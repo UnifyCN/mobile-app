@@ -37,3 +37,6 @@ amplifyconfiguration*
 # Deno lockfiles — generated as a side effect of `supabase functions deploy`.
 # Repo convention is not to track them (no edge function commits one today).
 deno.lock
+# Firebase Android config: supplied at build time by the EAS file env var GOOGLE_SERVICES_JSON
+google-services.json
+android/app/google-services.json
