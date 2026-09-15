@@ -34,6 +34,13 @@ module.exports = {
         backgroundColor: '#ffffff',
       },
       permissions: ['CAMERA', 'READ_MEDIA_IMAGES', 'READ_EXTERNAL_STORAGE'],
+      // expo-image-picker adds RECORD_AUDIO (video capture) and
+      // expo-tracking-transparency adds AD_ID. Unify uses neither on Android,
+      // and each one triggers an extra Play Console declaration.
+      blockedPermissions: [
+        'android.permission.RECORD_AUDIO',
+        'com.google.android.gms.permission.AD_ID',
+      ],
       package: 'com.anonymous.unifyfrontend',
       softwareKeyboardLayoutMode: 'resize',
     },
