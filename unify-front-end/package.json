@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.6.0",
   "scripts": {
+    "eas-build-pre-install": "if [ -n \"$GOOGLE_SERVICES_JSON\" ]; then cp \"$GOOGLE_SERVICES_JSON\" android/app/google-services.json; fi",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",

@@ -42,6 +42,11 @@ module.exports = {
         'com.google.android.gms.permission.AD_ID',
       ],
       package: 'com.anonymous.unifyfrontend',
+      // Firebase (FCM) config for expo-notifications. Not committed: EAS supplies
+      // it through the GOOGLE_SERVICES_JSON file env var; locally it is the
+      // gitignored ./google-services.json.
+      googleServicesFile:
+        process.env.GOOGLE_SERVICES_JSON ?? './google-services.json',
       softwareKeyboardLayoutMode: 'resize',
     },
     web: {
