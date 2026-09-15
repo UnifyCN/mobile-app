@@ -46,6 +46,20 @@ When committing, only stage files relevant to the change. Skip unrelated modific
 - Moderator notification emails go to `contact@unifysocial.ca` via Resend API
 - Legal documents are hosted on Notion — URLs are in `unify-front-end/utils/legalUrls.ts`
 
+## iOS builds and releases
+
+Use the `app-store-release` skill — it holds the full procedure. Two traps worth
+knowing before you touch a build:
+
+- **`unify-front-end/app.config.js` is the Expo config** (not `app.json`), and
+  `expo.version` there is the canonical store version. `package.json`'s version
+  is ignored by Expo and has drifted before.
+- **`unify-front-end/ios/` is gitignored**, so no `Podfile.lock` is committed and
+  every EAS build re-resolves CocoaPods. A transitive pod release can break a
+  build whose code did not change. To reproduce such a failure locally you must
+  delete `Podfile.lock` first — plain `pod install`, even with `--repo-update`,
+  keeps the locked versions and proves nothing.
+
 ## Skill routing
 
 When the user's request matches an available skill, ALWAYS invoke it using the Skill
@@ -56,6 +70,7 @@ Key routing rules:
 - Product ideas, "is this worth building", brainstorming → invoke office-hours
 - Bugs, errors, "why is this broken", 500 errors → invoke investigate
 - Ship, deploy, push, create PR → invoke ship
+- Release to the App Store, new version, OTA update, TestFlight → invoke app-store-release
 - QA, test the site, find bugs → invoke qa
 - Code review, check my diff → invoke review
 - Update docs after shipping → invoke document-release
