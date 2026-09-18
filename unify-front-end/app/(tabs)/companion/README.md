@@ -47,7 +47,8 @@ A conversational AI feature with persistent conversations, RAG (Retrieval Augmen
 
 ## Edge Functions
 
-### `rag-query/index.ts`
+### `rag-query` (source: UnifyCN/web-app `supabase/functions/rag-query/index.ts`)
+The deployed function is owned by the web repo; this repo no longer carries a copy.
 - **Input**: `prompt`, `conversationIdentifier`, `messages[]` (last 10)
 - **Process**:
   1. Generates embedding (OpenAI)

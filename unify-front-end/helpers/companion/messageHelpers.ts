@@ -39,8 +39,8 @@ export interface ParsedRAGResponse {
   estimatedCostUsd?: number;
 }
 
-// NOTE: This sanitizer logic is intentionally mirrored in:
-// supabase/functions/rag-query/index.ts
+// NOTE: This sanitizer logic is intentionally mirrored in the rag-query edge
+// function (source of truth: UnifyCN/web-app, supabase/functions/rag-query/index.ts).
 // Keep both copies in sync until we extract a shared cross-runtime module.
 // TODO(unify-companion): move smartchip sanitization to a single shared source of truth.
 const INVALID_ASSISTANT_LED_PATTERNS: RegExp[] = [

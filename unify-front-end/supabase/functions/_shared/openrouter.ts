@@ -6,9 +6,22 @@
  * Meta, DeepSeek, etc.) plus an automatic fallback chain on per-upstream 429s.
  *
  * Models default to env vars so they can be tuned without redeploying:
- *   OPENROUTER_MODEL_PRIMARY            (default: google/gemini-2.5-flash)
+ *   OPENROUTER_MODEL_PRIMARY            (default: deepseek/deepseek-v4.1-flash)
  *   OPENROUTER_MODEL_FALLBACKS          (comma-separated; default:
- *                                        deepseek/deepseek-v4-flash)
+ *                                        deepseek/deepseek-v4-flash-0731,
+ *                                        google/gemini-3.1-flash-lite)
+ *
+ * Reasoning ("thinking") — also env-driven:
+ *   OPENROUTER_REASONING                ("off" default | "on" | "minimal" |
+ *                                        "low" | "medium" | "high")
+ *   Hybrid models (DeepSeek V4 family, Qwen, Gemini 3.x) think BY DEFAULT and
+ *   bill the hidden reasoning tokens as output. Our workloads are short chat /
+ *   translation / JSON, where thinking roughly doubles cost and time-to-first-
+ *   token for no measurable gain, so the helper sends `reasoning: { enabled:
+ *   false }` unless a caller or the env asks otherwise. Callers pass
+ *   `reasoning: null` to send nothing (provider default). NOTE: some Gemini
+ *   3.x endpoints reject `enabled: false` with a 400 ("Reasoning is
+ *   mandatory") — keep such models out of the default chain.
  *
  * Provider routing (latency tuning) — also env-driven:
  *   OPENROUTER_PROVIDER_SORT            (default: "throughput"; set to ""
@@ -27,8 +40,11 @@ import { fetchWithRetry } from './fetchWithRetry.ts';
 
 const ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
 
-const DEFAULT_PRIMARY_MODEL = 'google/gemini-2.5-flash';
-const DEFAULT_FALLBACK_MODELS = ['deepseek/deepseek-v4-flash'];
+const DEFAULT_PRIMARY_MODEL = 'deepseek/deepseek-v4.1-flash';
+const DEFAULT_FALLBACK_MODELS = [
+  'deepseek/deepseek-v4-flash-0731',
+  'google/gemini-3.1-flash-lite',
+];
 
 export type OpenRouterMessageRole = 'system' | 'user' | 'assistant';
 
@@ -44,6 +60,14 @@ export interface ProviderRouting {
   sort?: 'throughput' | 'latency' | 'price';
   /** When false, fail instead of falling back outside `order`. */
   allow_fallbacks?: boolean;
+}
+
+/** OpenRouter's unified reasoning config (normalized per provider upstream). */
+export interface ReasoningConfig {
+  /** false = disable thinking entirely (hybrid models think by default). */
+  enabled?: boolean;
+  effort?: 'minimal' | 'low' | 'medium' | 'high';
+  max_tokens?: number;
 }
 
 export interface OpenRouterCallOptions {
@@ -65,6 +89,11 @@ export interface OpenRouterCallOptions {
   appUrl?: string;
   /** Provider routing — overrides OPENROUTER_PROVIDER_* env vars. */
   provider?: ProviderRouting;
+  /**
+   * Reasoning config — overrides OPENROUTER_REASONING env. Default is
+   * `{ enabled: false }`; pass `null` to omit the field (provider default).
+   */
+  reasoning?: ReasoningConfig | null;
 }
 
 export interface OpenRouterUsage {
@@ -138,6 +167,25 @@ function readDefaultProviderRouting(): ProviderRouting | null {
   };
 }
 
+function readDefaultReasoning(): ReasoningConfig | null {
+  const raw = (Deno.env.get('OPENROUTER_REASONING') ?? 'off').trim().toLowerCase();
+  if (raw === 'off' || raw === 'false' || raw === '') return { enabled: false };
+  if (raw === 'on' || raw === 'true') return null; // provider default
+  if (raw === 'minimal' || raw === 'low' || raw === 'medium' || raw === 'high') {
+    return { effort: raw };
+  }
+  console.warn(`Unrecognised OPENROUTER_REASONING="${raw}" — defaulting to off`);
+  return { enabled: false };
+}
+
+function resolveReasoning(
+  options: OpenRouterCallOptions
+): ReasoningConfig | null {
+  return options.reasoning === undefined
+    ? readDefaultReasoning()
+    : options.reasoning;
+}
+
 export async function callOpenRouter(
   options: OpenRouterCallOptions
 ): Promise<OpenRouterResult> {
@@ -168,6 +216,9 @@ export async function callOpenRouter(
 
   const provider = options.provider ?? readDefaultProviderRouting();
   if (provider) body.provider = provider;
+
+  const reasoning = resolveReasoning(options);
+  if (reasoning) body.reasoning = reasoning;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -269,6 +320,12 @@ export async function callOpenRouter(
 export interface OpenRouterStreamChunk {
   /** Incremental token text (may be empty for keep-alives). */
   delta?: string;
+  /**
+   * Provider error surfaced mid-stream (OpenRouter `data: {"error":{…}}`). When
+   * set, the stream is error-terminated — callers must treat it as a failure,
+   * not a successful (possibly empty) completion.
+   */
+  error?: string;
   /** True on the final chunk for a choice (finish_reason set). */
   done?: boolean;
   /** OpenRouter inlines usage on the final chunk when usage.include = true. */
@@ -303,7 +360,10 @@ export type OpenRouterStreamResult =
  * Error handling:
  *  - Connect-time / non-2xx responses return `{ ok: false, ... }` (same as
  *    callOpenRouter).
- *  - Mid-stream parse errors are silently logged and skipped — partial
+ *  - A provider error emitted mid-stream (`data: {"error":{…}}`) is surfaced as
+ *    a chunk with `error` set, so callers can fail instead of treating the
+ *    truncated stream as a successful completion.
+ *  - Malformed (unparseable) SSE chunks are logged and skipped — partial
  *    deltas are still delivered. The final `done: true` chunk is emitted
  *    when `[DONE]` arrives or the stream closes naturally.
  */
@@ -338,6 +398,9 @@ export async function callOpenRouterStream(
 
   const provider = options.provider ?? readDefaultProviderRouting();
   if (provider) body.provider = provider;
+
+  const reasoning = resolveReasoning(options);
+  if (reasoning) body.reasoning = reasoning;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -482,6 +545,21 @@ function parseOpenRouterSseMessage(
   } catch (err) {
     console.warn('Failed to parse OpenRouter SSE chunk:', err);
     return null;
+  }
+
+  // OpenRouter can emit an error payload mid-stream (`data: {"error":{…}}`)
+  // instead of choices. Surface it so callers distinguish an error-terminated
+  // stream from a successful completion (otherwise it'd fall through to null
+  // below and be skipped as an empty chunk).
+  if (parsed.error) {
+    const errObj = parsed.error as { message?: unknown };
+    const message =
+      errObj && typeof errObj === 'object' && typeof errObj.message === 'string'
+        ? errObj.message
+        : typeof parsed.error === 'string'
+          ? parsed.error
+          : 'OpenRouter stream error';
+    return { error: message };
   }
 
   const choices = (parsed.choices as Array<Record<string, unknown>>) ?? [];
