@@ -263,3 +263,29 @@ so that push carries `?from=search` and the nav reads "Resources".
   organizations get real programs instead.
 - **A fourth icon button for email.** Four buttons in a 393pt bar leaves the
   primary CTA too narrow for "Book a free assessment".
+
+## 2026-09-18 — Canada Shaws listing: brand resolved by the partner
+
+**Canada Shaws Consulting Inc. is the brand.** The open question was which of
+the two live sites (immshaws.com vs canadashaws.ca) the directory shows. The
+partner settled it on a call and by email on 2026-09-18: Canada Shaws Consulting
+Inc. holds the licensed consultants and signed the agreement, so the listing
+carries that name, the 672 number, `info@canadashaws.com`, and the Cooney Rd
+address. The referral link stays on `immshaws.com/unify/` — clients land there
+and sign with Canada Shaws.
+
+**Logo stays.** The partner reviewed the shipped "S" mark and asked to keep it
+for now, reversing the change-to-CanadaShaws request from the call.
+
+**Cost is `mixed`.** Initial assessment is free; everything after is paid.
+
+**Three of five programs link out.** The partner sent name + description only;
+the Study, Work and PR programs map to the hub pages on canadashaws.ca (the
+firm's English site), opened in the in-app browser. Visas & Extensions and
+Other Services have no page there, so they stay display-only. Those links
+bypass the `immshaws.com/unify/` referral page; the primary CTA still goes
+through it, and our own analytics count program taps.
+
+**Rejected:**
+- **Renaming the slug** to match the new name. It is the route and analytics
+  key; a rename would split the referral funnel across two identifiers.
