@@ -221,7 +221,7 @@ export interface Partner {
   ctaLabelKey?:
     | 'learn.resources.cta.applyOnline'
     | 'learn.resources.cta.bookAdvising'
-    | 'learn.resources.cta.bookAssessment'
+    | 'learn.resources.cta.bookIntroMeeting'
     | 'learn.resources.cta.getQuote'
     | 'learn.resources.cta.joinLibrary'
     | 'learn.resources.cta.visitWelcomeCentre';

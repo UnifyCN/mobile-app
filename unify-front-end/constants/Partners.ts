@@ -390,41 +390,81 @@ export const PARTNERS: Partner[] = [
     active: true,
   },
   // ── Immigration Help ────────────────────────────────────────────────────
+  // Copy, programs, languages and cost supplied by the partner by email on
+  // 2026-09-18 (Vicky Guo, Operations & Process Lead). The slug predates the
+  // rename and stays put — it is the analytics and route key. Program links
+  // go to the partner's own English site, not the /unify/ referral page.
   {
     slug: 'canada-shaw-immigration',
-    name: 'Canada Shaw Immigration Consultancy',
+    name: 'Canada Shaws Consulting Inc.',
     category: 'immigrationHelp',
     partnershipType: 'referral',
-    tagline: 'CICC-licensed firm for Express Entry, permits, and LMIA.',
+    tagline: 'Licensed RCICs, Canadian immigration & visa service experts.',
     description:
-      'A Richmond-based, CICC-licensed immigration consulting firm (est. 2015) offering full-service support — Express Entry, study and work permits, and LMIA applications — with bilingual English and Chinese service.',
+      'Established in 2015 and based in Richmond, British Columbia, Canada Shaws Consulting Inc. is a member of Shaws Global Brand Group. Its immigration consultants are licensed by the College of Immigration and Citizenship Consultants (CICC), Canada’s regulatory body for immigration and citizenship consultants.\n\nCanada Shaws provides comprehensive support across a wide range of Canadian immigration programs, as well as study permits, work permits, and business and investment pathways. Together with its sister companies under Shaws Global Brand Group, it also offers business consulting, investment advisory, global immigration services, residency and citizenship planning, education planning, and career planning. The firm helps clients worldwide navigate their options and build personalized plans for their future, with services available in English, Filipino (Tagalog), Persian (Farsi), Mandarin, and Cantonese.',
     highlights: [
       'CICC-licensed consultants',
-      'Express Entry, permits & LMIA',
-      'Bilingual English / 中文',
+      'Study, work, PR & visa pathways',
+      'Service in five languages',
     ],
     serviceArea: 'Richmond',
     // Affiliate link supplied by the partner; deliberately unlabelled in the
     // UI and opened by the standard Website button.
     website: 'https://www.immshaws.com/unify/',
-    ctaLabelKey: 'learn.resources.cta.bookAssessment',
-    cost: 'paid',
+    ctaLabelKey: 'learn.resources.cta.bookIntroMeeting',
+    cost: 'mixed',
     howToStart:
-      'Request a free assessment through the website, or contact them by phone, email or WhatsApp.',
+      'Book a free introductory session to discuss your needs and learn about their services.',
     phone: '+1 672-867-6886',
     email: 'info@canadashaws.com',
     address: '308-5811 Cooney Rd, Richmond, BC V6X 3M1',
     hours: 'Mon–Fri 9:00am–6:00pm · Closed weekends',
-    languages: ['English', 'Chinese (中文)'],
+    languages: [
+      'English',
+      'Filipino (Tagalog)',
+      'Persian (Farsi)',
+      'Mandarin',
+      'Cantonese',
+    ],
     programs: [
       {
-        id: 'canada-shaw-immigration-free-lmia-consultation',
-        name: 'Free LMIA Consultation',
+        id: 'canada-shaw-immigration-study-in-canada',
+        name: 'Study in Canada',
         description:
-          'Consultation on employer employment needs, with a scheduled 30-minute orientation.',
+          'Explore educational opportunities in Canada with personalized guidance on school applications, study permits, and — where eligible — part-time work during your studies and potential pathways to permanent residency after graduation.',
+        url: 'https://canadashaws.ca/study-abroad-in-canada/',
+      },
+      {
+        id: 'canada-shaw-immigration-work-in-canada',
+        name: 'Work in Canada',
+        description:
+          'Navigate Canadian work permit options with professional support tailored to your career goals.',
+        url: 'https://canadashaws.ca/work-in-canada/',
+      },
+      {
+        id: 'canada-shaw-immigration-permanent-residency',
+        name: 'Canadian Permanent Residency',
+        description:
+          'Explore permanent residency pathways tailored to your qualifications, experience, and long-term goals in Canada.',
+        url: 'https://canadashaws.ca/immigrate-to-canada/',
+      },
+      // No page on canadashaws.ca for visas/extensions or the citizenship +
+      // PRTD + ATIP bundle (checked 2026-09-18), so these two stay display-only.
+      {
+        id: 'canada-shaw-immigration-visas-extensions',
+        name: 'Visas & Extensions',
+        description:
+          'Get assistance with visa applications, permit extensions, and maintaining your temporary resident status in Canada.',
+      },
+      {
+        id: 'canada-shaw-immigration-other-services',
+        name: 'Other Services',
+        description:
+          'Access support with citizenship applications, document amendments, Permanent Resident Travel Documents (PRTDs), Access to Information and Privacy (ATIP) requests, and other services.',
       },
     ],
     logo: require('@/assets/images/partners/canada-shaw-immigration.png'),
+    lastVerified: '2026-09-18',
     displayOrder: 0,
     active: true,
   },
