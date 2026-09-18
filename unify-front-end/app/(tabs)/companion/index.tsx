@@ -50,7 +50,8 @@ import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
-// supabase/functions/rag-query/index.ts, which is the authoritative server-side
+// the rag-query edge function (source of truth: UnifyCN/web-app,
+// supabase/functions/rag-query/index.ts), which is the authoritative server-side
 // check. This client constant only powers proactive UX (disabling the input);
 // keep the two in sync.
 const MESSAGE_LIMIT = 6;

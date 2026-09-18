@@ -105,7 +105,7 @@ A case passes only when every assertion (deterministic + LLM judges) passes — 
 2. Add a TTFT (time-to-first-token) assertion now that streaming is live in the edge function — the eval harness currently uses the non-streaming branch (`stream: false`) so this needs a streaming-aware assertion path.
 
 Already shipped (kept for reference):
-- `rag-query` accepts `eval_profile` in the request body and gates the bypass on `x-eval-mode: 1` + `x-eval-secret` matching `EVAL_BYPASS_SECRET`. See `supabase/functions/rag-query/index.ts` (the `isEvalMode` block + the `evalProfile` branch in `profilePromise`).
+- `rag-query` accepts `eval_profile` in the request body and gates the bypass on `x-eval-mode: 1` + `x-eval-secret` matching `EVAL_BYPASS_SECRET`. See UnifyCN/web-app `supabase/functions/rag-query/index.ts` (the `isEvalMode` block + the `evalProfile` branch in `profilePromise`).
 
 ## Cost note
 
