@@ -5,6 +5,7 @@ import {
   setStoredLanguage,
   type SupportedLanguage,
 } from '@/i18n';
+import { promptRestartForLayoutDirection } from '@/i18n/restart';
 import { supabase } from '@/lib/supabase';
 
 export function useLanguage() {
@@ -14,7 +15,7 @@ export function useLanguage() {
 
   const changeLanguage = useCallback(
     async (lang: SupportedLanguage) => {
-      await setStoredLanguage(lang);
+      const needsRestart = await setStoredLanguage(lang);
 
       try {
         const {
@@ -30,6 +31,10 @@ export function useLanguage() {
         // Language is already persisted locally via AsyncStorage;
         // Supabase sync is best-effort.
       }
+
+      // LTR ⇄ RTL only applies after a reload; ask once the choice is saved
+      // locally and (best-effort) remotely so nothing is lost on restart.
+      if (needsRestart) promptRestartForLayoutDirection();
     },
     []
   );

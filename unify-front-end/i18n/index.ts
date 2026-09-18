@@ -7,15 +7,47 @@ import en from './locales/en/translation.json';
 import vi from './locales/vi/translation.json';
 import es from './locales/es/translation.json';
 import hi from './locales/hi/translation.json';
+import ar from './locales/ar/translation.json';
+import frCA from './locales/fr-CA/translation.json';
+import { syncLayoutDirection } from './direction';
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
   vi: 'Tiếng Việt',
   es: 'Español',
   hi: 'हिन्दी',
+  ar: 'العربية',
+  'fr-CA': 'Français (canadien)',
 } as const;
 
 export type SupportedLanguage = keyof typeof SUPPORTED_LANGUAGES;
+
+export const DEFAULT_LANGUAGE: SupportedLanguage = 'en';
+
+export function isSupportedLanguage(value: unknown): value is SupportedLanguage {
+  // hasOwnProperty, not `in`: `in` walks the prototype chain, so "toString"
+  // or "constructor" would wrongly pass as supported codes.
+  return (
+    typeof value === 'string' &&
+    Object.prototype.hasOwnProperty.call(SUPPORTED_LANGUAGES, value)
+  );
+}
+
+/**
+ * Map a device locale to a supported language. French ships only as
+ * Canadian French, so any fr* device locale resolves to `fr-CA` — the same
+ * rule as the web app's Accept-Language negotiation.
+ */
+export function languageFromDeviceLocale(
+  locale: { languageCode?: string | null; languageTag?: string | null } | undefined
+): SupportedLanguage {
+  const tag = locale?.languageTag;
+  if (isSupportedLanguage(tag)) return tag;
+  const code = locale?.languageCode ?? '';
+  if (code === 'fr') return 'fr-CA';
+  if (isSupportedLanguage(code)) return code;
+  return DEFAULT_LANGUAGE;
+}
 
 const LANGUAGE_STORAGE_KEY = 'user_preferred_language';
 
@@ -33,8 +65,8 @@ export function hasUserPickedLanguageThisSession(): boolean {
 async function getStoredLanguage(): Promise<SupportedLanguage> {
   try {
     const stored = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-    if (stored && stored in SUPPORTED_LANGUAGES) {
-      return stored as SupportedLanguage;
+    if (isSupportedLanguage(stored)) {
+      return stored;
     }
   } catch (e) {
     console.error(
@@ -43,26 +75,32 @@ async function getStoredLanguage(): Promise<SupportedLanguage> {
     );
   }
 
-  const deviceLang = Localization.getLocales()[0]?.languageCode ?? 'en';
-  if (deviceLang in SUPPORTED_LANGUAGES) {
-    return deviceLang as SupportedLanguage;
-  }
-  return 'en';
+  return languageFromDeviceLocale(Localization.getLocales()[0]);
 }
 
+/**
+ * Persist + apply a language. Resolves to `true` when the native layout
+ * direction changed (LTR ⇄ RTL) and the app must restart for the layout to
+ * match — see `promptRestartForLayoutDirection` in `i18n/restart.ts`.
+ */
 export async function setStoredLanguage(
   lang: SupportedLanguage,
   opts: { source: 'user' | 'server' } = { source: 'user' }
-) {
+): Promise<boolean> {
   await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
   if (opts.source === 'user') {
     userPickedLanguageThisSession = true;
   }
   await i18n.changeLanguage(lang);
+  return syncLayoutDirection(lang);
 }
 
 const initI18n = async () => {
   const lng = await getStoredLanguage();
+  // Cold start: make sure the native direction flag matches the language we
+  // are about to render (covers a server-synced switch that never restarted).
+  // Takes effect on the next launch; nothing to prompt for here.
+  syncLayoutDirection(lng);
 
   await i18n.use(initReactI18next).init({
     resources: {
@@ -70,6 +108,8 @@ const initI18n = async () => {
       vi: { translation: vi },
       es: { translation: es },
       hi: { translation: hi },
+      ar: { translation: ar },
+      'fr-CA': { translation: frCA },
     },
     lng,
     fallbackLng: 'en',

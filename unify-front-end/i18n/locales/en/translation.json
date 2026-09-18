@@ -999,7 +999,12 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "spanish": "Español",
-    "hindi": "हिन्दी"
+    "hindi": "हिन्दी",
+    "restart": {
+      "title": "Restart required",
+      "message": "The app needs to restart to switch the layout direction for this language.",
+      "button": "Restart now"
+    }
   },
   "reportScreen": {
     "titlePost": "Report Post",
@@ -1177,5 +1182,13 @@
       "consentRequired": "Please check the box to confirm you agree.",
       "submitFailed": "Couldn't submit your entry. Please try again."
     }
+  },
+  "translate": {
+    "button": "Translate",
+    "translating": "Translating…",
+    "machineTranslated": "Machine translated",
+    "showOriginal": "Show original",
+    "limitReached": "Daily translation limit reached",
+    "unavailable": "Translation unavailable, try again"
   }
 }

@@ -999,7 +999,12 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "spanish": "Español",
-    "hindi": "हिन्दी"
+    "hindi": "हिन्दी",
+    "restart": {
+      "title": "Cần khởi động lại",
+      "message": "Ứng dụng cần khởi động lại để đổi hướng bố cục cho ngôn ngữ này.",
+      "button": "Khởi động lại ngay"
+    }
   },
   "reportScreen": {
     "titlePost": "Báo cáo bài viết",
@@ -1177,5 +1182,13 @@
       "consentRequired": "Vui lòng đánh dấu vào ô để xác nhận bạn đồng ý.",
       "submitFailed": "Không thể gửi lượt tham gia. Vui lòng thử lại."
     }
+  },
+  "translate": {
+    "button": "Dịch",
+    "translating": "Đang dịch…",
+    "machineTranslated": "Bản dịch máy",
+    "showOriginal": "Xem bản gốc",
+    "limitReached": "Đã đạt giới hạn dịch trong ngày",
+    "unavailable": "Không thể dịch, hãy thử lại"
   }
 }

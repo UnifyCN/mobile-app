@@ -35,6 +35,7 @@ import ChevronRight from '@/components/icons/PostHeaderIcon';
 import { Avatar } from '@/components/Avatar';
 import { SkeletonLoader } from '@/components/SkeletonLoader';
 import { Theme } from '@/constants/Theme';
+import { TranslateButton } from '@/components/home/TranslateButton';
 import { useCurrentUser } from '@/context/UserContext';
 import { useToast } from '@/context/ToastContext';
 import { Permissions } from '@/types/permissions';
@@ -855,6 +856,17 @@ export const PostItem = memo(
                   )}
                 </TouchableOpacity>
 
+                {!shouldHideContent && (
+                  <View style={styles.translateWrapper}>
+                    <TranslateButton
+                      type='post'
+                      id={post.id}
+                      contentWidth={width - 92}
+                      isHtml
+                    />
+                  </View>
+                )}
+
                 <PostImageCarousel
                   cardImageWidth={cardImageWidth}
                   imageUrls={imageUrls}
@@ -1121,6 +1133,10 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     marginTop: 4,
+  },
+  translateWrapper: {
+    marginTop: -8,
+    marginBottom: 12,
   },
   homeDescriptionContainer: {
     minHeight: 66,
