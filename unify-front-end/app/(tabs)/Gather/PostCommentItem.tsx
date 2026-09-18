@@ -22,6 +22,7 @@ import { SkeletonLoader } from '@/components/SkeletonLoader';
 import { Theme } from '@/constants/Theme';
 import { useCurrentUser } from '@/context/UserContext';
 import { Permissions } from '@/types/permissions';
+import { TranslateButton } from '@/components/home/TranslateButton';
 
 interface PostCommentItemProps {
   comment: PostCommentData;
@@ -196,6 +197,7 @@ const PostCommentItem = memo(
                 )}
               {comment.content}
             </Text>
+            <TranslateButton type='comment' id={comment.id} />
 
             {/* Footer */}
             <View style={styles.footer}>

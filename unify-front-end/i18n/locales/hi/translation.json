@@ -999,7 +999,12 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "spanish": "Español",
-    "hindi": "हिन्दी"
+    "hindi": "हिन्दी",
+    "restart": {
+      "title": "पुनः आरंभ आवश्यक",
+      "message": "इस भाषा के लिए लेआउट दिशा बदलने हेतु ऐप को पुनः आरंभ करना होगा।",
+      "button": "अभी पुनः आरंभ करें"
+    }
   },
   "reportScreen": {
     "titlePost": "पोस्ट रिपोर्ट करें",
@@ -1177,5 +1182,13 @@
       "consentRequired": "कृपया पुष्टि करने के लिए चेकबॉक्स पर निशान लगाएँ।",
       "submitFailed": "आपकी प्रविष्टि जमा नहीं हो सकी। कृपया फिर से प्रयास करें।"
     }
+  },
+  "translate": {
+    "button": "अनुवाद करें",
+    "translating": "अनुवाद हो रहा है…",
+    "machineTranslated": "मशीन द्वारा अनुवादित",
+    "showOriginal": "मूल दिखाएँ",
+    "limitReached": "दैनिक अनुवाद सीमा पूरी हो गई",
+    "unavailable": "अनुवाद उपलब्ध नहीं, फिर से कोशिश करें"
   }
 }

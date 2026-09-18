@@ -1,68 +1,43 @@
-import { useState, useCallback, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { translateContent } from '@/services/posts/translateContent';
-import { SupportedLanguage } from '@/i18n';
+import {
+  translateContent,
+  type TranslatableType,
+} from '@/services/posts/translateContent';
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from '@/i18n';
 
-const translationCache = new Map<string, string>();
-
-function cacheKey(text: string, lang: string) {
-  return `${lang}::${text}`;
-}
-
-export function useTranslateContent(originalText: string) {
+/**
+ * On-demand translation of a post or comment into the current UI language.
+ * Nothing fetches automatically: `TranslateButton` calls `translate()`, and
+ * the result stays in the React Query cache (keyed by type + id + language)
+ * so re-showing a translation is instant and switching UI language
+ * re-translates. Mirrors the web app's `useContentTranslation`.
+ */
+export function useTranslateContent(type: TranslatableType, id: number) {
   const { i18n } = useTranslation();
-  const [translatedText, setTranslatedText] = useState<string | null>(null);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isShowingTranslation, setIsShowingTranslation] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
+  const lang = isSupportedLanguage(i18n.language)
+    ? i18n.language
+    : DEFAULT_LANGUAGE;
 
-  const targetLanguage = i18n.language as SupportedLanguage;
-
-  const translate = useCallback(async () => {
-    if (isShowingTranslation) {
-      setIsShowingTranslation(false);
-      return;
-    }
-
-    const key = cacheKey(originalText, targetLanguage);
-    const cached = translationCache.get(key);
-    if (cached) {
-      setTranslatedText(cached);
-      setIsShowingTranslation(true);
-      return;
-    }
-
-    setIsTranslating(true);
-    setError(null);
-
-    try {
-      const result = await translateContent(originalText, targetLanguage);
-      translationCache.set(key, result);
-      setTranslatedText(result);
-      setIsShowingTranslation(true);
-    } catch (err: any) {
-      setError(err.message || 'Translation failed');
-    } finally {
-      setIsTranslating(false);
-    }
-  }, [originalText, targetLanguage, isShowingTranslation]);
-
-  const reset = useCallback(() => {
-    abortRef.current?.abort();
-    setTranslatedText(null);
-    setIsShowingTranslation(false);
-    setIsTranslating(false);
-    setError(null);
-  }, []);
+  const query = useQuery({
+    queryKey: ['translation', type, id, lang],
+    queryFn: () => translateContent(type, id, lang),
+    enabled: false, // on-demand only
+    staleTime: Infinity,
+    gcTime: Infinity,
+    retry: false,
+  });
 
   return {
-    translatedText,
-    isTranslating,
-    isShowingTranslation,
-    error,
-    translate,
-    reset,
-    targetLanguage,
+    /**
+     * Trigger the translation. `refetch` always runs `queryFn` (a network
+     * request that may spend quota) — check `translation` first and skip
+     * calling this when data is already cached.
+     */
+    translate: query.refetch,
+    translation: query.data,
+    isTranslating: query.isFetching,
+    error: query.error,
+    targetLanguage: lang,
   };
 }

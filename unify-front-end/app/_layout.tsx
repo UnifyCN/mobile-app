@@ -14,9 +14,10 @@ import {
   i18nReady,
   setStoredLanguage,
   hasUserPickedLanguageThisSession,
-  SUPPORTED_LANGUAGES,
+  isSupportedLanguage,
   type SupportedLanguage,
 } from '@/i18n';
+import { promptRestartForLayoutDirection } from '@/i18n/restart';
 import { supabase } from '@/lib/supabase';
 import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
 import AuthWrapper from '@/components/AuthComponents/AuthWrapper';
@@ -255,7 +256,7 @@ function useLanguageSyncFromSupabase() {
     const local = i18n.language as SupportedLanguage;
 
     if (hasUserPickedLanguageThisSession()) {
-      if (local && local in SUPPORTED_LANGUAGES && local !== remote) {
+      if (isSupportedLanguage(local) && local !== remote) {
         supabase
           .from('user_onboarding_profiles')
           .update({ preferred_language: local })
@@ -266,10 +267,12 @@ function useLanguageSyncFromSupabase() {
             }
           });
       }
-    } else if (remote && remote in SUPPORTED_LANGUAGES && remote !== local) {
-      setStoredLanguage(remote as SupportedLanguage, {
-        source: 'server',
-      }).catch(e => console.error('Failed to sync language from supabase:', e));
+    } else if (isSupportedLanguage(remote) && remote !== local) {
+      setStoredLanguage(remote, { source: 'server' })
+        .then(needsRestart => {
+          if (needsRestart) promptRestartForLayoutDirection();
+        })
+        .catch(e => console.error('Failed to sync language from supabase:', e));
     }
   }, [currentUser?.id, profile, i18n.language]);
 }

@@ -1,15 +1,20 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  View,
-  StyleSheet,
   ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import RenderHtml, { MixedStyleDeclaration } from 'react-native-render-html';
 import { Theme } from '@/constants/Theme';
+import { DEFAULT_LANGUAGE } from '@/i18n';
 import { useTranslateContent } from '@/hooks/posts/useTranslateContent';
+import {
+  TranslationLimitError,
+  type TranslatableType,
+} from '@/services/posts/translateContent';
 
 const TRANSLATED_TAG_STYLES: Record<string, MixedStyleDeclaration> = {
   body: { fontSize: 16, lineHeight: 22, color: Theme.black },
@@ -25,89 +30,123 @@ const TRANSLATED_TAG_STYLES: Record<string, MixedStyleDeclaration> = {
 };
 
 interface TranslateButtonProps {
-  content: string;
-  contentWidth: number;
+  type: TranslatableType;
+  id: number;
+  /** Required when `isHtml` — width available to the HTML renderer. */
+  contentWidth?: number;
+  /** Post bodies are stored as HTML; comments are plain text. */
   isHtml?: boolean;
 }
 
+/**
+ * On-demand "Translate" affordance for user-generated content. Renders the
+ * trigger and, once translated, the machine translation *under* the original
+ * with a "Machine translated · Show original" footer. Hidden entirely when
+ * the UI language is English. Mirrors the web app's TranslateButton.
+ */
 export const TranslateButton = memo(
-  ({ content, contentWidth, isHtml = true }: TranslateButtonProps) => {
-    const { t, i18n } = useTranslation();
-    const {
-      translatedText,
-      isTranslating,
-      isShowingTranslation,
-      error,
-      translate,
-    } = useTranslateContent(content);
+  ({ type, id, contentWidth = 0, isHtml = false }: TranslateButtonProps) => {
+    const { t } = useTranslation();
+    const [showTranslation, setShowTranslation] = useState(false);
+    const { translate, translation, isTranslating, error, targetLanguage } =
+      useTranslateContent(type, id);
 
-    if (!content.trim() || i18n.language === 'en') {
-      return null;
+    const handleTranslate = useCallback(() => {
+      // Already cached → instant re-show, no refetch (a refetch would hit the
+      // network and spend quota even with cached data).
+      if (!translation) void translate();
+      setShowTranslation(true);
+    }, [translation, translate]);
+
+    if (targetLanguage === DEFAULT_LANGUAGE) return null;
+
+    if (translation && showTranslation) {
+      return (
+        <View style={styles.translationContainer}>
+          {type === 'post' && translation.translatedTitle ? (
+            <Text style={styles.translatedTitle}>
+              {translation.translatedTitle}
+            </Text>
+          ) : null}
+          {isHtml ? (
+            <RenderHtml
+              contentWidth={contentWidth}
+              source={{ html: translation.translatedContent }}
+              tagsStyles={TRANSLATED_TAG_STYLES}
+            />
+          ) : (
+            <Text style={styles.translatedPlainText}>
+              {translation.translatedContent}
+            </Text>
+          )}
+          <View style={styles.footer}>
+            <Text style={styles.attribution}>
+              {t('translate.machineTranslated')}
+            </Text>
+            <Text style={styles.attribution}> · </Text>
+            <TouchableOpacity
+              onPress={() => setShowTranslation(false)}
+              hitSlop={8}
+              accessibilityRole='button'
+            >
+              <Text style={styles.linkText}>{t('translate.showOriginal')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
     }
 
-    const buttonLabel = isTranslating
-      ? t('common.translating')
-      : error
-        ? t('common.translationFailed')
-        : isShowingTranslation
-          ? t('common.hideTranslation')
-          : t('common.seeTranslation');
+    if (isTranslating) {
+      return (
+        <View style={[styles.container, styles.row]}>
+          <ActivityIndicator
+            size={12}
+            color={Theme.textPostTime}
+            style={styles.spinner}
+          />
+          <Text style={styles.buttonText}>{t('translate.translating')}</Text>
+        </View>
+      );
+    }
+
+    if (error instanceof TranslationLimitError) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.buttonText}>{t('translate.limitReached')}</Text>
+        </View>
+      );
+    }
 
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={translate}
-          disabled={isTranslating}
-          style={styles.button}
+          onPress={handleTranslate}
+          style={styles.row}
           hitSlop={8}
+          accessibilityRole='button'
         >
-          {isTranslating && (
-            <ActivityIndicator
-              size={12}
-              color={Theme.textPostTime}
-              style={styles.spinner}
-            />
-          )}
-          <Text
-            style={[
-              styles.buttonText,
-              error && styles.errorText,
-            ]}
-          >
-            {buttonLabel}
+          <Text style={[styles.buttonText, error ? styles.errorText : null]}>
+            {error ? t('translate.unavailable') : t('translate.button')}
           </Text>
         </TouchableOpacity>
-
-        {isShowingTranslation && translatedText && (
-          <View style={styles.translationContainer}>
-            {isHtml ? (
-              <RenderHtml
-                contentWidth={contentWidth}
-                source={{ html: translatedText }}
-                tagsStyles={TRANSLATED_TAG_STYLES}
-              />
-            ) : (
-              <Text style={styles.translatedPlainText}>{translatedText}</Text>
-            )}
-            <Text style={styles.attribution}>{t('common.translatedBy')}</Text>
-          </View>
-        )}
       </View>
     );
   }
 );
 
+TranslateButton.displayName = 'TranslateButton';
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 6,
   },
-  button: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 2,
   },
   spinner: {
-    marginRight: 6,
+    marginEnd: 6,
   },
   buttonText: {
     fontSize: 14,
@@ -123,14 +162,30 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#E5E5E5',
   },
+  translatedTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Theme.black,
+    marginBottom: 4,
+  },
   translatedPlainText: {
     fontSize: 16,
     lineHeight: 22,
     color: Theme.black,
   },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
   attribution: {
     fontSize: 12,
     color: Theme.textPostTime,
-    marginTop: 4,
+  },
+  linkText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: Theme.textPostTime,
+    textDecorationLine: 'underline',
   },
 });

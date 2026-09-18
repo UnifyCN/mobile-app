@@ -999,7 +999,12 @@
     "english": "English",
     "vietnamese": "Tiếng Việt",
     "spanish": "Español",
-    "hindi": "हिन्दी"
+    "hindi": "हिन्दी",
+    "restart": {
+      "title": "Reinicio necesario",
+      "message": "La app debe reiniciarse para cambiar la dirección del diseño para este idioma.",
+      "button": "Reiniciar ahora"
+    }
   },
   "reportScreen": {
     "titlePost": "Reportar publicación",
@@ -1177,5 +1182,13 @@
       "consentRequired": "Por favor, marca la casilla para confirmar que aceptas.",
       "submitFailed": "No se pudo enviar tu participación. Por favor, intenta de nuevo."
     }
+  },
+  "translate": {
+    "button": "Traducir",
+    "translating": "Traduciendo…",
+    "machineTranslated": "Traducción automática",
+    "showOriginal": "Ver original",
+    "limitReached": "Has alcanzado el límite diario de traducciones",
+    "unavailable": "Traducción no disponible, inténtalo de nuevo"
   }
 }
