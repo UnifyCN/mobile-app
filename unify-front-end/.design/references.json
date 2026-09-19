@@ -1,0 +1,62 @@
+{
+  "sources": [
+    {
+      "source": ".design/evidence/baseline/checklist-top-2026-09-03.png",
+      "author": "existing-product",
+      "annotation": "Current Checklist tab, stage-4 skilled worker. Four urgency buckets, no dates, 0% progress bar, titles clamp at 2 lines.",
+      "take": ["bucket palette and icon tiles", "card radius and gutter", "connector line between checkboxes"],
+      "avoid": ["flat list with no time dimension", "clamped titles", "uninformative progress bar"],
+      "applies_to": ["hierarchy", "layout", "color", "content"],
+      "priority": "primary"
+    },
+    {
+      "source": ".design/evidence/baseline/checklist-task-sheet-2026-09-03.png",
+      "author": "existing-product",
+      "annotation": "Task sheet: bucket pill, full title, Why paragraph, green complete button, Learn how link. Best content on the surface.",
+      "take": ["Why paragraph", "Learn how link", "single primary action"],
+      "avoid": [],
+      "applies_to": ["content", "interaction"],
+      "priority": "primary"
+    },
+    {
+      "source": ".design/evidence/baseline/checklist-add-form-2026-09-03.png",
+      "author": "existing-product",
+      "annotation": "Add form is a full screen asking only bucket, title, description. No date field. Contradicts the layered-UI rule in CLAUDE.md.",
+      "take": ["bucket radio list"],
+      "avoid": ["full-screen takeover for a 3-field form"],
+      "applies_to": ["interaction", "layout"],
+      "priority": "supporting"
+    },
+    {
+      "source": "Supabase personalized_checklist_tasks (2026-09-03)",
+      "author": "existing-product",
+      "annotation": "147 rows; show_after_days / show_before_days / month_start / month_end all NULL. Tasks are phrased as prompts, not actions.",
+      "take": ["temporal columns exist as a precedent"],
+      "avoid": ["treating bank tasks as deadlines"],
+      "applies_to": ["content", "hierarchy"],
+      "priority": "supporting"
+    },
+    {
+      "source": "PostHog project 250953, 90 days to 2026-09-03",
+      "author": "agent",
+      "annotation": "69 users switched to Checklist; 6 completed a task; week-4 install retention 8%.",
+      "take": ["retention is the metric that matters"],
+      "avoid": [],
+      "applies_to": ["hierarchy"],
+      "priority": "primary"
+    },
+    {
+      "source": "Obsidian vault: 20 Areas/Unify/App/personalization-engine.md",
+      "author": "user",
+      "annotation": "Product intent from May 2026: time-triggered checklist items (SIN in week 1, taxes in February), 25/50/75/100% celebrations, 'Why this?' transparency.",
+      "take": ["time-triggered items", "why-this transparency"],
+      "avoid": [],
+      "applies_to": ["hierarchy", "content"],
+      "priority": "primary"
+    }
+  ],
+  "tensions": [
+    "The bucket vocabulary (urgency) and a date (time) both express priority. Two priority systems on one card compete. The exploration must decide which one groups and which one tags.",
+    "Deadlines are user-entered facts; bank tasks are editorial prompts. Mixing them in one list risks making the vague prompts look as urgent as a permit expiry."
+  ]
+}

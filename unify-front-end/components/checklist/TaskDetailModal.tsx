@@ -48,6 +48,9 @@ interface TaskDetailModalProps {
   onMarkComplete: () => void;
   isCustomTask?: boolean;
   onDeleteCustomTask?: () => void;
+  /** Checklist 2.0: a date the user attached to this task, already formatted. */
+  linkedDateLabel?: string | null;
+  onSetDate?: () => void;
 }
 
 export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
@@ -58,6 +61,8 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   onMarkComplete,
   isCustomTask = false,
   onDeleteCustomTask,
+  linkedDateLabel = null,
+  onSetDate,
 }) => {
   const [rendered, setRendered] = useState(visible);
   const translateY = useSharedValue(SCREEN_HEIGHT);
@@ -228,6 +233,24 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                 </View>
               )}
 
+              {/* Checklist 2.0: date row */}
+              {onSetDate && (
+                <TouchableOpacity
+                  style={styles.dateRow}
+                  onPress={onSetDate}
+                  accessibilityRole='button'
+                  activeOpacity={0.7}
+                >
+                  <MaterialIcons name='event' size={18} color='#64748B' />
+                  <Text style={styles.dateRowLabel}>
+                    {t('checklist.deadline.dateLabel')}
+                  </Text>
+                  <Text style={styles.dateRowValue}>
+                    {linkedDateLabel ?? t('checklist.deadline.setDate')}
+                  </Text>
+                </TouchableOpacity>
+              )}
+
               {/* Primary CTA */}
               <TouchableOpacity
                 style={[
@@ -378,6 +401,22 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     width: '100%',
     marginBottom: 10,
+  },
+  dateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#EEE',
+    marginTop: 4,
+  },
+  dateRowLabel: { fontSize: 15, color: '#6B6B6B' },
+  dateRowValue: {
+    marginLeft: 'auto',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#F68B26',
   },
   primaryButtonCompleted: {
     backgroundColor: '#fff',

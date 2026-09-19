@@ -1,0 +1,486 @@
+<title>Checklist 2.0 Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500;600;700&family=Funnel+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFDFB; --paper-2:#F7F2EC; --card:#FFFFFF;
+    --ink:#1E1B19; --ink-2:#56504B; --ink-3:#8A827B;
+    --line:#EAE4DD; --line-2:#F1ECE6;
+    --orange:#F68B26; --orange-deep:#E0742C; --orange-soft:#FDEAD6;
+    --shadow-sm:0 1px 2px rgba(40,28,12,.06),0 2px 8px rgba(40,28,12,.05);
+    --shadow-md:0 8px 24px rgba(40,28,12,.12),0 2px 6px rgba(40,28,12,.06);
+    --font-d:"Anek Latin",system-ui,sans-serif;
+    --font-b:"Funnel Sans","Anek Latin",system-ui,sans-serif;
+    /* app tokens (constants/Theme.ts, ChecklistPriority.ts, ChecklistItem.tsx) */
+    --app-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --app-bg:#FFFFFF; --app-text:#0F172A; --app-meta:#94A3B8; --app-border:#D6D5D5;
+    --app-track:#EAEAEA; --app-sub:#6B6B6B; --app-black:#000;
+    --now:#E03B3B; --now-bg:#FBCFCF; --soon:#F47734; --soon-bg:#FBE4CF;
+    --explore:#F49E34; --explore-bg:#FFEDBD; --opt:#5E8651; --opt-bg:#CDE9D2;
+    --overdue:#FF3B30; --good:#2E9E5B; --good-bg:#DDF3E4; --brand:#F68B26;
+    --phone-bezel:#15110E;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#171310; --paper-2:#1F1A16; --card:#241E19;
+      --ink:#F3EDE6; --ink-2:#C8BFB5; --ink-3:#8F857B;
+      --line:#332B25; --line-2:#2A231E;
+      --orange-soft:#3A2712;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3);
+      --shadow-md:0 8px 24px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);
+      --phone-bezel:#0B0908;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#171310; --paper-2:#1F1A16; --card:#241E19;
+    --ink:#F3EDE6; --ink-2:#C8BFB5; --ink-3:#8F857B;
+    --line:#332B25; --line-2:#2A231E;
+    --orange-soft:#3A2712;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3);
+    --shadow-md:0 8px 24px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);
+    --phone-bezel:#0B0908;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-b);color:var(--ink);background:var(--paper);padding:32px 20px 64px;-webkit-font-smoothing:antialiased;font-size:14px}
+  .wrap{max-width:1260px;margin:0 auto}
+  .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+  .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange-deep);font-weight:600;margin-bottom:8px}
+  h1{font-family:var(--font-d);font-weight:700;font-size:32px;line-height:1.05;letter-spacing:-.02em;text-wrap:balance;max-width:20ch}
+  .sub{color:var(--ink-2);font-size:15px;margin-top:10px;max-width:60ch;line-height:1.55}
+  .sub b{color:var(--ink);font-weight:600}
+  .frame{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-sm);font-size:13px;line-height:1.5;color:var(--ink-2);max-width:380px}
+  .frame dt{font-weight:700;color:var(--ink);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+  .frame dt:first-child{margin-top:0}
+  .controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 28px}
+  .seg{display:inline-flex;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:5px;gap:4px;box-shadow:var(--shadow-sm)}
+  .seg button{font-family:var(--font-b);font-weight:600;font-size:13.5px;color:var(--ink-2);background:transparent;border:0;padding:9px 16px;border-radius:10px;cursor:pointer;transition:all .18s ease}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .seg button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+  .hint{font-size:13px;color:var(--ink-3)}
+  .stage{display:grid;grid-template-columns:repeat(auto-fit,minmax(372px,1fr));gap:36px 28px;justify-items:center}
+  .col{display:flex;flex-direction:column;align-items:center;gap:14px;width:372px}
+  .tag{font-family:var(--font-d);font-weight:600;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:10px}
+  .tag .letter{width:26px;height:26px;border-radius:8px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:13px;font-weight:700}
+  .tag span.sub2{font-size:12.5px;color:var(--ink-3);font-weight:500;font-family:var(--font-b)}
+  .phone{width:372px;height:760px;border-radius:46px;background:var(--phone-bezel);padding:11px;box-shadow:0 40px 80px -28px rgba(40,24,8,.5),0 0 0 2px rgba(0,0,0,.4),inset 0 0 0 2px #2b241d;position:relative;flex:0 0 auto}
+  .screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--app-bg);display:flex;flex-direction:column;font-family:var(--app-font);color:var(--app-text)}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:128px;height:30px;background:var(--phone-bezel);border-radius:0 0 18px 18px;z-index:60}
+  .statusbar{height:46px;flex:0 0 46px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 6px;font-size:13px;font-weight:600;color:#000;z-index:55}
+  .tabhead{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:6px 16px 4px}
+  .logo{width:26px;height:26px}
+  .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#8AB4D9,#4C7A5B)}
+  .body{flex:1;position:relative;overflow:hidden}
+  .scroll{position:absolute;inset:0;overflow-y:auto;padding:4px 16px 96px;scrollbar-width:none}
+  .scroll::-webkit-scrollbar{width:0}
+  .tabbar{flex:0 0 64px;border-top:1px solid #EEE;display:flex;align-items:flex-start;padding-top:9px;background:var(--app-bg);z-index:20}
+  .tabbar div{flex:1;text-align:center;font-size:9.5px;color:#9A9A9A;display:flex;flex-direction:column;align-items:center;gap:3px}
+  .tabbar div.on{color:#000;font-weight:600}
+  .tabbar svg{width:22px;height:22px}
+  /* in-app typography (as-is: 24 / 16 / 15 / 13-14) */
+  .h-title{font-size:24px;font-weight:700;color:#000;letter-spacing:-.2px}
+  .h-sub{font-size:15px;color:var(--app-sub);margin-top:2px}
+  .h-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+  .addpill{background:var(--app-black);color:#fff;border-radius:20px;padding:7px 12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer;border:0;font-family:inherit}
+  .addpill:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  .progress{height:6px;border-radius:5px;background:var(--app-track);margin:14px 0 8px;overflow:hidden}
+  .progress i{display:block;height:100%;border-radius:5px;background:var(--good)}
+  .sec{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
+  .sec .tile{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto}
+  .sec .tile svg{width:20px;height:20px}
+  .sec .st{font-size:16px;font-weight:600;color:#000;line-height:1.15}
+  .sec .sc{font-size:13px;color:var(--app-sub);margin-top:2px}
+  .sec.plain .st{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--app-sub);font-weight:700}
+  .card{background:#fff;border:1px solid var(--app-border);border-radius:12px;padding:12px 12px 12px 12px;display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;cursor:pointer;position:relative}
+  .card:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  .card .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--now);flex:0 0 auto;margin-top:1px;display:grid;place-items:center}
+  .card .ck.soon{border-color:var(--soon)} .card .ck.explore{border-color:var(--explore)} .card .ck.opt{border-color:var(--opt)}
+  .card .ck.done{background:var(--good);border-color:var(--good)} .card .ck.done svg{width:13px;height:13px}
+  .card .ck.dl{border-color:#94A3B8}
+  .card .ck.overdue{border-color:var(--overdue)}
+  .card .tx{flex:1;min-width:0}
+  .card .tt{font-size:15px;font-weight:500;color:var(--app-text);line-height:1.3}
+  .card .tt.done{color:var(--app-meta);text-decoration:line-through}
+  .card .mt{font-size:13px;color:var(--app-meta);margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .card .mt b{font-weight:600}
+  .card .mt .od{color:var(--overdue);font-weight:600}
+  .card .mt .dsoon{color:var(--now);font-weight:600}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;line-height:1.4}
+  .chip.now{background:var(--now-bg);color:#9E2323} .chip.soon{background:var(--soon-bg);color:#9A4A17}
+  .chip.explore{background:var(--explore-bg);color:#8A5A0F} .chip.opt{background:var(--opt-bg);color:#2F5A2B}
+  .chip.doc{background:#EEF2F7;color:#334155}
+  .handle{width:14px;color:#C4C4C4;display:grid;place-items:center;align-self:center;flex:0 0 auto}
+  .handle svg{width:14px;height:14px}
+  .count{font-size:13px;color:var(--app-meta);margin-left:auto;font-variant-numeric:tabular-nums}
+  .empty{border:1.5px dashed var(--app-border);border-radius:12px;padding:16px 14px;text-align:center;color:var(--app-sub);font-size:14px;line-height:1.4;margin-bottom:8px}
+  .empty b{color:var(--app-text);display:block;font-size:15px;margin-bottom:4px}
+  .empty .cta{display:inline-block;margin-top:10px;background:var(--app-black);color:#fff;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .setdate{font-size:12px;color:var(--brand);font-weight:600}
+  /* option C dates board */
+  .board{display:flex;gap:10px;overflow-x:auto;padding:2px 0 6px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+  .board::-webkit-scrollbar{height:0}
+  .dcard{flex:0 0 132px;border:1px solid var(--app-border);border-radius:12px;padding:10px;background:#fff;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+  .dcard.add{border-style:dashed;align-items:center;justify-content:center;color:var(--app-sub);font-size:13px;text-align:center;gap:4px}
+  .dcard .ring{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--app-text)}
+  .dcard .dn{font-size:13px;font-weight:600;line-height:1.2}
+  .dcard .dd{font-size:11.5px;color:var(--app-meta)}
+  .dcard .dd.od{color:var(--overdue);font-weight:600}
+  /* option B horizon bands */
+  .band{display:flex;align-items:baseline;gap:8px;margin:18px 0 10px}
+  .band .bt{font-size:16px;font-weight:600;color:#000}
+  .band .bd{font-size:13px;color:var(--app-sub)}
+  /* option A timeline */
+  .tl{position:relative;padding-left:0}
+  .day{display:flex;align-items:baseline;gap:8px;margin:16px 0 8px}
+  .day .d{font-size:13px;font-weight:700;color:#000;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+  .day .d.od{color:var(--overdue)} .day .d.soon{color:var(--now)}
+  .day .r{font-size:13px;color:var(--app-meta)}
+  /* sheets */
+  .dim{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:80}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:10px 20px 26px;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);z-index:90;box-shadow:0 -10px 40px rgba(0,0,0,.18);max-height:88%;overflow-y:auto;font-family:var(--app-font)}
+  .screen.open .dim{opacity:1;pointer-events:auto} .screen.open .sheet{transform:translateY(0)}
+  .grab{width:36px;height:5px;border-radius:3px;background:#DADADA;margin:0 auto 14px}
+  .sheet .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px}
+  .sheet h3{font-size:22px;font-weight:700;line-height:1.2;margin:10px 0 6px;color:#000;letter-spacing:-.2px}
+  .sheet .why{font-size:14px;color:#475569;line-height:1.45}
+  .sheet .why b{color:var(--app-text)}
+  .big{display:flex;align-items:baseline;gap:8px;margin:12px 0 4px}
+  .big .n{font-size:40px;font-weight:700;letter-spacing:-1px;font-variant-numeric:tabular-nums;color:#000}
+  .big .n.od{color:var(--overdue)} .big .n.soon{color:var(--now)}
+  .big .l{font-size:15px;color:var(--app-sub)}
+  .kv{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid #EEE;font-size:15px}
+  .kv .k{color:var(--app-sub)} .kv .v{font-weight:600;font-variant-numeric:tabular-nums}
+  .kv .v.link{color:var(--brand)}
+  .rem{display:flex;gap:6px;margin-top:2px}
+  .rem span{font-size:12px;font-weight:600;padding:4px 8px;border-radius:999px;background:#F1F5F9;color:#334155}
+  .rem span.off{opacity:.45;text-decoration:line-through}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:12px;font-size:16px;font-weight:600;margin-top:14px;cursor:pointer;border:0;font-family:inherit;width:100%}
+  .btn.primary{background:var(--good);color:#fff}
+  .btn.ghost{background:#fff;color:var(--app-text);border:1px solid var(--app-border);margin-top:8px}
+  .btn.black{background:#000;color:#fff}
+  .btn:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  .link{display:block;text-align:center;color:var(--overdue);font-weight:600;font-size:15px;margin-top:14px;cursor:pointer}
+  .link.brand{color:var(--brand)}
+  .types{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+  .types span{font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid var(--app-border);cursor:pointer;background:#fff}
+  .types span.on{background:#000;color:#fff;border-color:#000}
+  .field{border:1px solid var(--app-border);border-radius:12px;padding:12px 12px;font-size:15px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;color:var(--app-text)}
+  .field .ph{color:#9AA3AF}
+  .lbl{font-size:13px;font-weight:600;color:var(--app-sub);margin-top:14px}
+  .note{font-size:12.5px;color:var(--app-meta);margin-top:10px;line-height:1.4}
+  .warn{display:flex;gap:8px;align-items:flex-start;background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 12px;font-size:13px;color:#7C2D12;margin-top:12px;line-height:1.35}
+  /* experiment cards */
+  .exp{width:372px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-sm);font-size:13px;line-height:1.5;color:var(--ink-2)}
+  .exp dl{display:grid;grid-template-columns:64px 1fr;gap:6px 10px}
+  .exp dt{font-weight:700;color:var(--ink);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+  .exp dd{margin:0}
+  .foot{margin-top:34px;color:var(--ink-3);font-size:12.5px;line-height:1.6;max-width:70ch}
+  .foot b{color:var(--ink-2)}
+  @media (prefers-reduced-motion:reduce){.sheet,.dim,.seg button{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="masthead">
+    <div>
+      <div class="kicker">Unify · Checklist 2.0 · Round 1</div>
+      <h1>Where does time live on the Checklist?</h1>
+      <p class="sub">Three answers to decision <b>D1</b>. Same user, same eleven tasks, same five dates, same tokens. Only the way time organizes the screen changes. Tap any card to open its sheet, tap <b>+ Add</b> to see the date entry.</p>
+    </div>
+    <dl class="frame">
+      <dt>Invariants</dt><dd>Mina, international student, Vancouver, arrived Aug 2026. Tokens from Theme.ts and ChecklistPriority.ts. System font, 24 / 16 / 15 / 13 scale, 12pt cards.</dd>
+      <dt>Evidence that decides</dt><dd>Can she see what is due this week without scrolling, and does the screen still make sense on day one with no dates entered?</dd>
+    </dl>
+  </div>
+
+  <div class="controls">
+    <div class="seg" role="tablist" aria-label="Scenario">
+      <button class="on" data-sc="typical" role="tab" aria-selected="true">Typical · week 4</button>
+      <button data-sc="empty" role="tab" aria-selected="false">First open · no dates</button>
+    </div>
+    <span class="hint">Today is <b>Wed Sep 3, 2026</b> in every phone.</span>
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <p class="foot"><b>What stays constant across A, B, C:</b> the task sheet keeps its Why paragraph and Learn how link; deadlines store a type, a label and a date only; reminders fire 90, 30 and 7 days before at 9:00; buckets keep their colour. <b>What the choice decides:</b> what groups the list, what becomes a tag, and what the day-one screen says.</p>
+</div>
+
+<script>
+(function(){
+  const TODAY = new Date(2026,8,3);
+  const fmt = d => d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+  const daysTo = d => Math.round((d-TODAY)/86400000);
+  const D = (y,m,dd)=>new Date(y,m-1,dd);
+
+  const BUCKET = {
+    now:{k:'now',label:'Do now',color:'#E03B3B',bg:'#FBCFCF',icon:'!'},
+    soon:{k:'soon',label:'Do soon',color:'#F47734',bg:'#FBE4CF',icon:'◷'},
+    explore:{k:'explore',label:'Explore and connect',color:'#F49E34',bg:'#FFEDBD',icon:'👥'},
+    opt:{k:'opt',label:'Optional / later',color:'#5E8651',bg:'#CDE9D2',icon:'…'}
+  };
+
+  // Deadlines the user entered (type, label, date). Dates only.
+  const DEADLINES = [
+    {id:'sin', type:'SIN', title:'Apply for your SIN', date:D(2026,8,30), why:'You set this date yourself. Without a SIN you cannot be paid for on-campus work or open a TFSA.', custom:true},
+    {id:'msp', type:'Health card', title:'BC MSP coverage begins', date:D(2026,9,8), why:'MSP starts after a wait period. Until then, keep your private plan card with you. After Sep 8 you can register with a family doctor.'},
+    {id:'permit', type:'Study permit', title:'Study permit expires', date:D(2026,11,12), why:'Apply to extend at least 30 days before expiry to keep your status while IRCC processes it. Extensions take 6 to 12 weeks.'},
+    {id:'passport', type:'Passport', title:'Passport expires', date:D(2027,3,3), why:'Your study permit cannot be extended past your passport expiry. Renew the passport first.'},
+    {id:'tax', type:'Tax filing', title:'File your 2026 tax return', date:D(2027,4,30), why:'Filing, even with no income, unlocks the GST credit and the BC climate action credit. Most students get money back.'}
+  ];
+  // Editorial tasks from Sanity (persona international_student, stage 1)
+  const TASKS = [
+    {id:'t1', b:'now', title:'Open a student-friendly bank account', why:'A Canadian account is needed for tuition refunds, rent, and pay. Big-5 banks waive fees for students.'},
+    {id:'t2', b:'now', title:'Set up health coverage', why:'International students in BC must enroll in MSP and carry private coverage during the wait period.', link:'msp'},
+    {id:'t3', b:'now', title:'Get a phone plan', why:'A local number is required for banking OTPs, SIN registration, and most job applications.', done:true},
+    {id:'t4', b:'now', title:'Get a SIN if you are working or plan to work soon', why:'Service Canada issues SINs same-day in person. Bring your permit and passport.', link:'sin'},
+    {id:'t5', b:'soon', title:'Housing basics and renter safety', why:'Most rental scams target newcomers in their first 60 days. Learn the warning signs before paying a deposit.'},
+    {id:'t6', b:'soon', title:'Transportation basics', why:'Your U-Pass covers TransLink. Tap in and out on SkyTrain; buses are tap-in only.'},
+    {id:'t7', b:'soon', title:'Finance basics for students', why:'Credit history starts at zero in Canada. A secured card builds it fastest.'},
+    {id:'t8', b:'explore', title:'Attend a campus newcomer or international student event', why:'Gather hosts a session at SFU Burnaby on Sep 18.'},
+    {id:'t9', b:'explore', title:'Join campus groups plus a “new to city” group', why:'People in your circle arrived within 90 days of you.'},
+    {id:'t10', b:'explore', title:'Use AI when you get stuck', why:'The Companion knows you are a student in Vancouver and answers in context.'},
+    {id:'t11', b:'opt', title:'Learn culture basics', why:'Small talk, tipping, and punctuality norms that surprise most newcomers.'}
+  ];
+
+  const SVG = {
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    handle:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>',
+    tab:{
+      learn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v4H4zM4 15h16v4H4zM8 9v6M16 9v6"/></svg>',
+      check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+      comp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+      comm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5M14 18c0-2 2-3.5 4-3.5s3 1.5 3 3.5"/></svg>',
+      social:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h4"/></svg>'
+    },
+    plus:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>'
+  };
+
+  const dlChip = t => `<span class="chip doc">${SVG.doc}${t}</span>`;
+  const bChip = b => `<span class="chip ${b}">${BUCKET[b].label}</span>`;
+
+  function rel(d){
+    const n = daysTo(d);
+    if(n<0) return {cls:'od', text:`${-n} day${-n===1?'':'s'} overdue`};
+    if(n===0) return {cls:'dsoon', text:'Today'};
+    if(n<=7) return {cls:'dsoon', text:`in ${n} day${n===1?'':'s'}`};
+    return {cls:'', text:`in ${n} days`};
+  }
+
+  function dlCard(d, opts={}){
+    const r = rel(d.date), n=daysTo(d.date);
+    const ck = n<0?'overdue':'dl';
+    return `<div class="card" tabindex="0" role="button" data-open="dl:${d.id}" aria-label="${d.title}, ${fmt(d.date)}, ${r.text}">
+      <div class="ck ${ck}"></div>
+      <div class="tx"><div class="tt">${d.title}</div>
+      <div class="mt">${opts.date!==false?`<b>${fmt(d.date)}</b> · `:''}<span class="${r.cls}">${r.text}</span>${opts.chip!==false?' '+dlChip(d.type):''}</div></div>
+      <div class="handle" aria-label="Reorder">${SVG.handle}</div></div>`;
+  }
+  function taskCard(t, opts={}){
+    const dl = t.link && DEADLINES.find(x=>x.id===t.link);
+    let meta='';
+    if(dl && opts.showLink!==false){ const r=rel(dl.date); meta=`<b>${fmt(dl.date)}</b> · <span class="${r.cls}">${r.text}</span>`; }
+    else if(opts.setDate) meta=`<span class="setdate">Set a date</span>`;
+    if(opts.chip!==false) meta += (meta?' ':'') + bChip(t.b);
+    return `<div class="card" tabindex="0" role="button" data-open="t:${t.id}" aria-label="${t.title}">
+      <div class="ck ${t.done?'done':t.b}">${t.done?SVG.check:''}</div>
+      <div class="tx"><div class="tt ${t.done?'done':''}">${t.title}</div>${meta?`<div class="mt">${meta}</div>`:''}</div>
+      <div class="handle" aria-label="Reorder">${SVG.handle}</div></div>`;
+  }
+  function bucketSec(b, count, done){
+    const B=BUCKET[b];
+    return `<div class="sec"><div class="tile" style="background:${B.bg};color:${B.color}"><b style="font-size:16px">${B.icon}</b></div>
+      <div><div class="st">${B.label}</div><div class="sc">${done}/${count} complete</div></div></div>`;
+  }
+  const header = (title, sub) => `<div class="h-row"><div><div class="h-title">${title}</div><div class="h-sub">${sub}</div></div><button class="addpill" data-open="add">${SVG.plus} Add</button></div>`;
+  const progress = (pct) => `<div class="progress"><i style="width:${pct}%"></i></div>`;
+
+  /* ---------- OPTION A: Timeline ---------- */
+  function renderA(sc){
+    const dls = sc==='empty'?[]:DEADLINES;
+    const dated = dls.slice().sort((a,b)=>a.date-b.date);
+    let h = header('Your plan', 'International student · Month 1');
+    h += progress(sc==='empty'?9:18);
+    if(sc==='empty'){
+      h += `<div class="empty" style="margin-top:12px"><b>No dates yet</b>Add your study permit expiry and Unify will remind you 90, 30 and 7 days before.<span class="cta" data-open="add">Add a date</span></div>`;
+    }
+    const groups = new Map();
+    for(const d of dated){
+      const n=daysTo(d.date);
+      const key = n<0?'Overdue':fmt(d.date)+'|'+d.date.getFullYear();
+      if(!groups.has(key)) groups.set(key,{d,items:[]});
+      groups.get(key).items.push(d);
+    }
+    for(const [key,g] of groups){
+      const n=daysTo(g.d.date);
+      const label = key==='Overdue'?'Overdue':fmt(g.d.date)+(g.d.date.getFullYear()!==2026?' '+g.d.date.getFullYear():'');
+      const r = rel(g.d.date);
+      h += `<div class="day"><span class="d ${n<0?'od':n<=7?'soon':''}">${label}</span><span class="r">${key==='Overdue'?'':r.text}</span></div>`;
+      for(const d of g.items){
+        h += dlCard(d,{date:false});
+        const linked = TASKS.filter(t=>t.link===d.id);
+        for(const t of linked) h += taskCard(t,{showLink:false});
+      }
+    }
+    const undated = TASKS.filter(t=>!t.link || sc==='empty');
+    const done = undated.filter(t=>t.done).length;
+    h += `<div class="sec plain"><div class="st">No date yet</div><span class="count">${done}/${undated.length}</span></div>`;
+    for(const t of undated) h += taskCard(t,{setDate:!t.done, showLink:false});
+    return h;
+  }
+
+  /* ---------- OPTION B: Horizons ---------- */
+  function renderB(sc){
+    const dls = sc==='empty'?[]:DEADLINES;
+    const items = [];
+    for(const d of dls) items.push({kind:'dl',d,n:daysTo(d.date)});
+    for(const t of TASKS){
+      const dl = sc!=='empty' && t.link && DEADLINES.find(x=>x.id===t.link);
+      let n;
+      if(dl) n = daysTo(dl.date);
+      else n = t.b==='now'?3 : t.b==='soon'?20 : 60; // rule: undated Do now → this week, Do soon → 30 days, rest → later
+      items.push({kind:'t',t,n,dl});
+    }
+    const week = items.filter(i=>i.n<=7), month = items.filter(i=>i.n>7&&i.n<=30), later = items.filter(i=>i.n>30);
+    const sortf = (a,b)=>a.n-b.n;
+    const render = i => i.kind==='dl'?dlCard(i.d):taskCard(i.t,{showLink:!!i.dl});
+    let h = header('This week', 'International student · Month 1');
+    h += progress(sc==='empty'?9:18);
+    if(sc==='empty'){
+      h += `<div class="warn">${SVG.doc}<span><b>Add your permit expiry.</b> Dates you add move into these groups and set reminders. Tasks without a date sit here by urgency.</span></div>`;
+    }
+    const band = (t, d, arr) => arr.length?`<div class="band"><span class="bt">${t}</span><span class="bd">${d}</span><span class="count">${arr.filter(i=>i.kind==='t'&&i.t.done).length}/${arr.length}</span></div>` + arr.sort(sortf).map(render).join(''):'';
+    h += band('This week','Sep 3 – 9',week);
+    h += band('Next 30 days','to Oct 3',month);
+    h += band('Later','',later);
+    return h;
+  }
+
+  /* ---------- OPTION C: Dates board ---------- */
+  function renderC(sc){
+    const dls = sc==='empty'?[]:DEADLINES.slice().sort((a,b)=>a.date-b.date);
+    let h = header('Checklist', 'International student · Month 1');
+    h += progress(sc==='empty'?9:18);
+    h += `<div class="sec plain" style="margin-top:12px"><div class="st">Your dates</div><span class="count">${dls.length}</span></div>`;
+    h += `<div class="board">`;
+    if(sc==='empty'){
+      h += `<div class="dcard add" data-open="add" role="button" tabindex="0" style="flex-basis:200px">${SVG.plus}<b style="color:var(--app-text)">Add your study permit expiry</b>Reminders at 90, 30 and 7 days</div>`;
+    } else {
+      for(const d of dls){
+        const n=daysTo(d.date); const total=Math.max(90,n+1); const pct=Math.max(0,Math.min(1,1-(n/total)));
+        const col = n<0?'#FF3B30':n<=7?'#E03B3B':n<=30?'#F47734':'#5E8651';
+        h += `<div class="dcard" data-open="dl:${d.id}" role="button" tabindex="0" aria-label="${d.title}, ${fmt(d.date)}">
+          <div class="ring" style="background:conic-gradient(${col} ${Math.round(pct*360)}deg,#EEF0F3 0);"><span style="background:#fff;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;color:${n<0?'#FF3B30':'#0F172A'}">${n<0?-n:n}${n<0?'':'d'}</span></div>
+          <div class="dn">${d.type}</div><div class="dd ${n<0?'od':''}">${n<0?'Overdue':fmt(d.date)}</div></div>`;
+      }
+      h += `<div class="dcard add" data-open="add" role="button" tabindex="0">${SVG.plus}Add a date</div>`;
+    }
+    h += `</div>`;
+    const week = sc==='empty'?[]:DEADLINES.filter(d=>daysTo(d.date)<=7);
+    if(week.length){
+      h += `<div class="sec"><div class="tile" style="background:#FBCFCF;color:#E03B3B"><b style="font-size:16px">!</b></div><div><div class="st">Due this week</div><div class="sc">${week.length} item${week.length>1?'s':''}</div></div></div>`;
+      for(const d of week.sort((a,b)=>a.date-b.date)) h += dlCard(d,{chip:false});
+    }
+    for(const b of ['now','soon','explore','opt']){
+      const ts = TASKS.filter(t=>t.b===b);
+      h += bucketSec(b, ts.length, ts.filter(t=>t.done).length);
+      for(const t of ts) h += taskCard(t,{chip:false, showLink:sc!=='empty'});
+    }
+    h += `<div class="empty" style="margin-top:10px;border-style:solid">${SVG.plus} Add your own item</div>`;
+    return h;
+  }
+
+  /* ---------- sheets (shared) ---------- */
+  function sheetFor(key){
+    if(key==='add'){
+      return `<div class="grab"></div><div class="lbl" style="margin-top:0">What is it?</div>
+        <div class="types"><span class="on">Study permit</span><span>Work permit</span><span>PR card</span><span>Health card</span><span>SIN</span><span>Tax filing</span><span>Insurance</span><span>Passport</span><span>Other</span></div>
+        <div class="lbl">Name</div><div class="field">Study permit expires</div>
+        <div class="lbl">Date</div><div class="field"><span>Nov 12, 2026</span><span style="color:#9AA3AF">▾</span></div>
+        <div class="lbl">Remind me</div><div class="rem" style="margin-top:8px"><span>90 days before</span><span>30 days</span><span>7 days</span></div>
+        <p class="note">Only the date is saved. Unify never stores permit numbers, photos, or scans.</p>
+        <button class="btn black">Save date</button><span class="link brand" data-close="1">Cancel</span>`;
+    }
+    const [kind,id]=key.split(':');
+    if(kind==='dl'){
+      const d = DEADLINES.find(x=>x.id===id); const n=daysTo(d.date); const r=rel(d.date);
+      return `<div class="grab"></div><span class="pill" style="background:#EEF2F7;color:#334155">${SVG.doc} ${d.type}</span>
+        <h3>${d.title}</h3>
+        <div class="big"><span class="n ${n<0?'od':n<=7?'soon':''}">${Math.abs(n)}</span><span class="l">days ${n<0?'overdue':'left'} · ${fmt(d.date)}${d.date.getFullYear()!==2026?' '+d.date.getFullYear():''}</span></div>
+        <p class="why"><b>Why:</b> ${d.why}</p>
+        <div class="kv" style="margin-top:12px"><span class="k">Reminders</span><div class="rem"><span class="${n<90?'off':''}">90d</span><span class="${n<30?'off':''}">30d</span><span class="${n<7?'off':''}">7d</span></div></div>
+        <div class="kv"><span class="k">Date</span><span class="v link">Edit</span></div>
+        <button class="btn primary">${SVG.check.replace('viewBox','width="16" height="16" viewBox')} Mark as done</button>
+        <span class="link">Learn how →</span>`;
+    }
+    const t = TASKS.find(x=>x.id===id); const B=BUCKET[t.b];
+    const dl = t.link && DEADLINES.find(x=>x.id===t.link);
+    return `<div class="grab"></div><span class="pill" style="background:${B.bg};color:${B.color}">${B.label}</span>
+      <h3>${t.title}</h3>
+      <p class="why"><b>Why:</b> ${t.why}</p>
+      ${dl?`<div class="kv" style="margin-top:12px"><span class="k">Linked date</span><span class="v">${fmt(dl.date)} · ${rel(dl.date).text}</span></div>`:`<div class="kv" style="margin-top:12px"><span class="k">Date</span><span class="v link">Set a date</span></div>`}
+      <button class="btn primary">${t.done?'Undo completion':'Mark as complete'}</button>
+      <span class="link">Learn how →</span>`;
+  }
+
+  const OPTIONS = [
+    {id:'A', name:'Timeline', sub:'one list in date order', render:renderA,
+     bet:'Time is the only grouping. Buckets become tags. Undated tasks sink to "No date yet" with a Set a date prompt.',
+     benefit:'The next thing due is always first. Every task has a visible path to getting a date.',
+     cost:'The editorial structure (Do now → Optional) disappears from the top of the screen.',
+     risk:'On day one the screen is 11 undated tasks and a prompt, so it looks unfinished until the user adds dates.'},
+    {id:'B', name:'Horizons', sub:'This week · Next 30 days · Later', render:renderB,
+     bet:'Group by time horizon. Undated tasks land in a horizon by their bucket (Do now → This week, Do soon → 30 days, rest → Later).',
+     benefit:'Works on day one with no dates, and dated items slot into the same groups. Header answers "this week".',
+     cost:'The bucket-to-horizon rule is invisible; a Do now task looks like it is due this week when nobody set a date.',
+     risk:'"This week" can grow long for stage 0 users with many Do now tasks, pushing real deadlines down.'},
+    {id:'C', name:'Dates board', sub:'countdowns above the existing list', render:renderC,
+     bet:'Deadlines are their own object: a horizontal board of countdown cards. Only items due within 7 days get promoted into a "Due this week" section above the untouched bucket list.',
+     benefit:'Smallest change to what exists. Deadlines are visually distinct from editorial tasks, which is honest to the data.',
+     cost:'Two systems on one screen. Items due in 8 to 90 days live only on the board, so the list below still has no time in it.',
+     risk:'The board reads as a dashboard widget; if a user adds no dates it is one dashed card and the screen is today\'s screen.'}
+  ];
+
+  const stage = document.getElementById('stage');
+  let scenario='typical';
+  function phone(o){
+    return `<div class="col" id="col-${o.id}">
+      <div class="tag"><span class="letter">${o.id}</span>${o.name}<span class="sub2">${o.sub}</span></div>
+      <div class="phone"><div class="screen" data-opt="${o.id}"><div class="notch"></div>
+        <div class="statusbar"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="tabhead"><svg class="logo" viewBox="0 0 32 32"><circle cx="16" cy="8" r="4" fill="#E03B3B"/><circle cx="24" cy="14" r="4" fill="#F68B26"/><circle cx="21" cy="24" r="4" fill="#5182C7"/><circle cx="11" cy="24" r="4" fill="#5E8651"/><circle cx="8" cy="14" r="4" fill="#F49E34"/></svg><div class="avatar"></div></div>
+        <div class="body"><div class="scroll" data-scroll="${o.id}"></div><div class="dim" data-close="1"></div><div class="sheet" data-sheet="${o.id}"></div></div>
+        <div class="tabbar"><div>${SVG.tab.learn}Learn</div><div class="on">${SVG.tab.check}Checklist</div><div>${SVG.tab.comp}Companion</div><div>${SVG.tab.comm}Community</div><div>${SVG.tab.social}Social</div></div>
+      </div></div>
+      <dl class="exp"><dt>Bet</dt><dd>${o.bet}</dd><dt>Benefit</dt><dd>${o.benefit}</dd><dt>Cost</dt><dd>${o.cost}</dd><dt>Risk</dt><dd>${o.risk}</dd></dl>
+    </div>`;
+  }
+  stage.innerHTML = OPTIONS.map(phone).join('');
+  function paint(){
+    for(const o of OPTIONS){
+      const s = document.querySelector(`[data-scroll="${o.id}"]`);
+      s.innerHTML = o.render(scenario);
+      s.scrollTop = 0;
+      s.closest('.screen').classList.remove('open');
+    }
+  }
+  paint();
+  document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.seg button').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-selected','false')});
+    b.classList.add('on'); b.setAttribute('aria-selected','true'); scenario=b.dataset.sc; paint();
+  }));
+  stage.addEventListener('click',e=>{
+    const closeEl = e.target.closest('[data-close]');
+    if(closeEl){ closeEl.closest('.screen').classList.remove('open'); return; }
+    const el = e.target.closest('[data-open]');
+    if(!el) return;
+    const screen = el.closest('.screen');
+    screen.querySelector('.sheet').innerHTML = sheetFor(el.dataset.open);
+    screen.classList.add('open');
+  });
+  stage.addEventListener('keydown',e=>{
+    if((e.key==='Enter'||e.key===' ') && e.target.matches('[data-open]')){ e.preventDefault(); e.target.click(); }
+    if(e.key==='Escape'){ const s=e.target.closest('.screen'); if(s) s.classList.remove('open'); }
+  });
+})();
+</script>

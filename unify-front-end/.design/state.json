@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "route": "full",
+  "job_kind": "redesign",
+  "surface": "native",
+  "constraint_mode": "existing-system",
+  "phase": "handoff",
+  "gates": {
+    "contract": "approved",
+    "direction": "approved",
+    "ship": "pending"
+  },
+  "artifacts": {
+    "design_contract": "DESIGN.md",
+    "references": ".design/references.json",
+    "decisions": ".design/decisions.md",
+    "selected_experiment": ".design/experiments/r1/board.html",
+    "latest_evidence": [
+      ".design/evidence/checklist2-list-empty-dates-2026-09-03.png",
+      ".design/evidence/checklist2-add-sheet-2026-09-03.png",
+      ".design/evidence/checklist2-later-with-deadline-2026-09-03.png",
+      ".design/evidence/checklist2-deadline-sheet-2026-09-03.png",
+      ".design/evidence/checklist2-linked-date-this-week-2026-09-03.png",
+      ".design/experiments/r1/board-render-2026-09-03.png",
+      ".design/evidence/checklist2-deadline-sheet-done-2026-09-03.png",
+      ".design/evidence/checklist2-dynamic-type-ax-xl-2026-09-03.png"
+    ],
+    "latest_review": ".design/reviews/review-r1-2026-09-03.md"
+  },
+  "open_decisions": [],
+  "blockers": []
+}

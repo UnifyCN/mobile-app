@@ -106,6 +106,12 @@ export const AnalyticsEvents = {
   CHECKLIST_TASK_UNCOMPLETED: 'checklist_task_uncompleted',
   CHECKLIST_CUSTOM_TASK_CREATED: 'checklist_custom_task_created',
   CHECKLIST_CUSTOM_TASK_DELETED: 'checklist_custom_task_deleted',
+  DEADLINE_CREATED: 'deadline_created',
+  DEADLINE_UPDATED: 'deadline_updated',
+  DEADLINE_COMPLETED: 'deadline_completed',
+  DEADLINE_UNCOMPLETED: 'deadline_uncompleted',
+  DEADLINE_DELETED: 'deadline_deleted',
+  DEADLINE_REMINDERS_SCHEDULED: 'deadline_reminders_scheduled',
 
   // Reports
   REPORT_SUBMITTED: 'report_submitted',
@@ -732,6 +738,39 @@ export function useAnalytics() {
       },
       trackChecklistCustomTaskDeleted: () => {
         posthog?.capture(AnalyticsEvents.CHECKLIST_CUSTOM_TASK_DELETED);
+      },
+
+      // Checklist 2.0 deadlines (dates only; never the title, it can hold PII)
+      trackDeadlineCreated: (kind: string, daysUntilDue: number, linked: boolean) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_CREATED, {
+          kind,
+          days_until_due: daysUntilDue,
+          linked_to_task: linked,
+        });
+      },
+      trackDeadlineUpdated: (kind: string, daysUntilDue: number) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_UPDATED, {
+          kind,
+          days_until_due: daysUntilDue,
+        });
+      },
+      trackDeadlineCompleted: (kind: string, daysUntilDue: number) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_COMPLETED, {
+          kind,
+          days_until_due: daysUntilDue,
+        });
+      },
+      trackDeadlineUncompleted: (kind: string) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_UNCOMPLETED, { kind });
+      },
+      trackDeadlineDeleted: (kind: string) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_DELETED, { kind });
+      },
+      trackDeadlineRemindersScheduled: (count: number, permission: string) => {
+        posthog?.capture(AnalyticsEvents.DEADLINE_REMINDERS_SCHEDULED, {
+          count,
+          permission,
+        });
       },
 
       // Reports

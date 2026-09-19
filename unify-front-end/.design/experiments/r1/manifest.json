@@ -1,0 +1,43 @@
+{
+  "round": 1,
+  "decision": "D1 — How does time organize the Checklist screen relative to the existing urgency buckets?",
+  "primary_axis": "information hierarchy (what groups the list, what becomes a tag)",
+  "invariants": [
+    "Same user: Mina, international student, Vancouver, arrived Aug 2026, stage 1",
+    "Same 11 Sanity tasks (international_student stage 1) and same 5 user-entered dates",
+    "Today fixed at 2026-09-03 in every phone",
+    "Tokens from constants/Theme.ts and constants/ChecklistPriority.ts; system font; 24/16/15/13 scale; 12pt cards; existing task sheet content (Why, Learn how)",
+    "Deadline sheet and add sheet are identical across options",
+    "Two scenarios rendered for each option: typical (week 4) and first open (no dates)"
+  ],
+  "evidence": "Can the user see what is due this week without scrolling, and does the screen still make sense on day one with no dates entered?",
+  "options": [
+    {
+      "id": "A",
+      "artifact": "board.html#col-A",
+      "name": "Timeline",
+      "bet": "Time is the only grouping. Buckets become tags. Undated tasks sink to a 'No date yet' group with a Set a date prompt.",
+      "benefit": "The next thing due is always first. Every task has a visible path to getting a date.",
+      "cost": "The editorial structure (Do now → Optional) disappears from the top of the screen.",
+      "risk": "On day one the screen is 11 undated tasks and a prompt, so it looks unfinished until the user adds dates."
+    },
+    {
+      "id": "B",
+      "artifact": "board.html#col-B",
+      "name": "Horizons",
+      "bet": "Group by time horizon: This week, Next 30 days, Later. Undated tasks land in a horizon by their bucket.",
+      "benefit": "Works on day one with no dates, and dated items slot into the same groups. Header answers 'this week'.",
+      "cost": "The bucket-to-horizon rule is invisible; a Do now task looks due this week when nobody set a date.",
+      "risk": "'This week' can grow long for stage 0 users with many Do now tasks, pushing real deadlines down."
+    },
+    {
+      "id": "C",
+      "artifact": "board.html#col-C",
+      "name": "Dates board",
+      "bet": "Deadlines are their own object: a horizontal board of countdown cards above the untouched bucket list. Only items due within 7 days are promoted into a 'Due this week' section.",
+      "benefit": "Smallest change to what exists. Deadlines are visually distinct from editorial tasks, which is honest to the data.",
+      "cost": "Two systems on one screen. Items due in 8 to 90 days live only on the board.",
+      "risk": "Reads as a dashboard widget; with no dates it is one dashed card and the screen is today's screen."
+    }
+  ]
+}

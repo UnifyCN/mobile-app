@@ -1,52 +1,70 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
   Alert,
   Dimensions,
-  View,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
+  FlatList,
 } from 'react-native';
-import { TouchableOpacity as GHTouchableOpacity } from 'react-native-gesture-handler';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import * as Haptics from 'expo-haptics';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { useTranslation } from 'react-i18next';
-import DraggableFlatList, {
-  RenderItemParams,
-  ScaleDecorator,
-} from 'react-native-draggable-flatlist';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
+import { useDeadlines } from '@/hooks/checklist/useDeadlines';
 import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import {
   deleteCustomChecklistTask,
   setCustomChecklistTaskCompletion,
 } from '@/services/checklist/customChecklistTasks';
-import { upsertChecklistTaskOrder } from '@/services/checklist/checklistTaskOrder';
-import { ChecklistItem } from '@/components/checklist/ChecklistItem';
-import { ChecklistSectionHeader } from '@/components/checklist/ChecklistSectionHeader';
+import {
+  createDeadline,
+  deleteDeadline,
+  setDeadlineCompletion,
+  updateDeadline,
+} from '@/services/checklist/deadlines';
+import {
+  cancelDeadlineReminders,
+  ensureReminderPermission,
+  getReminderPermission,
+  scheduleDeadlineReminders,
+  type ReminderPermission,
+} from '@/services/push/deadlineReminders';
 import { TaskDetailModal } from '@/components/checklist/TaskDetailModal';
+import { DeadlineSheet } from '@/components/checklist/DeadlineSheet';
+import {
+  AddDeadlineSheet,
+  type AddDeadlinePrefill,
+} from '@/components/checklist/AddDeadlineSheet';
+import { HorizonItemCard } from '@/components/checklist/HorizonItem';
+import {
+  HorizonSectionHeader,
+  HORIZON_TITLE_KEY,
+} from '@/components/checklist/HorizonSectionHeader';
 import { supabase } from '@/lib/supabase';
 import {
   ChecklistLinkTabSlug,
-  Priority,
   UserTaskWithDetails,
 } from '@/types/checklist';
+import type { Deadline, DeadlineInput } from '@/types/deadlines';
+import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import {
-  CHECKLIST_PRIORITY_ORDER,
-  normalizeChecklistPriority,
-  getChecklistTaskOrderKey,
-  replacePriorityBucket,
-} from '@/utils/checklistOrder';
-import { PRIORITY_CONFIG } from '@/constants/ChecklistPriority';
-import { useHapticsPreference } from '@/context/HapticsContext';
+  buildHorizonRows,
+  daysUntil,
+  leadingHorizon,
+  parseLocalDate,
+  MONTH_DAYS,
+  WEEK_DAYS,
+  type HorizonRow,
+} from '@/utils/checklistHorizons';
 import TabHeader from '@/components/home/HomeHeader';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -87,93 +105,21 @@ const PERSONA_KEYS: Record<string, string> = {
   pr: 'checklist.persona.pr',
 };
 
-type ChecklistRow =
-  | {
-      type: 'header';
-      key: string;
-      priority: Priority;
-      completedCount: number;
-      totalCount: number;
-    }
-  | {
-      type: 'task';
-      key: string;
-      task: UserTaskWithDetails;
-      isLastInSection: boolean;
-    };
-
-function buildRows(tasks: UserTaskWithDetails[]): ChecklistRow[] {
-  const byPriority: Record<Priority, UserTaskWithDetails[]> = {
-    'Do now': [],
-    'Do soon': [],
-    'Explore and connect': [],
-    'Explore & connect': [],
-    'Optional / later': [],
-  };
-  for (const t of tasks) {
-    const p = normalizeChecklistPriority(t.task.priority);
-    byPriority[p].push(t);
-  }
-
-  const rows: ChecklistRow[] = [];
-  for (const priority of CHECKLIST_PRIORITY_ORDER) {
-    const tasksInP = byPriority[priority] ?? [];
-    rows.push({
-      type: 'header',
-      key: `header:${priority}`,
-      priority,
-      completedCount: tasksInP.filter(t => t.completed).length,
-      totalCount: tasksInP.length,
-    });
-    tasksInP.forEach((task, idx) => {
-      rows.push({
-        type: 'task',
-        key: getChecklistTaskOrderKey(task),
-        task,
-        isLastInSection: idx === tasksInP.length - 1,
-      });
-    });
-  }
-  return rows;
-}
-
-/** Walk back from the given index to find which priority section it belongs to. */
-function findSectionAtIndex(
-  rows: ChecklistRow[],
-  index: number
-): Priority | null {
-  for (let i = Math.min(index, rows.length - 1); i >= 0; i--) {
-    const r = rows[i];
-    if (r?.type === 'header') return r.priority;
-  }
-  return null;
-}
-
-/** Extract just the tasks under the given priority section, in their current order. */
-function extractTasksInSection(
-  rows: ChecklistRow[],
-  priority: Priority
-): UserTaskWithDetails[] {
-  const out: UserTaskWithDetails[] = [];
-  let inSection = false;
-  for (const r of rows) {
-    if (r.type === 'header') {
-      inSection = r.priority === priority;
-      continue;
-    }
-    if (inSection) out.push(r.task);
-  }
-  return out;
-}
-
 export default function ChecklistScreen() {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const params = useLocalSearchParams<{ deadlineId?: string }>();
   const {
     trackScreen,
     trackChecklistTaskCompleted,
     trackChecklistTaskUncompleted,
     trackChecklistCustomTaskDeleted,
+    trackDeadlineCreated,
+    trackDeadlineUpdated,
+    trackDeadlineCompleted,
+    trackDeadlineUncompleted,
+    trackDeadlineDeleted,
+    trackDeadlineRemindersScheduled,
   } = useAnalytics();
   const {
     currentStage,
@@ -182,18 +128,22 @@ export default function ChecklistScreen() {
   } = useUserStage();
   const [persona, setPersona] = useState<string | null>(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
-  const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
-    null
-  );
+  const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDeadline, setSelectedDeadline] = useState<Deadline | null>(null);
+  const [deadlineSheetVisible, setDeadlineSheetVisible] = useState(false);
+  const [addPrefill, setAddPrefill] = useState<AddDeadlinePrefill | null>(null);
+  const [addVisible, setAddVisible] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [permission, setPermission] = useState<ReminderPermission>('undetermined');
   const [confettiKey, setConfettiKey] = useState<number | null>(null);
   const confettiTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [today, setToday] = useState(() => new Date());
+  const openedFromParamRef = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
-      if (confettiTimeoutRef.current) {
-        clearTimeout(confettiTimeoutRef.current);
-      }
+      if (confettiTimeoutRef.current) clearTimeout(confettiTimeoutRef.current);
     };
   }, []);
 
@@ -203,7 +153,6 @@ export default function ChecklistScreen() {
         const {
           data: { user },
         } = await supabase.auth.getUser();
-
         if (user) {
           const profile = await getOnboardingProfile(user.id);
           setPersona(profile?.persona || null);
@@ -214,7 +163,6 @@ export default function ChecklistScreen() {
         setIsLoadingProfile(false);
       }
     };
-
     fetchPersona();
   }, []);
 
@@ -223,93 +171,84 @@ export default function ChecklistScreen() {
     isLoading: tasksLoading,
     refetch,
     setTasks,
-  } = useChecklistTasks({
-    currentStage,
-    stageChanged,
-    persona,
-  });
+  } = useChecklistTasks({ currentStage, stageChanged, persona });
 
-  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up
+  const {
+    userId,
+    deadlines,
+    isLoading: deadlinesLoading,
+    setDeadlines,
+    refetch: refetchDeadlines,
+  } = useDeadlines();
+
+  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up,
+  // and re-anchor "today" so day counts stay right across midnight.
   useFocusEffect(
     useCallback(() => {
       trackScreen('Checklist');
-      if (currentStage !== null && persona) {
-        refetch();
-      }
-    }, [currentStage, persona, refetch, trackScreen])
+      setToday(new Date());
+      getReminderPermission().then(setPermission).catch(() => undefined);
+      if (currentStage !== null && persona) refetch();
+      refetchDeadlines();
+    }, [currentStage, persona, refetch, refetchDeadlines, trackScreen])
   );
 
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(task => task.completed).length;
-  const progressPercent = totalTasks > 0 ? completedTasks / totalTasks : 0;
+  // Opened from a reminder notification: show that deadline's sheet once.
+  useEffect(() => {
+    const id = params.deadlineId;
+    if (!id || openedFromParamRef.current === id || deadlines.length === 0) return;
+    const d = deadlines.find(x => String(x.id) === id);
+    if (d) {
+      openedFromParamRef.current = id;
+      setSelectedDeadline(d);
+      setDeadlineSheetVisible(true);
+    }
+  }, [params.deadlineId, deadlines]);
 
-  const isLoading = stageLoading || isLoadingProfile || tasksLoading;
+  const rows = useMemo(
+    () => buildHorizonRows(tasks, deadlines, today),
+    [tasks, deadlines, today]
+  );
+  const lead = useMemo(() => leadingHorizon(rows), [rows]);
 
-  const { hapticsEnabled } = useHapticsPreference();
+  const totalItems = tasks.length + deadlines.length;
+  const completedItems =
+    tasks.filter(x => x.completed).length + deadlines.filter(x => x.completed).length;
+  const progressPercent = totalItems > 0 ? completedItems / totalItems : 0;
+
+  const isLoading = stageLoading || isLoadingProfile || tasksLoading || deadlinesLoading;
   const tabBarHeight = useBottomTabBarHeight();
 
-  const rows = useMemo(() => buildRows(tasks), [tasks]);
+  const formatDate = useCallback(
+    (iso: string) =>
+      parseLocalDate(iso).toLocaleDateString(i18n.language, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+    [i18n.language]
+  );
 
+  const reminderCopy = useCallback(
+    (d: Deadline) => ({
+      title: (n: number) =>
+        n === 7
+          ? t('checklist.deadline.reminderTitleWeek', { title: d.title })
+          : t('checklist.deadline.reminderTitle', { title: d.title, n }),
+      body: t('checklist.deadline.reminderBody', { date: formatDate(d.due_date) }),
+    }),
+    [t, formatDate]
+  );
+
+  /* ---------- task sheet ---------- */
   const handleTaskPress = useCallback((task: UserTaskWithDetails) => {
     setSelectedTask(task);
     setModalVisible(true);
   }, []);
-
   const handleCloseModal = useCallback(() => {
     setModalVisible(false);
     setSelectedTask(null);
   }, []);
-
-  const handleDragStart = useCallback(() => {
-    if (hapticsEnabled) {
-      void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    }
-  }, [hapticsEnabled]);
-
-  const handleReorder = useCallback(
-    async (priority: Priority, reorderedBucket: UserTaskWithDetails[]) => {
-      setTasks(prev => replacePriorityBucket(prev, priority, reorderedBucket));
-
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error('Missing authenticated user');
-
-        const orderedKeys = reorderedBucket.map(t => getChecklistTaskOrderKey(t));
-        await upsertChecklistTaskOrder(user.id, priority, orderedKeys);
-      } catch (err) {
-        console.error('Failed to persist checklist order:', err);
-        refetch();
-      }
-    },
-    [refetch, setTasks]
-  );
-
-  const handleDragEnd = useCallback(
-    ({
-      data,
-      from,
-      to,
-    }: {
-      data: ChecklistRow[];
-      from: number;
-      to: number;
-    }) => {
-      if (from === to) return;
-      const moved = data[to];
-      // Drop onto a header or cross-section drop: ignore.
-      // Since we never update `tasks`, `rows` stays the same and the list
-      // re-renders back to the original order without a refetch.
-      if (!moved || moved.type !== 'task') return;
-      const targetSection = findSectionAtIndex(data, to);
-      const originalPriority = normalizeChecklistPriority(
-        moved.task.task.priority
-      );
-      if (!targetSection || targetSection !== originalPriority) return;
-      const newOrderedTasks = extractTasksInSection(data, targetSection);
-      handleReorder(targetSection, newOrderedTasks);
-    },
-    [handleReorder]
-  );
 
   const handleLearnHow = () => {
     if (!selectedTask?.task) {
@@ -322,9 +261,7 @@ export default function ChecklistScreen() {
     if (resolvedTab && TAB_SLUG_TO_ROUTE[resolvedTab]) {
       router.push(TAB_SLUG_TO_ROUTE[resolvedTab] as any);
     } else if (linkSubmoduleId && linkModuleId) {
-      router.push(
-        `/(tabs)/Learn/modules/${linkModuleId}/${linkSubmoduleId}` as any
-      );
+      router.push(`/(tabs)/Learn/modules/${linkModuleId}/${linkSubmoduleId}` as any);
     } else if (linkModuleId) {
       router.push(`/(tabs)/Learn/modules/${linkModuleId}` as any);
     } else {
@@ -332,9 +269,17 @@ export default function ChecklistScreen() {
     }
   };
 
+  const celebrate = () => {
+    if (confettiTimeoutRef.current) clearTimeout(confettiTimeoutRef.current);
+    setConfettiKey(Date.now());
+    confettiTimeoutRef.current = setTimeout(() => {
+      setConfettiKey(null);
+      confettiTimeoutRef.current = null;
+    }, 1800);
+  };
+
   const handleMarkComplete = async () => {
     if (!selectedTask) return;
-
     try {
       const {
         data: { user },
@@ -344,26 +289,18 @@ export default function ChecklistScreen() {
       const newCompletedStatus = !selectedTask.completed;
       const completedAt = newCompletedStatus ? new Date().toISOString() : null;
 
-      const updatedTasks = tasks.map(task => {
-        const isTarget =
-          selectedTask.source === 'custom'
-            ? task.custom_task_id === selectedTask.custom_task_id
-            : task.sanity_checklist_id === selectedTask.sanity_checklist_id;
-
-        if (!isTarget) return task;
-        return {
-          ...task,
-          completed: newCompletedStatus,
-          completed_at: completedAt,
-        };
-      });
-      setTasks(updatedTasks);
-
-      setSelectedTask({
-        ...selectedTask,
-        completed: newCompletedStatus,
-        completed_at: completedAt,
-      });
+      setTasks(prev =>
+        prev.map(task => {
+          const isTarget =
+            selectedTask.source === 'custom'
+              ? task.custom_task_id === selectedTask.custom_task_id
+              : task.sanity_checklist_id === selectedTask.sanity_checklist_id;
+          return isTarget
+            ? { ...task, completed: newCompletedStatus, completed_at: completedAt }
+            : task;
+        })
+      );
+      setSelectedTask({ ...selectedTask, completed: newCompletedStatus, completed_at: completedAt });
 
       const taskTitle = selectedTask.task?.task_name || 'Unknown';
       const taskPriority = selectedTask.task?.priority || 'Unknown';
@@ -371,14 +308,7 @@ export default function ChecklistScreen() {
       if (newCompletedStatus) {
         trackChecklistTaskCompleted(taskTitle, taskPriority, taskSource);
         handleCloseModal();
-        if (confettiTimeoutRef.current) {
-          clearTimeout(confettiTimeoutRef.current);
-        }
-        setConfettiKey(Date.now());
-        confettiTimeoutRef.current = setTimeout(() => {
-          setConfettiKey(null);
-          confettiTimeoutRef.current = null;
-        }, 1800);
+        celebrate();
       } else {
         trackChecklistTaskUncompleted(taskTitle, taskPriority, taskSource);
       }
@@ -419,17 +349,10 @@ export default function ChecklistScreen() {
               data: { user },
             } = await supabase.auth.getUser();
             if (!user) return;
-
-            setTasks(prev =>
-              prev.filter(task => task.custom_task_id !== customTaskId)
-            );
+            setTasks(prev => prev.filter(task => task.custom_task_id !== customTaskId));
             handleCloseModal();
             trackChecklistCustomTaskDeleted();
-
-            await deleteCustomChecklistTask({
-              userId: user.id,
-              customTaskId,
-            });
+            await deleteCustomChecklistTask({ userId: user.id, customTaskId });
           } catch (error) {
             console.error('Error deleting custom checklist task:', error);
             setTasks(prevTasks);
@@ -440,80 +363,187 @@ export default function ChecklistScreen() {
     ]);
   };
 
-  const renderItem = useCallback(
-    ({ item, drag, isActive }: RenderItemParams<ChecklistRow>) => {
-      if (item.type === 'header') {
+  /* ---------- deadlines ---------- */
+  const openAdd = useCallback((prefill: AddDeadlinePrefill | null) => {
+    setAddPrefill(prefill);
+    setAddVisible(true);
+  }, []);
+
+  const openSetDateForTask = useCallback(
+    (task: UserTaskWithDetails) => {
+      const key = getChecklistTaskOrderKey(task);
+      const existing = deadlines.find(d => d.linked_task_key === key);
+      setModalVisible(false);
+      setSelectedTask(null);
+      openAdd(
+        existing
+          ? { deadline: existing }
+          : { linkedTaskKey: key, linkedTaskTitle: task.task.task_name }
+      );
+    },
+    [deadlines, openAdd]
+  );
+
+  const scheduleFor = useCallback(
+    async (d: Deadline) => {
+      const perm = await ensureReminderPermission();
+      setPermission(perm);
+      if (perm !== 'granted') {
+        trackDeadlineRemindersScheduled(0, perm);
+        return;
+      }
+      try {
+        const n = await scheduleDeadlineReminders(d, reminderCopy(d));
+        trackDeadlineRemindersScheduled(n, perm);
+      } catch (err) {
+        console.error('Failed to schedule deadline reminders:', err);
+      }
+    },
+    [reminderCopy, trackDeadlineRemindersScheduled]
+  );
+
+  const handleSaveDeadline = async (input: DeadlineInput) => {
+    if (!userId) return;
+    setSaving(true);
+    try {
+      const editing = addPrefill?.deadline;
+      let saved: Deadline;
+      if (editing) {
+        saved = await updateDeadline(userId, editing.id, {
+          kind: input.kind,
+          title: input.title,
+          due_date: input.due_date,
+        });
+        setDeadlines(prev => prev.map(d => (d.id === saved.id ? saved : d)));
+        trackDeadlineUpdated(saved.kind, daysUntil(saved.due_date, today));
+      } else {
+        saved = await createDeadline(userId, input);
+        setDeadlines(prev => [...prev, saved]);
+        trackDeadlineCreated(
+          saved.kind,
+          daysUntil(saved.due_date, today),
+          !!saved.linked_task_key
+        );
+      }
+      setAddVisible(false);
+      setAddPrefill(null);
+      if (selectedDeadline?.id === saved.id) setSelectedDeadline(saved);
+      await scheduleFor(saved);
+    } catch (err) {
+      console.error('Failed to save deadline:', err);
+      Alert.alert(t('common.error'), t('common.unexpectedError'));
+      refetchDeadlines();
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeadlinePress = useCallback((d: Deadline) => {
+    setSelectedDeadline(d);
+    setDeadlineSheetVisible(true);
+  }, []);
+
+  const closeDeadlineSheet = useCallback(() => {
+    setDeadlineSheetVisible(false);
+    setSelectedDeadline(null);
+  }, []);
+
+  const handleToggleDeadlineDone = async () => {
+    if (!selectedDeadline || !userId) return;
+    const next = !selectedDeadline.completed;
+    const updated: Deadline = {
+      ...selectedDeadline,
+      completed: next,
+      completed_at: next ? new Date().toISOString() : null,
+    };
+    setDeadlines(prev => prev.map(d => (d.id === updated.id ? updated : d)));
+    setSelectedDeadline(updated);
+    try {
+      await setDeadlineCompletion(userId, updated.id, next);
+      if (next) {
+        trackDeadlineCompleted(updated.kind, daysUntil(updated.due_date, today));
+        closeDeadlineSheet();
+        celebrate();
+        await cancelDeadlineReminders(updated.id);
+      } else {
+        trackDeadlineUncompleted(updated.kind);
+        await scheduleFor(updated);
+      }
+    } catch (err) {
+      console.error('Failed to update deadline:', err);
+      refetchDeadlines();
+    }
+  };
+
+  const handleDeleteDeadline = () => {
+    if (!selectedDeadline || !userId) return;
+    const target = selectedDeadline;
+    Alert.alert(t('checklist.deadline.deleteTitle'), t('checklist.deadline.deleteMessage'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('common.delete'),
+        style: 'destructive',
+        onPress: async () => {
+          setDeadlines(prev => prev.filter(d => d.id !== target.id));
+          closeDeadlineSheet();
+          try {
+            await deleteDeadline(userId, target.id);
+            trackDeadlineDeleted(target.kind);
+            await cancelDeadlineReminders(target.id);
+          } catch (err) {
+            console.error('Failed to delete deadline:', err);
+            refetchDeadlines();
+          }
+        },
+      },
+    ]);
+  };
+
+  /* ---------- render ---------- */
+  const renderRow = useCallback(
+    ({ item: row, index }: { item: HorizonRow; index: number }) => {
+      if (row.type === 'header') {
+        // The screen title already names the leading horizon; a second
+        // "This week" three lines below it reads as a mistake.
+        if (index === 0 && row.horizon === lead) return null;
         return (
-          <ChecklistSectionHeader
-            priority={item.priority}
-            completedCount={item.completedCount}
-            totalCount={item.totalCount}
+          <HorizonSectionHeader
+            horizon={row.horizon}
+            completedCount={row.completedCount}
+            totalCount={row.totalCount}
+            today={today}
           />
         );
       }
-
-      const task = item.task;
-      const config =
-        PRIORITY_CONFIG[normalizeChecklistPriority(task.task.priority)];
-
-      return (
-        <ScaleDecorator activeScale={1.03}>
-          <View style={[styles.row, isActive && styles.rowActive]}>
-            <View style={styles.leftColumn}>
-              <View
-                style={[
-                  styles.timelineLine,
-                  { backgroundColor: config.backgroundColor },
-                  item.isLastInSection && styles.timelineLineLast,
-                ]}
-              />
-              <GHTouchableOpacity
-                onPress={() => !isActive && handleTaskPress(task)}
-                disabled={isActive}
-                style={[
-                  styles.checkboxCircle,
-                  { backgroundColor: '#FFF', borderColor: config.color },
-                  task.completed && {
-                    backgroundColor: config.color,
-                    borderColor: config.color,
-                  },
-                ]}
-                activeOpacity={0.7}
-              >
-                {task.completed && (
-                  <MaterialIcons name='check' size={20} color='#FFF' />
-                )}
-              </GHTouchableOpacity>
+      if (row.type === 'empty') {
+        return (
+          <View style={styles.caughtUp}>
+            <MaterialIcons name='check-circle-outline' size={20} color='#2E9E5B' />
+            <View style={styles.caughtUpText}>
+              <Text style={styles.caughtUpTitle}>{t('checklist.horizons.caughtUp')}</Text>
+              <Text style={styles.caughtUpHint}>{t('checklist.horizons.caughtUpHint')}</Text>
             </View>
-
-            <View style={styles.centerColumn}>
-              <ChecklistItem task={task} onPress={() => handleTaskPress(task)} />
-            </View>
-
-            <GHTouchableOpacity
-              style={styles.dragHandle}
-              accessibilityRole='button'
-              accessibilityLabel={`Reorder ${task.task.task_name}`}
-              accessibilityHint="Long press and drag to change this item's order within the section"
-              onLongPress={() => {
-                handleDragStart();
-                drag();
-              }}
-              delayLongPress={150}
-              activeOpacity={0.6}
-            >
-              <MaterialIcons name='drag-indicator' size={24} color='#BDBDBD' />
-            </GHTouchableOpacity>
           </View>
-        </ScaleDecorator>
+        );
+      }
+      const { item } = row;
+      if (item.kind === 'deadline') {
+        return (
+          <HorizonItemCard item={item} onPress={() => handleDeadlinePress(item.deadline)} />
+        );
+      }
+      return (
+        <HorizonItemCard
+          item={item}
+          onPress={() => handleTaskPress(item.task)}
+          onSetDate={() => openSetDateForTask(item.task)}
+        />
       );
     },
-    [handleTaskPress, handleDragStart]
+    [today, t, lead, handleDeadlinePress, handleTaskPress, openSetDateForTask]
   );
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+  if (isLoading) return <LoadingScreen />;
 
   const stageDescription =
     currentStage !== null
@@ -523,50 +553,87 @@ export default function ChecklistScreen() {
     ? t(PERSONA_KEYS[persona as keyof typeof PERSONA_KEYS] || 'common.user')
     : t('common.user');
 
-  // Don't show checklist if stage is null
   if (currentStage === null) {
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-        >
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <View style={styles.titleRow}>
               <Text style={styles.title}>{t('checklist.title')}</Text>
             </View>
-            <Text style={styles.subtitle}>
-              {t('checklist.onboardingRequired')}
-            </Text>
+            <Text style={styles.subtitle}>{t('checklist.onboardingRequired')}</Text>
           </View>
         </ScrollView>
       </View>
     );
   }
 
+  const leadHeader = rows[0]?.type === 'header' && rows[0].horizon === lead ? rows[0] : null;
+  const fmtShort = (d: Date) =>
+    d.toLocaleDateString(i18n.language, { month: 'short', day: 'numeric' });
+  const addDays = (n: number) =>
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + n);
+  const leadRange = leadHeader
+    ? lead === 'week'
+      ? `${fmtShort(today)} – ${fmtShort(addDays(WEEK_DAYS))}`
+      : lead === 'month'
+        ? t('checklist.horizons.until', { date: fmtShort(addDays(MONTH_DAYS)) })
+        : null
+    : null;
+  const leadCount =
+    leadHeader && leadHeader.totalCount > 0
+      ? `${leadHeader.completedCount}/${leadHeader.totalCount}`
+      : null;
+
+  const selectedTaskKey = selectedTask ? getChecklistTaskOrderKey(selectedTask) : null;
+  const selectedTaskDate = selectedTaskKey
+    ? deadlines.find(d => d.linked_task_key === selectedTaskKey)
+    : undefined;
+
   const ListHeader = (
     <View style={styles.header}>
       <View style={styles.titleRow}>
-        <Text style={styles.title}>{t('checklist.title')}</Text>
+        <Text style={styles.title} accessibilityRole='header'>
+          {t(HORIZON_TITLE_KEY[lead])}
+        </Text>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() =>
-            router.push('/(tabs)/Checklist/create-custom-item' as any)
-          }
+          onPress={() => openAdd(null)}
           activeOpacity={0.8}
+          accessibilityRole='button'
+          accessibilityLabel={t('checklist.deadline.addTitle')}
         >
-          <MaterialIcons name='add' size={18} color='#111' />
+          <MaterialIcons name='add' size={18} color='#fff' />
           <Text style={styles.addButtonLabel}>{t('common.add')}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.subtitle}>
-        {personaDisplay} - {stageDescription}
+        {personaDisplay} · {stageDescription}
       </Text>
+      {leadRange && (
+        <Text style={styles.leadRange}>
+          {leadRange}
+          {leadCount ? `  ·  ${leadCount}` : ''}
+        </Text>
+      )}
       <View style={styles.progressContainer}>
-        <View
-          style={[styles.progressBar, { width: `${progressPercent * 100}%` }]}
-        />
+        <View style={[styles.progressBar, { width: `${progressPercent * 100}%` }]} />
       </View>
+      {deadlines.length === 0 && (
+        <TouchableOpacity
+          style={styles.emptyBanner}
+          onPress={() => openAdd(null)}
+          activeOpacity={0.8}
+          accessibilityRole='button'
+        >
+          <MaterialIcons name='event' size={20} color='#7C2D12' />
+          <View style={styles.emptyBannerText}>
+            <Text style={styles.emptyBannerTitle}>{t('checklist.deadline.emptyTitle')}</Text>
+            <Text style={styles.emptyBannerBody}>{t('checklist.deadline.emptyBody')}</Text>
+            <Text style={styles.emptyBannerCta}>{t('checklist.deadline.emptyCta')} →</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 
@@ -574,20 +641,16 @@ export default function ChecklistScreen() {
     <View>
       <TouchableOpacity
         style={styles.addOwnRow}
-        onPress={() =>
-          router.push('/(tabs)/Checklist/create-custom-item' as any)
-        }
+        onPress={() => router.push('/(tabs)/Checklist/create-custom-item' as any)}
         activeOpacity={0.7}
+        accessibilityRole='button'
       >
         <MaterialIcons name='add-circle-outline' size={22} color='#6B6B6B' />
         <Text style={styles.addOwnRowText}>{t('checklist.addYourOwnItem')}</Text>
       </TouchableOpacity>
-
-      {tasks.length === 0 && (
+      {tasks.length === 0 && deadlines.length === 0 && (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>
-            {t('checklist.noTasksAvailable')}
-          </Text>
+          <Text style={styles.emptyText}>{t('checklist.noTasksAvailable')}</Text>
         </View>
       )}
     </View>
@@ -596,21 +659,15 @@ export default function ChecklistScreen() {
   return (
     <View style={styles.container}>
       <TabHeader variant='minimal' />
-      <DraggableFlatList
+      <FlatList
         data={rows}
         keyExtractor={row => row.key}
-        renderItem={renderItem}
-        onDragEnd={handleDragEnd}
+        renderItem={renderRow}
         ListHeaderComponent={ListHeader}
         ListFooterComponent={ListFooter}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: tabBarHeight + 24 },
-        ]}
-        activationDistance={8}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: tabBarHeight + 24 }]}
         showsVerticalScrollIndicator={false}
       />
-
 
       <TaskDetailModal
         visible={modalVisible}
@@ -620,6 +677,39 @@ export default function ChecklistScreen() {
         onMarkComplete={handleMarkComplete}
         isCustomTask={selectedTask?.source === 'custom'}
         onDeleteCustomTask={handleDeleteCustomTask}
+        linkedDateLabel={selectedTaskDate ? formatDate(selectedTaskDate.due_date) : null}
+        onSetDate={selectedTask ? () => openSetDateForTask(selectedTask) : undefined}
+      />
+
+      <DeadlineSheet
+        visible={deadlineSheetVisible}
+        deadline={selectedDeadline}
+        permission={permission}
+        onClose={closeDeadlineSheet}
+        onToggleDone={handleToggleDeadlineDone}
+        onEditDate={() => {
+          if (!selectedDeadline) return;
+          const d = selectedDeadline;
+          closeDeadlineSheet();
+          openAdd({ deadline: d });
+        }}
+        onDelete={handleDeleteDeadline}
+      />
+
+      <AddDeadlineSheet
+        visible={addVisible}
+        prefill={addPrefill}
+        saving={saving}
+        onClose={() => {
+          setAddVisible(false);
+          setAddPrefill(null);
+        }}
+        onSave={handleSaveDeadline}
+        onAddTaskInstead={() => {
+          setAddVisible(false);
+          setAddPrefill(null);
+          router.push('/(tabs)/Checklist/create-custom-item' as any);
+        }}
       />
 
       {confettiKey !== null && (
@@ -640,146 +730,83 @@ export default function ChecklistScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 32,
-  },
-  header: {
-    marginBottom: 4,
-  },
+  container: { flex: 1, backgroundColor: '#fff' },
+  scrollView: { flex: 1 },
+  scrollContent: { paddingHorizontal: 16, paddingTop: 4 },
+  header: { marginBottom: 4 },
   titleRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000',
+  title: { fontSize: 24, fontWeight: '700', color: '#000', flexShrink: 1 },
+  subtitle: { fontSize: 15, color: '#6B6B6B', marginTop: 2 },
+  leadRange: {
+    fontSize: 13,
+    color: '#94A3B8',
+    marginTop: 4,
+    fontVariant: ['tabular-nums'],
   },
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    backgroundColor: '#000',
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    backgroundColor: '#fff',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
   },
-  addButtonLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#111',
-  },
-  subtitle: {
-    marginTop: 6,
-    fontSize: 16,
-    color: '#000',
-  },
+  addButtonLabel: { color: '#fff', fontSize: 13, fontWeight: '600' },
   progressContainer: {
-    width: '100%',
-    height: 10,
+    height: 6,
     backgroundColor: '#eaeaea',
     borderRadius: 5,
-    marginTop: 16,
     overflow: 'hidden',
+    marginTop: 14,
+    marginBottom: 6,
   },
-  progressBar: {
-    height: '100%',
-    backgroundColor: '#000',
-    borderRadius: 5,
-  },
-  row: {
+  progressBar: { height: '100%', backgroundColor: '#2E9E5B', borderRadius: 5 },
+  emptyBanner: {
     flexDirection: 'row',
     gap: 10,
-    alignItems: 'center',
-    marginBottom: 10,
-    paddingLeft: 6,
-  },
-  rowActive: {
-    opacity: 0.95,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 4,
-    backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1,
+    borderColor: '#FED7AA',
     borderRadius: 12,
+    padding: 12,
+    marginTop: 12,
   },
-  leftColumn: {
-    width: 36,
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+  emptyBannerText: { flex: 1 },
+  emptyBannerTitle: { fontSize: 15, fontWeight: '700', color: '#7C2D12' },
+  emptyBannerBody: { fontSize: 13, color: '#7C2D12', lineHeight: 18, marginTop: 2 },
+  emptyBannerCta: { fontSize: 13, fontWeight: '700', color: '#7C2D12', marginTop: 6 },
+  caughtUp: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'flex-start',
+    borderWidth: 1.5,
+    borderStyle: 'dashed',
+    borderColor: '#D6D5D5',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 8,
   },
-  centerColumn: {
-    flex: 1,
-  },
-  dragHandle: {
-    width: 36,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkboxCircle: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2,
-  },
-  timelineLine: {
-    position: 'absolute',
-    top: 0,
-    bottom: -10,
-    left: '50%',
-    marginLeft: -1,
-    width: 2,
-    zIndex: 0,
-  },
-  timelineLineLast: {
-    bottom: 0,
-  },
+  caughtUpText: { flex: 1 },
+  caughtUpTitle: { fontSize: 15, fontWeight: '600', color: '#0F172A' },
+  caughtUpHint: { fontSize: 13, color: '#6B6B6B', marginTop: 2 },
   addOwnRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    marginTop: 20,
-    marginBottom: 8,
     backgroundColor: '#F5F5F5',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E8E8E8',
-    borderStyle: 'dashed',
+    paddingVertical: 14,
+    marginTop: 12,
   },
-  addOwnRowText: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#6B6B6B',
-  },
-  emptyContainer: {
-    padding: 32,
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 16,
-    color: '#A0AEC0',
-    textAlign: 'center',
-  },
+  addOwnRowText: { fontSize: 15, color: '#6B6B6B', fontWeight: '500' },
+  emptyContainer: { paddingVertical: 24, alignItems: 'center' },
+  emptyText: { fontSize: 15, color: '#A0AEC0', textAlign: 'center' },
 });

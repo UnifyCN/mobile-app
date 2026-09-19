@@ -111,6 +111,15 @@ export function usePushNotifications() {
           pathname: '/profile',
           params: { userId: String(data.actor_user_id) },
         } as Href);
+      } else if (data?.type === 'deadline') {
+        deepLinkTarget = '/(tabs)/Checklist';
+        router.push({
+          pathname: '/(tabs)/Checklist',
+          params:
+            data?.deadline_id != null
+              ? { deadlineId: String(data.deadline_id) }
+              : undefined,
+        } as Href);
       } else if (
         data?.type === 'learn_reminder' &&
         data?.lesson_id &&
