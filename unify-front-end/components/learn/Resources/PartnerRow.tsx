@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { COST_LABEL_KEYS, type Partner } from '@/types/partner';
+import { COST_LABEL_KEYS, type LocalizedPartner } from '@/types/partner';
 import { COST_CHIP, RESOURCE_THEME } from '@/constants/ResourceTheme';
 import Monogram from './Monogram';
 
 type Props = {
-  partner: Partner;
+  partner: LocalizedPartner;
   onPress: () => void;
 };
 

@@ -145,18 +145,17 @@ export const COST_LABEL_KEYS: Record<Cost, string> = {
  * A program a partner runs — a first-class record, not free text, so the
  * directory can later be re-cut by program instead of by org.
  *
- * Every field beyond `name` is optional: partner sites vary in what they
+ * Structure only; its name, summary and eligibility copy live in the locale
+ * files. Every field beyond `id` is optional: partner sites vary in what they
  * publish, and an unknown value must stay absent rather than be guessed.
  */
 export interface PartnerProgram {
-  /** Immutable analytics identifier; never derive this from localized display copy. */
+  /**
+   * Immutable analytics identifier; never derive this from localized display
+   * copy. Also the i18n key segment: the part after the partner's slug indexes
+   * `learn.resources.partners.<slug>.programs.<key>`.
+   */
   id: string;
-  /** Program name, e.g. "MentorConnect". */
-  name: string;
-  /** One-to-two line summary. */
-  description: string;
-  /** Who the program is for. Omitted unless the partner states it. */
-  eligibility?: string;
   cost?: Cost;
   /**
    * Which category this program belongs to, independent of its parent org.
@@ -175,42 +174,26 @@ export interface PartnerProgram {
 }
 
 export interface Partner {
-  /** Stable kebab-case id (also used in routes + analytics). */
+  /**
+   * Stable kebab-case id (also used in routes + analytics). Also the i18n key
+   * segment: every string this partner displays lives under
+   * `learn.resources.partners.<slug>`.
+   */
   slug: string;
+  /** The organization's own name. A proper noun — never translated. */
   name: string;
   category: PartnerCategory;
   /** 'resource' = informational; 'referral' = future commercial relationship. */
   partnershipType: PartnershipType;
-  /** One-line value prop shown in the list row. */
-  tagline: string;
-  /** Long-form "About" copy for the detail screen. */
-  description: string;
-  /** 2–4 "how they help newcomers" bullets. */
-  highlights: string[];
-  /** Area served, e.g. "Greater Vancouver", "Surrey", "British Columbia". */
-  serviceArea: string;
 
   // --- "How to get help" — every field optional; render only when populated.
   // An absent value means "the partner does not publish this", NOT "free" or
   // "open to everyone". Never infer these.
 
   cost?: Cost;
-  /**
-   * Who qualifies. Many BC settlement services are IRCC-funded and limited to
-   * permanent residents and protected persons, which excludes international
-   * students and most temporary workers. Routing someone to a service they
-   * are ineligible for is this feature's main failure mode, so this is set
-   * only from an explicit statement by the partner.
-   */
-  eligibility?: string;
-  /** How to make first contact: walk in, call, email, online form, referral. */
-  howToStart?: string;
   phone?: string;
   email?: string;
   address?: string;
-  hours?: string;
-  /** Languages of service. Omitted when unstated; never assumed to be English. */
-  languages?: string[];
   /** Public website; opened in an in-app browser. Button hidden if absent. */
   website?: string;
   /**
@@ -240,3 +223,51 @@ export interface Partner {
   /** Inactive partners are filtered out of all UI. */
   active: boolean;
 }
+
+// --- Localized copy -------------------------------------------------------
+// A Partner record carries no display copy. These are the shapes a partner
+// takes once `utils/localizePartner` has resolved its strings for the active
+// language; components render these, never a bare Partner.
+
+/** Copy a program publishes, resolved for the active language. */
+export interface PartnerProgramCopy {
+  /** Program name, e.g. "MentorConnect". */
+  name: string;
+  /** One-to-two line summary. */
+  description: string;
+  /** Who the program is for. Absent unless the partner states it. */
+  eligibility?: string;
+}
+
+/** Copy an organization publishes, resolved for the active language. */
+export interface PartnerCopy {
+  /** One-line value prop shown in the list row. */
+  tagline: string;
+  /** Long-form "About" copy for the detail screen. */
+  description: string;
+  /** 2–4 "how they help newcomers" bullets. */
+  highlights: string[];
+  /** Area served, e.g. "Greater Vancouver", "Surrey", "British Columbia". */
+  serviceArea: string;
+  /**
+   * Who qualifies. Many BC settlement services are IRCC-funded and limited to
+   * permanent residents and protected persons, which excludes international
+   * students and most temporary workers. Routing someone to a service they
+   * are ineligible for is this feature's main failure mode, so this is set
+   * only from an explicit statement by the partner.
+   */
+  eligibility?: string;
+  /** How to make first contact: walk in, call, email, online form, referral. */
+  howToStart?: string;
+  /** Opening hours. Numerals stay numeric; only the day names translate. */
+  hours?: string;
+  /** Languages of service. Absent when unstated; never assumed to be English. */
+  languages?: string[];
+}
+
+export type LocalizedPartnerProgram = PartnerProgram & PartnerProgramCopy;
+
+export type LocalizedPartner = Omit<Partner, 'programs'> &
+  PartnerCopy & {
+    programs?: LocalizedPartnerProgram[];
+  };

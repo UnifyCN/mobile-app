@@ -1,4 +1,13 @@
-import type { Partner, PartnerCategory } from '@/types/partner';
+import type { LocalizedPartner, PartnerCategory } from '@/types/partner';
+
+/**
+ * Arabic marks that carry no distinction a search should honour: the
+ * short-vowel harakat, the madda and the hamza forms NFD has just split off
+ * their base letter (\u0653-\u0655), the dagger alef, and the tatweel used to
+ * stretch a word for justification. They sit outside the \u0300-\u036f Latin
+ * combining range, so the Latin pass below does not reach them.
+ */
+const ARABIC_MARKS = /[\u064b-\u0655\u0670\u0640]/g;
 
 /**
  * Lowercase and strip combining accents so "Immigration Québec" matches
@@ -8,6 +17,12 @@ import type { Partner, PartnerCategory } from '@/types/partner';
  * đ is folded separately. It is its own letter rather than d plus a combining
  * mark, so NFD leaves it whole and a Vietnamese speaker typing "Định" would
  * otherwise match nothing.
+ *
+ * Arabic is folded the way Arabic search conventionally is: marks dropped,
+ * alef wasla to bare alef, alef maqsura to ya, ta marbuta to ha. Writers vary
+ * on all of them, so "مؤسسة" typed without its hamza still has to find the
+ * listing that carries one. NFD has already separated the hamza forms of alef,
+ * waw and ya into a base letter plus a mark, so dropping the mark is enough.
  */
 export function normalizeQuery(value: string): string {
   return value
@@ -15,6 +30,10 @@ export function normalizeQuery(value: string): string {
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/đ/g, 'd')
+    .replace(ARABIC_MARKS, '')
+    .replace(/\u0671/g, '\u0627')
+    .replace(/\u0649/g, '\u064a')
+    .replace(/\u0629/g, '\u0647')
     .trim();
 }
 
@@ -25,8 +44,15 @@ export type CategoryLabelResolver = (category: PartnerCategory) => string;
  * Every field a query is matched against. Kept in one place so the searchable
  * surface is obvious: what a person types is a service ("job search"), an
  * organization ("ISSofBC"), a place ("Surrey"), or a category ("Find Work").
+ *
+ * Takes a LocalizedPartner, so a person searching in Spanish matches the
+ * Spanish copy they are looking at. Only `name` stays language-independent,
+ * which is what lets "ISSofBC" find the org in any language.
  */
-function haystack(partner: Partner, labelFor: CategoryLabelResolver): string {
+function haystack(
+  partner: LocalizedPartner,
+  labelFor: CategoryLabelResolver
+): string {
   return normalizeQuery(
     [
       partner.name,
@@ -48,10 +74,10 @@ function haystack(partner: Partner, labelFor: CategoryLabelResolver): string {
  * category grid instead".
  */
 export function selectPartnersMatching(
-  partners: Partner[],
+  partners: LocalizedPartner[],
   query: string,
   labelFor: CategoryLabelResolver
-): Partner[] {
+): LocalizedPartner[] {
   const tokens = normalizeQuery(query).split(/\s+/).filter(Boolean);
   if (tokens.length === 0) return partners;
   return partners.filter(partner => {

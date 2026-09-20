@@ -155,11 +155,6 @@ describe('partner category metadata', () => {
       RESOURCE_THEME.surfaceSubtle,
     ],
     [
-      'language notice text',
-      RESOURCE_THEME.textNotice,
-      RESOURCE_THEME.surfaceNotice,
-    ],
-    [
       'service-area chip on a partner card',
       RESOURCE_THEME.textSecondary,
       RESOURCE_THEME.surfaceChipNeutral,

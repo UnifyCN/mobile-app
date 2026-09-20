@@ -21,7 +21,6 @@ export const RESOURCE_THEME = {
   surfaceChip: '#F3F4F6',
   /** Service-area chip on a partner card. */
   surfaceChipNeutral: '#F4F2EE',
-  surfaceNotice: '#F2F4F7',
   /** Hairline around a category card on white. */
   cardBorder: '#E7E4DE',
   /** Divider above the pinned action bar on the partner detail screen. */
@@ -54,12 +53,10 @@ export const RESOURCE_THEME = {
   /** Inactive segment label. Figma #7A776F → 3.89:1 on the track, below AA. */
   textSegmentInactive: '#6F6D65',
   textLabel: '#5F6672',
-  textNotice: '#46505E',
 
   // --- Accents
   /** Inline link ("How we choose these"). */
   link: '#0F766E',
-  iconNotice: '#465570',
 } as const;
 
 /**

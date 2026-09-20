@@ -413,7 +413,6 @@
     "resources": {
       "heading": "Où puis-je obtenir de l'aide?",
       "subtitle": "Des organismes de confiance pour vous aider à vous établir au Canada.",
-      "contentLanguageNotice": "Les renseignements fournis par les organismes sont offerts en anglais seulement pour le moment.",
       "emptyTitle": "Nous ajoutons des partenaires",
       "emptyText": "Nous sélectionnons avec soin des organismes de confiance pour vous. Revenez bientôt.",
       "orgCount": "{{count}} organisme",
@@ -469,6 +468,796 @@
         "money": {
           "label": "Argent et services bancaires",
           "description": "Comptes bancaires, crédit et conseils financiers pour les nouveaux arrivants."
+        }
+      },
+      "partners": {
+        "diversecity": {
+          "tagline": "Programmes culturellement sécuritaires en éducation, emploi et mieux-être.",
+          "description": "DIVERSEcity Community Resources Society est un organisme de bienfaisance enregistré en Colombie-Britannique (depuis 1978) qui oriente les nouveaux arrivants vers des programmes culturellement sécuritaires en éducation, en emploi, en santé et en mieux-être — le bras de service sur le terrain pour le soutien aux immigrants et aux réfugiés dans le Grand Vancouver.",
+          "highlights": [
+            "Programmes d'établissement adaptés à la culture",
+            "Soutien en éducation, emploi et santé",
+            "Au service des immigrants et réfugiés depuis 1978"
+          ],
+          "serviceArea": "Surrey et Delta",
+          "eligibility": "Les services d'établissement sont offerts aux résidents permanents, aux réfugiés et aux personnes protégées grâce au financement d'IRCC. Les résidents temporaires, les étudiants internationaux, les citoyens naturalisés et les demandeurs d'asile sont servis par le BC Newcomer Services Program.",
+          "howToStart": "Pour les services d'établissement, écrivez à newcomers@dcrs.ca ou composez le 604-507-6060. Renseignements généraux : 604-597-0205.",
+          "languages": [
+            "Anglais",
+            "Français",
+            "Espagnol",
+            "Arabe",
+            "Birman",
+            "Farsi",
+            "Hindi",
+            "Coréen",
+            "Mandarin",
+            "Pendjabi"
+          ],
+          "programs": {
+            "settlement-services": {
+              "name": "Services d'établissement",
+              "description": "Travail individuel avec un intervenant en établissement pour bâtir un plan qui couvre l'éducation, l'emploi, le logement et la santé.",
+              "eligibility": "Résidents permanents, réfugiés et personnes protégées grâce au financement d'IRCC; résidents temporaires, étudiants internationaux, citoyens naturalisés et demandeurs d'asile par le BC Newcomer Services Program."
+            },
+            "linc": {
+              "name": "Cours d'anglais (LINC)",
+              "description": "Cours d'anglais gratuits pour les nouveaux immigrants, de la pré-alphabétisation au niveau CLB 4. Une évaluation linguistique a lieu d'abord."
+            },
+            "safe-haven": {
+              "name": "Programme Safe Haven",
+              "description": "Soutien en établissement, en emploi, en langue et en counseling pour les demandeurs d'asile qui ne peuvent pas utiliser les services financés par le fédéral.",
+              "eligibility": "Demandeurs d'asile de Surrey et de Delta qui ne sont pas admissibles aux services d'établissement financés par le fédéral."
+            },
+            "rise": {
+              "name": "Programme RISE",
+              "description": "Aide individuelle et ateliers de groupe pour les réfugiés, sur les liens communautaires, les systèmes canadiens, le logement et l'emploi."
+            },
+            "employment-programs": {
+              "name": "Programmes d'emploi",
+              "description": "Préparation à l'emploi et soutien au travail autonome, dont EVolve Skills, Future Leaders, H.E.A.L. for Work et le Diverse Entrepreneurs Business Incubator."
+            },
+            "early-childhood-education": {
+              "name": "Service de garde pendant les cours LINC",
+              "description": "Garde gratuite pour les enfants de 18 mois à cinq ans pendant qu'un parent suit des cours d'anglais."
+            },
+            "mental-health-and-substance-use-services": {
+              "name": "Services en santé mentale et en consommation de substances",
+              "description": "Counseling et soutien. Accueil : 604-547-1202, intake@dcrs.ca."
+            },
+            "language-testing-centre-celpip": {
+              "name": "Centre d'examens linguistiques (CELPIP)",
+              "description": "Examens linguistiques CELPIP pour les demandes d'immigration et de citoyenneté."
+            }
+          }
+        },
+        "burnaby-neighbourhood-house": {
+          "tagline": "Programmes communautaires, garde d'enfants et aide aux nouveaux arrivants.",
+          "description": "Burnaby Neighbourhood House aide les gens à améliorer leur vie et à renforcer leur communauté par des programmes bâtis autour des besoins changeants d'une population diversifiée — garde d'enfants, famille et sécurité alimentaire, et soutien dédié aux nouveaux arrivants.",
+          "highlights": [
+            "Aide à l'établissement des nouveaux arrivants",
+            "Garde d'enfants et programmes familiaux",
+            "Initiatives de sécurité alimentaire"
+          ],
+          "serviceArea": "Burnaby",
+          "eligibility": "Les services d'établissement sont financés par IRCC et, conformément à ses exigences, visent les résidents permanents et les réfugiés au sens de la Convention. Les programmes communautaires, alimentaires et de garde d'enfants sont ouverts à tous.",
+          "howToStart": "Téléphonez ou écrivez à la maison la plus proche. Pour les services d'établissement, écrivez à settlementprogram@burnabynh.ca ou composez le 604-431-0400.",
+          "hours": "South House lun.-ven. 9 h à 17 h · North House lun.-ven. 9 h 30 à 16 h 30 · Brentwood House lun.-ven. 9 h à 16 h",
+          "languages": [
+            "Anglais",
+            "Mandarin",
+            "Filipino (tagalog)",
+            "Farsi",
+            "Dari",
+            "Pachto",
+            "Espagnol",
+            "Arabe",
+            "Kurde"
+          ],
+          "programs": {
+            "newcomers-settlement-services": {
+              "name": "Services d'établissement pour nouveaux arrivants",
+              "description": "Plans d'établissement, demandes de prestations, soutien linguistique et liens communautaires.",
+              "eligibility": "Financé par IRCC et, conformément à ses exigences, axé sur le soutien aux résidents permanents et aux réfugiés au sens de la Convention."
+            },
+            "information-and-orientation": {
+              "name": "Information et orientation",
+              "description": "Information en langage clair pour les nouveaux arrivants, en tête-à-tête, en famille ou en atelier de groupe."
+            },
+            "naars": {
+              "name": "Évaluation des besoins et des atouts (NAARS)",
+              "description": "Soutien global à l'établissement dans votre première langue et en anglais, y compris de l'aide pour demander des prestations."
+            },
+            "community-connections": {
+              "name": "Liens communautaires",
+              "description": "Bénévolat, programmes pour les jeunes et les femmes, cercles de conversation en anglais et ateliers sur la santé, le travail et l'éducation."
+            },
+            "food-security": {
+              "name": "Programmes de sécurité alimentaire",
+              "description": "Programmes d'accès à la nourriture, en plus de Burnaby Meals on Wheels."
+            },
+            "child-care": {
+              "name": "Programmes de garde d'enfants",
+              "description": "Garde agréée pour les 0 à 12 ans : petite enfance, prématernelle, âge scolaire, parascolaire et camp de jour d'été."
+            },
+            "volunteer-income-tax-program": {
+              "name": "Programme bénévole de déclaration de revenus",
+              "description": "Aide gratuite pour produire votre déclaration de revenus."
+            }
+          }
+        },
+        "ymca-bc": {
+          "tagline": "Des programmes pour les familles, les enfants et les aînés en C.-B.",
+          "description": "YMCA BC soutient les familles, les enfants et les aînés dans les communautés de toute la Colombie-Britannique, en bâtissant des milieux dynamiques et sains, animés d'un sens partagé de la responsabilité sociale, où les gens peuvent s'épanouir en esprit, en tête et en corps.",
+          "highlights": [
+            "Programmes pour tous les âges",
+            "Axé sur la santé et le mieux-être",
+            "Des communautés partout en C.-B."
+          ],
+          "serviceArea": "Colombie-Britannique",
+          "howToStart": "Écrivez à l'équipe des nouveaux arrivants à newcomers@ymcabc.ca pour vous inscrire avant votre première séance. Pour les questions générales sur l'emploi, écrivez à employment.services@ymcabc.ca ou composez le 604-681-9622.",
+          "hours": "lun.-ven. 8 h 30 à 16 h 30",
+          "programs": {
+            "english-conversation-club": {
+              "name": "Club de conversation en anglais pour nouveaux arrivants",
+              "description": "Un club hebdomadaire au Robert Lee YMCA, au centre-ville de Vancouver, où les nouveaux arrivants pratiquent l'anglais avec des animateurs formés.",
+              "eligibility": "Tous les statuts d'immigration, sauf les visas de visiteur. Vous devez avoir le droit légal de travailler au Canada. Les travailleurs étrangers temporaires doivent demander à l'équipe s'il y a des séances distinctes."
+            },
+            "citizenship-test-prep": {
+              "name": "Préparation à l'examen de citoyenneté canadienne",
+              "description": "Un programme de groupe hybride qui parcourt le guide Découvrir le Canada avec un animateur et des questions pratiques. Quatre sessions par année.",
+              "eligibility": "Tous les statuts d'immigration, sauf les visas de visiteur."
+            },
+            "connect2work": {
+              "name": "Connect2Work pour les nouveaux arrivants",
+              "description": "Des ateliers qui font le pont entre l'établissement et l'emploi : compétences professionnelles, confiance et contacts dans le marché du travail local."
+            },
+            "international-students-employment-support": {
+              "name": "Soutien à l'emploi pour les étudiants internationaux",
+              "description": "Programme gratuit qui aide les étudiants internationaux à surmonter les obstacles à l'emploi au Canada."
+            },
+            "self-employment-program": {
+              "name": "Programme de travail autonome",
+              "description": "Un programme financé de 48 semaines : 10 semaines pour rédiger un plan d'affaires, puis 38 semaines de soutien au démarrage avec un gestionnaire de cas.",
+              "eligibility": "18 ans ou plus; admissible à travailler au Canada; sans emploi ou travaillant moins de 20 heures par semaine; avoir demandé ou reçu l'assurance-emploi au cours des cinq dernières années, ou recevoir des prestations PWD/PPMB; habiter le Lower Mainland, Squamish ou Sechelt; et vous devez avoir une idée d'entreprise précise."
+            },
+            "explore-child-care-career": {
+              "name": "Explorer la garde d'enfants comme carrière",
+              "description": "Un cours court pour les nouveaux arrivants sur les carrières en garde d'enfants, les titres de compétence requis et comment entrer dans le domaine."
+            },
+            "wellness-connection": {
+              "name": "Mieux-être pour les nouveaux arrivants",
+              "description": "Un espace bienveillant qui accueille les nouveaux arrivants et favorise la bonne santé."
+            }
+          }
+        },
+        "iec-bc": {
+          "tagline": "Embaucher et retenir les talents immigrants en C.-B.",
+          "description": "L'Immigrant Employment Council of BC travaille du côté des employeurs dans l'intégration des immigrants — il aide les entreprises de la Colombie-Britannique à recruter, à embaucher et à retenir des talents immigrants qualifiés grâce à des programmes de mentorat, à des sites d'emploi et à la formation des employeurs.",
+          "highlights": [
+            "Programmes de mentorat",
+            "Sites d'emploi pour nouveaux arrivants",
+            "Formation des employeurs"
+          ],
+          "serviceArea": "Colombie-Britannique",
+          "howToStart": "Inscrivez-vous en ligne au moyen du formulaire TalentConnect, ou communiquez avec le bureau par téléphone ou par courriel. Chaque programme a son propre formulaire d'inscription.",
+          "programs": {
+            "talentconnect": {
+              "name": "TalentConnect",
+              "description": "Un profil gratuit qui présente vos compétences, votre formation et votre expérience aux employeurs de la C.-B., en plus de l'accès aux offres d'emploi et aux événements de réseautage.",
+              "eligibility": "Les nouveaux arrivants titulaires d'un permis de travail (sauf les travailleurs étrangers temporaires) et les personnes approuvées pour l'immigration qui ne sont pas encore arrivées. Vous devez être disponible pour travailler et habiter en C.-B., ou être prêt à y déménager."
+            },
+            "mentorconnect": {
+              "name": "MentorConnect",
+              "description": "Du mentorat propre à votre profession qui vous jumelle à un professionnel local établi, jusqu'à 12 heures sur deux mois.",
+              "eligibility": "Les personnes arrivées au Canada au cours des 10 dernières années qui sont admissibles à travailler et qui ont un curriculum vitæ prêt pour la recherche d'emploi. Vous devez être en C.-B. ou prévoir y déménager."
+            },
+            "ascend": {
+              "name": "ASCEND",
+              "description": "Apprentissage en ligne à votre rythme pour développer les compétences relationnelles en milieu de travail que recherchent les employeurs canadiens (en anglais et en français)."
+            },
+            "fast": {
+              "name": "FAST",
+              "description": "Aide les nouveaux arrivants à voir comment leur expérience et leur formation répondent aux normes canadiennes, avec des volets de préparation à la carrière par domaine.",
+              "eligibility": "Résidents permanents ou personnes approuvées en principe pour la résidence permanente, réfugiés, étudiants internationaux, immigrants qualifiés titulaires d'un permis de travail valide et citoyens canadiens."
+            }
+          }
+        },
+        "newcomer-jobs-canada": {
+          "tagline": "Un site d'emploi conçu pour les nouveaux arrivants au Canada.",
+          "description": "Newcomer Jobs Canada est un site d'emploi national commercial qui met en contact les nouveaux Canadiens et les employeurs. C'est un site d'annonces, pas une agence d'établissement : il n'y a pas de bureau en C.-B. ni de service en personne. Les employeurs paient pour afficher; la création d'un compte de chercheur d'emploi est gratuite.",
+          "highlights": [
+            "Site d'emploi pour nouveaux arrivants",
+            "Des occasions partout au Canada",
+            "Recherche d'emploi simplifiée"
+          ],
+          "serviceArea": "Canada",
+          "howToStart": "Créez un compte gratuit en ligne, téléversez votre curriculum vitæ et postulez des emplois sur le site Web.",
+          "hours": "lun.-ven. 9 h à 17 h HNC"
+        },
+        "canada-shaw-immigration": {
+          "tagline": "CRIC agréés, experts en immigration et en visas canadiens.",
+          "description": "Fondée en 2015 et établie à Richmond, en Colombie-Britannique, Canada Shaws Consulting Inc. est membre du Shaws Global Brand Group. Ses consultants en immigration sont agréés par le Collège des consultants en immigration et en citoyenneté (CICC), l'organisme de réglementation des consultants en immigration et en citoyenneté au Canada.\n\nCanada Shaws offre un soutien complet pour un large éventail de programmes d'immigration canadiens, ainsi que pour les permis d'études, les permis de travail et les voies d'accès liées aux affaires et à l'investissement. Avec ses sociétés sœurs du Shaws Global Brand Group, elle offre aussi du conseil en affaires, du conseil en investissement, des services d'immigration mondiaux, de la planification de la résidence et de la citoyenneté, de la planification des études et de la planification de carrière. Le cabinet aide des clients partout dans le monde à comprendre leurs options et à bâtir des plans personnalisés pour leur avenir, avec des services offerts en anglais, en filipino (tagalog), en persan (farsi), en mandarin et en cantonais.",
+          "highlights": [
+            "Consultants agréés par le CICC",
+            "Études, travail, RP et visas",
+            "Service en cinq langues"
+          ],
+          "serviceArea": "Richmond",
+          "howToStart": "Réservez une première rencontre gratuite pour discuter de vos besoins et connaître leurs services.",
+          "hours": "lun.-ven. 9 h à 18 h · Fermé la fin de semaine",
+          "languages": [
+            "Anglais",
+            "Filipino (tagalog)",
+            "Persan (farsi)",
+            "Mandarin",
+            "Cantonais"
+          ],
+          "programs": {
+            "study-in-canada": {
+              "name": "Étudier au Canada",
+              "description": "Explorez les possibilités d'études au Canada avec un accompagnement personnalisé pour les demandes d'admission, les permis d'études et — si vous y êtes admissible — le travail à temps partiel pendant vos études ainsi que les voies possibles vers la résidence permanente après l'obtention du diplôme."
+            },
+            "work-in-canada": {
+              "name": "Travailler au Canada",
+              "description": "Explorez les options de permis de travail canadiens avec un soutien professionnel adapté à vos objectifs de carrière."
+            },
+            "permanent-residency": {
+              "name": "Résidence permanente canadienne",
+              "description": "Explorez les voies vers la résidence permanente adaptées à vos qualifications, à votre expérience et à vos objectifs à long terme au Canada."
+            },
+            "visas-extensions": {
+              "name": "Visas et prolongations",
+              "description": "Obtenez de l'aide pour les demandes de visa, la prolongation de permis et le maintien de votre statut de résident temporaire au Canada."
+            },
+            "other-services": {
+              "name": "Autres services",
+              "description": "Obtenez du soutien pour les demandes de citoyenneté, la modification de documents, les titres de voyage pour résident permanent (TVRP), les demandes d'accès à l'information et de protection des renseignements personnels (AIPRP) et d'autres services."
+            }
+          }
+        },
+        "global-connect-immigration": {
+          "tagline": "Cabinet agréé pour la RP, les visas et l'établissement.",
+          "description": "Global Connect est un cabinet de consultation en immigration canadienne agréé qui aide les nouveaux arrivants à s'orienter dans les voies vers la résidence permanente, les démarches de visa et la planification de l'établissement, avec un accompagnement expert et personnalisé.",
+          "highlights": [
+            "Accompagnement vers la RP",
+            "Aide pour visas et permis de travail",
+            "Plan d'établissement personnalisé"
+          ],
+          "serviceArea": "Surrey",
+          "howToStart": "Téléphonez, écrivez un courriel ou réservez une consultation sur le site Web.",
+          "programs": {
+            "family-sponsorship": {
+              "name": "Parrainage familial",
+              "description": "De l'aide pour parrainer un époux, un conjoint, des enfants ou des parents en vue de la résidence permanente."
+            }
+          }
+        },
+        "burnaby-public-library": {
+          "tagline": "Des espaces inclusifs pour se rassembler, apprendre et jouer.",
+          "description": "La Burnaby Public Library crée des espaces inclusifs où les gens peuvent se rassembler, apprendre et jouer dans quatre succursales — des programmes, des ressources et des lieux de rencontre gratuits.",
+          "highlights": [
+            "Programmes et ressources gratuits",
+            "4 succursales à Burnaby",
+            "Des espaces accueillants pour apprendre"
+          ],
+          "serviceArea": "Burnaby · 4 succursales",
+          "eligibility": "L'abonnement est gratuit pour toute personne qui habite Burnaby ou la région InterLINK environnante. Aucune pièce d'identité n'est exigée pour ouvrir un compte, et vous pouvez utiliser le nom de votre choix. Des abonnements spéciaux existent pour les personnes qui habitent ailleurs en C.-B. et à l'extérieur de la C.-B.",
+          "howToStart": "Présentez-vous au comptoir de service de l'une des quatre succursales, ou composez le 604-436-5400, et le personnel ouvrira votre compte et vous remettra une carte utilisable immédiatement.",
+          "hours": "lun.-jeu. 10 h à 20 h · ven.-dim. 10 h à 18 h",
+          "programs": {
+            "become-a-member": {
+              "name": "Devenir membre",
+              "description": "Le personnel ouvre votre compte à n'importe quel comptoir de service et vous remet une carte le jour même. Aucune pièce d'identité n'est nécessaire, et une carte existante d'une autre bibliothèque peut être liée.",
+              "eligibility": "Gratuit pour toute personne qui habite Burnaby ou la région InterLINK environnante."
+            },
+            "english-conversation-circle": {
+              "name": "Cercle de conversation en anglais",
+              "description": "Pratiquez l'anglais et rencontrez des gens dans un groupe détendu. Un bibliothécaire anime la discussion. Offert en succursale et sur Zoom.",
+              "eligibility": "18 ans et plus. Une certaine connaissance de l'anglais est recommandée."
+            },
+            "learning-english": {
+              "name": "Apprendre l'anglais",
+              "description": "Des livres, des CD et des DVD de tous les niveaux, des guides d'étude pour IELTS, TOEIC, TOEFL et CELPIP, et des cours en ligne gratuits dont Mango Languages et Road to IELTS."
+            },
+            "arrivals-in-english": {
+              "name": "Arrivals in English",
+              "description": "Un cours en ligne gratuit axé sur l'anglais de tous les jours dont les nouveaux arrivants ont besoin en s'établissant au Canada."
+            },
+            "services-for-immigrants-newcomers": {
+              "name": "Services pour les immigrants et les nouveaux arrivants",
+              "description": "Un répertoire tenu par le personnel des services de la région de Burnaby, classés par besoin — préparation à la citoyenneté, travail, anglais — avec les coordonnées et l'admissibilité de chaque organisme."
+            },
+            "summer-reading-club": {
+              "name": "Club de lecture d'été",
+              "description": "Programme de lecture d'été gratuit pour les enfants de tous les âges."
+            }
+          }
+        },
+        "surrey-libraries": {
+          "tagline": "Éveiller la curiosité et l'apprentissage continu.",
+          "description": "Surrey Libraries rapproche les gens, éveille la curiosité et inspire l'apprentissage continu pour enrichir la vie des résidents de Surrey dans dix succursales.",
+          "highlights": [
+            "Programmes d'apprentissage gratuits",
+            "10 succursales à Surrey",
+            "Rapprocher la communauté"
+          ],
+          "serviceArea": "Surrey · 10 succursales",
+          "eligibility": "Vous pouvez devenir membre si vous habitez Surrey ou une communauté InterLINK voisine. Les services de bibliothèque pour les nouveaux arrivants sont gratuits dans toutes les succursales.",
+          "howToStart": "Visitez le Centre d'accueil des nouveaux arrivants à la succursale City Centre, niveau 4 — 604-590-7847 ou library-newcomers@surrey.ca.",
+          "hours": "Centre d'accueil des nouveaux arrivants : lun.-jeu. 10 h à 21 h · ven.-dim. 10 h à 17 h",
+          "programs": {
+            "newcomer-welcome-centre": {
+              "name": "Centre d'accueil des nouveaux arrivants",
+              "description": "Un espace dédié au niveau 4 de la succursale City Centre. Le personnel aide pour les cartes de bibliothèque, les services de la Ville de Surrey et les services communautaires, les questions en anglais et la recherche d'emploi. On y trouve des livres en langues du monde, des dictionnaires, du matériel IELTS et des ordinateurs."
+            },
+            "free-settlement-services-for-newcomers": {
+              "name": "Services d'établissement gratuits pour les nouveaux arrivants",
+              "description": "Des intervenants en établissement d'Options, DIVERSEcity, PICS et S.U.C.C.E.S.S. tiennent des séances en succursale — recherche d'emploi, cours d'anglais, préparation à l'examen de citoyenneté, prestations, inscription scolaire.",
+              "eligibility": "Aucune restriction de statut n'est indiquée. Les services sont offerts par des agences partenaires — téléphonez à l'avance pour confirmer les heures et les lieux."
+            },
+            "english-language-learners": {
+              "name": "Programmes pour les apprenants de l'anglais",
+              "description": "Des clubs de lecture et des cercles de conversation où vous pratiquez l'anglais dans un groupe accueillant. Les séances ont lieu dans les succursales."
+            },
+            "newcomer-teen-social-club": {
+              "name": "Club social pour adolescents nouveaux arrivants",
+              "description": "Un club mensuel où les adolescents nouveaux arrivants se font des amis et pratiquent l'anglais oral autour d'un thème différent chaque mois."
+            },
+            "get-a-library-card": {
+              "name": "Obtenir une carte de bibliothèque",
+              "description": "Gratuit pour toute personne qui habite Surrey ou une communauté InterLINK voisine. Apportez une pièce d'identité avec votre nom, votre photo et votre adresse, ou deux pièces d'identité. Les résidents de Surrey peuvent commencer en ligne avec une carte numérique de 90 jours.",
+              "eligibility": "Vous pouvez devenir membre si vous habitez Surrey ou une communauté InterLINK voisine."
+            },
+            "books-in-world-languages": {
+              "name": "Livres en langues du monde",
+              "description": "Des collections dans des langues autres que l'anglais, avec la liste des langues offertes dans chaque succursale."
+            },
+            "technology-help": {
+              "name": "Aide technologique",
+              "description": "Des séances sans rendez-vous et individuelles sur les ordinateurs, Internet, les téléphones, les tablettes et les liseuses."
+            }
+          }
+        },
+        "vancouver-public-library": {
+          "tagline": "Des lieux gratuits pour découvrir, créer et partager.",
+          "description": "La Vancouver Public Library répond depuis plus de 100 ans aux besoins d'apprentissage continu, de lecture et d'information des résidents de Vancouver, dans 21 succursales — des lieux gratuits où tous peuvent découvrir, créer et partager des idées et de l'information.",
+          "highlights": [
+            "Gratuit pour tous les résidents",
+            "21 succursales à Vancouver",
+            "Plus de 100 ans au service de la ville"
+          ],
+          "serviceArea": "Vancouver · 21 succursales",
+          "eligibility": "La carte de bibliothèque gratuite s'adresse à toute personne qui habite la Ville de Vancouver ou y possède une propriété, ainsi qu'aux résidents des University Endowment Lands, des quartiers de l'UBC et des logements familiaux de l'UBC. Les programmes et les événements sont ouverts à tous.",
+          "howToStart": "Présentez-vous à n'importe quelle succursale avec une pièce d'identité pour obtenir une carte, ou inscrivez-vous en ligne pour une carte numérique temporaire. Vous pouvez aussi composer le 604-331-3603 ou écrire à info@vpl.ca.",
+          "hours": "Succursale centrale : lun.-jeu. 9 h 30 à 20 h 30 · ven. 9 h 30 à 18 h · sam. 10 h à 18 h · dim. 11 h à 18 h",
+          "programs": {
+            "get-a-library-card": {
+              "name": "Obtenir une carte de bibliothèque",
+              "description": "Inscrivez-vous dans n'importe quelle succursale avec une pièce d'identité, ou en ligne pour une carte numérique temporaire. La carte de RP, la Confirmation de résidence permanente, ou un visa ou permis de travail délivré pour six mois ou plus sont acceptés, avec une preuve d'adresse à Vancouver.",
+              "eligibility": "Gratuit pour les personnes qui habitent la Ville de Vancouver ou y possèdent une propriété."
+            },
+            "esl-conversation-practice": {
+              "name": "Pratique de conversation en anglais langue seconde",
+              "description": "Des cercles de conversation où les apprenants de l'anglais se rencontrent, pratiquent et se font des amis. La plupart des séances sont sans rendez-vous ni inscription.",
+              "eligibility": "Convient surtout aux personnes de niveau intermédiaire en anglais."
+            },
+            "immigration-and-settlement-guide": {
+              "name": "Guide de l'immigration et de l'établissement",
+              "description": "Un guide tenu par le personnel qui couvre l'immigration au Canada, les services d'établissement, le soutien aux réfugiés, la recherche d'emploi, l'apprentissage de l'anglais et les services de traduction."
+            },
+            "translation-services-guide": {
+              "name": "Guide des services de traduction",
+              "description": "Une liste de services de traduction et d'interprétation, dont DIVERSEcity, ISSofBC, MOSAIC et la Society of Translators and Interpreters of BC."
+            },
+            "clarity-english": {
+              "name": "Clarity English",
+              "description": "Une ressource gratuite d'apprentissage des langues en ligne avec des activités interactives, des tests pratiques et de l'aide en grammaire."
+            },
+            "world-languages-collection": {
+              "name": "Collection en langues du monde",
+              "description": "De la lecture pour les adultes, les adolescents et les enfants dans seize langues autres que l'anglais. Les collections des succursales suivent leur quartier; la succursale centrale offre toute la gamme."
+            }
+          }
+        },
+        "big-brothers-big-sisters": {
+          "tagline": "Du mentorat qui change la vie des jeunes.",
+          "description": "Big Brothers Big Sisters jumelle des enfants et des adolescents avec des mentors adultes bienveillants. Dans cette région, l'agence locale est Big Brothers of Greater Vancouver, qui offre les programmes de mentorat communautaire, scolaire et de groupe présentés ici. Les autres régions du Canada sont desservies par leurs propres agences locales.",
+          "highlights": [
+            "Mentorat individuel pour les jeunes",
+            "Soutien au mieux-être des enfants",
+            "Des modèles adultes bienveillants"
+          ],
+          "serviceArea": "Grand Vancouver",
+          "howToStart": "Dans le Grand Vancouver, faites une demande auprès de Big Brothers of Greater Vancouver : formulaire de demande, séance d'information pour le tuteur, entrevue familiale et formation avant le jumelage, puis une liste d'attente pour le jumelage. Ailleurs, utilisez l'outil « Find an agency near you » du site Web national.",
+          "programs": {
+            "community-mentoring": {
+              "name": "Mentorat communautaire Big Brothers",
+              "description": "Mentorat individuel dans votre propre communauté. Les mentors s'engagent à une sortie hebdomadaire de 2 à 4 heures pendant un an."
+            },
+            "in-school-mentoring": {
+              "name": "Mentorat en milieu scolaire",
+              "description": "Mentorat individuel pendant la journée d'école — un mentor vient une heure par semaine durant l'année scolaire."
+            },
+            "teen-mentoring": {
+              "name": "Mentorat par les adolescents",
+              "description": "Des élèves du secondaire accompagnent des élèves du primaire une heure par semaine après l'école, avec un volet de leadership jeunesse."
+            },
+            "mentoring-with-math": {
+              "name": "Mentorat en mathématiques",
+              "description": "Du tutorat et du mentorat pour bâtir la confiance en mathématiques, pour les familles qui ne peuvent pas payer de tutorat. Le matériel est inclus."
+            },
+            "game-on": {
+              "name": "Game On!",
+              "description": "Un programme de groupe sur les choix santé par l'activité physique et la discussion sur les habiletés de vie. 90 minutes par semaine pendant 8 à 10 semaines."
+            },
+            "roots-mentoring": {
+              "name": "Mentorat Roots",
+              "description": "Un mentorat qui célèbre les cultures autochtones, avec des apprentissages auprès de leaders des communautés autochtones."
+            }
+          }
+        },
+        "united-way-bc": {
+          "tagline": "Du soutien là où le besoin est le plus grand en C.-B.",
+          "description": "United Way BC sert plus de cinq millions de Britanno-Colombiens en offrant des ressources et du soutien là où les besoins sont les plus grands — intervention d'urgence, enfants et jeunes, aînés, pauvreté, santé mentale et sécurité alimentaire.",
+          "highlights": [
+            "Aide d'urgence et lutte à la pauvreté",
+            "Programmes pour enfants, jeunes et aînés",
+            "Santé mentale et sécurité alimentaire"
+          ],
+          "serviceArea": "Colombie-Britannique",
+          "howToStart": "Pour trouver un service, appelez ou textez au 2-1-1 — gratuit et confidentiel. Pour des questions sur United Way BC même, composez le 604-294-8929 ou écrivez à info@uwbc.ca.",
+          "hours": "lun.-ven. 8 h 30 à 16 h 30 (fermé de 12 h à 13 h)",
+          "programs": {
+            "211": {
+              "name": "211 Colombie-Britannique",
+              "description": "Composez ou textez le 2-1-1 pour une référence gratuite et confidentielle vers des services communautaires, gouvernementaux et sociaux. Interprétation dans plus de 240 langues et dialectes."
+            },
+            "bc-safe-haven-program": {
+              "name": "Programme BC Safe Haven",
+              "description": "Soutient les demandeurs d'asile par des mobilisations de bénévoles et des appels au public pour du logement et des services.",
+              "eligibility": "Demandeurs d'asile."
+            },
+            "food-security": {
+              "name": "Sécurité alimentaire",
+              "description": "Des programmes qui améliorent l'accès à des aliments sains pour les personnes en situation d'insécurité alimentaire en C.-B."
+            },
+            "transit-assistance": {
+              "name": "Programme d'aide d'urgence au transport en commun",
+              "description": "Des bons de transport pour que les personnes dans le besoin puissent voyager en autobus sans frais."
+            },
+            "better-at-home": {
+              "name": "Better at Home",
+              "description": "De l'aide non médicale pour les aînés — épicerie, entretien ménager et liens sociaux — dans plus de 260 communautés."
+            },
+            "school-s-out": {
+              "name": "School's Out",
+              "description": "Des programmes avant et après l'école avec des repas nutritifs et du soutien au développement durant l'année scolaire.",
+              "eligibility": "De 6 à 12 ans."
+            },
+            "work-experience-opportunities-grant": {
+              "name": "Subvention pour les occasions d'expérience de travail",
+              "description": "Du soutien à la formation professionnelle et au développement des compétences.",
+              "eligibility": "Les personnes qui reçoivent de l'aide au revenu ou de l'aide aux personnes handicapées."
+            },
+            "youth-futures-education-fund": {
+              "name": "Fonds d'éducation Youth Futures",
+              "description": "Du financement à faibles obstacles pour les études.",
+              "eligibility": "Les jeunes autrefois pris en charge par l'État."
+            }
+          }
+        },
+        "trout-lake-community-centre": {
+          "tagline": "Plus de 200 programmes pour tous les âges.",
+          "description": "Le Trout Lake Community Centre offre plus de 200 programmes pour les personnes de tous les âges — un carrefour de quartier accueillant dans l'est de Vancouver, géré en partenariat avec la Vancouver Park Board.",
+          "highlights": [
+            "Plus de 200 programmes communautaires",
+            "Des activités pour tous les âges",
+            "Un lieu de rassemblement du quartier"
+          ],
+          "serviceArea": "Vancouver",
+          "howToStart": "Passez poser vos questions à la réception, composez le 604-257-6955, ou inscrivez-vous en ligne dans le système de loisirs de la Ville de Vancouver.",
+          "hours": "lun.-ven. 9 h à 21 h · sam.-dim. 8 h à 16 h",
+          "programs": {
+            "leisure-access-program-lap": {
+              "name": "Programme d'accès aux loisirs (LAP)",
+              "description": "Une subvention de la Ville de Vancouver qui donne jusqu'à 50 % de rabais sur les frais de programme et de centre de conditionnement physique.",
+              "eligibility": "Les résidents de Vancouver à faible revenu qui détiennent une carte d'accès aux loisirs valide."
+            },
+            "tlcca-program-cost-assistance": {
+              "name": "Aide aux frais de programme TLCCA",
+              "description": "De l'aide pour les frais de programme aux membres de la communauté en difficulté financière.",
+              "eligibility": "Les membres de la communauté en difficulté financière qui ne sont pas admissibles au LAP."
+            },
+            "adaptive-programs": {
+              "name": "Programmes adaptés",
+              "description": "Des activités inclusives pour tous les âges et toutes les capacités."
+            },
+            "licensed-preschool": {
+              "name": "Prématernelle agréée",
+              "description": "Apprentissage précoce pour les jeunes enfants au centre communautaire."
+            },
+            "older-adult-programs": {
+              "name": "Programmes pour aînés",
+              "description": "Restez actif et en lien avec vos pairs."
+            }
+          }
+        },
+        "amssa": {
+          "tagline": "Le pilier des agences au service des nouveaux arrivants en C.-B.",
+          "description": "L'Affiliation of Multicultural Societies and Service Agencies of BC est un organisme-cadre provincial qui renforce le secteur de l'établissement et de la diversité — il offre de la formation, des ressources, de l'apprentissage en ligne et de la représentation pour les agences au service des nouveaux arrivants partout en C.-B.",
+          "highlights": [
+            "Formation et apprentissage en ligne",
+            "Ressources pour les agences d'accueil",
+            "Une portée dans toute la C.-B."
+          ],
+          "serviceArea": "Colombie-Britannique",
+          "eligibility": "AMSSA sert les agences membres et les organismes du secteur de l'établissement, pas les nouveaux arrivants à titre individuel. Si vous avez besoin d'aide vous-même, communiquez directement avec une agence membre d'AMSSA.",
+          "howToStart": "Les organismes peuvent composer le 604-718-2780 ou le 1-888-355-5560, écrire à amssa@amssa.org, ou faire une demande sur la page d'adhésion. Les nouveaux arrivants à titre individuel doivent communiquer directement avec une agence membre d'AMSSA.",
+          "programs": {
+            "re-settlement-and-integration": {
+              "name": "(Ré)établissement et intégration",
+              "description": "Renforcement des capacités, réseautage, formation et ressources d'information pour les fournisseurs de services d'établissement en C.-B. et au Yukon.",
+              "eligibility": "Les organismes et les professionnels du secteur de l'établissement, y compris les titulaires de programmes IRCC C.-B. et Yukon et BC Settlement."
+            },
+            "migrant-worker-hub": {
+              "name": "Carrefour des travailleurs migrants",
+              "description": "Des outils, des ressources, une cartographie des services et de la formation qui renforcent la capacité des organismes qui soutiennent les travailleurs migrants en C.-B.",
+              "eligibility": "Les organismes d'établissement et de soutien aux travailleurs migrants."
+            },
+            "amssa-institute": {
+              "name": "AMSSA Institute",
+              "description": "Une plateforme d'apprentissage en ligne — webinaires, AMSSATalks, conférences et apprentissage en ligne sur des sujets allant de la santé mentale des réfugiés aux normes du travail."
+            },
+            "canadian-humanitarian-assistance-response-char": {
+              "name": "Intervention humanitaire canadienne (CHAR)",
+              "description": "Un réseau communautaire qui distribue des dons et des soutiens essentiels aux nouveaux arrivants dans le besoin partout au Canada."
+            },
+            "indigenous-truth-and-decolonization": {
+              "name": "Vérité autochtone et décolonisation",
+              "description": "Le programme d'AMSSA de travail sur la vérité autochtone et la décolonisation dans le secteur de l'établissement."
+            },
+            "national-sector-engagement": {
+              "name": "Mobilisation nationale du secteur",
+              "description": "Coordonne les initiatives de mobilisation nationale et les structures de gouvernance dans le secteur de l'établissement."
+            }
+          }
+        },
+        "surrey-lip": {
+          "tagline": "Plus de 30 organismes coordonnent l'intégration à Surrey.",
+          "description": "Un conseil multipartite financé par IRCC qui réunit plus de 30 organismes communautaires pour élaborer des stratégies concertées et fondées sur la recherche en matière d'intégration des nouveaux arrivants à Surrey. Géré par DIVERSEcity, il offre aussi des outils comme une carte des services et un outil de signalement du racisme.",
+          "highlights": [
+            "Coordonne plus de 30 organismes locaux",
+            "Carte des services pour nouveaux arrivants",
+            "Outil de signalement du racisme"
+          ],
+          "serviceArea": "Surrey",
+          "eligibility": "Surrey LIP est un partenariat d'organismes et n'offre pas de services aux personnes. Si vous avez besoin d'aide vous-même, utilisez la carte des services de Surrey ou communiquez avec un connecteur communautaire.",
+          "howToStart": "Pour de l'aide individuelle à l'établissement, communiquez avec un connecteur communautaire : CCBD@dcrs.ca ou 604-547-1272 (diaspora noire), CCM@dcrs.ca ou 604-547-1131 (communautés musulmanes et afghanes). Pour trouver n'importe quel service à Surrey, utilisez la carte des services de Surrey. Les organismes peuvent utiliser le formulaire de contact du site Web.",
+          "programs": {
+            "community-connector-project": {
+              "name": "Projet de connecteurs communautaires",
+              "description": "Des membres formés de la communauté donnent aux nouveaux arrivants de l'information, des services et des contacts pendant leur établissement, avec des volets pour la diaspora noire et pour les communautés musulmanes et afghanes.",
+              "eligibility": "Les nouveaux arrivants de tous les horizons, avec une attention particulière aux communautés noires et musulmanes/afghanes de Surrey."
+            },
+            "surrey-services-map": {
+              "name": "Carte des services de Surrey",
+              "description": "Une carte en ligne des services offerts aux nouveaux arrivants et aux résidents de Surrey."
+            },
+            "immigrant-advisory-round-table": {
+              "name": "Table ronde consultative des immigrants",
+              "description": "Une table de résidents immigrants qui transmet le point de vue de la communauté à la planification et aux projets de Surrey LIP."
+            },
+            "youth-newcomer-council": {
+              "name": "Conseil des jeunes nouveaux arrivants de Surrey",
+              "description": "Un conseil de jeunes nouveaux arrivants qui apporte le point de vue des jeunes au travail de Surrey LIP."
+            },
+            "bridging-indigenous-and-newcomer": {
+              "name": "Rapprocher les communautés autochtones et les nouveaux arrivants",
+              "description": "Un projet qui bâtit des relations et une compréhension commune entre les communautés autochtones et les communautés de nouveaux arrivants à Surrey."
+            },
+            "first-peoples-guide": {
+              "name": "Guide des Premiers Peuples de Surrey",
+              "description": "Un guide qui aide les animateurs à faire découvrir aux nouveaux arrivants les Premiers Peuples de la région de Surrey."
+            }
+          }
+        },
+        "delta-lip": {
+          "tagline": "Coordonne les services aux nouveaux arrivants à Delta.",
+          "description": "La Delta Local Immigration Partnership est une table de partenariat financée par IRCC qui réunit des organismes locaux pour rendre Delta plus accueillante pour les nouveaux arrivants. Elle indique qu'elle n'offre pas de services directs aux personnes.",
+          "highlights": [
+            "Coordonne les services locaux à Delta",
+            "Tables consultatives jeunesse et immigrants",
+            "Publie la carte des services de Delta"
+          ],
+          "serviceArea": "Delta",
+          "eligibility": "Delta LIP est un partenariat d'organismes communautaires, d'agences, d'organismes municipaux et d'entreprises locales, et n'offre pas de services aux personnes. Les nouveaux arrivants et les jeunes peuvent participer par ses tables consultatives, ou trouver des services grâce à la carte des services de Delta.",
+          "howToStart": "Écrivez à deltalip@dcrs.ca, ou utilisez le formulaire de contact du site Web. Pour trouver un service à Delta, utilisez la carte des services de Delta.",
+          "programs": {
+            "delta-services-map": {
+              "name": "Carte des services de Delta",
+              "description": "Une carte en ligne des services offerts aux nouveaux arrivants à Delta."
+            },
+            "resource-library": {
+              "name": "Bibliothèque de ressources",
+              "description": "Des ressources d'établissement et communautaires publiées par le partenariat pour les résidents de Delta et les fournisseurs de services."
+            },
+            "delta-youth-newcomer-advisory-table-dynat": {
+              "name": "Table consultative des jeunes nouveaux arrivants de Delta (DYNAT)",
+              "description": "Réunit des jeunes qui veulent rendre Delta plus accueillante pour les jeunes nouveaux arrivants.",
+              "eligibility": "Les jeunes de 16 à 25 ans qui veulent faire de Delta un endroit plus accueillant et inclusif pour les jeunes nouveaux arrivants."
+            },
+            "immigrant-advisory-table": {
+              "name": "Table consultative des immigrants",
+              "description": "Une table ronde bénévole dont les membres représentent une diversité de parcours et d'expériences.",
+              "eligibility": "Les candidats doivent avoir au moins 26 ans."
+            }
+          }
+        },
+        "sfu-international": {
+          "tagline": "Conseils, orientation et soutien aux nouveaux arrivants à SFU.",
+          "description": "L'International Services for Students de Simon Fraser University soutient les étudiants internationaux avec des conseils non scolaires, de l'orientation et des activités de carrière, en plus d'un soutien dédié aux étudiants qui se définissent comme réfugiés ou nouveaux arrivants.",
+          "highlights": [
+            "Conseils non scolaires aux étudiants internationaux",
+            "Orientation et activités de carrière",
+            "Soutien dédié aux réfugiés et nouveaux arrivants"
+          ],
+          "serviceArea": "Campus SFU de Burnaby",
+          "eligibility": "Les étudiants internationaux inscrits à SFU, y compris au premier cycle, aux cycles supérieurs et en échange.",
+          "howToStart": "Présentez-vous sans rendez-vous (en personne ou en ligne), prenez rendez-vous avec un conseiller, ou écrivez à iss_office@sfu.ca. Les questions de conseil vont à intl_advising@sfu.ca.",
+          "hours": "lun.-ven. 9 h à 16 h (fermé de 12 h à 13 h)",
+          "programs": {
+            "international-and-newcomer-student-advising": {
+              "name": "Conseils aux étudiants internationaux et nouveaux arrivants",
+              "description": "Des conseils non scolaires pour les étudiants internationaux du premier cycle, des cycles supérieurs et en échange.",
+              "eligibility": "Les étudiants internationaux, y compris au premier cycle, aux cycles supérieurs et en échange."
+            },
+            "refugee-and-newcomer-programs": {
+              "name": "Programmes pour réfugiés et nouveaux arrivants",
+              "description": "Un soutien avec gestion de cas pour les étudiants qui se définissent comme réfugiés ou nouveaux arrivants — aide à l'établissement, orientation et liens vers les conseils scolaires, la santé, l'aide financière et les services de carrière.",
+              "eligibility": "Les étudiants de SFU qui se définissent comme réfugiés ou nouveaux arrivants."
+            },
+            "student-refugee-program": {
+              "name": "Programme d'étudiants réfugiés (avec l'EUMC)",
+              "description": "SFU parraine chaque année six étudiants réfugiés du premier cycle venant de camps à l'étranger, avec l'Entraide universitaire mondiale du Canada. Le parrainage couvre les droits de scolarité, les livres, les frais et les frais de subsistance.",
+              "eligibility": "Les étudiants réfugiés de 18 à 25 ans dans des camps de réfugiés à l'étranger, sélectionnés par l'EUMC."
+            },
+            "global-student-centre": {
+              "name": "Global Student Centre",
+              "description": "Un espace sur le campus, au AQ 2013, pour le soutien aux étudiants internationaux, des événements et des rencontres avec les conseillers."
+            },
+            "international-student-orientation-series": {
+              "name": "Série d'orientation pour étudiants internationaux",
+              "description": "Une série en plusieurs volets pour tous les nouveaux étudiants internationaux qui commencent leurs études à SFU.",
+              "eligibility": "Les nouveaux étudiants internationaux qui commencent à SFU."
+            },
+            "international-student-career-week": {
+              "name": "Semaine de la carrière pour étudiants internationaux",
+              "description": "Une série d'activités de carrière d'une semaine conçue pour les étudiants internationaux.",
+              "eligibility": "Les étudiants internationaux du premier cycle et des cycles supérieurs."
+            }
+          }
+        },
+        "fraser-international-college": {
+          "tagline": "Des programmes passerelles vers les diplômes de SFU.",
+          "description": "Fraser International College est un collège passerelle privé situé sur le campus SFU de Burnaby, qui offre des programmes préparatoires et de première année menant aux diplômes de Simon Fraser University. Tous les programmes sont payants.",
+          "highlights": [
+            "Passerelle de transfert vers SFU",
+            "Programmes préparatoires et de 1re année",
+            "Sur le campus SFU de Burnaby"
+          ],
+          "serviceArea": "Burnaby",
+          "eligibility": "Les candidats doivent avoir au moins 17 ans au dernier jour de leur premier semestre et soumettre tous leurs relevés de notes. Les exigences scolaires varient selon le programme et le pays d'origine.",
+          "howToStart": "Faites une demande en ligne dans le portail étudiant de FIC, écrivez à info@fraseric.ca, ou passez par un agent d'éducation inscrit.",
+          "programs": {
+            "foundation-program-utp-stage-i": {
+              "name": "Programme préparatoire (UTP Stage I)",
+              "description": "Programme préuniversitaire suivi sur deux trimestres.",
+              "eligibility": "Réussite de la 11e année ou l'équivalent, avec des seuils qui dépendent du programme choisi."
+            },
+            "international-year-one-utp-stage-ii": {
+              "name": "Première année internationale (UTP Stage II)",
+              "description": "Programme de crédits universitaires de première année menant à un diplôme de SFU.",
+              "eligibility": "Généralement la réussite de la 12e année ou l'équivalent; les exigences varient selon le système du pays et le programme."
+            },
+            "associate-of-arts-degree": {
+              "name": "Diplôme d'associé en arts",
+              "description": "Diplôme d'associé de deux ans suivi à FIC.",
+              "eligibility": "Généralement la réussite de la 12e année ou l'équivalent."
+            },
+            "student-success-team": {
+              "name": "Équipe de réussite étudiante",
+              "description": "Conseils scolaires et planification des études, y compris la planification de la diplomation et du transfert vers SFU.",
+              "eligibility": "Les étudiants de FIC."
+            },
+            "wellness-office": {
+              "name": "Bureau du mieux-être",
+              "description": "Counseling et soutien en santé mentale offerts par un conseiller de l'équipe.",
+              "eligibility": "Les étudiants de FIC."
+            },
+            "student-support-services": {
+              "name": "Services de soutien aux étudiants",
+              "description": "Soutien à l'assiduité, tutoriels et ateliers, demandes de documents, aide au logement, orientation et activités sur le campus. Les étudiants de FIC ont aussi accès à certains services de SFU, dont SFU Recreation et SFU Multifaith.",
+              "eligibility": "Les étudiants de FIC."
+            }
+          }
+        },
+        "tugo": {
+          "tagline": "Assurance voyage et visiteurs, y compris pendant l'attente du régime de santé.",
+          "description": "TuGo est un assureur voyage à propriété canadienne dont le siège social est à Richmond, en C.-B. Ses régimes Visitors to Canada couvrent les frais médicaux d'urgence pour la famille en visite de l'étranger et pour les personnes qui attendent l'entrée en vigueur d'un régime de santé provincial.",
+          "highlights": [
+            "Couverture médicale d'urgence pour visiteurs",
+            "Options pour les conditions préexistantes",
+            "Propriété canadienne, siège social à Richmond"
+          ],
+          "serviceArea": "Canada et partout dans le monde",
+          "howToStart": "Demandez une soumission en ligne auprès d'un partenaire assureur de TuGo, ou composez le 1-855-929-8846.",
+          "hours": "lun.-ven. 6 h à 17 h HNP · sam. 7 h à 16 h HNP · dim. fermé",
+          "languages": [
+            "Anglais",
+            "Français"
+          ],
+          "programs": {
+            "visitors-to-canada-insurance": {
+              "name": "Assurance Visitors to Canada",
+              "description": "Protection médicale d'urgence pour les visiteurs — honoraires de médecin, médicaments sur ordonnance et transport d'urgence — avec des options couvrant les conditions préexistantes.",
+              "eligibility": "Pour les personnes qui visitent de la famille ou des amis, qui voyagent au Canada, ou qui attendent l'entrée en vigueur d'un régime de santé provincial."
+            },
+            "basic-visitors-to-canada-insurance": {
+              "name": "Assurance Visitors to Canada de base",
+              "description": "Couverture médicale d'urgence à coût réduit pour les visiteurs à petit budget."
+            },
+            "student-insurance": {
+              "name": "Assurance étudiants",
+              "description": "Couverture pour les étudiants internationaux sans régime de santé provincial et pour les étudiants canadiens qui étudient à l'extérieur. Comprend les soins médicaux et hospitaliers, certains soins dentaires et de la vue, et du tutorat après un séjour à l'hôpital.",
+              "eligibility": "Les étudiants internationaux qui étudient au Canada, et les étudiants canadiens qui étudient hors de leur province ou à l'étranger."
+            },
+            "trip-cancellation-trip-interruption-insurance": {
+              "name": "Assurance annulation et interruption de voyage",
+              "description": "Couvre les frais si un voyage est annulé avant le départ ou perturbé en cours de route."
+            },
+            "24-7-emergency-medical-assistance": {
+              "name": "Assistance médicale d'urgence 24/7",
+              "description": "Assistance médicale d'urgence et soutien aux réclamations en tout temps, au 1-800-663-0399."
+            }
+          }
+        },
+        "desjardins": {
+          "tagline": "Services bancaires, crédit et aide juridique gratuite.",
+          "description": "Desjardins est le plus grand groupe financier coopératif au Canada. Son offre pour les nouveaux arrivants comprend un compte chèques sans frais mensuels de forfait pendant une période d'admissibilité, des cartes de crédit sans frais annuels pour bâtir un historique de crédit canadien, et un service d'assistance juridique gratuit. Son réseau de caisses se trouve au Québec et en Ontario.",
+          "highlights": [
+            "Sans frais mensuels pendant la période d'admissibilité",
+            "Cartes de crédit pour bâtir votre historique",
+            "Assistance juridique gratuite pendant deux ans"
+          ],
+          "serviceArea": "Québec et Ontario",
+          "eligibility": "L'offre de compte pour nouveaux arrivants s'adresse aux personnes de 25 ans et plus qui sont résidentes permanentes, ou résidentes temporaires avec un permis de travail valide pour plus de 8 mois, qui habitent le Canada depuis 3 ans ou moins et qui ne sont pas déjà membres de Desjardins. Des offres distinctes visent les 18 à 24 ans et les étudiants à temps plein de 25 à 30 ans.",
+          "howToStart": "Ouvrez un compte en ligne en environ 15 minutes, ou faites une demande depuis l'étranger et confirmez votre identité dans un point de service à votre arrivée.",
+          "hours": "Assistance juridique : ouverture de dossier 24 h sur 24, 7 jours sur 7 · conseillers lun.-ven. 9 h à 20 h, sam. 9 h à 17 h",
+          "languages": [
+            "Anglais",
+            "Français"
+          ],
+          "programs": {
+            "newcomers-chequing-account-unlimited-plan": {
+              "name": "Compte chèques pour nouveaux arrivants (forfait Illimité)",
+              "description": "Compte chèques dont les frais mensuels du forfait Illimité sont annulés pendant la période d'admissibilité.",
+              "eligibility": "25 ans et plus, résident permanent ou résident temporaire avec un permis de travail valide plus de 8 mois, au Canada depuis 3 ans ou moins, et pas déjà membre de Desjardins."
+            },
+            "free-legal-assistance-service": {
+              "name": "Service d'assistance juridique gratuit",
+              "description": "Assistance juridique incluse dans l'offre pour nouveaux arrivants pendant deux ans, pour les questions de la vie courante."
+            },
+            "international-money-transfers": {
+              "name": "Virements de fonds internationaux",
+              "description": "Virements de fonds internationaux jusqu'à 25 000 $ par jour."
+            },
+            "youth-and-student-accounts": {
+              "name": "Comptes jeunesse et étudiants",
+              "description": "Des offres de compte pour les jeunes nouveaux arrivants et les étudiants à temps plein.",
+              "eligibility": "De 18 à 24 ans, ou de 25 à 30 ans si étudiant à temps plein."
+            }
+          }
         }
       },
       "cost": {
