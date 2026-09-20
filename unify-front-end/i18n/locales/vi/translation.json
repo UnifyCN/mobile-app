@@ -622,7 +622,116 @@
       "settleHealthPrompt": "Tôi mua bảo hiểm y tế khi mới đến Canada như thế nào?",
       "settleServices": "Dịch vụ hỗ trợ",
       "settleServicesDesc": "Dịch vụ miễn phí cho người mới đến.",
-      "settleServicesPrompt": "Có những dịch vụ hỗ trợ miễn phí nào cho người mới đến Canada?"
+      "settleServicesPrompt": "Có những dịch vụ hỗ trợ miễn phí nào cho người mới đến Canada?",
+      "personalized": {
+        "persona_only": {
+          "category": "Định cư"
+        },
+        "arrival_recent": {
+          "category": "Định cư",
+          "prompt": "Tôi vừa đến Canada — tôi nên làm gì trong 30 ngày đầu tiên?"
+        },
+        "arrival_future": {
+          "category": "Trước khi đến",
+          "prompt": "Tôi nên chuẩn bị những gì trước khi đến Canada?"
+        },
+        "stage_planning": {
+          "category": "Giấy tờ",
+          "prompt": "Tôi vẫn đang lên kế hoạch chuyển đến — tôi cần những giấy tờ nào để bắt đầu?"
+        },
+        "stage_recently_arrived": {
+          "category": "Định cư",
+          "prompt": "Tôi nên ưu tiên điều gì trong tháng đầu tiên ở đây?"
+        },
+        "persona_skilled_credentials": {
+          "category": "Tìm việc",
+          "prompt": "Làm thế nào để bằng cấp nước ngoài của tôi được công nhận tại Canada?"
+        },
+        "persona_student_pgwp": {
+          "category": "Tìm việc",
+          "prompt": "Làm thế nào để xin giấy phép lao động sau tốt nghiệp (PGWP)?"
+        },
+        "interest_documents": {
+          "category": "Giấy tờ",
+          "prompt": "Là người mới đến, tôi nên làm những giấy tờ và giấy tờ tùy thân nào trước?"
+        },
+        "interest_employment": {
+          "category": "Tìm việc",
+          "prompt": "Tôi nên bắt đầu tìm việc ở Canada như thế nào?"
+        },
+        "interest_finance": {
+          "category": "Tài chính",
+          "prompt": "Làm thế nào để mở tài khoản ngân hàng và xây dựng lịch sử tín dụng ở Canada?"
+        },
+        "interest_housing": {
+          "category": "Nhà ở",
+          "prompt": "Là người mới đến, tôi tìm nhà ở như thế nào?"
+        },
+        "interest_pr_immigration": {
+          "category": "Thường trú & Nhập cư",
+          "prompt": "Tôi nộp đơn xin thường trú như thế nào?"
+        },
+        "interest_healthcare": {
+          "category": "Y tế",
+          "prompt": "Bảo hiểm y tế của tỉnh bang hoạt động thế nào với người mới đến?"
+        },
+        "interest_family_kids": {
+          "category": "Gia đình",
+          "prompt": "Người mới đến có thể nhận những trợ cấp gia đình và chăm sóc trẻ em nào?"
+        },
+        "interest_transit": {
+          "category": "Đi lại",
+          "prompt": "Làm thế nào để lấy bằng lái xe và đi phương tiện công cộng ở thành phố của tôi?"
+        },
+        "hobby_career_growth_city": {
+          "category": "Tìm việc"
+        },
+        "hobby_exploring_canada_city": {
+          "category": "Đời sống"
+        },
+        "hobby_wellness_city": {
+          "category": "Đời sống"
+        },
+        "hobby_technology_city": {
+          "category": "Đời sống"
+        },
+        "hobby_music_city": {
+          "category": "Đời sống"
+        },
+        "hobby_fitness_city": {
+          "category": "Đời sống"
+        },
+        "hobby_personal_finance_city": {
+          "category": "Tài chính"
+        },
+        "hobby_family_parenting_city": {
+          "category": "Gia đình"
+        },
+        "hobby_education_city": {
+          "category": "Giáo dục"
+        },
+        "hobby_food_cooking_city": {
+          "category": "Đời sống"
+        },
+        "hobby_movies_city": {
+          "category": "Đời sống"
+        },
+        "goal_learn": {
+          "category": "Giáo dục",
+          "prompt": "Người mới đến có những tài nguyên học tập miễn phí nào?"
+        },
+        "goal_community": {
+          "category": "Định cư",
+          "prompt": "Làm thế nào để gặp gỡ những người mới đến khác và xây dựng cộng đồng ở đây?"
+        },
+        "goal_quick_answers": {
+          "category": "Giấy tờ",
+          "prompt": "Tra cứu nhanh: những giấy tờ và bước quan trọng nhất tôi sẽ cần là gì?"
+        },
+        "interest_pr_province": {
+          "category": "Thường trú & Nhập cư"
+        }
+      }
     },
     "history": {
       "newChat": "Cuộc trò chuyện mới",
@@ -801,7 +910,17 @@
     "tipNotFound": "Không tìm thấy mẹo",
     "sources": "Nguồn",
     "seePastTips": "Xem mẹo trước đây",
-    "dailyTip": "Mẹo hàng ngày"
+    "dailyTip": "Mẹo hàng ngày",
+    "category": {
+      "documents": "Giấy tờ",
+      "finance": "Tài chính",
+      "housing": "Nhà ở",
+      "employment": "Việc làm",
+      "healthcare": "Y tế",
+      "immigration": "Nhập cư",
+      "settlement": "Định cư",
+      "general": "Chung"
+    }
   },
   "events": {
     "title": "Sự kiện cộng đồng",

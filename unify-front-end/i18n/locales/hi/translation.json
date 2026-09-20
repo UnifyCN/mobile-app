@@ -622,7 +622,116 @@
       "settleHealthPrompt": "कनाडा में नवागंतुक के रूप में स्वास्थ्य बीमा कैसे प्राप्त करें?",
       "settleServices": "बसावट सेवाएं",
       "settleServicesDesc": "नवागंतुकों के लिए मुफ्त सेवाएं।",
-      "settleServicesPrompt": "कनाडा में नवागंतुकों के लिए कौन सी मुफ्त बसावट सेवाएं उपलब्ध हैं?"
+      "settleServicesPrompt": "कनाडा में नवागंतुकों के लिए कौन सी मुफ्त बसावट सेवाएं उपलब्ध हैं?",
+      "personalized": {
+        "persona_only": {
+          "category": "बसावट"
+        },
+        "arrival_recent": {
+          "category": "बसावट",
+          "prompt": "मैं अभी-अभी कनाडा आया हूँ — पहले 30 दिनों में मुझे क्या करना चाहिए?"
+        },
+        "arrival_future": {
+          "category": "आगमन से पहले",
+          "prompt": "कनाडा आने से पहले मुझे कैसे तैयारी करनी चाहिए?"
+        },
+        "stage_planning": {
+          "category": "दस्तावेज़",
+          "prompt": "मैं अभी भी अपने स्थानांतरण की योजना बना रहा हूँ — शुरू करने के लिए मुझे कौन से दस्तावेज़ चाहिए?"
+        },
+        "stage_recently_arrived": {
+          "category": "बसावट",
+          "prompt": "यहाँ अपने पहले महीने में मुझे किन बातों को प्राथमिकता देनी चाहिए?"
+        },
+        "persona_skilled_credentials": {
+          "category": "नौकरी की तलाश",
+          "prompt": "कनाडा में अपनी विदेशी योग्यताओं को मान्यता कैसे दिलाऊँ?"
+        },
+        "persona_student_pgwp": {
+          "category": "नौकरी की तलाश",
+          "prompt": "स्नातक-पश्चात कार्य परमिट (PGWP) कैसे प्राप्त करूँ?"
+        },
+        "interest_documents": {
+          "category": "दस्तावेज़",
+          "prompt": "नए आगंतुक के रूप में मुझे सबसे पहले कौन से दस्तावेज़ और पहचान-पत्र बनवाने चाहिए?"
+        },
+        "interest_employment": {
+          "category": "नौकरी की तलाश",
+          "prompt": "कनाडा में नौकरी की तलाश कैसे शुरू करूँ?"
+        },
+        "interest_finance": {
+          "category": "वित्त",
+          "prompt": "कनाडा में बैंक खाता कैसे खोलूँ और क्रेडिट कैसे बनाऊँ?"
+        },
+        "interest_housing": {
+          "category": "आवास",
+          "prompt": "नए आगंतुक के रूप में आवास कैसे ढूँढूँ?"
+        },
+        "interest_pr_immigration": {
+          "category": "स्थायी निवास और आप्रवासन",
+          "prompt": "स्थायी निवास के लिए आवेदन कैसे करूँ?"
+        },
+        "interest_healthcare": {
+          "category": "स्वास्थ्य सेवा",
+          "prompt": "नए आगंतुकों के लिए प्रांतीय स्वास्थ्य सेवा कैसे काम करती है?"
+        },
+        "interest_family_kids": {
+          "category": "परिवार",
+          "prompt": "नए आगंतुकों के लिए कौन से पारिवारिक और शिशु-देखभाल लाभ उपलब्ध हैं?"
+        },
+        "interest_transit": {
+          "category": "यातायात",
+          "prompt": "मैं ड्राइविंग लाइसेंस कैसे बनवाऊँ और अपने शहर में सार्वजनिक परिवहन कैसे इस्तेमाल करूँ?"
+        },
+        "hobby_career_growth_city": {
+          "category": "नौकरी की तलाश"
+        },
+        "hobby_exploring_canada_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_wellness_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_technology_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_music_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_fitness_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_personal_finance_city": {
+          "category": "वित्त"
+        },
+        "hobby_family_parenting_city": {
+          "category": "परिवार"
+        },
+        "hobby_education_city": {
+          "category": "शिक्षा"
+        },
+        "hobby_food_cooking_city": {
+          "category": "जीवनशैली"
+        },
+        "hobby_movies_city": {
+          "category": "जीवनशैली"
+        },
+        "goal_learn": {
+          "category": "शिक्षा",
+          "prompt": "नए आगंतुकों के लिए कौन से निःशुल्क शिक्षण संसाधन उपलब्ध हैं?"
+        },
+        "goal_community": {
+          "category": "बसावट",
+          "prompt": "मैं यहाँ दूसरे नए आगंतुकों से कैसे मिलूँ और समुदाय कैसे बनाऊँ?"
+        },
+        "goal_quick_answers": {
+          "category": "दस्तावेज़",
+          "prompt": "त्वरित संदर्भ: मुझे कौन से प्रमुख दस्तावेज़ और कदम चाहिए होंगे?"
+        },
+        "interest_pr_province": {
+          "category": "स्थायी निवास और आप्रवासन"
+        }
+      }
     },
     "history": {
       "newChat": "नई चैट",
@@ -801,7 +910,17 @@
     "tipNotFound": "सुझाव नहीं मिला",
     "sources": "स्रोत",
     "seePastTips": "पिछले सुझाव देखें",
-    "dailyTip": "दैनिक सुझाव"
+    "dailyTip": "दैनिक सुझाव",
+    "category": {
+      "documents": "दस्तावेज़",
+      "finance": "वित्त",
+      "housing": "आवास",
+      "employment": "रोज़गार",
+      "healthcare": "स्वास्थ्य सेवा",
+      "immigration": "आप्रवासन",
+      "settlement": "बसावट",
+      "general": "सामान्य"
+    }
   },
   "events": {
     "title": "सामुदायिक कार्यक्रम",

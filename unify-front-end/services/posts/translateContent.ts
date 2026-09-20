@@ -5,16 +5,29 @@ import type { SupportedLanguage } from '@/i18n';
  * On-demand translation of user-generated content into the viewer's UI
  * language, through the shared `translate-content` edge function (also used
  * by the web app). The function fetches the source row itself by id, caches
- * the result server-side in `post_translations` / `comment_translations`
- * (keyed by row + language, invalidated when the source text changes) and
- * enforces a 20/day per-user quota — cache hits are free and flagged
- * `cached: true`.
+ * the result server-side (keyed by row + language, invalidated when the
+ * source text changes) and enforces a 20/day per-user quota — cache hits are
+ * free and flagged `cached: true`.
+ *
+ * Each type maps to a source table and a title/content pair:
+ *   post    → posts            (title + content)
+ *   comment → comments         (content only)
+ *   event   → events           (title + description)
+ *   group   → groups           (group_name + group_description)
+ *   tip     → daily_tips       (title + tip_text)
  */
-export type TranslatableType = 'post' | 'comment';
+export type TranslatableType = 'post' | 'comment' | 'event' | 'group' | 'tip';
+
+/**
+ * Row identifier as the source table stores it: bigint for posts, comments,
+ * events and groups; a uuid string for daily tips. Forwarded verbatim so the
+ * edge function can look the row up without a lossy cast.
+ */
+export type TranslatableId = number | string;
 
 export interface TranslationResult {
   translatedContent: string;
-  /** Posts only — null when the model returned no title translation. */
+  /** Null for comments, and when the model returned no title translation. */
   translatedTitle: string | null;
   /** Detected ISO 639-1 source language, when the model reported one. */
   sourceLang?: string;
@@ -53,7 +66,7 @@ async function readErrorBody(error: unknown): Promise<{
 
 export async function translateContent(
   type: TranslatableType,
-  id: number,
+  id: TranslatableId,
   targetLanguage: SupportedLanguage
 ): Promise<TranslationResult> {
   const { data, error } = await supabase.functions.invoke<

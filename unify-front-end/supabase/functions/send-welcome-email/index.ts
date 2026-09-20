@@ -2,6 +2,11 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { Resend } from 'https://esm.sh/resend';
 import { en } from './templates/en.ts';
+import { vi } from './templates/vi.ts';
+import { es } from './templates/es.ts';
+import { hi } from './templates/hi.ts';
+import { ar } from './templates/ar.ts';
+import { frCA } from './templates/fr-CA.ts';
 
 const RESEND_USER_EMAILS_API_KEY = Deno.env.get('RESEND_USER_EMAILS_API_KEY');
 const RESEND_WELCOME_FROM = Deno.env.get('RESEND_WELCOME_FROM');
@@ -12,7 +17,16 @@ const RESEND_TIMEOUT_MS = 5000;
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-const templates: Record<string, typeof en> = { en };
+// Keys are the exact `preferred_language` values the app stores. An unknown
+// or null value falls back to English below.
+const templates: Record<string, typeof en> = {
+  en,
+  vi,
+  es,
+  hi,
+  ar,
+  'fr-CA': frCA,
+};
 
 Deno.serve(async req => {
   if (!RESEND_USER_EMAILS_API_KEY || !RESEND_WELCOME_FROM) {

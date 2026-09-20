@@ -9,6 +9,8 @@ import { parseSSEStream } from '@/utils/sseParser';
 import { Source } from '@/helpers/companion/messageHelpers';
 import { QueryType, TokenUsage } from '@/types/chatbot';
 import { classifyRagQueryError } from '@/helpers/companion/ragQueryErrors';
+import i18n from '@/i18n';
+import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
 
 // Re-export the typed errors so existing `from '@/utils/gemini'` imports keep
 // working. The definitions live in a dependency-free module so the classifier
@@ -87,6 +89,10 @@ export const streamGeminiAPI = async (
     return;
   }
 
+  // Resolved once per call, before the request is built, so a language change
+  // mid-stream cannot swap the code underneath an in-flight answer.
+  const responseLanguage = resolveAiResponseLanguage(i18n.language);
+
   let response: Response;
   try {
     const {
@@ -111,6 +117,9 @@ export const streamGeminiAPI = async (
         conversationIdentifier,
         messages: messages || [],
         stream: true,
+        // Ask the Companion to answer in the UI language. Omitted entirely for
+        // English so the default prompt path is unchanged.
+        ...(responseLanguage ? { responseLanguage } : {}),
       }),
     });
   } catch (err) {

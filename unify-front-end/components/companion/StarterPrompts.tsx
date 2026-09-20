@@ -156,6 +156,23 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
     }),
     [t]
   );
+
+  // Personalized chips come from the `personalize` edge function in English.
+  // Each starter carries a stable `id`, so a locale file can override its
+  // category and prompt. Starters whose text interpolates profile data (city,
+  // province, persona) have no key and keep the server text — those are the
+  // only chips that stay English in a translated UI.
+  const personalizedText = useCallback(
+    (starter: PersonalizedStarter) => ({
+      category: t(`companion.starters.personalized.${starter.id}.category`, {
+        defaultValue: starter.category,
+      }),
+      prompt: t(`companion.starters.personalized.${starter.id}.prompt`, {
+        defaultValue: starter.prompt,
+      }),
+    }),
+    [t]
+  );
   // Stable pool ref: same array reference unless the input genuinely changed.
   // personalizedStarters from React Query is referentially stable across renders
   // when data hasn't changed, so this useMemo only re-fires on real updates.
@@ -195,7 +212,8 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
 
   const handlePersonalizedPress = useCallback(
     (starter: PersonalizedStarter, slotIndex: number) => {
-      onPromptSelect(starter.prompt, undefined, true);
+      // Send the text the user actually read, not the English server copy.
+      onPromptSelect(personalizedText(starter).prompt, undefined, true);
 
       // Persist; fire-and-forget. Concurrent calls are safe — markStarterSeen
       // serializes its own read-modify-write internally.
@@ -237,7 +255,7 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
         return copy;
       });
     },
-    [pool, onPromptSelect]
+    [pool, onPromptSelect, personalizedText]
   );
 
   return (
@@ -247,29 +265,32 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {displayed.map((starter, index) => (
-          <View key={starter.id}>
-            <Animated.View
-              entering={FadeIn.duration(200)}
-              exiting={FadeOut.duration(150)}
-            >
-              <TouchableOpacity
-                style={[styles.card, styles.cardPersonalized]}
-                onPress={() => handlePersonalizedPress(starter, index)}
-                activeOpacity={0.8}
+        {displayed.map((starter, index) => {
+          const localized = personalizedText(starter);
+          return (
+            <View key={starter.id}>
+              <Animated.View
+                entering={FadeIn.duration(200)}
+                exiting={FadeOut.duration(150)}
               >
-                <View style={styles.cardHeader}>
-                  <View style={[styles.iconBadge, { backgroundColor: starter.iconBackground }]}>
-                    <Feather name={starter.iconName as keyof typeof Feather.glyphMap} size={16} color={Theme.white} />
+                <TouchableOpacity
+                  style={[styles.card, styles.cardPersonalized]}
+                  onPress={() => handlePersonalizedPress(starter, index)}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.cardHeader}>
+                    <View style={[styles.iconBadge, { backgroundColor: starter.iconBackground }]}>
+                      <Feather name={starter.iconName as keyof typeof Feather.glyphMap} size={16} color={Theme.white} />
+                    </View>
+                    <Text style={styles.cardLabel} numberOfLines={1}>{localized.category}</Text>
+                    <Feather name='chevron-right' size={16} color={Theme.textInactiveTab} />
                   </View>
-                  <Text style={styles.cardLabel} numberOfLines={1}>{starter.category}</Text>
-                  <Feather name='chevron-right' size={16} color={Theme.textInactiveTab} />
-                </View>
-                <Text style={styles.cardDescription} numberOfLines={3}>{starter.prompt}</Text>
-              </TouchableOpacity>
-            </Animated.View>
-          </View>
-        ))}
+                  <Text style={styles.cardDescription} numberOfLines={3}>{localized.prompt}</Text>
+                </TouchableOpacity>
+              </Animated.View>
+            </View>
+          );
+        })}
 
         {[...MODE_CARD_DEFS, ...topicStarterDefs].map(def => {
           const card = translateDef(def);

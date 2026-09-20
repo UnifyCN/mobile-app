@@ -2,18 +2,23 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import {
   translateContent,
+  type TranslatableId,
   type TranslatableType,
 } from '@/services/posts/translateContent';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '@/i18n';
 
 /**
- * On-demand translation of a post or comment into the current UI language.
+ * On-demand translation of user-generated content — a post, comment, event,
+ * group or daily tip — into the current UI language.
  * Nothing fetches automatically: `TranslateButton` calls `translate()`, and
  * the result stays in the React Query cache (keyed by type + id + language)
  * so re-showing a translation is instant and switching UI language
  * re-translates. Mirrors the web app's `useContentTranslation`.
  */
-export function useTranslateContent(type: TranslatableType, id: number) {
+export function useTranslateContent(
+  type: TranslatableType,
+  id: TranslatableId
+) {
   const { i18n } = useTranslation();
   const lang = isSupportedLanguage(i18n.language)
     ? i18n.language

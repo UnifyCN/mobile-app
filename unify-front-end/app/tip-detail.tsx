@@ -14,6 +14,7 @@ import BackHeader from '@/components/BackHeader';
 import { CATEGORY_CONFIG } from '@/components/tips/DailyTipCard';
 import { DailyTip } from '@/types/dailyTip';
 import { Theme } from '@/constants/Theme';
+import { TranslateButton } from '@/components/home/TranslateButton';
 import i18n from '@/i18n';
 
 const formatDate = (dateString: string): string => {
@@ -109,8 +110,14 @@ const TipDetailScreen = () => {
             ]}
           >
             <Text style={[styles.categoryText, { color: config.accent }]}>
-              {tipData.category.charAt(0).toUpperCase() +
-                tipData.category.slice(1)}
+              {t(`tips.category.${tipData.category}`, {
+                // Categories are generated server-side and the set can grow;
+                // an unknown slug falls back to the old capitalisation rather
+                // than rendering a raw key.
+                defaultValue:
+                  tipData.category.charAt(0).toUpperCase() +
+                  tipData.category.slice(1),
+              })}
             </Text>
           </View>
         </LinearGradient>
@@ -130,6 +137,13 @@ const TipDetailScreen = () => {
 
         {/* Full Tip Text */}
         <Text style={styles.tipText}>{tipData.tipText}</Text>
+
+        {/* Machine translation of the title + tip text. Renders nothing when
+            the UI language is English. Tips are always generated in English,
+            so this is the only way to read one in another language. */}
+        <View style={styles.translateRow}>
+          <TranslateButton type='tip' id={tipData.id} />
+        </View>
 
         {/* Source References */}
         {tipData.sourceRefs && tipData.sourceRefs.length > 0 && (
@@ -239,6 +253,9 @@ const styles = StyleSheet.create({
     color: Theme.black,
     paddingHorizontal: 20,
     lineHeight: 28,
+  },
+  translateRow: {
+    paddingHorizontal: 20,
   },
   sourcesSection: {
     paddingHorizontal: 20,
