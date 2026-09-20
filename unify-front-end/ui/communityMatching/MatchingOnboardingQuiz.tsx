@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 export interface QuizSelections {
   goal: string | null;
@@ -40,54 +41,71 @@ const COLORS = {
   successLight: '#ECFDF5',
 };
 
-// Question data for each step
+// Question data for each step. `value` fields are persisted to Supabase, so
+// they stay in English; only the label keys are translated at render time.
 const QUESTION_DATA = {
   1: {
     icon: 'group-add',
-    title: "What's your main goal?",
-    subtitle: 'This helps us match you with people who share similar goals',
+    titleKey: 'circles.quiz.step1Title',
+    subtitleKey: 'circles.quiz.step1Subtitle',
   },
   2: {
     icon: 'chat-bubble',
-    title: 'What would you like to discuss?',
-    subtitle: "Select all the topics you'd like your circle to cover",
+    titleKey: 'circles.quiz.step2Title',
+    subtitleKey: 'circles.quiz.step2Subtitle',
   },
   3: {
     icon: 'check-circle',
-    title: "You're all set!",
-    subtitle: "We'll match you with 3 other newcomers who share your goals",
+    titleKey: 'circles.quiz.step3Title',
+    subtitleKey: 'circles.quiz.step3Subtitle',
   },
 };
 
 const goalOptions = [
   {
     value: 'make_friends',
-    label: 'Make new friends in Canada',
+    labelKey: 'circles.quiz.goals.make_friends',
     icon: 'group-add',
   },
   {
     value: 'practice_english',
-    label: 'Practice English or French',
+    labelKey: 'circles.quiz.goals.practice_english',
     icon: 'chat-bubble',
   },
   {
     value: 'job_search',
-    label: 'Swap tips about jobs & resumes',
+    labelKey: 'circles.quiz.goals.job_search',
     icon: 'work',
   },
   {
     value: 'wellness',
-    label: 'Stay motivated & encouraged',
+    labelKey: 'circles.quiz.goals.wellness',
     icon: 'emoji-emotions',
   },
 ];
 
 const topicOptions = [
-  { value: 'immigration', label: 'Immigration paperwork', icon: 'description' },
-  { value: 'housing', label: 'Renting & housing search', icon: 'home' },
-  { value: 'finances', label: 'Budgeting & banking', icon: 'account-balance' },
-  { value: 'community', label: 'Making friends & social life', icon: 'groups' },
-  { value: 'career', label: 'Jobs, resumes & interviews', icon: 'trending-up' },
+  {
+    value: 'immigration',
+    labelKey: 'circles.quiz.topics.immigration',
+    icon: 'description',
+  },
+  { value: 'housing', labelKey: 'circles.quiz.topics.housing', icon: 'home' },
+  {
+    value: 'finances',
+    labelKey: 'circles.quiz.topics.finances',
+    icon: 'account-balance',
+  },
+  {
+    value: 'community',
+    labelKey: 'circles.quiz.topics.community',
+    icon: 'groups',
+  },
+  {
+    value: 'career',
+    labelKey: 'circles.quiz.topics.career',
+    icon: 'trending-up',
+  },
 ];
 
 // Selection card component
@@ -142,6 +160,7 @@ function QuestionHeader({
   step: number;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const questionData = QUESTION_DATA[step as keyof typeof QUESTION_DATA];
   const insets = useSafeAreaInsets();
 
@@ -163,8 +182,8 @@ function QuestionHeader({
             color={COLORS.white}
           />
         </View>
-        <Text style={styles.headerTitle}>{questionData.title}</Text>
-        <Text style={styles.headerSubtitle}>{questionData.subtitle}</Text>
+        <Text style={styles.headerTitle}>{t(questionData.titleKey)}</Text>
+        <Text style={styles.headerSubtitle}>{t(questionData.subtitleKey)}</Text>
       </View>
     </View>
   );
@@ -175,6 +194,7 @@ export function MatchingOnboardingQuiz({
   onClose,
   isSubmitting,
 }: MatchingOnboardingQuizProps) {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [goal, setGoal] = useState<string | null>(null);
   const [topics, setTopics] = useState<string[]>([]);
@@ -203,11 +223,11 @@ export function MatchingOnboardingQuiz({
 
   const handleNext = () => {
     if (step === 1 && !goal) {
-      setErrors({ 1: 'Please pick one' });
+      setErrors({ 1: t('circles.quiz.errorPickGoal') });
       return;
     }
     if (step === 2 && topics.length === 0) {
-      setErrors({ 2: 'Pick at least one topic' });
+      setErrors({ 2: t('circles.quiz.errorPickTopic') });
       return;
     }
     setErrors({});
@@ -240,7 +260,7 @@ export function MatchingOnboardingQuiz({
               {goalOptions.map(option => (
                 <SelectionCard
                   key={option.value}
-                  label={option.label}
+                  label={t(option.labelKey)}
                   icon={option.icon}
                   selected={goal === option.value}
                   onPress={() => {
@@ -265,7 +285,7 @@ export function MatchingOnboardingQuiz({
               {topicOptions.map(option => (
                 <SelectionCard
                   key={option.value}
-                  label={option.label}
+                  label={t(option.labelKey)}
                   icon={option.icon}
                   selected={topics.includes(option.value)}
                   onPress={() => toggleTopic(option.value)}
@@ -277,7 +297,7 @@ export function MatchingOnboardingQuiz({
               <View style={styles.selectedCount}>
                 <Feather name='check-circle' size={16} color={COLORS.success} />
                 <Text style={styles.selectedCountText}>
-                  {topics.length} topic{topics.length > 1 ? 's' : ''} selected
+                  {t('circles.quiz.topicsSelected', { count: topics.length })}
                 </Text>
               </View>
             )}
@@ -294,13 +314,16 @@ export function MatchingOnboardingQuiz({
                 <Feather name='check' size={32} color={COLORS.white} />
               </View>
             </View>
-            <Text style={styles.completionTitle}>You're all set!</Text>
+            <Text style={styles.completionTitle}>
+              {t('circles.quiz.step3Title')}
+            </Text>
             <Text style={styles.completionSubtitle}>
-              We'll match you with 3 other newcomers who share your goals and
-              interests. This usually takes a few minutes to a few hours.
+              {t('circles.quiz.completionSubtitle')}
             </Text>
             <View style={styles.summaryCard}>
-              <Text style={styles.summaryLabel}>Your circle preferences</Text>
+              <Text style={styles.summaryLabel}>
+                {t('circles.quiz.summaryLabel')}
+              </Text>
               <View style={styles.summaryRow}>
                 <MaterialIcons
                   name='group-add'
@@ -308,8 +331,12 @@ export function MatchingOnboardingQuiz({
                   color={COLORS.textSecondary}
                 />
                 <Text style={styles.summaryText}>
-                  {goalOptions.find(g => g.value === goal)?.label ||
-                    'Not selected'}
+                  {(() => {
+                    const selected = goalOptions.find(g => g.value === goal);
+                    return selected
+                      ? t(selected.labelKey)
+                      : t('circles.quiz.notSelected');
+                  })()}
                 </Text>
               </View>
               <View style={styles.summaryRow}>
@@ -319,7 +346,7 @@ export function MatchingOnboardingQuiz({
                   color={COLORS.textSecondary}
                 />
                 <Text style={styles.summaryText}>
-                  {topics.length} topic{topics.length > 1 ? 's' : ''} to discuss
+                  {t('circles.quiz.topicsToDiscuss', { count: topics.length })}
                 </Text>
               </View>
             </View>
@@ -348,7 +375,7 @@ export function MatchingOnboardingQuiz({
             {step > 1 ? (
               <TouchableOpacity style={styles.backButton} onPress={handleBack}>
                 <Feather name='arrow-left' size={20} color={COLORS.text} />
-                <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>{t('common.back')}</Text>
               </TouchableOpacity>
             ) : (
               <View />
@@ -358,7 +385,7 @@ export function MatchingOnboardingQuiz({
               onPress={handleNext}
               activeOpacity={0.8}
             >
-              <Text style={styles.nextButtonText}>Next</Text>
+              <Text style={styles.nextButtonText}>{t('common.next')}</Text>
               <Feather name='arrow-right' size={18} color={COLORS.white} />
             </TouchableOpacity>
           </View>
@@ -373,7 +400,9 @@ export function MatchingOnboardingQuiz({
               <ActivityIndicator color={COLORS.white} />
             ) : (
               <>
-                <Text style={styles.joinButtonText}>Join the waiting room</Text>
+                <Text style={styles.joinButtonText}>
+                  {t('circles.quiz.joinWaitingRoom')}
+                </Text>
                 <Feather name='arrow-right' size={18} color={COLORS.white} />
               </>
             )}

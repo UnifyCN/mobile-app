@@ -13,11 +13,11 @@ import BackHeader from '@/components/BackHeader';
 import { NewsDetails } from '@/types/news';
 import { Theme } from '@/constants/Theme';
 
-const formatDate = (dateString: string | null): string => {
+const formatDate = (dateString: string | null, locale: string): string => {
   if (!dateString) return '';
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -28,7 +28,7 @@ const formatDate = (dateString: string | null): string => {
 };
 
 const NewsDetailScreen = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { news } = useLocalSearchParams<{ news: string }>();
 
   let newsData: NewsDetails | null = null;
@@ -74,7 +74,10 @@ const NewsDetailScreen = () => {
         {/* Author and Date */}
         {author && date && (
           <Text style={styles.metadata}>
-            {t('news.byAuthorOnDate', { author, date: formatDate(date) })}
+            {t('news.byAuthorOnDate', {
+              author,
+              date: formatDate(date, i18n.language),
+            })}
           </Text>
         )}
         {author && !date && (
@@ -83,7 +86,9 @@ const NewsDetailScreen = () => {
           </Text>
         )}
         {!author && date && (
-          <Text style={styles.metadata}>{formatDate(date)}</Text>
+          <Text style={styles.metadata}>
+            {formatDate(date, i18n.language)}
+          </Text>
         )}
 
         {/* Article Image */}

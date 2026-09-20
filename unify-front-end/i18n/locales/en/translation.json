@@ -191,7 +191,8 @@
     "deleting": "Deleting…",
     "accountDeleted": "Account deleted",
     "accountDeletedMessage": "Your Unify account has been permanently deleted.",
-    "couldNotDelete": "Could not delete account"
+    "couldNotDelete": "Could not delete account",
+    "couldNotDeleteMessage": "We couldn't delete your account. Please try again later."
   },
   "editName": {
     "title": "Name",
@@ -520,7 +521,8 @@
         },
         "footnote": "This directory is a starting point, not legal or financial advice. Confirm the details with the organization before you visit. To report a missing or out-of-date listing, email contact@unifysocial.ca."
       }
-    }
+    },
+    "typeHerePlaceholder": "Type here"
   },
   "checklist": {
     "title": "Personalized Checklist",
@@ -561,7 +563,15 @@
       "priorityDoSoon": "Do soon",
       "priorityExploreConnect": "Explore and connect",
       "priorityOptionalLater": "Optional / later"
-    }
+    },
+    "priority": {
+      "doNow": "Do now",
+      "doSoon": "Do soon",
+      "exploreAndConnect": "Explore and connect",
+      "optionalLater": "Optional / later"
+    },
+    "reorderTask": "Reorder {{name}}",
+    "reorderHint": "Long press and drag to change this item's order within the section"
   },
   "companion": {
     "goBack": "Go back",
@@ -627,7 +637,16 @@
     "history": {
       "newChat": "New chat",
       "noConversationsFound": "No conversations found",
-      "noConversationsYet": "No conversations yet"
+      "noConversationsYet": "No conversations yet",
+      "title": "Chat History",
+      "searchPlaceholder": "Search chats...",
+      "untitled": "New Conversation",
+      "sections": {
+        "yesterday": "Yesterday",
+        "previous7Days": "Previous 7 Days",
+        "previous30Days": "Previous 30 Days",
+        "older": "Older"
+      }
     }
   },
   "home": {
@@ -706,7 +725,20 @@
     "noFollowersYet": "No followers yet",
     "notFollowingAnyone": "Not following anyone yet",
     "followersTab": "Followers",
-    "followingTab": "Following"
+    "followingTab": "Following",
+    "badges": {
+      "persona": {
+        "internationalStudent": "International student",
+        "skilledWorker": "Skilled worker",
+        "refugee": "Refugee",
+        "newcomer": "Newcomer"
+      },
+      "timeInCanada": {
+        "lessThanOneYear": "Less than 1 year",
+        "oneToThreeYears": "1-3 years",
+        "threePlusYears": "3+ years"
+      }
+    }
   },
   "profilePicture": {
     "chooseFromLibrary": "Choose from library",
@@ -867,7 +899,11 @@
     "loadingInviteCode": "Loading invite code",
     "friendCount": "{{count}} friend has joined Unify thanks to you.",
     "friendCount_plural": "{{count}} friends have joined Unify thanks to you.",
-    "isInGroups": "{{name}} is in these groups"
+    "isInGroups": "{{name}} is in these groups",
+    "inviteSenderWithCity": "{{name}} from {{city}}",
+    "inviteSenderFallback": "A friend",
+    "inviteMessageIntro": "{{sender}} has invited you to join them on Unify, Canada's app for newcomers. Download now to simplify your journey: {{url}}",
+    "inviteMessageCode": "Invite code: {{code}}"
   },
   "welcome": {
     "title": "Welcome to Unify.",
@@ -958,7 +994,65 @@
     "hourAgo": "{{count}} hour ago",
     "hourAgo_plural": "{{count}} hours ago",
     "dayAgo": "{{count}} day ago",
-    "dayAgo_plural": "{{count}} days ago"
+    "dayAgo_plural": "{{count}} days ago",
+    "persona": {
+      "international_student": "International Students",
+      "skilled_worker": "Skilled Workers",
+      "refugee": "Refugees & Protected Persons",
+      "other": "Newcomers"
+    },
+    "timeInCanada": {
+      "not_arrived": "Haven't arrived yet",
+      "less_than_1_year": "New to Canada (<1 year)",
+      "1_to_2_years": "Living in Canada (1-2 years)",
+      "2_to_3_years": "Living in Canada (2-3 years)",
+      "3_plus_years": "Living in Canada (3+ years)"
+    },
+    "timeInCanadaUnspecified": "Time in Canada (unspecified)",
+    "entryCard": {
+      "inCircleBadge": "In Circle",
+      "inCircleCta": "Open my Circle",
+      "inCircleSubtitle": "Your circle is active! Chat with your newcomer peers.",
+      "waitingBadge": "Finding matches",
+      "waitingCta": "Check status",
+      "waitingSubtitle": "Looking for people like you. We'll notify you when matched!",
+      "joinCta": "Join your Circle"
+    },
+    "completion": {
+      "headline": "You’re ready to join a circle",
+      "body": "We’ll notify you when three other people with the same path are ready, then connect you in a 14-day Unify Circle."
+    },
+    "quiz": {
+      "step1Title": "What's your main goal?",
+      "step1Subtitle": "This helps us match you with people who share similar goals",
+      "step2Title": "What would you like to discuss?",
+      "step2Subtitle": "Select all the topics you'd like your circle to cover",
+      "step3Title": "You're all set!",
+      "step3Subtitle": "We'll match you with 3 other newcomers who share your goals",
+      "goals": {
+        "make_friends": "Make new friends in Canada",
+        "practice_english": "Practice English or French",
+        "job_search": "Swap tips about jobs & resumes",
+        "wellness": "Stay motivated & encouraged"
+      },
+      "topics": {
+        "immigration": "Immigration paperwork",
+        "housing": "Renting & housing search",
+        "finances": "Budgeting & banking",
+        "community": "Making friends & social life",
+        "career": "Jobs, resumes & interviews"
+      },
+      "errorPickGoal": "Please pick one",
+      "errorPickTopic": "Pick at least one topic",
+      "topicsSelected": "{{count}} topic selected",
+      "topicsSelected_plural": "{{count}} topics selected",
+      "topicsToDiscuss": "{{count}} topic to discuss",
+      "topicsToDiscuss_plural": "{{count}} topics to discuss",
+      "completionSubtitle": "We'll match you with 3 other newcomers who share your goals and interests. This usually takes a few minutes to a few hours.",
+      "summaryLabel": "Your circle preferences",
+      "notSelected": "Not selected",
+      "joinWaitingRoom": "Join the waiting room"
+    }
   },
   "onboarding": {
     "stepOf": "Step {{current}} of {{total}}",
@@ -1190,5 +1284,91 @@
     "showOriginal": "Show original",
     "limitReached": "Daily translation limit reached",
     "unavailable": "Translation unavailable, try again"
+  },
+  "preLogin": {
+    "outcomes": {
+      "heading": "Here’s what you can achieve in 3 months",
+      "navigate": {
+        "title": "Navigate with confidence",
+        "description": "Build the essentials to feel at home in Canada."
+      },
+      "answers": {
+        "title": "Get fast, trusted answers",
+        "description": "Reliable guidance when you need it."
+      },
+      "community": {
+        "title": "Build your community",
+        "description": "Connect with people on similar journeys."
+      }
+    },
+    "belonging": {
+      "title": "Belonging Starts Here",
+      "description": "Join city-based and topic-based groups, discover events, and connect with people going through similar experiences."
+    },
+    "checklist": {
+      "title": "Know What to Do Next",
+      "description": "Get a personalized settlement checklist for your situation, and move forward step-by-step with more clarity and less stress.",
+      "doNow": "Do Now",
+      "progress": "{{completed}}/{{total}} complete",
+      "itemSubtitle": "Required for working and accessing services",
+      "items": {
+        "sin": "Get your SIN",
+        "bank": "Open a bank account",
+        "phone": "Get a phone plan",
+        "health": "Apply for provincial health coverage\n(MSP/equivalent)"
+      },
+      "modal": {
+        "title": "Get Your SIN",
+        "description": "Your SIN is required for employment, taxes, government benefits, and other essential processes."
+      }
+    },
+    "companion": {
+      "title": "Get Answers You Can Trust",
+      "description": "Ask questions in the moment and get personalized, practical guidance grounded in trusted Canadian sources.",
+      "userMessage": "I'm an international student who just arrived to Canada. Can you explain the BC transit system to me?",
+      "atAGlance": "At a Glance",
+      "glanceBody": "BC's transit system includes buses, SkyTrain, SeaBus, and West Coast Express, primarily managed by TransLink in Metro Vancouver; it's important for getting around, especially if you don't have a car.",
+      "whatToKnow": "What You Need to Know",
+      "translinkLabel": "TransLink:",
+      "translinkBody": "Operates most public transit in Metro Vancouver including buses, SkyTrain, and SeaBus...",
+      "askAnything": {
+        "title": "Ask Anything",
+        "description": "Get answers to any immigration question"
+      },
+      "formHelp": {
+        "title": "Form Help",
+        "description": "Receive step-by-step guidance on any form"
+      }
+    },
+    "learn": {
+      "title": "Settle In With Confidence",
+      "description": "Explore Unify's simple lessons and trusted resources on immigration, housing, finances, work, and everyday life in Canada.",
+      "sections": "{{total}} Sections",
+      "subjects": {
+        "finance": "Finance",
+        "employment": "Employment",
+        "housing": "Housing",
+        "documentation": "Documentation"
+      }
+    },
+    "circles": {
+      "title": "Unify Circles",
+      "description": "Get matched with 3 newcomers on a similar path to you for a 2-week group chat experience!",
+      "cta": "Join your Circle"
+    },
+    "event": {
+      "name": "Newcomer Meet & Greet",
+      "time": "4:30-6:30 pm",
+      "venue": "Metrotown Public Library"
+    },
+    "group": {
+      "name": "SFU International Stu...",
+      "members": "{{total}} members"
+    }
+  },
+  "notFound": {
+    "title": "Oops!",
+    "message": "This screen doesn't exist.",
+    "goHome": "Go to home screen!"
   }
 }

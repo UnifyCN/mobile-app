@@ -191,7 +191,8 @@
     "deleting": "جارٍ الحذف…",
     "accountDeleted": "تم حذف الحساب",
     "accountDeletedMessage": "تم حذف حسابك في Unify نهائيًا.",
-    "couldNotDelete": "تعذّر حذف الحساب"
+    "couldNotDelete": "تعذّر حذف الحساب",
+    "couldNotDeleteMessage": "تعذّر حذف حسابك. يرجى المحاولة مرة أخرى لاحقًا."
   },
   "editName": {
     "title": "الاسم",
@@ -520,7 +521,8 @@
         },
         "footnote": "هذا الدليل نقطة بداية، وليس نصيحة قانونية أو مالية. تأكد من التفاصيل لدى المنظمة قبل الزيارة. للإبلاغ عن إدراج مفقود أو قديم، راسلنا على contact@unifysocial.ca."
       }
-    }
+    },
+    "typeHerePlaceholder": "اكتب هنا"
   },
   "checklist": {
     "title": "قائمة مهام مخصصة",
@@ -561,7 +563,15 @@
       "priorityDoSoon": "افعله قريبًا",
       "priorityExploreConnect": "استكشف وتواصل",
       "priorityOptionalLater": "اختياري / لاحقًا"
-    }
+    },
+    "priority": {
+      "doNow": "افعل الآن",
+      "doSoon": "افعل قريبًا",
+      "exploreAndConnect": "استكشف وتواصل",
+      "optionalLater": "اختياري / لاحقًا"
+    },
+    "reorderTask": "إعادة ترتيب {{name}}",
+    "reorderHint": "اضغط مطولًا واسحب لتغيير ترتيب هذا العنصر داخل القسم"
   },
   "companion": {
     "goBack": "رجوع",
@@ -627,7 +637,16 @@
     "history": {
       "newChat": "محادثة جديدة",
       "noConversationsFound": "لم يتم العثور على محادثات",
-      "noConversationsYet": "لا توجد محادثات بعد"
+      "noConversationsYet": "لا توجد محادثات بعد",
+      "title": "سجل المحادثات",
+      "searchPlaceholder": "ابحث في المحادثات...",
+      "untitled": "محادثة جديدة",
+      "sections": {
+        "yesterday": "أمس",
+        "previous7Days": "آخر 7 أيام",
+        "previous30Days": "آخر 30 يومًا",
+        "older": "أقدم"
+      }
     }
   },
   "home": {
@@ -706,7 +725,20 @@
     "noFollowersYet": "لا يوجد متابِعون بعد",
     "notFollowingAnyone": "لا يتابع أحدًا بعد",
     "followersTab": "المتابِعون",
-    "followingTab": "المتابَعون"
+    "followingTab": "المتابَعون",
+    "badges": {
+      "persona": {
+        "internationalStudent": "طالب دولي",
+        "skilledWorker": "عامل ماهر",
+        "refugee": "لاجئ",
+        "newcomer": "وافد جديد"
+      },
+      "timeInCanada": {
+        "lessThanOneYear": "أقل من سنة",
+        "oneToThreeYears": "من سنة إلى 3 سنوات",
+        "threePlusYears": "أكثر من 3 سنوات"
+      }
+    }
   },
   "profilePicture": {
     "chooseFromLibrary": "الاختيار من المكتبة",
@@ -867,7 +899,11 @@
     "loadingInviteCode": "جارٍ تحميل رمز الدعوة",
     "friendCount": "انضم {{count}} صديق إلى Unify بفضلك.",
     "friendCount_plural": "انضم {{count}} أصدقاء إلى Unify بفضلك.",
-    "isInGroups": "{{name}} موجود في هذه المجموعات"
+    "isInGroups": "{{name}} موجود في هذه المجموعات",
+    "inviteSenderWithCity": "{{name}} من {{city}}",
+    "inviteSenderFallback": "صديق",
+    "inviteMessageIntro": "دعاك {{sender}} للانضمام إليه على Unify، تطبيق كندا للوافدين الجدد. حمّله الآن لتبسيط رحلتك: {{url}}",
+    "inviteMessageCode": "رمز الدعوة: {{code}}"
   },
   "welcome": {
     "title": "مرحبًا بك في Unify.",
@@ -958,7 +994,65 @@
     "hourAgo": "قبل {{count}} ساعة",
     "hourAgo_plural": "قبل {{count}} ساعات",
     "dayAgo": "قبل {{count}} يوم",
-    "dayAgo_plural": "قبل {{count}} أيام"
+    "dayAgo_plural": "قبل {{count}} أيام",
+    "persona": {
+      "international_student": "الطلاب الدوليون",
+      "skilled_worker": "العمال المهرة",
+      "refugee": "اللاجئون والأشخاص المحميون",
+      "other": "الوافدون الجدد"
+    },
+    "timeInCanada": {
+      "not_arrived": "لم يصل بعد",
+      "less_than_1_year": "جديد في كندا (أقل من سنة)",
+      "1_to_2_years": "يعيش في كندا (من سنة إلى سنتين)",
+      "2_to_3_years": "يعيش في كندا (من سنتين إلى 3 سنوات)",
+      "3_plus_years": "يعيش في كندا (أكثر من 3 سنوات)"
+    },
+    "timeInCanadaUnspecified": "المدة في كندا (غير محددة)",
+    "entryCard": {
+      "inCircleBadge": "داخل الدائرة",
+      "inCircleCta": "افتح دائرتي",
+      "inCircleSubtitle": "دائرتك نشطة! تحدّث مع الوافدين الجدد الآخرين.",
+      "waitingBadge": "جارٍ البحث عن تطابق",
+      "waitingCta": "تحقّق من الحالة",
+      "waitingSubtitle": "نبحث عن أشخاص مثلك. سنخبرك فور العثور على تطابق!",
+      "joinCta": "انضم إلى دائرتك"
+    },
+    "completion": {
+      "headline": "أنت جاهز للانضمام إلى دائرة",
+      "body": "سنخبرك عندما يصبح ثلاثة أشخاص آخرين يسلكون المسار نفسه جاهزين، ثم نجمعكم في دائرة Unify لمدة 14 يومًا."
+    },
+    "quiz": {
+      "step1Title": "ما هدفك الأساسي؟",
+      "step1Subtitle": "هذا يساعدنا على مطابقتك مع أشخاص يشاركونك الأهداف",
+      "step2Title": "عن ماذا تودّ أن تتحدث؟",
+      "step2Subtitle": "اختر كل المواضيع التي تودّ أن تغطيها دائرتك",
+      "step3Title": "كل شيء جاهز!",
+      "step3Subtitle": "سنطابقك مع 3 وافدين جدد آخرين يشاركونك أهدافك",
+      "goals": {
+        "make_friends": "تكوين صداقات جديدة في كندا",
+        "practice_english": "ممارسة الإنجليزية أو الفرنسية",
+        "job_search": "تبادل النصائح حول العمل والسيرة الذاتية",
+        "wellness": "الحفاظ على الحافز والتشجيع"
+      },
+      "topics": {
+        "immigration": "معاملات الهجرة",
+        "housing": "الإيجار والبحث عن سكن",
+        "finances": "الميزانية والخدمات المصرفية",
+        "community": "الصداقات والحياة الاجتماعية",
+        "career": "الوظائف والسير الذاتية والمقابلات"
+      },
+      "errorPickGoal": "يرجى اختيار واحد",
+      "errorPickTopic": "اختر موضوعًا واحدًا على الأقل",
+      "topicsSelected": "تم اختيار {{count}} موضوع",
+      "topicsSelected_plural": "تم اختيار {{count}} مواضيع",
+      "topicsToDiscuss": "{{count}} موضوع للنقاش",
+      "topicsToDiscuss_plural": "{{count}} مواضيع للنقاش",
+      "completionSubtitle": "سنطابقك مع 3 وافدين جدد آخرين يشاركونك أهدافك واهتماماتك. يستغرق ذلك عادة من بضع دقائق إلى بضع ساعات.",
+      "summaryLabel": "تفضيلات دائرتك",
+      "notSelected": "لم يتم الاختيار",
+      "joinWaitingRoom": "ادخل غرفة الانتظار"
+    }
   },
   "onboarding": {
     "stepOf": "الخطوة {{current}} من {{total}}",
@@ -1190,5 +1284,91 @@
     "showOriginal": "عرض النص الأصلي",
     "limitReached": "تم الوصول إلى حد الترجمة اليومي",
     "unavailable": "الترجمة غير متاحة، حاول مرة أخرى"
+  },
+  "preLogin": {
+    "outcomes": {
+      "heading": "إليك ما يمكنك تحقيقه خلال 3 أشهر",
+      "navigate": {
+        "title": "تنقّل بثقة",
+        "description": "جهّز الأساسيات لتشعر بأنك في بيتك في كندا."
+      },
+      "answers": {
+        "title": "احصل على إجابات سريعة وموثوقة",
+        "description": "إرشاد موثوق عندما تحتاج إليه."
+      },
+      "community": {
+        "title": "ابنِ مجتمعك",
+        "description": "تواصل مع أشخاص يخوضون رحلة مشابهة."
+      }
+    },
+    "belonging": {
+      "title": "الانتماء يبدأ من هنا",
+      "description": "انضم إلى مجموعات حسب المدينة والموضوع، واكتشف الفعاليات، وتواصل مع أشخاص يمرّون بتجارب مشابهة."
+    },
+    "checklist": {
+      "title": "اعرف ما عليك فعله بعد ذلك",
+      "description": "احصل على قائمة استقرار مخصّصة لوضعك، وتقدّم خطوة بخطوة بوضوح أكبر وتوتر أقل.",
+      "doNow": "افعل الآن",
+      "progress": "{{completed}}/{{total}} مكتمل",
+      "itemSubtitle": "مطلوب للعمل والحصول على الخدمات",
+      "items": {
+        "sin": "احصل على رقم التأمين الاجتماعي (SIN)",
+        "bank": "افتح حسابًا مصرفيًا",
+        "phone": "احصل على خطة هاتف",
+        "health": "قدّم طلبًا للتغطية الصحية في المقاطعة\n(MSP أو ما يعادله)"
+      },
+      "modal": {
+        "title": "احصل على رقم SIN",
+        "description": "رقم SIN مطلوب للعمل والضرائب والمزايا الحكومية وغيرها من الإجراءات الأساسية."
+      }
+    },
+    "companion": {
+      "title": "احصل على إجابات تثق بها",
+      "description": "اطرح أسئلتك في أي وقت واحصل على إرشاد عملي ومخصّص يستند إلى مصادر كندية موثوقة.",
+      "userMessage": "أنا طالب دولي وصلت للتو إلى كندا. هل يمكنك أن تشرح لي نظام النقل في بريتيش كولومبيا؟",
+      "atAGlance": "لمحة سريعة",
+      "glanceBody": "يشمل نظام النقل في بريتيش كولومبيا الحافلات وSkyTrain وSeaBus وWest Coast Express، وتديرها غالبًا شركة TransLink في مترو فانكوفر؛ وهو مهم للتنقل، خاصة إذا لم تكن تملك سيارة.",
+      "whatToKnow": "ما تحتاج إلى معرفته",
+      "translinkLabel": "TransLink:",
+      "translinkBody": "تشغّل معظم وسائل النقل العام في مترو فانكوفر، بما في ذلك الحافلات وSkyTrain وSeaBus...",
+      "askAnything": {
+        "title": "اسأل أي شيء",
+        "description": "احصل على إجابات لأي سؤال عن الهجرة"
+      },
+      "formHelp": {
+        "title": "مساعدة في النماذج",
+        "description": "احصل على إرشاد خطوة بخطوة لأي نموذج"
+      }
+    },
+    "learn": {
+      "title": "استقرّ بثقة",
+      "description": "استكشف دروس Unify البسيطة ومصادرها الموثوقة حول الهجرة والسكن والمال والعمل والحياة اليومية في كندا.",
+      "sections": "{{total}} أقسام",
+      "subjects": {
+        "finance": "المال",
+        "employment": "العمل",
+        "housing": "السكن",
+        "documentation": "الوثائق"
+      }
+    },
+    "circles": {
+      "title": "Unify Circles",
+      "description": "نطابقك مع 3 وافدين جدد يسلكون مسارًا مشابهًا لمسارك في تجربة دردشة جماعية لمدة أسبوعين!",
+      "cta": "انضم إلى دائرتك"
+    },
+    "event": {
+      "name": "لقاء الوافدين الجدد",
+      "time": "4:30–6:30 مساءً",
+      "venue": "مكتبة ميتروتاون العامة"
+    },
+    "group": {
+      "name": "طلاب SFU الدوليون...",
+      "members": "{{total}} عضوًا"
+    }
+  },
+  "notFound": {
+    "title": "عذرًا!",
+    "message": "هذه الشاشة غير موجودة.",
+    "goHome": "انتقل إلى الشاشة الرئيسية!"
   }
 }

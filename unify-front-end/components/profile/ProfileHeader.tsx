@@ -201,7 +201,7 @@ export const ProfileHeader = ({
           <View style={styles.badgesRow}>
             {personaBadge && (
               <InfoBadge
-                label={personaBadge.label}
+                label={personaBadge.labelText ?? t(personaBadge.labelKey)}
                 iconName={personaBadge.iconName}
                 backgroundColor={personaBadge.colors.backgroundColor}
                 textColor={personaBadge.colors.textColor}
@@ -210,7 +210,7 @@ export const ProfileHeader = ({
             )}
             {timeInCanadaBadge && (
               <InfoBadge
-                label={timeInCanadaBadge.label}
+                label={t(timeInCanadaBadge.labelKey)}
                 iconName={timeInCanadaBadge.iconName}
                 backgroundColor={timeInCanadaBadge.colors.backgroundColor}
                 textColor={timeInCanadaBadge.colors.textColor}

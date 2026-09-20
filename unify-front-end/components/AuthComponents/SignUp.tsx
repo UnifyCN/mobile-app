@@ -29,7 +29,11 @@ import { createUserIfNotExists } from '../../utils/createUserIfNotExists';
 import { SimpleTextField } from './Components';
 import { useAnalytics } from '@/utils/analytics';
 import LegalWebView from '@/components/LegalWebView';
-import { LEGAL_URLS, LEGAL_TITLES, LegalDocumentType } from '@/utils/legalUrls';
+import {
+  LEGAL_URLS,
+  LEGAL_TITLE_KEYS,
+  LegalDocumentType,
+} from '@/utils/legalUrls';
 
 // Auth component scaling factor (0.87) — shared convention across all auth screens
 const S = 0.87;
@@ -609,7 +613,7 @@ export function SignUp({
         {webViewDoc && (
           <LegalWebView
             url={LEGAL_URLS[webViewDoc]}
-            title={LEGAL_TITLES[webViewDoc]}
+            title={t(LEGAL_TITLE_KEYS[webViewDoc])}
             onClose={() => setWebViewDoc(null)}
           />
         )}

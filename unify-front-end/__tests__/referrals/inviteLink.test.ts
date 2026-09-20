@@ -7,6 +7,23 @@ import {
   INVITE_CLIPBOARD_PREFIX,
 } from '@/utils/inviteLink';
 import { APP_STORE_URL } from '@/constants/appStore';
+import en from '@/i18n/locales/en/translation.json';
+
+/**
+ * Minimal i18next stand-in backed by the real English catalogue, so these
+ * assertions break if a key is renamed or dropped from the locale files.
+ */
+const t = (key: string, options?: Record<string, unknown>): string => {
+  const value = key
+    .split('.')
+    .reduce<any>((acc, part) => acc?.[part], en as any);
+  if (typeof value !== 'string') {
+    throw new Error(`Missing en translation for key: ${key}`);
+  }
+  return value.replace(/\{\{\s*(\w+)\s*\}\}/g, (_m, name) =>
+    String(options?.[name] ?? '')
+  );
+};
 
 describe('inviteLink utils', () => {
   describe('parseInviteCode', () => {
@@ -71,7 +88,7 @@ describe('inviteLink utils', () => {
 
   describe('formatInviteMessage', () => {
     it('uses username + city when both present', () => {
-      const msg = formatInviteMessage({
+      const msg = formatInviteMessage(t, {
         username: 'Sarah',
         city: 'Toronto',
         code: 'YQAR67',
@@ -82,7 +99,7 @@ describe('inviteLink utils', () => {
     });
 
     it('omits city when null', () => {
-      const msg = formatInviteMessage({
+      const msg = formatInviteMessage(t, {
         username: 'Sarah',
         city: null,
         code: 'YQAR67',
@@ -93,7 +110,7 @@ describe('inviteLink utils', () => {
     });
 
     it('falls back to "A friend" when username is empty', () => {
-      const msg = formatInviteMessage({
+      const msg = formatInviteMessage(t, {
         username: '   ',
         city: null,
         code: 'YQAR67',
@@ -102,7 +119,7 @@ describe('inviteLink utils', () => {
     });
 
     it('embeds the invite code in the message body so recipients can paste manually', () => {
-      const msg = formatInviteMessage({
+      const msg = formatInviteMessage(t, {
         username: 'Sarah',
         city: null,
         code: 'YQAR67',
@@ -111,7 +128,7 @@ describe('inviteLink utils', () => {
     });
 
     it('embeds the canonical `unify-invite:CODE` form so a clipboard round-trip can be parsed', () => {
-      const msg = formatInviteMessage({
+      const msg = formatInviteMessage(t, {
         username: 'Sarah',
         city: null,
         code: 'YQAR67',

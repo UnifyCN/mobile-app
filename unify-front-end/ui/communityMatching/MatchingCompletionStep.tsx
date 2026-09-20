@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Theme } from '@/constants/Theme';
 
 export function MatchingCompletionStep() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.root}>
-      <Text style={styles.headline}>You’re ready to join a circle</Text>
-      <Text style={styles.body}>
-        We’ll notify you when three other people with the same path are ready,
-        then connect you in a 14-day Unify Circle.
-      </Text>
+      <Text style={styles.headline}>{t('circles.completion.headline')}</Text>
+      <Text style={styles.body}>{t('circles.completion.body')}</Text>
     </View>
   );
 }

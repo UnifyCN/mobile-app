@@ -91,7 +91,7 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
   suggestedNextSteps,
   onSuggestionPress,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showSources, setShowSources] = useState(false);
   const [selectedSource, setSelectedSource] = useState<{
     url: string;
@@ -153,7 +153,7 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
               return (
                 <Text style={styles.lastVerifiedText}>
                   {t('companion.sourcesVerified')}{' '}
-                  {parsedLastVerified.toLocaleDateString('en-CA', {
+                  {parsedLastVerified.toLocaleDateString(i18n.language, {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',

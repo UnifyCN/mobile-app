@@ -308,13 +308,13 @@ export default function WaitingRoomScreen() {
           <View style={styles.criteriaRow}>
             <Feather name='user' size={16} color='#ff820b' />
             <Text style={styles.criteriaText}>
-              {formatPersonaLabel(waitlistEntry.persona)}
+              {formatPersonaLabel(t, waitlistEntry.persona)}
             </Text>
           </View>
           <View style={styles.criteriaRow}>
             <Feather name='calendar' size={16} color='#ff820b' />
             <Text style={styles.criteriaText}>
-              {formatTimeInCanadaLabel(waitlistEntry.time_in_canada)}
+              {formatTimeInCanadaLabel(t, waitlistEntry.time_in_canada)}
             </Text>
           </View>
         </View>

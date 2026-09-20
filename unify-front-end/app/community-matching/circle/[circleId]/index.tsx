@@ -31,7 +31,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingScreen from '@/components/LoadingScreen';
 
 export default function CircleDetailsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { circleId } = useLocalSearchParams<{ circleId: string }>();
@@ -169,10 +169,21 @@ export default function CircleDetailsScreen() {
     if (!circle) return null;
     const start = new Date(circle.created_at);
     const end = new Date(circle.ends_at);
-    const format = (date: Date) =>
-      date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    const format = (date: Date) => {
+      try {
+        return date.toLocaleDateString(i18n.language, {
+          month: 'short',
+          day: 'numeric',
+        });
+      } catch {
+        return date.toLocaleDateString(undefined, {
+          month: 'short',
+          day: 'numeric',
+        });
+      }
+    };
     return `${format(start)} — ${format(end)}`;
-  }, [circle]);
+  }, [circle, i18n.language]);
 
   const countdownText = useMemo(() => {
     if (!circle || circle.status === 'ended') return null;
@@ -224,8 +235,8 @@ export default function CircleDetailsScreen() {
       <BackHeader title='' onBack={() => router.back()} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <CircleHeader
-          title={formatPersonaLabel(circle.persona)}
-          subtitle={formatTimeInCanadaLabel(circle.time_in_canada)}
+          title={formatPersonaLabel(t, circle.persona)}
+          subtitle={formatTimeInCanadaLabel(t, circle.time_in_canada)}
           dateRange={formattedDates}
           countdownText={countdownText}
           isActive={isActive}
@@ -281,7 +292,7 @@ export default function CircleDetailsScreen() {
                           {member.user.username}
                         </Text>
                         <Text style={styles.graduationMemberRole}>
-                          {formatPersonaLabel(circle.persona)}
+                          {formatPersonaLabel(t, circle.persona)}
                         </Text>
                       </View>
                     </TouchableOpacity>

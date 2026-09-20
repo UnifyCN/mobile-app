@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import ChecklistCard from '../cards/ChecklistCard';
 import ChecklistModalCard from '../cards/ChecklistModalCard';
 
@@ -24,6 +25,8 @@ const CONTAINER_W = 330 * S;
 const CONTAINER_H = 406 * S;
 
 export default function ChecklistScreen() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View
@@ -49,10 +52,9 @@ export default function ChecklistScreen() {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Know What to Do Next</Text>
+        <Text style={styles.title}>{t('preLogin.checklist.title')}</Text>
         <Text style={styles.description}>
-          Get a personalized settlement checklist for your situation, and move
-          forward step-by-step with more clarity and less stress.
+          {t('preLogin.checklist.description')}
         </Text>
       </View>
     </View>

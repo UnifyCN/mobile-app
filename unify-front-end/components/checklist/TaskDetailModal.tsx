@@ -184,7 +184,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                     color={priority.color}
                   />
                   <Text style={[styles.priorityLabel, { color: priority.color }]}>
-                    {priority.label}
+                    {t(priority.labelKey)}
                   </Text>
                 </View>
 
@@ -193,7 +193,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                     onPress={onDeleteCustomTask}
                     style={styles.trashButton}
                     accessibilityRole='button'
-                    accessibilityLabel='Delete task'
+                    accessibilityLabel={t('checklist.deleteTask')}
                     hitSlop={10}
                   >
                     <MaterialIcons

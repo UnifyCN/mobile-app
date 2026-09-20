@@ -66,6 +66,7 @@ export default function MoreGroupsScreen() {
       <BackHeader title={t('groups.title')} />
 
       <View style={styles.tabsContainer}>
+        {/* eslint-disable-next-line i18next/no-literal-string -- tab ids, not copy; the visible label comes from t() below */}
         {(['discover', 'joined'] as GroupsTab[]).map(tab => {
           const active = activeTab === tab;
 

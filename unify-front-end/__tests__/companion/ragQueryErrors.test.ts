@@ -1,10 +1,11 @@
 import {
   AICompanionBusyError,
   AICompanionLimitError,
-  BUSY_FALLBACK_MESSAGE,
-  DAILY_LIMIT_FALLBACK_MESSAGE,
+  BUSY_FALLBACK_MESSAGE_KEY,
+  DAILY_LIMIT_FALLBACK_MESSAGE_KEY,
   classifyRagQueryError,
 } from '@/helpers/companion/ragQueryErrors';
+import en from '@/i18n/locales/en/translation.json';
 
 describe('classifyRagQueryError', () => {
   describe('daily limit (429)', () => {
@@ -17,12 +18,19 @@ describe('classifyRagQueryError', () => {
       expect(err).toBeInstanceOf(AICompanionLimitError);
       expect((err as AICompanionLimitError).code).toBe('daily_limit_reached');
       expect(err.message).toBe('Daily message limit reached. Try again tomorrow.');
+      expect((err as AICompanionLimitError).messageKey).toBe(
+        DAILY_LIMIT_FALLBACK_MESSAGE_KEY
+      );
     });
 
-    it('maps a bare 429 (no/invalid body) to AICompanionLimitError with fallback copy', () => {
+    it('maps a bare 429 (no/invalid body) to AICompanionLimitError carrying the fallback i18n key', () => {
       const err = classifyRagQueryError(429, '');
       expect(err).toBeInstanceOf(AICompanionLimitError);
-      expect(err.message).toBe(DAILY_LIMIT_FALLBACK_MESSAGE);
+      expect((err as AICompanionLimitError).messageKey).toBe(
+        DAILY_LIMIT_FALLBACK_MESSAGE_KEY
+      );
+      // Diagnostic message stays machine-readable; it is never shown to users.
+      expect(err.message).toBe('rag-query 429: daily_limit_reached');
     });
 
     it('maps the daily_limit_reached code even if the status is not 429', () => {
@@ -42,10 +50,20 @@ describe('classifyRagQueryError', () => {
       expect(err.message).toContain('busy');
     });
 
-    it('maps a bare 503 to AICompanionBusyError with fallback copy', () => {
+    it('maps a bare 503 to AICompanionBusyError carrying the fallback i18n key', () => {
       const err = classifyRagQueryError(503, '');
       expect(err).toBeInstanceOf(AICompanionBusyError);
-      expect(err.message).toBe(BUSY_FALLBACK_MESSAGE);
+      expect((err as AICompanionBusyError).messageKey).toBe(
+        BUSY_FALLBACK_MESSAGE_KEY
+      );
+      expect(err.message).toBe('rag-query 503: ai_companion_busy');
+    });
+
+    it('exposes fallback keys that exist in the English catalogue', () => {
+      const resolve = (key: string) =>
+        key.split('.').reduce<any>((acc, part) => acc?.[part], en);
+      expect(typeof resolve(BUSY_FALLBACK_MESSAGE_KEY)).toBe('string');
+      expect(typeof resolve(DAILY_LIMIT_FALLBACK_MESSAGE_KEY)).toBe('string');
     });
   });
 

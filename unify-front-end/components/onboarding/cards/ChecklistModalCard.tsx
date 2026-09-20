@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 
 interface ChecklistModalCardProps {
@@ -9,6 +10,7 @@ interface ChecklistModalCardProps {
 export default function ChecklistModalCard({
   scale = 1,
 }: ChecklistModalCardProps) {
+  const { t } = useTranslation();
   const s = scale;
 
   return (
@@ -41,7 +43,7 @@ export default function ChecklistModalCard({
 
       {/* Title */}
       <Text style={[styles.title, { fontSize: 14.4 * s, marginBottom: 6 * s }]}>
-        Get Your SIN
+        {t('preLogin.checklist.modal.title')}
       </Text>
 
       {/* Description */}
@@ -51,8 +53,7 @@ export default function ChecklistModalCard({
           { fontSize: 9.6 * s, lineHeight: 13 * s, marginBottom: 14 * s },
         ]}
       >
-        Your SIN is required for employment, taxes, government benefits, and
-        other essential processes.
+        {t('preLogin.checklist.modal.description')}
       </Text>
 
       {/* Learn how button */}
@@ -69,7 +70,7 @@ export default function ChecklistModalCard({
         ]}
       >
         <Text style={[styles.learnButtonText, { fontSize: 9.6 * s }]}>
-          Learn how
+          {t('checklist.learnHow')}
         </Text>
         <Ionicons name='arrow-forward' size={14 * s} color='#fff' />
       </View>
@@ -87,7 +88,7 @@ export default function ChecklistModalCard({
         ]}
       >
         <Text style={[styles.completeButtonText, { fontSize: 9.6 * s }]}>
-          Mark as complete
+          {t('checklist.markAsComplete')}
         </Text>
         <Ionicons name='checkmark' size={14 * s} color='#4E7E4C' />
       </View>

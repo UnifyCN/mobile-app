@@ -1,5 +1,13 @@
 import { Conversation } from '@/services/companion/getConversations';
 
+/**
+ * Title persisted for a conversation that has no generated title yet. It is a
+ * database value, not display copy — the UI renders
+ * `companion.history.untitled` whenever a title equals this sentinel or is
+ * blank, so the row reads in the user's language.
+ */
+export const DEFAULT_CONVERSATION_TITLE = 'New Conversation';
+
 export interface GroupedConversations {
   yesterday: Conversation[];
   last7Days: Conversation[];
@@ -8,26 +16,40 @@ export interface GroupedConversations {
 }
 
 export interface ConversationSection {
-  title: string;
+  /** i18n key — the caller translates it at render time. */
+  titleKey: string;
   data: Conversation[];
   key: string;
 }
 
 /**
- * Filters conversations by search query (searches in title)
+ * Filters conversations by search query (searches in title).
+ *
+ * `untitledLabel` is the already-translated label shown for conversations that
+ * still carry the database default title, so a search matches what the user
+ * actually sees on screen.
  */
 export const filterConversations = (
   conversations: Conversation[] | undefined,
-  searchQuery: string
+  searchQuery: string,
+  untitledLabel: string = DEFAULT_CONVERSATION_TITLE
 ): Conversation[] => {
   if (!conversations) return [];
   if (!searchQuery.trim()) return conversations;
 
   const query = searchQuery.toLowerCase();
-  return conversations.filter(conv =>
-    (conv.title || 'New Conversation').toLowerCase().includes(query)
-  );
+  return conversations.filter(conv => {
+    const label = isUntitledConversation(conv.title)
+      ? untitledLabel
+      : (conv.title ?? '');
+    return label.toLowerCase().includes(query);
+  });
 };
+
+/** True when a conversation has no real title of its own yet. */
+export const isUntitledConversation = (
+  title: string | null | undefined
+): boolean => !title?.trim() || title === DEFAULT_CONVERSATION_TITLE;
 
 /**
  * Groups conversations by date ranges: Yesterday, Previous 7 Days, Previous 30 Days
@@ -90,22 +112,22 @@ export const createConversationSections = (
 ): ConversationSection[] => {
   return [
     {
-      title: 'Yesterday',
+      titleKey: 'companion.history.sections.yesterday',
       data: grouped.yesterday,
       key: 'yesterday',
     },
     {
-      title: 'Previous 7 Days',
+      titleKey: 'companion.history.sections.previous7Days',
       data: grouped.last7Days,
       key: 'last7Days',
     },
     {
-      title: 'Previous 30 Days',
+      titleKey: 'companion.history.sections.previous30Days',
       data: grouped.last30Days,
       key: 'last30Days',
     },
     {
-      title: 'Older',
+      titleKey: 'companion.history.sections.older',
       data: grouped.older,
       key: 'older',
     },

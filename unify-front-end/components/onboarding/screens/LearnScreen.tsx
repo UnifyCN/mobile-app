@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
+import { formatNumber } from '@/utils/formatNumber';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -87,6 +89,10 @@ function SubjectCard({
 }
 
 export default function LearnScreen() {
+  const { t } = useTranslation();
+  const sectionsLabel = (total: number) =>
+    t('preLogin.learn.sections', { total: formatNumber(total) });
+
   return (
     <View style={styles.container}>
       <View
@@ -100,8 +106,8 @@ export default function LearnScreen() {
           <SubjectCard
             color='#2FA43C'
             iconName='business-outline'
-            title='Finance'
-            sections='8 Sections'
+            title={t('preLogin.learn.subjects.finance')}
+            sections={sectionsLabel(8)}
             width={172}
             height={118}
             borderRadius={20}
@@ -118,8 +124,8 @@ export default function LearnScreen() {
           <SubjectCard
             color='#985DBB'
             iconName='person-outline'
-            title='Employment'
-            sections='5 Sections'
+            title={t('preLogin.learn.subjects.employment')}
+            sections={sectionsLabel(5)}
             width={169}
             height={116}
             borderRadius={20}
@@ -136,8 +142,8 @@ export default function LearnScreen() {
           <SubjectCard
             color='#E78D42'
             iconName='home-outline'
-            title='Housing'
-            sections='3 Sections'
+            title={t('preLogin.learn.subjects.housing')}
+            sections={sectionsLabel(3)}
             width={149}
             height={102}
             borderRadius={17}
@@ -154,8 +160,8 @@ export default function LearnScreen() {
           <SubjectCard
             color='#2C7ACD'
             iconName='document-text-outline'
-            title='Documentation'
-            sections='5 Sections'
+            title={t('preLogin.learn.subjects.documentation')}
+            sections={sectionsLabel(5)}
             width={203}
             height={139}
             borderRadius={24}
@@ -164,10 +170,9 @@ export default function LearnScreen() {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Settle In With Confidence</Text>
+        <Text style={styles.title}>{t('preLogin.learn.title')}</Text>
         <Text style={styles.description}>
-          Explore Unify's simple lessons and trusted resources on immigration,
-          housing, finances, work, and everyday life in Canada.
+          {t('preLogin.learn.description')}
         </Text>
       </View>
     </View>

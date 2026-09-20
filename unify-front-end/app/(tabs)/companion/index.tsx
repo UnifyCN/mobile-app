@@ -325,10 +325,11 @@ export default function CompanionScreen() {
         ) {
           setInputText(textToSend);
         }
-        if (error instanceof AICompanionBusyError) {
-          showToast(t('companion.busyToast'));
-        } else if (error instanceof AICompanionLimitError) {
-          showToast(t('companion.dailyLimitReachedToast'));
+        if (
+          error instanceof AICompanionBusyError ||
+          error instanceof AICompanionLimitError
+        ) {
+          showToast(t(error.messageKey));
         }
       }
     },

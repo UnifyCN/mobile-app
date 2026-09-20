@@ -133,7 +133,7 @@ export default function AccountSettingsPage() {
       console.error('Delete account failed', err);
       Alert.alert(
         t('settings.couldNotDelete'),
-        err instanceof Error ? err.message : t('settings.couldNotDelete')
+        t('settings.couldNotDeleteMessage')
       );
     } finally {
       setIsDeletingAccount(false);

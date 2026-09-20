@@ -28,7 +28,7 @@ export const ChecklistSectionHeader: React.FC<ChecklistSectionHeaderProps> = ({
         <MaterialIcons name={config.icon} size={32} color={config.color} />
       </View>
       <View style={styles.text}>
-        <ThemedText style={styles.priority}>{priority}</ThemedText>
+        <ThemedText style={styles.priority}>{t(config.labelKey)}</ThemedText>
         <ThemedText style={styles.count}>
           {t('checklist.completeCount', {
             completed: completedCount,

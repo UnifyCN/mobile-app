@@ -191,7 +191,8 @@
     "deleting": "Đang xóa…",
     "accountDeleted": "Tài khoản đã xóa",
     "accountDeletedMessage": "Tài khoản Unify của bạn đã bị xóa vĩnh viễn.",
-    "couldNotDelete": "Không thể xóa tài khoản"
+    "couldNotDelete": "Không thể xóa tài khoản",
+    "couldNotDeleteMessage": "Chúng tôi không thể xóa tài khoản của bạn. Vui lòng thử lại sau."
   },
   "editName": {
     "title": "Tên",
@@ -520,7 +521,8 @@
         },
         "footnote": "Danh mục này là điểm khởi đầu, không phải tư vấn pháp lý hay tài chính. Hãy xác nhận thông tin với tổ chức trước khi đến. Để báo một mục còn thiếu hoặc đã lỗi thời, hãy gửi email tới contact@unifysocial.ca."
       }
-    }
+    },
+    "typeHerePlaceholder": "Nhập tại đây"
   },
   "checklist": {
     "title": "Danh sách cá nhân",
@@ -561,7 +563,15 @@
       "priorityDoSoon": "Làm sớm",
       "priorityExploreConnect": "Khám phá & kết nối",
       "priorityOptionalLater": "Tùy chọn / sau"
-    }
+    },
+    "priority": {
+      "doNow": "Làm ngay",
+      "doSoon": "Làm sớm",
+      "exploreAndConnect": "Khám phá và kết nối",
+      "optionalLater": "Tùy chọn / để sau"
+    },
+    "reorderTask": "Sắp xếp lại {{name}}",
+    "reorderHint": "Nhấn giữ và kéo để thay đổi thứ tự của mục này trong phần"
   },
   "companion": {
     "goBack": "Quay lại",
@@ -627,7 +637,16 @@
     "history": {
       "newChat": "Cuộc trò chuyện mới",
       "noConversationsFound": "Không tìm thấy cuộc trò chuyện",
-      "noConversationsYet": "Chưa có cuộc trò chuyện nào"
+      "noConversationsYet": "Chưa có cuộc trò chuyện nào",
+      "title": "Lịch sử trò chuyện",
+      "searchPlaceholder": "Tìm cuộc trò chuyện...",
+      "untitled": "Cuộc trò chuyện mới",
+      "sections": {
+        "yesterday": "Hôm qua",
+        "previous7Days": "7 ngày trước",
+        "previous30Days": "30 ngày trước",
+        "older": "Cũ hơn"
+      }
     }
   },
   "home": {
@@ -706,7 +725,20 @@
     "noFollowersYet": "Chưa có người theo dõi",
     "notFollowingAnyone": "Chưa theo dõi ai",
     "followersTab": "Người theo dõi",
-    "followingTab": "Đang theo dõi"
+    "followingTab": "Đang theo dõi",
+    "badges": {
+      "persona": {
+        "internationalStudent": "Du học sinh",
+        "skilledWorker": "Lao động tay nghề cao",
+        "refugee": "Người tị nạn",
+        "newcomer": "Người mới đến"
+      },
+      "timeInCanada": {
+        "lessThanOneYear": "Dưới 1 năm",
+        "oneToThreeYears": "1–3 năm",
+        "threePlusYears": "Trên 3 năm"
+      }
+    }
   },
   "profilePicture": {
     "chooseFromLibrary": "Chọn từ thư viện",
@@ -867,7 +899,11 @@
     "loadingInviteCode": "Đang tải mã mời",
     "friendCount": "{{count}} bạn đã tham gia Unify nhờ bạn.",
     "friendCount_plural": "{{count}} bạn đã tham gia Unify nhờ bạn.",
-    "isInGroups": "{{name}} đang ở trong các nhóm này"
+    "isInGroups": "{{name}} đang ở trong các nhóm này",
+    "inviteSenderWithCity": "{{name}} từ {{city}}",
+    "inviteSenderFallback": "Một người bạn",
+    "inviteMessageIntro": "{{sender}} đã mời bạn tham gia Unify, ứng dụng dành cho người mới đến Canada. Tải ngay để hành trình của bạn dễ dàng hơn: {{url}}",
+    "inviteMessageCode": "Mã mời: {{code}}"
   },
   "welcome": {
     "title": "Chào mừng đến Unify.",
@@ -958,7 +994,65 @@
     "hourAgo": "{{count}} giờ trước",
     "hourAgo_plural": "{{count}} giờ trước",
     "dayAgo": "{{count}} ngày trước",
-    "dayAgo_plural": "{{count}} ngày trước"
+    "dayAgo_plural": "{{count}} ngày trước",
+    "persona": {
+      "international_student": "Du học sinh",
+      "skilled_worker": "Lao động tay nghề cao",
+      "refugee": "Người tị nạn và người được bảo vệ",
+      "other": "Người mới đến"
+    },
+    "timeInCanada": {
+      "not_arrived": "Chưa đến Canada",
+      "less_than_1_year": "Mới đến Canada (dưới 1 năm)",
+      "1_to_2_years": "Sống ở Canada (1–2 năm)",
+      "2_to_3_years": "Sống ở Canada (2–3 năm)",
+      "3_plus_years": "Sống ở Canada (trên 3 năm)"
+    },
+    "timeInCanadaUnspecified": "Thời gian ở Canada (chưa rõ)",
+    "entryCard": {
+      "inCircleBadge": "Đang trong Circle",
+      "inCircleCta": "Mở Circle của tôi",
+      "inCircleSubtitle": "Circle của bạn đang hoạt động! Hãy trò chuyện với những người mới đến khác.",
+      "waitingBadge": "Đang tìm người phù hợp",
+      "waitingCta": "Xem trạng thái",
+      "waitingSubtitle": "Chúng tôi đang tìm những người giống bạn. Bạn sẽ được thông báo khi có kết quả ghép nhóm!",
+      "joinCta": "Tham gia Circle của bạn"
+    },
+    "completion": {
+      "headline": "Bạn đã sẵn sàng tham gia một circle",
+      "body": "Chúng tôi sẽ thông báo cho bạn khi có thêm ba người cùng hành trình sẵn sàng, rồi kết nối các bạn trong một Unify Circle kéo dài 14 ngày."
+    },
+    "quiz": {
+      "step1Title": "Mục tiêu chính của bạn là gì?",
+      "step1Subtitle": "Điều này giúp chúng tôi ghép bạn với những người có mục tiêu tương tự",
+      "step2Title": "Bạn muốn trò chuyện về điều gì?",
+      "step2Subtitle": "Chọn tất cả chủ đề mà bạn muốn circle của mình thảo luận",
+      "step3Title": "Bạn đã sẵn sàng!",
+      "step3Subtitle": "Chúng tôi sẽ ghép bạn với 3 người mới đến khác có cùng mục tiêu",
+      "goals": {
+        "make_friends": "Kết bạn mới ở Canada",
+        "practice_english": "Luyện tiếng Anh hoặc tiếng Pháp",
+        "job_search": "Trao đổi kinh nghiệm về việc làm và hồ sơ xin việc",
+        "wellness": "Giữ động lực và được khích lệ"
+      },
+      "topics": {
+        "immigration": "Thủ tục nhập cư",
+        "housing": "Thuê nhà và tìm chỗ ở",
+        "finances": "Lập ngân sách và ngân hàng",
+        "community": "Kết bạn và đời sống xã hội",
+        "career": "Việc làm, hồ sơ và phỏng vấn"
+      },
+      "errorPickGoal": "Vui lòng chọn một mục",
+      "errorPickTopic": "Hãy chọn ít nhất một chủ đề",
+      "topicsSelected": "Đã chọn {{count}} chủ đề",
+      "topicsSelected_plural": "Đã chọn {{count}} chủ đề",
+      "topicsToDiscuss": "{{count}} chủ đề để thảo luận",
+      "topicsToDiscuss_plural": "{{count}} chủ đề để thảo luận",
+      "completionSubtitle": "Chúng tôi sẽ ghép bạn với 3 người mới đến khác có cùng mục tiêu và mối quan tâm. Việc này thường mất từ vài phút đến vài giờ.",
+      "summaryLabel": "Lựa chọn circle của bạn",
+      "notSelected": "Chưa chọn",
+      "joinWaitingRoom": "Vào phòng chờ"
+    }
   },
   "onboarding": {
     "stepOf": "Bước {{current}} trên {{total}}",
@@ -1190,5 +1284,91 @@
     "showOriginal": "Xem bản gốc",
     "limitReached": "Đã đạt giới hạn dịch trong ngày",
     "unavailable": "Không thể dịch, hãy thử lại"
+  },
+  "preLogin": {
+    "outcomes": {
+      "heading": "Đây là những gì bạn có thể đạt được trong 3 tháng",
+      "navigate": {
+        "title": "Tự tin định hướng",
+        "description": "Chuẩn bị những điều cơ bản để cảm thấy như ở nhà tại Canada."
+      },
+      "answers": {
+        "title": "Nhận câu trả lời nhanh và đáng tin cậy",
+        "description": "Hướng dẫn đáng tin cậy khi bạn cần."
+      },
+      "community": {
+        "title": "Xây dựng cộng đồng của bạn",
+        "description": "Kết nối với những người có hành trình tương tự."
+      }
+    },
+    "belonging": {
+      "title": "Sự gắn kết bắt đầu từ đây",
+      "description": "Tham gia các nhóm theo thành phố và theo chủ đề, khám phá sự kiện và kết nối với những người có trải nghiệm tương tự."
+    },
+    "checklist": {
+      "title": "Biết bạn cần làm gì tiếp theo",
+      "description": "Nhận danh sách việc cần làm khi định cư, phù hợp với hoàn cảnh của bạn, và tiến từng bước rõ ràng hơn, bớt căng thẳng hơn.",
+      "doNow": "Làm ngay",
+      "progress": "Hoàn thành {{completed}}/{{total}}",
+      "itemSubtitle": "Bắt buộc để đi làm và sử dụng dịch vụ",
+      "items": {
+        "sin": "Lấy số SIN của bạn",
+        "bank": "Mở tài khoản ngân hàng",
+        "phone": "Đăng ký gói điện thoại",
+        "health": "Đăng ký bảo hiểm y tế của tỉnh bang\n(MSP hoặc tương đương)"
+      },
+      "modal": {
+        "title": "Lấy số SIN của bạn",
+        "description": "Số SIN là bắt buộc để đi làm, khai thuế, nhận trợ cấp của chính phủ và các thủ tục thiết yếu khác."
+      }
+    },
+    "companion": {
+      "title": "Nhận câu trả lời bạn có thể tin tưởng",
+      "description": "Đặt câu hỏi ngay khi cần và nhận hướng dẫn thiết thực, phù hợp với bạn, dựa trên các nguồn đáng tin cậy của Canada.",
+      "userMessage": "Tôi là du học sinh vừa đến Canada. Bạn có thể giải thích hệ thống giao thông công cộng ở BC cho tôi không?",
+      "atAGlance": "Tổng quan nhanh",
+      "glanceBody": "Hệ thống giao thông công cộng ở BC gồm xe buýt, SkyTrain, SeaBus và West Coast Express, chủ yếu do TransLink quản lý tại Metro Vancouver; đây là phương tiện quan trọng để đi lại, nhất là khi bạn không có xe hơi.",
+      "whatToKnow": "Những điều bạn cần biết",
+      "translinkLabel": "TransLink:",
+      "translinkBody": "Vận hành phần lớn giao thông công cộng ở Metro Vancouver, gồm xe buýt, SkyTrain và SeaBus...",
+      "askAnything": {
+        "title": "Hỏi bất cứ điều gì",
+        "description": "Nhận câu trả lời cho mọi câu hỏi về nhập cư"
+      },
+      "formHelp": {
+        "title": "Trợ giúp biểu mẫu",
+        "description": "Nhận hướng dẫn từng bước cho mọi biểu mẫu"
+      }
+    },
+    "learn": {
+      "title": "An cư với sự tự tin",
+      "description": "Khám phá các bài học đơn giản và nguồn tài liệu đáng tin cậy của Unify về nhập cư, nhà ở, tài chính, việc làm và cuộc sống hằng ngày ở Canada.",
+      "sections": "{{total}} phần",
+      "subjects": {
+        "finance": "Tài chính",
+        "employment": "Việc làm",
+        "housing": "Nhà ở",
+        "documentation": "Giấy tờ"
+      }
+    },
+    "circles": {
+      "title": "Unify Circles",
+      "description": "Được ghép với 3 người mới đến có hành trình tương tự để trò chuyện nhóm trong 2 tuần!",
+      "cta": "Tham gia Circle của bạn"
+    },
+    "event": {
+      "name": "Buổi gặp gỡ người mới đến",
+      "time": "16:30–18:30",
+      "venue": "Thư viện công cộng Metrotown"
+    },
+    "group": {
+      "name": "SFU Sinh viên quốc tế...",
+      "members": "{{total}} thành viên"
+    }
+  },
+  "notFound": {
+    "title": "Rất tiếc!",
+    "message": "Màn hình này không tồn tại.",
+    "goHome": "Về màn hình chính!"
   }
 }

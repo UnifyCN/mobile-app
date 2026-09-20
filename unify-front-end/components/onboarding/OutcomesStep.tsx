@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Feather } from '@expo/vector-icons';
 import { Theme } from '@/constants/Theme';
 
@@ -24,27 +25,27 @@ function OutcomeCard({ icon, title, description }: OutcomeCardProps) {
 }
 
 export default function OutcomesStep() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>
-          Here’s what you can achieve in 3 months
-        </Text>
+        <Text style={styles.title}>{t('preLogin.outcomes.heading')}</Text>
         <View style={styles.outcomesContainer}>
           <OutcomeCard
             icon='compass'
-            title='Navigate with confidence'
-            description='Build the essentials to feel at home in Canada.'
+            title={t('preLogin.outcomes.navigate.title')}
+            description={t('preLogin.outcomes.navigate.description')}
           />
           <OutcomeCard
             icon='zap'
-            title='Get fast, trusted answers'
-            description='Reliable guidance when you need it.'
+            title={t('preLogin.outcomes.answers.title')}
+            description={t('preLogin.outcomes.answers.description')}
           />
           <OutcomeCard
             icon='users'
-            title='Build your community'
-            description='Connect with people on similar journeys.'
+            title={t('preLogin.outcomes.community.title')}
+            description={t('preLogin.outcomes.community.description')}
           />
         </View>
       </View>

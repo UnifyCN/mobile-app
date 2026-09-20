@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Share, Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import * as Clipboard from 'expo-clipboard';
 import { useQuery } from '@tanstack/react-query';
 
@@ -34,6 +35,7 @@ interface UseInviteResult {
  *                         → fire 'invite_share_sheet_opened' on 'shared' result only.
  */
 export function useInvite(): UseInviteResult {
+  const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const { data: profile } = useOnboardingProfile(currentUser?.id);
   const { capture, trackInviteShareCompleted } = useAnalytics();
@@ -76,7 +78,7 @@ export function useInvite(): UseInviteResult {
         console.warn('useInvite: clipboard set failed (non-fatal)', e);
       }
 
-      const message = formatInviteMessage({
+      const message = formatInviteMessage(t, {
         username: currentUser.username,
         city: profile?.city ?? null,
         code,
@@ -111,6 +113,7 @@ export function useInvite(): UseInviteResult {
     profile?.city,
     capture,
     trackInviteShareCompleted,
+    t,
   ]);
 
   return {

@@ -18,17 +18,26 @@ export interface BadgeColors {
   textColor: string;
 }
 
-export const TIME_IN_CANADA_RANGE_LABELS: Record<TimeInCanadaRange, string> = {
-  less_than_1_year: 'Less than 1 year',
-  one_to_three_years: '1-3 years',
-  three_plus_years: '3+ years',
+/**
+ * Badge copy lives in the locale catalogues; these maps hold i18n keys so the
+ * profile renders badges in the user's language. Callers translate with `t()`.
+ */
+export const TIME_IN_CANADA_RANGE_LABEL_KEYS: Record<
+  TimeInCanadaRange,
+  string
+> = {
+  less_than_1_year: 'profile.badges.timeInCanada.lessThanOneYear',
+  one_to_three_years: 'profile.badges.timeInCanada.oneToThreeYears',
+  three_plus_years: 'profile.badges.timeInCanada.threePlusYears',
 };
 
-const PERSONA_LABELS: Record<Exclude<Persona, 'other'>, string> = {
-  international_student: 'International student',
-  skilled_worker: 'Skilled worker',
-  refugee: 'Refugee',
+const PERSONA_LABEL_KEYS: Record<Exclude<Persona, 'other'>, string> = {
+  international_student: 'profile.badges.persona.internationalStudent',
+  skilled_worker: 'profile.badges.persona.skilledWorker',
+  refugee: 'profile.badges.persona.refugee',
 };
+
+const NEWCOMER_LABEL_KEY = 'profile.badges.persona.newcomer';
 
 const PERSONA_ICON_NAMES: Record<Persona, BadgeIconName> = {
   international_student: 'book-open',
@@ -98,7 +107,9 @@ export const getPersonaBadgeInfo = (
   persona: Persona | null | undefined,
   personaOther?: string | null
 ): {
-  label: string;
+  labelKey: string;
+  /** User-entered persona text — rendered verbatim, never translated. */
+  labelText?: string;
   iconName: BadgeIconName;
   colors: BadgeColors;
 } | null => {
@@ -109,14 +120,15 @@ export const getPersonaBadgeInfo = (
   if (persona === 'other') {
     const trimmedOther = personaOther?.trim();
     return {
-      label: trimmedOther ? trimmedOther : 'Newcomer',
+      labelKey: NEWCOMER_LABEL_KEY,
+      ...(trimmedOther ? { labelText: trimmedOther } : {}),
       iconName: PERSONA_ICON_NAMES.other,
       colors: PERSONA_COLORS.other,
     };
   }
 
   return {
-    label: PERSONA_LABELS[persona] ?? 'Newcomer',
+    labelKey: PERSONA_LABEL_KEYS[persona] ?? NEWCOMER_LABEL_KEY,
     iconName: PERSONA_ICON_NAMES[persona],
     colors: PERSONA_COLORS[persona],
   };
@@ -125,7 +137,7 @@ export const getPersonaBadgeInfo = (
 export const getTimeInCanadaBadgeInfo = (
   arrivalDate: string | null | undefined
 ): {
-  label: string;
+  labelKey: string;
   iconName: BadgeIconName;
   range: TimeInCanadaRange;
   colors: BadgeColors;
@@ -138,7 +150,7 @@ export const getTimeInCanadaBadgeInfo = (
 
   return {
     range,
-    label: TIME_IN_CANADA_RANGE_LABELS[range],
+    labelKey: TIME_IN_CANADA_RANGE_LABEL_KEYS[range],
     iconName: 'calendar',
     colors: TIME_IN_CANADA_COLORS[range],
   };

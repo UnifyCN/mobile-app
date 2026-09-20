@@ -5,12 +5,24 @@
  */
 
 /**
+ * i18n keys for the user-facing copy. This module stays free of i18next so it
+ * remains unit-testable in plain jest, so it carries keys and the rendering
+ * caller translates them.
+ */
+export const BUSY_FALLBACK_MESSAGE_KEY = 'companion.busyToast';
+
+export const DAILY_LIMIT_FALLBACK_MESSAGE_KEY =
+  'companion.dailyLimitReachedToast';
+
+/**
  * Thrown when rag-query signals upstream rate-limit / capacity issues (503).
  * Callers can match on `instanceof` (or `error.code === 'ai_companion_busy'`)
  * to surface a friendly "busy, try again" toast instead of a generic failure.
  */
 export class AICompanionBusyError extends Error {
   readonly code = 'ai_companion_busy' as const;
+  /** i18n key callers render — `message` is server text kept for logs. */
+  readonly messageKey = BUSY_FALLBACK_MESSAGE_KEY;
   constructor(message: string) {
     super(message);
     this.name = 'AICompanionBusyError';
@@ -25,17 +37,13 @@ export class AICompanionBusyError extends Error {
  */
 export class AICompanionLimitError extends Error {
   readonly code = 'daily_limit_reached' as const;
+  /** i18n key callers render — `message` is server text kept for logs. */
+  readonly messageKey = DAILY_LIMIT_FALLBACK_MESSAGE_KEY;
   constructor(message: string) {
     super(message);
     this.name = 'AICompanionLimitError';
   }
 }
-
-export const BUSY_FALLBACK_MESSAGE =
-  'AI Companion is busy right now. Please try again in a minute.';
-
-export const DAILY_LIMIT_FALLBACK_MESSAGE =
-  'Daily message limit reached. Try again tomorrow.';
 
 /**
  * Map a non-OK rag-query HTTP response to a typed Error. Detects both the
@@ -58,12 +66,14 @@ export function classifyRagQueryError(status: number, bodyText: string): Error {
 
   if (parsed?.code === 'daily_limit_reached' || status === 429) {
     return new AICompanionLimitError(
-      parsed?.error ?? DAILY_LIMIT_FALLBACK_MESSAGE
+      parsed?.error ?? `rag-query ${status}: daily_limit_reached`
     );
   }
 
   if (parsed?.code === 'ai_companion_busy' || status === 503) {
-    return new AICompanionBusyError(parsed?.error ?? BUSY_FALLBACK_MESSAGE);
+    return new AICompanionBusyError(
+      parsed?.error ?? `rag-query ${status}: ai_companion_busy`
+    );
   }
 
   return new Error(

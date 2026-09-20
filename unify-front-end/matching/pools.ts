@@ -13,19 +13,28 @@ type PoolTimeInCanada =
 export const COMMUNITY_CIRCLE_SIZE = 4;
 export const COMMUNITY_CIRCLE_DURATION_DAYS = 14;
 
-export const PERSONA_LABELS: Record<PoolPersona, string> = {
-  international_student: 'International Students',
-  skilled_worker: 'Skilled Workers',
-  refugee: 'Refugees & Protected Persons',
-  other: 'Newcomers',
+/**
+ * Minimal shape of i18next's `t`. Declared locally so this module stays free of
+ * react-i18next imports and can still be used from plain unit tests.
+ */
+export type TranslateFn = (
+  key: string,
+  options?: Record<string, unknown>
+) => string;
+
+export const PERSONA_LABEL_KEYS: Record<PoolPersona, string> = {
+  international_student: 'circles.persona.international_student',
+  skilled_worker: 'circles.persona.skilled_worker',
+  refugee: 'circles.persona.refugee',
+  other: 'circles.persona.other',
 };
 
-export const TIME_IN_CANADA_LABELS: Record<PoolTimeInCanada, string> = {
-  not_arrived: "Haven't arrived yet",
-  less_than_1_year: 'New to Canada (<1 year)',
-  '1_to_2_years': 'Living in Canada (1-2 years)',
-  '2_to_3_years': 'Living in Canada (2-3 years)',
-  '3_plus_years': 'Living in Canada (3+ years)',
+export const TIME_IN_CANADA_LABEL_KEYS: Record<PoolTimeInCanada, string> = {
+  not_arrived: 'circles.timeInCanada.not_arrived',
+  less_than_1_year: 'circles.timeInCanada.less_than_1_year',
+  '1_to_2_years': 'circles.timeInCanada.1_to_2_years',
+  '2_to_3_years': 'circles.timeInCanada.2_to_3_years',
+  '3_plus_years': 'circles.timeInCanada.3_plus_years',
 };
 
 export type PoolKey = string;
@@ -42,28 +51,37 @@ export const buildPoolKey = (
     'unknown'
   )}`;
 
-export const formatPersonaLabel = (persona?: PoolPersona | string | null) => {
+export const formatPersonaLabel = (
+  t: TranslateFn,
+  persona?: PoolPersona | string | null
+) => {
   if (!persona) {
-    return 'Newcomers';
+    return t(PERSONA_LABEL_KEYS.other);
   }
-  const labels = PERSONA_LABELS as Record<string, string>;
-  return labels[persona] ?? persona.replace(/_/g, ' ');
+  const keys = PERSONA_LABEL_KEYS as Record<string, string>;
+  const key = keys[persona];
+  // Unknown persona values come from the database, so there is no catalogue
+  // entry for them — fall back to the humanized raw value.
+  return key ? t(key) : persona.replace(/_/g, ' ');
 };
 
 export const formatTimeInCanadaLabel = (
+  t: TranslateFn,
   timeInCanada?: PoolTimeInCanada | null
 ) => {
   if (!timeInCanada) {
-    return 'Time in Canada (unspecified)';
+    return t('circles.timeInCanadaUnspecified');
   }
-  return TIME_IN_CANADA_LABELS[timeInCanada] ?? timeInCanada.replace(/_/g, ' ');
+  const key = TIME_IN_CANADA_LABEL_KEYS[timeInCanada];
+  return key ? t(key) : timeInCanada.replace(/_/g, ' ');
 };
 
 export const getPoolLabel = (
+  t: TranslateFn,
   persona?: PoolPersona | null,
   timeInCanada?: PoolTimeInCanada | null
 ) =>
-  `${formatPersonaLabel(persona)} • ${formatTimeInCanadaLabel(timeInCanada)}`;
+  `${formatPersonaLabel(t, persona)} • ${formatTimeInCanadaLabel(t, timeInCanada)}`;
 
 /**
  * Derives a TimeInCanada category from an arrival date.
