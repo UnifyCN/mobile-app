@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { buildNotificationI18n } from '@/utils/notificationText';
 
 /**
  * Create a "someone followed you" notification for the user who was followed.
@@ -20,7 +21,10 @@ export const createFollowNotification = async (
     .eq('id', user.id)
     .single();
 
-  const username = actor?.username ?? 'Someone';
+  // The row keeps English copy for older builds; `data.i18n` lets newer
+  // readers re-render it in the recipient's language.
+  const actorUsername = actor?.username ?? null;
+  const username = actorUsername ?? 'Someone';
 
   const { data: inserted, error } = await supabase
     .from('community_notifications')
@@ -30,7 +34,10 @@ export const createFollowNotification = async (
       type: 'followed',
       title: 'New follower',
       body: `${username} started following you.`,
-      data: { actor_user_id: user.id },
+      data: {
+        actor_user_id: user.id,
+        i18n: buildNotificationI18n('followed', { name: actorUsername }),
+      },
     })
     .select('id')
     .single();

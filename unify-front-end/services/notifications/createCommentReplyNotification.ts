@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { buildNotificationI18n } from '@/utils/notificationText';
 
 /**
  * Create a "someone replied to your comment" notification for the parent comment author.
@@ -41,7 +42,10 @@ export const createCommentReplyNotification = async (
     .eq('id', user.id)
     .single();
 
-  const username = actor?.username ?? 'Someone';
+  // The row keeps English copy for older builds; `data.i18n` lets newer
+  // readers re-render it in the recipient's language.
+  const actorUsername = actor?.username ?? null;
+  const username = actorUsername ?? 'Someone';
 
   const { data: inserted, error } = await supabase
     .from('community_notifications')
@@ -56,6 +60,7 @@ export const createCommentReplyNotification = async (
         comment_id: commentId,
         parent_comment_id: parentCommentId,
         actor_user_id: user.id,
+        i18n: buildNotificationI18n('commentReply', { name: actorUsername }),
       },
     })
     .select('id')

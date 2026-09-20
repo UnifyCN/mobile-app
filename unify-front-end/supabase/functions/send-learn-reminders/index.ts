@@ -1,5 +1,11 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  DEFAULT_NOTIFICATION_LANGUAGE,
+  render,
+  resolveNotificationLanguage,
+  type NotificationLanguage,
+} from '../_shared/notificationTemplates.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -11,29 +17,33 @@ const EXPO_PUSH_URL = 'https://exp.host/--/api/v2/push/send';
 
 const HOUR_MS = 60 * 60 * 1000;
 
-// Reminder tiers: each tier has a time window and message content
-// Windows must be >= 24h (cron interval) and overlap adjacent tiers to avoid gaps
+// Reminder tiers: each tier has a time window and a pair of template keys.
+// Windows must be >= 24h (cron interval) and overlap adjacent tiers to avoid gaps.
+// The copy itself lives in _shared/notificationTemplates.ts, one entry per
+// language; `namedKey` is the variant that greets the user by first name
+// (each language writes that greeting itself, rather than English-style
+// lowercasing of the first letter).
 const REMINDER_TIERS = [
   {
     tier: 1,
     minHours: 22,
     maxHours: 48,
-    title: 'Continue your lesson',
-    body: 'Pick up where you left off — your progress is saved.',
+    key: 'learnReminderTier1',
+    namedKey: 'learnReminderTier1Named',
   },
   {
     tier: 2,
     minHours: 48,
     maxHours: 96,
-    title: 'Keep learning!',
-    body: "You're making progress — don't stop now.",
+    key: 'learnReminderTier2',
+    namedKey: 'learnReminderTier2Named',
   },
   {
     tier: 3,
     minHours: 96,
     maxHours: 168,
-    title: 'We miss you!',
-    body: "It's been a week — pick up where you left off.",
+    key: 'learnReminderTier3',
+    namedKey: 'learnReminderTier3Named',
   },
 ];
 
@@ -228,7 +238,7 @@ Deno.serve(async (req: Request) => {
   // first_name lives on the users table, fetched separately below.
   const { data: profiles, error: profilesError } = await supabase
     .from('user_onboarding_profiles')
-    .select('id, wants_reminders')
+    .select('id, wants_reminders, preferred_language')
     .in('id', userIds);
 
   if (profilesError) {
@@ -245,6 +255,16 @@ Deno.serve(async (req: Request) => {
       .filter((p: { wants_reminders: boolean }) => p.wants_reminders === true)
       .map((p: { id: string }) => p.id)
   );
+
+  // Reminder copy follows the recipient's own language; anything unset or
+  // unrecognized falls back to English.
+  const languageByUser = new Map<string, NotificationLanguage>();
+  for (const p of (profiles ?? []) as Array<{
+    id: string;
+    preferred_language?: unknown;
+  }>) {
+    languageByUser.set(p.id, resolveNotificationLanguage(p.preferred_language));
+  }
 
   // Fetch first_name from users (separate table). Failure here is non-fatal —
   // reminders still go out without personalization.
@@ -312,19 +332,30 @@ Deno.serve(async (req: Request) => {
     const tokens = tokensByUser.get(candidate.user_id);
     if (!tokens?.length) continue;
 
-    // Prefix body with first name when available so the push feels personal.
-    // Lowercase the first letter so "Pick up..." reads as "Alex, pick up..."
+    // Use the name-greeting variant when we know the first name, so the push
+    // feels personal in every language.
     const firstName = firstNameByUser.get(candidate.user_id);
-    const body = firstName
-      ? `${firstName}, ${tier.body.charAt(0).toLowerCase()}${tier.body.slice(1)}`
-      : tier.body;
+    const language =
+      languageByUser.get(candidate.user_id) ?? DEFAULT_NOTIFICATION_LANGUAGE;
+    const rendered = render(
+      firstName ? tier.namedKey : tier.key,
+      language,
+      firstName ? { name: firstName } : undefined
+    );
+    if (!rendered) {
+      console.error(
+        'send-learn-reminders: unknown template key',
+        firstName ? tier.namedKey : tier.key
+      );
+      continue;
+    }
 
     for (const token of tokens) {
       messages.push({
         to: token,
         sound: 'default',
-        title: tier.title,
-        body,
+        title: rendered.title,
+        body: rendered.body,
         data: {
           type: 'learn_reminder',
           lesson_id: candidate.sanity_lesson_id,

@@ -231,7 +231,74 @@
     "title": "Notifications",
     "empty": "Aucune notification pour l'instant",
     "emptyHint": "Vous recevrez des mises à jour sur les nouvelles activités comme les abonnements, les mentions J'aime, les commentaires et d'autres moments importants.",
-    "markAllRead": "Tout marquer comme lu"
+    "markAllRead": "Tout marquer comme lu",
+    "templates": {
+      "fallbackName": "Quelqu’un",
+      "followed": {
+        "title": "Nouvel abonné",
+        "body": "{{name}} vous suit maintenant."
+      },
+      "liked": {
+        "title": "Nouvelle mention J’aime sur votre publication",
+        "body": "{{name}} a aimé votre publication."
+      },
+      "commented": {
+        "title": "Nouveau commentaire sur votre publication",
+        "body": "{{name}} a commenté votre publication."
+      },
+      "commentReply": {
+        "title": "Réponse à votre commentaire",
+        "body": "{{name}} a répondu à votre commentaire."
+      },
+      "commentLiked": {
+        "title": "Quelqu’un a aimé votre commentaire",
+        "body": "{{name}} a aimé votre commentaire."
+      },
+      "inviteRedeemed": {
+        "title": "Nouvel ami sur Unify",
+        "body": "🎉 {{name}} vient de rejoindre Unify grâce à vous."
+      },
+      "circleMatched": {
+        "title": "Vous avez été jumelé!",
+        "body": "Votre cercle Unify est prêt. Touchez pour rencontrer votre groupe."
+      },
+      "circleMatchedForced": {
+        "title": "Vous avez été jumelé!",
+        "body": "Nous vous avons placé dans un cercle pour ne pas vous faire attendre plus longtemps. Touchez pour rencontrer votre groupe."
+      },
+      "circleEnded": {
+        "title": "Votre cercle est terminé",
+        "body": "Dites merci, suivez-vous les uns les autres et continuez à vous entraider."
+      },
+      "circleEndingSoon": {
+        "title": "Il reste une journée à votre cercle",
+        "body": "Il reste une journée à ce cercle. Partagez un dernier conseil utile, remerciez une personne qui vous a aidé ou échangez vos coordonnées si vous voulez rester en contact."
+      },
+      "learnReminderTier1": {
+        "title": "Continuez votre leçon",
+        "body": "Reprenez où vous étiez rendu — votre progression est enregistrée."
+      },
+      "learnReminderTier1Named": {
+        "title": "Continuez votre leçon",
+        "body": "{{name}}, reprenez où vous étiez rendu — votre progression est enregistrée."
+      },
+      "learnReminderTier2": {
+        "title": "Continuez d’apprendre!",
+        "body": "Vous progressez — ne vous arrêtez pas maintenant."
+      },
+      "learnReminderTier2Named": {
+        "title": "Continuez d’apprendre!",
+        "body": "{{name}}, vous progressez — ne vous arrêtez pas maintenant."
+      },
+      "learnReminderTier3": {
+        "title": "Vous nous manquez!",
+        "body": "Ça fait une semaine — reprenez où vous étiez rendu."
+      },
+      "learnReminderTier3Named": {
+        "title": "Vous nous manquez!",
+        "body": "{{name}}, ça fait une semaine — reprenez où vous étiez rendu."
+      }
+    }
   },
   "search": {
     "title": "Rechercher",

@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { buildNotificationI18n } from '@/utils/notificationText';
 
 /**
  * Create a "someone commented on your post" notification for the post author.
@@ -27,7 +28,10 @@ export const createCommentNotification = async (
     .eq('id', user.id)
     .single();
 
-  const username = actor?.username ?? 'Someone';
+  // The row keeps English copy for older builds; `data.i18n` lets newer
+  // readers re-render it in the recipient's language.
+  const actorUsername = actor?.username ?? null;
+  const username = actorUsername ?? 'Someone';
 
   const { data: inserted, error } = await supabase
     .from('community_notifications')
@@ -37,7 +41,12 @@ export const createCommentNotification = async (
       type: 'commented',
       title: 'New comment on your post',
       body: `${username} commented on your post.`,
-      data: { post_id: postId, comment_id: commentId, actor_user_id: user.id },
+      data: {
+        post_id: postId,
+        comment_id: commentId,
+        actor_user_id: user.id,
+        i18n: buildNotificationI18n('commented', { name: actorUsername }),
+      },
     })
     .select('id')
     .single();

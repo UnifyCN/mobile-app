@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { buildNotificationI18n } from '@/utils/notificationText';
 
 /**
  * Create a "someone liked your post" notification for the post author.
@@ -26,7 +27,10 @@ export const createPostLikeNotification = async (
     .eq('id', user.id)
     .single();
 
-  const username = actor?.username ?? 'Someone';
+  // The row keeps English copy for older builds; `data.i18n` lets newer
+  // readers re-render it in the recipient's language.
+  const actorUsername = actor?.username ?? null;
+  const username = actorUsername ?? 'Someone';
 
   const { data: inserted, error } = await supabase
     .from('community_notifications')
@@ -36,7 +40,11 @@ export const createPostLikeNotification = async (
       type: 'liked',
       title: 'New like on your post',
       body: `${username} liked your post.`,
-      data: { post_id: postId, actor_user_id: user.id },
+      data: {
+        post_id: postId,
+        actor_user_id: user.id,
+        i18n: buildNotificationI18n('liked', { name: actorUsername }),
+      },
     })
     .select('id')
     .single();

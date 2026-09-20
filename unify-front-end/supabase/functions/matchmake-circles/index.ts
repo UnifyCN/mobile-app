@@ -1,6 +1,13 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 // @ts-ignore
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import {
+  buildI18n,
+  getPreferredLanguages,
+  render,
+  type NotificationLanguageSource,
+  type RenderedNotification,
+} from '../_shared/notificationTemplates.ts';
 
 const COMMUNITY_CIRCLE_DURATION_DAYS = 14;
 const MAX_CIRCLE_SIZE = 4;
@@ -824,6 +831,9 @@ async function createCircleForGroup(
   const notificationBody = group.forcedPlacement
     ? FORCED_PLACEMENT_BODY
     : STANDARD_MATCH_BODY;
+  const templateKey = group.forcedPlacement
+    ? 'circleMatchedForced'
+    : 'circleMatched';
 
   const { data, error } = await supabase.rpc('create_circle_match', {
     _pool_key: context.poolKey,
@@ -844,12 +854,42 @@ async function createCircleForGroup(
 
   const circleId = data as string;
 
+  // The RPC stores English copy and `{ circle_id }` as the payload. Re-write
+  // `data` with the structured i18n key so the app can render the row in the
+  // member's language; `circle_id` is preserved because the delivery update
+  // below (and the client's navigation) filter on it.
+  const { error: i18nError } = await supabase
+    .from('community_notifications')
+    .update({
+      data: { circle_id: circleId, i18n: buildI18n(templateKey) },
+    })
+    .eq('type', 'circle_matched')
+    .filter('data->>circle_id', 'eq', circleId);
+
+  if (i18nError) {
+    console.error(
+      'matchmake-circles: failed to attach i18n payload to notifications',
+      i18nError
+    );
+  }
+
+  const languages = await getPreferredLanguages(
+    supabase as unknown as NotificationLanguageSource,
+    memberIds
+  );
+  const textByUser = new Map<string, RenderedNotification>();
+  for (const [userId, lang] of languages) {
+    const rendered = render(templateKey, lang);
+    if (rendered) textByUser.set(userId, rendered);
+  }
+
   const deliveredUserIds = await sendPushNotifications(
     supabase,
     memberIds,
     "You've been matched!",
     notificationBody,
-    { type: 'circle_matched', circle_id: circleId }
+    { type: 'circle_matched', circle_id: circleId },
+    textByUser
   );
 
   if (deliveredUserIds.size > 0) {
@@ -943,7 +983,10 @@ async function closeExpiredCircles(supabase: SupabaseClient) {
           type: 'circle_ended',
           title: 'Your circle has wrapped up',
           body: 'Say thanks, follow one another, and keep the support going.',
-          data: { circle_id: member.circle_id },
+          data: {
+            circle_id: member.circle_id,
+            i18n: buildI18n('circleEnded'),
+          },
         }))
       );
 
@@ -1003,7 +1046,10 @@ async function sendDay13Reminders(supabase: SupabaseClient) {
           type: 'circle_ending_soon',
           title: 'One day left in your circle',
           body: DAY_13_REMINDER_MESSAGE,
-          data: { circle_id: member.circle_id },
+          data: {
+            circle_id: member.circle_id,
+            i18n: buildI18n('circleEndingSoon'),
+          },
         }))
       );
 
@@ -1166,7 +1212,9 @@ async function sendPushNotifications(
   userIds: string[],
   title: string,
   body: string,
-  data?: Record<string, unknown>
+  data?: Record<string, unknown>,
+  /** Per-recipient localized copy; `title`/`body` are the English fallback. */
+  textByUser?: Map<string, RenderedNotification>
 ): Promise<Set<string>> {
   const deliveredUserIds = new Set<string>();
   if (!userIds.length) return deliveredUserIds;
@@ -1186,16 +1234,19 @@ async function sendPushNotifications(
   }
 
   const messages = (tokenRows as Array<{ token: string; user_id: string }>).map(
-    ({ token, user_id }) => ({
-      to: token,
-      user_id,
-      sound: 'default',
-      title,
-      body,
-      data: data || {},
-      channelId: 'circles',
-      priority: 'high',
-    })
+    ({ token, user_id }) => {
+      const localized = textByUser?.get(user_id);
+      return {
+        to: token,
+        user_id,
+        sound: 'default',
+        title: localized?.title ?? title,
+        body: localized?.body ?? body,
+        data: data || {},
+        channelId: 'circles',
+        priority: 'high',
+      };
+    }
   );
 
   const batchSize = 100;
