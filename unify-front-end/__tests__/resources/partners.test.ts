@@ -8,6 +8,8 @@ import {
   selectActivePartnerBySlug,
 } from '@/constants/Partners';
 import { CATEGORY_ORDER, type PartnerCategory } from '@/types/partner';
+import { programKeySegment } from '@/utils/localizePartner';
+import en from '@/i18n/locales/en/translation.json';
 
 describe('partner data', () => {
   it('has 20 partners with unique slugs, and only the held one inactive', () => {
@@ -47,13 +49,12 @@ describe('partner data', () => {
     expect(thin.sort()).toEqual([...SINGLE_ORG_EXCEPTIONS].sort());
   });
 
+  // Display copy is asserted in partnerCopy.test.ts, against the locale files
+  // that now hold it.
   it('every partner has required fields + a valid category', () => {
     for (const p of PARTNERS) {
       expect(p.name).toBeTruthy();
-      expect(p.tagline).toBeTruthy();
-      expect(p.description.length).toBeGreaterThan(20);
-      expect(p.highlights.length).toBeGreaterThanOrEqual(2);
-      expect(p.serviceArea).toBeTruthy();
+      expect(p.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
       expect(CATEGORY_ORDER).toContain(p.category);
     }
   });
@@ -135,15 +136,13 @@ describe('partner data', () => {
     expect(result.map(p => p.slug)).toEqual(['a', 'b']);
   });
 
-  it('any partner programs have stable unique IDs and well-formed content', () => {
+  it('any partner programs have stable unique IDs and well-formed links', () => {
     const programIds = new Set<string>();
     for (const p of PARTNERS) {
       for (const program of p.programs ?? []) {
         expect(program.id).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
         expect(programIds.has(program.id)).toBe(false);
         programIds.add(program.id);
-        expect(program.name).toBeTruthy();
-        expect(program.description.length).toBeGreaterThan(10);
         // url is optional — not every partner publishes a page per program.
         if (program.url) expect(program.url).toMatch(/^https?:\/\/.+/);
       }
@@ -174,10 +173,21 @@ describe('partner data', () => {
   });
 
   it('IEC-BC leads with the two programs a newcomer can join', () => {
+    // Asserted through the copy tree, because the name is no longer on the
+    // record — the ordering rule is the point, not where the string lives.
     const iecbc = getPartnerBySlug('iec-bc');
-    expect(iecbc?.programs?.slice(0, 2).map(pr => pr.name)).toEqual([
-      'TalentConnect',
-      'MentorConnect',
+    const leading = iecbc?.programs?.slice(0, 2) ?? [];
+    expect(leading.map(pr => pr.id)).toEqual([
+      'iec-bc-talentconnect',
+      'iec-bc-mentorconnect',
     ]);
+    expect(
+      leading.map(
+        pr =>
+          (en as any).learn.resources.partners['iec-bc'].programs[
+            programKeySegment('iec-bc', pr.id)
+          ].name
+      )
+    ).toEqual(['TalentConnect', 'MentorConnect']);
   });
 });

@@ -1,5 +1,5 @@
 import { normalizeQuery, selectPartnersMatching } from '@/utils/searchPartners';
-import type { Partner, PartnerCategory } from '@/types/partner';
+import type { LocalizedPartner, PartnerCategory } from '@/types/partner';
 
 const labelFor = (category: PartnerCategory) =>
   ({
@@ -14,7 +14,9 @@ const labelFor = (category: PartnerCategory) =>
     money: 'Money & Banking',
   })[category];
 
-function partner(overrides: Partial<Partner> & Pick<Partner, 'slug'>): Partner {
+function partner(
+  overrides: Partial<LocalizedPartner> & Pick<LocalizedPartner, 'slug'>
+): LocalizedPartner {
   return {
     name: 'Example Society',
     category: 'gettingSettled',
@@ -29,7 +31,7 @@ function partner(overrides: Partial<Partner> & Pick<Partner, 'slug'>): Partner {
   };
 }
 
-const DIRECTORY: Partner[] = [
+const DIRECTORY: LocalizedPartner[] = [
   partner({
     slug: 'issofbc',
     name: 'ISSofBC',
@@ -64,6 +66,18 @@ describe('normalizeQuery', () => {
   it('lowercases and strips accents', () => {
     expect(normalizeQuery('  Québec  ')).toBe('quebec');
     expect(normalizeQuery('Montréal')).toBe('montreal');
+  });
+
+  it('folds Arabic hamza, alef maqsura and ta marbuta', () => {
+    // Writers vary on every one of these, so a query typed the plain way has
+    // to find a listing that carries the marks.
+    expect(normalizeQuery('مؤسسة')).toBe(normalizeQuery('موسسه'));
+    expect(normalizeQuery('إعادة')).toBe(normalizeQuery('اعاده'));
+    expect(normalizeQuery('اللغة الإنجليزية')).toBe(
+      normalizeQuery('اللغه الانجليزيه')
+    );
+    // Harakat and the tatweel elongation are dropped.
+    expect(normalizeQuery('مُســاعَدة')).toBe(normalizeQuery('مساعده'));
   });
 
   it('folds Vietnamese đ, which NFD leaves whole', () => {

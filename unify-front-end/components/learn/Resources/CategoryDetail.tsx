@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -10,6 +10,7 @@ import {
 } from '@/types/partner';
 import { getPartnersByCategory } from '@/constants/Partners';
 import { RESOURCE_THEME } from '@/constants/ResourceTheme';
+import { localizePartners } from '@/utils/localizePartner';
 import PartnerRow from './PartnerRow';
 
 type Props = {
@@ -22,7 +23,10 @@ export default function CategoryDetail({ category, onBack }: Props) {
   const { t } = useTranslation();
   const label = t(PARTNER_CATEGORY_LABEL_KEYS[category]);
   const description = t(PARTNER_CATEGORY_DESCRIPTION_KEYS[category]);
-  const partners = getPartnersByCategory(category);
+  const partners = useMemo(
+    () => localizePartners(getPartnersByCategory(category), t),
+    [category, t]
+  );
 
   return (
     <View style={styles.root}>

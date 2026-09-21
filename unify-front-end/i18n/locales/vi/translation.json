@@ -414,7 +414,6 @@
     "resources": {
       "heading": "Tôi có thể tìm trợ giúp ở đâu?",
       "subtitle": "Các tổ chức đáng tin cậy giúp bạn ổn định cuộc sống tại Canada.",
-      "contentLanguageNotice": "Thông tin chi tiết do các tổ chức cung cấp hiện chỉ có bằng tiếng Anh.",
       "emptyTitle": "Chúng tôi đang thêm đối tác",
       "emptyText": "Chúng tôi đang chọn lọc các tổ chức đáng tin cậy cho bạn. Hãy quay lại sau.",
       "orgCount": "{{count}} tổ chức",
@@ -470,6 +469,796 @@
         "money": {
           "label": "Tiền và ngân hàng",
           "description": "Tài khoản ngân hàng, tín dụng và hướng dẫn tài chính cho người mới đến."
+        }
+      },
+      "partners": {
+        "diversecity": {
+          "tagline": "Chương trình phù hợp văn hóa về giáo dục, việc làm & sức khỏe.",
+          "description": "DIVERSEcity Community Resources Society là tổ chức từ thiện đăng ký tại BC (từ năm 1978), kết nối người mới đến với các chương trình phù hợp văn hóa về giáo dục, việc làm, sức khỏe và đời sống — đơn vị trực tiếp hỗ trợ người nhập cư và người tị nạn tại vùng Vancouver mở rộng.",
+          "highlights": [
+            "Chương trình định cư phù hợp văn hóa",
+            "Hỗ trợ giáo dục, việc làm & sức khỏe",
+            "Phục vụ người nhập cư & tị nạn từ 1978"
+          ],
+          "serviceArea": "Surrey và Delta",
+          "eligibility": "Dịch vụ định cư dành cho thường trú nhân, người tị nạn và người được bảo vệ, theo tài trợ của IRCC. Cư dân tạm trú, du học sinh, công dân nhập tịch và người xin tị nạn được phục vụ qua BC Newcomer Services Program.",
+          "howToStart": "Về dịch vụ định cư, hãy gửi email tới newcomers@dcrs.ca hoặc gọi 604-507-6060. Hỏi thông tin chung: 604-597-0205.",
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Pháp",
+            "Tiếng Tây Ban Nha",
+            "Tiếng Ả Rập",
+            "Tiếng Miến Điện",
+            "Tiếng Ba Tư",
+            "Tiếng Hindi",
+            "Tiếng Hàn",
+            "Tiếng Quan Thoại",
+            "Tiếng Punjab"
+          ],
+          "programs": {
+            "settlement-services": {
+              "name": "Dịch vụ định cư",
+              "description": "Làm việc riêng với một nhân viên định cư để lập kế hoạch về giáo dục, việc làm, nhà ở và sức khỏe.",
+              "eligibility": "Thường trú nhân, người tị nạn và người được bảo vệ, theo tài trợ của IRCC; cư dân tạm trú, du học sinh, công dân nhập tịch và người xin tị nạn qua BC Newcomer Services Program."
+            },
+            "linc": {
+              "name": "Lớp tiếng Anh (LINC)",
+              "description": "Lớp tiếng Anh miễn phí cho người mới nhập cư, từ trình độ chưa biết chữ đến CLB 4. Bạn phải làm bài đánh giá ngôn ngữ trước."
+            },
+            "safe-haven": {
+              "name": "Chương trình Safe Haven",
+              "description": "Hỗ trợ định cư, việc làm, ngôn ngữ và tư vấn tâm lý cho người xin tị nạn không dùng được các dịch vụ do liên bang tài trợ.",
+              "eligibility": "Người xin tị nạn tại Surrey và Delta không đủ điều kiện dùng dịch vụ định cư do liên bang tài trợ."
+            },
+            "rise": {
+              "name": "Chương trình RISE",
+              "description": "Hỗ trợ riêng từng người và hội thảo nhóm cho người tị nạn, về kết nối cộng đồng, các hệ thống ở Canada, nhà ở và việc làm."
+            },
+            "employment-programs": {
+              "name": "Chương trình việc làm",
+              "description": "Hỗ trợ sẵn sàng đi làm và tự kinh doanh, gồm EVolve Skills, Future Leaders, H.E.A.L. for Work và Diverse Entrepreneurs Business Incubator."
+            },
+            "early-childhood-education": {
+              "name": "Giữ trẻ trong giờ học LINC",
+              "description": "Giữ trẻ miễn phí cho trẻ từ 18 tháng đến năm tuổi trong lúc cha mẹ học tiếng Anh."
+            },
+            "mental-health-and-substance-use-services": {
+              "name": "Dịch vụ sức khỏe tâm thần và hỗ trợ về chất gây nghiện",
+              "description": "Tư vấn và hỗ trợ. Tiếp nhận: 604-547-1202, intake@dcrs.ca."
+            },
+            "language-testing-centre-celpip": {
+              "name": "Trung tâm khảo thí ngôn ngữ (CELPIP)",
+              "description": "Thi ngôn ngữ CELPIP cho hồ sơ di trú và quốc tịch."
+            }
+          }
+        },
+        "burnaby-neighbourhood-house": {
+          "tagline": "Chương trình cộng đồng, giữ trẻ và hỗ trợ người mới đến tại Burnaby.",
+          "description": "Burnaby Neighbourhood House giúp mọi người cải thiện cuộc sống và gắn kết cộng đồng bằng các chương trình xây dựng theo nhu cầu đang thay đổi của một cộng đồng đa dạng — giữ trẻ, hỗ trợ gia đình và an ninh lương thực, cùng chương trình riêng cho người mới đến.",
+          "highlights": [
+            "Hỗ trợ định cư cho người mới đến",
+            "Chương trình giữ trẻ & gia đình",
+            "Sáng kiến an ninh lương thực"
+          ],
+          "serviceArea": "Burnaby",
+          "eligibility": "Dịch vụ định cư do IRCC tài trợ và, theo yêu cầu của IRCC, tập trung vào thường trú nhân và người tị nạn theo Công ước. Các chương trình cộng đồng, thực phẩm và giữ trẻ mở cho tất cả mọi người.",
+          "howToStart": "Hãy gọi điện hoặc gửi email cho cơ sở gần bạn nhất. Về dịch vụ định cư, hãy liên hệ settlementprogram@burnabynh.ca hoặc 604-431-0400.",
+          "hours": "South House Thứ 2–Thứ 6 9:00am–5:00pm · North House Thứ 2–Thứ 6 9:30am–4:30pm · Brentwood House Thứ 2–Thứ 6 9:00am–4:00pm",
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Quan Thoại",
+            "Tiếng Philippines (Tagalog)",
+            "Tiếng Ba Tư",
+            "Tiếng Dari",
+            "Tiếng Pashto",
+            "Tiếng Tây Ban Nha",
+            "Tiếng Ả Rập",
+            "Tiếng Kurd"
+          ],
+          "programs": {
+            "newcomers-settlement-services": {
+              "name": "Dịch vụ định cư cho người mới đến",
+              "description": "Lập kế hoạch định cư, nộp đơn xin trợ cấp, hỗ trợ ngôn ngữ và kết nối cộng đồng.",
+              "eligibility": "Do IRCC tài trợ và, theo yêu cầu của IRCC, tập trung hỗ trợ thường trú nhân và người tị nạn theo Công ước."
+            },
+            "information-and-orientation": {
+              "name": "Thông tin và hướng dẫn ban đầu",
+              "description": "Thông tin bằng ngôn ngữ dễ hiểu cho người mới đến, theo hình thức riêng từng người, theo gia đình, hoặc trong hội thảo nhóm."
+            },
+            "naars": {
+              "name": "Đánh giá nhu cầu và nguồn lực (NAARS)",
+              "description": "Hỗ trợ định cư toàn diện bằng tiếng mẹ đẻ của bạn và bằng tiếng Anh, gồm cả giúp nộp đơn xin trợ cấp."
+            },
+            "community-connections": {
+              "name": "Kết nối cộng đồng",
+              "description": "Hoạt động tình nguyện, chương trình cho thanh thiếu niên và phụ nữ, nhóm trò chuyện tiếng Anh, và hội thảo về sức khỏe, việc làm và giáo dục."
+            },
+            "food-security": {
+              "name": "Chương trình an ninh lương thực",
+              "description": "Các chương trình giúp tiếp cận thực phẩm, cùng với Burnaby Meals on Wheels."
+            },
+            "child-care": {
+              "name": "Chương trình giữ trẻ",
+              "description": "Dịch vụ giữ trẻ có giấy phép cho trẻ 0–12 tuổi: nhà trẻ, mẫu giáo, tuổi đi học, sau giờ học và trại hè ban ngày."
+            },
+            "volunteer-income-tax-program": {
+              "name": "Chương trình khai thuế thu nhập tình nguyện",
+              "description": "Hỗ trợ miễn phí khai tờ khai thuế thu nhập của bạn."
+            }
+          }
+        },
+        "ymca-bc": {
+          "tagline": "Chương trình cho gia đình, trẻ em và người cao tuổi khắp BC.",
+          "description": "YMCA BC hỗ trợ gia đình, trẻ em và người cao tuổi tại các cộng đồng khắp British Columbia, xây dựng những cộng đồng khỏe mạnh và sôi động, có tinh thần trách nhiệm xã hội chung, nơi mọi người phát triển về tinh thần, trí tuệ và thể chất.",
+          "highlights": [
+            "Chương trình cho mọi lứa tuổi",
+            "Chú trọng sức khỏe & thể chất",
+            "Cộng đồng khắp BC"
+          ],
+          "serviceArea": "British Columbia",
+          "howToStart": "Hãy gửi email cho nhóm phụ trách người mới đến tại newcomers@ymcabc.ca để ghi danh trước buổi học đầu tiên. Hỏi chung về việc làm, gửi tới employment.services@ymcabc.ca, hoặc gọi 604-681-9622.",
+          "hours": "Thứ 2–Thứ 6 8:30am–4:30pm",
+          "programs": {
+            "english-conversation-club": {
+              "name": "Câu lạc bộ trò chuyện tiếng Anh cho người mới đến",
+              "description": "Câu lạc bộ hằng tuần tại Robert Lee YMCA ở trung tâm Vancouver, nơi người mới đến luyện tiếng Anh với người hướng dẫn được đào tạo.",
+              "eligibility": "Mọi tình trạng di trú, trừ visa du lịch. Bạn phải được phép làm việc hợp pháp tại Canada. Lao động nước ngoài tạm thời hãy hỏi nhóm phụ trách về các buổi riêng."
+            },
+            "citizenship-test-prep": {
+              "name": "Chuẩn bị cho kỳ thi quốc tịch Canada",
+              "description": "Chương trình nhóm kết hợp trực tiếp và trực tuyến, học theo tài liệu Discover Canada cùng người hướng dẫn và câu hỏi luyện tập. Bốn đợt mỗi năm.",
+              "eligibility": "Mọi tình trạng di trú, trừ visa du lịch."
+            },
+            "connect2work": {
+              "name": "Connect2Work cho người mới đến",
+              "description": "Hội thảo nối liền định cư và việc làm: kỹ năng nghề, sự tự tin, và kết nối trong thị trường lao động địa phương."
+            },
+            "international-students-employment-support": {
+              "name": "Hỗ trợ việc làm cho du học sinh",
+              "description": "Chương trình miễn phí giúp du học sinh vượt qua rào cản việc làm tại Canada."
+            },
+            "self-employment-program": {
+              "name": "Chương trình tự kinh doanh",
+              "description": "Chương trình được tài trợ kéo dài 48 tuần: 10 tuần viết kế hoạch kinh doanh, rồi 38 tuần hỗ trợ khởi sự cùng một quản lý hồ sơ.",
+              "eligibility": "Từ 18 tuổi trở lên; đủ điều kiện làm việc tại Canada; đang thất nghiệp hoặc làm dưới 20 giờ mỗi tuần; đã nộp đơn hoặc đã nhận EI trong vòng năm năm qua, hoặc đang nhận trợ cấp PWD/PPMB; đang sống tại Lower Mainland, Squamish hoặc Sechelt; và bạn phải có một ý tưởng kinh doanh cụ thể."
+            },
+            "explore-child-care-career": {
+              "name": "Tìm hiểu nghề giữ trẻ",
+              "description": "Khóa học ngắn cho người mới đến về nghề giữ trẻ, các chứng chỉ cần có, và cách vào nghề."
+            },
+            "wellness-connection": {
+              "name": "Kết nối sức khỏe cho người mới đến",
+              "description": "Một không gian hỗ trợ, chào đón người mới đến và khuyến khích lối sống khỏe mạnh."
+            }
+          }
+        },
+        "iec-bc": {
+          "tagline": "Giúp doanh nghiệp BC tuyển và giữ nhân tài nhập cư.",
+          "description": "Immigrant Employment Council of BC làm việc ở phía nhà tuyển dụng trong quá trình hòa nhập của người nhập cư — giúp doanh nghiệp BC tìm kiếm, tuyển dụng và giữ chân nhân tài nhập cư có tay nghề, thông qua chương trình cố vấn, bảng tin việc làm và đào tạo cho nhà tuyển dụng.",
+          "highlights": [
+            "Chương trình cố vấn",
+            "Bảng tin việc làm cho người mới đến",
+            "Đào tạo cho nhà tuyển dụng"
+          ],
+          "serviceArea": "British Columbia",
+          "howToStart": "Hãy đăng ký trực tuyến qua mẫu đơn TalentConnect, hoặc liên hệ văn phòng bằng điện thoại hay email. Mỗi chương trình có mẫu đăng ký riêng.",
+          "programs": {
+            "talentconnect": {
+              "name": "TalentConnect",
+              "description": "Hồ sơ miễn phí giới thiệu kỹ năng, học vấn và kinh nghiệm của bạn với nhà tuyển dụng ở BC, kèm quyền xem tin tuyển dụng và dự các sự kiện kết nối.",
+              "eligibility": "Người mới đến có giấy phép lao động (trừ lao động nước ngoài tạm thời), và người đã được duyệt di trú nhưng chưa nhập cảnh. Bạn phải sẵn sàng đi làm và đang sống tại BC, hoặc sẵn sàng chuyển đến BC."
+            },
+            "mentorconnect": {
+              "name": "MentorConnect",
+              "description": "Cố vấn theo đúng ngành nghề, ghép bạn với một chuyên gia địa phương có kinh nghiệm, tối đa 12 giờ trong hai tháng.",
+              "eligibility": "Người mới đến Canada trong vòng 10 năm qua, đủ điều kiện làm việc và đã có hồ sơ xin việc sẵn sàng. Bạn phải đang ở BC hoặc dự định chuyển đến BC."
+            },
+            "ascend": {
+              "name": "ASCEND",
+              "description": "Học trực tuyến theo nhịp riêng của bạn để xây dựng các kỹ năng mềm nơi làm việc mà nhà tuyển dụng Canada tìm kiếm (tiếng Anh & tiếng Pháp)."
+            },
+            "fast": {
+              "name": "FAST",
+              "description": "Giúp người mới đến thấy kinh nghiệm và đào tạo của mình đáp ứng tiêu chuẩn Canada ra sao, với các nhánh chuẩn bị nghề nghiệp theo từng lĩnh vực.",
+              "eligibility": "Thường trú nhân hoặc người đã được chấp thuận về nguyên tắc cho PR, người tị nạn, du học sinh, người nhập cư có tay nghề với giấy phép lao động còn hiệu lực, và công dân Canada."
+            }
+          }
+        },
+        "newcomer-jobs-canada": {
+          "tagline": "Bảng tin việc làm dành riêng cho người mới đến Canada.",
+          "description": "Newcomer Jobs Canada là bảng tin việc làm thương mại trên toàn quốc, kết nối người mới đến Canada với nhà tuyển dụng. Đây là trang đăng tin, không phải cơ quan định cư: không có văn phòng ở BC và không phục vụ trực tiếp. Nhà tuyển dụng trả phí để đăng tin; người tìm việc tạo tài khoản miễn phí.",
+          "highlights": [
+            "Bảng tin việc làm cho người mới đến",
+            "Cơ hội trên khắp Canada",
+            "Tìm việc dễ hơn cho người mới sang"
+          ],
+          "serviceArea": "Canada",
+          "howToStart": "Hãy tạo tài khoản miễn phí trực tuyến, tải hồ sơ xin việc lên và nộp đơn ứng tuyển trên trang web.",
+          "hours": "Thứ 2–Thứ 6 9:00am–5:00pm CST"
+        },
+        "canada-shaw-immigration": {
+          "tagline": "RCIC được cấp phép, chuyên gia dịch vụ di trú & visa Canada.",
+          "description": "Thành lập năm 2015 và đặt tại Richmond, British Columbia, Canada Shaws Consulting Inc. là thành viên của Shaws Global Brand Group. Các chuyên viên di trú của công ty được cấp phép bởi College of Immigration and Citizenship Consultants (CICC), cơ quan quản lý chuyên viên di trú và quốc tịch của Canada.\n\nCanada Shaws hỗ trợ toàn diện cho nhiều chương trình di trú Canada, cũng như giấy phép du học, giấy phép lao động, và các con đường kinh doanh và đầu tư. Cùng với các công ty cùng tập đoàn Shaws Global Brand Group, công ty còn cung cấp tư vấn kinh doanh, tư vấn đầu tư, dịch vụ di trú toàn cầu, hoạch định thường trú và quốc tịch, hoạch định học tập, và hoạch định nghề nghiệp. Công ty giúp khách hàng trên toàn thế giới tìm hiểu các lựa chọn và lập kế hoạch riêng cho tương lai, với dịch vụ bằng tiếng Anh, tiếng Philippines (Tagalog), tiếng Ba Tư (Farsi), tiếng Quan Thoại và tiếng Quảng Đông.",
+          "highlights": [
+            "Chuyên viên được CICC cấp phép",
+            "Du học, làm việc, PR & visa",
+            "Phục vụ bằng năm ngôn ngữ"
+          ],
+          "serviceArea": "Richmond",
+          "howToStart": "Hãy đặt một buổi gặp giới thiệu miễn phí để trao đổi về nhu cầu của bạn và tìm hiểu các dịch vụ của họ.",
+          "hours": "Thứ 2–Thứ 6 9:00am–6:00pm · Nghỉ cuối tuần",
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Philippines (Tagalog)",
+            "Tiếng Ba Tư (Farsi)",
+            "Tiếng Quan Thoại",
+            "Tiếng Quảng Đông"
+          ],
+          "programs": {
+            "study-in-canada": {
+              "name": "Du học Canada",
+              "description": "Tìm hiểu cơ hội học tập tại Canada với hướng dẫn riêng về nộp đơn vào trường, giấy phép du học, và — nếu đủ điều kiện — làm việc bán thời gian trong lúc học cùng những con đường có thể dẫn tới thường trú sau khi tốt nghiệp."
+            },
+            "work-in-canada": {
+              "name": "Làm việc tại Canada",
+              "description": "Tìm hiểu các lựa chọn giấy phép lao động Canada với hỗ trợ chuyên nghiệp phù hợp mục tiêu nghề nghiệp của bạn."
+            },
+            "permanent-residency": {
+              "name": "Thường trú nhân Canada",
+              "description": "Tìm hiểu các con đường lấy thường trú phù hợp với bằng cấp, kinh nghiệm và mục tiêu lâu dài của bạn tại Canada."
+            },
+            "visas-extensions": {
+              "name": "Visa & gia hạn",
+              "description": "Được hỗ trợ khi xin visa, gia hạn giấy phép, và duy trì tình trạng tạm trú của bạn tại Canada."
+            },
+            "other-services": {
+              "name": "Dịch vụ khác",
+              "description": "Nhận hỗ trợ về hồ sơ xin quốc tịch, sửa đổi giấy tờ, Giấy thông hành thường trú nhân (PRTD), yêu cầu Access to Information and Privacy (ATIP), và các dịch vụ khác."
+            }
+          }
+        },
+        "global-connect-immigration": {
+          "tagline": "Công ty tư vấn có đăng ký về PR, visa và định cư.",
+          "description": "Global Connect là công ty tư vấn di trú Canada có đăng ký, giúp người mới đến tìm hiểu các con đường lấy thường trú, thủ tục visa và kế hoạch định cư, với hướng dẫn chuyên môn dành riêng cho từng người.",
+          "highlights": [
+            "Hướng dẫn con đường lấy PR",
+            "Hỗ trợ visa & giấy phép lao động",
+            "Kế hoạch định cư riêng cho bạn"
+          ],
+          "serviceArea": "Surrey",
+          "howToStart": "Hãy gọi điện, gửi email, hoặc đặt lịch tư vấn qua trang web.",
+          "programs": {
+            "family-sponsorship": {
+              "name": "Bảo lãnh gia đình",
+              "description": "Hỗ trợ bảo lãnh vợ/chồng, bạn đời, con cái hoặc cha mẹ để xin thường trú."
+            }
+          }
+        },
+        "burnaby-public-library": {
+          "tagline": "Không gian hòa nhập để gặp gỡ, học và vui chơi.",
+          "description": "Burnaby Public Library tạo ra những không gian hòa nhập, nơi mọi người gặp gỡ, học tập và vui chơi tại bốn chi nhánh — chương trình và tài nguyên miễn phí, cùng chỗ để kết nối.",
+          "highlights": [
+            "Chương trình & tài nguyên miễn phí",
+            "4 chi nhánh khắp Burnaby",
+            "Không gian học tập thân thiện"
+          ],
+          "serviceArea": "Burnaby · 4 chi nhánh",
+          "eligibility": "Thẻ thành viên miễn phí cho bất kỳ ai sống tại Burnaby hoặc khu vực InterLINK xung quanh. Bạn không cần giấy tờ tùy thân để mở tài khoản, và có thể dùng tên bạn chọn. Có loại thẻ riêng cho người sống ở nơi khác trong BC và ngoài BC.",
+          "howToStart": "Hãy đến quầy dịch vụ tại bất kỳ cơ sở nào trong bốn cơ sở, hoặc gọi 604-436-5400; nhân viên sẽ mở tài khoản và đưa bạn một thẻ dùng được ngay.",
+          "hours": "Thứ 2–Thứ 5 10:00am–8:00pm · Thứ 6–Chủ Nhật 10:00am–6:00pm",
+          "programs": {
+            "become-a-member": {
+              "name": "Đăng ký thành viên",
+              "description": "Nhân viên mở tài khoản cho bạn tại bất kỳ quầy dịch vụ nào và đưa thẻ ngay trong ngày. Không cần giấy tờ tùy thân, và bạn có thể liên kết thẻ sẵn có từ một thư viện khác.",
+              "eligibility": "Miễn phí cho bất kỳ ai sống tại Burnaby hoặc khu vực InterLINK xung quanh."
+            },
+            "english-conversation-circle": {
+              "name": "Nhóm trò chuyện tiếng Anh",
+              "description": "Luyện tiếng Anh và gặp gỡ mọi người trong một nhóm thoải mái. Một thủ thư dẫn dắt buổi trò chuyện. Có tại các chi nhánh và trên Zoom.",
+              "eligibility": "Từ 18 tuổi trở lên. Nên biết một chút tiếng Anh."
+            },
+            "learning-english": {
+              "name": "Học tiếng Anh",
+              "description": "Sách, CD và DVD ở mọi trình độ, tài liệu ôn IELTS, TOEIC, TOEFL và CELPIP, cùng các khóa học trực tuyến miễn phí như Mango Languages và Road to IELTS."
+            },
+            "arrivals-in-english": {
+              "name": "Arrivals in English",
+              "description": "Khóa học trực tuyến miễn phí, xây dựng quanh tiếng Anh hằng ngày mà người mới đến cần khi ổn định cuộc sống tại Canada."
+            },
+            "services-for-immigrants-newcomers": {
+              "name": "Dịch vụ cho người nhập cư & người mới đến",
+              "description": "Danh bạ do nhân viên thư viện cập nhật, liệt kê dịch vụ khu vực Burnaby theo nhu cầu — luyện thi quốc tịch, việc làm, tiếng Anh — kèm thông tin liên hệ và điều kiện của từng tổ chức."
+            },
+            "summer-reading-club": {
+              "name": "Câu lạc bộ đọc sách mùa hè",
+              "description": "Chương trình đọc sách mùa hè miễn phí cho trẻ em mọi lứa tuổi."
+            }
+          }
+        },
+        "surrey-libraries": {
+          "tagline": "Khơi dậy sự tò mò và học tập suốt đời.",
+          "description": "Surrey Libraries kết nối mọi người, khơi dậy sự tò mò và truyền cảm hứng học tập suốt đời để nâng cao đời sống của cư dân Surrey tại mười chi nhánh.",
+          "highlights": [
+            "Chương trình học suốt đời miễn phí",
+            "10 chi nhánh khắp Surrey",
+            "Gắn kết cộng đồng"
+          ],
+          "serviceArea": "Surrey · 10 chi nhánh",
+          "eligibility": "Bạn có thể làm thành viên nếu sống tại Surrey hoặc một cộng đồng InterLINK lân cận. Dịch vụ thư viện cho người mới đến là miễn phí tại mọi chi nhánh.",
+          "howToStart": "Hãy đến Trung tâm Chào đón người mới đến tại chi nhánh City Centre, tầng 4 — 604-590-7847 hoặc library-newcomers@surrey.ca.",
+          "hours": "Trung tâm Chào đón người mới đến: Thứ 2–Thứ 5 10:00am–9:00pm · Thứ 6–Chủ Nhật 10:00am–5:00pm",
+          "programs": {
+            "newcomer-welcome-centre": {
+              "name": "Trung tâm Chào đón người mới đến",
+              "description": "Một không gian riêng ở tầng 4 của chi nhánh City Centre. Nhân viên giúp bạn làm thẻ thư viện, tìm hiểu dịch vụ của thành phố Surrey và của cộng đồng, giải đáp thắc mắc tiếng Anh và tìm việc. Nơi đây có sách nhiều thứ tiếng, từ điển, tài liệu IELTS và máy tính."
+            },
+            "free-settlement-services-for-newcomers": {
+              "name": "Dịch vụ định cư miễn phí cho người mới đến",
+              "description": "Nhân viên định cư từ Options, DIVERSEcity, PICS và S.U.C.C.E.S.S. tổ chức các buổi tại chi nhánh — tìm việc, lớp tiếng Anh, luyện thi quốc tịch, trợ cấp, ghi danh trường học.",
+              "eligibility": "Không nêu giới hạn về tình trạng di trú. Dịch vụ do các cơ quan đối tác cung cấp — hãy gọi trước để xác nhận giờ và địa điểm."
+            },
+            "english-language-learners": {
+              "name": "Chương trình cho người học tiếng Anh",
+              "description": "Câu lạc bộ sách và nhóm trò chuyện, nơi bạn luyện tiếng Anh trong một nhóm thân thiện. Các buổi diễn ra tại nhiều chi nhánh."
+            },
+            "newcomer-teen-social-club": {
+              "name": "Câu lạc bộ giao lưu cho thiếu niên mới đến",
+              "description": "Câu lạc bộ hằng tháng, nơi thiếu niên mới đến kết bạn và luyện nói tiếng Anh quanh một chủ đề khác nhau mỗi tháng."
+            },
+            "get-a-library-card": {
+              "name": "Làm thẻ thư viện",
+              "description": "Miễn phí cho bất kỳ ai sống tại Surrey hoặc một cộng đồng InterLINK lân cận. Hãy mang giấy tờ tùy thân có tên, ảnh và địa chỉ của bạn, hoặc hai loại giấy tờ tùy thân. Cư dân Surrey có thể bắt đầu trực tuyến với thẻ số dùng trong 90 ngày.",
+              "eligibility": "Bạn có thể làm thành viên nếu sống tại Surrey hoặc một cộng đồng InterLINK lân cận."
+            },
+            "books-in-world-languages": {
+              "name": "Sách bằng các ngôn ngữ trên thế giới",
+              "description": "Bộ sưu tập bằng các ngôn ngữ khác tiếng Anh, kèm danh sách ngôn ngữ mà mỗi chi nhánh có."
+            },
+            "technology-help": {
+              "name": "Trợ giúp về công nghệ",
+              "description": "Các buổi đến trực tiếp không cần hẹn và buổi hướng dẫn riêng về máy tính, internet, điện thoại, máy tính bảng và máy đọc sách."
+            }
+          }
+        },
+        "vancouver-public-library": {
+          "tagline": "Nơi miễn phí để khám phá, sáng tạo và chia sẻ.",
+          "description": "Vancouver Public Library đã phục vụ nhu cầu học tập suốt đời, đọc sách và tra cứu thông tin của cư dân Vancouver trong hơn 100 năm, tại 21 chi nhánh — những nơi miễn phí để mọi người khám phá, sáng tạo và chia sẻ ý tưởng cùng thông tin.",
+          "highlights": [
+            "Miễn phí cho mọi cư dân",
+            "21 chi nhánh khắp Vancouver",
+            "Hơn 100 năm phục vụ thành phố"
+          ],
+          "serviceArea": "Vancouver · 21 chi nhánh",
+          "eligibility": "Thẻ thư viện miễn phí dành cho bất kỳ ai sống hoặc sở hữu bất động sản trong thành phố Vancouver, và cho cư dân của University Endowment Lands, các khu dân cư UBC và khu nhà ở gia đình UBC. Các chương trình và sự kiện mở cho tất cả mọi người.",
+          "howToStart": "Hãy đến bất kỳ chi nhánh nào cùng giấy tờ tùy thân để đăng ký thẻ, hoặc đăng ký trực tuyến để nhận thẻ số tạm thời. Bạn cũng có thể gọi 604-331-3603 hoặc gửi email tới info@vpl.ca.",
+          "hours": "Central: Thứ 2–Thứ 5 9:30am–8:30pm · Thứ 6 9:30am–6:00pm · Thứ 7 10:00am–6:00pm · Chủ Nhật 11:00am–6:00pm",
+          "programs": {
+            "get-a-library-card": {
+              "name": "Làm thẻ thư viện",
+              "description": "Hãy đăng ký tại bất kỳ chi nhánh nào cùng giấy tờ tùy thân, hoặc đăng ký trực tuyến để nhận thẻ số tạm thời. Thẻ PR, Confirmation of Permanent Residence, hoặc visa hay giấy phép lao động cấp từ sáu tháng trở lên đều được chấp nhận, kèm giấy tờ chứng minh địa chỉ tại Vancouver.",
+              "eligibility": "Miễn phí cho người sống hoặc sở hữu bất động sản trong thành phố Vancouver."
+            },
+            "esl-conversation-practice": {
+              "name": "Luyện trò chuyện tiếng Anh (ESL)",
+              "description": "Nhóm trò chuyện, nơi người học tiếng Anh gặp gỡ, luyện tập và kết bạn. Phần lớn các buổi là đến trực tiếp, không cần đăng ký.",
+              "eligibility": "Phù hợp nhất với người nói tiếng Anh trình độ trung cấp."
+            },
+            "immigration-and-settlement-guide": {
+              "name": "Cẩm nang di trú và định cư",
+              "description": "Cẩm nang do nhân viên thư viện cập nhật, nói về việc nhập cư vào Canada, dịch vụ định cư, hỗ trợ người tị nạn, tìm việc, học tiếng Anh và dịch vụ phiên dịch."
+            },
+            "translation-services-guide": {
+              "name": "Cẩm nang dịch vụ phiên dịch",
+              "description": "Danh sách các dịch vụ biên dịch và phiên dịch, gồm DIVERSEcity, ISSofBC, MOSAIC và Society of Translators and Interpreters of BC."
+            },
+            "clarity-english": {
+              "name": "Clarity English",
+              "description": "Tài nguyên học ngôn ngữ trực tuyến miễn phí với bài tập tương tác, bài kiểm tra thử và trợ giúp về ngữ pháp."
+            },
+            "world-languages-collection": {
+              "name": "Bộ sưu tập ngôn ngữ thế giới",
+              "description": "Sách đọc cho người lớn, thiếu niên và trẻ em bằng mười sáu ngôn ngữ khác tiếng Anh. Mỗi chi nhánh có bộ sưu tập theo khu dân cư của mình; chi nhánh Central có đầy đủ."
+            }
+          }
+        },
+        "big-brothers-big-sisters": {
+          "tagline": "Cố vấn thay đổi cuộc đời cho người trẻ.",
+          "description": "Big Brothers Big Sisters ghép trẻ em và thiếu niên với những người lớn tận tâm làm cố vấn. Tại khu vực này, tổ chức địa phương là Big Brothers of Greater Vancouver, đơn vị điều hành các chương trình cố vấn trong cộng đồng, trong trường học và theo nhóm được liệt kê ở đây. Các nơi khác ở Canada do tổ chức địa phương của họ phụ trách.",
+          "highlights": [
+            "Cố vấn 1:1 cho người trẻ",
+            "Hỗ trợ đời sống của trẻ em",
+            "Người lớn tận tâm làm gương"
+          ],
+          "serviceArea": "Vùng Vancouver mở rộng",
+          "howToStart": "Tại vùng Vancouver mở rộng, hãy nộp đơn qua Big Brothers of Greater Vancouver: mẫu đơn, buổi thông tin cho người giám hộ, phỏng vấn gia đình và tập huấn trước khi ghép, rồi vào danh sách chờ ghép cặp. Ở nơi khác, hãy dùng công cụ tìm \"Find an agency near you\" trên trang web toàn quốc.",
+          "programs": {
+            "community-mentoring": {
+              "name": "Cố vấn cộng đồng Big Brothers",
+              "description": "Cố vấn một kèm một ngay trong cộng đồng của bạn. Người cố vấn cam kết đi chơi cùng 2–4 giờ mỗi tuần trong một năm."
+            },
+            "in-school-mentoring": {
+              "name": "Cố vấn trong trường học",
+              "description": "Cố vấn một kèm một trong giờ học — người cố vấn đến thăm một giờ mỗi tuần suốt năm học."
+            },
+            "teen-mentoring": {
+              "name": "Cố vấn thiếu niên",
+              "description": "Học sinh trung học làm cố vấn cho học sinh tiểu học một giờ mỗi tuần sau giờ học, kèm phần rèn kỹ năng lãnh đạo cho người trẻ."
+            },
+            "mentoring-with-math": {
+              "name": "Cố vấn kèm môn Toán",
+              "description": "Kèm học cùng cố vấn để xây dựng sự tự tin với môn toán, dành cho gia đình không đủ khả năng trả tiền học thêm. Đồ dùng học tập được cung cấp kèm."
+            },
+            "game-on": {
+              "name": "Game On!",
+              "description": "Chương trình nhóm về lựa chọn lành mạnh qua vận động thể chất và trò chuyện về kỹ năng sống. 90 phút mỗi tuần, trong 8–10 tuần."
+            },
+            "roots-mentoring": {
+              "name": "Cố vấn Roots",
+              "description": "Chương trình cố vấn tôn vinh các nền văn hóa Bản địa, với bài học từ những người lãnh đạo cộng đồng Bản địa."
+            }
+          }
+        },
+        "united-way-bc": {
+          "tagline": "Hỗ trợ những người cần nhất trên khắp BC.",
+          "description": "United Way BC phục vụ hơn năm triệu người dân British Columbia, đưa nguồn lực và hỗ trợ đến nơi cần nhất — ứng phó khẩn cấp, trẻ em & thanh thiếu niên, người cao tuổi, nghèo đói, sức khỏe tâm thần và an ninh lương thực.",
+          "highlights": [
+            "Hỗ trợ khẩn cấp & xóa nghèo",
+            "Chương trình cho trẻ em, người trẻ & người cao tuổi",
+            "Sức khỏe tâm thần & an ninh lương thực"
+          ],
+          "serviceArea": "British Columbia",
+          "howToStart": "Để được giúp tìm dịch vụ, hãy gọi hoặc nhắn tin 2-1-1 — miễn phí và bảo mật. Để hỏi về chính United Way BC, hãy gọi 604-294-8929 hoặc gửi email tới info@uwbc.ca.",
+          "hours": "Thứ 2–Thứ 6 8:30am–4:30pm (nghỉ 12:00–1:00pm)",
+          "programs": {
+            "211": {
+              "name": "211 British Columbia",
+              "description": "Hãy gọi hoặc nhắn tin 2-1-1 để được giới thiệu miễn phí và bảo mật tới dịch vụ cộng đồng, chính phủ và xã hội. Có phiên dịch bằng hơn 240 ngôn ngữ và phương ngữ."
+            },
+            "bc-safe-haven-program": {
+              "name": "Chương trình BC Safe Haven",
+              "description": "Hỗ trợ người xin tị nạn thông qua huy động tình nguyện viên và kêu gọi cộng đồng về nhà ở và dịch vụ.",
+              "eligibility": "Người xin tị nạn."
+            },
+            "food-security": {
+              "name": "An ninh lương thực",
+              "description": "Các chương trình cải thiện khả năng tiếp cận thực phẩm lành mạnh cho người thiếu an ninh lương thực trên khắp BC."
+            },
+            "transit-assistance": {
+              "name": "Chương trình hỗ trợ đi lại khẩn cấp",
+              "description": "Phiếu đi xe để người gặp khó khăn có thể đi xe buýt miễn phí."
+            },
+            "better-at-home": {
+              "name": "Better at Home",
+              "description": "Hỗ trợ phi y tế cho người cao tuổi — đi chợ, dọn dẹp nhà cửa và kết nối xã hội — tại hơn 260 cộng đồng."
+            },
+            "school-s-out": {
+              "name": "School's Out",
+              "description": "Chương trình trước và sau giờ học với bữa ăn dinh dưỡng và hỗ trợ phát triển trong suốt năm học.",
+              "eligibility": "Từ 6 đến 12 tuổi."
+            },
+            "work-experience-opportunities-grant": {
+              "name": "Trợ cấp cơ hội kinh nghiệm làm việc",
+              "description": "Hỗ trợ đào tạo kỹ năng và nghề nghiệp.",
+              "eligibility": "Người đang nhận trợ cấp thu nhập hoặc trợ cấp khuyết tật."
+            },
+            "youth-futures-education-fund": {
+              "name": "Quỹ giáo dục Youth Futures",
+              "description": "Nguồn tài trợ học tập với ít điều kiện ràng buộc.",
+              "eligibility": "Người trẻ từng được chính phủ chăm sóc nuôi dưỡng."
+            }
+          }
+        },
+        "trout-lake-community-centre": {
+          "tagline": "Hơn 200 chương trình cho mọi lứa tuổi.",
+          "description": "Trout Lake Community Centre có hơn 200 chương trình cho mọi lứa tuổi — một điểm sinh hoạt khu phố thân thiện ở phía đông Vancouver, hoạt động cùng Vancouver Park Board.",
+          "highlights": [
+            "Hơn 200 chương trình cộng đồng",
+            "Hoạt động cho mọi lứa tuổi",
+            "Nơi gặp gỡ của khu phố"
+          ],
+          "serviceArea": "Vancouver",
+          "howToStart": "Hãy ghé hỏi tại quầy tiếp tân, gọi 604-257-6955, hoặc đăng ký trực tuyến qua hệ thống giải trí của thành phố Vancouver.",
+          "hours": "Thứ 2–Thứ 6 9:00am–9:00pm · Thứ 7–Chủ Nhật 8:00am–4:00pm",
+          "programs": {
+            "leisure-access-program-lap": {
+              "name": "Chương trình Leisure Access (LAP)",
+              "description": "Trợ giá của thành phố Vancouver, giảm tới 50% phí chương trình và phí phòng tập.",
+              "eligibility": "Cư dân Vancouver có thu nhập thấp và có thẻ leisure access còn hiệu lực."
+            },
+            "tlcca-program-cost-assistance": {
+              "name": "Hỗ trợ chi phí chương trình TLCCA",
+              "description": "Hỗ trợ phí chương trình cho người trong cộng đồng gặp khó khăn tài chính.",
+              "eligibility": "Người trong cộng đồng gặp khó khăn tài chính nhưng không đủ điều kiện nhận LAP."
+            },
+            "adaptive-programs": {
+              "name": "Chương trình thích ứng",
+              "description": "Hoạt động hòa nhập cho mọi lứa tuổi và mọi khả năng."
+            },
+            "licensed-preschool": {
+              "name": "Trường mẫu giáo có giấy phép",
+              "description": "Học tập sớm cho trẻ nhỏ tại trung tâm cộng đồng."
+            },
+            "older-adult-programs": {
+              "name": "Chương trình cho người cao tuổi",
+              "description": "Giữ sức khỏe và gắn kết với bạn bè cùng lứa tuổi."
+            }
+          }
+        },
+        "amssa": {
+          "tagline": "Nền tảng hỗ trợ các cơ quan phục vụ người mới đến ở BC.",
+          "description": "Affiliation of Multicultural Societies and Service Agencies of BC là tổ chức bảo trợ cấp tỉnh bang, giúp củng cố lĩnh vực định cư và đa dạng văn hóa — cung cấp đào tạo, tài nguyên, học trực tuyến và vận động chính sách cho các cơ quan phục vụ người mới đến trên khắp BC.",
+          "highlights": [
+            "Đào tạo & học trực tuyến cho cả ngành",
+            "Tài nguyên cho cơ quan phục vụ người mới đến",
+            "Phủ khắp toàn tỉnh bang BC"
+          ],
+          "serviceArea": "British Columbia",
+          "eligibility": "AMSSA phục vụ các cơ quan thành viên và tổ chức trong lĩnh vực định cư, không phục vụ từng người mới đến. Nếu bạn cần trợ giúp cho chính mình, hãy liên hệ trực tiếp một cơ quan thành viên của AMSSA.",
+          "howToStart": "Các tổ chức có thể gọi 604-718-2780 hoặc 1-888-355-5560, gửi email tới amssa@amssa.org, hoặc nộp đơn qua trang thành viên. Người mới đến nên liên hệ trực tiếp một cơ quan thành viên của AMSSA.",
+          "programs": {
+            "re-settlement-and-integration": {
+              "name": "(Tái) định cư và hòa nhập",
+              "description": "Nâng cao năng lực, kết nối, đào tạo và tài nguyên thông tin cho các đơn vị cung cấp dịch vụ định cư ở BC và Yukon.",
+              "eligibility": "Các tổ chức và người làm chuyên môn trong lĩnh vực định cư, gồm cả đơn vị nhận chương trình IRCC BC and Yukon và BC Settlement."
+            },
+            "migrant-worker-hub": {
+              "name": "Migrant Worker Hub",
+              "description": "Công cụ, tài nguyên, bản đồ dịch vụ và đào tạo giúp nâng cao năng lực cho các tổ chức hỗ trợ lao động nhập cư tại BC.",
+              "eligibility": "Các tổ chức định cư và tổ chức hỗ trợ lao động nhập cư."
+            },
+            "amssa-institute": {
+              "name": "AMSSA Institute",
+              "description": "Nền tảng học trực tuyến — hội thảo trực tuyến, AMSSATalks, bài giảng và khóa học điện tử về các chủ đề từ sức khỏe tâm thần của người tị nạn đến tiêu chuẩn lao động."
+            },
+            "canadian-humanitarian-assistance-response-char": {
+              "name": "Ứng phó hỗ trợ nhân đạo Canada (CHAR)",
+              "description": "Mạng lưới cộng đồng phân phối quà tặng và hỗ trợ thiết yếu cho người mới đến đang gặp khó khăn trên khắp Canada."
+            },
+            "indigenous-truth-and-decolonization": {
+              "name": "Sự thật với người Bản địa và phi thực dân hóa",
+              "description": "Chương trình của AMSSA về sự thật với người Bản địa và công việc phi thực dân hóa trong lĩnh vực định cư."
+            },
+            "national-sector-engagement": {
+              "name": "Kết nối ngành trên toàn quốc",
+              "description": "Điều phối các sáng kiến kết nối toàn quốc và cơ cấu quản trị trong toàn lĩnh vực định cư."
+            }
+          }
+        },
+        "surrey-lip": {
+          "tagline": "Hơn 30 tổ chức phối hợp giúp người mới đến hòa nhập ở Surrey.",
+          "description": "Một hội đồng đa bên do IRCC tài trợ, quy tụ hơn 30 tổ chức cộng đồng để xây dựng các chiến lược phối hợp, dựa trên nghiên cứu, cho việc hòa nhập của người mới đến tại Surrey. Do DIVERSEcity quản lý, hội đồng còn cung cấp những công cụ như bản đồ dịch vụ và công cụ báo cáo phân biệt chủng tộc.",
+          "highlights": [
+            "Điều phối hơn 30 tổ chức địa phương",
+            "Bản đồ dịch vụ cho người mới đến",
+            "Công cụ báo cáo phân biệt chủng tộc"
+          ],
+          "serviceArea": "Surrey",
+          "eligibility": "Surrey LIP là mạng lưới hợp tác giữa các tổ chức và không cung cấp dịch vụ cho từng cá nhân. Nếu bạn cần trợ giúp cho chính mình, hãy dùng Bản đồ dịch vụ Surrey hoặc liên hệ một Kết nối viên cộng đồng.",
+          "howToStart": "Để được hỗ trợ định cư riêng từng người, hãy liên hệ một Kết nối viên cộng đồng: CCBD@dcrs.ca hoặc 604-547-1272 (cộng đồng gốc Phi), CCM@dcrs.ca hoặc 604-547-1131 (cộng đồng Hồi giáo và Afghanistan). Để tìm bất kỳ dịch vụ nào ở Surrey, hãy dùng Bản đồ dịch vụ Surrey. Các tổ chức có thể dùng mẫu liên hệ trên trang web.",
+          "programs": {
+            "community-connector-project": {
+              "name": "Dự án Kết nối viên cộng đồng",
+              "description": "Những thành viên cộng đồng được đào tạo cung cấp thông tin, dịch vụ và kết nối cho người mới đến trong quá trình định cư, với nhánh riêng cho cộng đồng gốc Phi và cho cộng đồng Hồi giáo và Afghanistan.",
+              "eligibility": "Người mới đến thuộc mọi hoàn cảnh, đặc biệt chú trọng cộng đồng gốc Phi và cộng đồng Hồi giáo/Afghanistan tại Surrey."
+            },
+            "surrey-services-map": {
+              "name": "Bản đồ dịch vụ Surrey",
+              "description": "Bản đồ trực tuyến về các dịch vụ dành cho người mới đến và cư dân tại Surrey."
+            },
+            "immigrant-advisory-round-table": {
+              "name": "Bàn tròn cố vấn người nhập cư",
+              "description": "Một nhóm cư dân nhập cư đưa ý kiến của cộng đồng vào kế hoạch và dự án của Surrey LIP."
+            },
+            "youth-newcomer-council": {
+              "name": "Hội đồng người trẻ mới đến Surrey",
+              "description": "Hội đồng gồm những người trẻ mới đến, đưa góc nhìn của người trẻ vào công việc của Surrey LIP."
+            },
+            "bridging-indigenous-and-newcomer": {
+              "name": "Kết nối cộng đồng Bản địa và người mới đến",
+              "description": "Dự án xây dựng quan hệ và sự thấu hiểu giữa cộng đồng Bản địa và cộng đồng người mới đến tại Surrey."
+            },
+            "first-peoples-guide": {
+              "name": "Cẩm nang về các Dân tộc Đầu tiên ở Surrey",
+              "description": "Cẩm nang giúp người hướng dẫn giới thiệu cho người mới đến về các Dân tộc Đầu tiên ở khu vực Surrey."
+            }
+          }
+        },
+        "delta-lip": {
+          "tagline": "Điều phối dịch vụ cho người mới đến khắp Delta.",
+          "description": "Delta Local Immigration Partnership là bàn hợp tác do IRCC tài trợ, quy tụ các tổ chức địa phương để Delta trở nên thân thiện hơn với người mới đến. Tổ chức này nói rõ rằng họ không cung cấp dịch vụ trực tiếp cho cá nhân.",
+          "highlights": [
+            "Điều phối dịch vụ cho người mới đến tại Delta",
+            "Bàn cố vấn cho người trẻ và người nhập cư",
+            "Xuất bản Bản đồ dịch vụ Delta"
+          ],
+          "serviceArea": "Delta",
+          "eligibility": "Delta LIP là mạng lưới hợp tác giữa các tổ chức cộng đồng, cơ quan, đơn vị của thành phố và doanh nghiệp địa phương, và không cung cấp dịch vụ cho từng cá nhân. Người mới đến và người trẻ có thể tham gia qua các bàn cố vấn, hoặc tìm dịch vụ qua Bản đồ dịch vụ Delta.",
+          "howToStart": "Hãy gửi email tới deltalip@dcrs.ca, hoặc dùng mẫu liên hệ trên trang web. Để tìm một dịch vụ ở Delta, hãy dùng Bản đồ dịch vụ Delta.",
+          "programs": {
+            "delta-services-map": {
+              "name": "Bản đồ dịch vụ Delta",
+              "description": "Bản đồ trực tuyến về các dịch vụ dành cho người mới đến tại Delta."
+            },
+            "resource-library": {
+              "name": "Thư viện tài nguyên",
+              "description": "Tài nguyên về định cư và cộng đồng do mạng lưới này xuất bản cho cư dân Delta và các đơn vị cung cấp dịch vụ."
+            },
+            "delta-youth-newcomer-advisory-table-dynat": {
+              "name": "Bàn cố vấn người trẻ mới đến Delta (DYNAT)",
+              "description": "Quy tụ những người trẻ muốn Delta thân thiện hơn với người trẻ mới đến.",
+              "eligibility": "Người trẻ từ 16 đến 25 tuổi muốn Delta trở thành nơi thân thiện và hòa nhập hơn cho người trẻ mới đến."
+            },
+            "immigrant-advisory-table": {
+              "name": "Bàn cố vấn người nhập cư",
+              "description": "Bàn tròn tình nguyện với các thành viên đại diện cho nhiều hoàn cảnh và trải nghiệm khác nhau.",
+              "eligibility": "Người nộp đơn phải từ 26 tuổi trở lên."
+            }
+          }
+        },
+        "sfu-international": {
+          "tagline": "Tư vấn, định hướng và hỗ trợ người mới đến cho sinh viên SFU.",
+          "description": "International Services for Students của Simon Fraser University hỗ trợ du học sinh với tư vấn ngoài học thuật, định hướng và chương trình nghề nghiệp, cùng hỗ trợ riêng cho sinh viên tự nhận là người tị nạn hoặc người mới đến.",
+          "highlights": [
+            "Tư vấn ngoài học thuật cho du học sinh",
+            "Định hướng và chương trình nghề nghiệp",
+            "Hỗ trợ riêng cho người tị nạn và người mới đến"
+          ],
+          "serviceArea": "Cơ sở SFU Burnaby",
+          "eligibility": "Du học sinh đang theo học tại SFU, gồm sinh viên đại học, sau đại học và sinh viên trao đổi.",
+          "howToStart": "Hãy đến trực tiếp (tại chỗ hoặc trực tuyến), đặt lịch hẹn tư vấn, hoặc gửi email tới iss_office@sfu.ca. Thắc mắc về tư vấn gửi tới intl_advising@sfu.ca.",
+          "hours": "Thứ 2–Thứ 6 9:00am–4:00pm (nghỉ 12:00–1:00pm)",
+          "programs": {
+            "international-and-newcomer-student-advising": {
+              "name": "Tư vấn cho du học sinh và sinh viên mới đến",
+              "description": "Tư vấn ngoài học thuật cho du học sinh bậc đại học, sau đại học và sinh viên trao đổi.",
+              "eligibility": "Du học sinh, gồm sinh viên đại học, sau đại học và sinh viên trao đổi."
+            },
+            "refugee-and-newcomer-programs": {
+              "name": "Chương trình cho người tị nạn và người mới đến",
+              "description": "Hỗ trợ theo từng hồ sơ cho sinh viên tự nhận là người tị nạn hoặc người mới đến — giúp định cư, định hướng, và kết nối tới tư vấn học thuật, y tế, hỗ trợ tài chính và dịch vụ nghề nghiệp.",
+              "eligibility": "Sinh viên SFU tự nhận là người tị nạn hoặc người mới đến."
+            },
+            "student-refugee-program": {
+              "name": "Student Refugee Program (cùng WUSC)",
+              "description": "Mỗi năm SFU bảo trợ sáu sinh viên đại học là người tị nạn từ các trại ở nước ngoài, cùng với World University Service of Canada. Khoản bảo trợ gồm học phí, sách vở, lệ phí và chi phí sinh hoạt.",
+              "eligibility": "Sinh viên là người tị nạn từ 18 đến 25 tuổi đang ở trại tị nạn nước ngoài, được chọn thông qua WUSC."
+            },
+            "global-student-centre": {
+              "name": "Trung tâm Sinh viên Toàn cầu",
+              "description": "Một không gian trong trường tại AQ 2013 dành cho hỗ trợ du học sinh, sự kiện và thời gian gặp chuyên viên tư vấn."
+            },
+            "international-student-orientation-series": {
+              "name": "Chuỗi buổi định hướng cho du học sinh",
+              "description": "Chuỗi nhiều buổi dành cho tất cả du học sinh mới bắt đầu học tại SFU.",
+              "eligibility": "Du học sinh mới bắt đầu học tại SFU."
+            },
+            "international-student-career-week": {
+              "name": "Tuần lễ nghề nghiệp cho du học sinh",
+              "description": "Chuỗi hoạt động nghề nghiệp kéo dài một tuần, thiết kế riêng cho du học sinh.",
+              "eligibility": "Du học sinh bậc đại học và sau đại học."
+            }
+          }
+        },
+        "fraser-international-college": {
+          "tagline": "Chương trình cao đẳng chuyển tiếp lên bằng của SFU.",
+          "description": "Fraser International College là trường cao đẳng chuyển tiếp tư thục nằm trong cơ sở SFU Burnaby, cung cấp chương trình dự bị và năm nhất dẫn vào các bằng của Simon Fraser University. Mọi chương trình đều thu học phí.",
+          "highlights": [
+            "Đường chuyển tiếp lên đại học SFU",
+            "Chương trình dự bị và năm nhất đại học",
+            "Nằm trong cơ sở SFU Burnaby"
+          ],
+          "serviceArea": "Burnaby",
+          "eligibility": "Người nộp đơn phải đủ ít nhất 17 tuổi vào ngày cuối của học kỳ đầu tiên và phải nộp toàn bộ bảng điểm học tập. Yêu cầu học thuật khác nhau tùy chương trình và tùy quốc gia xuất thân.",
+          "howToStart": "Hãy nộp đơn trực tuyến qua cổng sinh viên FIC, gửi email tới info@fraseric.ca, hoặc nộp đơn qua một đại lý giáo dục có trong danh sách.",
+          "programs": {
+            "foundation-program-utp-stage-i": {
+              "name": "Chương trình dự bị (UTP Stage I)",
+              "description": "Chương trình trước đại học, học trong hai kỳ.",
+              "eligibility": "Hoàn thành lớp 11 hoặc tương đương, với mức yêu cầu tùy theo chương trình bạn chọn."
+            },
+            "international-year-one-utp-stage-ii": {
+              "name": "Năm nhất quốc tế (UTP Stage II)",
+              "description": "Chương trình tín chỉ năm nhất đại học, dẫn vào một bằng của SFU.",
+              "eligibility": "Thường là hoàn thành lớp 12 hoặc tương đương; yêu cầu khác nhau tùy hệ thống giáo dục từng nước và tùy chương trình."
+            },
+            "associate-of-arts-degree": {
+              "name": "Bằng Associate of Arts",
+              "description": "Bằng cao đẳng hai năm, học tại FIC.",
+              "eligibility": "Thường là hoàn thành lớp 12 hoặc tương đương."
+            },
+            "student-success-team": {
+              "name": "Nhóm hỗ trợ thành công của sinh viên",
+              "description": "Tư vấn học thuật và lập kế hoạch học tập, gồm kế hoạch tốt nghiệp và chuyển tiếp vào SFU.",
+              "eligibility": "Sinh viên FIC."
+            },
+            "wellness-office": {
+              "name": "Văn phòng chăm sóc sức khỏe",
+              "description": "Tư vấn và hỗ trợ sức khỏe tâm thần từ chuyên viên tư vấn của trường.",
+              "eligibility": "Sinh viên FIC."
+            },
+            "student-support-services": {
+              "name": "Dịch vụ hỗ trợ sinh viên",
+              "description": "Hỗ trợ về chuyên cần, lớp phụ đạo và hội thảo, yêu cầu giấy tờ, giúp tìm chỗ ở, định hướng và sự kiện trong trường. Sinh viên FIC cũng dùng được một số dịch vụ của SFU, gồm SFU Recreation và SFU Multifaith.",
+              "eligibility": "Sinh viên FIC."
+            }
+          }
+        },
+        "tugo": {
+          "tagline": "Bảo hiểm du lịch và khách thăm, gồm cả lúc chờ bảo hiểm y tế.",
+          "description": "TuGo là công ty bảo hiểm du lịch thuộc sở hữu Canada, có trụ sở chính tại Richmond, BC. Các gói Visitors to Canada của TuGo chi trả chi phí y tế khẩn cấp cho người thân từ nước ngoài sang thăm và cho người đang chờ chương trình bảo hiểm y tế của tỉnh bang có hiệu lực.",
+          "highlights": [
+            "Bảo hiểm y tế khẩn cấp cho khách đến Canada",
+            "Có lựa chọn chi trả cho bệnh có sẵn",
+            "Sở hữu Canada, trụ sở chính tại Richmond, BC"
+          ],
+          "serviceArea": "Canada và toàn thế giới",
+          "howToStart": "Hãy lấy báo giá trực tuyến qua một đối tác bảo hiểm của TuGo, hoặc gọi 1-855-929-8846.",
+          "hours": "Thứ 2–Thứ 6 6:00am–5:00pm PST · Thứ 7 7:00am–4:00pm PST · Chủ Nhật nghỉ",
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Pháp"
+          ],
+          "programs": {
+            "visitors-to-canada-insurance": {
+              "name": "Bảo hiểm Visitors to Canada",
+              "description": "Bảo vệ y tế khẩn cấp cho khách đến thăm — phí bác sĩ, thuốc theo toa và vận chuyển cấp cứu — với lựa chọn chi trả cho bệnh có sẵn.",
+              "eligibility": "Dành cho người đến thăm gia đình hoặc bạn bè, người đi du lịch trong Canada, hoặc người đang chờ chương trình bảo hiểm y tế của tỉnh bang có hiệu lực."
+            },
+            "basic-visitors-to-canada-insurance": {
+              "name": "Bảo hiểm Visitors to Canada bản cơ bản",
+              "description": "Bảo hiểm y tế khẩn cấp chi phí thấp hơn cho khách có ngân sách hạn chế."
+            },
+            "student-insurance": {
+              "name": "Bảo hiểm cho sinh viên",
+              "description": "Bảo hiểm cho du học sinh chưa có chương trình y tế của tỉnh bang, và cho sinh viên Canada đang học xa nhà. Gồm điều trị y tế và nằm viện, một phần nha khoa và mắt, và học bù sau khi nằm viện.",
+              "eligibility": "Du học sinh đang học tại Canada, và sinh viên Canada đang học ngoài tỉnh bang hoặc ở nước ngoài."
+            },
+            "trip-cancellation-trip-interruption-insurance": {
+              "name": "Bảo hiểm hủy chuyến & gián đoạn chuyến đi",
+              "description": "Chi trả chi phí nếu chuyến đi bị hủy trước khi khởi hành hoặc bị gián đoạn trong lúc đi."
+            },
+            "24-7-emergency-medical-assistance": {
+              "name": "Hỗ trợ y tế khẩn cấp 24/7",
+              "description": "Hỗ trợ y tế khẩn cấp và hỗ trợ yêu cầu bồi thường suốt ngày đêm qua số 1-800-663-0399."
+            }
+          }
+        },
+        "desjardins": {
+          "tagline": "Ngân hàng, xây dựng tín dụng và trợ giúp pháp lý miễn phí.",
+          "description": "Desjardins là tập đoàn tài chính hợp tác xã lớn nhất Canada. Ưu đãi dành cho người mới đến gồm tài khoản chi tiêu được miễn phí gói hằng tháng trong thời gian đủ điều kiện, thẻ tín dụng không phí thường niên để xây dựng lịch sử tín dụng tại Canada, và dịch vụ trợ giúp pháp lý miễn phí. Mạng lưới chi nhánh của Desjardins nằm ở Quebec và Ontario.",
+          "highlights": [
+            "Miễn phí gói hằng tháng trong thời gian ưu đãi",
+            "Thẻ tín dụng để xây lịch sử tín dụng Canada",
+            "Trợ giúp pháp lý miễn phí trong hai năm"
+          ],
+          "serviceArea": "Quebec và Ontario",
+          "eligibility": "Ưu đãi tài khoản cho người mới đến dành cho người từ 25 tuổi trở lên là thường trú nhân, hoặc là cư dân tạm trú có giấy phép lao động còn hiệu lực trên 8 tháng, đã sống tại Canada 3 năm trở xuống và chưa là thành viên Desjardins. Có ưu đãi riêng cho người 18–24 tuổi và sinh viên toàn thời gian 25–30 tuổi.",
+          "howToStart": "Hãy mở tài khoản trực tuyến trong khoảng 15 phút, hoặc nộp đơn từ nước ngoài rồi xác nhận danh tính tại một điểm giao dịch khi bạn đến nơi.",
+          "hours": "Trợ giúp pháp lý: mở hồ sơ 24/7 · chuyên viên tư vấn Thứ 2–Thứ 6 9:00am–8:00pm, Thứ 7 9:00am–5:00pm",
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Pháp"
+          ],
+          "programs": {
+            "newcomers-chequing-account-unlimited-plan": {
+              "name": "Tài khoản chi tiêu cho người mới đến (gói Unlimited)",
+              "description": "Tài khoản chi tiêu được miễn phí hằng tháng của gói Unlimited trong thời gian đủ điều kiện.",
+              "eligibility": "Từ 25 tuổi trở lên, là thường trú nhân hoặc cư dân tạm trú có giấy phép lao động còn hiệu lực trên 8 tháng, ở Canada 3 năm trở xuống, và chưa là thành viên Desjardins."
+            },
+            "free-legal-assistance-service": {
+              "name": "Dịch vụ trợ giúp pháp lý miễn phí",
+              "description": "Trợ giúp pháp lý đi kèm ưu đãi cho người mới đến trong hai năm, cho các vấn đề thường ngày."
+            },
+            "international-money-transfers": {
+              "name": "Chuyển tiền quốc tế",
+              "description": "Chuyển tiền quốc tế tối đa $25,000 mỗi ngày."
+            },
+            "youth-and-student-accounts": {
+              "name": "Tài khoản cho người trẻ và sinh viên",
+              "description": "Ưu đãi tài khoản cho người mới đến trẻ tuổi và sinh viên toàn thời gian.",
+              "eligibility": "18–24 tuổi, hoặc 25–30 tuổi nếu là sinh viên toàn thời gian."
+            }
+          }
         }
       },
       "cost": {

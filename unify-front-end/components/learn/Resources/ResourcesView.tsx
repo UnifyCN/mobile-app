@@ -19,10 +19,10 @@ import {
   PARTNER_CATEGORY_LABEL_KEYS,
   type PartnerCategory,
 } from '@/types/partner';
+import { localizePartners } from '@/utils/localizePartner';
 import { selectPartnersMatching } from '@/utils/searchPartners';
 import CategoryTile from './CategoryTile';
 import CategoryDetail from './CategoryDetail';
-import ContentLanguageNotice from './ContentLanguageNotice';
 import HowWeChooseSheet from './HowWeChooseSheet';
 import PartnerRow from './PartnerRow';
 import ResourcesSearchBar from './ResourcesSearchBar';
@@ -65,12 +65,13 @@ export default function ResourcesView() {
   );
 
   const isSearching = query.trim().length > 0;
+  // Search runs over the copy the person is reading, so the whole directory is
+  // localized first. `t` is the dependency: react-i18next hands back a new one
+  // on languageChanged, which re-resolves every string.
+  const partners = useMemo(() => localizePartners(getActivePartners(), t), [t]);
   const results = useMemo(
-    () =>
-      isSearching
-        ? selectPartnersMatching(getActivePartners(), query, labelFor)
-        : [],
-    [isSearching, query, labelFor]
+    () => (isSearching ? selectPartnersMatching(partners, query, labelFor) : []),
+    [isSearching, partners, query, labelFor]
   );
 
   const openPartner = (slug: string) => {
@@ -123,8 +124,6 @@ export default function ResourcesView() {
             {t('learn.resources.howWeChoose.link')}
           </Text>
         </TouchableOpacity>
-
-        <ContentLanguageNotice />
 
         <View style={styles.searchWrapper}>
           <ResourcesSearchBar value={query} onChangeText={setQuery} />

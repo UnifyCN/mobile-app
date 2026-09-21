@@ -125,10 +125,12 @@ a Feather equivalent.
 
 - Default: category grid.
 - Typing: grid is replaced by matching partners across all categories, with a
-  result count. Every whitespace token must match; accents are stripped.
+  result count. Every whitespace token must match; accents are stripped. The
+  index is the copy on screen, so a query matches in the language being read.
 - No matches: empty state echoing the query.
 - No partners at all: "We're adding partners" empty state.
-- Non-English locale: `ContentLanguageNotice` appears above the search field.
+- Non-English locale: nothing special. Partner copy is translated like the rest
+  of the app, so the old "English only" notice is gone.
 - Category tapped: detail renders in place, not pushed. Back nav returns to the
   grid and reads "Resources", the segment it returns to.
 - Category with no active partners: "No active partners" empty state.
@@ -157,7 +159,15 @@ a Feather equivalent.
   the category detail list **and** in the landing screen's search results, so it
   carries its own bottom margin and any change lands on both.
 - `app/(tabs)/Learn/resources/[slug].tsx` — the partner detail screen
-- `types/partner.ts` — category order, labels, colours, tints
+- `types/partner.ts` — category order, labels, colours, tints, and the
+  `LocalizedPartner` shape components render
+- `constants/Partners.ts` — the directory's **structure only**: slugs, category,
+  contact values, logos, ordering. Every displayed string lives in the locale
+  files under `learn.resources.partners.<slug>`.
+- `utils/localizePartner.ts` — resolves a record's copy for the active language.
+  Keys are derived from the slug and the program id, so a record cannot drift
+  from its copy; `__tests__/resources/partnerCopy.test.ts` asserts both
+  directions.
 - `components/common/BottomSheet.tsx` — the sheet (**not** `@gorhom/bottom-sheet`,
   which is not installed despite what CLAUDE.md says)
 
@@ -172,8 +182,9 @@ a Feather equivalent.
 
 - [x] Six category cards above the fold on iPhone 17 Pro
 - [x] Search filters name, tagline, service area, programs, highlights, category
-- [x] Empty, no-result, and non-English states render
-- [x] All four locales in parity
+      — against the translated copy, in whatever language is active
+- [x] Empty and no-result states render
+- [x] All six locales in parity, partner copy included
 - [x] Contrast suite passes for every token pair, every category glyph, and all
       three cost chips
 - [x] Partner cards render in both the category list and the search results

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -22,13 +22,13 @@ import {
   PARTNER_CATEGORY_COLORS,
   PARTNER_CATEGORY_TINTS,
   COST_LABEL_KEYS,
-  type Partner,
-  type PartnerProgram,
+  type LocalizedPartner,
+  type LocalizedPartnerProgram,
   type ResourceLinkTarget,
 } from '@/types/partner';
 import Monogram from '@/components/learn/Resources/Monogram';
-import ContentLanguageNotice from '@/components/learn/Resources/ContentLanguageNotice';
 import { useAnalytics } from '@/utils/analytics';
+import { localizePartner } from '@/utils/localizePartner';
 import { buildPartnerUrl } from '@/utils/partners';
 import { launchResourceLink } from '@/utils/openResourceLink';
 
@@ -122,7 +122,7 @@ function ContactRow({
  * nothing but its service area shows no Contact block — the value is already on
  * the tag beside the category.
  */
-function hasAnyContactField(p: Partner) {
+function hasAnyContactField(p: LocalizedPartner) {
   return Boolean(
     p.eligibility ||
       p.howToStart ||
@@ -151,17 +151,25 @@ export default function PartnerDetailScreen() {
     trackResourcesProgramClicked,
     trackResourcesLinkFailed,
   } = useAnalytics();
-  const partner = slug ? getPartnerBySlug(slug) : undefined;
+  const record = slug ? getPartnerBySlug(slug) : undefined;
+  // Copy lives in the locale files, so the record is resolved for the active
+  // language before anything reads a string off it.
+  const partner = useMemo(
+    () => (record ? localizePartner(record, t) : undefined),
+    [record, t]
+  );
 
+  // Keyed on the record, not the localized copy: switching language re-resolves
+  // every string and would otherwise report a second "partner opened".
   useEffect(() => {
-    if (partner) {
+    if (record) {
       trackResourcesPartnerOpened(
-        partner.slug,
-        partner.category,
-        partner.partnershipType
+        record.slug,
+        record.category,
+        record.partnershipType
       );
     }
-  }, [partner, trackResourcesPartnerOpened]);
+  }, [record, trackResourcesPartnerOpened]);
 
   const screenOptions = (
     <Stack.Screen
@@ -270,7 +278,7 @@ export default function PartnerDetailScreen() {
     if (!launched) showOpenError();
   };
 
-  const handleOpenProgram = async (program: PartnerProgram) => {
+  const handleOpenProgram = async (program: LocalizedPartnerProgram) => {
     if (!program.url) return;
     const launched = await launchResourceLink({
       buildUrl: () => new URL(program.url!).toString(),
@@ -331,10 +339,6 @@ export default function PartnerDetailScreen() {
             />
             <Text style={styles.tagText}>{partner.serviceArea}</Text>
           </View>
-        </View>
-
-        <View style={styles.languageNotice}>
-          <ContentLanguageNotice />
         </View>
 
         <View style={styles.block}>
@@ -642,7 +646,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: RESOURCE_THEME.textSecondary,
   },
-  languageNotice: { marginTop: 12 },
 
   block: { marginTop: 20 },
   sectionLabel: {
