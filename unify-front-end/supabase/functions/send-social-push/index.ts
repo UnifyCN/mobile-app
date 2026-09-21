@@ -3,6 +3,11 @@ import {
   createClient,
   type SupabaseClient,
 } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  getPreferredLanguage,
+  resolveNotificationText,
+  type NotificationLanguageSource,
+} from '../_shared/notificationTemplates.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -365,11 +370,23 @@ Deno.serve(async (req: Request) => {
 
   const channelId = 'social';
 
+  // The row's `title`/`body` are English. When the writer also stored
+  // `data.i18n`, re-render the copy in the recipient's own language; rows
+  // written before that contract (or with an unknown key) keep the English.
+  const recipientLanguage = await getPreferredLanguage(
+    supabaseService as unknown as NotificationLanguageSource,
+    notification.user_id
+  );
+  const { title: pushTitle, body: pushBody } = resolveNotificationText(
+    notification,
+    recipientLanguage
+  );
+
   const pushResult = await sendExpoPushToUsers(
     supabaseService,
     [notification.user_id],
-    notification.title,
-    notification.body,
+    pushTitle,
+    pushBody,
     pushData,
     channelId
   );

@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { buildNotificationI18n } from '@/utils/notificationText';
 
 /**
  * Create a "someone liked your comment" notification for the comment author.
@@ -27,7 +28,10 @@ export const createCommentLikeNotification = async (
     .eq('id', user.id)
     .single();
 
-  const username = actor?.username ?? 'Someone';
+  // The row keeps English copy for older builds; `data.i18n` lets newer
+  // readers re-render it in the recipient's language.
+  const actorUsername = actor?.username ?? null;
+  const username = actorUsername ?? 'Someone';
 
   const { data: inserted, error } = await supabase
     .from('community_notifications')
@@ -41,6 +45,7 @@ export const createCommentLikeNotification = async (
         post_id: comment.post_id,
         comment_id: commentId,
         actor_user_id: user.id,
+        i18n: buildNotificationI18n('commentLiked', { name: actorUsername }),
       },
     })
     .select('id')

@@ -232,7 +232,74 @@
     "title": "Thông báo",
     "empty": "Chưa có thông báo",
     "emptyHint": "Bạn sẽ nhận được cập nhật về hoạt động mới như theo dõi, thích, bình luận và các sự kiện quan trọng khác.",
-    "markAllRead": "Đánh dấu tất cả đã đọc"
+    "markAllRead": "Đánh dấu tất cả đã đọc",
+    "templates": {
+      "fallbackName": "Ai đó",
+      "followed": {
+        "title": "Người theo dõi mới",
+        "body": "{{name}} đã bắt đầu theo dõi bạn."
+      },
+      "liked": {
+        "title": "Lượt thích mới cho bài viết của bạn",
+        "body": "{{name}} đã thích bài viết của bạn."
+      },
+      "commented": {
+        "title": "Bình luận mới về bài viết của bạn",
+        "body": "{{name}} đã bình luận về bài viết của bạn."
+      },
+      "commentReply": {
+        "title": "Trả lời bình luận của bạn",
+        "body": "{{name}} đã trả lời bình luận của bạn."
+      },
+      "commentLiked": {
+        "title": "Ai đó đã thích bình luận của bạn",
+        "body": "{{name}} đã thích bình luận của bạn."
+      },
+      "inviteRedeemed": {
+        "title": "Bạn mới trên Unify",
+        "body": "🎉 {{name}} vừa tham gia Unify nhờ bạn."
+      },
+      "circleMatched": {
+        "title": "Bạn đã được ghép nhóm!",
+        "body": "Nhóm Unify Circle của bạn đã sẵn sàng. Nhấn để gặp nhóm của bạn."
+      },
+      "circleMatchedForced": {
+        "title": "Bạn đã được ghép nhóm!",
+        "body": "Chúng tôi đã xếp bạn vào một nhóm để bạn không phải chờ thêm. Nhấn để gặp nhóm của bạn."
+      },
+      "circleEnded": {
+        "title": "Nhóm của bạn đã kết thúc",
+        "body": "Hãy nói lời cảm ơn, theo dõi nhau và tiếp tục hỗ trợ nhau."
+      },
+      "circleEndingSoon": {
+        "title": "Còn một ngày nữa trong nhóm của bạn",
+        "body": "Còn một ngày nữa trong nhóm này. Hãy chia sẻ một mẹo hữu ích cuối cùng, cảm ơn người đã giúp bạn, hoặc trao đổi thông tin liên lạc nếu bạn muốn giữ liên lạc."
+      },
+      "learnReminderTier1": {
+        "title": "Tiếp tục bài học của bạn",
+        "body": "Hãy tiếp tục từ chỗ bạn dừng lại — tiến độ của bạn đã được lưu."
+      },
+      "learnReminderTier1Named": {
+        "title": "Tiếp tục bài học của bạn",
+        "body": "{{name}}, hãy tiếp tục từ chỗ bạn dừng lại — tiến độ của bạn đã được lưu."
+      },
+      "learnReminderTier2": {
+        "title": "Tiếp tục học nhé!",
+        "body": "Bạn đang tiến bộ — đừng dừng lại lúc này."
+      },
+      "learnReminderTier2Named": {
+        "title": "Tiếp tục học nhé!",
+        "body": "{{name}}, bạn đang tiến bộ — đừng dừng lại lúc này."
+      },
+      "learnReminderTier3": {
+        "title": "Chúng tôi nhớ bạn!",
+        "body": "Đã một tuần rồi — hãy tiếp tục từ chỗ bạn dừng lại."
+      },
+      "learnReminderTier3Named": {
+        "title": "Chúng tôi nhớ bạn!",
+        "body": "{{name}}, đã một tuần rồi — hãy tiếp tục từ chỗ bạn dừng lại."
+      }
+    }
   },
   "search": {
     "title": "Tìm kiếm",

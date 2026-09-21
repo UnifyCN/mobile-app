@@ -232,7 +232,74 @@
     "title": "Notifications",
     "empty": "No Notifications Yet",
     "emptyHint": "You'll get updates about new activity like follows, likes, comments, and other important moments.",
-    "markAllRead": "Mark all read"
+    "markAllRead": "Mark all read",
+    "templates": {
+      "fallbackName": "Someone",
+      "followed": {
+        "title": "New follower",
+        "body": "{{name}} started following you."
+      },
+      "liked": {
+        "title": "New like on your post",
+        "body": "{{name}} liked your post."
+      },
+      "commented": {
+        "title": "New comment on your post",
+        "body": "{{name}} commented on your post."
+      },
+      "commentReply": {
+        "title": "Reply to your comment",
+        "body": "{{name}} replied to your comment."
+      },
+      "commentLiked": {
+        "title": "Someone liked your comment",
+        "body": "{{name}} liked your comment."
+      },
+      "inviteRedeemed": {
+        "title": "New friend on Unify",
+        "body": "🎉 {{name}} just joined Unify thanks to you."
+      },
+      "circleMatched": {
+        "title": "You’ve been matched!",
+        "body": "Your Unify Circle is ready. Tap to meet your group."
+      },
+      "circleMatchedForced": {
+        "title": "You’ve been matched!",
+        "body": "We placed you into a circle so you wouldn’t keep waiting. Tap to meet your group."
+      },
+      "circleEnded": {
+        "title": "Your circle has wrapped up",
+        "body": "Say thanks, follow one another, and keep the support going."
+      },
+      "circleEndingSoon": {
+        "title": "One day left in your circle",
+        "body": "One day left in this circle. Share one last useful tip, thank someone who helped you, or exchange contact info if you want to stay in touch."
+      },
+      "learnReminderTier1": {
+        "title": "Continue your lesson",
+        "body": "Pick up where you left off — your progress is saved."
+      },
+      "learnReminderTier1Named": {
+        "title": "Continue your lesson",
+        "body": "{{name}}, pick up where you left off — your progress is saved."
+      },
+      "learnReminderTier2": {
+        "title": "Keep learning!",
+        "body": "You’re making progress — don’t stop now."
+      },
+      "learnReminderTier2Named": {
+        "title": "Keep learning!",
+        "body": "{{name}}, you’re making progress — don’t stop now."
+      },
+      "learnReminderTier3": {
+        "title": "We miss you!",
+        "body": "It’s been a week — pick up where you left off."
+      },
+      "learnReminderTier3Named": {
+        "title": "We miss you!",
+        "body": "{{name}}, it’s been a week — pick up where you left off."
+      }
+    }
   },
   "search": {
     "title": "Search",

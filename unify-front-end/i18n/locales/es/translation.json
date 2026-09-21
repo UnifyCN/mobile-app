@@ -232,7 +232,74 @@
     "title": "Notificaciones",
     "empty": "Sin notificaciones aún",
     "emptyHint": "Recibirás actualizaciones sobre nueva actividad como seguidores, likes, comentarios y otros momentos importantes.",
-    "markAllRead": "Marcar todo como leído"
+    "markAllRead": "Marcar todo como leído",
+    "templates": {
+      "fallbackName": "Alguien",
+      "followed": {
+        "title": "Nuevo seguidor",
+        "body": "{{name}} empezó a seguirte."
+      },
+      "liked": {
+        "title": "Nuevo me gusta en tu publicación",
+        "body": "A {{name}} le gustó tu publicación."
+      },
+      "commented": {
+        "title": "Nuevo comentario en tu publicación",
+        "body": "{{name}} comentó tu publicación."
+      },
+      "commentReply": {
+        "title": "Respuesta a tu comentario",
+        "body": "{{name}} respondió a tu comentario."
+      },
+      "commentLiked": {
+        "title": "Alguien dio me gusta a tu comentario",
+        "body": "A {{name}} le gustó tu comentario."
+      },
+      "inviteRedeemed": {
+        "title": "Nuevo amigo en Unify",
+        "body": "🎉 {{name}} acaba de unirse a Unify gracias a ti."
+      },
+      "circleMatched": {
+        "title": "¡Ya tienes grupo!",
+        "body": "Tu Círculo de Unify está listo. Toca para conocer a tu grupo."
+      },
+      "circleMatchedForced": {
+        "title": "¡Ya tienes grupo!",
+        "body": "Te colocamos en un círculo para que no sigas esperando. Toca para conocer a tu grupo."
+      },
+      "circleEnded": {
+        "title": "Tu círculo ha terminado",
+        "body": "Da las gracias, síganse entre ustedes y sigan apoyándose."
+      },
+      "circleEndingSoon": {
+        "title": "Queda un día en tu círculo",
+        "body": "Queda un día en este círculo. Comparte un último consejo útil, agradece a quien te ayudó o intercambia contactos si quieres seguir en contacto."
+      },
+      "learnReminderTier1": {
+        "title": "Continúa tu lección",
+        "body": "Retoma donde lo dejaste: tu progreso está guardado."
+      },
+      "learnReminderTier1Named": {
+        "title": "Continúa tu lección",
+        "body": "{{name}}, retoma donde lo dejaste: tu progreso está guardado."
+      },
+      "learnReminderTier2": {
+        "title": "¡Sigue aprendiendo!",
+        "body": "Estás avanzando: no te detengas ahora."
+      },
+      "learnReminderTier2Named": {
+        "title": "¡Sigue aprendiendo!",
+        "body": "{{name}}, estás avanzando: no te detengas ahora."
+      },
+      "learnReminderTier3": {
+        "title": "¡Te extrañamos!",
+        "body": "Ha pasado una semana: retoma donde lo dejaste."
+      },
+      "learnReminderTier3Named": {
+        "title": "¡Te extrañamos!",
+        "body": "{{name}}, ha pasado una semana: retoma donde lo dejaste."
+      }
+    }
   },
   "search": {
     "title": "Buscar",

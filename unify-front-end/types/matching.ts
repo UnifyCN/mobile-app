@@ -77,7 +77,10 @@ export type CommunityNotificationType =
   | 'new_message'
   | 'followed'
   | 'liked'
-  | 'commented';
+  | 'commented'
+  | 'comment_liked'
+  | 'comment_reply'
+  | 'invite_redeemed';
 
 /** Navigation target: profile = actor_user_id, post = post_id */
 export type CommunityNotificationData = {
@@ -87,6 +90,16 @@ export type CommunityNotificationData = {
   /** Post id for liked/commented → navigate to post. */
   post_id?: number;
   comment_id?: number;
+  parent_comment_id?: number;
+  /**
+   * Structured copy for localized rendering. `title`/`body` stay English for
+   * older builds; readers that understand this render
+   * `notifications.templates.<key>` instead. See `utils/notificationText.ts`.
+   */
+  i18n?: {
+    key: string;
+    params?: Record<string, string | number>;
+  };
 };
 
 export interface CommunityNotification {

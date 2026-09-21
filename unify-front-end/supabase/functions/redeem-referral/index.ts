@@ -36,6 +36,7 @@
 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { buildI18n } from '../_shared/notificationTemplates.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -237,7 +238,10 @@ Deno.serve(async req => {
       .eq('id', user.id)
       .maybeSingle();
 
-    const inviteeUsername = inviteeProfile?.username ?? 'Someone';
+    // The row keeps English copy for builds that predate `data.i18n`; the
+    // structured payload lets the app and send-social-push localize it.
+    const inviteeUsername = inviteeProfile?.username ?? null;
+    const inviteeDisplayName = inviteeUsername ?? 'Someone';
     const { data: notif, error: notifErr } = await supabase
       .from('community_notifications')
       .insert({
@@ -245,8 +249,15 @@ Deno.serve(async req => {
         triggered_by_user_id: user.id,
         type: 'invite_redeemed',
         title: 'New friend on Unify',
-        body: `🎉 ${inviteeUsername} just joined Unify thanks to you.`,
-        data: { actor_user_id: user.id, source },
+        body: `🎉 ${inviteeDisplayName} just joined Unify thanks to you.`,
+        data: {
+          actor_user_id: user.id,
+          source,
+          i18n: buildI18n(
+            'inviteRedeemed',
+            inviteeUsername ? { name: inviteeUsername } : undefined
+          ),
+        },
       })
       .select('id')
       .single();

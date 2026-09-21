@@ -18,6 +18,7 @@ import { Theme } from '@/constants/Theme';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useAnalytics } from '@/utils/analytics';
 import { formatRelativeTime } from '@/helpers/dateHelpers';
+import { getNotificationText } from '@/utils/notificationText';
 
 function getNotificationIcon(type: CommunityNotification['type']): string {
   switch (type) {
@@ -32,7 +33,12 @@ function getNotificationIcon(type: CommunityNotification['type']): string {
     case 'liked':
       return 'heart';
     case 'commented':
+    case 'comment_reply':
       return 'message-circle';
+    case 'comment_liked':
+      return 'heart';
+    case 'invite_redeemed':
+      return 'user-check';
     default:
       return 'bell';
   }
@@ -104,6 +110,9 @@ export default function NotificationsScreen() {
   const renderNotification = ({ item }: { item: CommunityNotification }) => {
     const isUnread = !item.read_at;
     const iconName = getNotificationIcon(item.type);
+    // Rows store English copy; `data.i18n` (when present) re-renders them in
+    // the reader's current language.
+    const { title, body } = getNotificationText(item, t);
 
     return (
       <TouchableOpacity
@@ -126,7 +135,7 @@ export default function NotificationsScreen() {
               style={[styles.title, isUnread && styles.titleUnread]}
               numberOfLines={1}
             >
-              {item.title}
+              {title}
             </Text>
             <Text style={styles.timestamp}>
               {formatRelativeTime(item.created_at)}
@@ -136,7 +145,7 @@ export default function NotificationsScreen() {
             style={[styles.body, isUnread && styles.bodyUnread]}
             numberOfLines={2}
           >
-            {item.body}
+            {body}
           </Text>
         </View>
         {isUnread && <View style={styles.unreadDot} />}
