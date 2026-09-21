@@ -191,7 +191,8 @@
     "deleting": "हटा रहा है…",
     "accountDeleted": "खाता हटा दिया गया",
     "accountDeletedMessage": "आपका Unify खाता स्थायी रूप से हटा दिया गया है।",
-    "couldNotDelete": "खाता हटा नहीं सका"
+    "couldNotDelete": "खाता हटा नहीं सका",
+    "couldNotDeleteMessage": "हम आपका खाता नहीं हटा सके। कृपया बाद में पुनः प्रयास करें।"
   },
   "editName": {
     "title": "नाम",
@@ -520,7 +521,8 @@
         },
         "footnote": "यह निर्देशिका एक शुरुआती बिंदु है, कानूनी या वित्तीय सलाह नहीं। जाने से पहले संगठन से जानकारी की पुष्टि करें। छूटी हुई या पुरानी जानकारी बताने के लिए contact@unifysocial.ca पर ईमेल करें।"
       }
-    }
+    },
+    "typeHerePlaceholder": "यहाँ लिखें"
   },
   "checklist": {
     "title": "व्यक्तिगत चेकलिस्ट",
@@ -561,7 +563,15 @@
       "priorityDoSoon": "जल्दी करें",
       "priorityExploreConnect": "अन्वेषण करें और जुड़ें",
       "priorityOptionalLater": "वैकल्पिक / बाद में"
-    }
+    },
+    "priority": {
+      "doNow": "अभी करें",
+      "doSoon": "जल्द करें",
+      "exploreAndConnect": "खोजें और जुड़ें",
+      "optionalLater": "वैकल्पिक / बाद में"
+    },
+    "reorderTask": "{{name}} का क्रम बदलें",
+    "reorderHint": "इस आइटम का क्रम इस खंड में बदलने के लिए देर तक दबाएँ और खींचें"
   },
   "companion": {
     "goBack": "वापस जाएं",
@@ -736,7 +746,16 @@
     "history": {
       "newChat": "नई चैट",
       "noConversationsFound": "कोई बातचीत नहीं मिली",
-      "noConversationsYet": "अभी तक कोई बातचीत नहीं"
+      "noConversationsYet": "अभी तक कोई बातचीत नहीं",
+      "title": "चैट इतिहास",
+      "searchPlaceholder": "चैट खोजें...",
+      "untitled": "नई बातचीत",
+      "sections": {
+        "yesterday": "कल",
+        "previous7Days": "पिछले 7 दिन",
+        "previous30Days": "पिछले 30 दिन",
+        "older": "इससे पुराने"
+      }
     }
   },
   "home": {
@@ -815,7 +834,20 @@
     "noFollowersYet": "अभी तक कोई अनुयायी नहीं",
     "notFollowingAnyone": "अभी तक किसी को फॉलो नहीं किया",
     "followersTab": "अनुयायी",
-    "followingTab": "अनुसरण"
+    "followingTab": "अनुसरण",
+    "badges": {
+      "persona": {
+        "internationalStudent": "अंतरराष्ट्रीय छात्र",
+        "skilledWorker": "कुशल कर्मचारी",
+        "refugee": "शरणार्थी",
+        "newcomer": "नया आगंतुक"
+      },
+      "timeInCanada": {
+        "lessThanOneYear": "1 साल से कम",
+        "oneToThreeYears": "1–3 साल",
+        "threePlusYears": "3+ साल"
+      }
+    }
   },
   "profilePicture": {
     "chooseFromLibrary": "लाइब्रेरी से चुनें",
@@ -986,7 +1018,11 @@
     "loadingInviteCode": "आमंत्रण कोड लोड हो रहा है",
     "friendCount": "{{count}} मित्र आपकी बदौलत Unify में शामिल हुआ है।",
     "friendCount_plural": "{{count}} मित्र आपकी बदौलत Unify में शामिल हुए हैं।",
-    "isInGroups": "{{name}} इन समूहों में है"
+    "isInGroups": "{{name}} इन समूहों में है",
+    "inviteSenderWithCity": "{{city}} से {{name}}",
+    "inviteSenderFallback": "एक मित्र",
+    "inviteMessageIntro": "{{sender}} ने आपको Unify पर जुड़ने के लिए आमंत्रित किया है — कनाडा में नए आगंतुकों के लिए ऐप। अपनी यात्रा आसान बनाने के लिए अभी डाउनलोड करें: {{url}}",
+    "inviteMessageCode": "आमंत्रण कोड: {{code}}"
   },
   "welcome": {
     "title": "Unify में आपका स्वागत है।",
@@ -1077,7 +1113,65 @@
     "hourAgo": "{{count}} घंटा पहले",
     "hourAgo_plural": "{{count}} घंटे पहले",
     "dayAgo": "{{count}} दिन पहले",
-    "dayAgo_plural": "{{count}} दिन पहले"
+    "dayAgo_plural": "{{count}} दिन पहले",
+    "persona": {
+      "international_student": "अंतरराष्ट्रीय छात्र",
+      "skilled_worker": "कुशल कर्मचारी",
+      "refugee": "शरणार्थी और संरक्षित व्यक्ति",
+      "other": "नए आगंतुक"
+    },
+    "timeInCanada": {
+      "not_arrived": "अभी पहुँचे नहीं",
+      "less_than_1_year": "कनाडा में नया (1 साल से कम)",
+      "1_to_2_years": "कनाडा में रह रहे (1–2 साल)",
+      "2_to_3_years": "कनाडा में रह रहे (2–3 साल)",
+      "3_plus_years": "कनाडा में रह रहे (3+ साल)"
+    },
+    "timeInCanadaUnspecified": "कनाडा में समय (अनिर्दिष्ट)",
+    "entryCard": {
+      "inCircleBadge": "Circle में",
+      "inCircleCta": "मेरा Circle खोलें",
+      "inCircleSubtitle": "आपका circle सक्रिय है! दूसरे नए आगंतुकों से बातचीत करें।",
+      "waitingBadge": "मिलान खोजा जा रहा है",
+      "waitingCta": "स्थिति देखें",
+      "waitingSubtitle": "हम आपके जैसे लोगों को खोज रहे हैं। मिलान होते ही आपको सूचित करेंगे!",
+      "joinCta": "अपने Circle में शामिल हों"
+    },
+    "completion": {
+      "headline": "आप circle में शामिल होने के लिए तैयार हैं",
+      "body": "जब आपके जैसे सफ़र वाले तीन और लोग तैयार होंगे, हम आपको सूचित करेंगे और फिर 14 दिन के Unify Circle में जोड़ देंगे।"
+    },
+    "quiz": {
+      "step1Title": "आपका मुख्य लक्ष्य क्या है?",
+      "step1Subtitle": "इससे हमें आपको समान लक्ष्य वाले लोगों से जोड़ने में मदद मिलती है",
+      "step2Title": "आप किस बारे में बात करना चाहेंगे?",
+      "step2Subtitle": "वे सभी विषय चुनें जिन पर आपका circle बात करे",
+      "step3Title": "सब तैयार है!",
+      "step3Subtitle": "हम आपको समान लक्ष्य वाले 3 अन्य नए आगंतुकों से जोड़ेंगे",
+      "goals": {
+        "make_friends": "कनाडा में नए दोस्त बनाएँ",
+        "practice_english": "अंग्रेज़ी या फ़्रेंच का अभ्यास करें",
+        "job_search": "नौकरी और रिज़्यूमे के सुझाव साझा करें",
+        "wellness": "प्रेरित और उत्साहित रहें"
+      },
+      "topics": {
+        "immigration": "आव्रजन की कागज़ी कार्रवाई",
+        "housing": "किराया और घर की खोज",
+        "finances": "बजट और बैंकिंग",
+        "community": "दोस्ती और सामाजिक जीवन",
+        "career": "नौकरी, रिज़्यूमे और इंटरव्यू"
+      },
+      "errorPickGoal": "कृपया एक चुनें",
+      "errorPickTopic": "कम से कम एक विषय चुनें",
+      "topicsSelected": "{{count}} विषय चुना गया",
+      "topicsSelected_plural": "{{count}} विषय चुने गए",
+      "topicsToDiscuss": "चर्चा के लिए {{count}} विषय",
+      "topicsToDiscuss_plural": "चर्चा के लिए {{count}} विषय",
+      "completionSubtitle": "हम आपको समान लक्ष्य और रुचि वाले 3 अन्य नए आगंतुकों से जोड़ेंगे। इसमें आमतौर पर कुछ मिनट से कुछ घंटे लगते हैं।",
+      "summaryLabel": "आपकी circle पसंद",
+      "notSelected": "चयनित नहीं",
+      "joinWaitingRoom": "प्रतीक्षा कक्ष में शामिल हों"
+    }
   },
   "onboarding": {
     "stepOf": "चरण {{current}} / {{total}}",
@@ -1309,5 +1403,91 @@
     "showOriginal": "मूल दिखाएँ",
     "limitReached": "दैनिक अनुवाद सीमा पूरी हो गई",
     "unavailable": "अनुवाद उपलब्ध नहीं, फिर से कोशिश करें"
+  },
+  "preLogin": {
+    "outcomes": {
+      "heading": "यहाँ देखें कि आप 3 महीने में क्या हासिल कर सकते हैं",
+      "navigate": {
+        "title": "आत्मविश्वास के साथ आगे बढ़ें",
+        "description": "कनाडा में घर जैसा महसूस करने के लिए ज़रूरी चीज़ें तैयार करें।"
+      },
+      "answers": {
+        "title": "तेज़ और भरोसेमंद जवाब पाएँ",
+        "description": "जब ज़रूरत हो, भरोसेमंद मार्गदर्शन।"
+      },
+      "community": {
+        "title": "अपना समुदाय बनाएँ",
+        "description": "समान सफ़र पर चल रहे लोगों से जुड़ें।"
+      }
+    },
+    "belonging": {
+      "title": "अपनापन यहीं से शुरू होता है",
+      "description": "शहर और विषय आधारित समूहों में शामिल हों, कार्यक्रम खोजें और समान अनुभव वाले लोगों से जुड़ें।"
+    },
+    "checklist": {
+      "title": "जानें आगे क्या करना है",
+      "description": "अपनी स्थिति के अनुसार व्यक्तिगत बसावट चेकलिस्ट पाएँ और अधिक स्पष्टता तथा कम तनाव के साथ कदम दर कदम आगे बढ़ें।",
+      "doNow": "अभी करें",
+      "progress": "{{completed}}/{{total}} पूरा",
+      "itemSubtitle": "काम करने और सेवाओं तक पहुँच के लिए आवश्यक",
+      "items": {
+        "sin": "अपना SIN प्राप्त करें",
+        "bank": "बैंक खाता खोलें",
+        "phone": "फ़ोन प्लान लें",
+        "health": "प्रांतीय स्वास्थ्य कवरेज के लिए आवेदन करें\n(MSP/समकक्ष)"
+      },
+      "modal": {
+        "title": "अपना SIN प्राप्त करें",
+        "description": "रोज़गार, कर, सरकारी लाभ और अन्य आवश्यक प्रक्रियाओं के लिए आपका SIN ज़रूरी है।"
+      }
+    },
+    "companion": {
+      "title": "भरोसेमंद जवाब पाएँ",
+      "description": "जब चाहें सवाल पूछें और कनाडा के भरोसेमंद स्रोतों पर आधारित व्यावहारिक, व्यक्तिगत मार्गदर्शन पाएँ।",
+      "userMessage": "मैं एक अंतरराष्ट्रीय छात्र हूँ जो अभी कनाडा आया है। क्या आप मुझे BC की परिवहन प्रणाली समझा सकते हैं?",
+      "atAGlance": "एक नज़र में",
+      "glanceBody": "BC की परिवहन प्रणाली में बसें, SkyTrain, SeaBus और West Coast Express शामिल हैं, जिन्हें मेट्रो वैंकूवर में मुख्य रूप से TransLink चलाता है; आने-जाने के लिए यह ज़रूरी है, खासकर यदि आपके पास कार नहीं है।",
+      "whatToKnow": "आपको क्या जानना चाहिए",
+      "translinkLabel": "TransLink:",
+      "translinkBody": "मेट्रो वैंकूवर में अधिकांश सार्वजनिक परिवहन चलाता है, जिसमें बसें, SkyTrain और SeaBus शामिल हैं...",
+      "askAnything": {
+        "title": "कुछ भी पूछें",
+        "description": "किसी भी आव्रजन प्रश्न का उत्तर पाएँ"
+      },
+      "formHelp": {
+        "title": "फ़ॉर्म में मदद",
+        "description": "किसी भी फ़ॉर्म के लिए चरण-दर-चरण मार्गदर्शन पाएँ"
+      }
+    },
+    "learn": {
+      "title": "आत्मविश्वास के साथ बसें",
+      "description": "आव्रजन, आवास, वित्त, काम और कनाडा के रोज़मर्रा जीवन पर Unify के सरल पाठ और भरोसेमंद संसाधन देखें।",
+      "sections": "{{total}} खंड",
+      "subjects": {
+        "finance": "वित्त",
+        "employment": "रोज़गार",
+        "housing": "आवास",
+        "documentation": "दस्तावेज़"
+      }
+    },
+    "circles": {
+      "title": "Unify Circles",
+      "description": "अपने जैसे सफ़र वाले 3 नए आगंतुकों के साथ 2 हफ़्ते के समूह चैट अनुभव के लिए जुड़ें!",
+      "cta": "अपने Circle में शामिल हों"
+    },
+    "event": {
+      "name": "नए आगंतुकों की मुलाकात",
+      "time": "शाम 4:30-6:30",
+      "venue": "मेट्रोटाउन पब्लिक लाइब्रेरी"
+    },
+    "group": {
+      "name": "SFU अंतरराष्ट्रीय छात्र...",
+      "members": "{{total}} सदस्य"
+    }
+  },
+  "notFound": {
+    "title": "ओह!",
+    "message": "यह स्क्रीन मौजूद नहीं है।",
+    "goHome": "होम स्क्रीन पर जाएँ!"
   }
 }

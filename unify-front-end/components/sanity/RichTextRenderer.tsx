@@ -1000,7 +1000,7 @@ export default function RichTextRenderer({
               isMid && { height: 160, textAlignVertical: 'top' },
               isSmall && { height: 60, textAlignVertical: 'top' },
             ]}
-            placeholder={block.placeholder || 'Type Here'}
+            placeholder={block.placeholder || t('learn.typeHerePlaceholder')}
             value={inputValues[block._key] || ''}
             onChangeText={value => onInputChange?.(block._key, value)}
             multiline={true}

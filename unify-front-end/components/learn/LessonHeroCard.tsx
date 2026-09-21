@@ -52,8 +52,8 @@ const mapIconName = (iconName: string): string => {
 };
 
 export default function LessonHeroCard({
-  moduleTitle = 'Finance',
-  submoduleTitle = 'Types of Banks & Credit Unions',
+  moduleTitle = '',
+  submoduleTitle = '',
   currentPage = 1,
   totalPages = 8,
   currentSection = 1,

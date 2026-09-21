@@ -12,7 +12,7 @@ import { CheckBox } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Theme } from '@/constants/Theme';
 import LegalWebView from '@/components/LegalWebView';
-import { LEGAL_URLS, LEGAL_TITLES } from '@/utils/legalUrls';
+import { LEGAL_URLS, LEGAL_TITLE_KEYS } from '@/utils/legalUrls';
 
 interface LegalConsentModalProps {
   visible: boolean;
@@ -84,7 +84,7 @@ export default function LegalConsentModal({
       {webViewDoc && (
         <LegalWebView
           url={LEGAL_URLS[webViewDoc]}
-          title={LEGAL_TITLES[webViewDoc]}
+          title={t(LEGAL_TITLE_KEYS[webViewDoc])}
           onClose={closeDocument}
         />
       )}

@@ -17,6 +17,7 @@ import { createCustomChecklistTask } from '@/services/checklist/customChecklistT
 import { queryClient } from '@/lib/queryClient';
 import { invalidateChecklistTasksQueries } from '@/hooks/checklist/checklistQueryKeys';
 import { CustomPriority } from '@/types/checklist';
+import { PRIORITY_CONFIG } from '@/constants/ChecklistPriority';
 
 const PRIORITY_OPTIONS: CustomPriority[] = [
   'Do now',
@@ -130,7 +131,7 @@ export default function CreateCustomItemScreen() {
                   selected && { color, fontWeight: '600' },
                 ]}
               >
-                {option}
+                {t(PRIORITY_CONFIG[option].labelKey)}
               </Text>
             </TouchableOpacity>
           );

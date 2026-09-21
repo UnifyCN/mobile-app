@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import type { CommunityMessage } from '@/types/matching';
 import { Avatar } from '@/components/Avatar';
 
@@ -27,6 +28,8 @@ export function CircleMessageBubble({
   timestampLabel,
   onPressSender,
 }: CircleMessageBubbleProps) {
+  const { t } = useTranslation();
+
   if (!message.sender_user_id) {
     return (
       <View style={styles.systemRow}>
@@ -78,7 +81,7 @@ export function CircleMessageBubble({
         {!isOwn && showSenderName && (
           <TouchableOpacity onPress={handlePressSender}>
             <Text style={styles.senderName}>
-              {message.sender?.username || 'Circle member'}
+              {message.sender?.username || t('circles.memberFallback')}
             </Text>
           </TouchableOpacity>
         )}

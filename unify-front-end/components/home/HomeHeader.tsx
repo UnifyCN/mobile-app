@@ -10,6 +10,7 @@ import ProfileModal from '@/components/home/ProfileModal';
 import { useUnreadNotificationCount } from '@/hooks/useCommunityNotifications';
 import { useCurrentUser } from '@/context/UserContext';
 import { TAB_HEADER_METRICS, getTabHeaderHeight } from '@/constants/TabHeader';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface TabHeaderProps {
   variant?: 'full' | 'minimal';
@@ -75,7 +76,9 @@ const TabHeader = ({ variant = 'full', title }: TabHeaderProps) => {
                 {unreadCount > 0 && (
                   <View style={styles.badge}>
                     <Text style={styles.badgeText}>
-                      {unreadCount > 9 ? '9+' : unreadCount}
+                      {unreadCount > 9
+                        ? `${formatNumber(9)}+`
+                        : formatNumber(unreadCount)}
                     </Text>
                   </View>
                 )}

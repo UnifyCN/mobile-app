@@ -29,6 +29,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
       {answers.map((answer, index) => {
         const isSelected = currentAnswer === answer;
         // change answer to dark grey if selected
+        // eslint-disable-next-line i18next/no-literal-string -- style value, not copy
         const backgroundColor = isSelected ? '#d0d0d0' : 'white';
 
         return (

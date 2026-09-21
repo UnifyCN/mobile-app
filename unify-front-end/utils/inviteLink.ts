@@ -28,19 +28,33 @@ interface InviterContext {
   code: string;
 }
 
-export function formatInviteMessage(inviter: InviterContext): string {
-  const name = inviter.username?.trim() || 'A friend';
-  const cityClause = inviter.city ? ` from ${inviter.city}` : '';
+/**
+ * Minimal shape of i18next's `t`. Declared locally so this module keeps no
+ * react-i18next import and stays usable from plain unit tests.
+ */
+export type TranslateFn = (
+  key: string,
+  options?: Record<string, unknown>
+) => string;
+
+export function formatInviteMessage(
+  t: TranslateFn,
+  inviter: InviterContext
+): string {
+  const name = inviter.username?.trim();
+  const sender = !name
+    ? t('referrals.inviteSenderFallback')
+    : inviter.city
+      ? t('referrals.inviteSenderWithCity', { name, city: inviter.city })
+      : name;
   // The canonical `unify-invite:CODE` form is also embedded so that if the
   // recipient copies the message (or any chunk containing the canonical form)
   // and the app reads their clipboard on first launch, parseInviteCode finds
   // it via PREFIXED_RE. The bare-code line is the human-readable fallback for
   // manual entry in onboarding step 3.
   return (
-    `${name}${cityClause} has invited you to join them on Unify, ` +
-    `Canada's app for newcomers. ` +
-    `Download now to simplify your journey: ${APP_STORE_URL}\n\n` +
-    `Invite code: ${inviter.code}\n` +
+    `${t('referrals.inviteMessageIntro', { sender, url: APP_STORE_URL })}\n\n` +
+    `${t('referrals.inviteMessageCode', { code: inviter.code })}\n` +
     `${INVITE_CLIPBOARD_PREFIX}${inviter.code}`
   );
 }

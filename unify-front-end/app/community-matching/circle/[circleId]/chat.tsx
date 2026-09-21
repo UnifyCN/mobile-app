@@ -662,8 +662,11 @@ export default function CircleChatScreen() {
         {typingMemberNames.length > 0 && (
           <View style={styles.typingIndicator}>
             <Text style={styles.typingText}>
-              {typingMemberNames.join(', ')}{' '}
-              {typingMemberNames.length > 1 ? 'are' : 'is'} typing...
+              {typingMemberNames.length > 1
+                ? t('circles.typingMultiple', {
+                    names: typingMemberNames.join(', '),
+                  })
+                : t('circles.typingOne', { name: typingMemberNames[0] })}
             </Text>
           </View>
         )}
@@ -745,7 +748,7 @@ export default function CircleChatScreen() {
                     {selectedMember.user.username}
                   </Text>
                   <Text style={styles.modalRole}>
-                    {formatPersonaLabel(circle?.persona)}
+                    {formatPersonaLabel(t, circle?.persona)}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -761,9 +764,9 @@ export default function CircleChatScreen() {
                 <View style={styles.commonGroundItem}>
                   <Feather name='map-pin' size={16} color='#ff820b' />
                   <Text style={styles.commonGroundText}>
-                    You both arrived in Canada{' '}
+                    {t('circles.bothArrived')}{' '}
                     <Text style={styles.highlight}>
-                      {formatTimeInCanadaLabel(circle?.time_in_canada)}
+                      {formatTimeInCanadaLabel(t, circle?.time_in_canada)}
                     </Text>
                   </Text>
                 </View>

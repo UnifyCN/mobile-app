@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import EventCard from '../cards/EventCard';
 import GroupCard from '../cards/GroupCard';
 import CirclesCard from '../cards/CirclesCard';
@@ -28,6 +29,8 @@ const CONTAINER_W = 300 * S;
 const CONTAINER_H = 350 * S;
 
 export default function BelongingScreen() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View
@@ -65,10 +68,9 @@ export default function BelongingScreen() {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Belonging Starts Here</Text>
+        <Text style={styles.title}>{t('preLogin.belonging.title')}</Text>
         <Text style={styles.description}>
-          Join city-based and topic-based groups, discover events, and connect
-          with people going through similar experiences.
+          {t('preLogin.belonging.description')}
         </Text>
       </View>
     </View>

@@ -1,35 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface ChecklistCardProps {
   scale?: number;
 }
 
 const ITEMS = [
-  {
-    title: 'Get your SIN',
-    subtitle: 'Required for working and accessing services',
-    completed: true,
-  },
-  {
-    title: 'Open a bank account',
-    subtitle: 'Required for working and accessing services',
-    completed: false,
-  },
-  {
-    title: 'Get a phone plan',
-    subtitle: 'Required for working and accessing services',
-    completed: false,
-  },
-  {
-    title: 'Apply for provincial health coverage\n(MSP/equivalent)',
-    subtitle: 'Required for working and accessing services',
-    completed: false,
-  },
+  { titleKey: 'preLogin.checklist.items.sin', completed: true },
+  { titleKey: 'preLogin.checklist.items.bank', completed: false },
+  { titleKey: 'preLogin.checklist.items.phone', completed: false },
+  { titleKey: 'preLogin.checklist.items.health', completed: false },
 ];
 
 export default function ChecklistCard({ scale = 1 }: ChecklistCardProps) {
+  const { t } = useTranslation();
   const s = scale;
 
   return (
@@ -51,10 +38,13 @@ export default function ChecklistCard({ scale = 1 }: ChecklistCardProps) {
         </View>
         <View>
           <Text style={[styles.headerTitle, { fontSize: 12.3 * s }]}>
-            Do Now
+            {t('preLogin.checklist.doNow')}
           </Text>
           <Text style={[styles.headerSubtitle, { fontSize: 10.8 * s }]}>
-            0/4 complete
+            {t('preLogin.checklist.progress', {
+              completed: formatNumber(0),
+              total: formatNumber(ITEMS.length),
+            })}
           </Text>
         </View>
       </View>
@@ -148,7 +138,7 @@ export default function ChecklistCard({ scale = 1 }: ChecklistCardProps) {
                 ]}
                 numberOfLines={2}
               >
-                {item.title}
+                {t(item.titleKey)}
               </Text>
               <Text
                 style={[
@@ -158,7 +148,7 @@ export default function ChecklistCard({ scale = 1 }: ChecklistCardProps) {
                 ]}
                 numberOfLines={1}
               >
-                {item.subtitle}
+                {t('preLogin.checklist.itemSubtitle')}
               </Text>
             </View>
           </View>

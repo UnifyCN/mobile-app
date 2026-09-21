@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTranslation } from 'react-i18next';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, Href } from 'expo-router';
@@ -21,6 +22,7 @@ interface EntryCardProps {
 }
 
 export function CommunityMatchingEntryCard({ onPress }: EntryCardProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const { currentUser } = useCurrentUser();
 
@@ -58,35 +60,35 @@ export function CommunityMatchingEntryCard({ onPress }: EntryCardProps) {
       return {
         icon: null,
         badge: null,
-        cta: 'Loading...',
+        cta: t('common.loading'),
       };
     }
     if (isInCircle) {
       return {
         icon: 'message-circle' as const,
         badge: {
-          text: 'In Circle',
+          text: t('circles.entryCard.inCircleBadge'),
           color: COLORS.white,
           bg: COLORS.semiTransparentWhite,
         },
-        cta: 'Open my Circle',
+        cta: t('circles.entryCard.inCircleCta'),
       };
     }
     if (isWaiting) {
       return {
         icon: 'clock' as const,
         badge: {
-          text: 'Finding matches',
+          text: t('circles.entryCard.waitingBadge'),
           color: COLORS.white,
           bg: COLORS.semiTransparentWhite,
         },
-        cta: 'Check status',
+        cta: t('circles.entryCard.waitingCta'),
       };
     }
     return {
       icon: 'group-add' as const, // MaterialIcons icon
       badge: null,
-      cta: 'Join your Circle',
+      cta: t('circles.entryCard.joinCta'),
     };
   };
 
@@ -118,7 +120,7 @@ export function CommunityMatchingEntryCard({ onPress }: EntryCardProps) {
         {/* Text content */}
         <View style={styles.copy}>
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Unify Circles</Text>
+            <Text style={styles.title}>{t('circles.title')}</Text>
             {status.badge && (
               <View
                 style={[styles.badge, { backgroundColor: status.badge.bg }]}
@@ -131,10 +133,10 @@ export function CommunityMatchingEntryCard({ onPress }: EntryCardProps) {
           </View>
           <Text style={styles.subtitle}>
             {isInCircle
-              ? 'Your circle is active! Chat with your newcomer peers.'
+              ? t('circles.entryCard.inCircleSubtitle')
               : isWaiting
-                ? "Looking for people like you. We'll notify you when matched!"
-                : 'Get matched with 3 newcomers on a similar path to you for a 2-week group chat experience!'}
+                ? t('circles.entryCard.waitingSubtitle')
+                : t('preLogin.circles.description')}
           </Text>
         </View>
       </View>

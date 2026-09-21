@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -8,6 +9,7 @@ interface CirclesCardProps {
 }
 
 export default function CirclesCard({ scale = 1 }: CirclesCardProps) {
+  const { t } = useTranslation();
   const s = scale;
   return (
     <View
@@ -67,7 +69,7 @@ export default function CirclesCard({ scale = 1 }: CirclesCardProps) {
               },
             ]}
           >
-            Unify Circles
+            {t('preLogin.circles.title')}
           </Text>
           <Text
             style={[
@@ -78,8 +80,7 @@ export default function CirclesCard({ scale = 1 }: CirclesCardProps) {
               },
             ]}
           >
-            Get matched with 3 newcomers on a similar path to you for a 2-week
-            group chat experience!
+            {t('preLogin.circles.description')}
           </Text>
         </View>
 
@@ -96,7 +97,7 @@ export default function CirclesCard({ scale = 1 }: CirclesCardProps) {
           ]}
         >
           <Text style={[styles.ctaText, { fontSize: Math.max(7.7 * s, 10) }]}>
-            Join your Circle
+            {t('preLogin.circles.cta')}
           </Text>
           <Ionicons name='arrow-forward' size={13 * s} color='#fff' />
         </View>

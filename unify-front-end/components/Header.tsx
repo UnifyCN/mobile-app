@@ -7,6 +7,7 @@ import { Bell, Search, Settings } from 'lucide-react-native';
 import UnifyLogo from '@/components/icons/UnifyLogo.svg';
 import { useUnreadNotificationCount } from '@/hooks/useCommunityNotifications';
 import { TAB_HEADER_METRICS, getTabHeaderHeight } from '@/constants/TabHeader';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface HeaderProps {
   showSearchIcon?: boolean;
@@ -55,7 +56,9 @@ const ActionButton = ({
         {showBadge && badgeValue > 0 && (
           <View style={styles.badge}>
             <Text style={styles.badgeText}>
-              {badgeValue > 9 ? '9+' : badgeValue}
+              {badgeValue > 9
+                ? `${formatNumber(9)}+`
+                : formatNumber(badgeValue)}
             </Text>
           </View>
         )}

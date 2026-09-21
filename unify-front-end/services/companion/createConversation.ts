@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { queryClient } from '@/lib/queryClient';
+import { DEFAULT_CONVERSATION_TITLE } from '@/helpers/companion/conversationHelpers';
 
 export interface CreateConversationResponse {
   conversation_identifier: string;
@@ -76,7 +77,7 @@ export const createConversation = async (
     if (!user) throw new Error('No authenticated user');
 
     // Generate title from first message if provided
-    let title = 'New Conversation';
+    let title = DEFAULT_CONVERSATION_TITLE;
     if (params?.firstMessage && params.firstMessage.trim()) {
       title = buildFallbackTitle(params.firstMessage.trim());
     }

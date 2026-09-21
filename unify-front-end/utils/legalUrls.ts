@@ -13,8 +13,12 @@ export const LEGAL_URLS = {
 
 export type LegalDocumentType = keyof typeof LEGAL_URLS;
 
-export const LEGAL_TITLES: Record<LegalDocumentType, string> = {
-  privacyPolicy: 'Privacy Policy',
-  communityGuidelines: 'Community Guidelines',
-  termsOfService: 'Terms of Service',
+/**
+ * i18n keys for each document's screen title. Callers translate with `t()` so
+ * the WebView header matches the user's language.
+ */
+export const LEGAL_TITLE_KEYS: Record<LegalDocumentType, string> = {
+  privacyPolicy: 'settings.privacyPolicy',
+  communityGuidelines: 'settings.communityGuidelines',
+  termsOfService: 'settings.termsOfService',
 };

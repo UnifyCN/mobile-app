@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -22,6 +23,8 @@ const CONTAINER_W = 335 * S;
 const CONTAINER_H = 415 * S;
 
 function UserBubble() {
+  const { t } = useTranslation();
+
   return (
     <View
       style={[
@@ -39,14 +42,15 @@ function UserBubble() {
           { fontSize: 12.5 * S, lineHeight: 17 * S },
         ]}
       >
-        I'm an international student who just arrived to Canada. Can you explain
-        the BC transit system to me?
+        {t('preLogin.companion.userMessage')}
       </Text>
     </View>
   );
 }
 
 function AIResponse() {
+  const { t } = useTranslation();
+
   return (
     <View
       style={[
@@ -62,12 +66,10 @@ function AIResponse() {
       <Text
         style={[styles.aiHeading, { fontSize: 14 * S, marginBottom: 8 * S }]}
       >
-        At a Glance
+        {t('preLogin.companion.atAGlance')}
       </Text>
       <Text style={[styles.aiBody, { fontSize: 11.5 * S, lineHeight: 16 * S }]}>
-        BC's transit system includes buses, SkyTrain, SeaBus, and West Coast
-        Express, primarily managed by TransLink in Metro Vancouver; it's
-        important for getting around, especially if you don't have a car.
+        {t('preLogin.companion.glanceBody')}
       </Text>
       <Text
         style={[
@@ -75,14 +77,16 @@ function AIResponse() {
           { fontSize: 14 * S, marginTop: 14 * S, marginBottom: 6 * S },
         ]}
       >
-        What You Need to Know
+        {t('preLogin.companion.whatToKnow')}
       </Text>
       <Text
         style={[styles.aiBody, { fontSize: 11.5 * S, lineHeight: 16 * S }]}
         numberOfLines={2}
       >
-        <Text style={styles.aiBold}>TransLink:</Text> Operates most public
-        transit in Metro Vancouver including buses, SkyTrain, and SeaBus...
+        <Text style={styles.aiBold}>
+          {t('preLogin.companion.translinkLabel')}
+        </Text>{' '}
+        {t('preLogin.companion.translinkBody')}
       </Text>
     </View>
   );
@@ -157,6 +161,8 @@ function FeatureCard({
 }
 
 export default function CompanionScreen() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View
@@ -207,8 +213,8 @@ export default function CompanionScreen() {
           <FeatureCard
             iconName='chatbubble'
             iconBg='#F4B9DF'
-            title='Ask Anything'
-            description='Get answers to any immigration question'
+            title={t('preLogin.companion.askAnything.title')}
+            description={t('preLogin.companion.askAnything.description')}
           />
         </View>
 
@@ -226,17 +232,16 @@ export default function CompanionScreen() {
           <FeatureCard
             iconName='document-text'
             iconBg='#F6A94C'
-            title='Form Help'
-            description='Receive step-by-step guidance on any form'
+            title={t('preLogin.companion.formHelp.title')}
+            description={t('preLogin.companion.formHelp.description')}
           />
         </View>
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Get Answers You Can Trust</Text>
+        <Text style={styles.title}>{t('preLogin.companion.title')}</Text>
         <Text style={styles.description}>
-          Ask questions in the moment and get personalized, practical guidance
-          grounded in trusted Canadian sources.
+          {t('preLogin.companion.description')}
         </Text>
       </View>
     </View>

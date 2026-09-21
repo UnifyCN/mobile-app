@@ -493,8 +493,10 @@ export default function ChecklistScreen() {
             <GHTouchableOpacity
               style={styles.dragHandle}
               accessibilityRole='button'
-              accessibilityLabel={`Reorder ${task.task.task_name}`}
-              accessibilityHint="Long press and drag to change this item's order within the section"
+              accessibilityLabel={t('checklist.reorderTask', {
+                name: task.task.task_name,
+              })}
+              accessibilityHint={t('checklist.reorderHint')}
               onLongPress={() => {
                 handleDragStart();
                 drag();
@@ -508,7 +510,7 @@ export default function ChecklistScreen() {
         </ScaleDecorator>
       );
     },
-    [handleTaskPress, handleDragStart]
+    [handleTaskPress, handleDragStart, t]
   );
 
   if (isLoading) {

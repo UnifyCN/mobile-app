@@ -1,14 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface EventCardProps {
   scale?: number;
 }
 
+// Illustrative date for the marketing card. Month and day are formatted with
+// the active language so the badge is not stuck on the English abbreviation.
+const SAMPLE_EVENT_DATE = new Date(2025, 5, 15);
+
 export default function EventCard({ scale = 1 }: EventCardProps) {
+  const { t, i18n } = useTranslation();
   const s = scale;
+  const dayLabel = formatNumber(SAMPLE_EVENT_DATE.getDate());
+  let monthLabel: string;
+  try {
+    monthLabel = SAMPLE_EVENT_DATE.toLocaleDateString(i18n.language, {
+      month: 'short',
+    });
+  } catch {
+    monthLabel = SAMPLE_EVENT_DATE.toLocaleDateString(undefined, {
+      month: 'short',
+    });
+  }
+
   return (
     <View
       style={[
@@ -50,12 +69,12 @@ export default function EventCard({ scale = 1 }: EventCardProps) {
         <Text
           style={[styles.dateDay, { fontSize: 18 * s, lineHeight: 22 * s }]}
         >
-          15
+          {dayLabel}
         </Text>
         <Text
           style={[styles.dateMonth, { fontSize: 18 * s, lineHeight: 22 * s }]}
         >
-          Jun
+          {monthLabel}
         </Text>
       </View>
 
@@ -71,7 +90,7 @@ export default function EventCard({ scale = 1 }: EventCardProps) {
         ]}
         numberOfLines={1}
       >
-        Newcomer Meet & Greet
+        {t('preLogin.event.name')}
       </Text>
 
       {/* Time row */}
@@ -80,7 +99,7 @@ export default function EventCard({ scale = 1 }: EventCardProps) {
         <Text
           style={[styles.infoText, { fontSize: 14 * s, marginLeft: 6 * s }]}
         >
-          4:30-6:30 pm
+          {t('preLogin.event.time')}
         </Text>
       </View>
 
@@ -91,7 +110,7 @@ export default function EventCard({ scale = 1 }: EventCardProps) {
           style={[styles.infoText, { fontSize: 14 * s, marginLeft: 6 * s }]}
           numberOfLines={1}
         >
-          Metrotown Public Library
+          {t('preLogin.event.venue')}
         </Text>
       </View>
     </View>

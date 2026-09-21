@@ -132,6 +132,7 @@ export default function FollowersFollowingScreen() {
       <BackHeader title='' />
 
       <View style={styles.tabsContainer}>
+        {/* eslint-disable-next-line i18next/no-literal-string -- tab ids, not copy; the visible label comes from t() below */}
         {(['followers', 'following'] as TabType[]).map(tab => {
           const active = activeTab === tab;
           const label = tab === 'followers' ? t('profile.followersTab') : t('profile.followingTab');

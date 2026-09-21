@@ -7,7 +7,12 @@ export interface PriorityConfig {
   icon: MaterialIconName;
   color: string;
   backgroundColor: string;
-  label: string;
+  /**
+   * i18n key for the human-readable label. The record keys stay in English
+   * because they are the Supabase column values and the ordering keys in
+   * `utils/checklistOrder.ts` — only the rendered label is translated.
+   */
+  labelKey: string;
 }
 
 export const PRIORITY_CONFIG: Record<Priority, PriorityConfig> = {
@@ -15,30 +20,30 @@ export const PRIORITY_CONFIG: Record<Priority, PriorityConfig> = {
     icon: 'error-outline',
     color: '#E03B3B',
     backgroundColor: '#FBCFCF',
-    label: 'Do now',
+    labelKey: 'checklist.priority.doNow',
   },
   'Do soon': {
     icon: 'schedule',
     color: '#F47734',
     backgroundColor: '#FBE4CF',
-    label: 'Do soon',
+    labelKey: 'checklist.priority.doSoon',
   },
   'Explore and connect': {
     icon: 'people',
     color: '#F49E34',
     backgroundColor: '#FFEDBD',
-    label: 'Explore and connect',
+    labelKey: 'checklist.priority.exploreAndConnect',
   },
   'Explore & connect': {
     icon: 'people',
     color: '#F49E34',
     backgroundColor: '#FFEDBD',
-    label: 'Explore and connect',
+    labelKey: 'checklist.priority.exploreAndConnect',
   },
   'Optional / later': {
     icon: 'pending',
     color: '#5E8651',
     backgroundColor: '#CDE9D2',
-    label: 'Optional / later',
+    labelKey: 'checklist.priority.optionalLater',
   },
 };

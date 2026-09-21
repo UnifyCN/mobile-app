@@ -1,12 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'expo-image';
+import { formatNumber } from '@/utils/formatNumber';
+
+const MEMBER_COUNT = 286;
 
 interface GroupCardProps {
   scale?: number;
 }
 
 export default function GroupCard({ scale = 1 }: GroupCardProps) {
+  const { t } = useTranslation();
   const s = scale;
   return (
     <View
@@ -37,12 +42,12 @@ export default function GroupCard({ scale = 1 }: GroupCardProps) {
       {/* Group info */}
       <View style={[styles.info, { marginTop: 9 * s }]}>
         <Text style={[styles.name, { fontSize: 16 * s }]} numberOfLines={1}>
-          SFU International Stu...
+          {t('preLogin.group.name')}
         </Text>
         <Text
           style={[styles.members, { fontSize: 12.5 * s, marginTop: 5 * s }]}
         >
-          286 members
+          {t('preLogin.group.members', { total: formatNumber(MEMBER_COUNT) })}
         </Text>
       </View>
     </View>

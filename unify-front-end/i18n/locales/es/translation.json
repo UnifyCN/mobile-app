@@ -191,7 +191,8 @@
     "deleting": "Eliminando…",
     "accountDeleted": "Cuenta eliminada",
     "accountDeletedMessage": "Tu cuenta de Unify ha sido eliminada permanentemente.",
-    "couldNotDelete": "No se pudo eliminar la cuenta"
+    "couldNotDelete": "No se pudo eliminar la cuenta",
+    "couldNotDeleteMessage": "No pudimos eliminar tu cuenta. Inténtalo de nuevo más tarde."
   },
   "editName": {
     "title": "Nombre",
@@ -520,7 +521,8 @@
         },
         "footnote": "Este directorio es un punto de partida, no es asesoría legal ni financiera. Confirma los datos con la organización antes de ir. Para informar de un dato faltante o desactualizado, escribe a contact@unifysocial.ca."
       }
-    }
+    },
+    "typeHerePlaceholder": "Escribe aquí"
   },
   "checklist": {
     "title": "Lista personalizada",
@@ -561,7 +563,15 @@
       "priorityDoSoon": "Hacer pronto",
       "priorityExploreConnect": "Explorar y conectar",
       "priorityOptionalLater": "Opcional / después"
-    }
+    },
+    "priority": {
+      "doNow": "Hazlo ahora",
+      "doSoon": "Hazlo pronto",
+      "exploreAndConnect": "Explora y conecta",
+      "optionalLater": "Opcional / más tarde"
+    },
+    "reorderTask": "Reordenar {{name}}",
+    "reorderHint": "Mantén pulsado y arrastra para cambiar el orden de este elemento dentro de la sección"
   },
   "companion": {
     "goBack": "Regresar",
@@ -736,7 +746,16 @@
     "history": {
       "newChat": "Nueva conversación",
       "noConversationsFound": "No se encontraron conversaciones",
-      "noConversationsYet": "Aún no hay conversaciones"
+      "noConversationsYet": "Aún no hay conversaciones",
+      "title": "Historial de chats",
+      "searchPlaceholder": "Buscar chats...",
+      "untitled": "Nueva conversación",
+      "sections": {
+        "yesterday": "Ayer",
+        "previous7Days": "Últimos 7 días",
+        "previous30Days": "Últimos 30 días",
+        "older": "Más antiguos"
+      }
     }
   },
   "home": {
@@ -815,7 +834,20 @@
     "noFollowersYet": "Sin seguidores aún",
     "notFollowingAnyone": "No sigue a nadie aún",
     "followersTab": "Seguidores",
-    "followingTab": "Siguiendo"
+    "followingTab": "Siguiendo",
+    "badges": {
+      "persona": {
+        "internationalStudent": "Estudiante internacional",
+        "skilledWorker": "Trabajador calificado",
+        "refugee": "Refugiado",
+        "newcomer": "Recién llegado"
+      },
+      "timeInCanada": {
+        "lessThanOneYear": "Menos de 1 año",
+        "oneToThreeYears": "1 a 3 años",
+        "threePlusYears": "Más de 3 años"
+      }
+    }
   },
   "profilePicture": {
     "chooseFromLibrary": "Elegir de la biblioteca",
@@ -986,7 +1018,11 @@
     "loadingInviteCode": "Cargando código de invitación",
     "friendCount": "{{count}} amigo se unió a Unify gracias a ti.",
     "friendCount_plural": "{{count}} amigos se unieron a Unify gracias a ti.",
-    "isInGroups": "{{name}} está en estos grupos"
+    "isInGroups": "{{name}} está en estos grupos",
+    "inviteSenderWithCity": "{{name}} desde {{city}}",
+    "inviteSenderFallback": "Un amigo",
+    "inviteMessageIntro": "{{sender}} te ha invitado a unirte a Unify, la app de Canadá para recién llegados. Descárgala ahora para simplificar tu camino: {{url}}",
+    "inviteMessageCode": "Código de invitación: {{code}}"
   },
   "welcome": {
     "title": "Bienvenido a Unify.",
@@ -1077,7 +1113,65 @@
     "hourAgo": "hace {{count}} hora",
     "hourAgo_plural": "hace {{count}} horas",
     "dayAgo": "hace {{count}} día",
-    "dayAgo_plural": "hace {{count}} días"
+    "dayAgo_plural": "hace {{count}} días",
+    "persona": {
+      "international_student": "Estudiantes internacionales",
+      "skilled_worker": "Trabajadores calificados",
+      "refugee": "Refugiados y personas protegidas",
+      "other": "Recién llegados"
+    },
+    "timeInCanada": {
+      "not_arrived": "Aún no ha llegado",
+      "less_than_1_year": "Nuevo en Canadá (menos de 1 año)",
+      "1_to_2_years": "Viviendo en Canadá (1-2 años)",
+      "2_to_3_years": "Viviendo en Canadá (2-3 años)",
+      "3_plus_years": "Viviendo en Canadá (más de 3 años)"
+    },
+    "timeInCanadaUnspecified": "Tiempo en Canadá (sin especificar)",
+    "entryCard": {
+      "inCircleBadge": "En tu Circle",
+      "inCircleCta": "Abrir mi Circle",
+      "inCircleSubtitle": "¡Tu circle está activo! Conversa con otros recién llegados.",
+      "waitingBadge": "Buscando coincidencias",
+      "waitingCta": "Ver estado",
+      "waitingSubtitle": "Estamos buscando personas como tú. ¡Te avisaremos cuando haya coincidencia!",
+      "joinCta": "Únete a tu Circle"
+    },
+    "completion": {
+      "headline": "Ya puedes unirte a un circle",
+      "body": "Te avisaremos cuando otras tres personas con el mismo camino estén listas y luego te conectaremos en un Unify Circle de 14 días."
+    },
+    "quiz": {
+      "step1Title": "¿Cuál es tu objetivo principal?",
+      "step1Subtitle": "Esto nos ayuda a conectarte con personas que comparten objetivos similares",
+      "step2Title": "¿De qué te gustaría hablar?",
+      "step2Subtitle": "Elige todos los temas que quieras tratar en tu circle",
+      "step3Title": "¡Todo listo!",
+      "step3Subtitle": "Te conectaremos con otros 3 recién llegados que comparten tus objetivos",
+      "goals": {
+        "make_friends": "Hacer nuevos amigos en Canadá",
+        "practice_english": "Practicar inglés o francés",
+        "job_search": "Intercambiar consejos sobre empleo y currículums",
+        "wellness": "Mantener la motivación y el ánimo"
+      },
+      "topics": {
+        "immigration": "Trámites de inmigración",
+        "housing": "Alquiler y búsqueda de vivienda",
+        "finances": "Presupuesto y banca",
+        "community": "Amistades y vida social",
+        "career": "Empleo, currículums y entrevistas"
+      },
+      "errorPickGoal": "Elige una opción",
+      "errorPickTopic": "Elige al menos un tema",
+      "topicsSelected": "{{count}} tema seleccionado",
+      "topicsSelected_plural": "{{count}} temas seleccionados",
+      "topicsToDiscuss": "{{count}} tema para conversar",
+      "topicsToDiscuss_plural": "{{count}} temas para conversar",
+      "completionSubtitle": "Te conectaremos con otros 3 recién llegados que comparten tus objetivos e intereses. Esto suele tardar de unos minutos a unas horas.",
+      "summaryLabel": "Tus preferencias de circle",
+      "notSelected": "Sin seleccionar",
+      "joinWaitingRoom": "Entrar a la sala de espera"
+    }
   },
   "onboarding": {
     "stepOf": "Paso {{current}} de {{total}}",
@@ -1309,5 +1403,91 @@
     "showOriginal": "Ver original",
     "limitReached": "Has alcanzado el límite diario de traducciones",
     "unavailable": "Traducción no disponible, inténtalo de nuevo"
+  },
+  "preLogin": {
+    "outcomes": {
+      "heading": "Esto es lo que puedes lograr en 3 meses",
+      "navigate": {
+        "title": "Avanza con confianza",
+        "description": "Consigue lo esencial para sentirte como en casa en Canadá."
+      },
+      "answers": {
+        "title": "Obtén respuestas rápidas y confiables",
+        "description": "Orientación confiable cuando la necesitas."
+      },
+      "community": {
+        "title": "Crea tu comunidad",
+        "description": "Conecta con personas que viven un camino similar."
+      }
+    },
+    "belonging": {
+      "title": "Aquí empieza tu pertenencia",
+      "description": "Únete a grupos por ciudad y por tema, descubre eventos y conecta con personas que viven experiencias similares."
+    },
+    "checklist": {
+      "title": "Sabe qué hacer a continuación",
+      "description": "Recibe una lista de asentamiento personalizada para tu situación y avanza paso a paso, con más claridad y menos estrés.",
+      "doNow": "Hazlo ahora",
+      "progress": "{{completed}}/{{total}} completado",
+      "itemSubtitle": "Necesario para trabajar y acceder a servicios",
+      "items": {
+        "sin": "Obtén tu NAS (SIN)",
+        "bank": "Abre una cuenta bancaria",
+        "phone": "Consigue un plan de teléfono",
+        "health": "Solicita la cobertura de salud provincial\n(MSP o equivalente)"
+      },
+      "modal": {
+        "title": "Obtén tu NAS (SIN)",
+        "description": "Tu NAS es necesario para el empleo, los impuestos, los beneficios del gobierno y otros trámites esenciales."
+      }
+    },
+    "companion": {
+      "title": "Obtén respuestas en las que puedes confiar",
+      "description": "Haz preguntas en el momento y recibe orientación práctica y personalizada, basada en fuentes canadienses confiables.",
+      "userMessage": "Soy un estudiante internacional que acaba de llegar a Canadá. ¿Puedes explicarme el sistema de transporte de BC?",
+      "atAGlance": "En resumen",
+      "glanceBody": "El transporte de BC incluye autobuses, SkyTrain, SeaBus y West Coast Express, gestionados sobre todo por TransLink en Metro Vancouver; es clave para moverte, especialmente si no tienes auto.",
+      "whatToKnow": "Lo que necesitas saber",
+      "translinkLabel": "TransLink:",
+      "translinkBody": "Opera la mayor parte del transporte público en Metro Vancouver, incluidos autobuses, SkyTrain y SeaBus...",
+      "askAnything": {
+        "title": "Pregunta lo que sea",
+        "description": "Obtén respuestas a cualquier duda migratoria"
+      },
+      "formHelp": {
+        "title": "Ayuda con formularios",
+        "description": "Recibe guía paso a paso para cualquier formulario"
+      }
+    },
+    "learn": {
+      "title": "Establécete con confianza",
+      "description": "Explora las lecciones sencillas y los recursos confiables de Unify sobre inmigración, vivienda, finanzas, trabajo y vida diaria en Canadá.",
+      "sections": "{{total}} secciones",
+      "subjects": {
+        "finance": "Finanzas",
+        "employment": "Empleo",
+        "housing": "Vivienda",
+        "documentation": "Documentación"
+      }
+    },
+    "circles": {
+      "title": "Unify Circles",
+      "description": "Conecta con 3 recién llegados con un camino similar al tuyo para un chat grupal de 2 semanas.",
+      "cta": "Únete a tu Circle"
+    },
+    "event": {
+      "name": "Encuentro de recién llegados",
+      "time": "16:30-18:30",
+      "venue": "Biblioteca Pública Metrotown"
+    },
+    "group": {
+      "name": "SFU Estudiantes Interna...",
+      "members": "{{total}} miembros"
+    }
+  },
+  "notFound": {
+    "title": "¡Vaya!",
+    "message": "Esta pantalla no existe.",
+    "goHome": "¡Ir a la pantalla de inicio!"
   }
 }

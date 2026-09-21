@@ -15,6 +15,7 @@ import {
   filterConversations,
   groupConversationsByDate,
   createConversationSections,
+  isUntitledConversation,
   ConversationSection,
 } from '@/helpers/companion/conversationHelpers';
 import { Conversation } from '@/services/companion/getConversations';
@@ -29,10 +30,12 @@ export default function ConversationHistoryScreen() {
   const { data: conversations, isLoading } = useConversations();
   const [searchQuery, setSearchQuery] = useState('');
 
+  const untitledLabel = t('companion.history.untitled');
+
   // Filter conversations by search query
   const filteredConversations = useMemo(
-    () => filterConversations(conversations, searchQuery),
-    [conversations, searchQuery]
+    () => filterConversations(conversations, searchQuery, untitledLabel),
+    [conversations, searchQuery, untitledLabel]
   );
 
   // Group conversations by date ranges
@@ -65,7 +68,7 @@ export default function ConversationHistoryScreen() {
     >
       <ChatListIcon width={20} height={20} />
       <Text style={styles.conversationTitle} numberOfLines={1}>
-        {item.title || 'New Conversation'}
+        {isUntitledConversation(item.title) ? untitledLabel : item.title}
       </Text>
     </TouchableOpacity>
   );
@@ -75,7 +78,7 @@ export default function ConversationHistoryScreen() {
 
     return (
       <View style={styles.section}>
-        <Text style={styles.sectionHeader}>{item.title}</Text>
+        <Text style={styles.sectionHeader}>{t(item.titleKey)}</Text>
         {item.data.map(conv => (
           <View key={conv.conversation_identifier}>
             {renderConversationItem({ item: conv })}
@@ -90,7 +93,7 @@ export default function ConversationHistoryScreen() {
 
   return (
     <View style={styles.container}>
-      <BackHeader title='Chat History' />
+      <BackHeader title={t('companion.history.title')} />
 
       {isLoading ? (
         <View style={styles.loadingContainer}>
@@ -102,7 +105,7 @@ export default function ConversationHistoryScreen() {
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder='Search chats...'
+              placeholder={t('companion.history.searchPlaceholder')}
               placeholderTextColor='#999'
               value={searchQuery}
               onChangeText={setSearchQuery}

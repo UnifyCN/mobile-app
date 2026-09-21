@@ -224,8 +224,7 @@ const SearchScreen = () => {
     searchHistory = (
       <View style={styles.searchFrame}>
         <Text style={styles.containerText}>
-          What do you want to discover today? Press 'enter' or 'go' to see
-          relevant people, groups, or posts
+          {t('search.discoverPrompt')}
         </Text>
       </View>
     );
@@ -307,7 +306,7 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>see more</Text>
+                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -338,7 +337,7 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>see more</Text>
+                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -364,7 +363,7 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>see more</Text>
+                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
                     </TouchableOpacity>
                   )}
                 </View>
