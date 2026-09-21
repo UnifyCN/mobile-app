@@ -622,7 +622,116 @@
       "settleHealthPrompt": "كيف أحصل على التأمين الصحي كوافد جديد في كندا؟",
       "settleServices": "خدمات الاستقرار",
       "settleServicesDesc": "خدمات مجانية للوافدين الجدد.",
-      "settleServicesPrompt": "ما هي خدمات الاستقرار المجانية المتاحة للوافدين الجدد في كندا؟"
+      "settleServicesPrompt": "ما هي خدمات الاستقرار المجانية المتاحة للوافدين الجدد في كندا؟",
+      "personalized": {
+        "persona_only": {
+          "category": "الاستقرار"
+        },
+        "arrival_recent": {
+          "category": "الاستقرار",
+          "prompt": "لقد وصلت إلى كندا للتو — ماذا يجب أن أفعل خلال أول 30 يومًا؟"
+        },
+        "arrival_future": {
+          "category": "قبل الوصول",
+          "prompt": "كيف أستعد قبل وصولي إلى كندا؟"
+        },
+        "stage_planning": {
+          "category": "المستندات",
+          "prompt": "ما زلت أخطط لانتقالي — ما المستندات التي أحتاجها للبدء؟"
+        },
+        "stage_recently_arrived": {
+          "category": "الاستقرار",
+          "prompt": "ما الذي يجب أن أعطيه الأولوية في شهري الأول هنا؟"
+        },
+        "persona_skilled_credentials": {
+          "category": "البحث عن عمل",
+          "prompt": "كيف أحصل على اعتراف كندا بمؤهلاتي الأجنبية؟"
+        },
+        "persona_student_pgwp": {
+          "category": "البحث عن عمل",
+          "prompt": "كيف أحصل على تصريح العمل بعد التخرج (PGWP)؟"
+        },
+        "interest_documents": {
+          "category": "المستندات",
+          "prompt": "بصفتي وافدًا جديدًا، ما المستندات وبطاقات الهوية التي يجب أن أحصل عليها أولًا؟"
+        },
+        "interest_employment": {
+          "category": "البحث عن عمل",
+          "prompt": "كيف أبدأ البحث عن عمل في كندا؟"
+        },
+        "interest_finance": {
+          "category": "المال",
+          "prompt": "كيف أفتح حسابًا مصرفيًا وأبني سجلًا ائتمانيًا في كندا؟"
+        },
+        "interest_housing": {
+          "category": "السكن",
+          "prompt": "بصفتي وافدًا جديدًا، كيف أجد سكنًا؟"
+        },
+        "interest_pr_immigration": {
+          "category": "الإقامة الدائمة والهجرة",
+          "prompt": "كيف أتقدم بطلب الإقامة الدائمة؟"
+        },
+        "interest_healthcare": {
+          "category": "الرعاية الصحية",
+          "prompt": "كيف تعمل الرعاية الصحية في المقاطعة بالنسبة للوافدين الجدد؟"
+        },
+        "interest_family_kids": {
+          "category": "العائلة",
+          "prompt": "ما إعانات الأسرة ورعاية الأطفال المتاحة للوافدين الجدد؟"
+        },
+        "interest_transit": {
+          "category": "التنقل",
+          "prompt": "كيف أحصل على رخصة قيادة وأستخدم النقل العام في مدينتي؟"
+        },
+        "hobby_career_growth_city": {
+          "category": "البحث عن عمل"
+        },
+        "hobby_exploring_canada_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_wellness_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_technology_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_music_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_fitness_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_personal_finance_city": {
+          "category": "المال"
+        },
+        "hobby_family_parenting_city": {
+          "category": "العائلة"
+        },
+        "hobby_education_city": {
+          "category": "التعليم"
+        },
+        "hobby_food_cooking_city": {
+          "category": "نمط الحياة"
+        },
+        "hobby_movies_city": {
+          "category": "نمط الحياة"
+        },
+        "goal_learn": {
+          "category": "التعليم",
+          "prompt": "ما موارد التعلّم المجانية المتاحة للوافدين الجدد؟"
+        },
+        "goal_community": {
+          "category": "الاستقرار",
+          "prompt": "كيف ألتقي بوافدين جدد آخرين وأبني مجتمعًا هنا؟"
+        },
+        "goal_quick_answers": {
+          "category": "المستندات",
+          "prompt": "مرجع سريع: ما أهم المستندات والخطوات التي سأحتاجها؟"
+        },
+        "interest_pr_province": {
+          "category": "الإقامة الدائمة والهجرة"
+        }
+      }
     },
     "history": {
       "newChat": "محادثة جديدة",
@@ -801,7 +910,17 @@
     "tipNotFound": "لم يتم العثور على النصيحة",
     "sources": "المصادر",
     "seePastTips": "عرض النصائح السابقة",
-    "dailyTip": "نصيحة اليوم"
+    "dailyTip": "نصيحة اليوم",
+    "category": {
+      "documents": "المستندات",
+      "finance": "المال",
+      "housing": "السكن",
+      "employment": "العمل",
+      "healthcare": "الرعاية الصحية",
+      "immigration": "الهجرة",
+      "settlement": "الاستقرار",
+      "general": "عام"
+    }
   },
   "events": {
     "title": "فعاليات المجتمع",

@@ -3,6 +3,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
+import { responseLanguageDirective } from '../_shared/responseLanguage.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -62,7 +63,7 @@ Deno.serve(async req => {
 
     // Parse request body
     const body = await req.json();
-    const { term } = body;
+    const { term, language } = body;
     let { lessonContext } = body;
 
     if (!term || typeof term !== 'string' || term.trim().length === 0) {
@@ -92,10 +93,15 @@ Deno.serve(async req => {
       ? `The user is reading a lesson about "${lessonContext}" and wants to understand this term or phrase: "${term.trim()}"`
       : `Explain this term or phrase to a newcomer to Canada: "${term.trim()}"`;
 
+    // Answer in the caller's UI language when they asked for one. The
+    // directive is built from a whitelist, so `language` is never
+    // interpolated into the prompt and English stays byte-for-byte unchanged.
+    const systemPrompt = SYSTEM_PROMPT + responseLanguageDirective(language);
+
     // Call OpenRouter
     const llmResult = await callOpenRouter({
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
       maxTokens: 256,

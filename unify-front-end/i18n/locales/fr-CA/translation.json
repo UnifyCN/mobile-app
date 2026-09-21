@@ -622,7 +622,116 @@
       "settleHealthPrompt": "Comment obtenir une assurance maladie en tant que nouvel arrivant au Canada?",
       "settleServices": "Services d'établissement",
       "settleServicesDesc": "Services gratuits pour les nouveaux arrivants.",
-      "settleServicesPrompt": "Quels services d'établissement gratuits sont offerts aux nouveaux arrivants au Canada?"
+      "settleServicesPrompt": "Quels services d'établissement gratuits sont offerts aux nouveaux arrivants au Canada?",
+      "personalized": {
+        "persona_only": {
+          "category": "Établissement"
+        },
+        "arrival_recent": {
+          "category": "Établissement",
+          "prompt": "Je viens d'arriver au Canada — que dois-je faire pendant mes 30 premiers jours?"
+        },
+        "arrival_future": {
+          "category": "Avant l'arrivée",
+          "prompt": "Comment dois-je me préparer avant d'arriver au Canada?"
+        },
+        "stage_planning": {
+          "category": "Documents",
+          "prompt": "Je planifie encore mon déménagement — quels documents me faut-il pour commencer?"
+        },
+        "stage_recently_arrived": {
+          "category": "Établissement",
+          "prompt": "Quelles priorités dois-je établir pendant mon premier mois ici?"
+        },
+        "persona_skilled_credentials": {
+          "category": "Recherche d'emploi",
+          "prompt": "Comment faire reconnaître mes diplômes étrangers au Canada?"
+        },
+        "persona_student_pgwp": {
+          "category": "Recherche d'emploi",
+          "prompt": "Comment obtenir un permis de travail postdiplôme (PTPD)?"
+        },
+        "interest_documents": {
+          "category": "Documents",
+          "prompt": "En tant que nouvel arrivant, quels documents et pièces d'identité dois-je obtenir en premier?"
+        },
+        "interest_employment": {
+          "category": "Recherche d'emploi",
+          "prompt": "Comment commencer ma recherche d'emploi au Canada?"
+        },
+        "interest_finance": {
+          "category": "Finances",
+          "prompt": "Comment ouvrir un compte bancaire et bâtir mon dossier de crédit au Canada?"
+        },
+        "interest_housing": {
+          "category": "Logement",
+          "prompt": "Comment trouver un logement en tant que nouvel arrivant?"
+        },
+        "interest_pr_immigration": {
+          "category": "Résidence permanente et immigration",
+          "prompt": "Comment présenter une demande de résidence permanente?"
+        },
+        "interest_healthcare": {
+          "category": "Santé",
+          "prompt": "Comment fonctionne l'assurance maladie provinciale pour les nouveaux arrivants?"
+        },
+        "interest_family_kids": {
+          "category": "Famille",
+          "prompt": "Quelles prestations familiales et de garde d'enfants sont offertes aux nouveaux arrivants?"
+        },
+        "interest_transit": {
+          "category": "Transport",
+          "prompt": "Comment obtenir un permis de conduire et utiliser le transport en commun dans ma ville?"
+        },
+        "hobby_career_growth_city": {
+          "category": "Recherche d'emploi"
+        },
+        "hobby_exploring_canada_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_wellness_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_technology_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_music_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_fitness_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_personal_finance_city": {
+          "category": "Finances"
+        },
+        "hobby_family_parenting_city": {
+          "category": "Famille"
+        },
+        "hobby_education_city": {
+          "category": "Éducation"
+        },
+        "hobby_food_cooking_city": {
+          "category": "Mode de vie"
+        },
+        "hobby_movies_city": {
+          "category": "Mode de vie"
+        },
+        "goal_learn": {
+          "category": "Éducation",
+          "prompt": "Quelles ressources d'apprentissage gratuites sont offertes aux nouveaux arrivants?"
+        },
+        "goal_community": {
+          "category": "Établissement",
+          "prompt": "Comment rencontrer d'autres nouveaux arrivants et bâtir une communauté ici?"
+        },
+        "goal_quick_answers": {
+          "category": "Documents",
+          "prompt": "Aide-mémoire : quels sont les principaux documents et étapes dont j'aurai besoin?"
+        },
+        "interest_pr_province": {
+          "category": "Résidence permanente et immigration"
+        }
+      }
     },
     "history": {
       "newChat": "Nouvelle conversation",
@@ -801,7 +910,17 @@
     "tipNotFound": "Conseil introuvable",
     "sources": "Sources",
     "seePastTips": "Voir les conseils précédents",
-    "dailyTip": "Conseil du jour"
+    "dailyTip": "Conseil du jour",
+    "category": {
+      "documents": "Documents",
+      "finance": "Finances",
+      "housing": "Logement",
+      "employment": "Emploi",
+      "healthcare": "Santé",
+      "immigration": "Immigration",
+      "settlement": "Établissement",
+      "general": "Général"
+    }
   },
   "events": {
     "title": "Événements communautaires",

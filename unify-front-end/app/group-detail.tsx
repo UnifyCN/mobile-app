@@ -17,6 +17,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { getGroupByName } from '@/services/groups/getGroupByName';
 import { PostItem } from '@/components/home/PostItem';
+import { TranslateButton } from '@/components/home/TranslateButton';
 import CreatePostButton from '@/components/posts/CreatePostButton';
 import { useGroupPosts } from '@/hooks/feeds/useGroupPosts';
 import { joinGroup } from '@/services/groups/joinGroup';
@@ -378,6 +379,10 @@ const GroupDetailScreen = () => {
                 <Text style={styles.aboutText}>{groupData.description}</Text>
               </>
             )}
+
+            {/* Machine translation of the group name + description. Renders
+                nothing when the UI language is English. */}
+            <TranslateButton type='group' id={groupData.id} />
 
             {/* Posts section divider */}
             {posts.length > 0 && <View style={styles.sectionDivider} />}

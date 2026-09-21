@@ -622,7 +622,116 @@
       "settleHealthPrompt": "How do I get health insurance as a newcomer in Canada?",
       "settleServices": "Settlement Services",
       "settleServicesDesc": "Free services for newcomers.",
-      "settleServicesPrompt": "What free settlement services are available for newcomers in Canada?"
+      "settleServicesPrompt": "What free settlement services are available for newcomers in Canada?",
+      "personalized": {
+        "persona_only": {
+          "category": "Settlement"
+        },
+        "arrival_recent": {
+          "category": "Settlement",
+          "prompt": "I just arrived in Canada — what should I do in my first 30 days?"
+        },
+        "arrival_future": {
+          "category": "Pre-Arrival",
+          "prompt": "How should I prepare before arriving in Canada?"
+        },
+        "stage_planning": {
+          "category": "Documents",
+          "prompt": "I'm still planning my move — what documents do I need to start?"
+        },
+        "stage_recently_arrived": {
+          "category": "Settlement",
+          "prompt": "What should I prioritize in my first month here?"
+        },
+        "persona_skilled_credentials": {
+          "category": "Job Search",
+          "prompt": "How do I get my foreign credentials recognized in Canada?"
+        },
+        "persona_student_pgwp": {
+          "category": "Job Search",
+          "prompt": "How do I get a post-graduation work permit (PGWP)?"
+        },
+        "interest_documents": {
+          "category": "Documents",
+          "prompt": "Which documents and IDs should I get first as a newcomer?"
+        },
+        "interest_employment": {
+          "category": "Job Search",
+          "prompt": "How do I start my job search in Canada?"
+        },
+        "interest_finance": {
+          "category": "Finance",
+          "prompt": "How do I open a bank account and build credit in Canada?"
+        },
+        "interest_housing": {
+          "category": "Housing",
+          "prompt": "How do I find housing as a newcomer?"
+        },
+        "interest_pr_immigration": {
+          "category": "PR & Immigration",
+          "prompt": "How do I apply for permanent residence?"
+        },
+        "interest_healthcare": {
+          "category": "Healthcare",
+          "prompt": "How does provincial healthcare work for newcomers?"
+        },
+        "interest_family_kids": {
+          "category": "Family",
+          "prompt": "What family and childcare benefits are available to newcomers?"
+        },
+        "interest_transit": {
+          "category": "Transit",
+          "prompt": "How do I get a driver's licence and use public transit in my city?"
+        },
+        "hobby_career_growth_city": {
+          "category": "Job Search"
+        },
+        "hobby_exploring_canada_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_wellness_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_technology_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_music_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_fitness_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_personal_finance_city": {
+          "category": "Finance"
+        },
+        "hobby_family_parenting_city": {
+          "category": "Family"
+        },
+        "hobby_education_city": {
+          "category": "Education"
+        },
+        "hobby_food_cooking_city": {
+          "category": "Lifestyle"
+        },
+        "hobby_movies_city": {
+          "category": "Lifestyle"
+        },
+        "goal_learn": {
+          "category": "Education",
+          "prompt": "What free learning resources are available to newcomers?"
+        },
+        "goal_community": {
+          "category": "Settlement",
+          "prompt": "How can I meet other newcomers and build community here?"
+        },
+        "goal_quick_answers": {
+          "category": "Documents",
+          "prompt": "Quick reference: what are the top documents and steps I'll need?"
+        },
+        "interest_pr_province": {
+          "category": "PR & Immigration"
+        }
+      }
     },
     "history": {
       "newChat": "New chat",
@@ -801,7 +910,17 @@
     "tipNotFound": "Tip not found",
     "sources": "Sources",
     "seePastTips": "See past tips",
-    "dailyTip": "Daily Tip"
+    "dailyTip": "Daily Tip",
+    "category": {
+      "documents": "Documents",
+      "finance": "Finance",
+      "housing": "Housing",
+      "employment": "Employment",
+      "healthcare": "Healthcare",
+      "immigration": "Immigration",
+      "settlement": "Settlement",
+      "general": "General"
+    }
   },
   "events": {
     "title": "Community Events",

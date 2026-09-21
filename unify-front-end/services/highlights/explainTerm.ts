@@ -1,17 +1,22 @@
 import { supabase } from '@/lib/supabase';
+import i18n from '@/i18n';
+import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
 
 /**
  * Calls the explain-term edge function to get a plain-language explanation
- * of a term or phrase from lesson content.
+ * of a term or phrase from lesson content. The explanation comes back in the
+ * current UI language; `language` is omitted for English so the function
+ * keeps its default English prompt.
  */
 export async function explainTerm(
   term: string,
   lessonContext?: string
 ): Promise<string> {
+  const language = resolveAiResponseLanguage(i18n.language);
   let data, error;
   try {
     const result = await supabase.functions.invoke('explain-term', {
-      body: { term, lessonContext },
+      body: { term, lessonContext, ...(language ? { language } : {}) },
     });
     data = result.data;
     error = result.error;

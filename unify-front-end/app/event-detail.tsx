@@ -23,6 +23,7 @@ import {
   getSafeEventExternalUrl,
   handoffEventExternalUrl,
 } from '@/helpers/eventHelpers';
+import { TranslateButton } from '@/components/home/TranslateButton';
 
 const EventDetailScreen = () => {
   const { t } = useTranslation();
@@ -223,6 +224,10 @@ const EventDetailScreen = () => {
         ) : (
           <Text style={styles.aboutText}>{t('events.noEventDescription')}</Text>
         )}
+
+        {/* Machine translation of the title + description. Renders nothing
+            when the UI language is English. */}
+        <TranslateButton type='event' id={eventData.id} />
       </ScrollView>
     </View>
   );

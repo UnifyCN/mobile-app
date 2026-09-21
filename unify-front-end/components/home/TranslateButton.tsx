@@ -13,6 +13,7 @@ import { DEFAULT_LANGUAGE } from '@/i18n';
 import { useTranslateContent } from '@/hooks/posts/useTranslateContent';
 import {
   TranslationLimitError,
+  type TranslatableId,
   type TranslatableType,
 } from '@/services/posts/translateContent';
 
@@ -31,7 +32,7 @@ const TRANSLATED_TAG_STYLES: Record<string, MixedStyleDeclaration> = {
 
 interface TranslateButtonProps {
   type: TranslatableType;
-  id: number;
+  id: TranslatableId;
   /** Required when `isHtml` — width available to the HTML renderer. */
   contentWidth?: number;
   /** Post bodies are stored as HTML; comments are plain text. */
@@ -63,7 +64,7 @@ export const TranslateButton = memo(
     if (translation && showTranslation) {
       return (
         <View style={styles.translationContainer}>
-          {type === 'post' && translation.translatedTitle ? (
+          {translation.translatedTitle ? (
             <Text style={styles.translatedTitle}>
               {translation.translatedTitle}
             </Text>
