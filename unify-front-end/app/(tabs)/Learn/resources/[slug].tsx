@@ -226,7 +226,11 @@ export default function PartnerDetailScreen() {
   const tint = PARTNER_CATEGORY_TINTS[partner.category];
   const categoryLabel = t(PARTNER_CATEGORY_LABEL_KEYS[partner.category]);
   const categoryIcon = PARTNER_CATEGORY_ICONS[partner.category];
-  const programs = partner.programs ?? [];
+  // A ctaOnly partner routes every visit through its tracked website link, so
+  // its programs, contact rows and action bar carry no other way out.
+  const programs = partner.ctaOnly
+    ? (partner.programs ?? []).map(program => ({ ...program, url: undefined }))
+    : (partner.programs ?? []);
   const visiblePrograms = programsExpanded
     ? programs
     : programs.slice(0, PROGRAMS_COLLAPSED);
@@ -460,7 +464,7 @@ export default function PartnerDetailScreen() {
               label={t('learn.resources.address')}
               value={partner.address}
               action={
-                partner.address ? (
+                partner.address && !partner.ctaOnly ? (
                   <RowLink
                     icon='map'
                     label={t('learn.resources.map')}
@@ -483,7 +487,7 @@ export default function PartnerDetailScreen() {
               label={t('learn.resources.email')}
               value={partner.email}
               action={
-                partner.email ? (
+                partner.email && !partner.ctaOnly ? (
                   <RowLink
                     icon='mail'
                     label={t('learn.resources.email')}
@@ -548,7 +552,8 @@ export default function PartnerDetailScreen() {
             </Text>
           </TouchableOpacity>
         ) : (
-          partner.phone && (
+          partner.phone &&
+          !partner.ctaOnly && (
             <TouchableOpacity
               onPress={() =>
                 handleExternalOpen(phoneUrl(partner.phone!), 'phone')
@@ -568,7 +573,7 @@ export default function PartnerDetailScreen() {
           )
         )}
 
-        {partner.website && partner.phone && (
+        {partner.website && partner.phone && !partner.ctaOnly && (
           <TouchableOpacity
             onPress={() => handleExternalOpen(phoneUrl(partner.phone!), 'phone')}
             activeOpacity={0.85}
@@ -582,7 +587,7 @@ export default function PartnerDetailScreen() {
           </TouchableOpacity>
         )}
 
-        {partner.address && (
+        {partner.address && !partner.ctaOnly && (
           <TouchableOpacity
             onPress={() =>
               handleExternalOpen(mapsUrl(partner.address!), 'directions')

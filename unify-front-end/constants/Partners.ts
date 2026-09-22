@@ -219,8 +219,10 @@ export const PARTNERS: Partner[] = [
   // ── Immigration Help ────────────────────────────────────────────────────
   // Copy, programs, languages and cost supplied by the partner by email on
   // 2026-09-18 (Vicky Guo, Operations & Process Lead). The slug predates the
-  // rename and stays put — it is the analytics and route key. Program links
-  // go to the partner's own English site, not the /unify/ referral page.
+  // rename and stays put — it is the analytics and route key. On 2026-09-22
+  // the partner asked that the /unify/ referral link be the only way out of
+  // the listing so it can attribute referrals: programs carry no links and
+  // ctaOnly suppresses the call, email and directions actions.
   {
     slug: 'canada-shaw-immigration',
     name: 'Canada Shaws Consulting Inc.',
@@ -234,27 +236,13 @@ export const PARTNERS: Partner[] = [
     phone: '+1 672-867-6886',
     email: 'info@canadashaws.com',
     address: '308-5811 Cooney Rd, Richmond, BC V6X 3M1',
+    ctaOnly: true,
     programs: [
-      {
-        id: 'canada-shaw-immigration-study-in-canada',
-        url: 'https://canadashaws.ca/study-abroad-in-canada/',
-      },
-      {
-        id: 'canada-shaw-immigration-work-in-canada',
-        url: 'https://canadashaws.ca/work-in-canada/',
-      },
-      {
-        id: 'canada-shaw-immigration-permanent-residency',
-        url: 'https://canadashaws.ca/immigrate-to-canada/',
-      },
-      // No page on canadashaws.ca for visas/extensions or the citizenship +
-      // PRTD + ATIP bundle (checked 2026-09-18), so these two stay display-only.
-      {
-        id: 'canada-shaw-immigration-visas-extensions',
-      },
-      {
-        id: 'canada-shaw-immigration-other-services',
-      },
+      { id: 'canada-shaw-immigration-study-in-canada' },
+      { id: 'canada-shaw-immigration-work-in-canada' },
+      { id: 'canada-shaw-immigration-permanent-residency' },
+      { id: 'canada-shaw-immigration-visas-extensions' },
+      { id: 'canada-shaw-immigration-other-services' },
     ],
     logo: require('@/assets/images/partners/canada-shaw-immigration.png'),
     lastVerified: '2026-09-18',

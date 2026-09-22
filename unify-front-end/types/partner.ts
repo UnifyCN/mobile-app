@@ -213,6 +213,13 @@ export interface Partner {
   /** Programs this partner runs, shown on the detail screen. */
   programs?: PartnerProgram[];
   /**
+   * The primary `website` button is the only outbound link on the detail
+   * screen: program cards are not tappable, and phone, email and address show
+   * as plain text with no call, email or directions action. For referral
+   * partners who attribute referrals through a tracked link.
+   */
+  ctaOnly?: boolean;
+  /**
    * ISO date (YYYY-MM-DD). Set ONLY when a human confirmed this record by
    * phone or email — never from web research. Not surfaced in the UI yet;
    * the "Last verified" badge is deliberately deferred.
