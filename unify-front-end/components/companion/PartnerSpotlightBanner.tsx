@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
-import { getSpotlightPartner } from '@/constants/Partners';
+import { getSpotlightPartner, isVerifiedPartner } from '@/constants/Partners';
 import { RESOURCE_THEME } from '@/constants/ResourceTheme';
 import { PARTNER_CATEGORY_COLORS } from '@/types/partner';
 import Monogram from '@/components/learn/Resources/Monogram';
@@ -70,9 +70,10 @@ export default function PartnerSpotlightBanner({ onClose }: Props) {
   };
 
   const title = t('learn.resources.spotlight.companionTitle');
-  const facts = `${t('learn.resources.spotlight.verifiedPartner')} · ${t(
-    'learn.resources.spotlight.meetingFacts'
-  )}`;
+  const meetingFacts = t('learn.resources.spotlight.meetingFacts');
+  const facts = isVerifiedPartner(partner)
+    ? `${t('learn.resources.spotlight.verifiedPartner')} · ${meetingFacts}`
+    : meetingFacts;
 
   return (
     <View style={styles.banner}>

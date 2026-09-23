@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { getSpotlightPartner } from '@/constants/Partners';
+import { getSpotlightPartner, isVerifiedPartner } from '@/constants/Partners';
 import { RESOURCE_THEME } from '@/constants/ResourceTheme';
 import {
   PARTNER_CATEGORY_COLORS,
@@ -79,9 +79,11 @@ export default function SpotlightRow({ variant, source }: Props) {
           {title}
         </Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
-        <Text style={styles.label}>
-          {t('learn.resources.spotlight.verifiedPartner')}
-        </Text>
+        {isVerifiedPartner(partner) && (
+          <Text style={styles.label}>
+            {t('learn.resources.spotlight.verifiedPartner')}
+          </Text>
+        )}
       </View>
       <Feather name='chevron-right' size={isCard ? 20 : 18} color={accent} />
     </TouchableOpacity>

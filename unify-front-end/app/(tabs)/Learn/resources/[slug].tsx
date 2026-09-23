@@ -9,7 +9,12 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  Stack,
+  useLocalSearchParams,
+  useNavigation,
+  useRouter,
+} from 'expo-router';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
@@ -159,6 +164,7 @@ export default function PartnerDetailScreen() {
   }>();
   const source = parsePartnerCtaSource(via);
   const router = useRouter();
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const [programsExpanded, setProgramsExpanded] = useState(false);
   const {
@@ -210,10 +216,19 @@ export default function PartnerDetailScreen() {
         ? t('learn.segment.resources')
         : t(PARTNER_CATEGORY_LABEL_KEYS[partner.category]);
 
-  const handleBack = () => {
-    router.back();
-    if (originTab) router.navigate(originTab.route as any);
-  };
+  // Every back — the nav above, the iOS swipe, Android's system back — goes
+  // through beforeRemove, so the return to the origin tab lives there. Only a
+  // back redirects: re-tapping the Learn tab pops to top and stays on Learn.
+  useEffect(() => {
+    if (!originTab) return;
+    return navigation.addListener('beforeRemove', event => {
+      const { type } = event.data.action;
+      if (type !== 'GO_BACK' && type !== 'POP') return;
+      requestAnimationFrame(() => router.navigate(originTab.route as any));
+    });
+  }, [navigation, originTab, router]);
+
+  const handleBack = () => router.back();
 
   const backNav = (
     <TouchableOpacity
