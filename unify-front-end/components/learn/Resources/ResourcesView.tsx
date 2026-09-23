@@ -26,6 +26,7 @@ import CategoryDetail from './CategoryDetail';
 import HowWeChooseSheet from './HowWeChooseSheet';
 import PartnerRow from './PartnerRow';
 import ResourcesSearchBar from './ResourcesSearchBar';
+import SpotlightRow from '@/components/partners/SpotlightRow';
 
 /** Grid columns in Figma 8129:32595. */
 const COLUMNS = 2;
@@ -167,23 +168,30 @@ export default function ResourcesView() {
             </Text>
           </View>
         ) : (
-          chunk(categories, COLUMNS).map(row => (
-            <View key={row[0].category} style={styles.gridRow}>
-              {row.map(({ category, partnerCount }) => (
-                <CategoryTile
-                  key={category}
-                  category={category}
-                  partnerCount={partnerCount}
-                  onPress={() => {
-                    trackResourcesCategoryOpened(category);
-                    setSelectedCategory(category);
-                  }}
-                />
-              ))}
-              {/* Keeps a lone trailing tile at column width instead of full. */}
-              {row.length < COLUMNS && <View style={styles.gridFiller} />}
+          <>
+            {/* The spotlight partner sits above the grid, not inside it: a
+                tile of its own would make one category read as paid-only. */}
+            <View style={styles.spotlight}>
+              <SpotlightRow variant='card' source='resources_spotlight' />
             </View>
-          ))
+            {chunk(categories, COLUMNS).map(row => (
+              <View key={row[0].category} style={styles.gridRow}>
+                {row.map(({ category, partnerCount }) => (
+                  <CategoryTile
+                    key={category}
+                    category={category}
+                    partnerCount={partnerCount}
+                    onPress={() => {
+                      trackResourcesCategoryOpened(category);
+                      setSelectedCategory(category);
+                    }}
+                  />
+                ))}
+                {/* Keeps a lone trailing tile at column width instead of full. */}
+                {row.length < COLUMNS && <View style={styles.gridFiller} />}
+              </View>
+            ))}
+          </>
         )}
       </ScrollView>
 
@@ -197,6 +205,7 @@ export default function ResourcesView() {
 
 const styles = StyleSheet.create({
   scrollContent: { padding: 16, paddingBottom: 100 },
+  spotlight: { marginBottom: 10 },
   heading: {
     // Same size and weight as the Lessons greeting it sits opposite.
     fontSize: 24,

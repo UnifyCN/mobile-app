@@ -5,6 +5,7 @@ import type {
   ResourceLinkFailureReason,
   ResourceLinkTarget,
 } from '@/types/partner';
+import type { PartnerCtaSource } from '@/utils/partners';
 
 // Event name constants for type safety and consistency
 export const AnalyticsEvents = {
@@ -134,6 +135,8 @@ export const AnalyticsEvents = {
   RESOURCES_PARTNER_WEBSITE_CLICKED: 'resources_partner_website_clicked',
   RESOURCES_PROGRAM_CLICKED: 'resources_program_clicked',
   RESOURCES_LINK_FAILED: 'resources_link_failed',
+  PARTNER_SPOTLIGHT_SHOWN: 'partner_spotlight_shown',
+  PARTNER_SPOTLIGHT_DISMISSED: 'partner_spotlight_dismissed',
 
   // Referrals (refer-a-friend)
   INVITE_CODE_GENERATED: 'invite_code_generated',
@@ -833,21 +836,40 @@ export function useAnalytics() {
       trackResourcesPartnerOpened: (
         slug: string,
         category: string,
-        partnershipType: PartnershipType
+        partnershipType: PartnershipType,
+        source?: PartnerCtaSource
       ) => {
         posthog?.capture(AnalyticsEvents.RESOURCES_PARTNER_OPENED, {
           slug,
           category,
           partnership_type: partnershipType,
+          ...(source && { source }),
         });
       },
       trackResourcesPartnerWebsiteClicked: (
         slug: string,
-        partnershipType: PartnershipType
+        partnershipType: PartnershipType,
+        source?: PartnerCtaSource
       ) => {
         posthog?.capture(AnalyticsEvents.RESOURCES_PARTNER_WEBSITE_CLICKED, {
           slug,
           partnership_type: partnershipType,
+          ...(source && { source }),
+        });
+      },
+      trackPartnerSpotlightShown: (slug: string, source: PartnerCtaSource) => {
+        posthog?.capture(AnalyticsEvents.PARTNER_SPOTLIGHT_SHOWN, {
+          slug,
+          source,
+        });
+      },
+      trackPartnerSpotlightDismissed: (
+        slug: string,
+        source: PartnerCtaSource
+      ) => {
+        posthog?.capture(AnalyticsEvents.PARTNER_SPOTLIGHT_DISMISSED, {
+          slug,
+          source,
         });
       },
       trackResourcesProgramClicked: (slug: string, programId: string) => {

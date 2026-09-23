@@ -1,35 +1,56 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ThemedText } from '@/components/ThemedText';
+import SpotlightRow from '@/components/partners/SpotlightRow';
 import { UserTaskWithDetails } from '@/types/checklist';
 
 interface ChecklistItemProps {
   task: UserTaskWithDetails;
   onPress?: () => void;
+  /** Adds the spotlight partner's help row under the title. */
+  showPartnerHelp?: boolean;
 }
 
 export const ChecklistItem: React.FC<ChecklistItemProps> = ({
   task,
   onPress,
+  showPartnerHelp = false,
 }) => {
   const isCompleted = task.completed;
   const taskName = task.task.task_name?.trim() ?? '';
 
-  return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={onPress}
-      activeOpacity={0.7}
+  const title = (
+    <ThemedText
+      style={[styles.taskName, isCompleted && styles.taskNameCompleted]}
+      numberOfLines={2}
+      ellipsizeMode='tail'
     >
-      <ThemedText
-        style={[styles.taskName, isCompleted && styles.taskNameCompleted]}
-        numberOfLines={2}
-        ellipsizeMode='tail'
+      {taskName}
+    </ThemedText>
+  );
+
+  if (!showPartnerHelp) {
+    return (
+      <TouchableOpacity
+        style={styles.container}
+        onPress={onPress}
+        activeOpacity={0.7}
       >
-        {taskName}
-      </ThemedText>
-    </TouchableOpacity>
+        {title}
+      </TouchableOpacity>
+    );
+  }
+
+  // The help row is a sibling of the title's touchable, not a child, so its
+  // tap never also opens the task sheet.
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+        {title}
+      </TouchableOpacity>
+      <SpotlightRow variant='inline' source='checklist_link' />
+    </View>
   );
 };
 

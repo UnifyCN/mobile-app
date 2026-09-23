@@ -6,9 +6,30 @@ import type { Partner } from '@/types/partner';
  */
 export type PartnerCtaSource =
   | 'learn_resources'
+  | 'resources_spotlight'
   | 'companion_ai'
   | 'checklist_link'
+  | 'learn_module'
   | 'home_card';
+
+const PARTNER_CTA_SOURCES: readonly PartnerCtaSource[] = [
+  'learn_resources',
+  'resources_spotlight',
+  'companion_ai',
+  'checklist_link',
+  'learn_module',
+  'home_card',
+];
+
+/** Narrows a route param to a known source; anything else is `undefined`. */
+export function parsePartnerCtaSource(
+  value: string | string[] | undefined
+): PartnerCtaSource | undefined {
+  return typeof value === 'string' &&
+    (PARTNER_CTA_SOURCES as readonly string[]).includes(value)
+    ? (value as PartnerCtaSource)
+    : undefined;
+}
 
 /**
  * Append Unify's UTM scheme to a partner's bare URL.
@@ -30,4 +51,13 @@ export function buildPartnerUrl(
   url.searchParams.set('utm_campaign', partner.slug);
   url.searchParams.set('ref', 'unify');
   return url.toString();
+}
+
+/**
+ * Route to a partner's detail screen. `via` names the surface the person came
+ * from; the detail screen reads it for analytics, the CTA's utm_medium, and
+ * its back label.
+ */
+export function partnerDetailHref(slug: string, via: PartnerCtaSource): string {
+  return `/(tabs)/Learn/resources/${slug}?via=${via}`;
 }

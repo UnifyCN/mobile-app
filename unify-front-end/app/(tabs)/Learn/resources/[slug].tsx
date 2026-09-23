@@ -9,12 +9,17 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  Stack,
+  useLocalSearchParams,
+  useNavigation,
+  useRouter,
+} from 'expo-router';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import TabHeader from '@/components/home/HomeHeader';
-import { getPartnerBySlug } from '@/constants/Partners';
+import { getPartnerBySlug, isVerifiedPartner } from '@/constants/Partners';
 import { COST_CHIP, RESOURCE_THEME } from '@/constants/ResourceTheme';
 import {
   PARTNER_CATEGORY_LABEL_KEYS,
@@ -29,11 +34,23 @@ import {
 import Monogram from '@/components/learn/Resources/Monogram';
 import { useAnalytics } from '@/utils/analytics';
 import { localizePartner } from '@/utils/localizePartner';
-import { buildPartnerUrl } from '@/utils/partners';
+import {
+  buildPartnerUrl,
+  parsePartnerCtaSource,
+  type PartnerCtaSource,
+} from '@/utils/partners';
 import { launchResourceLink } from '@/utils/openResourceLink';
 
 /** Programs listed before the "Show N more" disclosure (Figma 8134:33348). */
 const PROGRAMS_COLLAPSED = 3;
+
+/** Spotlight surfaces on another tab, and where back returns to. */
+const ORIGIN_TABS: Partial<
+  Record<PartnerCtaSource, { route: string; labelKey: string }>
+> = {
+  companion_ai: { route: '/(tabs)/companion', labelKey: 'tabs.companion' },
+  checklist_link: { route: '/(tabs)/Checklist', labelKey: 'tabs.checklist' },
+};
 
 function mapsUrl(address: string) {
   const q = encodeURIComponent(address);
@@ -138,11 +155,16 @@ function hasAnyContactField(p: LocalizedPartner) {
 export default function PartnerDetailScreen() {
   // `from=search` means the person arrived from the landing screen's results
   // rather than from a category, so back names the segment, not the category.
-  const { slug, from } = useLocalSearchParams<{
+  // `via` names a spotlight surface outside the directory (see
+  // `partnerDetailHref`); it attributes the visit and the CTA tap.
+  const { slug, from, via } = useLocalSearchParams<{
     slug: string;
     from?: string;
+    via?: string;
   }>();
+  const source = parsePartnerCtaSource(via);
   const router = useRouter();
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const [programsExpanded, setProgramsExpanded] = useState(false);
   const {
@@ -166,10 +188,11 @@ export default function PartnerDetailScreen() {
       trackResourcesPartnerOpened(
         record.slug,
         record.category,
-        record.partnershipType
+        record.partnershipType,
+        source
       );
     }
-  }, [record, trackResourcesPartnerOpened]);
+  }, [record, source, trackResourcesPartnerOpened]);
 
   const screenOptions = (
     <Stack.Screen
@@ -181,14 +204,35 @@ export default function PartnerDetailScreen() {
     />
   );
 
-  const backLabel =
-    from === 'search' || !partner
-      ? t('learn.segment.resources')
-      : t(PARTNER_CATEGORY_LABEL_KEYS[partner.category]);
+  // A push from another tab lands on the Learn stack, so a plain back would
+  // leave the person on Learn. Back pops this screen and returns to the tab
+  // they came from, and names it.
+  const originTab = source ? ORIGIN_TABS[source] : undefined;
+  const backLabel = originTab
+    ? t(originTab.labelKey)
+    : source === 'learn_module'
+      ? t('common.back')
+      : from === 'search' || source === 'resources_spotlight' || !partner
+        ? t('learn.segment.resources')
+        : t(PARTNER_CATEGORY_LABEL_KEYS[partner.category]);
+
+  // Every back — the nav above, the iOS swipe, Android's system back — goes
+  // through beforeRemove, so the return to the origin tab lives there. Only a
+  // back redirects: re-tapping the Learn tab pops to top and stays on Learn.
+  useEffect(() => {
+    if (!originTab) return;
+    return navigation.addListener('beforeRemove', event => {
+      const { type } = event.data.action;
+      if (type !== 'GO_BACK' && type !== 'POP') return;
+      requestAnimationFrame(() => router.navigate(originTab.route as any));
+    });
+  }, [navigation, originTab, router]);
+
+  const handleBack = () => router.back();
 
   const backNav = (
     <TouchableOpacity
-      onPress={() => router.back()}
+      onPress={handleBack}
       style={styles.backRow}
       activeOpacity={0.7}
       accessibilityRole='button'
@@ -265,11 +309,12 @@ export default function PartnerDetailScreen() {
   const handleVisit = async () => {
     if (!partner.website) return;
     const launched = await launchResourceLink({
-      buildUrl: () => buildPartnerUrl(partner, 'learn_resources'),
+      buildUrl: () => buildPartnerUrl(partner, source ?? 'learn_resources'),
       onIntent: () =>
         trackResourcesPartnerWebsiteClicked(
           partner.slug,
-          partner.partnershipType
+          partner.partnershipType,
+          source ?? 'learn_resources'
         ),
       launch: url =>
         WebBrowser.openBrowserAsync(url, {
@@ -343,6 +388,18 @@ export default function PartnerDetailScreen() {
             />
             <Text style={styles.tagText}>{partner.serviceArea}</Text>
           </View>
+          {record && isVerifiedPartner(record) && (
+            <View style={[styles.tag, styles.verifiedTag]}>
+              <Feather
+                name='check-circle'
+                size={13}
+                color={RESOURCE_THEME.link}
+              />
+              <Text style={[styles.tagText, styles.verifiedTagText]}>
+                {t('learn.resources.spotlight.verifiedPartner')}
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.block}>
@@ -651,6 +708,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: RESOURCE_THEME.textSecondary,
   },
+  // The "Free" cost chip's pair: green reads as a checked fact, not a promo.
+  verifiedTag: { backgroundColor: COST_CHIP.free.background },
+  verifiedTagText: { color: COST_CHIP.free.text },
 
   block: { marginTop: 20 },
   sectionLabel: {
