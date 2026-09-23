@@ -37,6 +37,8 @@ import {
 import { MessageWithSources } from '@/components/companion/MessageWithSources';
 import { TypingIndicator } from '@/components/companion/TypingIndicator';
 import { StarterPrompts } from '@/components/companion/StarterPrompts';
+import PartnerSpotlightBanner from '@/components/companion/PartnerSpotlightBanner';
+import { shouldShowCompanionSpotlight } from '@/constants/PartnerSpotlight';
 import { Theme } from '@/constants/Theme';
 import { TAB_HEADER_METRICS } from '@/constants/TabHeader';
 import SendIcon from '@/components/icons/SendIcon.svg';
@@ -238,10 +240,33 @@ export default function CompanionScreen() {
     displayMessages.length === 0 && (isLoadingMessages || isLoading);
   const showEmptyState = !showLoadingState && displayMessages.length === 0;
 
+  // Immigration answers in this chat, by message id. The server does not
+  // persist queryType, so only answers streamed in this session count, and a
+  // chat reopened from history starts at zero.
+  const immigrationAnswerIdsRef = useRef<Set<string>>(new Set());
+  const [immigrationAnswerCount, setImmigrationAnswerCount] = useState(0);
+  const [spotlightClosed, setSpotlightClosed] = useState(false);
+
+  useEffect(() => {
+    if (streamingBotMessage?.queryType !== 'immigration') return;
+    const ids = immigrationAnswerIdsRef.current;
+    if (ids.has(streamingBotMessage.id)) return;
+    ids.add(streamingBotMessage.id);
+    setImmigrationAnswerCount(ids.size);
+  }, [streamingBotMessage?.id, streamingBotMessage?.queryType]);
+
+  const showPartnerSpotlight = shouldShowCompanionSpotlight(
+    immigrationAnswerCount,
+    spotlightClosed
+  );
+
   const resetDraftState = useCallback(() => {
     setOptimisticMessages([]);
     setGreetingMessage(null);
     setInputText('');
+    immigrationAnswerIdsRef.current = new Set();
+    setImmigrationAnswerCount(0);
+    setSpotlightClosed(false);
   }, []);
 
   // Initialize conversation ID from query params if it exists, or clear it for new conversation
@@ -578,6 +603,14 @@ export default function CompanionScreen() {
             </>
           )}
 
+          {showPartnerSpotlight && (
+            <View style={styles.spotlightContainer}>
+              <PartnerSpotlightBanner
+                onClose={() => setSpotlightClosed(true)}
+              />
+            </View>
+          )}
+
           {/* Input */}
           <View style={styles.inputContainer}>
             <TextInput
@@ -692,6 +725,10 @@ const styles = StyleSheet.create({
   stickyContainer: {
     backgroundColor: '#fff',
     width: '100%',
+  },
+  spotlightContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
   },
   inputContainer: {
     flexDirection: 'row',

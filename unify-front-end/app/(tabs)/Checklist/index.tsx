@@ -46,6 +46,7 @@ import {
   replacePriorityBucket,
 } from '@/utils/checklistOrder';
 import { PRIORITY_CONFIG } from '@/constants/ChecklistPriority';
+import { firstPartnerHelpKey } from '@/constants/PartnerSpotlight';
 import { useHapticsPreference } from '@/context/HapticsContext';
 import TabHeader from '@/components/home/HomeHeader';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -249,6 +250,26 @@ export default function ChecklistScreen() {
   const tabBarHeight = useBottomTabBarHeight();
 
   const rows = useMemo(() => buildRows(tasks), [tasks]);
+  // Only the first open immigration item carries the partner row. Personas
+  // that plan PR get several such items in a row, and a row on each one
+  // repeats the same offer down the list.
+  const partnerHelpKey = useMemo(
+    () =>
+      firstPartnerHelpKey(
+        rows.flatMap(row =>
+          row.type === 'task'
+            ? [
+                {
+                  key: row.key,
+                  sanityId: row.task.sanity_checklist_id,
+                  completed: row.task.completed,
+                },
+              ]
+            : []
+        )
+      ),
+    [rows]
+  );
 
   const handleTaskPress = useCallback((task: UserTaskWithDetails) => {
     setSelectedTask(task);
@@ -487,7 +508,11 @@ export default function ChecklistScreen() {
             </View>
 
             <View style={styles.centerColumn}>
-              <ChecklistItem task={task} onPress={() => handleTaskPress(task)} />
+              <ChecklistItem
+                task={task}
+                onPress={() => handleTaskPress(task)}
+                showPartnerHelp={item.key === partnerHelpKey}
+              />
             </View>
 
             <GHTouchableOpacity
@@ -510,7 +535,7 @@ export default function ChecklistScreen() {
         </ScaleDecorator>
       );
     },
-    [handleTaskPress, handleDragStart, t]
+    [handleTaskPress, handleDragStart, partnerHelpKey, t]
   );
 
   if (isLoading) {

@@ -37,6 +37,8 @@ import Blob12 from '@/assets/images/Blob12.svg';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
 import { Layout } from '@/constants/Layout';
+import { isImmigrationModule } from '@/constants/PartnerSpotlight';
+import SpotlightRow from '@/components/partners/SpotlightRow';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -888,6 +890,11 @@ export default function ModuleIndex() {
         showsVerticalScrollIndicator={false}
       >
         {sections.map((section, index) => renderSectionCard(section, index))}
+        {isImmigrationModule(moduleId) && (
+          <View style={styles.partnerHelp}>
+            <SpotlightRow variant='inline' source='learn_module' />
+          </View>
+        )}
         <View style={{ height: 40 }} />
       </ScrollView>
     </View>
@@ -1013,6 +1020,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 32,
   },
+  partnerHelp: { marginTop: 8 },
 
   // Section row
   sectionRow: {

@@ -220,6 +220,13 @@ export interface Partner {
    */
   ctaOnly?: boolean;
   /**
+   * Promoted outside the directory: the Companion banner, the Resources
+   * landing row, and the help rows on immigration Checklist items and Learn
+   * modules. At most one active partner carries it; `getSpotlightPartner`
+   * returns the first.
+   */
+  spotlight?: boolean;
+  /**
    * ISO date (YYYY-MM-DD). Set ONLY when a human confirmed this record by
    * phone or email — never from web research. Not surfaced in the UI yet;
    * the "Last verified" badge is deliberately deferred.

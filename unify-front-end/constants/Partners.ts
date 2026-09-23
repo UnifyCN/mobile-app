@@ -237,6 +237,7 @@ export const PARTNERS: Partner[] = [
     email: 'info@canadashaws.com',
     address: '308-5811 Cooney Rd, Richmond, BC V6X 3M1',
     ctaOnly: true,
+    spotlight: true,
     programs: [
       { id: 'canada-shaw-immigration-study-in-canada' },
       { id: 'canada-shaw-immigration-work-in-canada' },
@@ -852,3 +853,20 @@ export const getCategoriesWithPartners = (): {
     partnerCount: counts.get(category)!,
   }));
 };
+
+/** The first active spotlight partner in an arbitrary directory. */
+export const selectSpotlightPartner = (
+  partners: Partner[]
+): Partner | undefined => selectActivePartners(partners).find(p => p.spotlight);
+
+/** The partner promoted outside the directory, if any. */
+export const getSpotlightPartner = (): Partner | undefined =>
+  selectSpotlightPartner(PARTNERS);
+
+/**
+ * A referral partner that a person at Unify has confirmed by phone or email.
+ * Drives the "Verified partner" chip; both halves are required so the chip
+ * never claims a check that did not happen.
+ */
+export const isVerifiedPartner = (partner: Partner): boolean =>
+  partner.partnershipType === 'referral' && !!partner.lastVerified;
