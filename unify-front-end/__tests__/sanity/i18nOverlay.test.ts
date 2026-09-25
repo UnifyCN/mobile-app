@@ -106,7 +106,8 @@ describe('Sanity language overlays', () => {
     ['ar-CA', 'ar'],
     ['fr', 'fr-CA'],
     ['fr-CA', 'fr-CA'],
-    ['pa-IN', 'en'],
+    ['pa-IN', 'pa'],
+    ['pa', 'pa'],
     ['unknown', 'en'],
   ] as const)(
     'normalizes %s to the available Sanity language %s',

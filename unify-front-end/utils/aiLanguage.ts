@@ -17,6 +17,7 @@ export const AI_RESPONSE_LANGUAGES = {
   hi: 'Hindi',
   ar: 'Arabic',
   'fr-CA': 'Canadian French',
+  pa: 'Punjabi',
 } as const;
 
 export type AiResponseLanguage = keyof typeof AI_RESPONSE_LANGUAGES;

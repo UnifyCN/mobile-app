@@ -9,6 +9,7 @@ import es from './locales/es/translation.json';
 import hi from './locales/hi/translation.json';
 import ar from './locales/ar/translation.json';
 import frCA from './locales/fr-CA/translation.json';
+import pa from './locales/pa/translation.json';
 import { syncLayoutDirection } from './direction';
 
 export const SUPPORTED_LANGUAGES = {
@@ -18,6 +19,7 @@ export const SUPPORTED_LANGUAGES = {
   hi: 'हिन्दी',
   ar: 'العربية',
   'fr-CA': 'Français (canadien)',
+  pa: 'ਪੰਜਾਬੀ',
 } as const;
 
 export type SupportedLanguage = keyof typeof SUPPORTED_LANGUAGES;
@@ -36,7 +38,8 @@ export function isSupportedLanguage(value: unknown): value is SupportedLanguage 
 /**
  * Map a device locale to a supported language. French ships only as
  * Canadian French, so any fr* device locale resolves to `fr-CA` — the same
- * rule as the web app's Accept-Language negotiation.
+ * rule as the web app's Accept-Language negotiation. Punjabi ships only in
+ * Gurmukhi script (`pa`).
  */
 export function languageFromDeviceLocale(
   locale: { languageCode?: string | null; languageTag?: string | null } | undefined
@@ -45,6 +48,9 @@ export function languageFromDeviceLocale(
   if (isSupportedLanguage(tag)) return tag;
   const code = locale?.languageCode ?? '';
   if (code === 'fr') return 'fr-CA';
+  // Punjabi ships in Gurmukhi only. A Shahmukhi device (pa-Arab-PK) reads
+  // Perso-Arabic script, so Gurmukhi would be unreadable — stay on English.
+  if (code === 'pa' && /-arab\b/i.test(tag ?? '')) return DEFAULT_LANGUAGE;
   if (isSupportedLanguage(code)) return code;
   return DEFAULT_LANGUAGE;
 }
@@ -110,6 +116,7 @@ const initI18n = async () => {
       hi: { translation: hi },
       ar: { translation: ar },
       'fr-CA': { translation: frCA },
+      pa: { translation: pa },
     },
     lng,
     fallbackLng: 'en',

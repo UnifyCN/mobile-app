@@ -25,7 +25,7 @@ When in doubt, ask: "Is this a sub-task of what the user is currently doing, or 
 
 ## Internationalization
 
-The app supports multiple languages (currently en, es, hi, vi) and the list keeps expanding. Treat i18n as a hard requirement, not an afterthought.
+The app supports multiple languages (currently en, vi, es, hi, ar, fr-CA, pa) and the list keeps expanding. Treat i18n as a hard requirement, not an afterthought.
 
 When making ANY change that touches user-facing text — UI copy, alerts, button labels, error messages, placeholders, accessibility labels — follow these rules:
 

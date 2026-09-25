@@ -47,7 +47,14 @@ export type Hobby =
  * Values any shared-database client may persist. Kept in lockstep with
  * `SUPPORTED_LANGUAGES` in `i18n/index.ts` and the web app's config.
  */
-export type PreferredLanguage = 'en' | 'vi' | 'es' | 'hi' | 'ar' | 'fr-CA';
+export type PreferredLanguage =
+  | 'en'
+  | 'vi'
+  | 'es'
+  | 'hi'
+  | 'ar'
+  | 'fr-CA'
+  | 'pa';
 
 export interface UserOnboardingProfile {
   id: string; // UUID matching auth.users.id

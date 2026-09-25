@@ -12,7 +12,7 @@ import {
 import { SANITY_LANGUAGES, normalizeSanityLanguage } from '@/services/sanity/i18n';
 
 /** The web app's `SUPPORTED_LANGUAGES` (lib/i18n/config.ts) — keep in sync. */
-const WEB_LANGUAGES = ['en', 'vi', 'es', 'hi', 'ar', 'fr-CA'] as const;
+const WEB_LANGUAGES = ['en', 'vi', 'es', 'hi', 'ar', 'fr-CA', 'pa'] as const;
 
 describe('supported languages', () => {
   it('matches the web app language set exactly', () => {
@@ -31,8 +31,9 @@ describe('supported languages', () => {
   it('isSupportedLanguage ignores prototype keys and unknown codes', () => {
     expect(isSupportedLanguage('fr-CA')).toBe(true);
     expect(isSupportedLanguage('ar')).toBe(true);
+    expect(isSupportedLanguage('pa')).toBe(true);
     expect(isSupportedLanguage('toString')).toBe(false);
-    expect(isSupportedLanguage('pa')).toBe(false);
+    expect(isSupportedLanguage('ur')).toBe(false);
     expect(isSupportedLanguage(undefined)).toBe(false);
   });
 });
@@ -46,10 +47,16 @@ describe('languageFromDeviceLocale', () => {
   it('uses the bare language code for the other locales', () => {
     expect(languageFromDeviceLocale({ languageCode: 'ar', languageTag: 'ar-EG' })).toBe('ar');
     expect(languageFromDeviceLocale({ languageCode: 'es', languageTag: 'es-MX' })).toBe('es');
+    expect(languageFromDeviceLocale({ languageCode: 'pa', languageTag: 'pa-IN' })).toBe('pa');
+    expect(languageFromDeviceLocale({ languageCode: 'pa', languageTag: 'pa-Guru-IN' })).toBe('pa');
+  });
+
+  it('keeps Shahmukhi Punjabi devices on English (Gurmukhi-only catalog)', () => {
+    expect(languageFromDeviceLocale({ languageCode: 'pa', languageTag: 'pa-Arab-PK' })).toBe('en');
   });
 
   it('falls back to English', () => {
-    expect(languageFromDeviceLocale({ languageCode: 'pa', languageTag: 'pa-IN' })).toBe('en');
+    expect(languageFromDeviceLocale({ languageCode: 'ur', languageTag: 'ur-PK' })).toBe('en');
     expect(languageFromDeviceLocale(undefined)).toBe('en');
   });
 });
@@ -64,7 +71,7 @@ describe('layout direction', () => {
   it('only Arabic is right-to-left', () => {
     expect(dirForLanguage('ar')).toBe('rtl');
     expect(isRtlLanguage('ar')).toBe(true);
-    for (const lang of ['en', 'vi', 'es', 'hi', 'fr-CA']) {
+    for (const lang of ['en', 'vi', 'es', 'hi', 'fr-CA', 'pa']) {
       expect(dirForLanguage(lang)).toBe('ltr');
     }
   });
