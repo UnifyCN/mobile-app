@@ -23,6 +23,7 @@ export const NOTIFICATION_LANGUAGES = [
   'hi',
   'ar',
   'fr-CA',
+  'pa',
 ] as const;
 
 export type NotificationLanguage = (typeof NOTIFICATION_LANGUAGES)[number];
@@ -54,6 +55,7 @@ export const FALLBACK_ACTOR_NAME: Record<NotificationLanguage, string> = {
   hi: 'कोई',
   ar: 'شخص ما',
   'fr-CA': 'Quelqu’un',
+  pa: 'ਕੋਈ',
 };
 
 export const NOTIFICATION_TEMPLATES = {
@@ -72,6 +74,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Nouvel abonné',
       body: '{{name}} vous suit maintenant.',
+    },
+    pa: {
+      title: 'ਨਵਾਂ ਫਾਲੋਅਰ',
+      body: '{{name}} ਨੇ ਤੁਹਾਨੂੰ ਫਾਲੋ ਕਰਨਾ ਸ਼ੁਰੂ ਕੀਤਾ।',
     },
   },
   liked: {
@@ -95,6 +101,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Nouvelle mention J’aime sur votre publication',
       body: '{{name}} a aimé votre publication.',
+    },
+    pa: {
+      title: "ਤੁਹਾਡੀ ਪੋਸਟ 'ਤੇ ਨਵਾਂ ਲਾਈਕ",
+      body: '{{name}} ਨੇ ਤੁਹਾਡੀ ਪੋਸਟ ਨੂੰ ਲਾਈਕ ਕੀਤਾ।',
     },
   },
   commented: {
@@ -122,6 +132,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Nouveau commentaire sur votre publication',
       body: '{{name}} a commenté votre publication.',
     },
+    pa: {
+      title: "ਤੁਹਾਡੀ ਪੋਸਟ 'ਤੇ ਨਵੀਂ ਟਿੱਪਣੀ",
+      body: "{{name}} ਨੇ ਤੁਹਾਡੀ ਪੋਸਟ 'ਤੇ ਟਿੱਪਣੀ ਕੀਤੀ।",
+    },
   },
   commentReply: {
     en: {
@@ -145,6 +159,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Réponse à votre commentaire',
       body: '{{name}} a répondu à votre commentaire.',
     },
+    pa: {
+      title: 'ਤੁਹਾਡੀ ਟਿੱਪਣੀ ਦਾ ਜਵਾਬ',
+      body: '{{name}} ਨੇ ਤੁਹਾਡੀ ਟਿੱਪਣੀ ਦਾ ਜਵਾਬ ਦਿੱਤਾ।',
+    },
   },
   commentLiked: {
     en: {
@@ -167,6 +185,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Quelqu’un a aimé votre commentaire',
       body: '{{name}} a aimé votre commentaire.',
+    },
+    pa: {
+      title: 'ਕਿਸੇ ਨੇ ਤੁਹਾਡੀ ਟਿੱਪਣੀ ਨੂੰ ਲਾਈਕ ਕੀਤਾ',
+      body: '{{name}} ਨੇ ਤੁਹਾਡੀ ਟਿੱਪਣੀ ਨੂੰ ਲਾਈਕ ਕੀਤਾ।',
     },
   },
   inviteRedeemed: {
@@ -194,6 +216,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Nouvel ami sur Unify',
       body: '🎉 {{name}} vient de rejoindre Unify grâce à vous.',
     },
+    pa: {
+      title: "Unify 'ਤੇ ਨਵਾਂ ਦੋਸਤ",
+      body: '🎉 ਤੁਹਾਡੇ ਸਦਕਾ {{name}} ਹੁਣੇ Unify ਨਾਲ ਜੁੜੇ ਹਨ।',
+    },
   },
   circleMatched: {
     en: {
@@ -219,6 +245,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Vous avez été jumelé!',
       body: 'Votre cercle Unify est prêt. Touchez pour rencontrer votre groupe.',
+    },
+    pa: {
+      title: 'ਤੁਹਾਡਾ ਮੈਚ ਹੋ ਗਿਆ!',
+      body: 'ਤੁਹਾਡਾ Unify ਸਰਕਲ ਤਿਆਰ ਹੈ। ਆਪਣੇ ਗਰੁੱਪ ਨੂੰ ਮਿਲਣ ਲਈ ਟੈਪ ਕਰੋ।',
     },
   },
   circleMatchedForced: {
@@ -246,6 +276,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Vous avez été jumelé!',
       body: 'Nous vous avons placé dans un cercle pour ne pas vous faire attendre plus longtemps. Touchez pour rencontrer votre groupe.',
     },
+    pa: {
+      title: 'ਤੁਹਾਡਾ ਮੈਚ ਹੋ ਗਿਆ!',
+      body: 'ਅਸੀਂ ਤੁਹਾਨੂੰ ਇੱਕ ਸਰਕਲ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰ ਦਿੱਤਾ ਤਾਂ ਜੋ ਤੁਹਾਨੂੰ ਹੋਰ ਉਡੀਕ ਨਾ ਕਰਨੀ ਪਵੇ। ਆਪਣੇ ਗਰੁੱਪ ਨੂੰ ਮਿਲਣ ਲਈ ਟੈਪ ਕਰੋ।',
+    },
   },
   circleEnded: {
     en: {
@@ -271,6 +305,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Votre cercle est terminé',
       body: 'Dites merci, suivez-vous les uns les autres et continuez à vous entraider.',
+    },
+    pa: {
+      title: 'ਤੁਹਾਡਾ ਸਰਕਲ ਪੂਰਾ ਹੋ ਗਿਆ',
+      body: 'ਧੰਨਵਾਦ ਕਹੋ, ਇੱਕ-ਦੂਜੇ ਨੂੰ ਫਾਲੋ ਕਰੋ, ਅਤੇ ਸਾਥ ਬਣਾਈ ਰੱਖੋ।',
     },
   },
   circleEndingSoon: {
@@ -298,6 +336,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Il reste une journée à votre cercle',
       body: 'Il reste une journée à ce cercle. Partagez un dernier conseil utile, remerciez une personne qui vous a aidé ou échangez vos coordonnées si vous voulez rester en contact.',
     },
+    pa: {
+      title: 'ਤੁਹਾਡੇ ਸਰਕਲ ਵਿੱਚ ਇੱਕ ਦਿਨ ਬਾਕੀ',
+      body: 'ਇਸ ਸਰਕਲ ਵਿੱਚ ਇੱਕ ਦਿਨ ਬਾਕੀ ਹੈ। ਇੱਕ ਆਖਰੀ ਕੰਮ ਦਾ ਸੁਝਾਅ ਸਾਂਝਾ ਕਰੋ, ਜਿਸ ਨੇ ਤੁਹਾਡੀ ਮਦਦ ਕੀਤੀ ਉਸਦਾ ਧੰਨਵਾਦ ਕਰੋ, ਜਾਂ ਜੇ ਤੁਸੀਂ ਸੰਪਰਕ ਵਿੱਚ ਰਹਿਣਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਸੰਪਰਕ ਜਾਣਕਾਰੀ ਸਾਂਝੀ ਕਰੋ।',
+    },
   },
   learnReminderTier1: {
     en: {
@@ -320,6 +362,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Continuez votre leçon',
       body: 'Reprenez où vous étiez rendu — votre progression est enregistrée.',
+    },
+    pa: {
+      title: 'ਆਪਣਾ ਪਾਠ ਜਾਰੀ ਰੱਖੋ',
+      body: 'ਜਿੱਥੇ ਛੱਡਿਆ ਸੀ ਉੱਥੋਂ ਸ਼ੁਰੂ ਕਰੋ — ਤੁਹਾਡੀ ਪ੍ਰਗਤੀ ਸੇਵ ਹੈ।',
     },
   },
   learnReminderTier1Named: {
@@ -347,6 +393,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Continuez votre leçon',
       body: '{{name}}, reprenez où vous étiez rendu — votre progression est enregistrée.',
     },
+    pa: {
+      title: 'ਆਪਣਾ ਪਾਠ ਜਾਰੀ ਰੱਖੋ',
+      body: '{{name}}, ਜਿੱਥੇ ਛੱਡਿਆ ਸੀ ਉੱਥੋਂ ਸ਼ੁਰੂ ਕਰੋ — ਤੁਹਾਡੀ ਪ੍ਰਗਤੀ ਸੇਵ ਹੈ।',
+    },
   },
   learnReminderTier2: {
     en: {
@@ -369,6 +419,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Continuez d’apprendre!',
       body: 'Vous progressez — ne vous arrêtez pas maintenant.',
+    },
+    pa: {
+      title: 'ਸਿੱਖਦੇ ਰਹੋ!',
+      body: 'ਤੁਸੀਂ ਅੱਗੇ ਵਧ ਰਹੇ ਹੋ — ਹੁਣ ਨਾ ਰੁਕੋ।',
     },
   },
   learnReminderTier2Named: {
@@ -396,6 +450,10 @@ export const NOTIFICATION_TEMPLATES = {
       title: 'Continuez d’apprendre!',
       body: '{{name}}, vous progressez — ne vous arrêtez pas maintenant.',
     },
+    pa: {
+      title: 'ਸਿੱਖਦੇ ਰਹੋ!',
+      body: '{{name}}, ਤੁਸੀਂ ਅੱਗੇ ਵਧ ਰਹੇ ਹੋ — ਹੁਣ ਨਾ ਰੁਕੋ।',
+    },
   },
   learnReminderTier3: {
     en: {
@@ -418,6 +476,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Vous nous manquez!',
       body: 'Ça fait une semaine — reprenez où vous étiez rendu.',
+    },
+    pa: {
+      title: 'ਅਸੀਂ ਤੁਹਾਨੂੰ ਯਾਦ ਕਰ ਰਹੇ ਹਾਂ!',
+      body: 'ਇੱਕ ਹਫ਼ਤਾ ਹੋ ਗਿਆ — ਜਿੱਥੇ ਛੱਡਿਆ ਸੀ ਉੱਥੋਂ ਸ਼ੁਰੂ ਕਰੋ।',
     },
   },
   learnReminderTier3Named: {
@@ -444,6 +506,10 @@ export const NOTIFICATION_TEMPLATES = {
     'fr-CA': {
       title: 'Vous nous manquez!',
       body: '{{name}}, ça fait une semaine — reprenez où vous étiez rendu.',
+    },
+    pa: {
+      title: 'ਅਸੀਂ ਤੁਹਾਨੂੰ ਯਾਦ ਕਰ ਰਹੇ ਹਾਂ!',
+      body: '{{name}}, ਇੱਕ ਹਫ਼ਤਾ ਹੋ ਗਿਆ — ਜਿੱਥੇ ਛੱਡਿਆ ਸੀ ਉੱਥੋਂ ਸ਼ੁਰੂ ਕਰੋ।',
     },
   },
 } as const satisfies Record<string, LocalizedTemplate>;

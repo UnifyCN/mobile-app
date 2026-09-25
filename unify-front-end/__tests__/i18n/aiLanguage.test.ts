@@ -8,18 +8,20 @@ describe('resolveAiResponseLanguage', () => {
     expect(resolveAiResponseLanguage(undefined)).toBeUndefined();
   });
 
-  it('returns the five supported non-English codes', () => {
+  it('returns the six supported non-English codes', () => {
     expect(resolveAiResponseLanguage('vi')).toBe('vi');
     expect(resolveAiResponseLanguage('es')).toBe('es');
     expect(resolveAiResponseLanguage('hi')).toBe('hi');
     expect(resolveAiResponseLanguage('ar')).toBe('ar');
     expect(resolveAiResponseLanguage('fr-CA')).toBe('fr-CA');
+    expect(resolveAiResponseLanguage('pa')).toBe('pa');
   });
 
   it('folds regional variants onto a supported code', () => {
     expect(resolveAiResponseLanguage('fr')).toBe('fr-CA');
     expect(resolveAiResponseLanguage('es-MX')).toBe('es');
     expect(resolveAiResponseLanguage('ar-EG')).toBe('ar');
+    expect(resolveAiResponseLanguage('pa-IN')).toBe('pa');
   });
 
   it('falls back to English for unsupported locales', () => {

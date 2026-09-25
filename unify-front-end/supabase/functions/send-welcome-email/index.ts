@@ -7,6 +7,7 @@ import { es } from './templates/es.ts';
 import { hi } from './templates/hi.ts';
 import { ar } from './templates/ar.ts';
 import { frCA } from './templates/fr-CA.ts';
+import { pa } from './templates/pa.ts';
 
 const RESEND_USER_EMAILS_API_KEY = Deno.env.get('RESEND_USER_EMAILS_API_KEY');
 const RESEND_WELCOME_FROM = Deno.env.get('RESEND_WELCOME_FROM');
@@ -26,6 +27,7 @@ const templates: Record<string, typeof en> = {
   hi,
   ar,
   'fr-CA': frCA,
+  pa,
 };
 
 Deno.serve(async req => {

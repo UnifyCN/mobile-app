@@ -109,6 +109,8 @@ Deno.test('unknown languages fall back, fr variants collapse to fr-CA', () => {
     DEFAULT_NOTIFICATION_LANGUAGE
   );
   assertEquals(resolveNotificationLanguage('hi'), 'hi');
+  assertEquals(resolveNotificationLanguage('pa'), 'pa');
+  assertEquals(resolveNotificationLanguage('pa-IN'), 'pa');
   assertEquals(
     render('followed', 'pt-BR', { name: 'Ana' })?.title,
     'New follower'

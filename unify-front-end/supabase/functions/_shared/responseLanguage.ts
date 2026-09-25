@@ -14,6 +14,7 @@ export const RESPONSE_LANGUAGE_NAMES: Record<string, string> = {
   hi: 'Hindi',
   ar: 'Arabic',
   'fr-CA': 'Canadian French',
+  pa: 'Punjabi',
 };
 
 /** Resolve regional locales to a whitelisted code, or null for English. */
@@ -30,6 +31,7 @@ export function normalizeResponseLanguage(
   if (normalized === 'es' || normalized.startsWith('es-')) return 'es';
   if (normalized === 'hi' || normalized.startsWith('hi-')) return 'hi';
   if (normalized === 'ar' || normalized.startsWith('ar-')) return 'ar';
+  if (normalized === 'pa' || normalized.startsWith('pa-')) return 'pa';
   return null;
 }
 

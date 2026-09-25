@@ -14,6 +14,7 @@ import es from '@/i18n/locales/es/translation.json';
 import hi from '@/i18n/locales/hi/translation.json';
 import ar from '@/i18n/locales/ar/translation.json';
 import frCA from '@/i18n/locales/fr-CA/translation.json';
+import pa from '@/i18n/locales/pa/translation.json';
 
 const LOCALES: Record<
   string,
@@ -25,6 +26,7 @@ const LOCALES: Record<
   hi,
   ar,
   'fr-CA': frCA,
+  pa,
 };
 
 /**

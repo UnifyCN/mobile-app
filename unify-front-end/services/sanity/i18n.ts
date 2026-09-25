@@ -5,6 +5,7 @@ export const SANITY_LANGUAGES = [
   'hi',
   'ar',
   'fr-CA',
+  'pa',
 ] as const;
 
 export type SanityLanguage = (typeof SANITY_LANGUAGES)[number];
@@ -20,6 +21,7 @@ export function normalizeSanityLanguage(
   if (normalized === 'es' || normalized.startsWith('es-')) return 'es';
   if (normalized === 'hi' || normalized.startsWith('hi-')) return 'hi';
   if (normalized === 'ar' || normalized.startsWith('ar-')) return 'ar';
+  if (normalized === 'pa' || normalized.startsWith('pa-')) return 'pa';
   return 'en';
 }
 

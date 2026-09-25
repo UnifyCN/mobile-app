@@ -20,6 +20,7 @@ import es from '@/i18n/locales/es/translation.json';
 import hi from '@/i18n/locales/hi/translation.json';
 import ar from '@/i18n/locales/ar/translation.json';
 import frCA from '@/i18n/locales/fr-CA/translation.json';
+import pa from '@/i18n/locales/pa/translation.json';
 
 /**
  * `constants/Partners.ts` holds structure and the locale files hold the copy,
@@ -31,7 +32,7 @@ import frCA from '@/i18n/locales/fr-CA/translation.json';
  * locale parity; this suite owns data-to-copy parity.
  */
 
-const LOCALES = { en, vi, es, hi, ar, 'fr-CA': frCA } as const;
+const LOCALES = { en, vi, es, hi, ar, 'fr-CA': frCA, pa } as const;
 
 /** Copy fields a partner block may carry, beyond its nested `programs`. */
 const PARTNER_FIELDS = [

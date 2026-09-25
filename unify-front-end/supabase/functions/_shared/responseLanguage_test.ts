@@ -9,12 +9,13 @@ import {
   responseLanguageDirective,
 } from './responseLanguage.ts';
 
-Deno.test('normalizeResponseLanguage accepts the five non-English codes', () => {
+Deno.test('normalizeResponseLanguage accepts the six non-English codes', () => {
   assertEquals(normalizeResponseLanguage('vi'), 'vi');
   assertEquals(normalizeResponseLanguage('es'), 'es');
   assertEquals(normalizeResponseLanguage('hi'), 'hi');
   assertEquals(normalizeResponseLanguage('ar'), 'ar');
   assertEquals(normalizeResponseLanguage('fr-CA'), 'fr-CA');
+  assertEquals(normalizeResponseLanguage('pa'), 'pa');
 });
 
 Deno.test('normalizeResponseLanguage folds regional variants', () => {
@@ -22,6 +23,7 @@ Deno.test('normalizeResponseLanguage folds regional variants', () => {
   assertEquals(normalizeResponseLanguage('fr-FR'), 'fr-CA');
   assertEquals(normalizeResponseLanguage('es-MX'), 'es');
   assertEquals(normalizeResponseLanguage('ar-EG'), 'ar');
+  assertEquals(normalizeResponseLanguage('pa-IN'), 'pa');
 });
 
 Deno.test('normalizeResponseLanguage returns null for English and junk', () => {
@@ -42,6 +44,7 @@ Deno.test('responseLanguageDirective names the whitelisted language', () => {
   const directive = responseLanguageDirective('vi');
   assertEquals(directive.includes('Respond in Vietnamese only.'), true);
   assertEquals(responseLanguageDirective('fr-CA').includes('Canadian French'), true);
+  assertEquals(responseLanguageDirective('pa').includes('Punjabi'), true);
 });
 
 Deno.test('responseLanguageDirective never echoes caller input', () => {
