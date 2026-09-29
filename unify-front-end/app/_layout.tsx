@@ -28,6 +28,7 @@ import PreLoginOnboarding from '@/components/onboarding/PreLoginOnboarding';
 import { UserProvider, useCurrentUser } from '@/context/UserContext';
 import { useAnalytics } from '@/utils/analytics';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
+import { useOtaUpdates } from '@/hooks/useOtaUpdates';
 import { HapticsProvider } from '@/context/HapticsContext';
 import { ToastProvider } from '@/context/ToastContext';
 import { InviteCodeProvider } from '@/context/InviteCodeContext';
@@ -287,6 +288,8 @@ function AppContent() {
   useAnalyticsIdentitySync();
   // Restore language from Supabase on first authed mount
   useLanguageSyncFromSupabase();
+  // Apply published OTA updates on launch and on every return to foreground
+  useOtaUpdates();
 
   return (
     <Stack>
