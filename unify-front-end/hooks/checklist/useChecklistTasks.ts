@@ -33,7 +33,7 @@ interface UseChecklistTasksParams {
 async function fetchChecklistTasks(
   userId: string,
   currentStage: number,
-  normalizedPersona: string,
+  normalizedPersona: string | null,
   stageChanged: boolean,
   language: SanityLanguage
 ): Promise<UserTaskWithDetails[]> {
@@ -81,18 +81,13 @@ export const useChecklistTasks = ({
   );
 
   const queryKey = useMemo(() => {
-    if (
-      !userId ||
-      currentStage === null ||
-      !normalizedPersona ||
-      normalizedPersona === ''
-    ) {
+    if (!userId || currentStage === null) {
       return null;
     }
     return checklistTasksQueryKey(
       userId,
       currentStage,
-      normalizedPersona,
+      normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
     );
@@ -105,7 +100,7 @@ export const useChecklistTasks = ({
     return buildChecklistCacheStorageKey(
       userId!,
       currentStage!,
-      normalizedPersona!,
+      normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
     );
@@ -158,16 +153,11 @@ export const useChecklistTasks = ({
       fetchChecklistTasks(
         userId!,
         currentStage!,
-        normalizedPersona!,
+        normalizedPersona,
         stageChanged,
         language
       ),
-    enabled:
-      cacheChecked &&
-      !!queryKey &&
-      !!userId &&
-      currentStage !== null &&
-      !!normalizedPersona,
+    enabled: cacheChecked && !!queryKey && !!userId && currentStage !== null,
     // Hydrated cache renders immediately, then revalidates for newly published
     // Sanity translations. Disk/memory entries separately expire after 10 min.
     staleTime: 0,
@@ -226,7 +216,6 @@ export const useChecklistTasks = ({
     waitingForAuth ||
     Boolean(
       queryKey &&
-      normalizedPersona &&
       currentStage !== null &&
       (!cacheChecked || (query.isPending && query.data === undefined))
     );
