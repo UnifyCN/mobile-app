@@ -1,6 +1,6 @@
 ---
 name: app-store-release
-description: Ship a new Unify iOS version to the App Store, or push an Expo OTA update to the live build. Use when the user says "release", "ship an update", "new version", "push to App Store Connect", "submit to Apple", "TestFlight build", "OTA update", "eas update", "cut a release", "bump the version", or asks whether a change can go out over the air. Handles the full path: preflight, OTA-vs-binary audit, version bump, quality gates, EAS build, EAS submit, GitHub release, and App Store Connect follow-through.
+description: Ship a new Unify iOS version to the App Store, or push an Expo OTA update to the live iOS and Android builds. Use when the user says "release", "ship an update", "new version", "push to App Store Connect", "submit to Apple", "TestFlight build", "OTA update", "eas update", "cut a release", "bump the version", or asks whether a change can go out over the air. Handles the full path: preflight, OTA-vs-binary audit, version bump, quality gates, EAS build, EAS submit, GitHub release, and App Store Connect follow-through.
 metadata:
   version: 1.0.0
 ---
@@ -10,6 +10,10 @@ metadata:
 Ship an iOS update. Two paths exist and picking the wrong one either wastes a
 20-minute build or crashes every user on the live binary. Run the audit in
 Step 1 before you touch anything.
+
+An OTA (Step 2A) reaches **both** the iOS and the Android production binaries.
+New Android binaries go through Google Play, which this skill does not cover;
+the binary steps (2B onward) are iOS-only.
 
 **All commands run from `unify-front-end/`.** Nothing in this skill works from
 the repo root.
@@ -55,23 +59,39 @@ If a check fails, fix it and re-run. Do not proceed with a dirty tree.
 
 ## Step 1 — OTA or new binary? (the audit)
 
-Find the last shipped release and diff against it:
+The two live binaries were built from different commits, so audit each one.
+`<base>` is the commit of the live binary:
 
-```bash
-git describe --tags --abbrev=0          # e.g. v1.5.1
-git log --oneline <lastTag>..HEAD
-git diff --name-only <lastTag>..HEAD -- \
-  unify-front-end/app.config.js \
-  unify-front-end/package.json \
-  unify-front-end/ios unify-front-end/android
-git diff <lastTag>..HEAD -- unify-front-end/app.config.js unify-front-end/package.json
-```
-
-Cross-check what is actually live:
+- **iOS:** the last tag, `git describe --tags --abbrev=0` (e.g. `v1.6.0`).
+- **Android:** builds are not tagged. In Play Console, read the versionCode
+  live on the production track. Find the build whose `appBuildVersion` equals
+  it in the output below and take its `gitCommitHash`. If
+  `git cat-file -e <commit>` fails (the build came from a squash-merged branch),
+  use the squash-merge commit on `main` instead (versionCode 12 was built from
+  `e4c4dd54`, merged as `6a32cbdf` in PR #310).
 
 ```bash
 npx eas-cli@latest build:list --platform ios --limit 3 --non-interactive
+npx eas-cli@latest build:list --platform android --limit 3 --non-interactive --json
 ```
+
+Run this block once per platform, with that platform's `<base>`. The paths are
+repo-root paths, so keep `git -C ..`: from `unify-front-end/` without it, the
+pathspecs match nothing and the audit falsely reports no native change.
+
+```bash
+git -C .. log --oneline <base>..HEAD
+git -C .. diff --name-only <base>..HEAD -- \
+  unify-front-end/app.config.js \
+  unify-front-end/package.json \
+  unify-front-end/ios unify-front-end/android
+git -C .. diff <base>..HEAD -- unify-front-end/app.config.js unify-front-end/package.json
+```
+
+A native change for one platform only (the `android` block or `android/`
+files; the `ios` block or `infoPlist`) blocks the OTA for that platform only.
+Run Step 2A with `--platform ios` or `--platform android` for the unblocked
+platform, and ship the blocked one a new binary.
 
 **Any one of these forces a new binary. OTA cannot deliver them:**
 
@@ -97,12 +117,26 @@ anything.** Both paths are outward-facing and neither is reversible.
 Only after Step 1 says OTA is safe.
 
 ```bash
-npx eas-cli@latest update --branch production --message "<what changed>"
+npx eas-cli@latest update --branch production --platform all \
+  --environment production --non-interactive --message "<what changed>"
 ```
 
+`--environment` is mandatory with `--non-interactive`. Without it the command
+dies before bundling with `The --environment flag must be set`. It selects the
+EAS environment whose `EXPO_PUBLIC_*` variables get inlined into the bundle;
+`production` is the one the live binary was built with. The untracked files in
+the tree make EAS print the commit with a `*` suffix; that is cosmetic, the
+bundle only contains what Metro imports.
+
+`--platform all` because the iOS and Android production binaries both run
+runtime `exposdk:55.0.0` on channel `production`. Use `--platform ios` or
+`--platform android` only when Step 1 blocked the other platform. Until
+2026-10-09 this step said `--platform ios`: Android users stayed on 2026-09-15
+code through 12 merged PRs while iOS got every OTA.
+
 The store version does not change. No build number, no review. Confirm the
-update lists `Runtime version: exposdk:55.0.0` — if it does not, it will not
-reach the live build.
+update lists `Runtime version: exposdk:55.0.0` and both platforms. If the
+runtime differs, it will not reach the live build.
 
 Skip to Step 5 (no GitHub release for an OTA unless the user asks).
 
@@ -408,7 +442,8 @@ linkage for every pod in the app.
 | App builds but cannot reach Supabase / Sanity | New `EXPO_PUBLIC_*` var only in local `.env` | Add it to the EAS `production` environment |
 | Store version looks wrong | Read `package.json` instead of `app.config.js` | `app.config.js` is canonical |
 | Build number conflict | Someone hand-edited `buildNumber` | Leave it to EAS; `appVersionSource` is `remote` |
-| OTA crashes the live app | JS calls a native module the shipped binary lacks | This is Step 1's job — never skip the audit |
+| OTA crashes the live app | JS calls a native module the shipped binary lacks | This is Step 1's job. Never skip the audit, for either binary |
+| Android users stay on old code while iOS gets every update | OTA published with `--platform ios` | `--platform all`, unless Step 1 blocks one platform |
 | `Install pods` fails: "Swift pods cannot yet be integrated as static libraries" | A transitive pod re-resolved to a version pulling a Swift pod with non-modular ObjC dependencies. No committed `Podfile.lock`, so this needs no change from us | Name the pods the error lists in `expo-build-properties` → `ios.extraPods` with `modular_headers: true` |
 | Build failed and the diff looks innocent | Pods re-resolve on every build | Check pod versions in the log before blaming your commits |
 
