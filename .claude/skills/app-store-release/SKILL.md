@@ -59,37 +59,39 @@ If a check fails, fix it and re-run. Do not proceed with a dirty tree.
 
 ## Step 1 — OTA or new binary? (the audit)
 
-Find the last shipped release and diff against it:
+The two live binaries were built from different commits, so audit each one.
+`<base>` is the commit of the live binary:
 
-```bash
-git describe --tags --abbrev=0          # e.g. v1.5.1
-git log --oneline <lastTag>..HEAD
-git diff --name-only <lastTag>..HEAD -- \
-  unify-front-end/app.config.js \
-  unify-front-end/package.json \
-  unify-front-end/ios unify-front-end/android
-git diff <lastTag>..HEAD -- unify-front-end/app.config.js unify-front-end/package.json
-```
-
-Cross-check what is actually live:
+- **iOS:** the last tag, `git describe --tags --abbrev=0` (e.g. `v1.6.0`).
+- **Android:** builds are not tagged. In Play Console, read the versionCode
+  live on the production track. Find the build whose `appBuildVersion` equals
+  it in the output below and take its `gitCommitHash`. If
+  `git cat-file -e <commit>` fails (the build came from a squash-merged branch),
+  use the squash-merge commit on `main` instead (versionCode 12 was built from
+  `e4c4dd54`, merged as `6a32cbdf` in PR #310).
 
 ```bash
 npx eas-cli@latest build:list --platform ios --limit 3 --non-interactive
 npx eas-cli@latest build:list --platform android --limit 3 --non-interactive --json
 ```
 
-The two binaries were built from different commits, so audit each one. iOS
-binaries are tagged, so `<lastTag>` above covers iOS. Android binaries are not
-tagged: take the `gitCommitHash` of the build that is live on the Play
-production track (Play Console shows its versionCode), then repeat the
-`git diff --name-only <commit>..HEAD -- ...` command with that commit. If the
-build came from a squash-merged branch and `git cat-file -e <commit>` fails,
-use the squash-merge commit on `main` instead (versionCode 12 was built from
-`e4c4dd54`, merged as `6a32cbdf` in PR #310).
+Run this block once per platform, with that platform's `<base>`. The paths are
+repo-root paths, so keep `git -C ..`: from `unify-front-end/` without it, the
+pathspecs match nothing and the audit falsely reports no native change.
+
+```bash
+git -C .. log --oneline <base>..HEAD
+git -C .. diff --name-only <base>..HEAD -- \
+  unify-front-end/app.config.js \
+  unify-front-end/package.json \
+  unify-front-end/ios unify-front-end/android
+git -C .. diff <base>..HEAD -- unify-front-end/app.config.js unify-front-end/package.json
+```
 
 A native change for one platform only (the `android` block or `android/`
 files; the `ios` block or `infoPlist`) blocks the OTA for that platform only.
-Publish the OTA to the other platform, and ship the blocked one a new binary.
+Run Step 2A with `--platform ios` or `--platform android` for the unblocked
+platform, and ship the blocked one a new binary.
 
 **Any one of these forces a new binary. OTA cannot deliver them:**
 
