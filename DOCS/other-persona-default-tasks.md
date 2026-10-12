@@ -1,6 +1,6 @@
 # Default checklist tasks for the Other persona
 
-This list is the approved baseline for users who select **Other** as their persona. Each task is useful without assuming a specific immigration pathway, school enrolment, profession, employment status, or family situation. The app lets users remove any suggested task that does not apply to them.
+This list is the baseline for users who select **Other** as their persona. Five tasks per stage keep the checklist manageable, and the selections have broad value across newcomer pathways. Where a task depends on a personal goal or circumstance, its wording says so, and users can remove any suggestion that does not apply to them.
 
 ## Before arrival
 
