@@ -1406,6 +1406,12 @@
     "undoCompletion": "Hoàn tác",
     "learnHow": "Tìm hiểu cách làm",
     "deleteTask": "Xóa nhiệm vụ",
+    "removeSuggestedTask": "Gỡ khỏi danh sách của tôi",
+    "removeSuggestedTaskTitle": "Gỡ đề xuất này?",
+    "removeSuggestedTaskMessage": "Bạn có thể khôi phục sau trong mục Nhiệm vụ đã gỡ.",
+    "removedTasks": "Nhiệm vụ đã gỡ",
+    "restore": "Khôi phục",
+    "restoreTaskA11y": "Khôi phục {{name}} vào danh sách của tôi",
     "stage": {
       "0": "Chưa đến",
       "1": "0–3 tháng",
@@ -1419,7 +1425,8 @@
       "protected_person": "Người được bảo vệ",
       "skilled_worker": "Lao động tay nghề",
       "immigrant": "Người nhập cư",
-      "pr": "PR"
+      "pr": "PR",
+      "other": "Người mới đến"
     },
     "createItem": {
       "headerTitle": "Mục danh sách mới",

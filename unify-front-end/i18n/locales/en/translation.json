@@ -1406,6 +1406,12 @@
     "undoCompletion": "Undo completion",
     "learnHow": "Learn how",
     "deleteTask": "Delete task",
+    "removeSuggestedTask": "Remove from my checklist",
+    "removeSuggestedTaskTitle": "Remove this suggestion?",
+    "removeSuggestedTaskMessage": "You can restore it later from Removed tasks.",
+    "removedTasks": "Removed tasks",
+    "restore": "Restore",
+    "restoreTaskA11y": "Restore {{name}} to my checklist",
     "stage": {
       "0": "Not arrived yet",
       "1": "0–3 months",
@@ -1419,7 +1425,8 @@
       "protected_person": "Protected Person",
       "skilled_worker": "Skilled Worker",
       "immigrant": "Immigrant",
-      "pr": "PR"
+      "pr": "PR",
+      "other": "Newcomer"
     },
     "createItem": {
       "headerTitle": "New Checklist Item",

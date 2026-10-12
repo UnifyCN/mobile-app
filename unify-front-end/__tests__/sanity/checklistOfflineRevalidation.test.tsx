@@ -55,6 +55,34 @@ const cachedTasks = [
 describe('checklist offline revalidation', () => {
   beforeEach(() => mockFetch.mockReset());
 
+  it('loads the checklist for the Other/Newcomer persona', async () => {
+    mockFetch.mockResolvedValue([]);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    );
+    const { result, unmount } = renderHook(
+      () =>
+        useChecklistTasks({
+          currentStage: 4,
+          stageChanged: false,
+          persona: 'other',
+        }),
+      { wrapper }
+    );
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ persona: 'other', stage: 'years_3_plus' })
+    );
+
+    unmount();
+    client.clear();
+  });
+
   it('keeps same-language hydrated tasks when Sanity revalidation fails', async () => {
     const key = buildChecklistCacheStorageKey(
       'user-1',

@@ -112,6 +112,7 @@ export interface UserTask {
   sanity_checklist_id: string | null;
   completed: boolean;
   completed_at: string | null;
+  dismissed_at: string | null;
   source?: TaskSource;
   task?: ChecklistTaskDetails;
 }

@@ -48,6 +48,7 @@ interface TaskDetailModalProps {
   onMarkComplete: () => void;
   isCustomTask?: boolean;
   onDeleteCustomTask?: () => void;
+  onRemoveSuggestedTask?: () => void;
 }
 
 export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
@@ -58,6 +59,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   onMarkComplete,
   isCustomTask = false,
   onDeleteCustomTask,
+  onRemoveSuggestedTask,
 }) => {
   const [rendered, setRendered] = useState(visible);
   const translateY = useSharedValue(SCREEN_HEIGHT);
@@ -183,21 +185,30 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                     size={16}
                     color={priority.color}
                   />
-                  <Text style={[styles.priorityLabel, { color: priority.color }]}>
+                  <Text
+                    style={[styles.priorityLabel, { color: priority.color }]}
+                  >
                     {t(priority.labelKey)}
                   </Text>
                 </View>
 
-                {isCustomTask && onDeleteCustomTask && (
+                {((isCustomTask && onDeleteCustomTask) ||
+                  (!isCustomTask && onRemoveSuggestedTask)) && (
                   <TouchableOpacity
-                    onPress={onDeleteCustomTask}
+                    onPress={
+                      isCustomTask ? onDeleteCustomTask : onRemoveSuggestedTask
+                    }
                     style={styles.trashButton}
                     accessibilityRole='button'
-                    accessibilityLabel={t('checklist.deleteTask')}
+                    accessibilityLabel={t(
+                      isCustomTask
+                        ? 'checklist.deleteTask'
+                        : 'checklist.removeSuggestedTask'
+                    )}
                     hitSlop={10}
                   >
                     <MaterialIcons
-                      name='delete-outline'
+                      name={isCustomTask ? 'delete-outline' : 'visibility-off'}
                       size={22}
                       color='#64748B'
                     />
@@ -243,13 +254,15 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   size={20}
                   color={isCompleted ? '#059669' : '#fff'}
                 />
-                  <Text
+                <Text
                   style={[
                     styles.primaryButtonText,
                     isCompleted && styles.primaryButtonTextCompleted,
                   ]}
                 >
-                  {isCompleted ? t('checklist.undoCompletion') : t('checklist.markAsComplete')}
+                  {isCompleted
+                    ? t('checklist.undoCompletion')
+                    : t('checklist.markAsComplete')}
                 </Text>
               </TouchableOpacity>
 
@@ -261,7 +274,9 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   activeOpacity={0.8}
                   accessibilityRole='button'
                 >
-                  <Text style={styles.secondaryButtonText}>{t('checklist.learnHow')}</Text>
+                  <Text style={styles.secondaryButtonText}>
+                    {t('checklist.learnHow')}
+                  </Text>
                   <MaterialIcons
                     name='arrow-forward'
                     size={18}
