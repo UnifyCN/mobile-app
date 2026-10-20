@@ -29,3 +29,22 @@ describe('getLesson', () => {
     expect(params).toEqual({ lessonId: untrustedId, lang: 'es' });
   });
 });
+
+it('overlays translated blocks before adapting them and preserves base block order', async () => {
+  mockFetchSanity.mockResolvedValue({
+    _id: 'lesson', _type: 'lesson', title: 'Base',
+    content_blocks: [
+      { _type: 'lesson_activity', _key: 'q', title: 'Question', instructions: [] },
+      { _type: 'lesson_content', _key: 'summary', title: 'Summary', content: [] },
+    ],
+    i18n: { content_blocks: [
+      { _type: 'lesson_content', _key: 'summary', title: 'Resumen', content: [] },
+      { _type: 'lesson_activity', _key: 'q', title: 'Pregunta', instructions: [] },
+    ] },
+  });
+  const lesson = await getLesson('lesson', 'es');
+  expect(lesson?.pages?.map(page => page.title)).toEqual(['Pregunta', 'Resumen']);
+  expect(lesson?.pages?.map(page => page._key)).toEqual(['q', 'summary']);
+  expect(lesson?.pages?.[0].activity?._key).toBe('q');
+  expect(mockFetchSanity.mock.calls.at(-1)[0]).toContain('content_blocks');
+});

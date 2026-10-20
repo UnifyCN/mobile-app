@@ -81,6 +81,7 @@ export interface SanityLesson extends SanityDocument {
     _ref: string;
     _type: 'reference';
   };
+  content_blocks?: SanityLessonContentBlock[];
   pages?: SanityLessonPage[];
   activity_pages?: SanityActivityPage[];
   ending_pages?: SanityEndingPage[];
@@ -91,7 +92,13 @@ export interface SanityLesson extends SanityDocument {
   order: number;
 }
 
+export type SanityLessonContentBlock =
+  | (Omit<SanityLessonPage, 'order' | 'activity'> & { _type: 'lesson_content' })
+  | (Omit<SanityActivityPage, 'order'> & { _type: 'lesson_activity' });
+
 export interface SanityLessonPage {
+  /** Present only for activity steps in the ordered content-block flow. */
+  activity?: Omit<SanityActivityPage, 'order'>;
   _key: string;
   title: string;
   order: number;

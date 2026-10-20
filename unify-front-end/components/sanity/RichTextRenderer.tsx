@@ -1190,13 +1190,25 @@ export default function RichTextRenderer({
     if (block._type === 'matching_question') {
       const questionKey = block._key || `matching-${index}`;
 
+      // Restore matching progress by stable pair key, even if options reshuffle.
+      const savedAnswer = questionAnswers[questionKey];
+      const restoredPairs = Array.isArray(savedAnswer)
+        ? (block.matching_pairs || []).filter((pair: { _key: string }) => savedAnswer.includes(pair._key))
+        : [];
+      const rightItems: string[] = scrambledRightItemsMap[questionKey] || [];
+      const restoredRightIndices: number[] = [];
+      for (const pair of restoredPairs) {
+        const index = rightItems.findIndex((item, index) =>
+          item === pair.right_item && !restoredRightIndices.includes(index));
+        if (index >= 0) restoredRightIndices.push(index);
+      }
       // Get state for this question, initialize if needed
       const questionState = matchingQuestionState[questionKey] || {
         selectedLeftItem: null,
         selectedRightIndex: null,
         matchedPairs: {},
-        completedLeftItems: [],
-        completedRightIndices: [],
+        completedLeftItems: restoredPairs.map((pair: { left_item: string }) => pair.left_item),
+        completedRightIndices: restoredRightIndices,
         incorrectLeftItems: [],
         incorrectRightIndices: [],
       };
@@ -1220,15 +1232,7 @@ export default function RichTextRenderer({
         side: 'left' | 'right'
       ) => {
         setMatchingQuestionState(prev => {
-          const current = prev[questionKey] || {
-            selectedLeftItem: null,
-            selectedRightIndex: null,
-            matchedPairs: {},
-            completedLeftItems: [],
-            completedRightIndices: [],
-            incorrectLeftItems: [],
-            incorrectRightIndices: [],
-          };
+          const current = prev[questionKey] || questionState;
 
           if (side === 'left') {
             const item = itemOrIndex as string;
@@ -1270,16 +1274,14 @@ export default function RichTextRenderer({
             pair.right_item === selectedRightItem
         );
 
+        if (correctMatch && onQuestionAnswer) {
+          const saved = questionAnswers[questionKey];
+          const completedKeys = Array.isArray(saved) ? saved : [];
+          onQuestionAnswer(questionKey, [...new Set([...completedKeys, correctMatch._key])]);
+        }
+
         setMatchingQuestionState(prev => {
-          const current = prev[questionKey] || {
-            selectedLeftItem: null,
-            selectedRightIndex: null,
-            matchedPairs: {},
-            completedLeftItems: [],
-            completedRightIndices: [],
-            incorrectLeftItems: [],
-            incorrectRightIndices: [],
-          };
+          const current = prev[questionKey] || questionState;
 
           if (correctMatch) {
             return {
