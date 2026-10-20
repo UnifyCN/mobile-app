@@ -84,3 +84,62 @@ describe('getLesson', () => {
     expect(params).toEqual({ lessonId: untrustedId, lang: 'es' });
   });
 });
+
+it('overlays translated blocks before adapting them and preserves base block order', async () => {
+  mockFetchSanity.mockResolvedValue({
+    _id: 'lesson', _type: 'lesson', title: 'Base',
+    content_blocks: [
+      { _type: 'lesson_activity', _key: 'q', title: 'Question', instructions: [] },
+      { _type: 'lesson_content', _key: 'summary', title: 'Summary', content: [] },
+    ],
+    i18n: { content_blocks: [
+      { _type: 'lesson_content', _key: 'summary', title: 'Resumen', content: [] },
+      { _type: 'lesson_activity', _key: 'q', title: 'Pregunta', instructions: [] },
+    ] },
+  });
+  const lesson = await getLesson('lesson', 'es');
+  expect(lesson?.pages?.map(page => page.title)).toEqual(['Pregunta', 'Resumen']);
+  expect(lesson?.pages?.map(page => page._key)).toEqual(['q', 'summary']);
+  expect(lesson?.pages?.[0].activity?._key).toBe('q');
+  expect(mockFetchSanity.mock.calls.at(-1)[0]).toContain('content_blocks');
+});
+
+it.each([true, false])(
+  'applies the translated-sections guard to content blocks (translated sections: %s)',
+  async structured => {
+    const english = [{ _key: 'new-english-section', _type: 'lessonConcept', content: [] }];
+    const spanish = [{ _key: 'page-concept', _type: 'lessonConcept', content: [] }];
+    mockFetchSanity.mockResolvedValue({
+      _id: 'lesson', _type: 'lesson', title: 'Base',
+      content_blocks: [
+        { _type: 'lesson_content', _key: 'intro', title: 'Intro', content: [], contentVersion: 2, sections: english, readingMinutes: 3 },
+      ],
+      i18n: { content_blocks: [
+        { _type: 'lesson_content', _key: 'intro', title: 'Introducción', content: [],
+          ...(structured ? { contentVersion: 2, sections: spanish, readingMinutes: 4 } : {}) },
+      ] },
+    });
+    const page = (await getLesson('lesson', 'es'))!.pages![0];
+    expect(page.title).toBe('Introducción');
+    if (structured) {
+      expect(page.contentVersion).toBe(2);
+      expect(page.sections).toEqual(spanish);
+      expect(page.readingMinutes).toBe(4);
+    } else {
+      expect(page.contentVersion).not.toBe(2);
+      expect(page.sections).toBeUndefined();
+    }
+  }
+);
+
+it('keeps structured sections on English content blocks', async () => {
+  const sections = [{ _key: 'concept', _type: 'lessonConcept', content: [] }];
+  mockFetchSanity.mockResolvedValue({
+    _id: 'lesson', _type: 'lesson', title: 'Base',
+    content_blocks: [
+      { _type: 'lesson_content', _key: 'intro', title: 'Intro', content: [], contentVersion: 2, sections, readingMinutes: 3 },
+    ],
+  });
+  const page = (await getLesson('lesson', 'en'))!.pages![0];
+  expect(page).toMatchObject({ _key: 'intro', contentVersion: 2, sections, readingMinutes: 3 });
+});

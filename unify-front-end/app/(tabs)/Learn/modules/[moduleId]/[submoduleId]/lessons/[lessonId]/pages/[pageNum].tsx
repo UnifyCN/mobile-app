@@ -17,6 +17,7 @@ import { useSanityLesson } from '@/hooks/sanity/useSanityLessons';
 import { useSanityModule } from '@/hooks/sanity/useSanityModules';
 import { useSanityLessonQuizzes } from '@/hooks/sanity/useSanityQuizzes';
 import { useSanitySubmoduleWithLessons } from '@/hooks/sanity/useSanitySubmodules';
+import LessonBlockActivity from '@/components/learn/LessonBlockActivity';
 import SubmoduleProgressBar from '@/components/learn/SubmoduleProgressBar';
 import { useAnalytics } from '@/utils/analytics';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
@@ -37,6 +38,7 @@ import {
 } from '@/utils/submoduleProgress'; // static
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
 import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
+import { saveResumePosition } from '@/services/progress/progressService';
 import { useToast } from '@/context/ToastContext';
 import { useLessonPageSaved } from '@/hooks/learn/useLessonPageSaved';
 import { useMutateSaveLessonPage } from '@/hooks/learn/useMutateSaveLessonPage';
@@ -101,6 +103,12 @@ export default function LessonPageScreen() {
   const { saveLessonCompletion, saveCurrentPage } = useLessonProgress();
 
   const currentPageData = lesson?.pages?.[currentPage - 1];
+  const [submittedActivityKey, setSubmittedActivityKey] = useState<string | null>(null);
+  const activityIdentity = `${lessonId}:${currentPageData?._key}`;
+  const handleActivityReady = useCallback((ready: boolean) => {
+    setSubmittedActivityKey(ready ? activityIdentity : null);
+  }, [activityIdentity]);
+  const activityReady = !currentPageData?.activity || submittedActivityKey === activityIdentity;
   const totalPages = lesson?.pages?.length || 0;
   // Canonical denominator for user_lesson_progress.total_pages — includes
   // activity + quiz + ending pages so progress bars agree across screens.
@@ -120,6 +128,12 @@ export default function LessonPageScreen() {
     lessonId || '',
     currentPageKey
   );
+
+  useFocusEffect(useCallback(() => {
+    if (lesson?.content_blocks?.length && currentPageData?._key) {
+      void saveResumePosition(lessonId, submoduleId, moduleId, 'lesson', currentPage);
+    }
+  }, [lesson?.content_blocks?.length, currentPageData?._key, lessonId, submoduleId, moduleId, currentPage]));
 
   // Calculate progress for the progress bar - keep it static/offline
   const progress = calculateLessonProgress(
@@ -234,6 +248,7 @@ export default function LessonPageScreen() {
   };
 
   const handleNext = async () => {
+    if (!activityReady) return;
     if (currentPage < totalPages) {
       // Persist current position before navigating (fire-and-forget)
       saveCurrentPage(
@@ -499,29 +514,40 @@ export default function LessonPageScreen() {
           colorHex={moduleData?.colorTheme?.hex}
         />
 
-        <LessonPageContent
-          currentPageData={currentPageData}
-          highlights={highlights || []}
-          lessonId={lessonId || ''}
-          lessonTitle={lesson?.title}
-          lessonNumber={
-            submoduleData.lessons.findIndex(item => item._id === lessonId) + 1
-          }
-          saveHighlightMutation={saveHighlightMutation}
-          deleteHighlightMutation={deleteHighlightMutation}
-          trackLessonHighlightCreated={trackLessonHighlightCreated}
-          trackLessonHighlightRemoved={trackLessonHighlightRemoved}
-          askAIVisible={askAIVisible}
-          setAskAIVisible={setAskAIVisible}
-          askAITerm={askAITerm}
-          setAskAITerm={setAskAITerm}
-          navContext={{
-            moduleId: moduleId || '',
-            submoduleId: submoduleId || '',
-            submoduleTitle: submoduleData?.title || '',
-            pageNum: currentPage,
-          }}
-        />
+        {currentPageData.activity ? (
+          <LessonBlockActivity
+            key={activityIdentity}
+            activity={currentPageData.activity}
+            lessonId={lessonId}
+            submoduleId={submoduleId}
+            moduleId={moduleId}
+            onReady={handleActivityReady}
+          />
+        ) : (
+          <LessonPageContent
+            currentPageData={currentPageData}
+            highlights={highlights || []}
+            lessonId={lessonId || ''}
+            lessonTitle={lesson?.title}
+            lessonNumber={
+              submoduleData.lessons.findIndex(item => item._id === lessonId) + 1
+            }
+            saveHighlightMutation={saveHighlightMutation}
+            deleteHighlightMutation={deleteHighlightMutation}
+            trackLessonHighlightCreated={trackLessonHighlightCreated}
+            trackLessonHighlightRemoved={trackLessonHighlightRemoved}
+            askAIVisible={askAIVisible}
+            setAskAIVisible={setAskAIVisible}
+            askAITerm={askAITerm}
+            setAskAITerm={setAskAITerm}
+            navContext={{
+              moduleId: moduleId || '',
+              submoduleId: submoduleId || '',
+              submoduleTitle: submoduleData?.title || '',
+              pageNum: currentPage,
+            }}
+          />
+        )}
 
         {/* Navigation buttons - anchored at bottom */}
         <View style={styles.navigationContainer}>
@@ -533,10 +559,10 @@ export default function LessonPageScreen() {
             style={[
               styles.nextBtn,
               { backgroundColor: '#191919' },
-              isSaving && styles.nextBtnDisabled,
+              (isSaving || !activityReady) && styles.nextBtnDisabled,
             ]}
             onPress={handleNext}
-            disabled={isSaving}
+            disabled={isSaving || !activityReady}
           >
             <Text style={styles.nextBtnText}>
               {t(
