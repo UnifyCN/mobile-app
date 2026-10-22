@@ -12,6 +12,7 @@ import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSanityLessonQuizzes } from '@/hooks/sanity/useSanityQuizzes';
 import { useAnalytics, AnalyticsEvents } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useCallback, useRef } from 'react';
 
 export default function QuizzesPage() {
@@ -23,6 +24,13 @@ export default function QuizzesPage() {
   }>();
 
   const { trackScreen, capture } = useAnalytics();
+  // Joins the lesson visit (see useLearnEvents).
+  const { onLessonScreenFocused } = useLearnEvents();
+  useFocusEffect(
+    useCallback(() => {
+      if (lessonId) onLessonScreenFocused(lessonId);
+    }, [lessonId, onLessonScreenFocused])
+  );
   const { data: quizzes, isLoading, error } = useSanityLessonQuizzes(lessonId);
   const hasTrackedRef = useRef<boolean>(false);
 
