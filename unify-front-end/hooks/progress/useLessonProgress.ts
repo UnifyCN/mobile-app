@@ -4,8 +4,11 @@ import { cachedProgressService } from '@/services/progress/cachedProgressService
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
 import { updateLessonProgress } from '@/services/progress/progressService';
 import { maybeMarkModuleCompleted } from '@/services/learn/moduleProgressService';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 
 export function useLessonProgress() {
+  const { onLessonCompleted } = useLearnEvents();
+
   // Save lesson completion to database
   const saveLessonCompletion = useCallback(
     async (
@@ -64,6 +67,10 @@ export function useLessonProgress() {
         // Emit progress update event to trigger refetch in learn index
         progressEventEmitter.emit();
 
+        // lesson_completed: every end-of-lesson path (last content page,
+        // activity, quiz, or ending page) saves through here.
+        onLessonCompleted(moduleId, submoduleId, lessonId);
+
         // Fire-and-forget: if this was the last lesson in the module, flip
         // `learn_progress.status` to 'completed'. Never block the UI on this.
         maybeMarkModuleCompleted(moduleId)
@@ -78,7 +85,7 @@ export function useLessonProgress() {
         return false;
       }
     },
-    []
+    [onLessonCompleted]
   );
 
   /**

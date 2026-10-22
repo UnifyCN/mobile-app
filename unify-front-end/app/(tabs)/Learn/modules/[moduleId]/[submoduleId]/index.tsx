@@ -26,6 +26,7 @@ import { useTaskProgress } from '@/hooks/progress/useTaskProgress';
 import { useSanityPractices } from '@/hooks/sanity/useSanityPractices';
 import { useSanityTasks } from '@/hooks/sanity/useSanityTasks';
 import { getLearnHref } from '@/utils/learnHref';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import {
   getCompletedSectionId,
   getNextIncompleteSectionId,
@@ -184,6 +185,15 @@ export default function SubmoduleIndex() {
 
   const sectionNumber =
     (moduleData?.submodules?.findIndex(s => s?._id === submoduleId) ?? 0) + 1;
+
+  const { onSubmoduleFocused } = useLearnEvents();
+  const submoduleTitle = submoduleData?.title;
+  useFocusEffect(
+    useCallback(() => {
+      if (!moduleId || !submoduleId || !submoduleTitle) return;
+      onSubmoduleFocused(moduleId, submoduleId, submoduleTitle);
+    }, [moduleId, submoduleId, submoduleTitle, onSubmoduleFocused])
+  );
 
   useFocusEffect(
     useCallback(() => {

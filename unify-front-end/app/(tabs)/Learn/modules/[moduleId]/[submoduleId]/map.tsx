@@ -122,8 +122,9 @@ const getLessonStyles = (
 export default function SubmoduleMap() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { trackScreen, trackSubmoduleViewed, trackLessonStarted } =
-    useAnalytics();
+  // submodule_viewed / lesson_started fire from the submodule index and lesson
+  // pages (useLearnEvents); this screen is no longer linked from the app.
+  const { trackScreen } = useAnalytics();
   const insets = useSafeAreaInsets();
   const { moduleId, submoduleId } = useLocalSearchParams<{
     moduleId: string;
@@ -160,16 +161,9 @@ export default function SubmoduleMap() {
         now - lastTrackedRef.current > 500
       ) {
         trackScreen(`Map: ${submoduleTitle}`);
-        trackSubmoduleViewed(moduleId, submoduleId, submoduleTitle);
         lastTrackedRef.current = now;
       }
-    }, [
-      submoduleTitle,
-      moduleId,
-      submoduleId,
-      trackScreen,
-      trackSubmoduleViewed,
-    ])
+    }, [submoduleTitle, moduleId, submoduleId, trackScreen])
   );
 
   // Fetch lesson progress data
@@ -389,16 +383,8 @@ export default function SubmoduleMap() {
                 },
               });
             } else {
-              // Otherwise, go directly to lesson
-              // Track lesson start event
-              if (moduleId && submoduleId) {
-                trackLessonStarted(
-                  moduleId,
-                  submoduleId,
-                  lesson.id,
-                  lesson.title
-                );
-              }
+              // Otherwise, go directly to lesson. lesson_started fires from
+              // the lesson page itself (useLearnEvents).
               router.push({
                 pathname:
                   '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]' as any,
