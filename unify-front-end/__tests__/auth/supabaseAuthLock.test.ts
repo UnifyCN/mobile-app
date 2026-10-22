@@ -64,24 +64,50 @@ async function queueGetSessionCalls(auth: {
         error?.isAcquireTimeout ? 'timed-out' : 'failed'
     )
   );
-  // Initialization plus every queued storage read.
+  // Every queued storage read, plus initialization on a cold client.
   await jest.advanceTimersByTimeAsync((QUEUED_CALLS + 2) * STORAGE_DELAY_MS);
   return Promise.all(results);
 }
 
+type AppClientModule = typeof import('@/lib/supabase');
+
+// Load a fresh app client (own auth-js module and lock map), then let
+// initialization and its first auto-refresh tick finish so the lock is free.
+async function loadSettledAppClient(): Promise<AppClientModule> {
+  let mod!: AppClientModule;
+  jest.isolateModules(() => {
+    mod = require('@/lib/supabase');
+  });
+  await jest.advanceTimersByTimeAsync(STORAGE_DELAY_MS * 4);
+  await mod.supabase.auth.stopAutoRefresh();
+  await jest.advanceTimersByTimeAsync(STORAGE_DELAY_MS * 4);
+  expect(jest.getTimerCount()).toBe(0);
+  return mod;
+}
+
 describe('Supabase auth lock timeout', () => {
+  let appClient: AppClientModule | null = null;
+
   beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation(() => {});
     jest.spyOn(console, 'log').mockImplementation(() => {});
     jest.useFakeTimers();
+    mockStorageDelayMs = STORAGE_DELAY_MS;
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    if (appClient) {
+      await appClient.supabase.auth.stopAutoRefresh();
+      appClient = null;
+    }
+    // Finish pending reads so nothing leaks into the next test.
+    await jest.advanceTimersByTimeAsync(100_000);
+    expect(jest.getTimerCount()).toBe(0);
     jest.useRealTimers();
     jest.restoreAllMocks();
   });
 
-  it('times out a cold-start queue with plain processLock (reproduces the report)', async () => {
+  it('times out a queue with plain processLock (reproduces the report)', async () => {
     const client = createClient(
       'https://example.supabase.co',
       'test-anon-key',
@@ -106,20 +132,16 @@ describe('Supabase auth lock timeout', () => {
   });
 
   it('lets the same queue finish on the app client', async () => {
-    const { supabase } = require('@/lib/supabase');
+    appClient = await loadSettledAppClient();
 
-    const outcomes = await queueGetSessionCalls(supabase.auth);
+    const outcomes = await queueGetSessionCalls(appClient.supabase.auth);
 
     expect(outcomes).toEqual(Array(QUEUED_CALLS).fill('resolved'));
-    // Initialization has finished, so this stops the ticker it started.
-    await supabase.auth.stopAutoRefresh();
-    expect(jest.getTimerCount()).toBe(0);
   });
 
   it('delivers the onAuthStateChange initial session after a long lock hold', async () => {
-    const { supabase } = require('@/lib/supabase');
-    await jest.advanceTimersByTimeAsync(STORAGE_DELAY_MS * 2);
-    await supabase.auth.stopAutoRefresh();
+    appClient = await loadSettledAppClient();
+    const { supabase } = appClient;
 
     // Hold the lock for 40s (longer than any fixed bound tried so far), then
     // subscribe. auth-js runs the initial emission in a promise nobody
@@ -136,11 +158,11 @@ describe('Supabase auth lock timeout', () => {
     await expect(holder).resolves.toMatchObject({ error: null });
     expect(callback).toHaveBeenCalledWith('INITIAL_SESSION', null);
     subscription.unsubscribe();
-    mockStorageDelayMs = STORAGE_DELAY_MS;
   });
 
   it('keeps a zero timeout as "skip if busy" for the auto-refresh tick', async () => {
-    const { authLock } = require('@/lib/supabase');
+    appClient = await loadSettledAppClient();
+    const { authLock } = appClient;
     const lockName = 'lock:test-zero';
 
     // Hold the lock, then ask with 0 as the auto-refresh tick does. It must
