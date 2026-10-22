@@ -13,3 +13,16 @@ export function getProviderSignUpErrorType(
   if (ignoredCodes.includes(code)) return null;
   return code;
 }
+
+/**
+ * @react-native-google-signin v16 `signIn()` does not throw when the user
+ * dismisses the sheet. It resolves with `{ type: 'cancelled', data: null }`,
+ * so the caller must stop there instead of going on to `getTokens()`.
+ */
+export function isGoogleSignInCancelled(result: unknown): boolean {
+  return (
+    typeof result === 'object' &&
+    result !== null &&
+    (result as { type?: unknown }).type === 'cancelled'
+  );
+}

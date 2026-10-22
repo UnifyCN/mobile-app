@@ -28,7 +28,10 @@ import Google from '../../assets/images/Google.svg';
 import { createUserIfNotExists } from '../../utils/createUserIfNotExists';
 import { SimpleTextField } from './Components';
 import { useAnalytics } from '@/utils/analytics';
-import { getProviderSignUpErrorType } from '@/utils/signUpProviderError';
+import {
+  getProviderSignUpErrorType,
+  isGoogleSignInCancelled,
+} from '@/utils/signUpProviderError';
 import {
   getSignUpValidationReason,
   isValidEmail,
@@ -206,6 +209,12 @@ export function SignUp({
         await GoogleSignin.hasPlayServices();
       }
       const signInResult: any = await GoogleSignin.signIn();
+      if (isGoogleSignInCancelled(signInResult)) {
+        // signIn() resolves (does not throw) when the user dismisses the
+        // sheet. Not a failure: stop before getTokens() rejects.
+        setLoading(false);
+        return;
+      }
       const googleGivenName: string | null =
         signInResult?.data?.user?.givenName ??
         signInResult?.user?.givenName ??

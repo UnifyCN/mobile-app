@@ -1,4 +1,7 @@
-import { getProviderSignUpErrorType } from '@/utils/signUpProviderError';
+import {
+  getProviderSignUpErrorType,
+  isGoogleSignInCancelled,
+} from '@/utils/signUpProviderError';
 
 const GOOGLE_IGNORED = ['SIGN_IN_CANCELLED', 'IN_PROGRESS'];
 const APPLE_IGNORED = ['ERR_REQUEST_CANCELED'];
@@ -44,5 +47,29 @@ describe('getProviderSignUpErrorType', () => {
     expect(getProviderSignUpErrorType({ code: 12 }, APPLE_IGNORED)).toBe(
       'provider_error'
     );
+  });
+});
+
+describe('isGoogleSignInCancelled', () => {
+  it('is true for the non-throwing cancel result of signIn()', () => {
+    expect(isGoogleSignInCancelled({ type: 'cancelled', data: null })).toBe(
+      true
+    );
+  });
+
+  it('is false for a successful result in either SDK shape', () => {
+    expect(
+      isGoogleSignInCancelled({
+        type: 'success',
+        data: { user: { givenName: 'A' } },
+      })
+    ).toBe(false);
+    expect(isGoogleSignInCancelled({ user: { givenName: 'A' } })).toBe(false);
+  });
+
+  it('is false for null, undefined and non-objects', () => {
+    expect(isGoogleSignInCancelled(null)).toBe(false);
+    expect(isGoogleSignInCancelled(undefined)).toBe(false);
+    expect(isGoogleSignInCancelled('cancelled')).toBe(false);
   });
 });
