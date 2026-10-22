@@ -165,3 +165,52 @@ export function buildCompanionStreamResponseProperties(input: {
     responseTimeMs: input.responseTimeMs,
   });
 }
+
+/**
+ * Which starter card the user tapped. Fixed cards carry their code-defined id
+ * (e.g. `fact_check`, `ee_crs`). Personalized chips are built from the user's
+ * profile, so only their slot is recorded, never their id or text.
+ */
+export type CompanionStarterRef =
+  | { kind: 'static'; id: string }
+  | { kind: 'personalized'; position: number };
+
+export type CompanionStarterPromptProperties =
+  | { prompt_id: string; mode?: string; is_personalized: false }
+  | { position: number; is_personalized: true };
+
+/**
+ * Properties for `companion_starter_prompt_used`. Never carries the prompt
+ * text (spec #314): a fixed card sends its id and mode, a personalized chip
+ * sends only its 0-based slot.
+ */
+export function buildCompanionStarterPromptProperties(
+  starter: CompanionStarterRef,
+  mode?: string
+): CompanionStarterPromptProperties {
+  if (starter.kind === 'personalized') {
+    return { position: starter.position, is_personalized: true };
+  }
+  return {
+    prompt_id: starter.id,
+    ...(mode ? { mode } : {}),
+    is_personalized: false,
+  };
+}
+
+export interface CompanionSuggestionClickedProperties {
+  position: number;
+  suggestion_count: number;
+}
+
+/**
+ * Properties for `companion_suggestion_clicked`. Suggestions are written by
+ * the model from the user's conversation, so only the tapped chip's 0-based
+ * position and the number of chips shown are sent, never the text.
+ */
+export function buildCompanionSuggestionClickedProperties(
+  position: number,
+  suggestionCount: number
+): CompanionSuggestionClickedProperties {
+  return { position, suggestion_count: suggestionCount };
+}

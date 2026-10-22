@@ -18,7 +18,12 @@ import MarkdownText, { hexToRgba } from './MarkdownText';
 interface MessageWithSourcesProps {
   item: Message;
   suggestedNextSteps?: string[];
-  onSuggestionPress?: (suggestion: string) => void;
+  /** `position` is the chip's 0-based index among `count` chips shown. */
+  onSuggestionPress?: (
+    suggestion: string,
+    position: number,
+    count: number
+  ) => void;
 }
 
 /**
@@ -237,7 +242,13 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
                   <TouchableOpacity
                     key={index}
                     style={styles.suggestionChip}
-                    onPress={() => onSuggestionPress(suggestion)}
+                    onPress={() =>
+                      onSuggestionPress(
+                        suggestion,
+                        index,
+                        suggestedNextSteps.length
+                      )
+                    }
                     activeOpacity={0.7}
                   >
                     <Text style={styles.suggestionText} numberOfLines={2}>
