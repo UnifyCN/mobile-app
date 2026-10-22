@@ -22,28 +22,53 @@ export type CompanionTopic = (typeof COMPANION_TOPICS)[number];
 export interface CompanionMessageSentProperties {
   message_length: number;
   conversation_id: string;
-  turn_number: number;
+  /** Absent when the turn is not known yet (see the builder). */
+  turn_number?: number;
   input_source: CompanionInputSource;
 }
 
 /**
  * Properties for `companion_message_sent`. `turn_number` is 1 for the first
  * user message in a conversation: earlier user messages + 1. Bot replies and
- * the local greeting bubble do not count. Never carries the message text.
+ * the local greeting bubble do not count. In an existing conversation whose
+ * saved messages have not loaded yet the count is unknown, so `turn_number`
+ * is left out rather than guessed. Never carries the message text.
  */
 export function buildCompanionMessageSentProperties(input: {
   messageLength: number;
   conversationId: string;
+  /** The conversation as shown before this message was sent. */
   priorMessages: readonly { isUser: boolean }[];
+  /** True when the message starts a new conversation. */
+  isNewConversation: boolean;
+  /** True once an existing conversation's saved messages have loaded. */
+  historyLoaded: boolean;
   inputSource: CompanionInputSource;
 }): CompanionMessageSentProperties {
+  const turnKnown = input.isNewConversation || input.historyLoaded;
   const priorUserTurns = input.priorMessages.filter(m => m.isUser).length;
   return {
     message_length: input.messageLength,
     conversation_id: input.conversationId,
-    turn_number: priorUserTurns + 1,
+    ...(turnKnown ? { turn_number: priorUserTurns + 1 } : {}),
     input_source: input.inputSource,
   };
+}
+
+/**
+ * Whether a conversation's saved messages have loaded from the server.
+ *
+ * Neither "the query has data" nor "the query succeeded" is enough:
+ * - useSaveMessage writes optimistic rows (negative ids) into the cache, so a
+ *   message sent before the load leaves a cache holding only that message.
+ * - getConversationMessages returns [] on a failed fetch.
+ * An existing conversation always has saved messages, so it counts as loaded
+ * only once the cache holds at least one row from the server (positive id).
+ */
+export function isConversationHistoryLoaded(
+  rows: readonly { id: number }[] | undefined
+): boolean {
+  return !!rows && rows.some(row => row.id > 0);
 }
 
 /**

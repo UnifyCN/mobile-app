@@ -50,6 +50,7 @@ import { useAnalytics } from '@/utils/analytics';
 import {
   CompanionInputOrigin,
   CompanionInputSource,
+  isConversationHistoryLoaded,
   resolveTypedInputSource,
 } from '@/helpers/companion/companionAnalytics';
 import { usePersonalizedStarters } from '@/hooks/companion/usePersonalizedStarters';
@@ -218,6 +219,7 @@ export default function CompanionScreen() {
   } = useSendMessage({
     messages,
     currentConversationId,
+    isHistoryLoaded: isConversationHistoryLoaded(dbMessages),
     setCurrentConversationId,
     isPremium,
   });

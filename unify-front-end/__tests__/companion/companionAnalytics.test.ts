@@ -1,6 +1,7 @@
 import {
   buildCompanionMessageSentProperties,
   buildCompanionResponseProperties,
+  isConversationHistoryLoaded,
   normalizeCompanionTopic,
   resolveTypedInputSource,
 } from '@/helpers/companion/companionAnalytics';
@@ -9,12 +10,17 @@ const user = { isUser: true };
 const bot = { isUser: false };
 
 describe('buildCompanionMessageSentProperties', () => {
+  // An existing conversation whose saved messages have loaded.
+  const loaded = { isNewConversation: false, historyLoaded: true };
+
   it('first typed message in a new conversation is turn 1', () => {
     expect(
       buildCompanionMessageSentProperties({
         messageLength: 12,
         conversationId: 'conv-a',
         priorMessages: [],
+        isNewConversation: true,
+        historyLoaded: false,
         inputSource: 'typed',
       })
     ).toEqual({
@@ -31,18 +37,21 @@ describe('buildCompanionMessageSentProperties', () => {
         messageLength: 5,
         conversationId: 'conv-a',
         priorMessages: [bot],
+        isNewConversation: true,
+        historyLoaded: false,
         inputSource: 'typed',
       }).turn_number
     ).toBe(1);
   });
 
-  it('counts earlier user messages in the conversation, not bot replies', () => {
+  it('counts earlier user messages once the history has loaded, not bot replies', () => {
     // user, bot, user, bot -> the next user message is the third turn
     expect(
       buildCompanionMessageSentProperties({
         messageLength: 30,
         conversationId: 'conv-b',
         priorMessages: [user, bot, user, bot],
+        ...loaded,
         inputSource: 'suggestion',
       })
     ).toEqual({
@@ -53,12 +62,35 @@ describe('buildCompanionMessageSentProperties', () => {
     });
   });
 
+  it('leaves turn_number out in an existing conversation whose history has not loaded', () => {
+    // The 3rd question sent before the history loads: the screen holds no
+    // earlier messages yet, so counting would wrongly say turn 1.
+    const props = buildCompanionMessageSentProperties({
+      messageLength: 22,
+      conversationId: 'conv-e',
+      priorMessages: [],
+      isNewConversation: false,
+      historyLoaded: false,
+      inputSource: 'typed',
+    });
+    expect(props).toEqual({
+      message_length: 22,
+      conversation_id: 'conv-e',
+      input_source: 'typed',
+    });
+    expect(Object.prototype.hasOwnProperty.call(props, 'turn_number')).toBe(
+      false
+    );
+  });
+
   it('carries starter_prompt as the input source', () => {
     expect(
       buildCompanionMessageSentProperties({
         messageLength: 40,
         conversationId: 'conv-c',
         priorMessages: [],
+        isNewConversation: true,
+        historyLoaded: false,
         inputSource: 'starter_prompt',
       }).input_source
     ).toBe('starter_prompt');
@@ -69,6 +101,7 @@ describe('buildCompanionMessageSentProperties', () => {
       messageLength: 3,
       conversationId: 'conv-d',
       priorMessages: [],
+      ...loaded,
       inputSource: 'typed',
     });
     expect(Object.keys(props).sort()).toEqual([
@@ -77,6 +110,27 @@ describe('buildCompanionMessageSentProperties', () => {
       'message_length',
       'turn_number',
     ]);
+  });
+});
+
+describe('isConversationHistoryLoaded', () => {
+  it('is false before the query has any data', () => {
+    expect(isConversationHistoryLoaded(undefined)).toBe(false);
+  });
+
+  it('is false for an empty result (a failed fetch also returns [])', () => {
+    expect(isConversationHistoryLoaded([])).toBe(false);
+  });
+
+  it('is false when the cache holds only optimistic rows', () => {
+    // A message sent before the load: useSaveMessage puts its optimistic
+    // rows (negative ids) into an otherwise empty cache.
+    expect(isConversationHistoryLoaded([{ id: -1 }, { id: -2 }])).toBe(false);
+  });
+
+  it('is true once the cache holds rows from the server', () => {
+    expect(isConversationHistoryLoaded([{ id: 41 }, { id: 42 }])).toBe(true);
+    expect(isConversationHistoryLoaded([{ id: 41 }, { id: -3 }])).toBe(true);
   });
 });
 
