@@ -40,6 +40,9 @@ export function useLearnEvents(gate: LearnEventGate = learnEventGate) {
           trackLessonStarted(moduleId, submoduleId, lessonId, lessonTitle);
         }
       },
+      /** A quiz or ending screen of the lesson gained focus (joins the visit). */
+      onLessonScreenFocused: (lessonId: string) =>
+        gate.lessonScreenFocused(lessonId),
       onLessonCompleted: (
         moduleId: string,
         submoduleId: string,

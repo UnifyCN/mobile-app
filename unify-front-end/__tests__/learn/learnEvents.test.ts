@@ -146,6 +146,73 @@ describe('lesson_started', () => {
   });
 });
 
+describe('Back navigation across lessons in one visit', () => {
+  it('A -> B -> Back to A -> Next to B fires lesson_started once per lesson', () => {
+    const { events, calls } = setup();
+
+    act(() => {
+      events.current.onSubmoduleFocused('mod-1', 'sub-1', 'S1');
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-a', 1, 'A');
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-b', 1, 'B');
+      // Back from B page 1 pushes A page 1
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-a', 1, 'A');
+      // Next through A to B page 1 again
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-b', 1, 'B');
+    });
+
+    expect(
+      calls(AnalyticsEvents.LESSON_STARTED).map(([, p]) => p.lesson_id)
+    ).toEqual(['les-a', 'les-b']);
+  });
+
+  it('returning to A does not repeat its activity_completed or lesson_completed', () => {
+    const { events, calls } = setup();
+
+    act(() => {
+      events.current.onSubmoduleFocused('mod-1', 'sub-1', 'S1');
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-a', 1, 'A');
+      events.current.onActivitySubmitted('mod-1', 'sub-1', 'les-a', 'act-1');
+      events.current.onLessonCompleted('mod-1', 'sub-1', 'les-a');
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-b', 1, 'B');
+      // Back into A, redo its activity and finish it again
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-a', 1, 'A');
+      events.current.onActivitySubmitted('mod-1', 'sub-1', 'les-a', 'act-1');
+      events.current.onLessonCompleted('mod-1', 'sub-1', 'les-a');
+    });
+
+    expect(calls(AnalyticsEvents.ACTIVITY_COMPLETED)).toHaveLength(1);
+    expect(calls(AnalyticsEvents.LESSON_COMPLETED)).toHaveLength(1);
+  });
+});
+
+describe('resume inside a lesson', () => {
+  it('resume at a quiz, then Back to page 1, does not fire lesson_started', () => {
+    const { events, calls } = setup();
+
+    act(() => {
+      events.current.onSubmoduleFocused('mod-1', 'sub-1', 'S1');
+      // getLearnHref resumes the user on a quiz question
+      events.current.onLessonScreenFocused('les-1');
+      // Back from the quiz sends the user to page 1 of the lesson
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-1', 1, 'L1');
+    });
+
+    expect(calls(AnalyticsEvents.LESSON_STARTED)).toHaveLength(0);
+  });
+
+  it('resume at an ending page, then Back to page 1, does not fire lesson_started', () => {
+    const { events, calls } = setup();
+
+    act(() => {
+      events.current.onLearnHubFocused();
+      events.current.onLessonScreenFocused('les-1');
+      events.current.onLessonPageFocused('mod-1', 'sub-1', 'les-1', 1, 'L1');
+    });
+
+    expect(calls(AnalyticsEvents.LESSON_STARTED)).toHaveLength(0);
+  });
+});
+
 describe('lesson_completed', () => {
   it('fires once when the user reaches the end of a lesson, with ids', () => {
     const { events, calls } = setup();
