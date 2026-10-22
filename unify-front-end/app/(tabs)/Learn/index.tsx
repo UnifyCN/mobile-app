@@ -13,6 +13,7 @@ import { useFocusEffect } from 'expo-router';
 import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import LessonHeroCard from '../../../components/learn/LessonHeroCard';
 import CarouselDots from '../../../components/learn/CarouselDots';
 import SectionHeader from '../../../components/learn/SectionHeader';
@@ -38,6 +39,7 @@ type LearnView = 'articles' | 'resources';
 export default function Learn() {
   useProgressCache();
   const { trackScreen } = useAnalytics();
+  const { onLearnHubFocused } = useLearnEvents();
   const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const bucket = getTimeOfDayGreeting();
@@ -71,6 +73,13 @@ export default function Learn() {
         lastTrackedRef.current = now;
       }
     }, [trackScreen])
+  );
+
+  // The user left any submodule / lesson flow (learn start/complete events).
+  useFocusEffect(
+    React.useCallback(() => {
+      onLearnHubFocused();
+    }, [onLearnHubFocused])
   );
 
   const onMomentumEnd = (e: any) => {

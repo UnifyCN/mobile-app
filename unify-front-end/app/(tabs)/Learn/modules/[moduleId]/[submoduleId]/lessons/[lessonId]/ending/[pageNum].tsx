@@ -46,7 +46,7 @@ export default function EndingPageScreen() {
     lessonId: string;
     pageNum: string;
   }>();
-  const { trackScreen, trackLessonCompleted } = useAnalytics();
+  const { trackScreen } = useAnalytics();
   const [showExitModal, setShowExitModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
