@@ -117,8 +117,10 @@ anything.** Both paths are outward-facing and neither is reversible.
 Only after Step 1 says OTA is safe.
 
 ```bash
-npx eas-cli@latest update --branch production --platform all \
-  --environment production --non-interactive --message "<what changed>"
+for p in ios android; do
+  npx eas-cli@latest update --branch production --platform "$p" \
+    --environment production --non-interactive --message "<what changed>"
+done
 ```
 
 `--environment` is mandatory with `--non-interactive`. Without it the command
@@ -128,14 +130,19 @@ EAS environment whose `EXPO_PUBLIC_*` variables get inlined into the bundle;
 the tree make EAS print the commit with a `*` suffix; that is cosmetic, the
 bundle only contains what Metro imports.
 
-`--platform all` because the iOS and Android production binaries both run
-runtime `exposdk:55.0.0` on channel `production`. Use `--platform ios` or
-`--platform android` only when Step 1 blocked the other platform. Until
-2026-10-09 this step said `--platform ios`: Android users stayed on 2026-09-15
-code through 12 merged PRs while iOS got every OTA.
+Publish to both platforms, because the iOS and Android production binaries
+both run runtime `exposdk:55.0.0` on channel `production`. Drop a platform from
+the loop only when Step 1 blocked it. Until 2026-10-09 this step said
+`--platform ios`: Android users stayed on 2026-09-15 code through 12 merged PRs
+while iOS got every OTA.
 
-The store version does not change. No build number, no review. Confirm the
-update lists `Runtime version: exposdk:55.0.0` and both platforms. If the
+Do not use `--platform all`. It also exports the web platform, whose static
+render fails in Node with `getValueWithKeyAsync is not a function`
+(`expo-secure-store` has no web implementation), so nothing publishes. If a run
+dies with Metro `ENOTEMPTY`, re-run that platform; it is a cache race.
+
+The store version does not change. No build number, no review. Confirm each
+update prints `Runtime version  exposdk:55.0.0` and that both platforms published. If the
 runtime differs, it will not reach the live build.
 
 Skip to Step 5 (no GitHub release for an OTA unless the user asks).
@@ -443,7 +450,8 @@ linkage for every pod in the app.
 | Store version looks wrong | Read `package.json` instead of `app.config.js` | `app.config.js` is canonical |
 | Build number conflict | Someone hand-edited `buildNumber` | Leave it to EAS; `appVersionSource` is `remote` |
 | OTA crashes the live app | JS calls a native module the shipped binary lacks | This is Step 1's job. Never skip the audit, for either binary |
-| Android users stay on old code while iOS gets every update | OTA published with `--platform ios` | `--platform all`, unless Step 1 blocks one platform |
+| Android users stay on old code while iOS gets every update | OTA published with `--platform ios` only | Publish `--platform ios` and `--platform android`, unless Step 1 blocks one |
+| `eas update --platform all` fails with `getValueWithKeyAsync is not a function` | `all` includes web, whose static render calls `expo-secure-store` in Node | Publish `ios` and `android` separately |
 | `Install pods` fails: "Swift pods cannot yet be integrated as static libraries" | A transitive pod re-resolved to a version pulling a Swift pod with non-modular ObjC dependencies. No committed `Podfile.lock`, so this needs no change from us | Name the pods the error lists in `expo-build-properties` → `ios.extraPods` with `modular_headers: true` |
 | Build failed and the diff looks innocent | Pods re-resolve on every build | Check pod versions in the log before blaming your commits |
 
