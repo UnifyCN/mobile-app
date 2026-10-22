@@ -47,16 +47,27 @@ export function buildCompanionMessageSentProperties(input: {
 }
 
 /**
- * Source for a message sent from the input box. A starter prompt can prefill
- * the input (fact check) for the user to complete; when the sent text still
- * starts with that prefill, the starter prompt produced the message.
+ * Text the app (not the user) put in the input box, and the source it came
+ * from: a fact-check starter prefill, or a failed starter / suggestion send
+ * restored for retry.
+ */
+export interface CompanionInputOrigin {
+  text: string;
+  source: CompanionInputSource;
+}
+
+/**
+ * Source for a message sent from the input box. When the sent text still
+ * starts with the text the app put there, that origin produced the message;
+ * otherwise the user typed it.
  */
 export function resolveTypedInputSource(
   text: string,
-  starterPrefill: string | null
+  origin: CompanionInputOrigin | null
 ): CompanionInputSource {
-  return starterPrefill && text.startsWith(starterPrefill.trim())
-    ? 'starter_prompt'
+  const originText = origin?.text.trim();
+  return origin && originText && text.startsWith(originText)
+    ? origin.source
     : 'typed';
 }
 

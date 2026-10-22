@@ -1,5 +1,6 @@
+import { PostHog } from 'posthog-react-native';
 import {
-  resetAnalyticsKeepingPlatform,
+  buildPostHogOptions,
   toAppPlatform,
   withAppPlatform,
 } from '@/utils/appPlatform';
@@ -39,35 +40,59 @@ describe('withAppPlatform', () => {
   });
 });
 
-describe('resetAnalyticsKeepingPlatform', () => {
-  it('registers platform again after reset clears super properties', () => {
-    const calls: string[] = [];
-    const registered: Record<string, unknown>[] = [];
-    const client = {
-      reset: () => {
-        calls.push('reset');
-      },
-      register: (props: Record<string, unknown>) => {
-        calls.push('register');
-        registered.push(props);
-      },
-    };
-
-    resetAnalyticsKeepingPlatform(client, 'android');
-
-    expect(calls).toEqual(['reset', 'register']);
-    expect(registered).toEqual([{ platform: 'android' }]);
+describe('buildPostHogOptions', () => {
+  it('adds platform to the SDK app properties and keeps the defaults', () => {
+    const options = buildPostHogOptions('https://example.test', 'android');
+    expect(options.host).toBe('https://example.test');
+    const appProps = (
+      options.customAppProperties as (p: object) => Record<string, unknown>
+    )({ $app_build: '42', $app_version: '1.4.0', $os_name: 'Android' });
+    expect(appProps).toEqual({
+      $app_build: '42',
+      $app_version: '1.4.0',
+      $os_name: 'Android',
+      platform: 'android',
+    });
   });
 
-  it('does not register anything when the platform is unknown', () => {
-    const register = jest.fn();
-    const reset = jest.fn();
-    resetAnalyticsKeepingPlatform({ reset, register }, null);
-    expect(reset).toHaveBeenCalledTimes(1);
-    expect(register).not.toHaveBeenCalled();
+  it('keeps the SDK app properties unchanged when the platform is unknown', () => {
+    const options = buildPostHogOptions('https://example.test', null);
+    const appProps = (
+      options.customAppProperties as (p: object) => Record<string, unknown>
+    )({ $app_build: '42' });
+    expect(appProps).toEqual({ $app_build: '42' });
   });
+});
 
-  it('tolerates a missing client', () => {
-    expect(() => resetAnalyticsKeepingPlatform(undefined, 'ios')).not.toThrow();
+describe('PostHog client built with buildPostHogOptions', () => {
+  it('puts platform on the first event, and on events after reset()', async () => {
+    const client = new PostHog('phc_test', {
+      ...buildPostHogOptions('https://example.test', 'android'),
+      persistence: 'memory',
+      // Nothing leaves the test: no flush by count or by timer.
+      flushAt: 1000,
+      flushInterval: 600_000,
+      captureAppLifecycleEvents: false,
+      preloadFeatureFlags: false,
+    });
+    const captured: { event: string; properties: Record<string, unknown> }[] =
+      [];
+    client.on('capture', (message: (typeof captured)[number]) => {
+      captured.push(message);
+    });
+
+    // Sent before init completes: the very first event on a fresh install.
+    client.capture('first_event');
+    await client.ready();
+    client.reset();
+    client.capture('after_sign_out');
+
+    expect(captured.map(m => m.event)).toEqual([
+      'first_event',
+      'after_sign_out',
+    ]);
+    for (const message of captured) {
+      expect(message.properties.platform).toBe('android');
+    }
   });
 });

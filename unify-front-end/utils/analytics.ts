@@ -6,7 +6,6 @@ import type {
   ResourceLinkTarget,
 } from '@/types/partner';
 import type { PartnerCtaSource } from '@/utils/partners';
-import { resetAnalyticsKeepingPlatform } from '@/utils/appPlatform';
 import type {
   CompanionMessageSentProperties,
   CompanionResponseProperties,
@@ -336,9 +335,10 @@ export function useAnalytics() {
       identify: (userId: string, properties: IdentifyUserProperties) => {
         posthog?.identify(userId, { ...properties });
       },
-      // reset() clears super properties; platform is registered again.
+      // `platform` survives reset(): it is an app property (see
+      // buildPostHogOptions), not a registered super property.
       reset: () => {
-        resetAnalyticsKeepingPlatform(posthog);
+        posthog?.reset();
       },
 
       // Screen tracking

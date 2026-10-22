@@ -22,8 +22,8 @@ import { supabase } from '@/lib/supabase';
 import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
 import AuthWrapper from '@/components/AuthComponents/AuthWrapper';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { PostHogProvider, usePostHog } from 'posthog-react-native';
-import { registerAppPlatform } from '@/utils/appPlatform';
+import { PostHogProvider } from 'posthog-react-native';
+import { buildPostHogOptions } from '@/utils/appPlatform';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreLoginOnboarding from '@/components/onboarding/PreLoginOnboarding';
 import { UserProvider, useCurrentUser } from '@/context/UserContext';
@@ -44,6 +44,12 @@ import {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+// Built once: carries the `platform` app property onto every PostHog event,
+// from the first one and after reset().
+const POSTHOG_OPTIONS = buildPostHogOptions(
+  process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+);
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -113,13 +119,9 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <PostHogProvider
         apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY || ''}
-        options={{
-          host:
-            process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-        }}
+        options={POSTHOG_OPTIONS}
         autocapture={{ captureScreens: false }}
       >
-        <PlatformSuperProperty />
         <GestureHandlerRootView>
           <KeyboardProvider>
             <SafeAreaProvider>
@@ -162,20 +164,6 @@ export default function RootLayout() {
       )}
     </QueryClientProvider>
   );
-}
-
-/**
- * Registers the `platform` super property (`ios` | `android`) so every client
- * event carries it. Rendered as the provider's first child so the effect runs
- * before the effects of the screens below it. `reset()` clears super
- * properties; the analytics `reset` wrapper registers platform again.
- */
-function PlatformSuperProperty() {
-  const posthog = usePostHog();
-  useEffect(() => {
-    registerAppPlatform(posthog);
-  }, [posthog]);
-  return null;
 }
 
 /**

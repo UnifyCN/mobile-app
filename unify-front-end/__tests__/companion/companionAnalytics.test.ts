@@ -81,7 +81,12 @@ describe('buildCompanionMessageSentProperties', () => {
 });
 
 describe('resolveTypedInputSource', () => {
-  it('is typed when no starter prefilled the input', () => {
+  const factCheckPrefill = {
+    text: 'Is it true that',
+    source: 'starter_prompt' as const,
+  };
+
+  it('is typed when nothing put text in the input', () => {
     expect(resolveTypedInputSource('Is it true that', null)).toBe('typed');
   });
 
@@ -89,14 +94,43 @@ describe('resolveTypedInputSource', () => {
     expect(
       resolveTypedInputSource(
         'Is it true that I need a SIN to work?',
-        'Is it true that'
+        factCheckPrefill
       )
     ).toBe('starter_prompt');
   });
 
   it('is typed when the user replaced the prefilled text', () => {
     expect(
-      resolveTypedInputSource('How do I get a SIN?', 'Is it true that')
+      resolveTypedInputSource('How do I get a SIN?', factCheckPrefill)
+    ).toBe('typed');
+  });
+
+  it('keeps suggestion when a failed suggestion is re-sent unchanged', () => {
+    // After a failed send the screen puts the text back in the input; the
+    // re-send keeps the source of the original message.
+    expect(
+      resolveTypedInputSource('How do I open a bank account?', {
+        text: 'How do I open a bank account?',
+        source: 'suggestion',
+      })
+    ).toBe('suggestion');
+  });
+
+  it('keeps starter_prompt when a failed starter is re-sent unchanged', () => {
+    expect(
+      resolveTypedInputSource('What documents do I need for a SIN?', {
+        text: 'What documents do I need for a SIN?',
+        source: 'starter_prompt',
+      })
+    ).toBe('starter_prompt');
+  });
+
+  it('is typed when the restored text was replaced', () => {
+    expect(
+      resolveTypedInputSource('Where is the nearest library?', {
+        text: 'How do I open a bank account?',
+        source: 'suggestion',
+      })
     ).toBe('typed');
   });
 });
@@ -132,27 +166,35 @@ describe('buildCompanionResponseProperties', () => {
   const base = {
     queryType: 'immigration' as const,
     hasSources: true,
-    tokenUsage: { prompt_tokens: 100, completion_tokens: 50, total_tokens: 150 },
+    tokenUsage: {
+      prompt_tokens: 100,
+      completion_tokens: 50,
+      total_tokens: 150,
+    },
     estimatedCostUsd: 0.0002,
     responseTimeMs: 1800,
   };
 
   it('adds topic when the response carries it', () => {
-    expect(buildCompanionResponseProperties({ ...base, topic: 'housing' }))
-      .toEqual({
-        query_type: 'immigration',
-        topic: 'housing',
-        has_sources: true,
-        prompt_tokens: 100,
-        completion_tokens: 50,
-        total_tokens: 150,
-        estimated_cost_usd: 0.0002,
-        response_time_ms: 1800,
-      });
+    expect(
+      buildCompanionResponseProperties({ ...base, topic: 'housing' })
+    ).toEqual({
+      query_type: 'immigration',
+      topic: 'housing',
+      has_sources: true,
+      prompt_tokens: 100,
+      completion_tokens: 50,
+      total_tokens: 150,
+      estimated_cost_usd: 0.0002,
+      response_time_ms: 1800,
+    });
   });
 
   it('omits topic when the response has none (old rag-query)', () => {
-    const props = buildCompanionResponseProperties({ ...base, topic: undefined });
+    const props = buildCompanionResponseProperties({
+      ...base,
+      topic: undefined,
+    });
     expect(Object.prototype.hasOwnProperty.call(props, 'topic')).toBe(false);
     expect(props.query_type).toBe('immigration');
   });

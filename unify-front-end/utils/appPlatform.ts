@@ -1,8 +1,12 @@
 import { Platform } from 'react-native';
+import type {
+  PostHogCustomAppProperties,
+  PostHogOptions,
+} from 'posthog-react-native';
 
 /**
  * The mobile platform tag used across analytics:
- * - PostHog super property `platform` on every client event
+ * - PostHog property `platform` on every client event
  * - request body field `platform` on every AI edge-function call, which the
  *   functions copy onto their `$ai_generation` event
  *
@@ -25,29 +29,26 @@ export function withAppPlatform<T extends object>(
   return platform ? { ...body, platform } : body;
 }
 
-interface SuperPropertyClient {
-  reset: () => void;
-  register: (properties: Record<string, string>) => unknown;
-}
-
-/** Registers the `platform` super property on the PostHog client. */
-export function registerAppPlatform(
-  client: SuperPropertyClient | undefined | null,
-  platform: AppPlatform | null = APP_PLATFORM
-): void {
-  if (!client || !platform) return;
-  void client.register({ platform });
-}
-
 /**
- * PostHog `reset()` clears every registered super property, so register
- * `platform` again at once. Events sent after sign-out keep the tag.
+ * Options for `PostHogProvider`. `platform` goes in through
+ * `customAppProperties`, not `register()`: the SDK merges app properties into
+ * every event from construction on (so `Application Installed`, which fires
+ * during init before any effect can run, has it too), and `reset()` does not
+ * clear them (so events after sign-out keep it). The SDK defaults ($app_build,
+ * $app_version, ...) are kept; its lifecycle events need them.
  */
-export function resetAnalyticsKeepingPlatform(
-  client: SuperPropertyClient | undefined | null,
+export function buildPostHogOptions(
+  host: string,
   platform: AppPlatform | null = APP_PLATFORM
-): void {
-  if (!client) return;
-  client.reset();
-  registerAppPlatform(client, platform);
+): Pick<PostHogOptions, 'host' | 'customAppProperties'> {
+  return {
+    host,
+    customAppProperties: (defaults: PostHogCustomAppProperties) => {
+      if (!platform) return defaults;
+      const withPlatform: PostHogCustomAppProperties & {
+        platform: AppPlatform;
+      } = { ...defaults, platform };
+      return withPlatform;
+    },
+  };
 }

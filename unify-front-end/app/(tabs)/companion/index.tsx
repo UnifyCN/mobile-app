@@ -48,6 +48,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
 import {
+  CompanionInputOrigin,
   CompanionInputSource,
   resolveTypedInputSource,
 } from '@/helpers/companion/companionAnalytics';
@@ -263,12 +264,12 @@ export default function CompanionScreen() {
     spotlightClosed
   );
 
-  // Text a starter prompt put in the input box (fact check) for the user to
-  // complete. Used only to label the next typed send as `starter_prompt`.
-  const starterPrefillRef = useRef<string | null>(null);
+  // Text the app put in the input box (fact-check prefill, or a failed send
+  // restored for retry) and its source. Labels the next send from the input.
+  const inputOriginRef = useRef<CompanionInputOrigin | null>(null);
 
   const resetDraftState = useCallback(() => {
-    starterPrefillRef.current = null;
+    inputOriginRef.current = null;
     setOptimisticMessages([]);
     setGreetingMessage(null);
     setInputText('');
@@ -329,8 +330,8 @@ export default function CompanionScreen() {
       if (!textToSend || isLoading || !canSend) return;
       const inputSource =
         source ??
-        resolveTypedInputSource(textToSend, starterPrefillRef.current);
-      starterPrefillRef.current = null;
+        resolveTypedInputSource(textToSend, inputOriginRef.current);
+      inputOriginRef.current = null;
 
       let optimisticMessageId: string | null = null;
       if (!currentConversationId) {
@@ -364,6 +365,7 @@ export default function CompanionScreen() {
           !(error as Error & { messagePersisted?: boolean }).messagePersisted
         ) {
           setInputText(textToSend);
+          inputOriginRef.current = { text: textToSend, source: inputSource };
         }
         if (
           error instanceof AICompanionBusyError ||
@@ -428,7 +430,7 @@ export default function CompanionScreen() {
 
     // For fact check, pre-fill the input so user can complete the sentence
     if (mode === 'fact_check') {
-      starterPrefillRef.current = prompt;
+      inputOriginRef.current = { text: prompt, source: 'starter_prompt' };
       setInputText(prompt);
       // Focus input after setting text so user can type immediately
       setTimeout(() => inputRef.current?.focus(), 50);
