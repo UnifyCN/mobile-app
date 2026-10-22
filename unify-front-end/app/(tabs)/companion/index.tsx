@@ -48,8 +48,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
 import {
+  buildCompanionStarterPromptProperties,
+  buildCompanionSuggestionClickedProperties,
   CompanionInputOrigin,
   CompanionInputSource,
+  CompanionStarterRef,
   isConversationHistoryLoaded,
   resolveTypedInputSource,
 } from '@/helpers/companion/companionAnalytics';
@@ -392,14 +395,12 @@ export default function CompanionScreen() {
   // Handle starter prompt selection
   const handleStarterPromptSelect = (
     prompt: string,
-    mode?: string,
-    isPersonalized?: boolean
+    mode: string | undefined,
+    starter: CompanionStarterRef
   ) => {
-    // Track the starter prompt usage (empty prompt defaults to 'Ask Anything')
+    // Track which card was tapped by id or slot, never by its text.
     trackCompanionStarterPromptUsed(
-      prompt || 'Ask Anything',
-      mode,
-      isPersonalized
+      buildCompanionStarterPromptProperties(starter, mode)
     );
 
     // "Ask Anything" - show bot greeting message
@@ -445,8 +446,11 @@ export default function CompanionScreen() {
 
   // Handle suggested next step click
   const handleSuggestionClick = useCallback(
-    (suggestion: string) => {
-      trackCompanionSuggestionClicked(suggestion);
+    (suggestion: string, position: number, count: number) => {
+      // Suggestions are model-written from the conversation: send no text.
+      trackCompanionSuggestionClicked(
+        buildCompanionSuggestionClickedProperties(position, count)
+      );
       handleSendMessage(suggestion, 'suggestion');
     },
     [trackCompanionSuggestionClicked, handleSendMessage]

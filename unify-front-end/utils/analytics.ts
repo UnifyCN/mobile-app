@@ -10,11 +10,15 @@ import type { SignUpValidationReason } from '@/utils/signUpValidation';
 import type {
   CompanionMessageSentProperties,
   CompanionResponseProperties,
+  CompanionStarterPromptProperties,
+  CompanionSuggestionClickedProperties,
 } from '@/helpers/companion/companionAnalytics';
 
 export type {
   CompanionMessageSentProperties,
   CompanionResponseProperties,
+  CompanionStarterPromptProperties,
+  CompanionSuggestionClickedProperties,
 } from '@/helpers/companion/companionAnalytics';
 
 // Event name constants for type safety and consistency
@@ -193,11 +197,6 @@ export interface GroupEventProperties {
 export interface EventEventProperties {
   event_id: string;
   event_title?: string;
-}
-
-export interface CompanionPromptProperties {
-  prompt: string;
-  mode?: string;
 }
 
 export interface LessonProperties {
@@ -548,20 +547,20 @@ export function useAnalytics() {
           ...properties,
         });
       },
+      // Never pass prompt or suggestion text here (spec #314); build the
+      // properties with the helpers in helpers/companion/companionAnalytics.
       trackCompanionStarterPromptUsed: (
-        prompt: string,
-        mode?: string,
-        isPersonalized?: boolean
+        properties: CompanionStarterPromptProperties
       ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_STARTER_PROMPT_USED, {
-          prompt,
-          ...(mode && { mode }),
-          ...(isPersonalized !== undefined && { is_personalized: isPersonalized }),
+          ...properties,
         });
       },
-      trackCompanionSuggestionClicked: (suggestion: string) => {
+      trackCompanionSuggestionClicked: (
+        properties: CompanionSuggestionClickedProperties
+      ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_SUGGESTION_CLICKED, {
-          suggestion,
+          ...properties,
         });
       },
       trackCompanionHistoryViewed: () => {

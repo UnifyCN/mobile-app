@@ -1,7 +1,9 @@
 import {
   buildCompanionMessageSentProperties,
   buildCompanionResponseProperties,
+  buildCompanionStarterPromptProperties,
   buildCompanionStreamResponseProperties,
+  buildCompanionSuggestionClickedProperties,
   isConversationHistoryLoaded,
   normalizeCompanionTopic,
   resolveTypedInputSource,
@@ -341,5 +343,61 @@ describe('buildCompanionStreamResponseProperties', () => {
     expect(props.has_sources).toBe(false);
     expect(props.query_type).toBe('unknown');
     expect(props.topic).toBe('work');
+  });
+});
+
+// Spec #314: no question text in a client event. Every value must be a
+// number, boolean, or one of the fixed identifiers below.
+const FIXED_STRINGS = new Set(['fact_check', 'form_help', 'ee_crs']);
+function expectNoFreeText(props: object, text: string) {
+  for (const value of Object.values(props)) {
+    if (typeof value === 'string') {
+      expect(FIXED_STRINGS.has(value)).toBe(true);
+    } else {
+      expect(['number', 'boolean']).toContain(typeof value);
+    }
+  }
+  expect(JSON.stringify(props)).not.toContain(text);
+}
+
+describe('buildCompanionStarterPromptProperties', () => {
+  it('sends a fixed card by id and mode, never its text', () => {
+    const props = buildCompanionStarterPromptProperties(
+      { kind: 'static', id: 'fact_check' },
+      'fact_check'
+    );
+    expect(props).toEqual({
+      prompt_id: 'fact_check',
+      mode: 'fact_check',
+      is_personalized: false,
+    });
+    expect(props).not.toHaveProperty('prompt');
+    expectNoFreeText(props, 'Is it true that');
+  });
+
+  it('leaves mode out for a topic card without one', () => {
+    expect(
+      buildCompanionStarterPromptProperties({ kind: 'static', id: 'ee_crs' })
+    ).toEqual({ prompt_id: 'ee_crs', is_personalized: false });
+  });
+
+  it('sends a personalized chip by slot only, never its id or text', () => {
+    const props = buildCompanionStarterPromptProperties({
+      kind: 'personalized',
+      position: 2,
+    });
+    expect(props).toEqual({ position: 2, is_personalized: true });
+    expect(Object.keys(props).sort()).toEqual(['is_personalized', 'position']);
+    expectNoFreeText(props, 'Vancouver');
+  });
+});
+
+describe('buildCompanionSuggestionClickedProperties', () => {
+  it('sends only position and suggestion_count', () => {
+    const props = buildCompanionSuggestionClickedProperties(1, 3);
+    expect(props).toEqual({ position: 1, suggestion_count: 3 });
+    expect(Object.keys(props).sort()).toEqual(['position', 'suggestion_count']);
+    expect(props).not.toHaveProperty('suggestion');
+    expectNoFreeText(props, 'my work permit');
   });
 });
