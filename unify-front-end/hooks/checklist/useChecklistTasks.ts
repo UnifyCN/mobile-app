@@ -65,11 +65,16 @@ export const useChecklistTasks = ({
 
   useEffect(() => {
     let cancelled = false;
-    supabase.auth.getUser().then(({ data }) => {
-      if (!cancelled) {
-        setUserId(data.user?.id ?? null);
-      }
-    });
+    supabase.auth
+      .getUser()
+      .then(({ data }) => {
+        if (!cancelled) {
+          setUserId(data.user?.id ?? null);
+        }
+      })
+      .catch(error => {
+        console.warn('[useChecklistTasks] Failed to read auth user:', error);
+      });
     return () => {
       cancelled = true;
     };
