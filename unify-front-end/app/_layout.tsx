@@ -23,6 +23,7 @@ import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
 import AuthWrapper from '@/components/AuthComponents/AuthWrapper';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { PostHogProvider } from 'posthog-react-native';
+import { buildPostHogOptions } from '@/utils/appPlatform';
 import { POSTHOG_ERROR_TRACKING_OPTIONS } from '@/utils/posthogOptions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreLoginOnboarding from '@/components/onboarding/PreLoginOnboarding';
@@ -44,6 +45,15 @@ import {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+// Built once: the `platform` app property goes on every PostHog event (from
+// the first one and after reset()), plus exception autocapture.
+const POSTHOG_OPTIONS = {
+  ...buildPostHogOptions(
+    process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com'
+  ),
+  errorTracking: POSTHOG_ERROR_TRACKING_OPTIONS,
+};
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -113,11 +123,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <PostHogProvider
         apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY || ''}
-        options={{
-          host:
-            process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-          errorTracking: POSTHOG_ERROR_TRACKING_OPTIONS,
-        }}
+        options={POSTHOG_OPTIONS}
         autocapture={{ captureScreens: false }}
       >
         <GestureHandlerRootView>

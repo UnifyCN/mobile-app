@@ -3,6 +3,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
+import { aiPlatformProperties } from '../_shared/aiPlatform.ts';
 import { responseLanguageDirective } from '../_shared/responseLanguage.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
@@ -153,6 +154,7 @@ Student's answer: "${userAnswer.trim()}"`;
       $ai_total_tokens: llmResult.usage.totalTokens,
       $ai_total_cost_usd: llmResult.usage.costUsd,
       feature: 'practice_feedback',
+      ...aiPlatformProperties(body),
       question_length: questionText.length,
       answer_length: userAnswer.length,
     });
