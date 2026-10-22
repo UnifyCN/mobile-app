@@ -28,6 +28,10 @@ import Google from '../../assets/images/Google.svg';
 import { createUserIfNotExists } from '../../utils/createUserIfNotExists';
 import { SimpleTextField } from './Components';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  getSignUpValidationReason,
+  isValidEmail,
+} from '@/utils/signUpValidation';
 import LegalWebView from '@/components/LegalWebView';
 import {
   LEGAL_URLS,
@@ -53,6 +57,7 @@ export function SignUp({
     trackSignUpStarted,
     trackSignUpCompleted,
     trackSignUpFailed,
+    trackSignUpValidationError,
     trackSignInCompleted,
     trackGoogleSignInUsed,
     trackAppleSignInUsed,
@@ -74,14 +79,12 @@ export function SignUp({
   const [webViewDoc, setWebViewDoc] = useState<LegalDocumentType | null>(null);
   const scrollRef = useRef<ScrollView>(null);
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   useEffect(() => {
     trackSignUpStarted();
   }, [trackSignUpStarted]);
 
   const validateEmail = (emailInput: string) => {
-    setIsEmailValid(emailRegex.test(emailInput.trim()));
+    setIsEmailValid(isValidEmail(emailInput));
   };
 
   const toggleConsent = () => {
@@ -98,26 +101,35 @@ export function SignUp({
     if (isChecked) return true;
     setConsentError(true);
     setErrorMessage(null);
-    trackSignUpFailed('terms_not_accepted', method);
+    trackSignUpValidationError('terms_not_accepted', method);
     AccessibilityInfo.announceForAccessibility(t('auth.acceptTermsRequired'));
     scrollRef.current?.scrollToEnd({ animated: true });
     return false;
   };
 
   const handleSignUp = async () => {
-    if (password !== confirmPassword) {
-      setErrorMessage(t('auth.passwordsDoNotMatch'));
-      trackSignUpFailed('passwords_mismatch');
+    const reason = getSignUpValidationReason({
+      email,
+      password,
+      confirmPassword,
+      termsAccepted: isChecked,
+    });
+    if (reason === 'terms_not_accepted') {
+      requireConsent('email');
       return;
     }
-
-    if (!isEmailValid) {
-      setErrorMessage(t('auth.invalidEmail'));
-      trackSignUpFailed('invalid_email');
+    if (reason) {
+      // Client-side form problem, not a server or provider failure.
+      // `empty_fields` is unreachable from the UI (the button stays disabled)
+      // so it has no user-facing message.
+      if (reason === 'passwords_mismatch') {
+        setErrorMessage(t('auth.passwordsDoNotMatch'));
+      } else if (reason === 'invalid_email') {
+        setErrorMessage(t('auth.invalidEmail'));
+      }
+      trackSignUpValidationError(reason);
       return;
     }
-
-    if (!requireConsent('email')) return;
 
     setLoading(true);
     setErrorMessage(null);

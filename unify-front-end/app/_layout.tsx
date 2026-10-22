@@ -23,6 +23,7 @@ import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
 import AuthWrapper from '@/components/AuthComponents/AuthWrapper';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { PostHogProvider } from 'posthog-react-native';
+import { POSTHOG_ERROR_TRACKING_OPTIONS } from '@/utils/posthogOptions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreLoginOnboarding from '@/components/onboarding/PreLoginOnboarding';
 import { UserProvider, useCurrentUser } from '@/context/UserContext';
@@ -115,6 +116,7 @@ export default function RootLayout() {
         options={{
           host:
             process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+          errorTracking: POSTHOG_ERROR_TRACKING_OPTIONS,
         }}
         autocapture={{ captureScreens: false }}
       >

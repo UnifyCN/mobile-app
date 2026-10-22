@@ -6,6 +6,7 @@ import type {
   ResourceLinkTarget,
 } from '@/types/partner';
 import type { PartnerCtaSource } from '@/utils/partners';
+import type { SignUpValidationReason } from '@/utils/signUpValidation';
 
 // Event name constants for type safety and consistency
 export const AnalyticsEvents = {
@@ -80,6 +81,7 @@ export const AnalyticsEvents = {
   SIGN_UP_STARTED: 'sign_up_started',
   SIGN_UP_COMPLETED: 'sign_up_completed',
   SIGN_UP_FAILED: 'sign_up_failed',
+  SIGN_UP_VALIDATION_ERROR: 'sign_up_validation_error',
   SIGN_IN_COMPLETED: 'sign_in_completed',
   SIGN_IN_FAILED: 'sign_in_failed',
   GOOGLE_SIGN_IN_USED: 'google_sign_in_used',
@@ -669,6 +671,15 @@ export function useAnalytics() {
       trackSignUpFailed: (errorType: string, method: AuthMethod = 'email') => {
         posthog?.capture(AnalyticsEvents.SIGN_UP_FAILED, {
           error_type: errorType,
+          method,
+        });
+      },
+      trackSignUpValidationError: (
+        reason: SignUpValidationReason,
+        method: AuthMethod = 'email'
+      ) => {
+        posthog?.capture(AnalyticsEvents.SIGN_UP_VALIDATION_ERROR, {
+          reason,
           method,
         });
       },
