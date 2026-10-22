@@ -141,3 +141,27 @@ export function buildCompanionResponseProperties(input: {
     response_time_ms: input.responseTimeMs,
   };
 }
+
+/**
+ * Properties for `companion_response_received` from a streamed answer.
+ * `topic` comes from the `complete` event (rag-query sends it there once the
+ * answer is done); it is left out when absent, as with older rag-query builds.
+ */
+export function buildCompanionStreamResponseProperties(input: {
+  metadata?: { sources?: readonly unknown[]; queryType?: QueryType };
+  completion: {
+    topic?: unknown;
+    tokenUsage?: TokenUsage;
+    estimatedCostUsd?: number;
+  };
+  responseTimeMs: number;
+}): CompanionResponseProperties {
+  return buildCompanionResponseProperties({
+    queryType: input.metadata?.queryType,
+    topic: input.completion.topic,
+    hasSources: (input.metadata?.sources?.length ?? 0) > 0,
+    tokenUsage: input.completion.tokenUsage,
+    estimatedCostUsd: input.completion.estimatedCostUsd,
+    responseTimeMs: input.responseTimeMs,
+  });
+}

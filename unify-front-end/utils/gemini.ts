@@ -29,8 +29,6 @@ interface ConversationMessage {
 export interface StreamMetadata {
   sources?: Source[];
   queryType?: QueryType;
-  /** Topic label from newer rag-query builds; validated in companionAnalytics. */
-  topic?: string;
   disclaimer?: string;
   lastVerified?: string;
 }
@@ -38,6 +36,12 @@ export interface StreamMetadata {
 export interface StreamComplete {
   cleanAnswer: string;
   suggestedNextSteps?: string[];
+  /**
+   * Topic label from newer rag-query builds. It is on `complete`, not
+   * `metadata`, because the model labels its own answer. Validated in
+   * companionAnalytics.
+   */
+  topic?: string;
   tokenUsage?: TokenUsage;
   estimatedCostUsd?: number;
   model?: string;

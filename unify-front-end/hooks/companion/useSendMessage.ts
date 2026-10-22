@@ -18,7 +18,7 @@ import {
 import {
   CompanionInputSource,
   buildCompanionMessageSentProperties,
-  buildCompanionResponseProperties,
+  buildCompanionStreamResponseProperties,
 } from '@/helpers/companion/companionAnalytics';
 import { useAnalytics } from '@/utils/analytics';
 
@@ -206,19 +206,15 @@ export const useSendMessage = ({
       queryClient.invalidateQueries({ queryKey: ['chatbot-usage'] });
 
       const sources = metadata?.sources ?? [];
-      const queryType = metadata?.queryType;
       const sanitizedSuggestions = sanitizeSuggestedNextSteps(
         completion.suggestedNextSteps
       );
 
       // Track companion response with cost metrics
       trackCompanionResponseReceived(
-        buildCompanionResponseProperties({
-          queryType,
-          topic: metadata?.topic,
-          hasSources: sources.length > 0,
-          tokenUsage: completion.tokenUsage,
-          estimatedCostUsd: completion.estimatedCostUsd,
+        buildCompanionStreamResponseProperties({
+          metadata,
+          completion,
           responseTimeMs,
         })
       );

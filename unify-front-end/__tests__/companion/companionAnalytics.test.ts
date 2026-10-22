@@ -1,6 +1,7 @@
 import {
   buildCompanionMessageSentProperties,
   buildCompanionResponseProperties,
+  buildCompanionStreamResponseProperties,
   isConversationHistoryLoaded,
   normalizeCompanionTopic,
   resolveTypedInputSource,
@@ -276,5 +277,69 @@ describe('buildCompanionResponseProperties', () => {
       estimated_cost_usd: undefined,
       response_time_ms: 10,
     });
+  });
+});
+
+describe('buildCompanionStreamResponseProperties', () => {
+  const metadata = {
+    sources: [{ title: 'IRCC' }],
+    queryType: 'immigration' as const,
+  };
+  const completion = {
+    tokenUsage: {
+      prompt_tokens: 100,
+      completion_tokens: 50,
+      total_tokens: 150,
+    },
+    estimatedCostUsd: 0.0002,
+  };
+
+  it('takes topic from the complete event', () => {
+    expect(
+      buildCompanionStreamResponseProperties({
+        metadata,
+        completion: { ...completion, topic: 'housing' },
+        responseTimeMs: 1800,
+      })
+    ).toEqual({
+      query_type: 'immigration',
+      topic: 'housing',
+      has_sources: true,
+      prompt_tokens: 100,
+      completion_tokens: 50,
+      total_tokens: 150,
+      estimated_cost_usd: 0.0002,
+      response_time_ms: 1800,
+    });
+  });
+
+  it('omits topic when the complete event has none (old rag-query)', () => {
+    const props = buildCompanionStreamResponseProperties({
+      metadata,
+      completion,
+      responseTimeMs: 1800,
+    });
+    expect(Object.prototype.hasOwnProperty.call(props, 'topic')).toBe(false);
+    expect(props.query_type).toBe('immigration');
+  });
+
+  it('does not read topic from the metadata event', () => {
+    const metadataWithTopic = { ...metadata, topic: 'housing' };
+    const props = buildCompanionStreamResponseProperties({
+      metadata: metadataWithTopic,
+      completion,
+      responseTimeMs: 1800,
+    });
+    expect(Object.prototype.hasOwnProperty.call(props, 'topic')).toBe(false);
+  });
+
+  it('has no sources and unknown query_type without a metadata event', () => {
+    const props = buildCompanionStreamResponseProperties({
+      completion: { ...completion, topic: 'work' },
+      responseTimeMs: 900,
+    });
+    expect(props.has_sources).toBe(false);
+    expect(props.query_type).toBe('unknown');
+    expect(props.topic).toBe('work');
   });
 });
