@@ -15,6 +15,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
+import { aiPlatformProperties } from '../_shared/aiPlatform.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -118,6 +119,7 @@ Deno.serve(async (req: Request) => {
       $ai_total_tokens: llmResult.usage.totalTokens,
       $ai_total_cost_usd: llmResult.usage.costUsd,
       feature: 'generate_title',
+      ...aiPlatformProperties(body),
       message_length: message.length,
     });
 

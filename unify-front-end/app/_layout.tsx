@@ -22,7 +22,8 @@ import { supabase } from '@/lib/supabase';
 import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
 import AuthWrapper from '@/components/AuthComponents/AuthWrapper';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { PostHogProvider } from 'posthog-react-native';
+import { PostHogProvider, usePostHog } from 'posthog-react-native';
+import { registerAppPlatform } from '@/utils/appPlatform';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreLoginOnboarding from '@/components/onboarding/PreLoginOnboarding';
 import { UserProvider, useCurrentUser } from '@/context/UserContext';
@@ -118,6 +119,7 @@ export default function RootLayout() {
         }}
         autocapture={{ captureScreens: false }}
       >
+        <PlatformSuperProperty />
         <GestureHandlerRootView>
           <KeyboardProvider>
             <SafeAreaProvider>
@@ -160,6 +162,20 @@ export default function RootLayout() {
       )}
     </QueryClientProvider>
   );
+}
+
+/**
+ * Registers the `platform` super property (`ios` | `android`) so every client
+ * event carries it. Rendered as the provider's first child so the effect runs
+ * before the effects of the screens below it. `reset()` clears super
+ * properties; the analytics `reset` wrapper registers platform again.
+ */
+function PlatformSuperProperty() {
+  const posthog = usePostHog();
+  useEffect(() => {
+    registerAppPlatform(posthog);
+  }, [posthog]);
+  return null;
 }
 
 /**

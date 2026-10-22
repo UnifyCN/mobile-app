@@ -15,6 +15,11 @@ import {
   formatMessagesForAPI,
   sanitizeSuggestedNextSteps,
 } from '@/helpers/companion/messageHelpers';
+import {
+  CompanionInputSource,
+  buildCompanionMessageSentProperties,
+  buildCompanionResponseProperties,
+} from '@/helpers/companion/companionAnalytics';
 import { useAnalytics } from '@/utils/analytics';
 
 type SendMessageError = Error & {
@@ -51,11 +56,13 @@ export const useSendMessage = ({
   const { data: usage } = useChatbotUsage();
   const createConversation = useCreateConversation();
   const saveMessage = useSaveMessage();
-  const { trackCompanionResponseReceived } = useAnalytics();
+  const { trackCompanionMessageSent, trackCompanionResponseReceived } =
+    useAnalytics();
 
   const sendMessage = async (
     messageText: string,
-    optimisticClientId?: string
+    optimisticClientId?: string,
+    inputSource: CompanionInputSource = 'typed'
   ): Promise<void> => {
     setIsLoading(true);
     setIsWaitingForBot(true);
@@ -81,6 +88,18 @@ export const useSendMessage = ({
           throw error;
         }
       }
+
+      // Tracked here, not in the screen, because a new conversation only has
+      // an id after createConversation. `messages` holds the conversation as
+      // it was before this message, so it gives the turn number.
+      trackCompanionMessageSent(
+        buildCompanionMessageSentProperties({
+          messageLength: messageText.length,
+          conversationId: conversationIdToUse,
+          priorMessages: messages,
+          inputSource,
+        })
+      );
 
       // Save user message to database
       try {
@@ -186,15 +205,16 @@ export const useSendMessage = ({
       );
 
       // Track companion response with cost metrics
-      trackCompanionResponseReceived({
-        query_type: queryType || 'unknown',
-        has_sources: sources.length > 0,
-        prompt_tokens: completion.tokenUsage?.prompt_tokens,
-        completion_tokens: completion.tokenUsage?.completion_tokens,
-        total_tokens: completion.tokenUsage?.total_tokens,
-        estimated_cost_usd: completion.estimatedCostUsd,
-        response_time_ms: responseTimeMs,
-      });
+      trackCompanionResponseReceived(
+        buildCompanionResponseProperties({
+          queryType,
+          topic: metadata?.topic,
+          hasSources: sources.length > 0,
+          tokenUsage: completion.tokenUsage,
+          estimatedCostUsd: completion.estimatedCostUsd,
+          responseTimeMs,
+        })
+      );
 
       // Store real-time-only fields for UI display (not persisted to DB)
       setLastSuggestedNextSteps(sanitizedSuggestions);

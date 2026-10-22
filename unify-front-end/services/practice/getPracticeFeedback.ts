@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import i18n from '@/i18n';
 import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
+import { withAppPlatform } from '@/utils/appPlatform';
 
 export interface PracticeFeedbackRequest {
   questionText: string;
@@ -21,7 +22,10 @@ export async function getPracticeFeedback(
   let data, error;
   try {
     const result = await supabase.functions.invoke('practice-feedback', {
-      body: { ...request, ...(language ? { language } : {}) },
+      body: withAppPlatform({
+        ...request,
+        ...(language ? { language } : {}),
+      }),
     });
     data = result.data;
     error = result.error;

@@ -47,6 +47,10 @@ import CompanionHeader from '@/components/CompanionHeader';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  CompanionInputSource,
+  resolveTypedInputSource,
+} from '@/helpers/companion/companionAnalytics';
 import { usePersonalizedStarters } from '@/hooks/companion/usePersonalizedStarters';
 import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
@@ -105,7 +109,6 @@ export default function CompanionScreen() {
   });
   const {
     trackScreen,
-    trackCompanionMessageSent,
     trackCompanionStarterPromptUsed,
     trackCompanionSuggestionClicked,
     trackCompanionHistoryViewed,
@@ -260,7 +263,12 @@ export default function CompanionScreen() {
     spotlightClosed
   );
 
+  // Text a starter prompt put in the input box (fact check) for the user to
+  // complete. Used only to label the next typed send as `starter_prompt`.
+  const starterPrefillRef = useRef<string | null>(null);
+
   const resetDraftState = useCallback(() => {
+    starterPrefillRef.current = null;
     setOptimisticMessages([]);
     setGreetingMessage(null);
     setInputText('');
@@ -316,9 +324,13 @@ export default function CompanionScreen() {
   );
 
   const handleSendMessage = useCallback(
-    async (messageText?: string) => {
+    async (messageText?: string, source?: CompanionInputSource) => {
       const textToSend = messageText || inputText.trim();
       if (!textToSend || isLoading || !canSend) return;
+      const inputSource =
+        source ??
+        resolveTypedInputSource(textToSend, starterPrefillRef.current);
+      starterPrefillRef.current = null;
 
       let optimisticMessageId: string | null = null;
       if (!currentConversationId) {
@@ -334,10 +346,13 @@ export default function CompanionScreen() {
       }
 
       setInputText('');
-      trackCompanionMessageSent(textToSend.length);
 
       try {
-        await sendMessage(textToSend, optimisticMessageId ?? undefined);
+        await sendMessage(
+          textToSend,
+          optimisticMessageId ?? undefined,
+          inputSource
+        );
       } catch (error) {
         if (optimisticMessageId) {
           setOptimisticMessages(current =>
@@ -363,7 +378,6 @@ export default function CompanionScreen() {
       isLoading,
       canSend,
       sendMessage,
-      trackCompanionMessageSent,
       currentConversationId,
       setOptimisticMessages,
       showToast,
@@ -414,6 +428,7 @@ export default function CompanionScreen() {
 
     // For fact check, pre-fill the input so user can complete the sentence
     if (mode === 'fact_check') {
+      starterPrefillRef.current = prompt;
       setInputText(prompt);
       // Focus input after setting text so user can type immediately
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -421,14 +436,14 @@ export default function CompanionScreen() {
     }
 
     // For other prompts, send directly
-    handleSendMessage(prompt);
+    handleSendMessage(prompt, 'starter_prompt');
   };
 
   // Handle suggested next step click
   const handleSuggestionClick = useCallback(
     (suggestion: string) => {
       trackCompanionSuggestionClicked(suggestion);
-      handleSendMessage(suggestion);
+      handleSendMessage(suggestion, 'suggestion');
     },
     [trackCompanionSuggestionClicked, handleSendMessage]
   );

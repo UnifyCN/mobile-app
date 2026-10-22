@@ -6,6 +6,16 @@ import type {
   ResourceLinkTarget,
 } from '@/types/partner';
 import type { PartnerCtaSource } from '@/utils/partners';
+import { resetAnalyticsKeepingPlatform } from '@/utils/appPlatform';
+import type {
+  CompanionMessageSentProperties,
+  CompanionResponseProperties,
+} from '@/helpers/companion/companionAnalytics';
+
+export type {
+  CompanionMessageSentProperties,
+  CompanionResponseProperties,
+} from '@/helpers/companion/companionAnalytics';
 
 // Event name constants for type safety and consistency
 export const AnalyticsEvents = {
@@ -184,10 +194,6 @@ export interface EventEventProperties {
   event_title?: string;
 }
 
-export interface CompanionMessageProperties {
-  message_length: number;
-}
-
 export interface CompanionPromptProperties {
   prompt: string;
   mode?: string;
@@ -234,16 +240,6 @@ export interface OnboardingStepProperties {
 
 export interface NotificationProperties {
   notification_type: string;
-}
-
-export interface CompanionResponseProperties {
-  query_type: string;
-  has_sources: boolean;
-  prompt_tokens?: number;
-  completion_tokens?: number;
-  total_tokens?: number;
-  estimated_cost_usd?: number;
-  response_time_ms?: number;
 }
 
 export interface TipViewedProperties {
@@ -340,8 +336,9 @@ export function useAnalytics() {
       identify: (userId: string, properties: IdentifyUserProperties) => {
         posthog?.identify(userId, { ...properties });
       },
+      // reset() clears super properties; platform is registered again.
       reset: () => {
-        posthog?.reset();
+        resetAnalyticsKeepingPlatform(posthog);
       },
 
       // Screen tracking
@@ -542,9 +539,11 @@ export function useAnalytics() {
       },
 
       // AI Companion
-      trackCompanionMessageSent: (messageLength: number) => {
+      trackCompanionMessageSent: (
+        properties: CompanionMessageSentProperties
+      ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_MESSAGE_SENT, {
-          message_length: messageLength,
+          ...properties,
         });
       },
       trackCompanionStarterPromptUsed: (
