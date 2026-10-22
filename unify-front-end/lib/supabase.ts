@@ -39,25 +39,17 @@ const SecureStoreAdapter = {
   removeItem: (key: string) => SecureStore.deleteItemAsync(key),
 };
 
-// auth-js 2.104 (Expo SDK 55 upgrade) waits only 5s for the auth lock, then
-// throws "Acquiring process lock ... timed out". processLock serializes every
-// getUser/getSession call, and getUser holds the lock for a network round
-// trip, so a cold start that queues many auth calls can exceed 5s on a slow
-// network. Older auth-js waited indefinitely; keep a bound so a hung request
-// still surfaces as an error instead of a permanent deadlock.
-export const AUTH_LOCK_ACQUIRE_TIMEOUT_MS = 30_000;
-
-// createClient does not forward auth.lockAcquireTimeout, so raise the timeout
-// inside the lock itself. Keep 0 ("skip if busy", used by the auto-refresh
-// tick) and negative ("wait forever") as auth-js passes them.
+// auth-js 2.104 (Expo SDK 55 upgrade) gives each auth call 5s to acquire the
+// auth lock, then throws "Acquiring process lock ... timed out". processLock
+// serializes every getUser/getSession call, and getUser holds the lock for a
+// network round trip, so a cold start can queue past any fixed bound. A
+// timeout does not release the holder; it only rejects the waiter, sometimes
+// inside auth-js (onAuthStateChange) where the app cannot catch it. So wait
+// for the lock the way auth-js 2.70 did. createClient does not forward
+// auth.lockAcquireTimeout, hence the wrapper. Keep 0 ("skip if busy", used by
+// the auto-refresh tick) as auth-js passes it.
 export const authLock: typeof processLock = (name, acquireTimeout, fn) =>
-  processLock(
-    name,
-    acquireTimeout > 0
-      ? Math.max(acquireTimeout, AUTH_LOCK_ACQUIRE_TIMEOUT_MS)
-      : acquireTimeout,
-    fn
-  );
+  processLock(name, acquireTimeout > 0 ? -1 : acquireTimeout, fn);
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
