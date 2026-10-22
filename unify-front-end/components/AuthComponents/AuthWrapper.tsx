@@ -84,10 +84,17 @@ export default function AuthWrapper({ children, onBackToOnboarding }: Props) {
   });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        setSession(session);
+      })
+      .catch(error => {
+        // onAuthStateChange still delivers the session; never stay on the
+        // loading screen because this read failed.
+        console.warn('[AuthWrapper] Failed to read auth session:', error);
+      })
+      .finally(() => setLoading(false));
 
     const {
       data: { subscription },
