@@ -28,6 +28,7 @@ import Google from '../../assets/images/Google.svg';
 import { createUserIfNotExists } from '../../utils/createUserIfNotExists';
 import { SimpleTextField } from './Components';
 import { useAnalytics } from '@/utils/analytics';
+import { getProviderSignUpErrorType } from '@/utils/signUpProviderError';
 import {
   getSignUpValidationReason,
   isValidEmail,
@@ -218,6 +219,7 @@ export function SignUp({
         });
         if (error) {
           setErrorMessage(error.message);
+          trackSignUpFailed(error.code || 'provider_signin_failed', 'google');
           setLoading(false);
           return;
         }
@@ -238,6 +240,7 @@ export function SignUp({
             setErrorMessage(
               userCreationError?.message || t('auth.failedSignUpSetup')
             );
+            trackSignUpFailed('user_creation_failed', 'google');
             setLoading(false);
             return;
           }
@@ -257,17 +260,26 @@ export function SignUp({
           trackSignInCompleted('google');
         } else if (data?.user?.id && !data?.user?.email) {
           setErrorMessage(t('auth.googleNoEmail'));
+          trackSignUpFailed('no_email', 'google');
           setLoading(false);
           return;
         } else if (!data?.user?.id) {
           setErrorMessage(t('auth.googleNoUser'));
+          trackSignUpFailed('no_user', 'google');
           setLoading(false);
           return;
         }
       } else {
         setErrorMessage(t('auth.googleNoToken'));
+        trackSignUpFailed('no_token', 'google');
       }
     } catch (error: any) {
+      // Cancelling the Google sheet is not a failure, so it fires no event.
+      const errorType = getProviderSignUpErrorType(error, [
+        statusCodes.SIGN_IN_CANCELLED,
+        statusCodes.IN_PROGRESS,
+      ]);
+      if (errorType) trackSignUpFailed(errorType, 'google');
       if (error?.code === statusCodes.IN_PROGRESS) {
         setLoading(false);
         return;
@@ -310,6 +322,7 @@ export function SignUp({
 
         if (error) {
           setErrorMessage(error.message);
+          trackSignUpFailed(error.code || 'provider_signin_failed', 'apple');
           setLoading(false);
           return;
         }
@@ -330,6 +343,7 @@ export function SignUp({
             setErrorMessage(
               userCreationError?.message || t('auth.failedSignUpSetup')
             );
+            trackSignUpFailed('user_creation_failed', 'apple');
             setLoading(false);
             return;
           }
@@ -347,17 +361,25 @@ export function SignUp({
           trackSignInCompleted('apple');
         } else if (data?.user?.id && !data?.user?.email) {
           setErrorMessage(t('auth.appleNoEmail'));
+          trackSignUpFailed('no_email', 'apple');
           setLoading(false);
           return;
         } else if (!data?.user?.id) {
           setErrorMessage(t('auth.appleNoUser'));
+          trackSignUpFailed('no_user', 'apple');
           setLoading(false);
           return;
         }
       } else {
         setErrorMessage(t('auth.appleNoToken'));
+        trackSignUpFailed('no_token', 'apple');
       }
     } catch (error: any) {
+      // Cancelling the Apple sheet is not a failure, so it fires no event.
+      const errorType = getProviderSignUpErrorType(error, [
+        'ERR_REQUEST_CANCELED',
+      ]);
+      if (errorType) trackSignUpFailed(errorType, 'apple');
       if (error?.code === 'ERR_REQUEST_CANCELED') {
         setLoading(false);
         return;
