@@ -1,3 +1,6 @@
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import StructuredLesson from '@/components/learn/StructuredLesson';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -288,6 +291,7 @@ export default function SubmoduleIntroScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.lesson.errorLoadingIntro')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -297,29 +301,29 @@ export default function SubmoduleIntroScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={submoduleData?.title || 'Submodule'}
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Title */}
-        <Text style={styles.title}>{introData?.title}</Text>
-
-        {/* Content sections */}
-        <View style={styles.content}>
-          <RichTextRenderer
-            blocks={introData?.content}
-            markDefs={introData?.markDefs}
-          />
-        </View>
-      </ScrollView>
+      <StructuredLesson
+        key={`${submoduleId}-${currentPage}`}
+        title={introData.title || ''}
+        sections={[
+          {
+            _key: introData._key || 'content',
+            _type: 'lessonConcept',
+            content: introData.content || [],
+          },
+        ]}
+        markDefs={introData.markDefs}
+        highlights={[]}
+        onScrollBeginDrag={() => {}}
+      />
 
       {/* Navigation buttons - anchored at bottom */}
       <View style={styles.buttonContainer}>
@@ -329,10 +333,7 @@ export default function SubmoduleIntroScreen() {
           </TouchableOpacity>
         )}
         <TouchableOpacity
-          style={[
-            styles.nextBtn,
-            { backgroundColor: moduleData?.colorTheme?.hex || '#1A1919' },
-          ]}
+          style={[styles.nextBtn, { backgroundColor: '#191919' }]}
           onPress={handleNext}
         >
           <Text style={styles.nextBtnText}>{t('common.next')}</Text>
@@ -348,11 +349,10 @@ export default function SubmoduleIntroScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
-              {t('learn.lesson.exitTitle')}
-            </Text>
+            <Text style={styles.modalTitle}>{t('learn.lesson.exitTitle')}</Text>
             <Text style={styles.modalDesc}>
-              {t('learn.lesson.exitBody1')}{'\n'}
+              {t('learn.lesson.exitBody1')}
+              {'\n'}
               {t('learn.lesson.exitBody2')}
             </Text>
 
@@ -369,7 +369,9 @@ export default function SubmoduleIntroScreen() {
               style={styles.modalSecondaryBtn}
               onPress={handleContinue}
             >
-              <Text style={styles.modalSecondaryBtnText}>{t('learn.lesson.exitContinue')}</Text>
+              <Text style={styles.modalSecondaryBtnText}>
+                {t('learn.lesson.exitContinue')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -502,10 +504,7 @@ const styles = StyleSheet.create({
 
   // Button container and buttons
   buttonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 20,

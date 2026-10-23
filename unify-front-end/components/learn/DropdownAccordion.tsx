@@ -48,6 +48,8 @@ export default function DropdownAccordion({
           <View key={item.id}>
             <TouchableOpacity
               style={styles.header}
+              accessibilityRole='button'
+              accessibilityState={{ expanded: open }}
               onPress={() => toggle(item.id)}
             >
               <Text style={[styles.headerText, titleTextStyle]}>

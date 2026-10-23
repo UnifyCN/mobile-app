@@ -1,9 +1,14 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-} from 'react';
+import LearnRetry from '@/components/learn/LearnRetry';
+import TabHeader from '@/components/home/HomeHeader';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import {
+  learnStyles as ui,
+  LearnBack,
+  LearnProgress,
+} from '@/components/learn/LearnPrimitives';
+import { useLessonStatuses } from '@/hooks/progress/useLessonStatuses';
+import { lessonResumeHref } from '@/utils/lessonResume';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,7 +17,6 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
-  ViewStyle,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -32,14 +36,8 @@ import {
   LearnSectionId,
 } from '@/utils/learnCompletionNavigation';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Layout } from '@/constants/Layout';
 
 const SUBJECT_COLOR = '#10B981'; // green for Learn (active)
-
-const TIMELINE_LEFT_WIDTH = 24;
-const DOT_SIZE = 16;
-const LINE_WIDTH = 2;
 
 type SectionUIState = 'completed' | 'active' | 'unlocked' | 'locked';
 
@@ -53,76 +51,9 @@ interface SubmoduleSectionViewModel {
   onPress: () => void;
 }
 
-function getSectionStyles(
-  section: SubmoduleSectionViewModel,
-  prevSection: SubmoduleSectionViewModel | null,
-  nextSection: SubmoduleSectionViewModel | null,
-  subjectColor: string
-): {
-  dotStyle: ViewStyle[];
-  lineAboveStyle: ViewStyle[];
-  lineBelowStyle: ViewStyle[];
-} {
-  let dotStyle: ViewStyle[] = [styles.dot];
-  if (section.uiState === 'completed') {
-    dotStyle.push({ backgroundColor: subjectColor });
-  } else if (section.uiState === 'active' || section.uiState === 'unlocked') {
-    dotStyle.push({
-      backgroundColor: '#FFFFFF',
-      borderWidth: 2,
-      borderColor: subjectColor,
-    });
-  } else {
-    dotStyle.push({
-      backgroundColor: '#FFFFFF',
-      borderWidth: 2,
-      borderColor: '#D1D1D1',
-    });
-  }
-
-  let lineAboveStyle: ViewStyle[] = [styles.lineSegment];
-  if (prevSection) {
-    if (
-      prevSection.uiState === 'completed' &&
-      section.uiState === 'completed'
-    ) {
-      lineAboveStyle.push({ backgroundColor: subjectColor });
-    } else if (
-      prevSection.uiState === 'completed' &&
-      (section.uiState === 'active' || section.uiState === 'unlocked')
-    ) {
-      lineAboveStyle.push(styles.lineDotted);
-      lineAboveStyle.push({ borderColor: subjectColor });
-    } else {
-      lineAboveStyle.push(styles.lineDotted);
-    }
-  }
-
-  let lineBelowStyle: ViewStyle[] = [styles.lineSegment];
-  if (nextSection) {
-    if (
-      section.uiState === 'completed' &&
-      nextSection.uiState === 'completed'
-    ) {
-      lineBelowStyle.push({ backgroundColor: subjectColor });
-    } else if (
-      section.uiState === 'completed' &&
-      (nextSection.uiState === 'active' || nextSection.uiState === 'unlocked')
-    ) {
-      lineBelowStyle.push(styles.lineDotted);
-      lineBelowStyle.push({ borderColor: subjectColor });
-    } else {
-      lineBelowStyle.push(styles.lineDotted);
-    }
-  }
-
-  return { dotStyle, lineAboveStyle, lineBelowStyle };
-}
-
 export default function SubmoduleIndex() {
   const router = useRouter();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
   const {
     moduleId,
     submoduleId,
@@ -136,6 +67,8 @@ export default function SubmoduleIndex() {
     justCompletedTasks?: string;
     justCompletedPractice?: string;
   }>();
+
+  const lessonStatus = useLessonStatuses(submoduleId || '');
 
   const completedSectionId = getCompletedSectionId({
     justCompletedLearn,
@@ -158,7 +91,6 @@ export default function SubmoduleIndex() {
   const [hasTaskProgressLoadError, setHasTaskProgressLoadError] =
     useState(false);
   const [isResolvingLearnHref, setIsResolvingLearnHref] = useState(false);
-  const [openedCardId, setOpenedCardId] = useState<string | null>('learn');
 
   const {
     data: submoduleData,
@@ -181,9 +113,6 @@ export default function SubmoduleIndex() {
   const { getTaskProgressBySubmodule } = useTaskProgress();
 
   const subjectColor = moduleData?.colorTheme?.hex || SUBJECT_COLOR;
-
-  const sectionNumber =
-    (moduleData?.submodules?.findIndex(s => s?._id === submoduleId) ?? 0) + 1;
 
   useFocusEffect(
     useCallback(() => {
@@ -428,16 +357,6 @@ export default function SubmoduleIndex() {
     completedSectionId
   );
 
-  const highlightedSectionId =
-    requestedNextSectionId ??
-    sections.find(section => section.progressPercent < 100)?.id ??
-    sections[0]?.id ??
-    null;
-
-  useLayoutEffect(() => {
-    setOpenedCardId(highlightedSectionId);
-  }, [highlightedSectionId]);
-
   useEffect(() => {
     if (!isCompletionTransition || !moduleId) return;
     if (
@@ -522,137 +441,6 @@ export default function SubmoduleIndex() {
     tasks,
   ]);
 
-  const handleCardTap = (section: SubmoduleSectionViewModel) => {
-    if (openedCardId === section.id) {
-      section.onPress();
-    } else {
-      setOpenedCardId(section.id);
-    }
-  };
-
-  const renderSectionCard = (
-    section: SubmoduleSectionViewModel,
-    index: number
-  ) => {
-    const isOpened = openedCardId === section.id;
-    const isLocked = section.uiState === 'locked';
-    const isFirst = index === 0;
-    const isLast = index === sections.length - 1;
-
-    const { dotStyle, lineAboveStyle, lineBelowStyle } = getSectionStyles(
-      section,
-      isFirst ? null : sections[index - 1],
-      isLast ? null : sections[index + 1],
-      subjectColor
-    );
-    const statusLabel =
-      section.progressPercent >= 100
-        ? t('common.completed')
-        : section.progressPercent > 0
-          ? t('learn.submodule.percentComplete', {
-              percent: Math.round(section.progressPercent),
-            })
-          : null;
-    const ctaLabel =
-      section.progressPercent >= 100
-        ? t('common.review')
-        : section.progressPercent > 0
-          ? t('common.continue')
-          : t('common.start');
-
-    return (
-      <View key={section.id} style={styles.sectionRow}>
-        <View style={styles.timelineColumn}>
-          <View style={styles.timelineContent}>
-            <View style={styles.lineHalf}>
-              {!isFirst && <View style={[...lineAboveStyle, { flex: 1 }]} />}
-            </View>
-            <View style={dotStyle} />
-            <View style={styles.lineHalf}>
-              {!isLast && <View style={[...lineBelowStyle, { flex: 1 }]} />}
-            </View>
-          </View>
-          {!isLast && (
-            <View style={styles.timelineGap}>
-              <View style={[...lineBelowStyle, { flex: 1 }]} />
-            </View>
-          )}
-        </View>
-        <TouchableOpacity
-          activeOpacity={isLocked ? 1 : 0.8}
-          onPress={() => handleCardTap(section)}
-          style={[
-            styles.card,
-            isOpened && styles.cardOpened,
-            isOpened && {
-              backgroundColor: subjectColor,
-              borderColor: subjectColor,
-            },
-            isLocked && styles.cardLocked,
-          ]}
-        >
-          <View style={styles.cardInner}>
-            <View style={styles.cardTopRow}>
-              <Text
-                style={[
-                  styles.cardTitle,
-                  isOpened && styles.cardTitleOpened,
-                  isLocked && styles.textLocked,
-                ]}
-              >
-                {section.title}
-              </Text>
-              <Feather
-                name={section.iconName}
-                size={16}
-                style={[
-                  styles.cardIcon,
-                  isOpened && styles.cardIconOpened,
-                  isLocked && styles.textLocked,
-                ]}
-              />
-            </View>
-            <Text
-              style={[
-                styles.sectionDescription,
-                isOpened && styles.lessonCountOpened,
-                isLocked && styles.textLocked,
-              ]}
-            >
-              {section.description}
-            </Text>
-            {!!statusLabel && (
-              <Text
-                style={[
-                  styles.sectionStatus,
-                  isOpened && styles.sectionStatusOpened,
-                  isLocked && styles.textLocked,
-                ]}
-              >
-                {statusLabel}
-              </Text>
-            )}
-            {isOpened && (
-              <View style={styles.startCtaWrap}>
-                <View style={styles.startCta}>
-                  {section.id === 'learn' && isResolvingLearnHref ? (
-                    <ActivityIndicator size='small' color={subjectColor} />
-                  ) : (
-                    <Text
-                      style={[styles.startCtaText, { color: subjectColor }]}
-                    >
-                      {ctaLabel}
-                    </Text>
-                  )}
-                </View>
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   if (
     isLoading ||
     (isCompletionTransition &&
@@ -686,308 +474,232 @@ export default function SubmoduleIndex() {
     );
   }
 
+  const categoryColor = categorySymbol(moduleId, moduleData?.icon).foreground;
+  const courseLessons = submoduleData.lessons ?? [];
+  const completedLessonCount = courseLessons.filter(lesson =>
+    lessonStatus.rows.some(
+      row => row.sanity_lesson_id === lesson._id && row.is_completed
+    )
+  ).length;
+  const lessonCompletionPercent = courseLessons.length
+    ? (completedLessonCount / courseLessons.length) * 100
+    : 0;
+  const nextLessonId = courseLessons.find(
+    lesson =>
+      !lessonStatus.rows.find(row => row.sanity_lesson_id === lesson._id)
+        ?.is_completed
+  )?._id;
   return (
-    <View style={styles.pageContainer}>
-      {/* White header: back, icon, title, description */}
-      <View
-        style={[
-          styles.header,
-          {
-            backgroundColor: '#FFFFFF',
-            paddingTop: insets.top + Layout.header.topInsetOffset,
-          },
-        ]}
-      >
-        <View style={styles.headerTopRow}>
-          <TouchableOpacity
-            onPress={() =>
-              router.replace({
-                pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-                params: { moduleId },
-              })
-            }
-            style={styles.backButton}
-          >
-            <Feather name='chevron-left' size={28} color='#000' />
-          </TouchableOpacity>
-          <View style={styles.headerCenterWrap}>
-            <Text style={styles.headerModuleName} numberOfLines={1}>
-              {moduleData?.title ?? ''}
-            </Text>
-          </View>
-          <View style={styles.headerRightPlaceholder} />
-        </View>
-
-        <View style={styles.headerTitleWrap}>
-          <View style={styles.headerTitleBlock}>
-            <View style={styles.headerSectionPill}>
-              <Text style={styles.headerSectionLabel}>
-                {t('learn.module.section', { number: sectionNumber })}
-              </Text>
-            </View>
-            <Text style={styles.headerTitle}>{submoduleData.title}</Text>
-          </View>
-        </View>
-
-        <View style={styles.headerDescriptionWrap}>
-          <Text style={styles.headerDescription}>
-            {submoduleData.description ||
-              t('learn.submodule.defaultDescription')}
-          </Text>
-        </View>
-      </View>
-
+    <View style={ui.screen}>
+      <TabHeader variant='minimal' />
       <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={ui.content}
         showsVerticalScrollIndicator={false}
       >
-        {sections.map((section, index) => renderSectionCard(section, index))}
-        <View style={{ height: 40 }} />
+        <LearnBack
+          title={moduleData?.title ?? t('learn.home.courses')}
+          onPress={() =>
+            router.replace({
+              pathname: '/(tabs)/Learn/modules/[moduleId]',
+              params: { moduleId },
+            })
+          }
+        />
+        <Text style={ui.title}>{submoduleData.title}</Text>
+        {submoduleData.description ? (
+          <Text style={ui.subtitle}>{submoduleData.description}</Text>
+        ) : null}
+        {!lessonStatus.loading && !lessonStatus.error && (
+          <View style={{ gap: 10 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 22,
+                fontWeight: '600',
+                color: categoryColor,
+              }}
+            >
+              {t('learn.home.completionSummary', {
+                completed: completedLessonCount,
+                total: courseLessons.length,
+              })}
+            </Text>
+            <View style={{ height: 6 }}>
+              <LearnProgress
+                color={categoryColor}
+                value={lessonCompletionPercent}
+                label={submoduleData.title}
+              />
+            </View>
+          </View>
+        )}
+        {!!submoduleData.intro_pages?.length && (
+          <TouchableOpacity
+            accessibilityRole='button'
+            style={ui.card}
+            onPress={() =>
+              router.push(
+                `/(tabs)/Learn/modules/${moduleId}/${submoduleId}/intro/1` as any
+              )
+            }
+          >
+            <Text style={ui.rowTitle}>{t('learn.module.introduction')}</Text>
+          </TouchableOpacity>
+        )}
+        <Text style={ui.heading}>{t('learn.segment.lessons')}</Text>
+        {lessonStatus.loading ? (
+          <ActivityIndicator accessibilityLabel={t('common.loading')} />
+        ) : lessonStatus.error ? (
+          <View style={{ gap: 12 }}>
+            <Text style={ui.meta}>{t('learn.errorLoadingLessons')}</Text>
+            <LearnRetry />
+            <TouchableOpacity
+              accessibilityRole='button'
+              onPress={lessonStatus.refresh}
+              style={{ minHeight: 44, justifyContent: 'center' }}
+            >
+              <Text style={ui.rowTitle}>{t('common.retry')}</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View
+            style={{
+              borderWidth: 1,
+              borderColor: '#E3E3E3',
+              borderRadius: 16,
+              overflow: 'hidden',
+            }}
+          >
+            {courseLessons.map((lesson, index) => {
+              const progress = lessonStatus.rows.find(
+                row => row.sanity_lesson_id === lesson._id
+              );
+              const done = Boolean(progress?.is_completed);
+              const active =
+                lesson._id === nextLessonId || progress?.is_in_progress;
+              return (
+                <React.Fragment key={lesson._id}>
+                  {index > 0 && <View style={ui.separator} />}
+                  <TouchableOpacity
+                    accessibilityRole='button'
+                    accessibilityLabel={`${lesson.title}. ${t(done ? 'learn.pathwayCard.done' : progress?.is_in_progress ? 'learn.home.started' : active ? 'learn.home.upNext' : 'common.start')}`}
+                    activeOpacity={0.65}
+                    style={[ui.row, { padding: 13, minHeight: 65 }]}
+                    onPress={() => {
+                      if (isResolvingLearnHref) return;
+                      if (
+                        index === 0 &&
+                        lessonStatus.rows.length === 0 &&
+                        submoduleData.intro_pages?.length
+                      ) {
+                        void handleLearnPress();
+                        return;
+                      }
+                      router.push(
+                        lessonResumeHref(
+                          moduleId,
+                          submoduleId,
+                          lesson._id,
+                          done ? undefined : progress
+                        ) as any
+                      );
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 14,
+                        borderWidth: done ? 0 : 2,
+                        borderColor: active ? categoryColor : '#D7D7DB',
+                        backgroundColor: done ? categoryColor : '#FFFFFF',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {done ? (
+                        <Feather name='check' size={15} color='#FFFFFF' />
+                      ) : active ? (
+                        <View
+                          style={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: 5,
+                            backgroundColor: categoryColor,
+                          }}
+                        />
+                      ) : (
+                        <Text style={ui.meta}>{index + 1}</Text>
+                      )}
+                    </View>
+                    <View style={ui.grow}>
+                      <Text style={ui.rowTitle}>{lesson.title}</Text>
+                      <Text style={ui.meta}>
+                        {t(
+                          done
+                            ? 'learn.pathwayCard.done'
+                            : progress?.is_in_progress
+                              ? 'learn.home.started'
+                              : active
+                                ? 'learn.home.upNext'
+                                : 'common.start'
+                        )}
+                      </Text>
+                    </View>
+                    {active && !done ? (
+                      <View style={ui.action}>
+                        <Text style={ui.actionText}>
+                          {t(
+                            progress?.is_in_progress
+                              ? 'common.continue'
+                              : 'common.start'
+                          )}
+                        </Text>
+                      </View>
+                    ) : (
+                      <Feather name='chevron-right' size={16} color='#999' />
+                    )}
+                  </TouchableOpacity>
+                </React.Fragment>
+              );
+            })}
+          </View>
+        )}
+        {sections
+          .filter(section => section.id !== 'learn')
+          .map(section => (
+            <TouchableOpacity
+              key={section.id}
+              accessibilityRole='button'
+              onPress={section.onPress}
+              style={[ui.card, ui.row]}
+            >
+              <Feather
+                name={section.iconName}
+                size={22}
+                color={categoryColor}
+              />
+              <View style={ui.grow}>
+                <Text style={ui.rowTitle}>{section.title}</Text>
+                <Text style={ui.meta}>{section.description}</Text>
+              </View>
+              <Feather name='chevron-right' size={18} color='#999' />
+            </TouchableOpacity>
+          ))}
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  pageContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  safe: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    paddingBottom: 8,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ECEDEF',
-    position: 'relative' as const,
-    overflow: 'hidden',
-  },
-  headerTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 8,
-  },
-  backButton: {
-    width: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitleWrap: {
-    paddingHorizontal: 16,
-    marginTop: 14,
-  },
-  headerTitleBlock: {
-    marginLeft: 16,
-    marginBottom: 8,
-  },
-  headerSectionPill: {
-    alignSelf: 'flex-start',
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#E6E9EE',
-    backgroundColor: '#F7F8FA',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    marginBottom: 8,
-  },
-  headerSectionLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#5A6270',
-    letterSpacing: 0.4,
-    textTransform: 'uppercase',
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#101114',
-    letterSpacing: -0.4,
-  },
-  headerDescriptionWrap: {
-    paddingHorizontal: 16,
-    marginTop: 2,
-    paddingBottom: 4,
-  },
-  headerDescription: {
-    fontSize: 15,
-    fontWeight: '400',
-    color: '#4B5563',
-    lineHeight: 22,
-    marginLeft: 16,
-    marginRight: 10,
-  },
-  headerCenterWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingBottom: 2,
-  },
-  headerModuleName: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#111111',
-    letterSpacing: -0.2,
-  },
-  headerRightPlaceholder: {
-    width: 44,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 8,
-    paddingLeft: 16,
-    paddingRight: 32,
-  },
-  sectionRow: {
-    flexDirection: 'row',
-    minHeight: 64,
-    paddingBottom: 16,
-  },
-  timelineColumn: {
-    width: TIMELINE_LEFT_WIDTH,
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  timelineContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  timelineGap: {
-    height: 16,
-    width: '100%',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: -16,
-  },
-  lineHalf: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-  },
-  lineSegment: {
-    width: LINE_WIDTH,
-    backgroundColor: '#D1D1D1',
-  },
-  lineDotted: {
-    width: LINE_WIDTH,
-    backgroundColor: '#D1D1D1',
-    opacity: 0.4,
-  },
-  dot: {
-    width: DOT_SIZE,
-    height: DOT_SIZE,
-    borderRadius: DOT_SIZE / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  card: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    marginLeft: 16,
-    borderWidth: 1,
-    borderColor: '#E5E5E5',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  cardOpened: {
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
-    transform: [{ scale: 1.01 }],
-  },
-  cardLocked: {
-    opacity: 0.5,
-  },
-  cardInner: {
-    minHeight: 0,
-  },
-  cardTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 1,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-  },
-  cardTitleOpened: {
-    color: '#FFFFFF',
-  },
-  cardIcon: {
-    color: '#7B8698',
-  },
-  cardIconOpened: {
-    color: '#FFFFFF',
-  },
-  sectionDescription: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#888888',
-    marginBottom: 0,
-  },
-  lessonCountOpened: {
-    color: 'rgba(255,255,255,0.85)',
-  },
-  sectionStatus: {
-    fontSize: 11,
-    fontWeight: '500',
-    color: '#9CA3AF',
-    marginTop: 4,
-  },
-  sectionStatusOpened: {
-    color: 'rgba(255,255,255,0.8)',
-  },
-  textLocked: {
-    color: '#AAAAAA',
-  },
-  startCtaWrap: {
-    marginTop: 8,
-  },
-  startCta: {
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startCtaText: {
-    fontSize: 13,
-    fontWeight: '600',
-  },
+  safe: { flex: 1, backgroundColor: '#FFFFFF' },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
+    gap: 16,
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-    marginTop: 12,
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#EF4444',
-    textAlign: 'center',
-  },
+  loadingText: { fontSize: 16, color: '#686464' },
+  errorText: { fontSize: 16, color: '#686464' },
 });

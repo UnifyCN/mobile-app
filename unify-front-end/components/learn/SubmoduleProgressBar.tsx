@@ -31,6 +31,9 @@ interface SubmoduleProgressBarProps {
    * gradient when omitted.
    */
   colorHex?: string;
+  lessonLayout?: boolean;
+  lessonPosition?: number;
+  lessonCount?: number;
 }
 
 // Convert a 6-char hex to an rgba-ish 8-char hex so we can render a
@@ -56,6 +59,9 @@ export default function SubmoduleProgressBar({
   isBookmarked = false,
   bookmarkLoading = false,
   colorHex,
+  lessonLayout = false,
+  lessonPosition,
+  lessonCount,
 }: SubmoduleProgressBarProps) {
   const { t } = useTranslation();
   const progressPercentage =
@@ -75,7 +81,10 @@ export default function SubmoduleProgressBar({
       <View style={styles.header}>
         <TouchableOpacity
           onPress={onClose}
-          style={styles.headerSide}
+          style={[
+            styles.headerSide,
+            lessonLayout && { width: 88, alignItems: 'flex-start' },
+          ]}
           accessibilityRole='button'
           accessibilityLabel={t('learn.lesson.closeLessonA11y')}
         >
@@ -83,10 +92,22 @@ export default function SubmoduleProgressBar({
         </TouchableOpacity>
 
         <Text style={styles.title} numberOfLines={2}>
-          {t('learn.module.section', { number: submoduleOrder })}: {submoduleTitle}
+          {lessonLayout
+            ? t('learn.structured.moduleNumber', { number: submoduleOrder })
+            : `${t('learn.module.section', { number: submoduleOrder })}: ${submoduleTitle}`}
         </Text>
 
-        <View style={styles.headerSide}>
+        <View
+          style={[
+            styles.headerSide,
+            lessonLayout && { width: 88, flexDirection: 'row', gap: 8 },
+          ]}
+        >
+          {lessonLayout && lessonPosition && lessonCount ? (
+            <Text style={{ fontSize: 13, color: '#777777' }}>
+              {lessonPosition} / {lessonCount}
+            </Text>
+          ) : null}
           {showBookmark ? (
             <TouchableOpacity
               onPress={onBookmarkPress}
@@ -94,7 +115,9 @@ export default function SubmoduleProgressBar({
               style={styles.bookmarkButton}
               accessibilityRole='button'
               accessibilityLabel={
-                isBookmarked ? t('learn.lesson.removeSavedPage') : t('learn.lesson.saveLessonPage')
+                isBookmarked
+                  ? t('learn.lesson.removeSavedPage')
+                  : t('learn.lesson.saveLessonPage')
               }
             >
               {bookmarkLoading ? (
@@ -113,16 +136,23 @@ export default function SubmoduleProgressBar({
       </View>
 
       <View style={styles.progressBarContainer}>
-        <View style={styles.progressBarBackground}>
-          <LinearGradient
-            colors={gradientColors as unknown as [string, string]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={[
-              styles.progressBarFill,
-              { width: `${Math.min(progressPercentage, 100)}%` },
-            ]}
-          />
+        <View
+          style={[
+            styles.progressBarBackground,
+            lessonLayout && { backgroundColor: '#33312D' },
+          ]}
+        >
+          {!lessonLayout ? (
+            <LinearGradient
+              colors={gradientColors as unknown as [string, string]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[
+                styles.progressBarFill,
+                { width: `${Math.min(progressPercentage, 100)}%` },
+              ]}
+            />
+          ) : null}
         </View>
       </View>
     </View>
@@ -134,14 +164,14 @@ const SIDE_WIDTH = 44;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    paddingTop: 30,
+    paddingTop: 0,
     marginBottom: 10,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingVertical: 4,
     paddingTop: '2%',
   },
   headerSide: {
@@ -151,11 +181,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bookmarkButton: {
+    minHeight: 44,
+    minWidth: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 4,
   },
   title: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '600',
     color: '#343434',
     textAlign: 'center',
@@ -165,7 +199,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   progressBarBackground: {
-    height: 6,
+    height: 2,
     backgroundColor: '#EEEEEE',
     borderRadius: 3,
     overflow: 'hidden',

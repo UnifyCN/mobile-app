@@ -1,3 +1,8 @@
+import {
+  isResumable,
+  lessonResumeHref,
+  ResumeProgress,
+} from '@/utils/lessonResume';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { progressClient } from '@/services/progress/progressClient';
 import { sanityClient } from '@/sanity-custom';
@@ -24,9 +29,10 @@ interface ContinueLesson {
   currentSection: number;
   totalSections: number;
   href: string;
+  isNext?: boolean;
 }
 
-interface LessonProgressRow {
+interface LessonProgressRow extends ResumeProgress {
   sanity_lesson_id: string;
   sanity_submodule_id: string;
   is_completed: boolean;
@@ -64,7 +70,7 @@ export function useInProgressLessons() {
         await progressClient
           .from('user_lesson_progress')
           .select(
-            'sanity_lesson_id,sanity_submodule_id,is_completed,is_in_progress,completed_pages,current_page_number,last_accessed_at'
+            'sanity_lesson_id,sanity_submodule_id,is_completed,is_in_progress,completed_pages,current_page_number,current_page_type,current_quiz_id,current_question_number,last_accessed_at'
           )
           .eq('user_id', user.id)
           .order('last_accessed_at', { ascending: false });
@@ -78,7 +84,7 @@ export function useInProgressLessons() {
       }
 
       // Fetch modules/submodules/lessons with compact page counts from Sanity
-      const modulesQuery = `*[_type == "module" && ${BASE_LANGUAGE_FILTER}] {
+      const modulesQuery = `*[_type == "module" && ${BASE_LANGUAGE_FILTER}] | order(order, _id) {
           _id,
           title,
           ${i18nOverlay('title')},
@@ -126,62 +132,53 @@ export function useInProgressLessons() {
       }
 
       const availableLessons: ContinueLesson[] = [];
+      const catalogLessons: ContinueLesson[] = [];
 
       for (const module of modulesData || []) {
-        let activeLesson: any = null;
-        let activeSubmodule: any = null;
+        for (const activeSubmodule of module.submodules || []) {
+          for (const activeLesson of activeSubmodule.lessons || []) {
+            const lessonProgress = progressByLessonId.get(activeLesson._id);
+            if (!getLessonTotalPages(activeLesson)) continue;
 
-        for (const submodule of module?.submodules || []) {
-          for (const lesson of submodule?.lessons || []) {
-            const lessonProgress = progressByLessonId.get(lesson._id);
-            const isCompleted = Boolean(lessonProgress?.is_completed);
+            const totalPages = getLessonTotalPages(activeLesson);
+            const progressPercent =
+              lessonProgress && totalPages > 0
+                ? Math.round(
+                    (lessonProgress.completed_pages / totalPages) * 100
+                  )
+                : 0;
 
-            // All lessons are unlocked: pick the first not completed lesson.
-            if (!isCompleted) {
-              activeLesson = lesson;
-              activeSubmodule = submodule;
-              break;
-            }
-          }
+            const currentPage = lessonProgress?.current_page_number || 1;
+            const submoduleIndex = (module.submodules || []).findIndex(
+              (s: any) => s._id === activeSubmodule._id
+            );
+            const currentSection = submoduleIndex >= 0 ? submoduleIndex + 1 : 1;
+            const totalSections = module.submodules?.length || 0;
 
-          if (activeLesson) {
-            break;
+            const candidate: ContinueLesson = {
+              id: activeLesson._id,
+              title: activeLesson.title || 'Untitled Lesson',
+              description: activeLesson.description || '',
+              moduleId: module._id,
+              moduleTitle: module.title || 'Unknown Module',
+              submoduleId: activeSubmodule._id,
+              submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
+              currentPage,
+              totalPages,
+              progressPercent,
+              currentSection,
+              totalSections,
+              href: lessonResumeHref(
+                module._id,
+                activeSubmodule._id,
+                activeLesson._id,
+                lessonProgress
+              ),
+            };
+            catalogLessons.push(candidate);
+            if (isResumable(lessonProgress)) availableLessons.push(candidate);
           }
         }
-
-        if (!activeLesson || !activeSubmodule) {
-          continue;
-        }
-
-        const lessonProgress = progressByLessonId.get(activeLesson._id);
-        const totalPages = getLessonTotalPages(activeLesson);
-        const progressPercent =
-          lessonProgress && totalPages > 0
-            ? Math.round((lessonProgress.completed_pages / totalPages) * 100)
-            : 0;
-
-        const currentPage = lessonProgress?.current_page_number || 1;
-        const submoduleIndex = (module.submodules || []).findIndex(
-          (s: any) => s._id === activeSubmodule._id
-        );
-        const currentSection = submoduleIndex >= 0 ? submoduleIndex + 1 : 1;
-        const totalSections = module.submodules?.length || 0;
-
-        availableLessons.push({
-          id: activeLesson._id,
-          title: activeLesson.title || 'Untitled Lesson',
-          description: activeLesson.description || '',
-          moduleId: module._id,
-          moduleTitle: module.title || 'Unknown Module',
-          submoduleId: activeSubmodule._id,
-          submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
-          currentPage,
-          totalPages,
-          progressPercent,
-          currentSection,
-          totalSections,
-          href: `/(tabs)/Learn/modules/${module._id}/${activeSubmodule._id}/lessons/${activeLesson._id}/pages/${currentPage}` as any,
-        });
       }
 
       // Sort by most recently accessed using O(1) lookups.
@@ -196,6 +193,27 @@ export function useInProgressLessons() {
         return new Date(bAccess).getTime() - new Date(aAccess).getTime();
       });
 
+      if (!inProgressLessons.length) {
+        const latest = progressRows.find(row =>
+          catalogLessons.some(lesson => lesson.id === row.sanity_lesson_id)
+        );
+        const pivot = catalogLessons.findIndex(
+          lesson => lesson.id === latest?.sanity_lesson_id
+        );
+        const ordered = [
+          ...catalogLessons.slice(pivot + 1),
+          ...catalogLessons.slice(0, pivot + 1),
+        ];
+        const next = ordered.find(
+          lesson => !progressByLessonId.get(lesson.id)?.is_completed
+        );
+        if (next)
+          inProgressLessons.push({
+            ...next,
+            isNext: true,
+            href: lessonResumeHref(next.moduleId, next.submoduleId, next.id),
+          });
+      }
       if (isLatestRequest()) setLessons(inProgressLessons);
     } catch (error) {
       if (isLatestRequest()) {

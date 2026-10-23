@@ -88,27 +88,25 @@ export default function RichTextRenderer({
 
   if (!blocks || !Array.isArray(blocks)) return null;
 
-  // Create numbering map for ordered lists (keep prev behavior)
-  const createNumberingMap = (blocks: any[]) => {
-    const numberingMap: { [key: string]: number } = {};
-    let currentNumber = 1;
-    let inOrderedList = false;
-
-    blocks.forEach((block, index) => {
-      if (block._type === 'block' && block.listItem === 'number') {
-        if (!inOrderedList) {
-          currentNumber = 1;
-          inOrderedList = true;
-        }
-        numberingMap[block._key || index] = currentNumber;
-        currentNumber++;
-      } else if (block._type === 'block' && !block.listItem) {
-        inOrderedList = false;
-        currentNumber = 1;
+  // Count each nesting level independently; child descriptions do not consume parent numbers.
+  const createNumberingMap = (items: any[]) => {
+    const map: Record<string, number> = {};
+    const counters: Record<number, number> = {};
+    items.forEach((block, index) => {
+      if (block._type !== 'block' || !block.listItem) {
+        Object.keys(counters).forEach(key => delete counters[Number(key)]);
+        return;
       }
+      const level = block.level || 1;
+      Object.keys(counters).forEach(key => {
+        if (Number(key) > level) delete counters[Number(key)];
+      });
+      if (block.listItem === 'number') {
+        counters[level] = (counters[level] || 0) + 1;
+        map[block._key || index] = counters[level];
+      } else delete counters[level];
     });
-
-    return numberingMap;
+    return map;
   };
 
   const numberingMap = createNumberingMap(blocks);
@@ -838,6 +836,8 @@ export default function RichTextRenderer({
     }
 
     if (block._type === 'image') {
+      // An empty decorative image is an authoring placeholder, not learner content.
+      if (!block.asset?._ref) return null;
       const imageUrl = block.asset?._ref
         ? `https://cdn.sanity.io/images/fercgabp/production/${block.asset._ref
             .replace('image-', '')
@@ -854,17 +854,44 @@ export default function RichTextRenderer({
                 setSelectedImage(imageUrl);
               }}
               activeOpacity={0.9}
+              accessibilityRole='button'
+              accessibilityLabel={block.alt || t('learn.lesson.openImage')}
+              accessibilityHint={t('learn.lesson.openImage')}
             >
               <ExpoImage
                 source={imageUrl}
-                style={mergedStyles.image}
-                contentFit='cover'
+                style={[
+                  mergedStyles.image,
+                  {
+                    height: undefined,
+                    aspectRatio: (() => {
+                      const dimensions =
+                        block.asset._ref.match(/-(\d+)x(\d+)-/);
+                      return dimensions
+                        ? Number(dimensions[1]) / Number(dimensions[2])
+                        : 1;
+                    })(),
+                  },
+                ]}
+                contentFit='contain'
                 cachePolicy='memory-disk'
               />
+              <Text
+                style={{
+                  fontSize: 14,
+                  lineHeight: 20,
+                  color: '#535353',
+                  marginBottom: 12,
+                }}
+              >
+                {t('learn.lesson.openImage')}
+              </Text>
             </TouchableOpacity>
           ) : (
             <View style={mergedStyles.imagePlaceholder}>
-              <Text style={mergedStyles.imagePlaceholderText}>{t('learn.lesson.imagePlaceholder')}</Text>
+              <Text style={mergedStyles.imagePlaceholderText}>
+                {t('learn.lesson.imagePlaceholder')}
+              </Text>
             </View>
           )}
         </View>
@@ -897,7 +924,9 @@ export default function RichTextRenderer({
       // keep your current example override
       return (
         <View key={block._key || index} style={mergedStyles.exampleBox}>
-          <Text style={mergedStyles.exampleBoxTitle}>{t('learn.lesson.example')}</Text>
+          <Text style={mergedStyles.exampleBoxTitle}>
+            {t('learn.lesson.example')}
+          </Text>
           <RichTextRenderer
             blocks={block.content || []}
             markDefs={markDefs}
@@ -1702,7 +1731,7 @@ const styles = StyleSheet.create({
     borderColor: '#DCDCDC',
     borderRadius: 8,
     padding: 16,
-    minWidth: 170,
+    minWidth: 0,
     minHeight: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1828,5 +1857,4 @@ const styles = StyleSheet.create({
     borderTopColor: '#E5E7EB',
     width: '100%',
   },
-
 });

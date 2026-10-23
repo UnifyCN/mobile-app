@@ -1,3 +1,8 @@
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import { saveLessonReview } from '@/services/learn/lessonReviews';
+import StructuredLesson from '@/components/learn/StructuredLesson';
+import LearnRetry from '@/components/learn/LearnRetry';
+import { saveResumePosition } from '@/services/progress/progressService';
 import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
@@ -10,6 +15,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -49,6 +56,7 @@ export default function EndingPageScreen() {
   const { trackScreen, trackLessonCompleted } = useAnalytics();
   const [showExitModal, setShowExitModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const operationPending = useRef(false);
 
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
@@ -96,6 +104,21 @@ export default function EndingPageScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      if (
+        !operationPending.current &&
+        currentPageData &&
+        lessonId &&
+        submoduleId &&
+        moduleId
+      ) {
+        void saveResumePosition(
+          lessonId,
+          submoduleId,
+          moduleId,
+          'ending',
+          currentPage
+        );
+      }
       const now = Date.now();
       const pageKey = `${lessonId}-${currentPage}`;
       // Only track if: data is loaded, throttle passed, AND this is a different page than last tracked
@@ -110,7 +133,16 @@ export default function EndingPageScreen() {
         lastTrackedRef.current = now;
         lastTrackedPageRef.current = pageKey;
       }
-    }, [lessonTitle, lessonId, currentPage, totalPages, trackScreen])
+    }, [
+      lessonTitle,
+      lessonId,
+      submoduleId,
+      moduleId,
+      currentPageData?._key,
+      currentPage,
+      totalPages,
+      trackScreen,
+    ])
   );
 
   // Helper functions for sequential navigation
@@ -130,15 +162,43 @@ export default function EndingPageScreen() {
     return currentIndex === (submoduleData?.lessons?.length || 0) - 1;
   };
 
-  const handleSaveAndLeave = () => {
-    setShowExitModal(false);
-    router.push({
-      pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-      params: { moduleId, submoduleId },
-    });
+  const runSaveOperation = async (action: () => Promise<void>) => {
+    if (operationPending.current) return;
+    operationPending.current = true;
+    setIsSaving(true);
+    try {
+      await action();
+    } catch {
+      Alert.alert(t('common.somethingWentWrong'), t('common.tryAgain'));
+    } finally {
+      operationPending.current = false;
+      setIsSaving(false);
+    }
   };
 
+  const persistCurrentPosition = async () => {
+    const saved = await saveResumePosition(
+      lessonId,
+      submoduleId,
+      moduleId,
+      'ending',
+      currentPage
+    );
+    if (!saved) throw new Error('Ending resume save failed');
+  };
+
+  const handleSaveAndLeave = () =>
+    runSaveOperation(async () => {
+      await persistCurrentPosition();
+      setShowExitModal(false);
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
+        params: { moduleId, submoduleId },
+      });
+    });
+
   const handleContinue = () => {
+    if (operationPending.current) return;
     setShowExitModal(false);
   };
 
@@ -153,23 +213,15 @@ export default function EndingPageScreen() {
     // other save site so completed_pages / total_pages is stable.
     const totalAllPages = getLessonTotalPages(lesson, quizzes);
 
-    setIsSaving(true);
-    let didSave = false;
-    try {
-      didSave = await saveLessonCompletion(
-        lessonId || '',
-        submoduleId || '',
-        moduleId || '',
-        totalAllPages
-      );
-    } finally {
-      setIsSaving(false);
-    }
-
-    if (!didSave) {
-      Alert.alert(t('common.somethingWentWrong'), t('common.tryAgain'));
-      return;
-    }
+    await persistCurrentPosition();
+    const didSave = await saveLessonCompletion(
+      lessonId || '',
+      submoduleId || '',
+      moduleId || '',
+      totalAllPages
+    );
+    if (!didSave) throw new Error('Lesson completion save failed');
+    setShowReviewModal(false);
 
     // Navigate: either back to submodule index (last lesson) or to next lesson
     if (isLastLesson()) {
@@ -195,6 +247,7 @@ export default function EndingPageScreen() {
   };
 
   const handleNext = async () => {
+    if (operationPending.current) return;
     if (currentPage < totalPages) {
       // Go to next ending page
       router.push({
@@ -216,6 +269,7 @@ export default function EndingPageScreen() {
   };
 
   const handleBack = () => {
+    if (operationPending.current) return;
     if (currentPage > 1) {
       // Go to previous ending page
       router.push({
@@ -278,17 +332,14 @@ export default function EndingPageScreen() {
 
   // --- review actions ---
   const handleSubmitReview = () => {
-    // TODO: here you could POST {rating, comment}
-    setShowReviewModal(false);
-    // Fire the async completion — we don't need to block this handler, the
-    // helper itself awaits the upsert before navigating.
-    void completeLessonAndNavigate();
+    if (!rating) return;
+    return runSaveOperation(async () => {
+      await saveLessonReview(lessonId, rating, comment);
+      await completeLessonAndNavigate();
+    });
   };
 
-  const handleSkipReview = () => {
-    setShowReviewModal(false);
-    void completeLessonAndNavigate();
-  };
+  const handleSkipReview = () => runSaveOperation(completeLessonAndNavigate);
 
   if (loadingLesson || quizzesLoading || submoduleLoading) {
     return (
@@ -311,6 +362,7 @@ export default function EndingPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.lesson.errorLoadingEnding')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -320,30 +372,29 @@ export default function EndingPageScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={submoduleData?.title || 'Submodule'}
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Page title */}
-        <Text style={styles.pageTitle}>{currentPageData.title}</Text>
-
-        {/* Page contents */}
-        <View style={styles.content}>
-          <RichTextRenderer
-            blocks={currentPageData.content || []}
-            markDefs={currentPageData.markDefs}
-            styles={{ normal: styles.contentText }}
-          />
-        </View>
-      </ScrollView>
+      <StructuredLesson
+        key={`${submoduleId}-${currentPage}`}
+        title={currentPageData.title || ''}
+        sections={[
+          {
+            _key: currentPageData._key || 'content',
+            _type: 'lessonConcept',
+            content: currentPageData.content || [],
+          },
+        ]}
+        markDefs={currentPageData.markDefs}
+        highlights={[]}
+        onScrollBeginDrag={() => {}}
+      />
 
       {/* Navigation buttons - anchored at bottom */}
       <View style={styles.navigationContainer}>
@@ -354,7 +405,7 @@ export default function EndingPageScreen() {
         <TouchableOpacity
           style={[
             styles.nextBtn,
-            { backgroundColor: moduleData?.colorTheme?.hex || '#1A1919' },
+            { backgroundColor: '#191919' },
             isSaving && styles.nextBtnDisabled,
           ]}
           onPress={handleNext}
@@ -369,7 +420,7 @@ export default function EndingPageScreen() {
         visible={showExitModal}
         transparent
         animationType='fade'
-        onRequestClose={() => setShowExitModal(false)}
+        onRequestClose={handleContinue}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
@@ -382,6 +433,7 @@ export default function EndingPageScreen() {
 
             <TouchableOpacity
               style={styles.modalPrimaryBtn}
+              disabled={isSaving}
               onPress={handleSaveAndLeave}
             >
               <Text style={styles.modalPrimaryBtnText}>
@@ -391,6 +443,7 @@ export default function EndingPageScreen() {
 
             <TouchableOpacity
               style={styles.modalSecondaryBtn}
+              disabled={isSaving}
               onPress={handleContinue}
             >
               <Text style={styles.modalSecondaryBtnText}>
@@ -408,10 +461,19 @@ export default function EndingPageScreen() {
         animationType='slide'
         onRequestClose={handleSkipReview}
       >
-        <TouchableWithoutFeedback onPress={handleSkipReview}>
-          <View style={styles.reviewOverlay}>
-            <TouchableWithoutFeedback onPress={() => {}}>
-              <View style={styles.reviewContainer}>
+        <TouchableWithoutFeedback accessible={false} onPress={handleSkipReview}>
+          <KeyboardAvoidingView
+            style={styles.reviewOverlay}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <TouchableWithoutFeedback accessible={false} onPress={() => {}}>
+              <ScrollView
+                style={{ maxHeight: '90%', flexGrow: 0 }}
+                contentContainerStyle={styles.reviewContainer}
+                keyboardShouldPersistTaps='handled'
+                keyboardDismissMode='interactive'
+                accessibilityViewIsModal
+              >
                 <View style={styles.reviewHandle} />
 
                 <Text style={styles.reviewTitle}>
@@ -433,7 +495,16 @@ export default function EndingPageScreen() {
                     return (
                       <TouchableOpacity
                         key={i}
+                        accessibilityRole='radio'
+                        accessibilityLabel={t('learn.lesson.reviewRating', {
+                          count: i,
+                        })}
+                        accessibilityState={{
+                          checked: rating === i,
+                          disabled: isSaving,
+                        }}
                         activeOpacity={0.8}
+                        disabled={isSaving}
                         onPress={() => setRating(i)}
                         style={styles.starTouch}
                       >
@@ -455,9 +526,12 @@ export default function EndingPageScreen() {
                   <View style={styles.commentBox}>
                     <TextInput
                       style={styles.commentInput}
+                      accessibilityLabel={t('learn.lesson.reviewPlaceholder')}
                       multiline
                       placeholder={t('learn.lesson.reviewPlaceholder')}
                       placeholderTextColor='#878787'
+                      maxLength={2000}
+                      editable={!isSaving}
                       value={comment}
                       onChangeText={setComment}
                       textAlignVertical='top'
@@ -474,15 +548,21 @@ export default function EndingPageScreen() {
                         moduleData?.colorTheme?.hex || Theme.primaryGatherRed,
                     },
                   ]}
+                  accessibilityRole='button'
+                  accessibilityState={{
+                    disabled: isSaving || rating === null,
+                    busy: isSaving,
+                  }}
+                  disabled={isSaving || rating === null}
                   onPress={handleSubmitReview}
                 >
                   <Text style={styles.reviewSubmitText}>
                     {t('common.submit')}
                   </Text>
                 </TouchableOpacity>
-              </View>
+              </ScrollView>
             </TouchableWithoutFeedback>
-          </View>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </Modal>
     </SafeAreaView>
@@ -532,10 +612,7 @@ const styles = StyleSheet.create({
 
   // Navigation styles
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,

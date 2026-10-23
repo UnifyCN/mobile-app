@@ -1,3 +1,5 @@
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
@@ -233,6 +235,7 @@ export default function PracticeQuizQuestionPage() {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorText}>{t('learn.practice.failedToLoad')}</Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -240,6 +243,7 @@ export default function PracticeQuizQuestionPage() {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorText}>{t('learn.quiz.questionNotFound')}</Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -464,6 +468,7 @@ export default function PracticeQuizQuestionPage() {
   return (
     <SafeAreaView style={styles.container}>
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={
@@ -471,7 +476,7 @@ export default function PracticeQuizQuestionPage() {
         }
         submoduleOrder={submoduleData?.order ?? 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
       <ScrollView
         style={styles.scrollView}
@@ -482,6 +487,7 @@ export default function PracticeQuizQuestionPage() {
           <View style={styles.questionContainer}>
             <View style={styles.questionContent}>
               <RichTextRenderer
+                compactContainer
                 blocks={currentQuestion.question_text || []}
                 markDefs={currentQuestion.questionMarkDefs}
                 styles={{
@@ -621,6 +627,7 @@ export default function PracticeQuizQuestionPage() {
                         </View>
                         <View style={styles.optionContent}>
                           <RichTextRenderer
+                            compactContainer
                             blocks={option.text || []}
                             markDefs={option.textMarkDefs}
                             styles={{
@@ -645,6 +652,7 @@ export default function PracticeQuizQuestionPage() {
             currentQuestion.answer_box.showAfterSubmit && (
               <View style={styles.answerBoxContainer}>
                 <RichTextRenderer
+                  compactContainer
                   blocks={currentQuestion.answer_box.content || []}
                   markDefs={currentQuestion.answer_box.markDefs}
                   styles={{
@@ -689,9 +697,7 @@ export default function PracticeQuizQuestionPage() {
           style={[
             styles.checkButton,
             {
-              backgroundColor: isDisabled
-                ? '#F3F4F6'
-                : moduleData?.colorTheme?.hex || '#575757',
+              backgroundColor: isDisabled ? '#F3F4F6' : '#191919',
             },
           ]}
           onPress={handleNext}
@@ -758,7 +764,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 24,
   },
   loadingContainer: {
     flex: 1,
@@ -787,19 +793,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   quizTitle: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: '700',
     color: '#000',
     marginBottom: 12,
-    lineHeight: 38,
-    textAlign: 'center',
+    lineHeight: 40,
+    textAlign: 'left',
   },
   questionContainer: {
     gap: 15,
   },
   questionContent: {
-    marginBottom: 24,
-    alignItems: 'center',
+    marginBottom: 12,
+    alignItems: 'stretch',
   },
   optionsContainer: {
     gap: 17,
@@ -901,10 +907,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -914,21 +917,25 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backButton: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D7D7D7',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
   backButtonText: {
-    color: '#6B7280',
+    color: '#191919',
     fontSize: 16,
     fontWeight: '600',
   },
   checkButton: {
     backgroundColor: '#575757',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
@@ -958,7 +965,7 @@ const styles = StyleSheet.create({
     borderColor: '#DCDCDC',
     borderRadius: 8,
     padding: 16,
-    minWidth: 170,
+    minWidth: 0,
     minHeight: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1003,18 +1010,12 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   answerBoxContainer: {
-    backgroundColor: 'transparent',
-    borderLeftWidth: 5,
-    borderLeftColor: '#3F3F3F',
-    paddingLeft: 15,
-    paddingRight: 0,
-    paddingVertical: 0,
-    alignSelf: 'center',
-    width: 353,
-    maxWidth: '100%',
-    minHeight: 80,
-    marginTop: 20,
-    marginBottom: 30,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 14,
+    padding: 14,
+    alignSelf: 'stretch',
+    marginTop: 16,
+    marginBottom: 16,
   },
   modalOverlay: {
     flex: 1,

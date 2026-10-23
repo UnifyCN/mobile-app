@@ -1,3 +1,5 @@
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, {
   useState,
   useEffect,
@@ -14,6 +16,7 @@ import {
   ScrollView,
   Modal,
   Alert,
+  TextInput,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useSanityQuizQuestions } from '@/hooks/sanity/useSanityQuizzes';
@@ -40,30 +43,7 @@ import { useAnalytics } from '@/utils/analytics';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-// Grade a single/multiple-choice answer for a given question. Module-level so it
-// can be used both in the render body and inside the attempt-resolution effect
-// (which flushes a selection made before the attempt id was ready).
-function gradeQuizAnswer(question: any, answer: string | string[]): boolean {
-  if (!question) return false;
-  if (question.question_type === 'multiple_choice_multiple') {
-    const correctIds = (
-      question.options?.filter((o: any) => o.is_correct) || []
-    ).map((o: any) => o._key);
-    const arr = Array.isArray(answer) ? answer : [];
-    return (
-      correctIds.length > 0 &&
-      correctIds.every((id: string) => arr.includes(id)) &&
-      arr.every((id: string) => correctIds.includes(id))
-    );
-  }
-  const correctAnswerId =
-    question.correct_answer?.value?.[0] || question.correct_answer?.value;
-  const single = Array.isArray(answer) ? answer[0] : answer;
-  return (
-    single === correctAnswerId ||
-    !!question.options?.find((o: any) => o._key === single)?.is_correct
-  );
-}
+import { gradeQuizAnswer } from '@/utils/gradeQuizAnswer';
 
 export default function QuizQuestionPage() {
   const { moduleId, submoduleId, lessonId, quizId, questionNum } =
@@ -317,6 +297,7 @@ export default function QuizQuestionPage() {
         <Text style={styles.errorText}>
           {t('learn.quiz.errorLoadingQuestion')}
         </Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -361,6 +342,7 @@ export default function QuizQuestionPage() {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorText}>{t('learn.quiz.questionNotFound')}</Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -550,40 +532,12 @@ export default function QuizQuestionPage() {
         });
       }
     } else if (!hasSubmitted) {
-      // First submission - check if answer is correct
-      let isAnswerCorrect = false;
-
-      if (currentQuestion.question_type === 'multiple_choice_multiple') {
-        // For multiple choice multiple, check if all correct options are selected and no incorrect ones
-        const correctOptions =
-          currentQuestion.options?.filter((opt: any) => opt.is_correct) || [];
-        const correctOptionIds = correctOptions.map((opt: any) => opt._key);
-
-        // Check if all correct options are selected and no incorrect ones
-        const hasAllCorrect = correctOptionIds.every((id: string) =>
-          selectedAnswers.includes(id)
-        );
-        const hasNoIncorrect = selectedAnswers.every((id: string) =>
-          correctOptionIds.includes(id)
-        );
-
-        isAnswerCorrect =
-          hasAllCorrect && hasNoIncorrect && selectedAnswers.length > 0;
-      } else {
-        // Single choice logic
-        const correctAnswerId =
-          currentQuestion.correct_answer?.value?.[0] ||
-          currentQuestion.correct_answer?.value;
-        // `options` and a matching option are both optional in Sanity. Coerce
-        // the resulting boolean | undefined to the boolean UI state contract.
-        isAnswerCorrect = Boolean(
-          selectedAnswer === correctAnswerId ||
-            currentQuestion.options?.find(opt => opt._key === selectedAnswer)
-              ?.is_correct
-        );
-      }
-
-      setIsCorrect(isAnswerCorrect);
+      const answer =
+        currentQuestion.question_type === 'multiple_choice_multiple'
+          ? selectedAnswers
+          : selectedAnswer || '';
+      setIsCorrect(gradeQuizAnswer(currentQuestion, answer));
+      persistSelection(answer);
       setHasSubmitted(true);
     } else {
       // Already submitted and correct - proceed to next
@@ -704,7 +658,12 @@ export default function QuizQuestionPage() {
       router.push({
         pathname:
           '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum]' as any,
-        params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+        params: {
+          moduleId,
+          submoduleId,
+          lessonId,
+          pageNum: String(Math.max(1, lesson.pages?.length || 0)),
+        },
       });
     }
   };
@@ -713,12 +672,13 @@ export default function QuizQuestionPage() {
     <SafeAreaView style={styles.container}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={submoduleData?.title || 'Submodule'}
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -735,6 +695,7 @@ export default function QuizQuestionPage() {
           <View style={styles.questionContainer}>
             <View style={styles.questionContent}>
               <RichTextRenderer
+                compactContainer
                 blocks={currentQuestion.question_text || []}
                 markDefs={currentQuestion.questionMarkDefs}
                 styles={{
@@ -742,7 +703,7 @@ export default function QuizQuestionPage() {
                     fontSize: 18,
                     color: '#000',
                     lineHeight: 27,
-                    textAlign: 'center',
+                    textAlign: 'left',
                   },
                 }}
               />
@@ -833,6 +794,42 @@ export default function QuizQuestionPage() {
                   </Text>
                 </TouchableOpacity>
               </View>
+            ) : currentQuestion.question_type === 'short_answer' ? (
+              <View style={{ gap: 12 }}>
+                <TextInput
+                  accessibilityLabel={t('learn.quiz.yourAnswer')}
+                  placeholder={t('learn.quiz.yourAnswer')}
+                  value={selectedAnswer || ''}
+                  onChangeText={value => {
+                    answerTouchedRef.current = true;
+                    setSelectedAnswer(value);
+                    setHasSubmitted(false);
+                  }}
+                  onBlur={() => persistSelection(selectedAnswer || '')}
+                  editable={!hasSubmitted || !isCorrect}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#B8B8B8',
+                    borderRadius: 12,
+                    padding: 14,
+                    fontSize: 18,
+                    lineHeight: 27,
+                    color: '#191919',
+                  }}
+                />
+                {hasSubmitted && (
+                  <Text
+                    accessibilityLiveRegion='polite'
+                    style={{ fontSize: 18, lineHeight: 27 }}
+                  >
+                    {t(
+                      isCorrect
+                        ? 'learn.structured.correct'
+                        : 'learn.structured.tryAgain'
+                    )}
+                  </Text>
+                )}
+              </View>
             ) : (
               <View style={styles.optionsContainer}>
                 {(currentQuestion.options || []).map((option: any) => {
@@ -886,6 +883,7 @@ export default function QuizQuestionPage() {
                         </View>
                         <View style={styles.optionContent}>
                           <RichTextRenderer
+                            compactContainer
                             blocks={option.text || []}
                             markDefs={option.textMarkDefs}
                             styles={{
@@ -911,6 +909,7 @@ export default function QuizQuestionPage() {
             currentQuestion.answer_box.showAfterSubmit && (
               <View style={styles.answerBoxContainer}>
                 <RichTextRenderer
+                  compactContainer
                   blocks={currentQuestion.answer_box.content || []}
                   markDefs={currentQuestion.answer_box.markDefs}
                   styles={{
@@ -963,10 +962,10 @@ export default function QuizQuestionPage() {
                     (currentQuestion.matching_pairs?.length || 0)
                   : currentQuestion.question_type === 'multiple_choice_multiple'
                     ? selectedAnswers.length === 0
-                    : !selectedAnswer
+                    : !selectedAnswer?.trim()
               )
                 ? '#F3F4F6'
-                : moduleData?.colorTheme?.hex || '#575757',
+                : '#191919',
             },
           ]}
           onPress={handleNext}
@@ -976,7 +975,7 @@ export default function QuizQuestionPage() {
                 (currentQuestion.matching_pairs?.length || 0)
               : currentQuestion.question_type === 'multiple_choice_multiple'
                 ? selectedAnswers.length === 0
-                : !selectedAnswer
+                : !selectedAnswer?.trim()
           }
         >
           <Text
@@ -987,7 +986,7 @@ export default function QuizQuestionPage() {
                   (currentQuestion.matching_pairs?.length || 0)
                 : currentQuestion.question_type === 'multiple_choice_multiple'
                   ? selectedAnswers.length === 0
-                  : !selectedAnswer) && styles.checkButtonTextDisabled,
+                  : !selectedAnswer?.trim()) && styles.checkButtonTextDisabled,
             ]}
           >
             {currentQuestion.question_type === 'matching'
@@ -1057,7 +1056,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 24,
   },
   loadingContainer: {
     flex: 1,
@@ -1130,19 +1129,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   quizTitle: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: '700',
     color: '#000',
     marginBottom: 12,
-    lineHeight: 38,
-    textAlign: 'center',
+    lineHeight: 40,
+    textAlign: 'left',
   },
   questionContainer: {
     gap: 15,
   },
   questionContent: {
-    marginBottom: 24,
-    alignItems: 'center',
+    marginBottom: 12,
+    alignItems: 'stretch',
   },
   questionText: {
     fontSize: 25,
@@ -1249,10 +1248,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -1262,21 +1258,25 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backButton: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D7D7D7',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
   backButtonText: {
-    color: '#6B7280',
+    color: '#191919',
     fontSize: 16,
     fontWeight: '600',
   },
   checkButton: {
     backgroundColor: '#575757',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
@@ -1317,7 +1317,7 @@ const styles = StyleSheet.create({
     borderColor: '#DCDCDC',
     borderRadius: 8,
     padding: 16,
-    minWidth: 170,
+    minWidth: 0,
     minHeight: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1362,18 +1362,12 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
   },
   answerBoxContainer: {
-    backgroundColor: 'transparent',
-    borderLeftWidth: 5,
-    borderLeftColor: '#3F3F3F',
-    paddingLeft: 15,
-    paddingRight: 0,
-    paddingVertical: 0,
-    alignSelf: 'center',
-    width: 353,
-    maxWidth: '100%',
-    minHeight: 80,
-    marginTop: 20,
-    marginBottom: 30,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 14,
+    padding: 14,
+    alignSelf: 'stretch',
+    marginTop: 16,
+    marginBottom: 16,
   },
 
   // Modal styles
