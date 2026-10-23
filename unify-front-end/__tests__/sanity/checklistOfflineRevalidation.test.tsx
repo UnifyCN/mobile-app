@@ -9,8 +9,8 @@ jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
 jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
-      // Offline: the stored session is readable, but getUser() needs the
-      // network and resolves with a null user.
+      // Offline with an unexpired stored session: getSession() reads it from
+      // storage, but getUser() needs the network and resolves with a null user.
       getSession: jest.fn().mockResolvedValue({
         data: { session: { user: { id: 'user-1' } } },
         error: null,
