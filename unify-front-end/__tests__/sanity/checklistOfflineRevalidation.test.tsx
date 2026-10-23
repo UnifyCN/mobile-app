@@ -9,7 +9,16 @@ jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
 jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
-      getUser: jest.fn().mockResolvedValue({ data: { user: { id: 'user-1' } } }),
+      // Offline with an unexpired stored session: getSession() reads it from
+      // storage, but getUser() needs the network and resolves with a null user.
+      getSession: jest.fn().mockResolvedValue({
+        data: { session: { user: { id: 'user-1' } } },
+        error: null,
+      }),
+      getUser: jest.fn().mockResolvedValue({
+        data: { user: null },
+        error: new Error('Network request failed'),
+      }),
     },
     from: jest.fn(() => ({
       select: jest.fn(() => ({
@@ -26,6 +35,7 @@ jest.mock('@/sanity-custom', () => ({
 }));
 
 import { sanityClient } from '@/sanity-custom';
+import { supabase } from '@/lib/supabase';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
 import {
   buildChecklistCacheStorageKey,
@@ -117,6 +127,8 @@ describe('checklist offline revalidation', () => {
     await waitFor(() => expect(result.current.error).toContain('offline'));
     expect(result.current.tasks).toEqual(cachedTasks);
     await expect(loadChecklistFromDisk(key)).resolves.toEqual(cachedTasks);
+    // The user ID comes from the stored session, not a network lookup.
+    expect(supabase.auth.getUser).not.toHaveBeenCalled();
 
     unmount();
     client.clear();
