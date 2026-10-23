@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Alert,
   Dimensions,
@@ -292,10 +298,14 @@ export default function ChecklistScreen() {
       setTasks(prev => replacePriorityBucket(prev, priority, reorderedBucket));
 
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) throw new Error('Missing authenticated user');
 
-        const orderedKeys = reorderedBucket.map(t => getChecklistTaskOrderKey(t));
+        const orderedKeys = reorderedBucket.map(t =>
+          getChecklistTaskOrderKey(t)
+        );
         await upsertChecklistTaskOrder(user.id, priority, orderedKeys);
       } catch (err) {
         console.error('Failed to persist checklist order:', err);
@@ -343,11 +353,19 @@ export default function ChecklistScreen() {
     if (resolvedTab && TAB_SLUG_TO_ROUTE[resolvedTab]) {
       router.push(TAB_SLUG_TO_ROUTE[resolvedTab] as any);
     } else if (linkSubmoduleId && linkModuleId) {
-      router.push(
-        `/(tabs)/Learn/modules/${linkModuleId}/${linkSubmoduleId}` as any
-      );
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
+        params: {
+          moduleId: linkModuleId,
+          submoduleId: linkSubmoduleId,
+          origin: 'checklist',
+        },
+      });
     } else if (linkModuleId) {
-      router.push(`/(tabs)/Learn/modules/${linkModuleId}` as any);
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
+        params: { moduleId: linkModuleId, origin: 'checklist' },
+      });
     } else {
       router.push('/(tabs)/Learn');
     }
@@ -428,37 +446,41 @@ export default function ChecklistScreen() {
     const customTaskId = selectedTask.custom_task_id;
     if (!customTaskId) return;
 
-    Alert.alert(t('checklist.deleteItemTitle'), t('checklist.deleteItemMessage'), [
-      { text: t('common.cancel'), style: 'cancel' },
-      {
-        text: t('common.delete'),
-        style: 'destructive',
-        onPress: async () => {
-          const prevTasks = tasks;
-          try {
-            const {
-              data: { user },
-            } = await supabase.auth.getUser();
-            if (!user) return;
+    Alert.alert(
+      t('checklist.deleteItemTitle'),
+      t('checklist.deleteItemMessage'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            const prevTasks = tasks;
+            try {
+              const {
+                data: { user },
+              } = await supabase.auth.getUser();
+              if (!user) return;
 
-            setTasks(prev =>
-              prev.filter(task => task.custom_task_id !== customTaskId)
-            );
-            handleCloseModal();
-            trackChecklistCustomTaskDeleted();
+              setTasks(prev =>
+                prev.filter(task => task.custom_task_id !== customTaskId)
+              );
+              handleCloseModal();
+              trackChecklistCustomTaskDeleted();
 
-            await deleteCustomChecklistTask({
-              userId: user.id,
-              customTaskId,
-            });
-          } catch (error) {
-            console.error('Error deleting custom checklist task:', error);
-            setTasks(prevTasks);
-            refetch();
-          }
+              await deleteCustomChecklistTask({
+                userId: user.id,
+                customTaskId,
+              });
+            } catch (error) {
+              console.error('Error deleting custom checklist task:', error);
+              setTasks(prevTasks);
+              refetch();
+            }
+          },
         },
-      },
-    ]);
+      ]
+    );
   };
 
   const renderItem = useCallback(
@@ -544,7 +566,10 @@ export default function ChecklistScreen() {
 
   const stageDescription =
     currentStage !== null
-      ? t(STAGE_KEYS[currentStage as keyof typeof STAGE_KEYS] || 'common.stageNotSet')
+      ? t(
+          STAGE_KEYS[currentStage as keyof typeof STAGE_KEYS] ||
+            'common.stageNotSet'
+        )
       : t('common.stageNotSet');
   const personaDisplay = persona
     ? t(PERSONA_KEYS[persona as keyof typeof PERSONA_KEYS] || 'common.user')
@@ -607,7 +632,9 @@ export default function ChecklistScreen() {
         activeOpacity={0.7}
       >
         <MaterialIcons name='add-circle-outline' size={22} color='#6B6B6B' />
-        <Text style={styles.addOwnRowText}>{t('checklist.addYourOwnItem')}</Text>
+        <Text style={styles.addOwnRowText}>
+          {t('checklist.addYourOwnItem')}
+        </Text>
       </TouchableOpacity>
 
       {tasks.length === 0 && (
@@ -637,7 +664,6 @@ export default function ChecklistScreen() {
         activationDistance={8}
         showsVerticalScrollIndicator={false}
       />
-
 
       <TaskDetailModal
         visible={modalVisible}

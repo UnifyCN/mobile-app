@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
 import { useLocalSearchParams, router } from 'expo-router';
+import { normalizeLearnOrigin } from '@/utils/learnOriginNavigation';
 
 export default function QuizIndex() {
-  const { moduleId, submoduleId, lessonId, quizId } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    quizId,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     lessonId: string;
     quizId: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
 
   useEffect(() => {
     // Redirect to first question
@@ -20,9 +29,10 @@ export default function QuizIndex() {
         lessonId,
         quizId,
         questionNum: '1',
+        ...(origin ? { origin } : {}),
       },
     });
-  }, []);
+  }, [moduleId, submoduleId, lessonId, quizId, origin]);
 
   return null;
 }

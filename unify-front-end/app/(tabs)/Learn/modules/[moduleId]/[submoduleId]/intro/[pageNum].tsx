@@ -23,6 +23,10 @@ import {
   getLessonTotalPages,
 } from '@/utils/submoduleProgress';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 const getSanityImageUrl = (assetRef: string | undefined): string | null => {
   if (!assetRef) return null;
@@ -35,11 +39,19 @@ const getSanityImageUrl = (assetRef: string | undefined): string | null => {
 export default function SubmoduleIntroScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, pageNum } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    pageNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     pageNum: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const [showExitModal, setShowExitModal] = useState(false);
   const { saveCurrentPage } = useLessonProgress();
 
@@ -60,6 +72,10 @@ export default function SubmoduleIntroScreen() {
 
   const handleSaveAndLeave = () => {
     setShowExitModal(false);
+    if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
+      return;
+    }
     router.push({
       pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
       params: { moduleId, submoduleId },
@@ -79,8 +95,11 @@ export default function SubmoduleIntroScreen() {
           moduleId,
           submoduleId,
           pageNum: (currentPage - 1).toString(),
+          ...originParams,
         },
       });
+    } else if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
     }
   };
 
@@ -113,6 +132,7 @@ export default function SubmoduleIntroScreen() {
           moduleId,
           submoduleId,
           pageNum: (currentPage + 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -121,12 +141,17 @@ export default function SubmoduleIntroScreen() {
         router.push({
           pathname:
             '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]' as any,
-          params: { moduleId, submoduleId, lessonId: firstLesson._id },
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId: firstLesson._id,
+            ...originParams,
+          },
         });
       } else {
         router.push({
           pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-          params: { moduleId, submoduleId },
+          params: { moduleId, submoduleId, ...originParams },
         });
       }
     }
@@ -348,11 +373,10 @@ export default function SubmoduleIntroScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
-              {t('learn.lesson.exitTitle')}
-            </Text>
+            <Text style={styles.modalTitle}>{t('learn.lesson.exitTitle')}</Text>
             <Text style={styles.modalDesc}>
-              {t('learn.lesson.exitBody1')}{'\n'}
+              {t('learn.lesson.exitBody1')}
+              {'\n'}
               {t('learn.lesson.exitBody2')}
             </Text>
 
@@ -369,7 +393,9 @@ export default function SubmoduleIntroScreen() {
               style={styles.modalSecondaryBtn}
               onPress={handleContinue}
             >
-              <Text style={styles.modalSecondaryBtnText}>{t('learn.lesson.exitContinue')}</Text>
+              <Text style={styles.modalSecondaryBtnText}>
+                {t('learn.lesson.exitContinue')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

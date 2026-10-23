@@ -13,6 +13,10 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -40,12 +44,21 @@ import { useFocusEffect } from '@react-navigation/native';
 export default function EndingPageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, lessonId, pageNum } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    pageNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     lessonId: string;
     pageNum: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const { trackScreen, trackLessonCompleted } = useAnalytics();
   const [showExitModal, setShowExitModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -132,6 +145,10 @@ export default function EndingPageScreen() {
 
   const handleSaveAndLeave = () => {
     setShowExitModal(false);
+    if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
+      return;
+    }
     router.push({
       pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
       params: { moduleId, submoduleId },
@@ -175,7 +192,12 @@ export default function EndingPageScreen() {
     if (isLastLesson()) {
       router.dismissTo({
         pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-        params: { moduleId, submoduleId, justCompletedLearn: '1' },
+        params: {
+          moduleId,
+          submoduleId,
+          justCompletedLearn: '1',
+          ...originParams,
+        },
       });
     } else {
       const nextLesson = getNextLesson();
@@ -188,6 +210,7 @@ export default function EndingPageScreen() {
             submoduleId,
             lessonId: nextLesson._id,
             pageNum: '1',
+            ...originParams,
           },
         });
       }
@@ -205,6 +228,7 @@ export default function EndingPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage + 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -226,6 +250,7 @@ export default function EndingPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage - 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -245,6 +270,7 @@ export default function EndingPageScreen() {
             lessonId,
             quizId: lastQuiz._id,
             questionNum: lastQuizQuestions.toString(),
+            ...originParams,
           },
         });
       } else if (lesson?.activity_pages && lesson.activity_pages.length > 0) {
@@ -256,6 +282,7 @@ export default function EndingPageScreen() {
             submoduleId,
             lessonId,
             pageNum: lesson.activity_pages.length.toString(),
+            ...originParams,
           },
         });
       } else {
@@ -269,6 +296,7 @@ export default function EndingPageScreen() {
               submoduleId,
               lessonId,
               pageNum: totalLessonPages.toString(),
+              ...originParams,
             },
           });
         }

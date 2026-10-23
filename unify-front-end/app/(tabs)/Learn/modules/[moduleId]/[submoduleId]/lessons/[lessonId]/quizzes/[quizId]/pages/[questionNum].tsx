@@ -14,6 +14,7 @@ import {
   ScrollView,
   Modal,
   Alert,
+  TextInput,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useSanityQuizQuestions } from '@/hooks/sanity/useSanityQuizzes';
@@ -39,41 +40,30 @@ import {
 import { useAnalytics } from '@/utils/analytics';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-
-// Grade a single/multiple-choice answer for a given question. Module-level so it
-// can be used both in the render body and inside the attempt-resolution effect
-// (which flushes a selection made before the attempt id was ready).
-function gradeQuizAnswer(question: any, answer: string | string[]): boolean {
-  if (!question) return false;
-  if (question.question_type === 'multiple_choice_multiple') {
-    const correctIds = (
-      question.options?.filter((o: any) => o.is_correct) || []
-    ).map((o: any) => o._key);
-    const arr = Array.isArray(answer) ? answer : [];
-    return (
-      correctIds.length > 0 &&
-      correctIds.every((id: string) => arr.includes(id)) &&
-      arr.every((id: string) => correctIds.includes(id))
-    );
-  }
-  const correctAnswerId =
-    question.correct_answer?.value?.[0] || question.correct_answer?.value;
-  const single = Array.isArray(answer) ? answer[0] : answer;
-  return (
-    single === correctAnswerId ||
-    !!question.options?.find((o: any) => o._key === single)?.is_correct
-  );
-}
+import { gradeQuizAnswer, isTextAnswerQuestion } from '@/utils/quizAnswer';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 export default function QuizQuestionPage() {
-  const { moduleId, submoduleId, lessonId, quizId, questionNum } =
-    useLocalSearchParams<{
-      moduleId: string;
-      submoduleId: string;
-      lessonId: string;
-      quizId: string;
-      questionNum: string;
-    }>();
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    quizId,
+    questionNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
+    moduleId: string;
+    submoduleId: string;
+    lessonId: string;
+    quizId: string;
+    questionNum: string;
+    origin?: string | string[];
+  }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const { t } = useTranslation();
   const { trackScreen, capture } = useAnalytics();
   const currentQuestionIndex = parseInt(questionNum || '1') - 1;
@@ -213,6 +203,7 @@ export default function QuizQuestionPage() {
 
   // Get current question (may be undefined during loading)
   const currentQuestion = questions?.[currentQuestionIndex];
+  const isTextAnswer = isTextAnswerQuestion(currentQuestion?.question_type);
 
   // Scramble right column items for matching questions
   // This hook must be called before any early returns to maintain hook order
@@ -478,6 +469,7 @@ export default function QuizQuestionPage() {
               lessonId,
               quizId: nextQuiz._id,
               questionNum: '1',
+              ...originParams,
             },
           });
         } else {
@@ -488,7 +480,13 @@ export default function QuizQuestionPage() {
             router.push({
               pathname:
                 '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum]' as any,
-              params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+              params: {
+                moduleId,
+                submoduleId,
+                lessonId,
+                pageNum: '1',
+                ...originParams,
+              },
             });
           } else {
             // No ending pages, save this lesson as completed
@@ -514,7 +512,12 @@ export default function QuizQuestionPage() {
               router.dismissTo({
                 pathname:
                   '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-                params: { moduleId, submoduleId, justCompletedLearn: '1' },
+                params: {
+                  moduleId,
+                  submoduleId,
+                  justCompletedLearn: '1',
+                  ...originParams,
+                },
               });
             } else {
               // Go to next lesson
@@ -528,6 +531,7 @@ export default function QuizQuestionPage() {
                     submoduleId,
                     lessonId: nextLesson._id,
                     pageNum: '1',
+                    ...originParams,
                   },
                 });
               }
@@ -546,42 +550,18 @@ export default function QuizQuestionPage() {
             lessonId,
             quizId,
             questionNum: (currentQuestionIndex + 2).toString(),
+            ...originParams,
           },
         });
       }
     } else if (!hasSubmitted) {
-      // First submission - check if answer is correct
-      let isAnswerCorrect = false;
-
-      if (currentQuestion.question_type === 'multiple_choice_multiple') {
-        // For multiple choice multiple, check if all correct options are selected and no incorrect ones
-        const correctOptions =
-          currentQuestion.options?.filter((opt: any) => opt.is_correct) || [];
-        const correctOptionIds = correctOptions.map((opt: any) => opt._key);
-
-        // Check if all correct options are selected and no incorrect ones
-        const hasAllCorrect = correctOptionIds.every((id: string) =>
-          selectedAnswers.includes(id)
-        );
-        const hasNoIncorrect = selectedAnswers.every((id: string) =>
-          correctOptionIds.includes(id)
-        );
-
-        isAnswerCorrect =
-          hasAllCorrect && hasNoIncorrect && selectedAnswers.length > 0;
-      } else {
-        // Single choice logic
-        const correctAnswerId =
-          currentQuestion.correct_answer?.value?.[0] ||
-          currentQuestion.correct_answer?.value;
-        // `options` and a matching option are both optional in Sanity. Coerce
-        // the resulting boolean | undefined to the boolean UI state contract.
-        isAnswerCorrect = Boolean(
-          selectedAnswer === correctAnswerId ||
-            currentQuestion.options?.find(opt => opt._key === selectedAnswer)
-              ?.is_correct
-        );
-      }
+      // First submission: save and grade the selected or typed answer.
+      const answer =
+        currentQuestion.question_type === 'multiple_choice_multiple'
+          ? selectedAnswers
+          : selectedAnswer || '';
+      persistSelection(answer);
+      const isAnswerCorrect = gradeQuizAnswer(currentQuestion, answer);
 
       setIsCorrect(isAnswerCorrect);
       setHasSubmitted(true);
@@ -611,6 +591,7 @@ export default function QuizQuestionPage() {
               lessonId,
               quizId: nextQuiz._id,
               questionNum: '1',
+              ...originParams,
             },
           });
         } else {
@@ -621,7 +602,13 @@ export default function QuizQuestionPage() {
             router.push({
               pathname:
                 '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum]' as any,
-              params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+              params: {
+                moduleId,
+                submoduleId,
+                lessonId,
+                pageNum: '1',
+                ...originParams,
+              },
             });
           } else {
             // No ending pages, save this lesson as completed
@@ -647,7 +634,12 @@ export default function QuizQuestionPage() {
               router.dismissTo({
                 pathname:
                   '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-                params: { moduleId, submoduleId, justCompletedLearn: '1' },
+                params: {
+                  moduleId,
+                  submoduleId,
+                  justCompletedLearn: '1',
+                  ...originParams,
+                },
               });
             } else {
               // Go to next lesson
@@ -661,6 +653,7 @@ export default function QuizQuestionPage() {
                     submoduleId,
                     lessonId: nextLesson._id,
                     pageNum: '1',
+                    ...originParams,
                   },
                 });
               }
@@ -679,6 +672,7 @@ export default function QuizQuestionPage() {
             lessonId,
             quizId,
             questionNum: (currentQuestionIndex + 2).toString(),
+            ...originParams,
           },
         });
       }
@@ -697,6 +691,7 @@ export default function QuizQuestionPage() {
           lessonId,
           quizId,
           questionNum: currentQuestionIndex.toString(),
+          ...originParams,
         },
       });
     } else {
@@ -704,7 +699,13 @@ export default function QuizQuestionPage() {
       router.push({
         pathname:
           '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum]' as any,
-        params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+        params: {
+          moduleId,
+          submoduleId,
+          lessonId,
+          pageNum: '1',
+          ...originParams,
+        },
       });
     }
   };
@@ -833,6 +834,26 @@ export default function QuizQuestionPage() {
                   </Text>
                 </TouchableOpacity>
               </View>
+            ) : isTextAnswer ? (
+              <TextInput
+                style={[
+                  styles.textAnswerInput,
+                  hasSubmitted &&
+                    (isCorrect
+                      ? styles.textAnswerInputCorrect
+                      : styles.textAnswerInputIncorrect),
+                ]}
+                value={selectedAnswer || ''}
+                onChangeText={value => {
+                  answerTouchedRef.current = true;
+                  setSelectedAnswer(value);
+                }}
+                placeholder={t('learn.typeHerePlaceholder')}
+                placeholderTextColor='#9CA3AF'
+                multiline
+                textAlignVertical='top'
+                editable={!hasSubmitted}
+              />
             ) : (
               <View style={styles.optionsContainer}>
                 {(currentQuestion.options || []).map((option: any) => {
@@ -1021,6 +1042,10 @@ export default function QuizQuestionPage() {
               style={styles.modalPrimaryBtn}
               onPress={() => {
                 setShowExitModal(false);
+                if (origin === 'checklist') {
+                  router.replace(getLessonExitDestination(origin, '') as any);
+                  return;
+                }
                 router.push({
                   pathname:
                     '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
@@ -1151,6 +1176,26 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     gap: 17,
+  },
+  textAnswerInput: {
+    minHeight: 140,
+    borderWidth: 1,
+    borderColor: '#DCDCDC',
+    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    color: '#111827',
+    fontSize: 18,
+    lineHeight: 27,
+  },
+  textAnswerInputCorrect: {
+    borderColor: '#10B981',
+    backgroundColor: '#ECFDF5',
+  },
+  textAnswerInputIncorrect: {
+    borderColor: '#EF4444',
+    backgroundColor: '#FEF2F2',
   },
   optionButton: {
     borderWidth: 1,
