@@ -18,6 +18,7 @@ import {
   markStarterSeen,
   clearSeenStarterIds,
 } from '@/utils/companionStarterHistory';
+import { createTapOnlyPressHandlers } from '@/utils/pressIntent';
 
 interface StarterPromptsProps {
   onPromptSelect: (
@@ -271,6 +272,9 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
       >
         {displayed.map((starter, index) => {
           const localized = personalizedText(starter);
+          const pressHandlers = createTapOnlyPressHandlers(() =>
+            handlePersonalizedPress(starter, index)
+          );
           return (
             <View key={starter.id}>
               <Animated.View
@@ -279,7 +283,8 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
               >
                 <TouchableOpacity
                   style={[styles.card, styles.cardPersonalized]}
-                  onPress={() => handlePersonalizedPress(starter, index)}
+                  {...pressHandlers}
+                  delayLongPress={400}
                   activeOpacity={0.8}
                 >
                   <View style={styles.cardHeader}>
@@ -298,16 +303,20 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
 
         {[...MODE_CARD_DEFS, ...topicStarterDefs].map(def => {
           const card = translateDef(def);
+          const pressHandlers = createTapOnlyPressHandlers(() =>
+            onPromptSelect(card.prompt, card.mode, {
+              // Internal analytics discriminator, never shown to the user.
+              // eslint-disable-next-line i18next/no-literal-string
+              kind: 'static',
+              id: card.id,
+            })
+          );
           return (
             <TouchableOpacity
               key={card.id}
               style={styles.card}
-              onPress={() =>
-                onPromptSelect(card.prompt, card.mode, {
-                  kind: 'static',
-                  id: card.id,
-                })
-              }
+              {...pressHandlers}
+              delayLongPress={400}
               activeOpacity={0.8}
             >
               <View style={styles.cardHeader}>

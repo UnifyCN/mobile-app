@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -16,12 +17,14 @@ import { useCurrentUser } from '@/context/UserContext';
 import { updateUsername } from '@/services/users/updateUsername';
 import { updateFirstName } from '@/services/users/updateFirstName';
 import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/context/ToastContext';
 
 export default function EditNamePage() {
   const router = useRouter();
   const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
   const [firstName, setFirstName] = useState(currentUser?.firstName ?? '');
   const [username, setUsername] = useState(currentUser?.username || '');
   const [firstNameError, setFirstNameError] = useState<string | null>(null);
@@ -77,12 +80,10 @@ export default function EditNamePage() {
       }
 
       if (firstNameSucceeded && usernameSucceeded) {
-        queryClient.invalidateQueries({ queryKey: ['userInfo'] });
-        Alert.alert(
-          t('editName.successTitle'),
-          t('editName.successMessage'),
-          [{ text: t('common.ok'), onPress: () => router.back() }]
-        );
+        void queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+        Keyboard.dismiss();
+        router.back();
+        showToast(t('editName.successMessage'));
       } else {
         // Partial success — invalidate so the screen reflects the saved fields,
         // stay on the page so the user can retry the failed field.

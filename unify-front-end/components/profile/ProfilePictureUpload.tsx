@@ -21,6 +21,8 @@ import { updateProfilePicture } from '@/services/users/updateProfilePicture';
 import { clearAvatarUrlCache } from '@/services/s3/avatarUrlCache';
 import { useQueryClient } from '@tanstack/react-query';
 import { Theme } from '@/constants/Theme';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { getBottomSheetPadding } from '@/utils/safeAreaSpacing';
 
 interface ProfilePictureUploadProps {
   currentPictureUrl?: string;
@@ -36,6 +38,7 @@ export const ProfilePictureUpload = ({
   onClose,
 }: ProfilePictureUploadProps) => {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const [isUploading, setIsUploading] = useState(false);
   const queryClient = useQueryClient();
   const slideAnim = useRef(new Animated.Value(300)).current;
@@ -250,6 +253,7 @@ export const ProfilePictureUpload = ({
             <Animated.View
               style={[
                 styles.modalContent,
+                { paddingBottom: getBottomSheetPadding(insets.bottom) },
                 { transform: [{ translateY: slideAnim }] },
               ]}
               {...panResponder.panHandlers}
