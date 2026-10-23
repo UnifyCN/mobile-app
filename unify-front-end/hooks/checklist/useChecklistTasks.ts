@@ -63,13 +63,17 @@ export const useChecklistTasks = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [cacheChecked, setCacheChecked] = useState(false);
 
+  // Read the user ID from the stored session, not getUser(). getUser() makes a
+  // network request and resolves with a null user when it fails, which left
+  // this hook loading forever on an offline cold start. The session needs no
+  // network, so the cached checklist can still render.
   useEffect(() => {
     let cancelled = false;
     supabase.auth
-      .getUser()
+      .getSession()
       .then(({ data }) => {
         if (!cancelled) {
-          setUserId(data.user?.id ?? null);
+          setUserId(data.session?.user.id ?? null);
         }
       })
       .catch(error => {
