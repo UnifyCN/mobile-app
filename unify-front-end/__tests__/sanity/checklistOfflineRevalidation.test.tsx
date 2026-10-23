@@ -9,7 +9,16 @@ jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
 jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
-      getUser: jest.fn().mockResolvedValue({ data: { user: { id: 'user-1' } } }),
+      // Offline with an unexpired stored session: getSession() reads it from
+      // storage, but getUser() needs the network and resolves with a null user.
+      getSession: jest.fn().mockResolvedValue({
+        data: { session: { user: { id: 'user-1' } } },
+        error: null,
+      }),
+      getUser: jest.fn().mockResolvedValue({
+        data: { user: null },
+        error: new Error('Network request failed'),
+      }),
     },
     from: jest.fn(() => ({
       select: jest.fn(() => ({
@@ -26,6 +35,7 @@ jest.mock('@/sanity-custom', () => ({
 }));
 
 import { sanityClient } from '@/sanity-custom';
+import { supabase } from '@/lib/supabase';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
 import {
   buildChecklistCacheStorageKey,
@@ -54,6 +64,34 @@ const cachedTasks = [
 
 describe('checklist offline revalidation', () => {
   beforeEach(() => mockFetch.mockReset());
+
+  it('loads the checklist for the Other/Newcomer persona', async () => {
+    mockFetch.mockResolvedValue([]);
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    );
+    const { result, unmount } = renderHook(
+      () =>
+        useChecklistTasks({
+          currentStage: 4,
+          stageChanged: false,
+          persona: 'other',
+        }),
+      { wrapper }
+    );
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ persona: 'other', stage: 'years_3_plus' })
+    );
+
+    unmount();
+    client.clear();
+  });
 
   it('keeps same-language hydrated tasks when Sanity revalidation fails', async () => {
     const key = buildChecklistCacheStorageKey(
@@ -89,6 +127,8 @@ describe('checklist offline revalidation', () => {
     await waitFor(() => expect(result.current.error).toContain('offline'));
     expect(result.current.tasks).toEqual(cachedTasks);
     await expect(loadChecklistFromDisk(key)).resolves.toEqual(cachedTasks);
+    // The user ID comes from the stored session, not a network lookup.
+    expect(supabase.auth.getUser).not.toHaveBeenCalled();
 
     unmount();
     client.clear();

@@ -33,13 +33,19 @@ module.exports = {
         foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
       },
-      permissions: ['CAMERA', 'READ_MEDIA_IMAGES', 'READ_EXTERNAL_STORAGE'],
+      permissions: ['CAMERA', 'READ_EXTERNAL_STORAGE'],
       // expo-image-picker adds RECORD_AUDIO (video capture) and
       // expo-tracking-transparency adds AD_ID. Unify uses neither on Android,
       // and each one triggers an extra Play Console declaration.
+      // READ_MEDIA_IMAGES / READ_MEDIA_VIDEO: Play's photo and video
+      // permissions policy rejects them unless the app is gallery-like.
+      // expo-image-picker uses the system photo picker on Android 13+ and
+      // requests no media permission there, so neither is needed.
       blockedPermissions: [
         'android.permission.RECORD_AUDIO',
         'com.google.android.gms.permission.AD_ID',
+        'android.permission.READ_MEDIA_IMAGES',
+        'android.permission.READ_MEDIA_VIDEO',
       ],
       package: 'com.anonymous.unifyfrontend',
       // Firebase (FCM) config for expo-notifications. Not committed: EAS supplies

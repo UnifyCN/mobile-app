@@ -47,6 +47,15 @@ import CompanionHeader from '@/components/CompanionHeader';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  buildCompanionStarterPromptProperties,
+  buildCompanionSuggestionClickedProperties,
+  CompanionInputOrigin,
+  CompanionInputSource,
+  CompanionStarterRef,
+  isConversationHistoryLoaded,
+  resolveTypedInputSource,
+} from '@/helpers/companion/companionAnalytics';
 import { usePersonalizedStarters } from '@/hooks/companion/usePersonalizedStarters';
 import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
@@ -105,7 +114,6 @@ export default function CompanionScreen() {
   });
   const {
     trackScreen,
-    trackCompanionMessageSent,
     trackCompanionStarterPromptUsed,
     trackCompanionSuggestionClicked,
     trackCompanionHistoryViewed,
@@ -214,6 +222,7 @@ export default function CompanionScreen() {
   } = useSendMessage({
     messages,
     currentConversationId,
+    isHistoryLoaded: isConversationHistoryLoaded(dbMessages),
     setCurrentConversationId,
     isPremium,
   });
@@ -260,7 +269,12 @@ export default function CompanionScreen() {
     spotlightClosed
   );
 
+  // Text the app put in the input box (fact-check prefill, or a failed send
+  // restored for retry) and its source. Labels the next send from the input.
+  const inputOriginRef = useRef<CompanionInputOrigin | null>(null);
+
   const resetDraftState = useCallback(() => {
+    inputOriginRef.current = null;
     setOptimisticMessages([]);
     setGreetingMessage(null);
     setInputText('');
@@ -316,9 +330,13 @@ export default function CompanionScreen() {
   );
 
   const handleSendMessage = useCallback(
-    async (messageText?: string) => {
+    async (messageText?: string, source?: CompanionInputSource) => {
       const textToSend = messageText || inputText.trim();
       if (!textToSend || isLoading || !canSend) return;
+      const inputSource =
+        source ??
+        resolveTypedInputSource(textToSend, inputOriginRef.current);
+      inputOriginRef.current = null;
 
       let optimisticMessageId: string | null = null;
       if (!currentConversationId) {
@@ -334,10 +352,13 @@ export default function CompanionScreen() {
       }
 
       setInputText('');
-      trackCompanionMessageSent(textToSend.length);
 
       try {
-        await sendMessage(textToSend, optimisticMessageId ?? undefined);
+        await sendMessage(
+          textToSend,
+          optimisticMessageId ?? undefined,
+          inputSource
+        );
       } catch (error) {
         if (optimisticMessageId) {
           setOptimisticMessages(current =>
@@ -349,6 +370,7 @@ export default function CompanionScreen() {
           !(error as Error & { messagePersisted?: boolean }).messagePersisted
         ) {
           setInputText(textToSend);
+          inputOriginRef.current = { text: textToSend, source: inputSource };
         }
         if (
           error instanceof AICompanionBusyError ||
@@ -363,7 +385,6 @@ export default function CompanionScreen() {
       isLoading,
       canSend,
       sendMessage,
-      trackCompanionMessageSent,
       currentConversationId,
       setOptimisticMessages,
       showToast,
@@ -374,14 +395,12 @@ export default function CompanionScreen() {
   // Handle starter prompt selection
   const handleStarterPromptSelect = (
     prompt: string,
-    mode?: string,
-    isPersonalized?: boolean
+    mode: string | undefined,
+    starter: CompanionStarterRef
   ) => {
-    // Track the starter prompt usage (empty prompt defaults to 'Ask Anything')
+    // Track which card was tapped by id or slot, never by its text.
     trackCompanionStarterPromptUsed(
-      prompt || 'Ask Anything',
-      mode,
-      isPersonalized
+      buildCompanionStarterPromptProperties(starter, mode)
     );
 
     // "Ask Anything" - show bot greeting message
@@ -414,6 +433,7 @@ export default function CompanionScreen() {
 
     // For fact check, pre-fill the input so user can complete the sentence
     if (mode === 'fact_check') {
+      inputOriginRef.current = { text: prompt, source: 'starter_prompt' };
       setInputText(prompt);
       // Focus input after setting text so user can type immediately
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -421,14 +441,17 @@ export default function CompanionScreen() {
     }
 
     // For other prompts, send directly
-    handleSendMessage(prompt);
+    handleSendMessage(prompt, 'starter_prompt');
   };
 
   // Handle suggested next step click
   const handleSuggestionClick = useCallback(
-    (suggestion: string) => {
-      trackCompanionSuggestionClicked(suggestion);
-      handleSendMessage(suggestion);
+    (suggestion: string, position: number, count: number) => {
+      // Suggestions are model-written from the conversation: send no text.
+      trackCompanionSuggestionClicked(
+        buildCompanionSuggestionClickedProperties(position, count)
+      );
+      handleSendMessage(suggestion, 'suggestion');
     },
     [trackCompanionSuggestionClicked, handleSendMessage]
   );

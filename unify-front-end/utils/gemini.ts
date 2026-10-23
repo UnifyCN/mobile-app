@@ -11,6 +11,7 @@ import { QueryType, TokenUsage } from '@/types/chatbot';
 import { classifyRagQueryError } from '@/helpers/companion/ragQueryErrors';
 import i18n from '@/i18n';
 import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
+import { withAppPlatform } from '@/utils/appPlatform';
 
 // Re-export the typed errors so existing `from '@/utils/gemini'` imports keep
 // working. The definitions live in a dependency-free module so the classifier
@@ -35,6 +36,12 @@ export interface StreamMetadata {
 export interface StreamComplete {
   cleanAnswer: string;
   suggestedNextSteps?: string[];
+  /**
+   * Topic label from newer rag-query builds. It is on `complete`, not
+   * `metadata`, because the model labels its own answer. Validated in
+   * companionAnalytics.
+   */
+  topic?: string;
   tokenUsage?: TokenUsage;
   estimatedCostUsd?: number;
   model?: string;
@@ -112,15 +119,17 @@ export const streamGeminiAPI = async (
         Authorization: `Bearer ${accessToken}`,
         apikey: SUPABASE_ANON_KEY,
       },
-      body: JSON.stringify({
-        prompt,
-        conversationIdentifier,
-        messages: messages || [],
-        stream: true,
-        // Ask the Companion to answer in the UI language. Omitted entirely for
-        // English so the default prompt path is unchanged.
-        ...(responseLanguage ? { responseLanguage } : {}),
-      }),
+      body: JSON.stringify(
+        withAppPlatform({
+          prompt,
+          conversationIdentifier,
+          messages: messages || [],
+          stream: true,
+          // Ask the Companion to answer in the UI language. Omitted entirely
+          // for English so the default prompt path is unchanged.
+          ...(responseLanguage ? { responseLanguage } : {}),
+        })
+      ),
     });
   } catch (err) {
     callbacks.onError(

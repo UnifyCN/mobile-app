@@ -28,6 +28,14 @@ import Google from '../../assets/images/Google.svg';
 import { createUserIfNotExists } from '../../utils/createUserIfNotExists';
 import { SimpleTextField } from './Components';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  getProviderSignUpErrorType,
+  isGoogleSignInCancelled,
+} from '@/utils/signUpProviderError';
+import {
+  getSignUpValidationReason,
+  isValidEmail,
+} from '@/utils/signUpValidation';
 import LegalWebView from '@/components/LegalWebView';
 import {
   LEGAL_URLS,
@@ -53,6 +61,7 @@ export function SignUp({
     trackSignUpStarted,
     trackSignUpCompleted,
     trackSignUpFailed,
+    trackSignUpValidationError,
     trackSignInCompleted,
     trackGoogleSignInUsed,
     trackAppleSignInUsed,
@@ -74,14 +83,12 @@ export function SignUp({
   const [webViewDoc, setWebViewDoc] = useState<LegalDocumentType | null>(null);
   const scrollRef = useRef<ScrollView>(null);
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   useEffect(() => {
     trackSignUpStarted();
   }, [trackSignUpStarted]);
 
   const validateEmail = (emailInput: string) => {
-    setIsEmailValid(emailRegex.test(emailInput.trim()));
+    setIsEmailValid(isValidEmail(emailInput));
   };
 
   const toggleConsent = () => {
@@ -98,26 +105,35 @@ export function SignUp({
     if (isChecked) return true;
     setConsentError(true);
     setErrorMessage(null);
-    trackSignUpFailed('terms_not_accepted', method);
+    trackSignUpValidationError('terms_not_accepted', method);
     AccessibilityInfo.announceForAccessibility(t('auth.acceptTermsRequired'));
     scrollRef.current?.scrollToEnd({ animated: true });
     return false;
   };
 
   const handleSignUp = async () => {
-    if (password !== confirmPassword) {
-      setErrorMessage(t('auth.passwordsDoNotMatch'));
-      trackSignUpFailed('passwords_mismatch');
+    const reason = getSignUpValidationReason({
+      email,
+      password,
+      confirmPassword,
+      termsAccepted: isChecked,
+    });
+    if (reason === 'terms_not_accepted') {
+      requireConsent('email');
       return;
     }
-
-    if (!isEmailValid) {
-      setErrorMessage(t('auth.invalidEmail'));
-      trackSignUpFailed('invalid_email');
+    if (reason) {
+      // Client-side form problem, not a server or provider failure.
+      // `empty_fields` is unreachable from the UI (the button stays disabled)
+      // so it has no user-facing message.
+      if (reason === 'passwords_mismatch') {
+        setErrorMessage(t('auth.passwordsDoNotMatch'));
+      } else if (reason === 'invalid_email') {
+        setErrorMessage(t('auth.invalidEmail'));
+      }
+      trackSignUpValidationError(reason);
       return;
     }
-
-    if (!requireConsent('email')) return;
 
     setLoading(true);
     setErrorMessage(null);
@@ -193,6 +209,12 @@ export function SignUp({
         await GoogleSignin.hasPlayServices();
       }
       const signInResult: any = await GoogleSignin.signIn();
+      if (isGoogleSignInCancelled(signInResult)) {
+        // signIn() resolves (does not throw) when the user dismisses the
+        // sheet. Not a failure: stop before getTokens() rejects.
+        setLoading(false);
+        return;
+      }
       const googleGivenName: string | null =
         signInResult?.data?.user?.givenName ??
         signInResult?.user?.givenName ??
@@ -206,6 +228,7 @@ export function SignUp({
         });
         if (error) {
           setErrorMessage(error.message);
+          trackSignUpFailed(error.code || 'provider_signin_failed', 'google');
           setLoading(false);
           return;
         }
@@ -226,6 +249,7 @@ export function SignUp({
             setErrorMessage(
               userCreationError?.message || t('auth.failedSignUpSetup')
             );
+            trackSignUpFailed('user_creation_failed', 'google');
             setLoading(false);
             return;
           }
@@ -245,17 +269,26 @@ export function SignUp({
           trackSignInCompleted('google');
         } else if (data?.user?.id && !data?.user?.email) {
           setErrorMessage(t('auth.googleNoEmail'));
+          trackSignUpFailed('no_email', 'google');
           setLoading(false);
           return;
         } else if (!data?.user?.id) {
           setErrorMessage(t('auth.googleNoUser'));
+          trackSignUpFailed('no_user', 'google');
           setLoading(false);
           return;
         }
       } else {
         setErrorMessage(t('auth.googleNoToken'));
+        trackSignUpFailed('no_token', 'google');
       }
     } catch (error: any) {
+      // Cancelling the Google sheet is not a failure, so it fires no event.
+      const errorType = getProviderSignUpErrorType(error, [
+        statusCodes.SIGN_IN_CANCELLED,
+        statusCodes.IN_PROGRESS,
+      ]);
+      if (errorType) trackSignUpFailed(errorType, 'google');
       if (error?.code === statusCodes.IN_PROGRESS) {
         setLoading(false);
         return;
@@ -298,6 +331,7 @@ export function SignUp({
 
         if (error) {
           setErrorMessage(error.message);
+          trackSignUpFailed(error.code || 'provider_signin_failed', 'apple');
           setLoading(false);
           return;
         }
@@ -318,6 +352,7 @@ export function SignUp({
             setErrorMessage(
               userCreationError?.message || t('auth.failedSignUpSetup')
             );
+            trackSignUpFailed('user_creation_failed', 'apple');
             setLoading(false);
             return;
           }
@@ -335,17 +370,25 @@ export function SignUp({
           trackSignInCompleted('apple');
         } else if (data?.user?.id && !data?.user?.email) {
           setErrorMessage(t('auth.appleNoEmail'));
+          trackSignUpFailed('no_email', 'apple');
           setLoading(false);
           return;
         } else if (!data?.user?.id) {
           setErrorMessage(t('auth.appleNoUser'));
+          trackSignUpFailed('no_user', 'apple');
           setLoading(false);
           return;
         }
       } else {
         setErrorMessage(t('auth.appleNoToken'));
+        trackSignUpFailed('no_token', 'apple');
       }
     } catch (error: any) {
+      // Cancelling the Apple sheet is not a failure, so it fires no event.
+      const errorType = getProviderSignUpErrorType(error, [
+        'ERR_REQUEST_CANCELED',
+      ]);
+      if (errorType) trackSignUpFailed(errorType, 'apple');
       if (error?.code === 'ERR_REQUEST_CANCELED') {
         setLoading(false);
         return;

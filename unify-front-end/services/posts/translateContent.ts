@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { SupportedLanguage } from '@/i18n';
+import { withAppPlatform } from '@/utils/appPlatform';
 
 /**
  * On-demand translation of user-generated content into the viewer's UI
@@ -72,7 +73,7 @@ export async function translateContent(
   const { data, error } = await supabase.functions.invoke<
     Partial<TranslationResult> & ErrorBody
   >('translate-content', {
-    body: { type, id, targetLanguage },
+    body: withAppPlatform({ type, id, targetLanguage }),
   });
 
   if (error) {

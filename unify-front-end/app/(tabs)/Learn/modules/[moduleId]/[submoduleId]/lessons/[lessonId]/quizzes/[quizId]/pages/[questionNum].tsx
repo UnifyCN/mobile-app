@@ -38,6 +38,7 @@ import {
   saveResumePosition,
 } from '@/services/progress/progressService';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { gradeQuizAnswer, isTextAnswerQuestion } from '@/utils/quizAnswer';
@@ -66,6 +67,14 @@ export default function QuizQuestionPage() {
   const originParams = origin ? { origin } : {};
   const { t } = useTranslation();
   const { trackScreen, capture } = useAnalytics();
+  // Joins the lesson visit, so Back to page 1 after a resume here is not a
+  // lesson_started.
+  const { onLessonScreenFocused } = useLearnEvents();
+  useFocusEffect(
+    useCallback(() => {
+      if (lessonId) onLessonScreenFocused(lessonId);
+    }, [lessonId, onLessonScreenFocused])
+  );
   const currentQuestionIndex = parseInt(questionNum || '1') - 1;
   const { data: questions, isLoading, error } = useSanityQuizQuestions(quizId);
   const {

@@ -11,7 +11,6 @@ import {
 } from '@/utils/checklistOrder';
 import { getChecklistByPersonaAndStage } from '@/services/sanity/checklist';
 import { getUserTasks } from './getUserTasks';
-import { deleteUserTasks } from './deleteUserTasks';
 import { getCustomChecklistTasks } from './customChecklistTasks';
 import type { SanityLanguage } from '@/services/sanity/i18n';
 
@@ -34,6 +33,7 @@ function mergeChecklistWithUserTasks(
       sanity_checklist_id: item._id,
       completed: row?.completed ?? false,
       completed_at: row?.completed_at ?? null,
+      dismissed_at: row?.dismissed_at ?? null,
       source: 'sanity',
       task: sanityChecklistItemToTaskDetails(item),
     };
@@ -51,6 +51,7 @@ function mapCustomTasksToChecklistRows(
     sanity_checklist_id: null,
     completed: row.completed,
     completed_at: row.completed_at,
+    dismissed_at: null,
     source: 'custom',
     task: {
       task_name: row.title,
@@ -61,26 +62,23 @@ function mapCustomTasksToChecklistRows(
 }
 
 /**
- * 1. If stage changed: delete all user_tasks for this user (clean slate for new stage).
- * 2. Fetch checklist content from Sanity (persona in personas + stage slug).
- * 3. Fetch user_tasks (only rows that exist = items user has marked completed).
- * 4. Merge: display all Sanity items; completed = true only if a user_tasks row exists.
- * No pre-creating rows — we only write to user_tasks when the user marks an item complete.
+ * 1. Fetch checklist content from Sanity (persona in personas + stage slug).
+ * 2. Fetch user_tasks, which stores completion and per-user dismissal state.
+ * 3. Merge the current Sanity items with their saved user state.
+ * Rows are created only when the user completes or removes a suggested task.
  */
 export async function getChecklistWithUserProgress(
   userId: string,
-  persona: string,
+  persona: string | null,
   stageSlug: string,
   options: { stageChanged?: boolean; language?: SanityLanguage }
 ): Promise<UserTaskWithDetails[]> {
-  if (options.stageChanged) {
-    await deleteUserTasks(userId);
-  }
-
-  const items = await getChecklistByPersonaAndStage(persona, stageSlug, {
-    skipCache: true,
-    language: options.language,
-  });
+  const items = persona
+    ? await getChecklistByPersonaAndStage(persona, stageSlug, {
+        skipCache: true,
+        language: options.language,
+      })
+    : [];
 
   const rows = items.length > 0 ? await getUserTasks(userId) : [];
   const sanityTasks =

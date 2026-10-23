@@ -35,6 +35,7 @@ import {
   ACTIVITY_QUESTION_PREFIX,
 } from '@/services/progress/progressService';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function ActivityPageScreen() {
@@ -55,7 +56,8 @@ export default function ActivityPageScreen() {
   }>();
   const origin = normalizeLearnOrigin(originParam);
   const originParams = origin ? { origin } : {};
-  const { trackScreen, trackActivityCompleted } = useAnalytics();
+  const { trackScreen } = useAnalytics();
+  const { onLessonPageFocused, onActivitySubmitted } = useLearnEvents();
   const [showExitModal, setShowExitModal] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
@@ -181,6 +183,30 @@ export default function ActivityPageScreen() {
     ])
   );
 
+  // Joins the lesson visit (resuming here is not a start). An activity page is
+  // the lesson's first page only when the lesson has no content pages.
+  const contentPageCount = lesson?.pages?.length || 0;
+  useFocusEffect(
+    useCallback(() => {
+      if (!moduleId || !submoduleId || !lessonId || !lessonTitle) return;
+      onLessonPageFocused(
+        moduleId,
+        submoduleId,
+        lessonId,
+        contentPageCount + currentPage,
+        lessonTitle
+      );
+    }, [
+      moduleId,
+      submoduleId,
+      lessonId,
+      lessonTitle,
+      contentPageCount,
+      currentPage,
+      onLessonPageFocused,
+    ])
+  );
+
   // Helper functions for sequential navigation
   const getCurrentLessonIndex = () => {
     if (!submoduleData?.lessons) return -1;
@@ -289,7 +315,7 @@ export default function ActivityPageScreen() {
           true
         );
       });
-      trackActivityCompleted(moduleId, submoduleId, lessonId, pageKey);
+      onActivitySubmitted(moduleId, submoduleId, lessonId, pageKey);
     }
   };
 

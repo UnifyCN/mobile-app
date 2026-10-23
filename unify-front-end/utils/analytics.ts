@@ -6,6 +6,20 @@ import type {
   ResourceLinkTarget,
 } from '@/types/partner';
 import type { PartnerCtaSource } from '@/utils/partners';
+import type { SignUpValidationReason } from '@/utils/signUpValidation';
+import type {
+  CompanionMessageSentProperties,
+  CompanionResponseProperties,
+  CompanionStarterPromptProperties,
+  CompanionSuggestionClickedProperties,
+} from '@/helpers/companion/companionAnalytics';
+
+export type {
+  CompanionMessageSentProperties,
+  CompanionResponseProperties,
+  CompanionStarterPromptProperties,
+  CompanionSuggestionClickedProperties,
+} from '@/helpers/companion/companionAnalytics';
 
 // Event name constants for type safety and consistency
 export const AnalyticsEvents = {
@@ -80,6 +94,7 @@ export const AnalyticsEvents = {
   SIGN_UP_STARTED: 'sign_up_started',
   SIGN_UP_COMPLETED: 'sign_up_completed',
   SIGN_UP_FAILED: 'sign_up_failed',
+  SIGN_UP_VALIDATION_ERROR: 'sign_up_validation_error',
   SIGN_IN_COMPLETED: 'sign_in_completed',
   SIGN_IN_FAILED: 'sign_in_failed',
   GOOGLE_SIGN_IN_USED: 'google_sign_in_used',
@@ -184,15 +199,6 @@ export interface EventEventProperties {
   event_title?: string;
 }
 
-export interface CompanionMessageProperties {
-  message_length: number;
-}
-
-export interface CompanionPromptProperties {
-  prompt: string;
-  mode?: string;
-}
-
 export interface LessonProperties {
   module_id: string;
   submodule_id?: string;
@@ -234,16 +240,6 @@ export interface OnboardingStepProperties {
 
 export interface NotificationProperties {
   notification_type: string;
-}
-
-export interface CompanionResponseProperties {
-  query_type: string;
-  has_sources: boolean;
-  prompt_tokens?: number;
-  completion_tokens?: number;
-  total_tokens?: number;
-  estimated_cost_usd?: number;
-  response_time_ms?: number;
 }
 
 export interface TipViewedProperties {
@@ -340,6 +336,8 @@ export function useAnalytics() {
       identify: (userId: string, properties: IdentifyUserProperties) => {
         posthog?.identify(userId, { ...properties });
       },
+      // `platform` survives reset(): it is an app property (see
+      // buildPostHogOptions), not a registered super property.
       reset: () => {
         posthog?.reset();
       },
@@ -542,25 +540,27 @@ export function useAnalytics() {
       },
 
       // AI Companion
-      trackCompanionMessageSent: (messageLength: number) => {
+      trackCompanionMessageSent: (
+        properties: CompanionMessageSentProperties
+      ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_MESSAGE_SENT, {
-          message_length: messageLength,
+          ...properties,
         });
       },
+      // Never pass prompt or suggestion text here (spec #314); build the
+      // properties with the helpers in helpers/companion/companionAnalytics.
       trackCompanionStarterPromptUsed: (
-        prompt: string,
-        mode?: string,
-        isPersonalized?: boolean
+        properties: CompanionStarterPromptProperties
       ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_STARTER_PROMPT_USED, {
-          prompt,
-          ...(mode && { mode }),
-          ...(isPersonalized !== undefined && { is_personalized: isPersonalized }),
+          ...properties,
         });
       },
-      trackCompanionSuggestionClicked: (suggestion: string) => {
+      trackCompanionSuggestionClicked: (
+        properties: CompanionSuggestionClickedProperties
+      ) => {
         posthog?.capture(AnalyticsEvents.COMPANION_SUGGESTION_CLICKED, {
-          suggestion,
+          ...properties,
         });
       },
       trackCompanionHistoryViewed: () => {
@@ -669,6 +669,15 @@ export function useAnalytics() {
       trackSignUpFailed: (errorType: string, method: AuthMethod = 'email') => {
         posthog?.capture(AnalyticsEvents.SIGN_UP_FAILED, {
           error_type: errorType,
+          method,
+        });
+      },
+      trackSignUpValidationError: (
+        reason: SignUpValidationReason,
+        method: AuthMethod = 'email'
+      ) => {
+        posthog?.capture(AnalyticsEvents.SIGN_UP_VALIDATION_ERROR, {
+          reason,
           method,
         });
       },

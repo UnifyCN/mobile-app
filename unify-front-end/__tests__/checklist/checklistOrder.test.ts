@@ -19,6 +19,7 @@ function makeSanityTask(
     sanity_checklist_id: sanityId,
     completed: false,
     completed_at: null,
+    dismissed_at: null,
     source: 'sanity',
     task: {
       task_name: name,
@@ -41,6 +42,7 @@ function makeCustomTask(
     sanity_checklist_id: null,
     completed: false,
     completed_at: null,
+    dismissed_at: null,
     source: 'custom',
     task: {
       task_name: name,
@@ -94,10 +96,7 @@ describe('checklistOrder', () => {
       const b = makeSanityTask('b', 'Do now', 'B');
       const c = makeSanityTask('c', 'Do now', 'C');
 
-      const result = applyOrderWithinPriority(
-        [a, b, c],
-        ['sanity:b']
-      );
+      const result = applyOrderWithinPriority([a, b, c], ['sanity:b']);
 
       expect(result.map(t => t.task.task_name)).toEqual(['B', 'A', 'C']);
     });
@@ -123,11 +122,9 @@ describe('checklistOrder', () => {
       const doSoon = makeSanityTask('b', 'Do soon', 'B');
       const newDoNow = makeSanityTask('c', 'Do now', 'C');
 
-      const result = replacePriorityBucket(
-        [doNow, doSoon],
-        'Do now',
-        [newDoNow]
-      );
+      const result = replacePriorityBucket([doNow, doSoon], 'Do now', [
+        newDoNow,
+      ]);
 
       const names = result.map(t => t.task.task_name);
       expect(names).toEqual(['C', 'B']);

@@ -1406,6 +1406,12 @@
     "undoCompletion": "Annuler",
     "learnHow": "Apprendre comment",
     "deleteTask": "Supprimer la tâche",
+    "removeSuggestedTask": "Retirer de ma liste",
+    "removeSuggestedTaskTitle": "Retirer cette suggestion?",
+    "removeSuggestedTaskMessage": "Vous pourrez la restaurer plus tard dans les tâches retirées.",
+    "removedTasks": "Tâches retirées",
+    "restore": "Restaurer",
+    "restoreTaskA11y": "Restaurer {{name}} dans ma liste",
     "stage": {
       "0": "Pas encore arrivé",
       "1": "0–3 mois",
@@ -1419,7 +1425,8 @@
       "protected_person": "Personne protégée",
       "skilled_worker": "Travailleur qualifié",
       "immigrant": "Immigrant",
-      "pr": "RP"
+      "pr": "RP",
+      "other": "Nouvel arrivant"
     },
     "createItem": {
       "headerTitle": "Nouvel élément de liste",

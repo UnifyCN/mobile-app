@@ -1406,6 +1406,12 @@
     "undoCompletion": "التراجع عن الإكمال",
     "learnHow": "تعلّم كيف",
     "deleteTask": "حذف المهمة",
+    "removeSuggestedTask": "إزالة من قائمتي",
+    "removeSuggestedTaskTitle": "هل تريد إزالة هذا الاقتراح؟",
+    "removeSuggestedTaskMessage": "يمكنك استعادته لاحقًا من المهام المُزالة.",
+    "removedTasks": "المهام المُزالة",
+    "restore": "استعادة",
+    "restoreTaskA11y": "استعادة {{name}} إلى قائمتي",
     "stage": {
       "0": "لم يصل بعد",
       "1": "0–3 أشهر",
@@ -1419,7 +1425,8 @@
       "protected_person": "شخص محميّ",
       "skilled_worker": "عامل ماهر",
       "immigrant": "مهاجر",
-      "pr": "مقيم دائم"
+      "pr": "مقيم دائم",
+      "other": "وافد جديد"
     },
     "createItem": {
       "headerTitle": "عنصر جديد في القائمة",

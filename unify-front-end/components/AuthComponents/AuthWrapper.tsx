@@ -84,15 +84,23 @@ export default function AuthWrapper({ children, onBackToOnboarding }: Props) {
   });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        setSession(session);
+        setLoading(false);
+      })
+      .catch(error => {
+        // Stay on the loading screen: a failed read is not "signed out".
+        // onAuthStateChange below still delivers the session.
+        console.warn('[AuthWrapper] Failed to read auth session:', error);
+      });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      setLoading(false);
       // Invalidate queries when auth state changes
       if (session?.user?.id) {
         queryClient.invalidateQueries({

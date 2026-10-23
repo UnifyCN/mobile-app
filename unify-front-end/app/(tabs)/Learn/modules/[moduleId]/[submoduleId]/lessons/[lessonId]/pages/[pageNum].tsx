@@ -21,6 +21,7 @@ import { useSanitySubmoduleWithLessons } from '@/hooks/sanity/useSanitySubmodule
 import RichTextRenderer from '@/components/sanity/RichTextRenderer';
 import SubmoduleProgressBar from '@/components/learn/SubmoduleProgressBar';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
 import { SelectionProvider, useSelection } from '@/context/SelectionContext';
 import {
@@ -170,6 +171,28 @@ export default function LessonPageScreen() {
       totalPages,
       trackScreen,
       trackLessonPageViewed,
+    ])
+  );
+
+  // lesson_started (page 1 of a new lesson visit); the gate drops repeats.
+  const { onLessonPageFocused } = useLearnEvents();
+  useFocusEffect(
+    useCallback(() => {
+      if (!moduleId || !submoduleId || !lessonId || !lessonTitle) return;
+      onLessonPageFocused(
+        moduleId,
+        submoduleId,
+        lessonId,
+        currentPage,
+        lessonTitle
+      );
+    }, [
+      moduleId,
+      submoduleId,
+      lessonId,
+      currentPage,
+      lessonTitle,
+      onLessonPageFocused,
     ])
   );
 

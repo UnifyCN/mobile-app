@@ -43,6 +43,7 @@ import Blob11 from '@/assets/images/Blob11.svg';
 import Blob12 from '@/assets/images/Blob12.svg';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { Layout } from '@/constants/Layout';
 import { isImmigrationModule } from '@/constants/PartnerSpotlight';
 import SpotlightRow from '@/components/partners/SpotlightRow';
@@ -174,6 +175,7 @@ export default function ModuleIndex() {
   const router = useRouter();
   const { t } = useTranslation();
   const { trackScreen, trackModuleViewed } = useAnalytics();
+  const { onLearnHubFocused } = useLearnEvents();
   const insets = useSafeAreaInsets();
   const {
     moduleId,
@@ -570,6 +572,13 @@ export default function ModuleIndex() {
         lastTrackedRef.current = now;
       }
     }, [moduleTitle, submoduleCount, moduleId, trackScreen, trackModuleViewed])
+  );
+
+  // The user left any submodule / lesson flow (learn start/complete events).
+  useFocusEffect(
+    useCallback(() => {
+      onLearnHubFocused();
+    }, [onLearnHubFocused])
   );
 
   // Which submodule is the next one the user should do?

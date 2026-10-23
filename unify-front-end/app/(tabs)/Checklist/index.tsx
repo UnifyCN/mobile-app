@@ -31,6 +31,7 @@ import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
 import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
+import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
 import {
   deleteCustomChecklistTask,
   setCustomChecklistTaskCompletion,
@@ -92,6 +93,7 @@ const PERSONA_KEYS: Record<string, string> = {
   skilled_worker: 'checklist.persona.skilled_worker',
   immigrant: 'checklist.persona.immigrant',
   pr: 'checklist.persona.pr',
+  other: 'checklist.persona.other',
 };
 
 type ChecklistRow =
@@ -246,8 +248,16 @@ export default function ChecklistScreen() {
     }, [currentStage, persona, refetch, trackScreen])
   );
 
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(task => task.completed).length;
+  const activeTasks = useMemo(
+    () => tasks.filter(task => !task.dismissed_at),
+    [tasks]
+  );
+  const removedTasks = useMemo(
+    () => tasks.filter(task => task.source === 'sanity' && task.dismissed_at),
+    [tasks]
+  );
+  const totalTasks = activeTasks.length;
+  const completedTasks = activeTasks.filter(task => task.completed).length;
   const progressPercent = totalTasks > 0 ? completedTasks / totalTasks : 0;
 
   const isLoading = stageLoading || isLoadingProfile || tasksLoading;
@@ -255,7 +265,7 @@ export default function ChecklistScreen() {
   const { hapticsEnabled } = useHapticsPreference();
   const tabBarHeight = useBottomTabBarHeight();
 
-  const rows = useMemo(() => buildRows(tasks), [tasks]);
+  const rows = useMemo(() => buildRows(activeTasks), [activeTasks]);
   // Only the first open immigration item carries the partner row. Personas
   // that plan PR get several such items in a row, and a row on each one
   // repeats the same offer down the list.
@@ -483,6 +493,73 @@ export default function ChecklistScreen() {
     );
   };
 
+  const handleRemoveSuggestedTask = () => {
+    const sanityChecklistId = selectedTask?.sanity_checklist_id;
+    if (!sanityChecklistId || selectedTask?.source !== 'sanity') return;
+
+    Alert.alert(
+      t('checklist.removeSuggestedTaskTitle'),
+      t('checklist.removeSuggestedTaskMessage'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('checklist.removeSuggestedTask'),
+          style: 'destructive',
+          onPress: async () => {
+            const previousTasks = tasks;
+            const dismissedAt = new Date().toISOString();
+            try {
+              const {
+                data: { user },
+              } = await supabase.auth.getUser();
+              if (!user) return;
+
+              setTasks(previous =>
+                previous.map(task =>
+                  task.sanity_checklist_id === sanityChecklistId
+                    ? { ...task, dismissed_at: dismissedAt }
+                    : task
+                )
+              );
+              handleCloseModal();
+              await setChecklistItemDismissed(user.id, sanityChecklistId, true);
+            } catch (error) {
+              console.error('Error removing suggested checklist task:', error);
+              setTasks(previousTasks);
+              refetch();
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleRestoreSuggestedTask = async (task: UserTaskWithDetails) => {
+    const sanityChecklistId = task.sanity_checklist_id;
+    if (!sanityChecklistId) return;
+
+    const previousTasks = tasks;
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      setTasks(previous =>
+        previous.map(item =>
+          item.sanity_checklist_id === sanityChecklistId
+            ? { ...item, dismissed_at: null }
+            : item
+        )
+      );
+      await setChecklistItemDismissed(user.id, sanityChecklistId, false);
+    } catch (error) {
+      console.error('Error restoring suggested checklist task:', error);
+      setTasks(previousTasks);
+      refetch();
+    }
+  };
+
   const renderItem = useCallback(
     ({ item, drag, isActive }: RenderItemParams<ChecklistRow>) => {
       if (item.type === 'header') {
@@ -637,11 +714,36 @@ export default function ChecklistScreen() {
         </Text>
       </TouchableOpacity>
 
-      {tasks.length === 0 && (
+      {activeTasks.length === 0 && (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>
             {t('checklist.noTasksAvailable')}
           </Text>
+        </View>
+      )}
+
+      {removedTasks.length > 0 && (
+        <View style={styles.removedSection}>
+          <Text style={styles.removedTitle}>{t('checklist.removedTasks')}</Text>
+          {removedTasks.map(task => (
+            <View
+              key={task.sanity_checklist_id ?? task.task.task_name}
+              style={styles.removedRow}
+            >
+              <Text numberOfLines={2} style={styles.removedTaskName}>
+                {task.task.task_name}
+              </Text>
+              <TouchableOpacity
+                onPress={() => handleRestoreSuggestedTask(task)}
+                accessibilityRole='button'
+                accessibilityLabel={t('checklist.restoreTaskA11y', {
+                  name: task.task.task_name,
+                })}
+              >
+                <Text style={styles.restoreText}>{t('checklist.restore')}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
       )}
     </View>
@@ -673,6 +775,7 @@ export default function ChecklistScreen() {
         onMarkComplete={handleMarkComplete}
         isCustomTask={selectedTask?.source === 'custom'}
         onDeleteCustomTask={handleDeleteCustomTask}
+        onRemoveSuggestedTask={handleRemoveSuggestedTask}
       />
 
       {confettiKey !== null && (
@@ -704,6 +807,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 32,
+  },
+  removedSection: {
+    marginTop: 20,
+    paddingTop: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#E2E8F0',
+  },
+  removedTitle: {
+    marginBottom: 8,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#64748B',
+  },
+  removedRow: {
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  removedTaskName: {
+    flex: 1,
+    fontSize: 14,
+    color: '#64748B',
+  },
+  restoreText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#E03B3B',
   },
   header: {
     marginBottom: 4,

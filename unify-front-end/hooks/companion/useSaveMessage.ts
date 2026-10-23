@@ -9,6 +9,8 @@ interface SaveMessageContext {
   previousMessages: ConversationMessage[] | undefined;
 }
 
+// Optimistic rows get negative ids so they never collide with database ids.
+// isConversationHistoryLoaded relies on this to tell them apart.
 let nextOptimisticMessageId = -1;
 
 const getNextOptimisticMessageId = () => {
