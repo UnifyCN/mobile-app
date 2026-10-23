@@ -42,6 +42,7 @@ import {
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
 import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
 import { useAnalytics } from '@/utils/analytics';
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function EndingPageScreen() {
@@ -53,7 +54,15 @@ export default function EndingPageScreen() {
     lessonId: string;
     pageNum: string;
   }>();
-  const { trackScreen, trackLessonCompleted } = useAnalytics();
+  const { trackScreen } = useAnalytics();
+  // Joins the lesson visit, so Back to page 1 after a resume here is not a
+  // lesson_started.
+  const { onLessonScreenFocused } = useLearnEvents();
+  useFocusEffect(
+    useCallback(() => {
+      if (lessonId) onLessonScreenFocused(lessonId);
+    }, [lessonId, onLessonScreenFocused])
+  );
   const [showExitModal, setShowExitModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const operationPending = useRef(false);

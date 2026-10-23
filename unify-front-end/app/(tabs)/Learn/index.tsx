@@ -1,3 +1,4 @@
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import React from 'react';
 import {
   View,
@@ -36,6 +37,12 @@ type LearnView = 'articles' | 'resources';
 export default function Learn() {
   useProgressCache();
   const { trackScreen, trackModuleCardClicked } = useAnalytics();
+  const { onLearnHubFocused } = useLearnEvents();
+  useFocusEffect(
+    React.useCallback(() => {
+      onLearnHubFocused();
+    }, [onLearnHubFocused])
+  );
   const { t } = useTranslation();
   const router = useRouter();
   const isFocused = useIsFocused();

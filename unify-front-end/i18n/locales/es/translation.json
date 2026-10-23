@@ -1438,6 +1438,12 @@
     "undoCompletion": "Deshacer",
     "learnHow": "Aprende cómo",
     "deleteTask": "Eliminar tarea",
+    "removeSuggestedTask": "Quitar de mi lista",
+    "removeSuggestedTaskTitle": "¿Quitar esta sugerencia?",
+    "removeSuggestedTaskMessage": "Puedes restaurarla más tarde desde Tareas eliminadas.",
+    "removedTasks": "Tareas eliminadas",
+    "restore": "Restaurar",
+    "restoreTaskA11y": "Restaurar {{name}} en mi lista",
     "stage": {
       "0": "Aún no llegó",
       "1": "0–3 meses",
@@ -1451,7 +1457,8 @@
       "protected_person": "Persona protegida",
       "skilled_worker": "Trabajador calificado",
       "immigrant": "Inmigrante",
-      "pr": "PR"
+      "pr": "PR",
+      "other": "Recién llegado"
     },
     "createItem": {
       "headerTitle": "Nuevo elemento",

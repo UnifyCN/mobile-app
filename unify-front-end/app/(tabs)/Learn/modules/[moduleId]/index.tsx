@@ -1,3 +1,4 @@
+import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import TabHeader from '@/components/home/HomeHeader';
 import CategorySymbol, {
   categorySymbol,
@@ -61,6 +62,12 @@ export default function ModuleIndex() {
   const router = useRouter();
   const { t } = useTranslation();
   const { trackScreen, trackModuleViewed } = useAnalytics();
+  const { onLearnHubFocused } = useLearnEvents();
+  useFocusEffect(
+    useCallback(() => {
+      onLearnHubFocused();
+    }, [onLearnHubFocused])
+  );
   const { moduleId, whyTag } = useLocalSearchParams<{
     moduleId: string;
     blobIndex?: string;

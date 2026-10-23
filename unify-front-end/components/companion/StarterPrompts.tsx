@@ -12,6 +12,7 @@ import { Feather } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Theme } from '@/constants/Theme';
 import type { PersonalizedStarter } from '@/hooks/companion/usePersonalizedStarters';
+import type { CompanionStarterRef } from '@/helpers/companion/companionAnalytics';
 import {
   getSeenStarterIds,
   markStarterSeen,
@@ -21,8 +22,8 @@ import {
 interface StarterPromptsProps {
   onPromptSelect: (
     prompt: string,
-    mode?: string,
-    isPersonalized?: boolean
+    mode: string | undefined,
+    starter: CompanionStarterRef
   ) => void;
   personalizedStarters?: PersonalizedStarter[];
 }
@@ -213,7 +214,10 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
   const handlePersonalizedPress = useCallback(
     (starter: PersonalizedStarter, slotIndex: number) => {
       // Send the text the user actually read, not the English server copy.
-      onPromptSelect(personalizedText(starter).prompt, undefined, true);
+      onPromptSelect(personalizedText(starter).prompt, undefined, {
+        kind: 'personalized',
+        position: slotIndex,
+      });
 
       // Persist; fire-and-forget. Concurrent calls are safe — markStarterSeen
       // serializes its own read-modify-write internally.
@@ -298,7 +302,12 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
             <TouchableOpacity
               key={card.id}
               style={styles.card}
-              onPress={() => onPromptSelect(card.prompt, card.mode, false)}
+              onPress={() =>
+                onPromptSelect(card.prompt, card.mode, {
+                  kind: 'static',
+                  id: card.id,
+                })
+              }
               activeOpacity={0.8}
             >
               <View style={styles.cardHeader}>

@@ -33,7 +33,7 @@ interface UseChecklistTasksParams {
 async function fetchChecklistTasks(
   userId: string,
   currentStage: number,
-  normalizedPersona: string,
+  normalizedPersona: string | null,
   stageChanged: boolean,
   language: SanityLanguage
 ): Promise<UserTaskWithDetails[]> {
@@ -63,13 +63,23 @@ export const useChecklistTasks = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [cacheChecked, setCacheChecked] = useState(false);
 
+  // Read the user ID from the stored session, not getUser(). getUser() always
+  // makes a network request and resolves with a null user when it fails, which
+  // left this hook loading if it failed after stage and persona had loaded.
+  // getSession() reads storage; it only uses the network to refresh an
+  // expiring token, and then returns a null session if the refresh fails.
   useEffect(() => {
     let cancelled = false;
-    supabase.auth.getUser().then(({ data }) => {
-      if (!cancelled) {
-        setUserId(data.user?.id ?? null);
-      }
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!cancelled) {
+          setUserId(data.session?.user.id ?? null);
+        }
+      })
+      .catch(error => {
+        console.warn('[useChecklistTasks] Failed to read auth user:', error);
+      });
     return () => {
       cancelled = true;
     };
@@ -81,18 +91,13 @@ export const useChecklistTasks = ({
   );
 
   const queryKey = useMemo(() => {
-    if (
-      !userId ||
-      currentStage === null ||
-      !normalizedPersona ||
-      normalizedPersona === ''
-    ) {
+    if (!userId || currentStage === null) {
       return null;
     }
     return checklistTasksQueryKey(
       userId,
       currentStage,
-      normalizedPersona,
+      normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
     );
@@ -105,7 +110,7 @@ export const useChecklistTasks = ({
     return buildChecklistCacheStorageKey(
       userId!,
       currentStage!,
-      normalizedPersona!,
+      normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
     );
@@ -158,16 +163,11 @@ export const useChecklistTasks = ({
       fetchChecklistTasks(
         userId!,
         currentStage!,
-        normalizedPersona!,
+        normalizedPersona,
         stageChanged,
         language
       ),
-    enabled:
-      cacheChecked &&
-      !!queryKey &&
-      !!userId &&
-      currentStage !== null &&
-      !!normalizedPersona,
+    enabled: cacheChecked && !!queryKey && !!userId && currentStage !== null,
     // Hydrated cache renders immediately, then revalidates for newly published
     // Sanity translations. Disk/memory entries separately expire after 10 min.
     staleTime: 0,
@@ -226,7 +226,6 @@ export const useChecklistTasks = ({
     waitingForAuth ||
     Boolean(
       queryKey &&
-      normalizedPersona &&
       currentStage !== null &&
       (!cacheChecked || (query.isPending && query.data === undefined))
     );

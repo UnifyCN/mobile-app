@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { queryClient } from '@/lib/queryClient';
+import { withAppPlatform } from '@/utils/appPlatform';
 import { DEFAULT_CONVERSATION_TITLE } from '@/helpers/companion/conversationHelpers';
 
 export interface CreateConversationResponse {
@@ -21,9 +22,9 @@ const buildFallbackTitle = (firstMessage: string): string =>
 const generateTitle = async (firstMessage: string): Promise<string> => {
   try {
     const { data, error } = await supabase.functions.invoke('generate-title', {
-      body: {
+      body: withAppPlatform({
         message: firstMessage,
-      },
+      }),
     });
 
     if (error || !data || !data.title) {

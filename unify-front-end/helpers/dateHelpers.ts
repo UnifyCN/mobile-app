@@ -125,7 +125,7 @@ export const stageNumberToStageSlug = (stage: number): string => {
   }
 };
 
-/** Allowed persona slugs for Sanity checklist (exactly 6). Unknown → null so we do not pass to GROQ. */
+/** Allowed persona slugs for Sanity checklist. Unknown → null so we do not pass to GROQ. */
 const CHECKLIST_PERSONA_SLUGS = [
   'international_student',
   'refugee',
@@ -133,14 +133,11 @@ const CHECKLIST_PERSONA_SLUGS = [
   'skilled_worker',
   'immigrant',
   'pr',
+  'other',
 ] as const;
 
 export const normalizePersonaSlug = (persona: string | null): string | null => {
   if (!persona) return null;
   const p = persona.toLowerCase().trim();
-  return CHECKLIST_PERSONA_SLUGS.includes(
-    p as (typeof CHECKLIST_PERSONA_SLUGS)[number]
-  )
-    ? p
-    : null;
+  return CHECKLIST_PERSONA_SLUGS.find(slug => slug === p) ?? null;
 };

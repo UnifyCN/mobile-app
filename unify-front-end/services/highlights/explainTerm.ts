@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import i18n from '@/i18n';
 import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
+import { withAppPlatform } from '@/utils/appPlatform';
 
 /**
  * Calls the explain-term edge function to get a plain-language explanation
@@ -16,7 +17,11 @@ export async function explainTerm(
   let data, error;
   try {
     const result = await supabase.functions.invoke('explain-term', {
-      body: { term, lessonContext, ...(language ? { language } : {}) },
+      body: withAppPlatform({
+        term,
+        lessonContext,
+        ...(language ? { language } : {}),
+      }),
     });
     data = result.data;
     error = result.error;

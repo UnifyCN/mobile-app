@@ -1438,6 +1438,12 @@
     "undoCompletion": "पूर्ववत करें",
     "learnHow": "कैसे करें सीखें",
     "deleteTask": "कार्य हटाएं",
+    "removeSuggestedTask": "मेरी सूची से हटाएँ",
+    "removeSuggestedTaskTitle": "यह सुझाव हटाएँ?",
+    "removeSuggestedTaskMessage": "आप इसे बाद में हटाए गए कार्यों से वापस जोड़ सकते हैं।",
+    "removedTasks": "हटाए गए कार्य",
+    "restore": "वापस जोड़ें",
+    "restoreTaskA11y": "{{name}} को मेरी सूची में वापस जोड़ें",
     "stage": {
       "0": "अभी नहीं पहुंचे",
       "1": "0–3 महीने",
@@ -1451,7 +1457,8 @@
       "protected_person": "संरक्षित व्यक्ति",
       "skilled_worker": "कुशल कर्मचारी",
       "immigrant": "अप्रवासी",
-      "pr": "PR"
+      "pr": "PR",
+      "other": "नवागंतुक"
     },
     "createItem": {
       "headerTitle": "नया चेकलिस्ट आइटम",

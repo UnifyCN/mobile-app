@@ -3,6 +3,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
+import { aiPlatformProperties } from '../_shared/aiPlatform.ts';
 import { responseLanguageDirective } from '../_shared/responseLanguage.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
@@ -138,6 +139,7 @@ Deno.serve(async req => {
       $ai_total_cost_usd: llmResult.usage.costUsd,
       // Custom properties for filtering
       feature: 'ask_ai_learn',
+      ...aiPlatformProperties(body),
       term_length: term.length,
     });
 
