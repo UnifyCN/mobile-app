@@ -63,7 +63,12 @@ describe.each(LOCALES)('arrival countdown copy (%s)', lang => {
   it('renders a count in the pre-arrival form for 1 to 1000 days', async () => {
     const t = await makeT(lang);
     for (const days of [1, 2, 3, 5, 11, 21, 40, 100, 365, 1000]) {
-      const text = tPlural(t, 'checklist.arrivalCountdown.preArrival', days, lang);
+      const text = tPlural(
+        t,
+        'checklist.arrivalCountdown.preArrival',
+        days,
+        lang
+      );
       expect(text).not.toContain('preArrival');
       if (lang !== 'ar') expect(text).toContain(String(days));
     }

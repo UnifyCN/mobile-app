@@ -21,7 +21,9 @@ const TODAY = new Date(2026, 9, 23, 12, 0, 0);
 
 type Props = { userId: string | null; arrivalDate: string | null };
 
-const setup = (initial: Props = { userId: 'u1', arrivalDate: '2026-12-01' }) => {
+const setup = (
+  initial: Props = { userId: 'u1', arrivalDate: '2026-12-01' }
+) => {
   const refreshStage = jest.fn().mockResolvedValue(undefined);
   const refreshUser = jest.fn();
   const refetchChecklist = jest.fn().mockResolvedValue(undefined);
@@ -38,7 +40,7 @@ const setup = (initial: Props = { userId: 'u1', arrivalDate: '2026-12-01' }) => 
   return { ...hook, refreshStage, refreshUser, refetchChecklist };
 };
 
-const deferred = <T,>() => {
+const deferred = <T>() => {
   let resolve!: (value: T) => void;
   let reject!: (error: Error) => void;
   const promise = new Promise<T>((res, rej) => {

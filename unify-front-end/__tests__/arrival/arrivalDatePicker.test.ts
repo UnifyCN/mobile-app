@@ -45,10 +45,7 @@ describe('isArrivalDateInRange', () => {
   );
 });
 
-import {
-  getPickerOptions,
-  setPickerPart,
-} from '@/helpers/arrivalDatePicker';
+import { getPickerOptions, setPickerPart } from '@/helpers/arrivalDatePicker';
 
 const range = getArrivalDateRange(TODAY);
 const at = (y: number, m: number, d: number) => new Date(y, m - 1, d);
@@ -62,7 +59,9 @@ describe('getPickerOptions', () => {
   });
 
   it('limits months in the first and last year', () => {
-    expect(getPickerOptions(at(2021, 11, 5), range).months).toEqual([9, 10, 11]);
+    expect(getPickerOptions(at(2021, 11, 5), range).months).toEqual([
+      9, 10, 11,
+    ]);
     expect(getPickerOptions(at(2029, 1, 5), range).months).toEqual([
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
     ]);
