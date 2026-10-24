@@ -56,7 +56,7 @@ export function ArrivalDateSheet({
   const canSave = selectedDay !== arrivalDate && !isSaving;
 
   return (
-    <BottomSheet visible={visible} onClose={onClose} snapPoint={0.68}>
+    <BottomSheet visible={visible} onClose={onClose} snapPoint={0.64}>
       <View
         style={[
           styles.content,
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: 4,
-    justifyContent: 'space-between',
   },
   title: {
     fontSize: 20,
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   saveButton: {
+    marginTop: 'auto',
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'center',
