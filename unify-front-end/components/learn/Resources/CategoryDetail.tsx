@@ -9,6 +9,7 @@ import {
   type PartnerCategory,
 } from '@/types/partner';
 import { getPartnersByCategory } from '@/constants/Partners';
+import { useCurrentUser } from '@/context/UserContext';
 import { RESOURCE_THEME } from '@/constants/ResourceTheme';
 import { localizePartners } from '@/utils/localizePartner';
 import PartnerRow from './PartnerRow';
@@ -23,9 +24,10 @@ export default function CategoryDetail({ category, onBack }: Props) {
   const { t } = useTranslation();
   const label = t(PARTNER_CATEGORY_LABEL_KEYS[category]);
   const description = t(PARTNER_CATEGORY_DESCRIPTION_KEYS[category]);
+  const province = useCurrentUser().currentUser?.province;
   const partners = useMemo(
-    () => localizePartners(getPartnersByCategory(category), t),
-    [category, t]
+    () => localizePartners(getPartnersByCategory(category, province), t),
+    [category, province, t]
   );
 
   return (

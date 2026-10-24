@@ -1,4 +1,5 @@
 import type { ImageSourcePropType } from 'react-native';
+import type { Province } from '@/supabase/functions/_shared/province';
 
 export type PartnerCategory =
   | 'gettingSettled'
@@ -232,6 +233,13 @@ export interface Partner {
    * the "Last verified" badge is deliberately deferred.
    */
   lastVerified?: string;
+  /**
+   * Provinces whose residents this partner serves. Leave unset for a partner
+   * that serves all of Canada or works online for anyone in Canada. Eligibility
+   * wins over delivery: an online service only for BC residents is tagged
+   * British Columbia. Never an empty list.
+   */
+  provinces?: Province[];
   /** Lower numbers render first within a category. */
   displayOrder: number;
   /** Inactive partners are filtered out of all UI. */

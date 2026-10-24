@@ -1,3 +1,9 @@
+import {
+  PROVINCES,
+  toKnownProvince,
+  type Province,
+} from '@/supabase/functions/_shared/province';
+
 // Top 20 Canadian cities + provinces + "Other (specify)"
 export const CANADIAN_CITIES = [
   'Toronto',
@@ -46,21 +52,7 @@ const CITY_TO_PROVINCE: Record<string, string> = {
   'Barrie': 'Ontario',
 };
 
-export const CANADIAN_PROVINCES = [
-  'Alberta',
-  'British Columbia',
-  'Manitoba',
-  'New Brunswick',
-  'Newfoundland and Labrador',
-  'Northwest Territories',
-  'Nova Scotia',
-  'Nunavut',
-  'Ontario',
-  'Prince Edward Island',
-  'Quebec',
-  'Saskatchewan',
-  'Yukon',
-];
+export const CANADIAN_PROVINCES: string[] = [...PROVINCES];
 
 export const getProvinceForCity = (city: string): string | null => {
   return CITY_TO_PROVINCE[city] || null;
@@ -122,3 +114,12 @@ export const normalizeProvince = (
   const key = trimmed.toLowerCase().replace(/\s+/g, ' ').replace(/\.$/, '');
   return PROVINCE_BY_LOWER[key] ?? PROVINCE_ALIASES[key] ?? trimmed;
 };
+
+/**
+ * The province a stored profile value stands for, or null when it is not one of
+ * the 13 (null, blank, or free text typed for "Other"). Use this, not
+ * `normalizeProvince`, wherever the value decides which content shows.
+ */
+export const resolveUserProvince = (
+  province: string | null | undefined
+): Province | null => toKnownProvince(normalizeProvince(province));
