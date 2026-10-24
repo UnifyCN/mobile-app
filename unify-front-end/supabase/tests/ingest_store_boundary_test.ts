@@ -343,7 +343,8 @@ Deno.test(
       `select distinct metadata->>'published_at' as d from public.knowledge_chunks where chunk_text like '%Work permit (from outside Canada)%'`
     );
     assertEquals(workDates, [{ d: '2026-10-28' }]);
-    // One fenced refresh call carries the four date groups. No chunk row is
+    // The attempt is stored right after the claim, before any other work. One
+    // fenced refresh call carries the four date groups. No chunk row is
     // written through the table API, and nothing is embedded again.
     assertEquals(
       run.requests
@@ -351,8 +352,8 @@ Deno.test(
         .map(r => r.table),
       [
         'claim_crawl_source',
-        'refresh_knowledge_metadata',
         'record_crawl_attempt',
+        'refresh_knowledge_metadata',
         'release_crawl_source',
       ]
     );
