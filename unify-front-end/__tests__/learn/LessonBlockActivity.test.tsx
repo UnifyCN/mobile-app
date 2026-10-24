@@ -2,14 +2,18 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import LessonBlockActivity from '@/components/learn/LessonBlockActivity';
-import { getActivityInputsByPage, saveActivityInput } from '@/services/progress/progressService';
+import { SAVE_DEADLINE_MS, getActivityInputsByPage, requestUser, saveActivityInput } from '@/services/progress/progressService';
 import type { SanityActivityPage } from '@/types/sanity';
 
 jest.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key }) }));
+jest.mock('@/services/progress/progressClient', () => ({ progressClient: {} }));
 jest.mock('@/services/progress/progressService', () => ({
   ACTIVITY_QUESTION_PREFIX: 'question:',
+  SAVE_DEADLINE_MS: jest.requireActual('@/services/progress/progressService').SAVE_DEADLINE_MS,
   getActivityInputsByPage: jest.fn(),
+  requestUser: jest.fn(),
   saveActivityInput: jest.fn(),
+  saveDeadline: jest.requireActual('@/services/progress/progressService').saveDeadline,
 }));
 jest.mock('@/components/sanity/RichTextRenderer', () => {
   const React = require('react');
@@ -62,8 +66,8 @@ it('restores answers, submits them, shows feedback, then enables navigation', as
   fireEvent.press(view.getByText('common.submit'));
   await waitFor(() => expect(onReady).toHaveBeenLastCalledWith(true));
   expect(view.getByText('Feedback shown')).toBeTruthy();
-  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'reflection', 'Check the source', true, false);
-  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', true, false);
+  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'reflection', 'Check the source', true, expect.objectContaining({ clearSubmitted: false }));
+  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', true, expect.objectContaining({ clearSubmitted: false }));
 });
 
 it('keeps Next unavailable when an answer cannot be saved', async () => {
@@ -143,7 +147,7 @@ it('clears the submitted state of an answer changed after Submit', async () => {
   await waitFor(() => expect(view.getByTestId('question')).toBeTruthy());
   fireEvent.press(view.getByTestId('question'));
   await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(1));
-  expect(saveInput).toHaveBeenLastCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', false, true);
+  expect(saveInput).toHaveBeenLastCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', false, expect.objectContaining({ clearSubmitted: true }));
 });
 
 it('writes the pending draft of an older copy before a reopened copy reads', async () => {
@@ -154,7 +158,7 @@ it('writes the pending draft of an older copy before a reopened copy reads', asy
   fireEvent.changeText(first.getByTestId('reflection'), 'Older draft');
   expect(loadInputs).toHaveBeenCalledTimes(1);
   render(<LessonBlockActivity activity={activity} lessonId="remount" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
-  await waitFor(() => expect(saveInput).toHaveBeenCalledWith('remount', 'module', 'course', 'knowledge-check', 'reflection', 'Older draft', false, true));
+  await waitFor(() => expect(saveInput).toHaveBeenCalledWith('remount', 'module', 'course', 'knowledge-check', 'reflection', 'Older draft', false, expect.objectContaining({ clearSubmitted: true })));
   await act(async () => { await Promise.resolve(); });
   expect(loadInputs).toHaveBeenCalledTimes(1);
   await act(async () => { finishDraft(true); });
@@ -175,4 +179,38 @@ it('asks for a new submit when an optional answer changed after Submit', async (
   await waitFor(() => expect(view.getByTestId('note').props.value).toBe('Edited later'));
   expect(onReady).not.toHaveBeenCalledWith(true);
   expect(view.queryByText('Feedback shown')).toBeNull();
+});
+
+it('keeps the account that was signed in when a write was queued', async () => {
+  let finishFirst!: (saved: boolean) => void;
+  saveInput.mockImplementationOnce(() => new Promise(resolve => { finishFirst = resolve; }));
+  jest.mocked(requestUser).mockReturnValue('account-a' as never);
+  const view = render(<LessonBlockActivity activity={activity} lessonId="account" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
+  await waitFor(() => expect(view.getByTestId('question')).toBeTruthy());
+  fireEvent.press(view.getByTestId('question'));
+  await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(1));
+  fireEvent.press(view.getByTestId('question'));
+  jest.mocked(requestUser).mockReturnValue('account-b' as never);
+  await act(async () => { finishFirst(true); });
+  await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(2));
+  expect(saveInput.mock.calls.map(call => call[7]?.userRequest)).toEqual(['account-a', 'account-a']);
+});
+
+it('opens a reopened copy after a stalled save reaches its deadline', async () => {
+  jest.useFakeTimers();
+  try {
+    saveInput.mockImplementationOnce((...args) => new Promise(resolve => {
+      args[7]?.signal?.addEventListener('abort', () => resolve(false));
+    }));
+    const first = render(<LessonBlockActivity activity={activity} lessonId="stalled" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
+    await act(async () => { await jest.advanceTimersByTimeAsync(0); });
+    fireEvent.press(first.getByTestId('question'));
+    const reopened = render(<LessonBlockActivity activity={activity} lessonId="stalled" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
+    await act(async () => { await jest.advanceTimersByTimeAsync(SAVE_DEADLINE_MS - 1); });
+    expect(reopened.queryByText('learn.lesson.loadingActivity')).toBeTruthy();
+    await act(async () => { await jest.advanceTimersByTimeAsync(1); });
+    expect(reopened.queryByText('learn.lesson.loadingActivity')).toBeNull();
+  } finally {
+    jest.useRealTimers();
+  }
 });

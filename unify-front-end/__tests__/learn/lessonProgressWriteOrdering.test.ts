@@ -1,7 +1,6 @@
 import { renderHook } from '@testing-library/react-native';
 import {
-  PREVIOUS_WRITE_WAIT_MS,
-  USER_WAIT_MS,
+  SAVE_DEADLINE_MS,
   saveResumePosition,
   updateLessonProgress,
 } from '@/services/progress/progressService';
@@ -12,7 +11,11 @@ const mockUpsert = jest.fn();
 jest.mock('@/services/progress/progressClient', () => ({
   progressClient: {
     auth: { getUser: (...args: unknown[]) => mockGetUser(...args) },
-    from: () => ({ upsert: (...args: unknown[]) => mockUpsert(...args) }),
+    from: () => ({
+      upsert: (row: unknown, options: unknown) => ({
+        abortSignal: (signal: AbortSignal) => mockUpsert(row, options, signal),
+      }),
+    }),
   },
 }));
 jest.mock('@/utils/progressEventEmitter', () => ({ progressEventEmitter: { emit: jest.fn() } }));
@@ -76,18 +79,26 @@ test('different lessons do not wait for each other', async () => {
   first.resolve({ error: null });
 });
 
-test('a stalled earlier write does not hold lesson completion forever', async () => {
+const abortable = (_row: unknown, _options: unknown, signal: AbortSignal) =>
+  new Promise(resolve => signal.addEventListener('abort', () => resolve({ error: { message: 'aborted' } })));
+
+test('a stalled earlier write is aborted at its deadline and completion then runs', async () => {
   jest.useFakeTimers();
   try {
-    mockUpsert.mockImplementationOnce(() => new Promise(() => {})).mockResolvedValue({ error: null });
+    const errorLog = jest.spyOn(console, 'error').mockImplementation(() => {});
+    mockUpsert.mockImplementationOnce(abortable).mockResolvedValue({ error: null });
     const { result } = renderHook(() => useLessonProgress());
-    void saveResumePosition('stalled', 'sub', 'module', 'lesson', 2);
+    const stalled = saveResumePosition('stalled', 'sub', 'module', 'lesson', 2);
     const completion = result.current.saveLessonCompletion('stalled', 'sub', 'module', 3);
-    await jest.advanceTimersByTimeAsync(PREVIOUS_WRITE_WAIT_MS - 1);
+    await jest.advanceTimersByTimeAsync(SAVE_DEADLINE_MS - 1);
     expect(mockUpsert).toHaveBeenCalledTimes(1);
     await jest.advanceTimersByTimeAsync(1);
+    expect(await stalled).toBe(false);
     expect(await completion).toBe(true);
     expect(mockUpsert).toHaveBeenCalledTimes(2);
+    expect((mockUpsert.mock.calls[0][2] as AbortSignal).aborted).toBe(true);
+    expect((mockUpsert.mock.calls[1][2] as AbortSignal).aborted).toBe(false);
+    errorLog.mockRestore();
   } finally {
     jest.useRealTimers();
   }
@@ -107,30 +118,6 @@ test('queued writes keep the learner who was signed in when they were called', a
   expect(stored.map(row => row.user_id)).toEqual(['a', 'a', 'a']);
 });
 
-test('a stalled write that lands after completion is overwritten by completion again', async () => {
-  jest.useFakeTimers();
-  try {
-    const stalled = deferred<{ error: null }>();
-    const stored: Row[] = [];
-    mockUpsert.mockImplementation(async (row: Row) => {
-      if (mockUpsert.mock.calls.length === 1) await stalled.promise;
-      stored.push(row);
-      return { error: null };
-    });
-    const { result } = renderHook(() => useLessonProgress());
-    void updateLessonProgress('late', 'sub', 'module', 'lesson', 1, 3);
-    const completion = result.current.saveLessonCompletion('late', 'sub', 'module', 3);
-    await jest.advanceTimersByTimeAsync(PREVIOUS_WRITE_WAIT_MS);
-    expect(await completion).toBe(true);
-    expect(stored.map(row => Boolean(row.is_completed))).toEqual([true]);
-    stalled.resolve({ error: null });
-    await jest.advanceTimersByTimeAsync(0);
-    expect(stored.map(row => Boolean(row.is_completed))).toEqual([true, false, true]);
-  } finally {
-    jest.useRealTimers();
-  }
-});
-
 test('completion fails instead of waiting forever for a stalled sign-in check', async () => {
   jest.useFakeTimers();
   try {
@@ -138,7 +125,7 @@ test('completion fails instead of waiting forever for a stalled sign-in check', 
     const { result } = renderHook(() => useLessonProgress());
     const errorLog = jest.spyOn(console, 'error').mockImplementation(() => {});
     const completion = result.current.saveLessonCompletion('auth', 'sub', 'module', 3);
-    await jest.advanceTimersByTimeAsync(USER_WAIT_MS);
+    await jest.advanceTimersByTimeAsync(SAVE_DEADLINE_MS);
     expect(await completion).toBe(false);
     expect(mockUpsert).not.toHaveBeenCalled();
     errorLog.mockRestore();

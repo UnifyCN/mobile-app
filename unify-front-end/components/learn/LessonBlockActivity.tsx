@@ -7,7 +7,9 @@ import type { SanityActivityPage } from '@/types/sanity';
 import {
   ACTIVITY_QUESTION_PREFIX,
   getActivityInputsByPage,
+  requestUser,
   saveActivityInput,
+  saveDeadline,
 } from '@/services/progress/progressService';
 
 // Shared by every mounted copy of an activity. The reader pushes a new screen
@@ -19,8 +21,13 @@ const pendingDrafts = new Map<string, { timer: ReturnType<typeof setTimeout>; ru
 
 const activityScope = (lessonId: string, activityKey: string) => `${lessonId}|${activityKey}|`;
 
-function queueFieldWrite(key: string, write: () => Promise<boolean>) {
-  const next = (fieldWrites.get(key) ?? Promise.resolve(true)).then(write);
+// Each write has a deadline, so a stalled one cannot hold later writes or a
+// reopened copy's read.
+function queueFieldWrite(key: string, write: (signal: AbortSignal) => Promise<boolean>) {
+  const next = (fieldWrites.get(key) ?? Promise.resolve(true)).then(() => {
+    const deadline = saveDeadline();
+    return write(deadline.signal).finally(deadline.done);
+  });
   fieldWrites.set(key, next);
   void next.then(() => {
     if (fieldWrites.get(key) === next) fieldWrites.delete(key);
@@ -63,11 +70,15 @@ export default function LessonBlockActivity({
   const scope = activityScope(lessonId, activity._key);
 
   // Writes run in order, so a draft clears the field's submitted state: an
-  // answer changed after Submit must be submitted again.
-  const persist = (fieldKey: string, value: string, isSubmitted = false) =>
-    queueFieldWrite(scope + fieldKey, () => saveActivityInput(
-      lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted, !isSubmitted
+  // answer changed after Submit must be submitted again. The user is read
+  // when the write is queued, so a queued write keeps its account.
+  const persist = (fieldKey: string, value: string, isSubmitted = false) => {
+    const userRequest = requestUser();
+    return queueFieldWrite(scope + fieldKey, signal => saveActivityInput(
+      lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted,
+      { clearSubmitted: !isSubmitted, userRequest, signal }
     ));
+  };
 
   useEffect(() => {
     let cancelled = false;

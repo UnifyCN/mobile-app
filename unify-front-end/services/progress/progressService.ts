@@ -108,25 +108,22 @@ async function startLesson(
 }
 
 // Every writer of a lesson's user_lesson_progress row (page progress, resume
-// position, completion) runs through one queue per lesson, in call order. A
-// slow earlier write can otherwise land last and move the resume point back,
-// or mark a completed lesson as in progress again. Each writer reads the
-// signed-in user when it is called, not when its turn comes.
+// position, completion) runs through one queue per lesson, strictly in call
+// order. A slow earlier write can otherwise land last and move the resume
+// point back, or mark a completed lesson as in progress again. Each writer
+// reads the signed-in user when it is called, not when its turn comes.
 const lessonProgressWrites = new Map<string, Promise<unknown>>();
-const latestLessonWrites = new Map<string, () => Promise<unknown>>();
 
-// A write waits at most this long for the write before it, and a writer waits
-// at most this long for the signed-in user. React Native's Android HTTP client
-// has no default timeout, so one stalled request must not hold later saves,
-// including lesson completion, forever.
-export const PREVIOUS_WRITE_WAIT_MS = 8000;
-export const USER_WAIT_MS = 8000;
+// Every save gets this long. React Native's Android HTTP client has no default
+// timeout, so a stalled request is aborted instead of holding the queue, or
+// landing late over newer data.
+export const SAVE_DEADLINE_MS = 10000;
 
 /** Reads the signed-in user now. A failed or stalled read resolves to null. */
 export function requestUser() {
   return new Promise<Awaited<ReturnType<typeof progressClient.auth.getUser>> | null>(
     resolve => {
-      const timer = setTimeout(() => resolve(null), USER_WAIT_MS);
+      const timer = setTimeout(() => resolve(null), SAVE_DEADLINE_MS);
       progressClient.auth
         .getUser()
         .then(resolve, () => resolve(null))
@@ -135,35 +132,25 @@ export function requestUser() {
   );
 }
 
+/** An abort signal that fires after SAVE_DEADLINE_MS, and a cleanup to call when done. */
+export function saveDeadline() {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SAVE_DEADLINE_MS);
+  return { signal: controller.signal, done: () => clearTimeout(timer) };
+}
+
 export function enqueueLessonProgressWrite<T>(
   lessonId: string,
-  write: () => Promise<T>
+  write: (signal: AbortSignal) => Promise<T>
 ): Promise<T> {
   const previous = lessonProgressWrites.get(lessonId) || Promise.resolve();
-  let skippedStalledWrite = false;
-  const turn = new Promise<void>(resolve => {
-    const timer = setTimeout(() => {
-      skippedStalledWrite = true;
-      resolve();
-    }, PREVIOUS_WRITE_WAIT_MS);
-    const done = () => {
-      clearTimeout(timer);
-      resolve();
-    };
-    previous.then(done, done);
-  });
-  // When a stalled write finally lands after later writes ran, apply the
-  // latest write again so the stale data does not stay.
-  const reapplyLatest = () => {
-    if (!skippedStalledWrite) return;
-    const latest = latestLessonWrites.get(lessonId);
-    if (latest) void enqueueLessonProgressWrite(lessonId, latest).catch(() => undefined);
-  };
-  void previous.then(reapplyLatest, reapplyLatest);
-
-  const pending = turn.then(write);
+  const pending = previous
+    .catch(() => undefined)
+    .then(() => {
+      const deadline = saveDeadline();
+      return write(deadline.signal).finally(deadline.done);
+    });
   lessonProgressWrites.set(lessonId, pending);
-  latestLessonWrites.set(lessonId, write);
   const release = () => {
     if (lessonProgressWrites.get(lessonId) === pending) {
       lessonProgressWrites.delete(lessonId);
@@ -184,8 +171,9 @@ export function updateLessonProgress(
   questionNumber?: number
 ): Promise<void> {
   const userRequest = requestUser();
-  return enqueueLessonProgressWrite(lessonId, () =>
+  return enqueueLessonProgressWrite(lessonId, signal =>
     writeLessonProgress(
+      signal,
       userRequest,
       lessonId,
       submoduleId,
@@ -200,6 +188,7 @@ export function updateLessonProgress(
 }
 
 async function writeLessonProgress(
+  signal: AbortSignal,
   userRequest: ReturnType<typeof requestUser>,
   lessonId: string,
   submoduleId: string,
@@ -238,7 +227,8 @@ async function writeLessonProgress(
 
     const { error } = await progressClient
       .from('user_lesson_progress')
-      .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
+      .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' })
+      .abortSignal(signal);
 
     if (error) {
       console.error('Error updating lesson progress:', error);
@@ -270,7 +260,7 @@ export function saveResumePosition(
   if (!lessonId || !submoduleId || !moduleId) return Promise.resolve(false);
   // Capture authentication at invocation, then write in visit order, including Back.
   const userRequest = requestUser();
-  return enqueueLessonProgressWrite(lessonId, async () => {
+  return enqueueLessonProgressWrite(lessonId, async signal => {
     try {
       const auth = await userRequest;
       const user = auth?.data.user;
@@ -291,7 +281,8 @@ export function saveResumePosition(
 
       const { error } = await progressClient
         .from('user_lesson_progress')
-        .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
+        .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' })
+        .abortSignal(signal);
 
       if (error) {
         console.error('Error saving resume position:', error);
@@ -663,6 +654,16 @@ export async function completeQuizAttempt(
 // block _key is only ever an input OR a question, never both.
 export const ACTIVITY_QUESTION_PREFIX = 'q::';
 
+/** Options for callers that queue each field's writes in order (LessonBlockActivity). */
+export interface OrderedActivitySave {
+  /** A draft clears is_submitted: the submitted answer is no longer the stored one. */
+  clearSubmitted?: boolean;
+  /** The signed-in user, read when the save was queued. */
+  userRequest?: ReturnType<typeof requestUser>;
+  /** Aborts the request, so a stalled save cannot hold the field's queue. */
+  signal?: AbortSignal;
+}
+
 export async function saveActivityInput(
   lessonId: string,
   submoduleId: string,
@@ -671,12 +672,12 @@ export async function saveActivityInput(
   fieldKey: string,
   value: string,
   isSubmitted = false,
-  clearSubmitted = false
+  ordered: OrderedActivitySave = {}
 ): Promise<boolean> {
   try {
-    const {
-      data: { user },
-    } = await progressClient.auth.getUser();
+    const user = ordered.userRequest
+      ? (await ordered.userRequest)?.data.user
+      : (await progressClient.auth.getUser()).data.user;
     if (!user) return false;
 
     const payload: any = {
@@ -694,18 +695,19 @@ export async function saveActivityInput(
     if (isSubmitted) {
       payload.is_submitted = true;
       payload.submitted_at = new Date().toISOString();
-    } else if (clearSubmitted) {
-      // Only for callers that write each field in order: a later edit then
-      // means the submitted answer is no longer the stored one.
+    } else if (ordered.clearSubmitted) {
       payload.is_submitted = false;
     }
 
-    const { error } = await progressClient
+    const request = progressClient
       .from('user_activity_inputs')
       .upsert(payload, {
         onConflict:
           'user_id,sanity_lesson_id,activity_page_key,input_field_key',
       });
+    const { error } = await (ordered.signal
+      ? request.abortSignal(ordered.signal)
+      : request);
 
     if (error) {
       console.error('Error saving activity input:', error);
