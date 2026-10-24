@@ -1,0 +1,48 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✓ rejects an em dash in new copy
+    ✓ rejects a record that is not an English not_arrived checklist item
+    ✓ rejects a persona that no app persona or live record uses
+    ✓ rejects a link_tab outside the schema list and a record with no link
+    ✓ accepts the committed payload and keeps its targeting (1 ms)
+  planChanges for new records
+    ✓ creates records that are absent and leaves identical live records alone (6 ms)
+    ✓ never overwrites a live record that differs from the payload (1 ms)
+  planChanges for the existing port-of-entry record
+    ✓ patches only title and description, guarded by the snapshot revision
+    ✓ refuses to patch when the live revision moved and the copy is not the target (1 ms)
+    ✓ does nothing when the live record already holds the target copy
+    ✓ reports a conflict when the record is missing
+  verifyReadback
+    ✓ passes when every record reads back exactly as proposed
+    ✓ reports a missing new record and a changed new record
+    ✓ reports a change to a field the patch must not touch (1 ms)
+  buildMutations
+    ✕ writes only what the plan needs, with the revision guard on the patch (1 ms)
+    ✓ writes nothing when the live data already matches
+
+  ● buildMutations › writes only what the plan needs, with the revision guard on the patch
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 6
+    Received length: 0
+    Received array:  []
+
+      222 |     });
+      223 |     const mutations = buildMutations(payload, plan);
+    > 224 |     expect(mutations).toHaveLength(6);
+          |                       ^
+      225 |     const creates = mutations.filter(m => 'createIfNotExists' in m);
+      226 |     expect(creates).toHaveLength(5);
+      227 |     expect(
+
+      at Object.toHaveLength (__tests__/sanity/beforeYouLandContent.test.ts:224:23)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 17 passed, 18 total
+Snapshots:   0 total
+Time:        0.577 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

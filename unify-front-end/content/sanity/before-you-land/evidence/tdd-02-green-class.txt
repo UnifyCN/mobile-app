@@ -1,0 +1,10 @@
+PASS __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.249 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.
