@@ -1447,7 +1447,19 @@
       "optionalLater": "Optionnel / plus tard"
     },
     "reorderTask": "Réorganiser {{name}}",
-    "reorderHint": "Appuyez longuement et faites glisser pour changer l’ordre de cet élément dans la section"
+    "reorderHint": "Appuyez longuement et faites glisser pour changer l’ordre de cet élément dans la section",
+    "arrivalCountdown": {
+      "preArrival_one": "{{count}} jour avant votre arrivée",
+      "preArrival_many": "{{count}} de jours avant votre arrivée",
+      "preArrival_other": "{{count}} jours avant votre arrivée",
+      "first30Days": "Vos 30 premiers jours",
+      "changeHint": "Modifier votre date d'arrivée"
+    },
+    "arrivalDate": {
+      "sheetTitle": "Date d'arrivée",
+      "save": "Enregistrer",
+      "saveError": "Nous n'avons pas pu enregistrer votre date d'arrivée. Veuillez réessayer."
+    }
   },
   "companion": {
     "goBack": "Retour",

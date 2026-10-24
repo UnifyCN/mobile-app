@@ -1447,7 +1447,22 @@
       "optionalLater": "اختياري / لاحقًا"
     },
     "reorderTask": "إعادة ترتيب {{name}}",
-    "reorderHint": "اضغط مطولًا واسحب لتغيير ترتيب هذا العنصر داخل القسم"
+    "reorderHint": "اضغط مطولًا واسحب لتغيير ترتيب هذا العنصر داخل القسم",
+    "arrivalCountdown": {
+      "preArrival_zero": "تبقّى {{count}} يوم حتى وصولك",
+      "preArrival_one": "تبقّى يوم واحد حتى وصولك",
+      "preArrival_two": "تبقّى يومان حتى وصولك",
+      "preArrival_few": "تبقّت {{count}} أيام حتى وصولك",
+      "preArrival_many": "تبقّى {{count}} يومًا حتى وصولك",
+      "preArrival_other": "تبقّى {{count}} يوم حتى وصولك",
+      "first30Days": "أول 30 يومًا لك",
+      "changeHint": "غيّر تاريخ وصولك"
+    },
+    "arrivalDate": {
+      "sheetTitle": "تاريخ الوصول",
+      "save": "حفظ",
+      "saveError": "تعذّر حفظ تاريخ وصولك. حاول مرة أخرى."
+    }
   },
   "companion": {
     "goBack": "رجوع",

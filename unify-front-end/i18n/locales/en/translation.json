@@ -1447,7 +1447,18 @@
       "optionalLater": "Optional / later"
     },
     "reorderTask": "Reorder {{name}}",
-    "reorderHint": "Long press and drag to change this item's order within the section"
+    "reorderHint": "Long press and drag to change this item's order within the section",
+    "arrivalCountdown": {
+      "preArrival_one": "{{count}} day until you land",
+      "preArrival_other": "{{count}} days until you land",
+      "first30Days": "Your first 30 days",
+      "changeHint": "Change your arrival date"
+    },
+    "arrivalDate": {
+      "sheetTitle": "Arrival date",
+      "save": "Save",
+      "saveError": "We couldn't save your arrival date. Please try again."
+    }
   },
   "companion": {
     "goBack": "Go back",
