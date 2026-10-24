@@ -71,7 +71,7 @@ export default function ActivityPageScreen() {
   }>({});
   const [isSaving, setIsSaving] = useState(false);
 
-  const currentPage = parseInt(pageNum || '1');
+  const currentPage = Number(pageNum || '1');
   const { data: lesson, isLoading: loadingLesson } = useSanityLesson(
     lessonId || ''
   );

@@ -19,13 +19,14 @@ const mockActivitySubmitted = jest.fn();
 let mockLesson: SanityLesson;
 let mockSubmodule: SanitySubmoduleWithLessons;
 let mockOrigin: string | undefined;
+let mockPageNum = '1';
 
 jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({
     moduleId: 'course',
     submoduleId: 'module',
     lessonId: 'lesson',
-    pageNum: '1',
+    pageNum: mockPageNum,
     origin: mockOrigin,
   }),
   useRouter: () => mockRouter,
@@ -147,6 +148,7 @@ const rawLesson: SanityLesson = {
 beforeEach(() => {
   jest.clearAllMocks();
   mockOrigin = undefined;
+  mockPageNum = '1';
   mockLesson = withOrderedLessonBlocks(rawLesson);
   mockSubmodule = {
     _id: 'module',
@@ -229,6 +231,24 @@ test('an unconverted ending route still renders and saves its original position'
   );
   expect(mockRouter.replace).not.toHaveBeenCalled();
 });
+
+test.each([
+  { Screen: EndingPageScreen, pageNum: '1.5' },
+  { Screen: EndingPageScreen, pageNum: '1junk' },
+  { Screen: ActivityPageScreen, pageNum: '1.5' },
+  { Screen: ActivityPageScreen, pageNum: '1junk' },
+])(
+  'an invalid legacy route number $pageNum does not select another page',
+  async ({ Screen, pageNum }) => {
+    mockPageNum = pageNum;
+    render(React.createElement(Screen));
+    await waitFor(() => {
+      expect(mockRouter.replace).not.toHaveBeenCalled();
+      expect(mockSaveResumePosition).not.toHaveBeenCalled();
+      expect(mockPageFocused).not.toHaveBeenCalled();
+    });
+  }
+);
 
 test('an unconverted activity route still renders and saves its original position', async () => {
   mockLesson = { ...rawLesson, content_blocks: undefined };

@@ -86,7 +86,7 @@ export default function EndingPageScreen() {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
 
-  const currentPage = parseInt(pageNum || '1', 10);
+  const currentPage = Number(pageNum || '1');
 
   const { data: lesson, isLoading: loadingLesson } = useSanityLesson(
     lessonId || ''
