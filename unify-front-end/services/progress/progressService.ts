@@ -673,6 +673,8 @@ export interface RestoredActivityInputs {
   inputValues: Record<string, string>;
   /** embedded question answers keyed by block _key */
   questionAnswers: Record<string, string | string[]>;
+  /** submitted state keyed by stored field key (question keys keep their prefix) */
+  submittedFields: Record<string, boolean>;
   /** whether any saved row on this page was already submitted */
   isSubmitted: boolean;
 }
@@ -709,6 +711,7 @@ export async function getActivityInputsByPage(
         result[pageKey] = {
           inputValues: {},
           questionAnswers: {},
+          submittedFields: {},
           isSubmitted: false,
         };
       }
@@ -716,6 +719,7 @@ export async function getActivityInputsByPage(
       if (row.is_submitted) bucket.isSubmitted = true;
 
       const fieldKey = row.input_field_key as string;
+      bucket.submittedFields[fieldKey] = row.is_submitted === true;
       const raw = (row.input_value ?? '') as string;
       if (fieldKey.startsWith(ACTIVITY_QUESTION_PREFIX)) {
         const blockKey = fieldKey.slice(ACTIVITY_QUESTION_PREFIX.length);

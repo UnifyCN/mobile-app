@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import LessonBlockActivity from '@/components/learn/LessonBlockActivity';
 import { getActivityInputsByPage, saveActivityInput } from '@/services/progress/progressService';
 import type { SanityActivityPage } from '@/types/sanity';
@@ -54,7 +54,7 @@ beforeEach(() => {
 
 it('restores answers, submits them, shows feedback, then enables navigation', async () => {
   loadInputs.mockResolvedValue({
-    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' }, isSubmitted: false },
+    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' }, submittedFields: {}, isSubmitted: false },
   });
   const onReady = jest.fn();
   const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
@@ -83,7 +83,8 @@ it('keeps Next unavailable when an answer cannot be saved', async () => {
 
 it('keeps a completed submission open when the learner returns', async () => {
   loadInputs.mockResolvedValue({
-    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' }, isSubmitted: true },
+    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' },
+      submittedFields: { reflection: true, 'question:question': true }, isSubmitted: true },
   });
   const onReady = jest.fn();
   const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
@@ -94,11 +95,44 @@ it('keeps a completed submission open when the learner returns', async () => {
 
 it('asks for a new submit when a returning submission no longer meets the requirements', async () => {
   loadInputs.mockResolvedValue({
-    'knowledge-check': { inputValues: { reflection: ' ' }, questionAnswers: { question: 'a' }, isSubmitted: true },
+    'knowledge-check': { inputValues: { reflection: ' ' }, questionAnswers: { question: 'a' },
+      submittedFields: { reflection: true, 'question:question': true }, isSubmitted: true },
   });
   const onReady = jest.fn();
   const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
   await waitFor(() => expect(view.getByTestId('reflection')).toBeTruthy());
+  expect(onReady).not.toHaveBeenCalledWith(true);
+  expect(view.queryByText('Feedback shown')).toBeNull();
+});
+
+it('asks for a new submit when only part of an earlier submit was saved', async () => {
+  loadInputs.mockResolvedValue({
+    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' },
+      submittedFields: { reflection: true, 'question:question': false }, isSubmitted: true },
+  });
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(view.getByTestId('reflection').props.value).toBe('Check the source'));
+  expect(onReady).not.toHaveBeenCalledWith(true);
+  expect(view.queryByText('Feedback shown')).toBeNull();
+});
+
+it('does not open Next for an edit made while the submit was saving', async () => {
+  let finishSave!: (saved: boolean) => void;
+  const held = new Promise<boolean>(resolve => { finishSave = resolve; });
+  saveInput.mockImplementation(() => held);
+  loadInputs.mockResolvedValue({
+    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' },
+      submittedFields: {}, isSubmitted: false },
+  });
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(view.getByTestId('reflection').props.value).toBe('Check the source'));
+  fireEvent.press(view.getByText('common.submit'));
+  await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(2));
+  fireEvent.changeText(view.getByTestId('reflection'), '');
+  await act(async () => { finishSave(true); await held; });
+  await act(async () => { await Promise.resolve(); });
   expect(onReady).not.toHaveBeenCalledWith(true);
   expect(view.queryByText('Feedback shown')).toBeNull();
 });

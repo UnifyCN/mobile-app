@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { canSubmitLessonActivity } from '@/utils/lessonActivity';
+import { canSubmitLessonActivity, requiredResponseKeys } from '@/utils/lessonActivity';
 import RichTextRenderer from '@/components/sanity/RichTextRenderer';
 import type { SanityActivityPage } from '@/types/sanity';
 import {
@@ -28,6 +28,7 @@ export default function LessonBlockActivity({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const edits = useRef(0);
   const writes = useRef<Record<string, Promise<boolean>>>({});
 
   const persist = (fieldKey: string, value: string, isSubmitted = false) => {
@@ -50,7 +51,11 @@ export default function LessonBlockActivity({
         setInputs(current => ({ ...saved.inputValues, ...current }));
         setAnswers(current => ({ ...saved.questionAnswers, ...current }));
         // A returning learner keeps a completed submission; Next stays open.
+        // Every required response must be submitted: a partly failed submit
+        // can leave some rows submitted and others not.
+        const required = requiredResponseKeys(activity.instructions, ACTIVITY_QUESTION_PREFIX);
         if (
+          required.every(key => saved.submittedFields[key]) &&
           saved.isSubmitted &&
           canSubmitLessonActivity(activity.instructions, saved.inputValues, saved.questionAnswers)
         ) {
@@ -64,6 +69,7 @@ export default function LessonBlockActivity({
   }, [lessonId, activity._key, activity.instructions, onReady]);
 
   const invalidateSubmission = () => {
+    edits.current += 1;
     setSubmitted(false);
     onReady(false);
   };
@@ -90,6 +96,7 @@ export default function LessonBlockActivity({
   const handleSubmit = async () => {
     if (!canSubmit || saving) return;
     setSaving(true);
+    const editsAtSubmit = edits.current;
     Object.values(timers.current).forEach(clearTimeout);
     timers.current = {};
     try {
@@ -103,6 +110,8 @@ export default function LessonBlockActivity({
         Alert.alert(t('common.somethingWentWrong'), t('common.tryAgain'));
         return;
       }
+      // An edit during the save was not validated; the learner submits again.
+      if (edits.current !== editsAtSubmit) return;
       setSubmitted(true);
       onReady(true);
     } finally {
