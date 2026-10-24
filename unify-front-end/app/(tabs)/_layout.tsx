@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Tabs, useRouter, usePathname } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -224,8 +225,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   tabText: {
-    fontSize: 10,
-    fontFamily: 'Inter',
+    ...typography.tab,
   },
   tabIcon: {
     height: 24,
@@ -237,6 +237,6 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   inactiveTab: {
-    color: '#878787',
+    color: '#62605B',
   },
 });

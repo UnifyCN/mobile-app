@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -130,11 +131,12 @@ const styles = StyleSheet.create({
     // Text container
   },
   title: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#fff',
   },
   description: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#fff',
   },
   ctaButton: {
@@ -146,7 +148,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ctaText: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#fff',
   },
 });

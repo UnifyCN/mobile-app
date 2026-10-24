@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -215,7 +216,9 @@ export default function SubmoduleMap() {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>{t('learn.map.loadingSubmodule')}</Text>
+          <Text style={styles.loadingText}>
+            {t('learn.map.loadingSubmodule')}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -226,7 +229,9 @@ export default function SubmoduleMap() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loadingContainer}>
           <Text style={styles.errorText}>
-            {t('learn.map.errorLoadingSubmodule', { message: error?.message || t('common.unknownError') })}
+            {t('learn.map.errorLoadingSubmodule', {
+              message: error?.message || t('common.unknownError'),
+            })}
           </Text>
         </View>
       </SafeAreaView>
@@ -489,9 +494,7 @@ export default function SubmoduleMap() {
               {t('learn.module.section', { number: submoduleData.order })}
             </Text>
           )}
-          <Text style={styles.sectionTitle}>
-            {submoduleData?.title || ''}
-          </Text>
+          <Text style={styles.sectionTitle}>{submoduleData?.title || ''}</Text>
           {submoduleData?.description && (
             <Text style={styles.sectionDescription} numberOfLines={3}>
               {submoduleData.description}
@@ -547,32 +550,17 @@ const styles = StyleSheet.create({
   headerRightPlaceholder: {
     width: Layout.header.rowHeight,
   },
-  headerSubjectName: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000000',
-  },
+  headerSubjectName: { ...typography.title, color: '#000000' },
   headerSectionInfo: {
     marginTop: 8,
     paddingLeft: Layout.header.horizontalPadding,
   },
-  sectionNumber: {
-    fontSize: 24,
-    fontWeight: '400',
-    color: '#000000',
-    marginBottom: 2,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#000000',
-    marginBottom: 8,
-  },
+  sectionNumber: { ...typography.section, color: '#000000', marginBottom: 2 },
+  sectionTitle: { ...typography.title, color: '#000000', marginBottom: 8 },
   sectionDescription: {
-    fontSize: 14,
-    fontWeight: '400',
+    ...typography.secondary,
     color: '#000000',
-    lineHeight: 20,
+    fontWeight: '400',
   },
 
   // Scroll
@@ -655,19 +643,15 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   lessonNumber: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#1A1A1A',
     marginBottom: 2,
+    fontWeight: '600',
   },
   lessonNumberActive: {
     color: '#FFFFFF',
   },
-  lessonTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-  },
+  lessonTitle: { ...typography.cardTitle, color: '#1A1A1A' },
   lessonTitleActive: {
     color: '#FFFFFF',
   },
@@ -702,14 +686,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#EF4444',
-    textAlign: 'center',
-  },
+  loadingText: { ...typography.body, color: '#6B7280', textAlign: 'center' },
+  errorText: { ...typography.body, color: '#EF4444', textAlign: 'center' },
 });

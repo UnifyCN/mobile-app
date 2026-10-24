@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -38,9 +39,7 @@ export default function WelcomeScreen({
 
         {/* Text */}
         <Text style={styles.title}>{t('auth.welcome.title')}</Text>
-        <Text style={styles.description}>
-          {t('auth.welcome.subtitle')}
-        </Text>
+        <Text style={styles.description}>{t('auth.welcome.subtitle')}</Text>
       </View>
 
       {/* Buttons at bottom */}
@@ -52,7 +51,9 @@ export default function WelcomeScreen({
           ]}
           onPress={onCreateAccount}
         >
-          <Text style={styles.createButtonText}>{t('auth.welcome.createAccount')}</Text>
+          <Text style={styles.createButtonText}>
+            {t('auth.welcome.createAccount')}
+          </Text>
         </Pressable>
 
         <Pressable
@@ -91,17 +92,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   title: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 24,
-    lineHeight: 30,
+    ...typography.title,
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,
   },
   description: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    ...typography.body,
     color: '#000',
     textAlign: 'center',
     maxWidth: 313,
@@ -118,11 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  createButtonText: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 17.5,
-    color: '#fff',
-  },
+  createButtonText: { ...typography.button, color: '#fff' },
   loginButton: {
     backgroundColor: '#fff',
     height: 40,
@@ -132,11 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginButtonText: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 17.5,
-    color: '#050505',
-  },
+  loginButtonText: { ...typography.button, color: '#050505' },
   buttonPressed: {
     opacity: 0.85,
   },

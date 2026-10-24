@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { supabase } from '@/lib/supabase';
@@ -33,7 +34,10 @@ export default function ResetPasswordPage() {
 
     // Validate passwords match
     if (newPassword !== confirmPassword) {
-      setMessage({ type: 'error', text: t('resetPassword.passwordsDoNotMatch') });
+      setMessage({
+        type: 'error',
+        text: t('resetPassword.passwordsDoNotMatch'),
+      });
       setLoading(false);
       return;
     }
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   description: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     marginBottom: 32,
     marginTop: 16,
@@ -175,12 +179,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 24,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#000',
-    marginBottom: 8,
-  },
+  label: { ...typography.label, color: '#000', marginBottom: 8 },
   textField: {
     backgroundColor: '#fff',
     color: '#000',
@@ -206,16 +205,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 32,
   },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  message: {
-    fontSize: 14,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
+  buttonText: { ...typography.button, color: 'white', textAlign: 'center' },
+  message: { ...typography.secondary, marginBottom: 16, textAlign: 'center' },
   errorMessage: {
     color: '#f00',
   },

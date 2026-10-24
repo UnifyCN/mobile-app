@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -410,16 +411,15 @@ const styles = StyleSheet.create({
   segmentedControl: { marginTop: 16, marginHorizontal: 16, marginBottom: 12 },
   scrollContent: { padding: 16, paddingBottom: 100 },
   pageTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
+
     color: '#000',
     marginBottom: 8,
   },
   pageSubtitle: {
-    fontSize: 16,
-    fontWeight: '400',
+    ...typography.body,
+
     color: '#000',
-    lineHeight: 20,
     marginBottom: 10,
   },
   heroWrapper: { marginTop: 8 },
@@ -446,13 +446,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   emptyText: {
+    ...typography.section,
+
     color: '#575757',
-    fontSize: 18,
-    fontWeight: '600',
     marginBottom: 8,
   },
   emptySubtext: {
-    color: '#8e8e93',
-    fontSize: 14,
+    ...typography.secondary,
+
+    color: '#62605B',
   },
 });

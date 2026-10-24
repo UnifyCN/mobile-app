@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -84,18 +85,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
+    ...typography.cardTitle,
     marginTop: 8,
-    fontWeight: '700',
-    fontSize: 13.5,
-    lineHeight: 16.9,
-    // Two lines reserved regardless of wrapping, so tiles in a row match.
-    minHeight: 33.8,
+    minHeight: 48,
     color: RESOURCE_THEME.textCard,
+    fontWeight: '600',
   },
   count: {
+    ...typography.caption,
     marginTop: 8,
-    fontWeight: '500',
-    fontSize: 11.5,
     color: RESOURCE_THEME.textCount,
+    fontWeight: '500',
   },
 });

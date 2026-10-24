@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -54,18 +55,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginVertical: 10,
   },
-  answerText: {
-    fontSize: 19,
-    color: '#000',
-    margin: 10,
-    marginLeft: 25,
-    fontWeight: '400',
-  },
-  questionText: {
-    fontSize: 19,
-    color: '#333',
-    marginBottom: 25,
-  },
+  answerText: { ...typography.body, color: '#000', margin: 10, marginLeft: 25 },
+  questionText: { ...typography.body, color: '#333', marginBottom: 25 },
   correct: {
     backgroundColor: '#c8e6c9',
     borderColor: '#fff',

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -54,7 +55,9 @@ export default function QuizzesPage() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color='#3B82F6' />
-          <Text style={styles.loadingText}>{t('learn.quiz.loadingQuizzes')}</Text>
+          <Text style={styles.loadingText}>
+            {t('learn.quiz.loadingQuizzes')}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -76,15 +79,17 @@ export default function QuizzesPage() {
     return (
       <SafeAreaView style={styles.safe}>
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyTitle}>{t('learn.quiz.noQuizzesAvailable')}</Text>
-          <Text style={styles.emptyText}>
-            {t('learn.quizzes.empty')}
+          <Text style={styles.emptyTitle}>
+            {t('learn.quiz.noQuizzesAvailable')}
           </Text>
+          <Text style={styles.emptyText}>{t('learn.quizzes.empty')}</Text>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Text style={styles.backButtonText}>{t('learn.quiz.backToLesson')}</Text>
+            <Text style={styles.backButtonText}>
+              {t('learn.quiz.backToLesson')}
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -96,9 +101,7 @@ export default function QuizzesPage() {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('learn.quiz.quizzesTitle')}</Text>
-          <Text style={styles.subtitle}>
-            {t('learn.quizzes.header')}
-          </Text>
+          <Text style={styles.subtitle}>{t('learn.quizzes.header')}</Text>
         </View>
 
         <View style={styles.quizzesList}>
@@ -127,7 +130,9 @@ export default function QuizzesPage() {
               }}
             >
               <View style={styles.quizHeader}>
-                <Text style={styles.quizNumber}>{t('learn.quiz.quizPrefix', { number: quiz.order_number })}</Text>
+                <Text style={styles.quizNumber}>
+                  {t('learn.quiz.quizPrefix', { number: quiz.order_number })}
+                </Text>
                 <Text style={styles.quizTitle}>{quiz.title}</Text>
               </View>
 
@@ -136,7 +141,9 @@ export default function QuizzesPage() {
               )}
 
               <View style={styles.quizFooter}>
-                <Text style={styles.startQuiz}>{t('learn.quiz.startQuiz')}</Text>
+                <Text style={styles.startQuiz}>
+                  {t('learn.quiz.startQuiz')}
+                </Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -147,7 +154,9 @@ export default function QuizzesPage() {
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Text style={styles.backButtonText}>{t('learn.quiz.backToLesson')}</Text>
+            <Text style={styles.backButtonText}>
+              {t('learn.quiz.backToLesson')}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -170,11 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  loadingText: { ...typography.body, marginTop: 16, color: '#6B7280' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -182,11 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#DC2626',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.body, color: '#DC2626', textAlign: 'center' },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -194,14 +195,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  emptyTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#000',
-    marginBottom: 8,
-  },
+  emptyTitle: { ...typography.title, color: '#000', marginBottom: 8 },
   emptyText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
     textAlign: 'center',
     marginBottom: 24,
@@ -211,16 +207,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#000',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  title: { ...typography.title, color: '#000', marginBottom: 8 },
+  subtitle: { ...typography.body, color: '#6B7280' },
   quizzesList: {
     padding: 20,
     gap: 16,
@@ -244,20 +232,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   quizNumber: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#3B82F6',
     marginBottom: 4,
-  },
-  quizTitle: {
-    fontSize: 18,
     fontWeight: '600',
-    color: '#000',
   },
+  quizTitle: { ...typography.cardTitle, color: '#000' },
   quizDescription: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     marginBottom: 16,
   },
   quizFooter: {
@@ -265,15 +248,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  passingScore: {
-    fontSize: 14,
-    color: '#6B7280',
-  },
-  startQuiz: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#3B82F6',
-  },
+  passingScore: { ...typography.secondary, color: '#6B7280' },
+  startQuiz: { ...typography.cardTitle, color: '#3B82F6' },
   footer: {
     padding: 20,
     paddingTop: 0,
@@ -285,9 +261,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  backButtonText: {
-    color: '#374151',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  backButtonText: { ...typography.button, color: '#374151' },
 });

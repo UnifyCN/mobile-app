@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   View,
   Text,
@@ -91,37 +92,33 @@ const PostCommentItem = memo(
     }, [comment.user_id]);
 
     const handleDeleteComment = useCallback(() => {
-      Alert.alert(
-        t('home.deleteComment'),
-        t('home.deleteCommentConfirm'),
-        [
-          {
-            text: t('common.cancel'),
-            style: 'cancel',
-            onPress: () => setDeleteModalVisible(false),
+      Alert.alert(t('home.deleteComment'), t('home.deleteCommentConfirm'), [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+          onPress: () => setDeleteModalVisible(false),
+        },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: () => {
+            deleteCommentMutation.mutate(
+              { commentId: comment.id, postId: comment.post_id },
+              {
+                onSuccess: () => {
+                  setDeleteModalVisible(false);
+                },
+                onError: error => {
+                  Alert.alert(
+                    t('common.error'),
+                    error.message || t('home.failedDeleteComment')
+                  );
+                },
+              }
+            );
           },
-          {
-            text: t('common.delete'),
-            style: 'destructive',
-            onPress: () => {
-              deleteCommentMutation.mutate(
-                { commentId: comment.id, postId: comment.post_id },
-                {
-                  onSuccess: () => {
-                    setDeleteModalVisible(false);
-                  },
-                  onError: error => {
-                    Alert.alert(
-                      t('common.error'),
-                      error.message || t('home.failedDeleteComment')
-                    );
-                  },
-                }
-              );
-            },
-          },
-        ]
-      );
+        },
+      ]);
     }, [comment.id, comment.post_id, deleteCommentMutation, t]);
 
     // Use batch-loaded metadata
@@ -308,7 +305,9 @@ const PostCommentItem = memo(
                   style={styles.modalOption}
                   onPress={() => setDeleteModalVisible(false)}
                 >
-                  <Text style={styles.modalOptionText}>{t('common.cancel')}</Text>
+                  <Text style={styles.modalOptionText}>
+                    {t('common.cancel')}
+                  </Text>
                 </TouchableOpacity>
               </Pressable>
             </View>
@@ -336,13 +335,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    ...typography.caption,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    fontSize: 12,
     color: '#000',
     textAlign: 'left',
-    lineHeight: 16,
     marginBottom: 6,
   },
   headerLeft: {
@@ -361,23 +359,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#f0f0f0',
   },
-  name: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-  },
+  name: { ...typography.cardTitle, color: Theme.black },
   time: {
+    ...typography.secondary,
     paddingTop: 2,
-    fontSize: 14,
     color: Theme.textPostTime,
     fontWeight: '500',
   },
-  description: {
-    fontSize: 16,
-    lineHeight: 22,
-    marginTop: 4,
-    marginBottom: 12,
-  },
+  description: { ...typography.body, marginTop: 4, marginBottom: 12 },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -386,27 +375,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  footerText: {
-    marginLeft: 4,
-    fontSize: 14,
-  },
+  footerText: { ...typography.secondary, marginLeft: 4 },
   replyButton: {
     marginLeft: 20,
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
-  replyButtonText: {
-    fontSize: 14,
-    color: Theme.textPostTime,
-    fontWeight: '500',
-  },
+  replyButtonText: { ...typography.button, color: Theme.textPostTime },
   repliesToggle: {
     marginTop: 10,
     paddingVertical: 4,
     alignSelf: 'flex-start',
   },
   repliesToggleText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textPostTime,
     fontWeight: '500',
   },
@@ -471,12 +453,7 @@ const styles = StyleSheet.create({
   optionIcon: {
     marginRight: 8,
   },
-  modalOptionText: {
-    fontSize: 18,
-    color: Theme.black,
-    fontWeight: '500',
-    flex: 1,
-  },
+  modalOptionText: { ...typography.body, color: Theme.black, flex: 1 },
   deleteText: {
     color: '#FF3B30',
   },

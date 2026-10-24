@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -420,7 +421,9 @@ export function SignUp({
         {/* Header */}
         <Text style={styles.header}>{t('auth.createAccount')}</Text>
         <View style={styles.subHeaderRow}>
-          <Text style={styles.subHeaderText}>{t('auth.alreadyHaveAccount')}</Text>
+          <Text style={styles.subHeaderText}>
+            {t('auth.alreadyHaveAccount')}
+          </Text>
           <Text style={styles.subHeaderLink} onPress={onSwitchToSignIn}>
             {t('auth.logIn')}
           </Text>
@@ -585,7 +588,9 @@ export function SignUp({
                     style={styles.checkboxLinkText}
                     onPress={() => setWebViewDoc('communityGuidelines')}
                     accessibilityRole='link'
-                    accessibilityLabel={t('auth.accessibility.communityGuidelines')}
+                    accessibilityLabel={t(
+                      'auth.accessibility.communityGuidelines'
+                    )}
                   />
                 ),
               }}
@@ -682,28 +687,15 @@ const styles = StyleSheet.create({
     marginTop: 12 * S,
     alignSelf: 'flex-start',
   },
-  header: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 32 * S,
-    color: '#000',
-    marginTop: 48 * S,
-  },
+  header: { ...typography.title, color: '#000', marginTop: 48 * S },
   subHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 6 * S,
     marginBottom: 32 * S,
   },
-  subHeaderText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 15 * S,
-    color: '#666',
-  },
-  subHeaderLink: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 15 * S,
-    color: '#000',
-  },
+  subHeaderText: { ...typography.secondary, color: '#666' },
+  subHeaderLink: { ...typography.secondary, fontWeight: '600', color: '#000' },
   fieldContainer: {
     marginBottom: 14 * S,
   },
@@ -724,15 +716,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   textField: {
+    ...typography.body,
     backgroundColor: '#F5F5F5',
     color: '#000',
     borderColor: '#E8E8E8',
     borderWidth: 1 * S,
     borderRadius: 12 * S,
     padding: 14 * S,
-    height: 52 * S,
-    fontSize: 15 * S,
-    fontFamily: 'FunnelSans_400Regular',
+    minHeight: 52 * S,
   },
   textFieldWithLeftIcon: {
     paddingLeft: 44 * S,
@@ -743,12 +734,7 @@ const styles = StyleSheet.create({
   textFieldError: {
     borderColor: '#f00',
   },
-  errorMessage: {
-    color: '#f00',
-    fontSize: 13 * S,
-    fontFamily: 'FunnelSans_400Regular',
-    marginBottom: 8 * S,
-  },
+  errorMessage: { ...typography.caption, color: '#f00', marginBottom: 8 * S },
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -764,9 +750,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff4f4',
   },
   consentErrorMessage: {
+    ...typography.caption,
     color: '#f00',
-    fontSize: 13 * S,
-    fontFamily: 'FunnelSans_400Regular',
     marginBottom: 12 * S,
   },
   checkboxContainer: {
@@ -780,22 +765,16 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
   },
-  checkboxText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 14 * S,
-    color: '#000',
-    flex: 1,
-  },
+  checkboxText: { ...typography.secondary, color: '#000', flex: 1 },
   checkboxLinkText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 14 * S,
+    ...typography.secondary,
     color: '#5182C7',
     textDecorationLine: 'underline',
   },
   signUpButton: {
     backgroundColor: '#000',
     borderRadius: 40 * S,
-    height: 52 * S,
+    minHeight: 52 * S,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 8 * S,
@@ -804,10 +783,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#E7E7E9',
   },
   signUpButtonText: {
+    ...typography.button,
     color: '#fff',
     textAlign: 'center',
-    fontSize: 18 * S,
-    fontFamily: 'FunnelSans_600SemiBold',
   },
   divider: {
     flexDirection: 'row',
@@ -820,9 +798,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0E0E0',
   },
   dividerText: {
-    fontFamily: 'FunnelSans_400Regular',
-    color: '#999',
-    fontSize: 14 * S,
+    ...typography.secondary,
+    color: '#62605B',
     marginHorizontal: 16 * S,
   },
   socialRow: {
@@ -832,7 +809,7 @@ const styles = StyleSheet.create({
   },
   socialIconButton: {
     width: 60 * S,
-    height: 52 * S,
+    minHeight: 52 * S,
     borderRadius: 12 * S,
     borderWidth: 1 * S,
     borderColor: '#E0E0E0',

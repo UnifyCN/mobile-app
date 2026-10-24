@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -83,7 +84,8 @@ export default function SubmoduleProgressBar({
         </TouchableOpacity>
 
         <Text style={styles.title} numberOfLines={2}>
-          {t('learn.module.section', { number: submoduleOrder })}: {submoduleTitle}
+          {t('learn.module.section', { number: submoduleOrder })}:{' '}
+          {submoduleTitle}
         </Text>
 
         <View style={styles.headerSide}>
@@ -94,7 +96,9 @@ export default function SubmoduleProgressBar({
               style={styles.bookmarkButton}
               accessibilityRole='button'
               accessibilityLabel={
-                isBookmarked ? t('learn.lesson.removeSavedPage') : t('learn.lesson.saveLessonPage')
+                isBookmarked
+                  ? t('learn.lesson.removeSavedPage')
+                  : t('learn.lesson.saveLessonPage')
               }
             >
               {bookmarkLoading ? (
@@ -154,9 +158,8 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   title: {
+    ...typography.cardTitle,
     flex: 1,
-    fontSize: 18,
-    fontWeight: '600',
     color: '#343434',
     textAlign: 'center',
   },
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   label: {
-    fontSize: 12,
+    ...typography.caption,
     color: '#6B7280',
     marginTop: 8,
     textAlign: 'center',

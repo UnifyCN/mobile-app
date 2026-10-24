@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -200,11 +201,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: '#000',
-  },
+  headerTitle: { ...typography.cardTitle, color: '#000' },
   scrollContent: {
     flexGrow: 0,
   },
@@ -213,29 +210,17 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 32,
   },
-  loadingText: {
-    fontSize: 15,
-    color: '#6B7280',
-  },
+  loadingText: { ...typography.secondary, color: '#6B7280' },
   feedbackContainer: {
     paddingBottom: 8,
   },
-  feedbackText: {
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#374151',
-  },
+  feedbackText: { ...typography.body, color: '#374151' },
   errorContainer: {
     alignItems: 'center',
     gap: 14,
     paddingVertical: 20,
   },
-  errorText: {
-    fontSize: 15,
-    color: '#EF4444',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
+  errorText: { ...typography.secondary, color: '#EF4444', textAlign: 'center' },
   retryButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -244,20 +229,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
   },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: '600',
-  },
+  retryButtonText: { ...typography.button, color: '#fff' },
   doneButton: {
     marginTop: 16,
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
   },
-  doneButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  doneButtonText: { ...typography.button, color: '#fff' },
 });

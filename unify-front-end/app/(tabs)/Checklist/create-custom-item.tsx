@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useMemo, useState } from 'react';
 import {
   Alert,
@@ -93,7 +94,9 @@ export default function CreateCustomItemScreen() {
         >
           <MaterialIcons name='close' size={24} color='#111' />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('checklist.createItem.headerTitle')}</Text>
+        <Text style={styles.headerTitle}>
+          {t('checklist.createItem.headerTitle')}
+        </Text>
         <TouchableOpacity
           onPress={handleSave}
           disabled={!isFormValid || isSaving}
@@ -113,7 +116,9 @@ export default function CreateCustomItemScreen() {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.sectionLabel}>{t('checklist.createItem.categoryLabel')}</Text>
+      <Text style={styles.sectionLabel}>
+        {t('checklist.createItem.categoryLabel')}
+      </Text>
       <View style={styles.priorityContainer}>
         {PRIORITY_OPTIONS.map(option => {
           const selected = priority === option;
@@ -138,7 +143,9 @@ export default function CreateCustomItemScreen() {
         })}
       </View>
 
-      <Text style={styles.sectionLabel}>{t('checklist.createItem.titleLabel')}</Text>
+      <Text style={styles.sectionLabel}>
+        {t('checklist.createItem.titleLabel')}
+      </Text>
       <TextInput
         value={title}
         onChangeText={setTitle}
@@ -148,7 +155,9 @@ export default function CreateCustomItemScreen() {
         maxLength={120}
       />
 
-      <Text style={styles.sectionLabel}>{t('checklist.createItem.descriptionLabel')}</Text>
+      <Text style={styles.sectionLabel}>
+        {t('checklist.createItem.descriptionLabel')}
+      </Text>
       <TextInput
         value={description}
         onChangeText={setDescription}
@@ -189,10 +198,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerTitle: {
+    ...typography.section,
     flex: 1,
     textAlign: 'center',
-    fontSize: 20,
-    fontWeight: '600',
     color: '#111',
     marginHorizontal: 8,
   },
@@ -208,20 +216,16 @@ const styles = StyleSheet.create({
   saveButtonDisabled: {
     backgroundColor: '#E5E5E5',
   },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  saveButtonText: { ...typography.button, color: '#fff' },
   saveButtonTextDisabled: {
     color: '#9E9E9E',
   },
   sectionLabel: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#1F1F1F',
     marginBottom: 8,
     marginTop: 6,
+    fontWeight: '600',
   },
   priorityContainer: {
     borderWidth: 1,
@@ -236,17 +240,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   priorityOptionText: {
-    fontSize: 15,
+    ...typography.secondary,
     color: '#3A3A3A',
     fontWeight: '500',
   },
   input: {
+    ...typography.body,
     borderWidth: 1,
     borderColor: '#E5E5E5',
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    fontSize: 15,
     color: '#111',
     marginBottom: 14,
   },
@@ -259,9 +263,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 4,
   },
-  cancelButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#6B6B6B',
-  },
+  cancelButtonText: { ...typography.button, color: '#6B6B6B' },
 });

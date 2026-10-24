@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -67,12 +68,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: 26,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     marginBottom: 20,
     textAlign: 'left',
-    lineHeight: 34,
   },
   outcomesContainer: {
     width: '100%',
@@ -101,16 +100,6 @@ const styles = StyleSheet.create({
   cardText: {
     flex: 1,
   },
-  cardTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: Theme.black,
-    lineHeight: 24,
-    marginBottom: 4,
-  },
-  cardDescription: {
-    fontSize: 15,
-    color: Theme.textInput,
-    lineHeight: 22,
-  },
+  cardTitle: { ...typography.cardTitle, color: Theme.black, marginBottom: 4 },
+  cardDescription: { ...typography.secondary, color: Theme.textInput },
 });

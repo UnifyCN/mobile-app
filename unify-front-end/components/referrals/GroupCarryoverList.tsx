@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -28,7 +29,9 @@ export function GroupCarryoverList({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{t('referrals.isInGroups', { name: inviterName })}</Text>
+      <Text style={styles.heading}>
+        {t('referrals.isInGroups', { name: inviterName })}
+      </Text>
       {groups.map(g => {
         const isSelected = selected.has(g.id);
         return (
@@ -45,7 +48,9 @@ export function GroupCarryoverList({
                 : ''
             }`}
           >
-            <View style={[styles.checkbox, isSelected && styles.checkboxChecked]}>
+            <View
+              style={[styles.checkbox, isSelected && styles.checkboxChecked]}
+            >
               {isSelected ? (
                 <Feather name='check' size={16} color={Theme.white} />
               ) : null}
@@ -90,7 +95,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   heading: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     marginBottom: 12,
   },
@@ -122,13 +127,9 @@ const styles = StyleSheet.create({
   rowText: {
     flex: 1,
   },
-  rowName: {
-    fontSize: 16,
-    color: Theme.black,
-    fontWeight: '600',
-  },
+  rowName: { ...typography.cardTitle, color: Theme.black },
   rowMembers: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.textPostTime,
     marginTop: 2,
   },
