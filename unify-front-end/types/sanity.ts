@@ -87,6 +87,8 @@ export interface SanityLesson extends SanityDocument {
   pages?: SanityLessonPage[];
   activity_pages?: SanityActivityPage[];
   ending_pages?: SanityEndingPage[];
+  /** Reader-only data for resolving saved routes after ordered conversion. */
+  legacyResumePages?: Pick<SanityLesson, 'activity_pages' | 'ending_pages'>;
   lesson_page_count?: number;
   activity_page_count?: number;
   ending_page_count?: number;
