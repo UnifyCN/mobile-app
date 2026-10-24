@@ -3,12 +3,14 @@ import {
   lessonResumeHref,
   ResumeProgress,
 } from '@/utils/lessonResume';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { progressClient } from '@/services/progress/progressClient';
 import { sanityClient } from '@/sanity-custom';
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
 import { getLessonTotalPages } from '@/utils/submoduleProgress';
 import { useSanityLanguage } from '@/hooks/sanity/useSanityLanguage';
+import { useLearnProvince } from '@/hooks/learn/useLearnProvince';
+import { isVisibleForProvince } from '@/supabase/functions/_shared/province';
 import {
   BASE_LANGUAGE_FILTER,
   i18nOverlay,
@@ -21,6 +23,9 @@ interface ContinueLesson {
   description: string;
   moduleId: string;
   moduleTitle: string;
+  // The module's province tag, kept so the cards can be checked again against
+  // the current profile province on every render.
+  moduleProvince?: string | null;
   submoduleId: string;
   submoduleTitle: string;
   currentPage: number;
@@ -44,12 +49,15 @@ interface LessonProgressRow extends ResumeProgress {
 
 export function useInProgressLessons() {
   const language = useSanityLanguage();
+  const { province, isLoading: provinceLoading } = useLearnProvince();
   const [lessons, setLessons] = useState<ContinueLesson[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const requestSequence = useRef(0);
 
   const fetchInProgressLessons = useCallback(async () => {
+    // Until the profile loads, null does not yet mean "no province".
+    if (provinceLoading) return;
     const requestId = ++requestSequence.current;
     const isLatestRequest = () => requestId === requestSequence.current;
     try {
@@ -87,6 +95,7 @@ export function useInProgressLessons() {
       const modulesQuery = `*[_type == "module" && ${BASE_LANGUAGE_FILTER}] | order(order, _id) {
           _id,
           title,
+          province,
           ${i18nOverlay('title')},
           "submodules": *[_type == "submodule" && references(^._id) && ${BASE_LANGUAGE_FILTER}] | order(order) {
             _id,
@@ -113,15 +122,21 @@ export function useInProgressLessons() {
       const rawModules = await sanityClient.fetch(modulesQuery, {
         lang: language,
       });
-      const modulesData = (rawModules ?? []).map((module: any) => ({
-        ...mergeI18nOverlay(module),
-        submodules: (module.submodules ?? []).map((submodule: any) => ({
-          ...mergeI18nOverlay(submodule),
-          lessons: (submodule.lessons ?? []).map((lesson: any) =>
-            mergeI18nOverlay(lesson)
-          ),
-        })),
-      }));
+      // A card is built per module, so a module for another province never
+      // reaches the loop below, with or without saved progress.
+      const modulesData = (rawModules ?? [])
+        .filter((module: any) =>
+          isVisibleForProvince(module.province, province)
+        )
+        .map((module: any) => ({
+          ...mergeI18nOverlay(module),
+          submodules: (module.submodules ?? []).map((submodule: any) => ({
+            ...mergeI18nOverlay(submodule),
+            lessons: (submodule.lessons ?? []).map((lesson: any) =>
+              mergeI18nOverlay(lesson)
+            ),
+          })),
+        }));
 
       const progressRows = (lessonProgresses || []) as LessonProgressRow[];
 
@@ -161,6 +176,7 @@ export function useInProgressLessons() {
               description: activeLesson.description || '',
               moduleId: module._id,
               moduleTitle: module.title || 'Unknown Module',
+              moduleProvince: module.province ?? null,
               submoduleId: activeSubmodule._id,
               submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
               currentPage,
@@ -223,7 +239,7 @@ export function useInProgressLessons() {
     } finally {
       if (isLatestRequest()) setIsLoading(false);
     }
-  }, [language]);
+  }, [language, province, provinceLoading]);
 
   // Fetch on mount and whenever the content language changes.
   useEffect(() => {
@@ -243,8 +259,19 @@ export function useInProgressLessons() {
     return unsubscribe;
   }, [fetchInProgressLessons]);
 
+  // The cards were built for the province of the request that made them. A
+  // profile change renders before the next request starts, so the returned
+  // cards are checked against the province of this render.
+  const visibleLessons = useMemo(
+    () =>
+      lessons.filter(lesson =>
+        isVisibleForProvince(lesson.moduleProvince, province)
+      ),
+    [lessons, province]
+  );
+
   return {
-    lessons,
+    lessons: visibleLessons,
     isLoading,
     error,
     refresh: fetchInProgressLessons,

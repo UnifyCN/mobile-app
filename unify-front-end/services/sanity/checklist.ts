@@ -6,17 +6,25 @@ import {
   type SanityLanguage,
   type WithI18n,
 } from './i18n';
+import {
+  checklistProvinceKeyPart,
+  checklistProvinceParam,
+} from '@/utils/checklistProvince';
 
 /**
  * GROQ: checklist items where user's persona is in item's personas array
  * and user's stage matches item's stage. Order by class then class_order.
- * Params: $persona (slug from Supabase), $stage (slug from Supabase).
+ * Items with no province are national and show to everyone; an item with a
+ * province shows only to users in that province.
+ * Params: $persona (slug from Supabase), $stage (slug from Supabase),
+ * $province (canonical name, or an empty string when the user has none).
  */
 const CHECKLIST_QUERY = `*[
   _type == "checklist"
   && (language == "en" || !defined(language))
   && $persona in personas
   && stage == $stage
+  && (!defined(province) || province == "" || province == $province)
 ] | order(class asc, class_order asc) {
   _id,
   _type,
@@ -27,15 +35,17 @@ const CHECKLIST_QUERY = `*[
   class_order,
   link_tab,
   ${i18nOverlay('title, description, longer_description')},
-  "module": module-> { _id, title },
-  "submodule": submodule-> { _id, title, "moduleId": module._ref }
+  "module": module-> { _id, title, province },
+  "submodule": submodule-> { _id, title, "moduleId": module._ref, "moduleProvince": module->province }
 }`;
 
 const CACHE_KEY = (
   persona: string,
   stageSlug: string,
-  language: SanityLanguage
-) => `checklist:${persona}:${stageSlug}:${language}`;
+  language: SanityLanguage,
+  province: string | null | undefined
+) =>
+  `checklist:${persona}:${stageSlug}:${language}:${checklistProvinceKeyPart(province)}`;
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
 let cache: {
@@ -47,10 +57,14 @@ let cache: {
 export async function getChecklistByPersonaAndStage(
   persona: string,
   stageSlug: string,
-  options?: { skipCache?: boolean; language?: SanityLanguage }
+  options?: {
+    skipCache?: boolean;
+    language?: SanityLanguage;
+    province?: string | null;
+  }
 ): Promise<SanityChecklistItem[]> {
   const language = options?.language ?? 'en';
-  const key = CACHE_KEY(persona, stageSlug, language);
+  const key = CACHE_KEY(persona, stageSlug, language, options?.province);
   const now = Date.now();
 
   if (
@@ -68,6 +82,7 @@ export async function getChecklistByPersonaAndStage(
         persona,
         stage: stageSlug,
         lang: language,
+        province: checklistProvinceParam(options?.province),
       }
     );
     const data = Array.isArray(result) ? result.map(mergeI18nOverlay) : [];

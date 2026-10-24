@@ -1,4 +1,5 @@
 import { normalizeQuery, selectPartnersMatching } from '@/utils/searchPartners';
+import { selectActivePartners } from '@/constants/Partners';
 import type { LocalizedPartner, PartnerCategory } from '@/types/partner';
 
 const labelFor = (category: PartnerCategory) =>
@@ -34,12 +35,14 @@ function partner(
 const DIRECTORY: LocalizedPartner[] = [
   partner({
     slug: 'issofbc',
+    provinces: ['British Columbia'],
     name: 'ISSofBC',
     tagline: 'Settlement services for newcomers',
     serviceArea: 'Greater Vancouver',
   }),
   partner({
     slug: 'surrey-libraries',
+    provinces: ['British Columbia'],
     name: 'Surrey Libraries',
     category: 'librariesLearning',
     tagline: 'Free programs and study space',
@@ -53,7 +56,15 @@ const DIRECTORY: LocalizedPartner[] = [
     ],
   }),
   partner({
+    slug: 'toronto-newcomer-hub',
+    name: 'Toronto Newcomer Hub',
+    tagline: 'Settlement services in the GTA',
+    serviceArea: 'Toronto',
+    provinces: ['Ontario'],
+  }),
+  partner({
     slug: 'back-in-motion',
+    provinces: ['British Columbia'],
     name: 'Back in Motion',
     category: 'findWork',
     tagline: 'Employment programs',
@@ -61,6 +72,34 @@ const DIRECTORY: LocalizedPartner[] = [
     highlights: ['Resume and interview coaching'],
   }),
 ];
+
+describe('searching the directory a reader is allowed to see', () => {
+  const visible = (province: string | null) =>
+    selectPartnersMatching(
+      selectActivePartners(DIRECTORY, province),
+      'settlement',
+      labelFor
+    ).map(p => p.slug);
+
+  it('finds no BC-only partner for a user in Ontario', () => {
+    expect(visible('Ontario')).toEqual(['toronto-newcomer-hub']);
+    expect(
+      selectPartnersMatching(
+        selectActivePartners(DIRECTORY, 'Ontario'),
+        'surrey',
+        labelFor
+      )
+    ).toEqual([]);
+  });
+
+  it('finds BC partners for a BC user', () => {
+    expect(visible('British Columbia')).toEqual(['issofbc']);
+  });
+
+  it('finds nothing provincial for a user with no province', () => {
+    expect(visible(null)).toEqual([]);
+  });
+});
 
 describe('normalizeQuery', () => {
   it('lowercases and strips accents', () => {

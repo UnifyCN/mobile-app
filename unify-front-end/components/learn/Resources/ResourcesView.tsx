@@ -11,6 +11,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import { useCurrentUser } from '@/context/UserContext';
 import {
   getActivePartners,
   getCategoriesWithPartners,
@@ -24,6 +25,7 @@ import { localizePartners } from '@/utils/localizePartner';
 import { selectPartnersMatching } from '@/utils/searchPartners';
 import CategoryTile from './CategoryTile';
 import CategoryDetail from './CategoryDetail';
+import MorePartnersNote from './MorePartnersNote';
 import HowWeChooseSheet from './HowWeChooseSheet';
 import PartnerRow from './PartnerRow';
 import ResourcesSearchBar from './ResourcesSearchBar';
@@ -55,7 +57,9 @@ export default function ResourcesView() {
   const router = useRouter();
   const { t } = useTranslation();
   const { trackResourcesViewed, trackResourcesCategoryOpened } = useAnalytics();
-  const categories = getCategoriesWithPartners();
+  const { currentUser } = useCurrentUser();
+  const province = currentUser?.province;
+  const categories = getCategoriesWithPartners(province);
 
   useEffect(() => {
     trackResourcesViewed();
@@ -70,7 +74,10 @@ export default function ResourcesView() {
   // Search runs over the copy the person is reading, so the whole directory is
   // localized first. `t` is the dependency: react-i18next hands back a new one
   // on languageChanged, which re-resolves every string.
-  const partners = useMemo(() => localizePartners(getActivePartners(), t), [t]);
+  const partners = useMemo(
+    () => localizePartners(getActivePartners(province), t),
+    [province, t]
+  );
   const results = useMemo(
     () =>
       isSearching ? selectPartnersMatching(partners, query, labelFor) : [],
@@ -131,6 +138,8 @@ export default function ResourcesView() {
         <View style={styles.searchWrapper}>
           <ResourcesSearchBar value={query} onChangeText={setQuery} />
         </View>
+
+        <MorePartnersNote />
 
         {isSearching ? (
           results.length === 0 ? (

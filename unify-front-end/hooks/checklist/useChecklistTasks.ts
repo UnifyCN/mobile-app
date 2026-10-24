@@ -2,7 +2,10 @@ import type { SetStateAction } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { UserTaskWithDetails } from '@/types/checklist';
+import type {
+  ChecklistCacheContext,
+  UserTaskWithDetails,
+} from '@/types/checklist';
 import { getChecklistWithUserProgress } from '@/services/checklist/getChecklistWithUserProgress';
 import { getChecklistTaskOrders } from '@/services/checklist/checklistTaskOrder';
 import { applySavedOrderToTasks } from '@/utils/checklistOrder';
@@ -28,6 +31,8 @@ interface UseChecklistTasksParams {
   currentStage: number | null;
   stageChanged: boolean;
   persona: string | null;
+  /** Onboarding-profile province; unmatched or missing means national items only. */
+  province: string | null;
 }
 
 async function fetchChecklistTasks(
@@ -35,14 +40,15 @@ async function fetchChecklistTasks(
   currentStage: number,
   normalizedPersona: string | null,
   stageChanged: boolean,
-  language: SanityLanguage
+  language: SanityLanguage,
+  province: string | null
 ): Promise<UserTaskWithDetails[]> {
   const stageSlug = stageNumberToStageSlug(currentStage);
   const merged = await getChecklistWithUserProgress(
     userId,
     normalizedPersona,
     stageSlug,
-    { stageChanged, language }
+    { stageChanged, language, province }
   );
   try {
     const orders = await getChecklistTaskOrders(userId);
@@ -57,6 +63,7 @@ export const useChecklistTasks = ({
   currentStage,
   stageChanged,
   persona,
+  province,
 }: UseChecklistTasksParams) => {
   const queryClient = useQueryClient();
   const language = useSanityLanguage();
@@ -90,38 +97,36 @@ export const useChecklistTasks = ({
     [persona]
   );
 
-  const queryKey = useMemo(() => {
+  const cacheContext = useMemo<ChecklistCacheContext | null>(() => {
     if (!userId || currentStage === null) {
       return null;
     }
-    return checklistTasksQueryKey(
+    return {
       userId,
-      currentStage,
-      normalizedPersona ?? 'unpersonalized',
+      stage: currentStage,
+      personaSlug: normalizedPersona ?? 'unpersonalized',
       stageChanged,
-      language
-    );
-  }, [userId, currentStage, normalizedPersona, stageChanged, language]);
-
-  const storageKey = useMemo(() => {
-    if (!queryKey) {
-      return null;
-    }
-    return buildChecklistCacheStorageKey(
-      userId!,
-      currentStage!,
-      normalizedPersona ?? 'unpersonalized',
-      stageChanged,
-      language
-    );
+      language,
+      province,
+    };
   }, [
-    queryKey,
     userId,
     currentStage,
     normalizedPersona,
     stageChanged,
     language,
+    province,
   ]);
+
+  const queryKey = useMemo(
+    () => (cacheContext ? checklistTasksQueryKey(cacheContext) : null),
+    [cacheContext]
+  );
+
+  const storageKey = useMemo(
+    () => (cacheContext ? buildChecklistCacheStorageKey(cacheContext) : null),
+    [cacheContext]
+  );
 
   // Hydrate React Query from memory (sync) then AsyncStorage before network fetch.
   useEffect(() => {
@@ -165,7 +170,8 @@ export const useChecklistTasks = ({
         currentStage!,
         normalizedPersona,
         stageChanged,
-        language
+        language,
+        province
       ),
     enabled: cacheChecked && !!queryKey && !!userId && currentStage !== null,
     // Hydrated cache renders immediately, then revalidates for newly published

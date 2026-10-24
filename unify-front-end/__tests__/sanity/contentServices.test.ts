@@ -239,6 +239,82 @@ describe('translated Sanity service contracts', () => {
     });
   });
 
+  describe('checklist province targeting', () => {
+    const fetchedParams = () => mockFetch.mock.calls[0][1];
+
+    it.each([
+      ['Ontario', 'Ontario'],
+      ['British Columbia', 'British Columbia'],
+      ['ON', 'Ontario'],
+      ['bc', 'British Columbia'],
+    ])('queries for %s as %s', async (profileProvince, expected) => {
+      mockFetch.mockResolvedValue([]);
+      await getChecklistByPersonaAndStage('other', 'not_arrived', {
+        skipCache: true,
+        province: profileProvince,
+      });
+      expect(fetchedParams()).toMatchObject({ province: expected });
+    });
+
+    it.each([
+      ['no province saved', null],
+      ['an undefined province', undefined],
+      ['an empty province', ''],
+      ['unmatched free text', 'Somewhere Else'],
+    ])('queries national items only for %s', async (_label, province) => {
+      mockFetch.mockResolvedValue([]);
+      await getChecklistByPersonaAndStage('other', 'not_arrived', {
+        skipCache: true,
+        province,
+      });
+      expect(fetchedParams()).toMatchObject({ province: '' });
+    });
+
+    it('keeps unset, empty, and matching province items only', async () => {
+      mockFetch.mockResolvedValue([]);
+      await getChecklistByPersonaAndStage('other', 'not_arrived', {
+        skipCache: true,
+        province: 'Ontario',
+      });
+      const query = String(mockFetch.mock.calls[0][0]);
+      expect(query).toContain(
+        '(!defined(province) || province == "" || province == $province)'
+      );
+    });
+
+    it('selects the province of the module each task links to', async () => {
+      mockFetch.mockResolvedValue([]);
+      await getChecklistByPersonaAndStage('other', 'not_arrived', {
+        skipCache: true,
+        province: 'Ontario',
+      });
+      const query = String(mockFetch.mock.calls[0][0]);
+      expect(query).toMatch(/"module": module->\s*\{[^}]*\bprovince\b/);
+      expect(query).toMatch(/"moduleProvince": module->province/);
+    });
+
+    it('does not serve one province cached items to another province', async () => {
+      const bcItem = { _id: 'bc-item', title: 'BC item' };
+      const onItem = { _id: 'on-item', title: 'Ontario item' };
+      mockFetch.mockResolvedValueOnce([bcItem]).mockResolvedValueOnce([onItem]);
+
+      const bc = await getChecklistByPersonaAndStage('cache-p', 'cache-s', {
+        province: 'British Columbia',
+      });
+      const ontario = await getChecklistByPersonaAndStage(
+        'cache-p',
+        'cache-s',
+        {
+          province: 'Ontario',
+        }
+      );
+
+      expect(bc.map(i => i._id)).toEqual(['bc-item']);
+      expect(ontario.map(i => i._id)).toEqual(['on-item']);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+  });
+
   it('rejects a failed forced checklist refresh even after an empty success', async () => {
     mockFetch
       .mockResolvedValueOnce([])
