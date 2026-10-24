@@ -1,7 +1,10 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
-import { getArrivalStage } from '../_shared/arrivalStage.ts';
+import {
+  getArrivalStage,
+  normalizeStoredArrivalDate,
+} from '../_shared/arrivalStage.ts';
 import { buildArrivalLine, buildStageLine } from '../_shared/stageContext.ts';
 import {
   LOCAL_DATE_HEADER,
@@ -270,8 +273,10 @@ Deno.serve(async (req: Request) => {
     }
 
     const persona: string = profile?.persona || 'other';
+    // The row holds the raw timestamptz. Use the calendar date it stands for.
+    const arrivalDate = normalizeStoredArrivalDate(profile?.arrival_date);
     // The stored stage is only a cache. Recompute it from arrival_date.
-    const computedStage = getArrivalStage(profile?.arrival_date, localToday);
+    const computedStage = getArrivalStage(arrivalDate, localToday);
     // daily_tips.stage is NOT NULL text, so unknown is stored as 'unknown'.
     const stage: string = computedStage === null ? 'unknown' : String(computedStage);
     const today = new Date().toISOString().split('T')[0];
@@ -404,7 +409,7 @@ Deno.serve(async (req: Request) => {
       province: profile?.province || null,
       goals: profile?.goals || [],
       learning_interests: profile?.learning_interests || [],
-      arrival_date: profile?.arrival_date || null,
+      arrival_date: arrivalDate,
     };
     const prompt = buildGeminiPrompt(userProfile, today, localToday);
     let rawText = await callTipModel(prompt);

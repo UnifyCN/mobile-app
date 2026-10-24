@@ -4,7 +4,7 @@ import { StageNumber } from '@/types/checklist';
 import { Persona } from '@/types/onboardingProfile';
 import { getPublicOnboardingProfile } from '@/services/onboarding/getPublicOnboardingProfile';
 import { normalizeProvince } from '@/constants/LocationData';
-import { getArrivalStage } from '@/helpers/arrivalDate';
+import { getArrivalStage, normalizeStoredArrivalDate } from '@/helpers/arrivalDate';
 import { syncStageCache } from '@/services/onboarding/syncStageCache';
 
 export interface UserInfo {
@@ -115,7 +115,7 @@ export const getUserInfo = async (userId?: string): Promise<UserInfo> => {
       province: string | null;
       stage: unknown;
     } = {
-      arrival_date: onboardingData?.arrival_date ?? null,
+      arrival_date: normalizeStoredArrivalDate(onboardingData?.arrival_date),
       persona: onboardingData?.persona ?? null,
       persona_other: onboardingData?.persona_other ?? null,
       city: onboardingData?.city ?? null,
@@ -128,7 +128,9 @@ export const getUserInfo = async (userId?: string): Promise<UserInfo> => {
       if (publicProfile) {
         resolvedOnboarding.persona = publicProfile.persona;
         resolvedOnboarding.persona_other = publicProfile.persona_other;
-        resolvedOnboarding.arrival_date = publicProfile.arrival_date;
+        resolvedOnboarding.arrival_date = normalizeStoredArrivalDate(
+          publicProfile.arrival_date
+        );
       }
     }
 

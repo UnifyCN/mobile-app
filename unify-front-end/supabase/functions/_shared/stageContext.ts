@@ -7,15 +7,20 @@ import {
   getArrivalStage,
   getMonthsSinceArrival,
   getStageDescription,
+  normalizeStoredArrivalDate,
 } from './arrivalStage.ts';
 import type { OnboardingProfile } from './companionTemplates.ts';
 
-/** Companion profile with the stage recomputed from arrival_date (null = unknown). */
+/**
+ * Companion profile with the stage recomputed from arrival_date (null =
+ * unknown). The row holds the raw timestamptz, so the date is normalized to a
+ * calendar date first; the profile carries only that date.
+ */
 export function buildCompanionProfile(
   row: Record<string, unknown>,
   today: Date = new Date()
 ): OnboardingProfile {
-  const arrivalDate = (row.arrival_date as string | null | undefined) ?? null;
+  const arrivalDate = normalizeStoredArrivalDate(row.arrival_date);
   return {
     persona: (row.persona as string | null | undefined) ?? null,
     city: (row.city as string | null | undefined) ?? null,

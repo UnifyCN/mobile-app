@@ -33,6 +33,79 @@ export function parseCalendarDate(
   return isRealDate ? { year, month, day } : null;
 }
 
+// A Postgres timestamptz as PostgREST or psql prints it, for example
+// "2026-12-02T00:00:00+00:00", "2026-12-02T00:00:00.000Z" or
+// "2026-12-02 00:00:00+00". An offset is required: without one the value is
+// not an instant.
+const STORED_TIMESTAMP_PATTERN =
+  /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,9})?)?(Z|[+-]\d{2}(?::?\d{2})?)$/;
+const MS_PER_MINUTE = 60_000;
+
+const pad = (value: number, width: number): string =>
+  String(value).padStart(width, '0');
+
+/**
+ * The one place that turns a stored arrival_date into the calendar date it
+ * stands for. Every read boundary (database rows, edge function rows, the
+ * public profile response, cached profiles) calls this, so the rest of the
+ * code only ever sees YYYY-MM-DD or null.
+ *
+ * Semantics:
+ * - The hosted column is a timestamptz. The app writes a calendar date; the
+ *   database stores it as midnight UTC and returns, for example,
+ *   "2026-12-02T00:00:00+00:00". The chosen date is the UTC calendar date of
+ *   that instant. It is never the device date: in Vancouver that instant is
+ *   still 2026-12-01 at 16:00, and the user chose 2026-12-02.
+ * - A timestamp with another offset is moved to UTC first, then read the same
+ *   way. A time other than midnight is not an error: the UTC date still wins.
+ * - A plain YYYY-MM-DD passes through unchanged when it is a real date.
+ * - Anything else is unknown (null): null, undefined, non-strings, a timestamp
+ *   with no offset, an impossible date or time ("2026-02-30", hour 24), or
+ *   any other text. Callers must not guess a date from such a value.
+ *
+ * The strict parser parseCalendarDate still accepts only YYYY-MM-DD.
+ */
+export function normalizeStoredArrivalDate(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const date = parseCalendarDate(value);
+  if (date)
+    return `${pad(date.year, 4)}-${pad(date.month, 2)}-${pad(date.day, 2)}`;
+
+  const match = STORED_TIMESTAMP_PATTERN.exec(value);
+  if (!match) return null;
+  const [year, month, day, hour, minute, second] = match
+    .slice(1, 7)
+    .map(part => (part === undefined ? 0 : Number(part)));
+  if (hour > 23 || minute > 59 || second > 59) return null;
+
+  const offset = match[7];
+  let offsetMinutes = 0;
+  if (offset !== 'Z') {
+    const digits = offset.slice(1).replace(':', '');
+    const offsetHours = Number(digits.slice(0, 2));
+    const offsetRest = Number(digits.slice(2) || '0');
+    if (offsetHours > 23 || offsetRest > 59) return null;
+    offsetMinutes =
+      (offset[0] === '-' ? -1 : 1) * (offsetHours * 60 + offsetRest);
+  }
+
+  // setUTCFullYear keeps years 0 to 99 as written (Date.UTC maps them to 19xx).
+  const instant = new Date(0);
+  instant.setUTCFullYear(year, month - 1, day);
+  instant.setUTCHours(hour, minute, second, 0);
+  const isRealDate =
+    instant.getUTCFullYear() === year &&
+    instant.getUTCMonth() === month - 1 &&
+    instant.getUTCDate() === day;
+  if (!isRealDate) return null;
+
+  const utc = new Date(instant.getTime() - offsetMinutes * MS_PER_MINUTE);
+  const normalized = `${pad(utc.getUTCFullYear(), 4)}-${pad(utc.getUTCMonth() + 1, 2)}-${pad(utc.getUTCDate(), 2)}`;
+  // The result must pass the strict parser, so no caller can see a date it
+  // would reject.
+  return parseCalendarDate(normalized) ? normalized : null;
+}
+
 const localCalendarDate = (date: Date): CalendarDate => ({
   year: date.getFullYear(),
   month: date.getMonth() + 1,

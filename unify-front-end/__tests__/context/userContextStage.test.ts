@@ -131,6 +131,21 @@ describe('UserProvider', () => {
     expect(result.current.currentUser?.stage).toBe(2);
   });
 
+  it('exposes the plain date and stage 0 for a cached raw timestamp', async () => {
+    // A cached entry from before the date was normalized at the read boundary.
+    const client = makeClient();
+    const cachedRaw = info({
+      arrivalDate: '2026-12-02T00:00:00+00:00',
+      stage: null,
+    });
+    client.setQueryData(['userInfo', 'u1'], cachedRaw);
+    mockGetUserInfo.mockResolvedValue(cachedRaw);
+    const { result } = renderUser(client);
+    await waitFor(() => expect(result.current.currentUser).not.toBeNull());
+    expect(result.current.currentUser?.arrivalDate).toBe('2026-12-02');
+    expect(result.current.currentUser?.stage).toBe(0);
+  });
+
   it('refreshUser reloads the profile after a date update', async () => {
     const client = makeClient();
     mockGetUserInfo.mockResolvedValueOnce(info({ stage: 2 }));

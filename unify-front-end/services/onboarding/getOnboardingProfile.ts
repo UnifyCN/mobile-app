@@ -1,7 +1,10 @@
 import { supabase } from '@/lib/supabase';
 import { UserOnboardingProfile } from '@/types/onboardingProfile';
 import { normalizeProvince } from '@/constants/LocationData';
-import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
+import {
+  normalizeStoredArrivalDate,
+  resolveStoredStage,
+} from '@/supabase/functions/_shared/arrivalStage';
 
 export const getOnboardingProfile = async (
   userId?: string
@@ -45,7 +48,7 @@ export const getOnboardingProfile = async (
       persona_other: data.persona_other,
       referral_source: data.referral_source,
       referral_source_other: data.referral_source_other,
-      arrival_date: data.arrival_date,
+      arrival_date: normalizeStoredArrivalDate(data.arrival_date),
       city: data.city,
       province: normalizeProvince(data.province),
       stage: resolveStoredStage(data.stage),
