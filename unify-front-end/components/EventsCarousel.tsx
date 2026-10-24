@@ -106,8 +106,7 @@ export const EventsCarousel = ({
 }: EventsCarouselProps) => {
   const { t } = useTranslation();
   const router = useRouter();
-  // One extra row preserves the carousel's existing View more card.
-  const { data: events, isLoading } = useEvents(maxEvents + 1);
+  const { data: events, isLoading } = useEvents();
 
   const upcomingEvents = getUpcomingEventsSorted(events);
 

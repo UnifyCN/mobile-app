@@ -20,10 +20,13 @@ const option = (key, fallback) => {
 };
 if (args.includes('--help')) {
   console.log(
-    'node scripts/performance/mobile-data.cjs --output FILE [--samples 12] [--ref COMMIT] [--compare COMMIT] [--credentials FILE]'
+    'node scripts/performance/mobile-data.cjs --output FILE [--samples 12] [--ref COMMIT] [--compare COMMIT --candidate COMMIT] [--credentials FILE]'
   );
   console.log(
     'The credential file contains an owned QA email and password on separate lines. Only GET, auth login, and the read-only metadata RPC are permitted.'
+  );
+  console.log(
+    'All application modules come from immutable commits. The candidate defaults to HEAD. Uncommitted application edits are not measured.'
   );
   process.exit(0);
 }
@@ -32,8 +35,20 @@ if (!output) throw new Error('--output is required');
 const samples = Number(option('--samples', '12'));
 if (!Number.isInteger(samples) || samples < 1 || samples > 50)
   throw new Error('Use 1-50 samples');
+const resolveCommit = value =>
+  execFileSync('git', ['rev-parse', '--verify', `${value}^{commit}`], {
+    cwd: appRoot,
+    encoding: 'utf8',
+  }).trim();
+const checkoutHead = resolveCommit('HEAD');
 const ref = option('--ref', null);
 const compare = option('--compare', null);
+if (ref && (compare || args.includes('--candidate')))
+  throw new Error('--ref cannot be combined with --compare or --candidate');
+const baselineRef = ref || compare ? resolveCommit(ref ?? compare) : null;
+const candidateRef = ref
+  ? null
+  : resolveCommit(option('--candidate', checkoutHead));
 const credentialPath = option(
   '--credentials',
   path.join(require('node:os').homedir(), '.unify-qa-account')
@@ -251,7 +266,7 @@ async function main() {
       'Community data': () =>
         Promise.all([
           groups(),
-          events({ upcomingLimit: 4, from: discoveryTime }).then(rows => {
+          events().then(rows => {
             const visible = upcoming(rows, discoveryTime);
             return { cards: visible.slice(0, 3), hasMore: visible.length > 3 };
           }),
@@ -268,10 +283,10 @@ async function main() {
   };
   const variants = compare
     ? [
-        { name: 'before', ref: compare },
-        { name: 'after', ref: null },
+        { name: 'before', ref: baselineRef },
+        { name: 'after', ref: candidateRef },
       ]
-    : [{ name: ref ? 'before' : 'after', ref }];
+    : [{ name: ref ? 'before' : 'after', ref: baselineRef ?? candidateRef }];
   for (const variant of variants) Object.assign(variant, make(variant.ref));
   const results = [];
   const flowNames = Object.keys(variants[0].flows);
@@ -355,11 +370,13 @@ async function main() {
     measured_at: new Date().toISOString(),
     runtime: process.version,
     platform: process.platform,
-    baseline_ref: compare ?? ref,
-    current_head: execFileSync('git', ['rev-parse', 'HEAD'], {
-      cwd: appRoot,
-      encoding: 'utf8',
-    }).trim(),
+    baseline_ref: baselineRef,
+    candidate_ref: candidateRef,
+    checkout_head: checkoutHead,
+    runner_sha256: crypto
+      .createHash('sha256')
+      .update(fs.readFileSync(__filename))
+      .digest('hex'),
     scope:
       'Real app data loaders with Node transports and live hosted data. Not native rendering or device latency. One warmup per variant, alternating variant order, no application data writes.',
     fixture: {
