@@ -1,5 +1,6 @@
 import type { QueryClient } from '@tanstack/react-query';
 import { personalizedStartersAccountKey } from '@/hooks/companion/personalizedStartersQueryKey';
+import { notifyArrivalReconciliation } from './arrivalReconciliation';
 import type { ConfirmedArrival } from '@/services/onboarding/updateArrivalDate';
 import type { UserInfo } from '@/services/users/getUserInfo';
 import type { UserOnboardingProfile } from '@/types/onboardingProfile';
@@ -45,8 +46,11 @@ const cancelAccountReads = (queryClient: QueryClient, userId: string) =>
     )
   );
 
-/** Drop the account caches' current values and read the row again. */
+/** Reload the account's stage and revalidate its query caches. */
 const revalidateAccount = async (queryClient: QueryClient, userId: string) => {
+  // Notify before any wait so active stage hooks drop earlier profile reads.
+  // Send no snapshot: the last response need not be the last database commit.
+  notifyArrivalReconciliation(userId);
   await cancelAccountReads(queryClient, userId);
   await Promise.all(
     accountKeys(userId).map(queryKey =>
