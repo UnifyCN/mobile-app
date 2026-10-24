@@ -1,3 +1,4 @@
+import { withOrderedLessonBlocks } from '../../utils/lessonContentBlocks';
 import { sanityClient } from '../../sanity-custom';
 import { SanityLesson } from '../../types/sanity';
 import {
@@ -21,18 +22,19 @@ export async function getLesson(
       slug,
       description,
       submodule,
+      content_blocks,
       pages,
       activity_pages,
       ending_pages,
       order,
-      ${i18nOverlay('title, description, pages, activity_pages, ending_pages')}
+      ${i18nOverlay('title, description, content_blocks, pages, activity_pages, ending_pages')}
     }`;
 
     const lesson = await sanityClient.fetch<WithI18n<SanityLesson> | null>(
       query,
       { lessonId, lang: language }
     );
-    return lesson ? mergeI18nOverlay(lesson) : null;
+    return lesson ? withOrderedLessonBlocks(mergeI18nOverlay(lesson)) : null;
   } catch (error) {
     console.error('Error fetching lesson from Sanity:', error);
     return null;

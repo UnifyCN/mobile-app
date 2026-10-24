@@ -572,12 +572,12 @@ export async function saveActivityInput(
   fieldKey: string,
   value: string,
   isSubmitted = false
-): Promise<void> {
+): Promise<boolean> {
   try {
     const {
       data: { user },
     } = await progressClient.auth.getUser();
-    if (!user) return;
+    if (!user) return false;
 
     const payload: any = {
       user_id: user.id,
@@ -605,9 +605,12 @@ export async function saveActivityInput(
 
     if (error) {
       console.error('Error saving activity input:', error);
+      return false;
     }
+    return true;
   } catch (error) {
     console.error('Error in saveActivityInput:', error);
+    return false;
   }
 }
 
