@@ -1,3 +1,6 @@
+import { typography } from '@/constants/Typography';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, {
   useState,
   useEffect,
@@ -41,7 +44,9 @@ import { useAnalytics } from '@/utils/analytics';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { gradeQuizAnswer, isTextAnswerQuestion } from '@/utils/quizAnswer';
+
+import { gradeQuizAnswer } from '@/utils/gradeQuizAnswer';
+import { isTextAnswerQuestion } from '@/utils/quizAnswer';
 import {
   getLessonExitDestination,
   normalizeLearnOrigin,
@@ -317,6 +322,7 @@ export default function QuizQuestionPage() {
         <Text style={styles.errorText}>
           {t('learn.quiz.errorLoadingQuestion')}
         </Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -361,6 +367,7 @@ export default function QuizQuestionPage() {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorText}>{t('learn.quiz.questionNotFound')}</Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -564,15 +571,12 @@ export default function QuizQuestionPage() {
         });
       }
     } else if (!hasSubmitted) {
-      // First submission: save and grade the selected or typed answer.
       const answer =
         currentQuestion.question_type === 'multiple_choice_multiple'
           ? selectedAnswers
           : selectedAnswer || '';
+      setIsCorrect(gradeQuizAnswer(currentQuestion, answer));
       persistSelection(answer);
-      const isAnswerCorrect = gradeQuizAnswer(currentQuestion, answer);
-
-      setIsCorrect(isAnswerCorrect);
       setHasSubmitted(true);
     } else {
       // Already submitted and correct - proceed to next
@@ -712,7 +716,7 @@ export default function QuizQuestionPage() {
           moduleId,
           submoduleId,
           lessonId,
-          pageNum: '1',
+          pageNum: String(Math.max(1, lesson.pages?.length || 0)),
           ...originParams,
         },
       });
@@ -723,12 +727,13 @@ export default function QuizQuestionPage() {
     <SafeAreaView style={styles.container}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={submoduleData?.title || 'Submodule'}
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -745,14 +750,15 @@ export default function QuizQuestionPage() {
           <View style={styles.questionContainer}>
             <View style={styles.questionContent}>
               <RichTextRenderer
+                compactContainer
                 blocks={currentQuestion.question_text || []}
                 markDefs={currentQuestion.questionMarkDefs}
                 styles={{
                   normal: {
-                    fontSize: 18,
+                    ...typography.reading,
                     color: '#000',
                     lineHeight: 27,
-                    textAlign: 'center',
+                    textAlign: 'left',
                   },
                 }}
               />
@@ -844,25 +850,43 @@ export default function QuizQuestionPage() {
                 </TouchableOpacity>
               </View>
             ) : isTextAnswer ? (
-              <TextInput
-                style={[
-                  styles.textAnswerInput,
-                  hasSubmitted &&
-                    (isCorrect
-                      ? styles.textAnswerInputCorrect
-                      : styles.textAnswerInputIncorrect),
-                ]}
-                value={selectedAnswer || ''}
-                onChangeText={value => {
-                  answerTouchedRef.current = true;
-                  setSelectedAnswer(value);
-                }}
-                placeholder={t('learn.typeHerePlaceholder')}
-                placeholderTextColor='#9CA3AF'
-                multiline
-                textAlignVertical='top'
-                editable={!hasSubmitted}
-              />
+              <View style={{ gap: 12 }}>
+                <TextInput
+                  accessibilityLabel={t('learn.quiz.yourAnswer')}
+                  multiline
+                  textAlignVertical='top'
+                  placeholder={t('learn.quiz.yourAnswer')}
+                  value={selectedAnswer || ''}
+                  onChangeText={value => {
+                    answerTouchedRef.current = true;
+                    setSelectedAnswer(value);
+                    setHasSubmitted(false);
+                  }}
+                  onBlur={() => persistSelection(selectedAnswer || '')}
+                  editable={!hasSubmitted || !isCorrect}
+                  style={{
+                    borderWidth: 1,
+                    minHeight: 140,
+                    borderColor: '#B8B8B8',
+                    borderRadius: 12,
+                    padding: 14,
+                    ...typography.reading,
+                    color: '#191919',
+                  }}
+                />
+                {hasSubmitted && (
+                  <Text
+                    accessibilityLiveRegion='polite'
+                    style={{ ...typography.reading }}
+                  >
+                    {t(
+                      isCorrect
+                        ? 'learn.structured.correct'
+                        : 'learn.structured.tryAgain'
+                    )}
+                  </Text>
+                )}
+              </View>
             ) : (
               <View style={styles.optionsContainer}>
                 {(currentQuestion.options || []).map((option: any) => {
@@ -916,6 +940,7 @@ export default function QuizQuestionPage() {
                         </View>
                         <View style={styles.optionContent}>
                           <RichTextRenderer
+                            compactContainer
                             blocks={option.text || []}
                             markDefs={option.textMarkDefs}
                             styles={{
@@ -941,35 +966,29 @@ export default function QuizQuestionPage() {
             currentQuestion.answer_box.showAfterSubmit && (
               <View style={styles.answerBoxContainer}>
                 <RichTextRenderer
+                  compactContainer
                   blocks={currentQuestion.answer_box.content || []}
                   markDefs={currentQuestion.answer_box.markDefs}
                   styles={{
                     normal: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     bullet: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     number: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     strong: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '600',
+                      ...typography.reading,
                       color: '#3F3F3F',
+                      fontWeight: '600',
                     },
                   }}
                 />
@@ -993,10 +1012,10 @@ export default function QuizQuestionPage() {
                     (currentQuestion.matching_pairs?.length || 0)
                   : currentQuestion.question_type === 'multiple_choice_multiple'
                     ? selectedAnswers.length === 0
-                    : !selectedAnswer
+                    : !selectedAnswer?.trim()
               )
                 ? '#F3F4F6'
-                : moduleData?.colorTheme?.hex || '#575757',
+                : '#191919',
             },
           ]}
           onPress={handleNext}
@@ -1006,7 +1025,7 @@ export default function QuizQuestionPage() {
                 (currentQuestion.matching_pairs?.length || 0)
               : currentQuestion.question_type === 'multiple_choice_multiple'
                 ? selectedAnswers.length === 0
-                : !selectedAnswer
+                : !selectedAnswer?.trim()
           }
         >
           <Text
@@ -1017,7 +1036,7 @@ export default function QuizQuestionPage() {
                   (currentQuestion.matching_pairs?.length || 0)
                 : currentQuestion.question_type === 'multiple_choice_multiple'
                   ? selectedAnswers.length === 0
-                  : !selectedAnswer) && styles.checkButtonTextDisabled,
+                  : !selectedAnswer?.trim()) && styles.checkButtonTextDisabled,
             ]}
           >
             {currentQuestion.question_type === 'matching'
@@ -1091,7 +1110,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 24,
   },
   loadingContainer: {
     flex: 1,
@@ -1099,10 +1118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  loadingText: { ...typography.body, color: '#6B7280' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -1110,11 +1126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#DC2626',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.body, color: '#DC2626', textAlign: 'center' },
   header: {
     paddingHorizontal: 20,
     paddingTop: 10,
@@ -1126,18 +1138,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 15,
   },
-  closeButton: {
-    fontSize: 18,
-    color: '#000',
-    fontWeight: '600',
-  },
+  closeButton: { ...typography.button, color: '#000' },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#000',
     flex: 1,
     textAlign: 'center',
-    marginRight: 18, // Compensate for close button width
+    marginRight: 18,
   },
   progressBar: {
     height: 4,
@@ -1155,34 +1162,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   questionCounter: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: '#6B7280',
+    fontWeight: '600',
   },
   content: {
     padding: 20,
     flex: 1,
   },
   quizTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 12,
-    lineHeight: 38,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   questionContainer: {
     gap: 15,
   },
   questionContent: {
-    marginBottom: 24,
-    alignItems: 'center',
+    marginBottom: 12,
+    alignItems: 'stretch',
   },
-  questionText: {
-    fontSize: 25,
-    color: '#000',
-    lineHeight: 30,
-  },
+  questionText: { ...typography.title, color: '#000' },
   optionsContainer: {
     gap: 17,
   },
@@ -1195,8 +1196,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: '#fff',
     color: '#111827',
-    fontSize: 18,
-    lineHeight: 27,
+    ...typography.reading,
   },
   textAnswerInputCorrect: {
     borderColor: '#10B981',
@@ -1287,26 +1287,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#EF4444',
     marginTop: 0,
   },
-  checkmark: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+  checkmark: { ...typography.caption, color: '#fff', fontWeight: 'bold' },
   optionContent: {
     flex: 1,
     minHeight: 20,
   },
-  optionText: {
-    fontSize: 18,
-    color: '#374151',
-    lineHeight: 27,
-    fontWeight: '700',
-  },
+  optionText: { ...typography.reading, color: '#374151', fontWeight: '700' },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -1316,32 +1304,28 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backButton: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D7D7D7',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
-  backButtonText: {
-    color: '#6B7280',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  backButtonText: { ...typography.button, color: '#191919' },
   checkButton: {
     backgroundColor: '#575757',
     paddingVertical: 14,
-    paddingHorizontal: 70,
+    paddingHorizontal: 12,
+    flex: 1,
     borderRadius: 8,
     alignItems: 'center',
   },
   checkButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  checkButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  checkButtonText: { ...typography.button, color: '#fff' },
   checkButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -1371,7 +1355,7 @@ const styles = StyleSheet.create({
     borderColor: '#DCDCDC',
     borderRadius: 8,
     padding: 16,
-    minWidth: 170,
+    minWidth: 0,
     minHeight: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -1390,7 +1374,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF2F2',
   },
   matchingItemText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#374151',
     textAlign: 'center',
     fontWeight: '500',
@@ -1407,27 +1391,17 @@ const styles = StyleSheet.create({
   matchingCheckButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  matchingCheckButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  matchingCheckButtonText: { ...typography.button, color: '#fff' },
   matchingCheckButtonTextDisabled: {
     color: '#9CA3AF',
   },
   answerBoxContainer: {
-    backgroundColor: 'transparent',
-    borderLeftWidth: 5,
-    borderLeftColor: '#3F3F3F',
-    paddingLeft: 15,
-    paddingRight: 0,
-    paddingVertical: 0,
-    alignSelf: 'center',
-    width: 353,
-    maxWidth: '100%',
-    minHeight: 80,
-    marginTop: 20,
-    marginBottom: 30,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 14,
+    padding: 14,
+    alignSelf: 'stretch',
+    marginTop: 16,
+    marginBottom: 16,
   },
 
   // Modal styles
@@ -1447,16 +1421,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -1468,11 +1440,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -1480,9 +1448,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

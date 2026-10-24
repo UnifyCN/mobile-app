@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -5,10 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 type Props = { placeholder?: string; onFilterPress?: () => void };
 
-export default function SearchBar({
-  placeholder,
-  onFilterPress,
-}: Props) {
+export default function SearchBar({ placeholder, onFilterPress }: Props) {
   const { t } = useTranslation();
   const displayPlaceholder = placeholder ?? t('common.search');
   return (
@@ -31,7 +29,8 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
   container: {
-    height: 44,
+    minHeight: 44,
+    paddingVertical: 4,
     borderRadius: 22,
     backgroundColor: '#eee',
     paddingHorizontal: 16,
@@ -39,9 +38,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   placeholder: {
+    ...typography.secondary,
     marginLeft: 8,
-    color: '#9f9d9d',
-    fontSize: 15,
+    color: typographyColors.secondary,
   },
   filterButton: {
     width: 34,

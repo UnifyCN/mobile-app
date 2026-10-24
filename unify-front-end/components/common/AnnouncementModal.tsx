@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -134,10 +135,10 @@ const styles = StyleSheet.create({
   },
 
   badgeText: {
-    fontSize: 11,
-    fontWeight: '800',
+    ...typography.caption,
     color: '#B45309',
     letterSpacing: 1.2,
+    fontWeight: '800',
   },
 
   iconContainer: {
@@ -147,11 +148,9 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#111827',
     letterSpacing: -0.4,
-    lineHeight: 26,
     marginBottom: 14,
   },
 
@@ -162,11 +161,10 @@ const styles = StyleSheet.create({
   },
 
   body: {
-    fontSize: 15,
-    fontWeight: '400',
+    ...typography.secondary,
     color: '#4B5563',
-    lineHeight: 23,
     marginBottom: 24,
+    fontWeight: '400',
   },
 
   button: {
@@ -177,10 +175,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 0.2,
-  },
+  buttonText: { ...typography.button, color: '#FFFFFF', letterSpacing: 0.2 },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useCallback } from 'react';
 import {
   View,
@@ -355,10 +356,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerName: {
+    ...typography.secondary,
     color: Theme.white,
-    fontSize: 15,
-    fontWeight: '600',
     flexShrink: 1,
+    fontWeight: '600',
   },
   headerRight: {
     flexDirection: 'row',
@@ -366,8 +367,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   headerCount: {
+    ...typography.secondary,
     color: 'rgba(255, 255, 255, 0.7)',
-    fontSize: 14,
     fontWeight: '500',
   },
   closeButton: {

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -54,8 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   stepText: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.textInput,
     textAlign: 'center',
   },

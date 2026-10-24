@@ -1,5 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import { Text, StyleSheet, Linking } from 'react-native';
+import { highlightRangeMatches } from '@/utils/highlightRange';
 import { Theme } from '@/constants/Theme';
 import { useSelectionOptional } from '@/context/SelectionContext';
 import { Highlight } from '@/services/highlights/highlightService';
@@ -46,7 +47,7 @@ export function flattenSpansToWords(
     if (child._type !== 'span') continue;
 
     const text = child.text || '';
-    if (!text.trim()) continue;
+    if (!text.length) continue;
 
     const wordStyles: any[] = [];
     let linkHref: string | undefined;
@@ -213,6 +214,34 @@ function InteractiveSelectableText({
     [styledWords]
   );
 
+  const validHighlights = useMemo(
+    () =>
+      highlights.filter(h =>
+        highlightRangeMatches(
+          plainWords,
+          h.start_word_index,
+          h.end_word_index,
+          h.selected_text
+        )
+      ),
+    [highlights, plainWords]
+  );
+
+  useEffect(() => {
+    if (
+      selection.startWord?.blockKey === blockKey &&
+      JSON.stringify(selection.allWords) !== JSON.stringify(plainWords)
+    ) {
+      selectionCtx.clearSelection();
+    }
+  }, [
+    blockKey,
+    plainWords,
+    selection.allWords,
+    selection.startWord?.blockKey,
+    selectionCtx.clearSelection,
+  ]);
+
   const isWordInSelection = useCallback(
     (wordIndex: number | undefined): boolean => {
       if (wordIndex == null) return false;
@@ -241,14 +270,17 @@ function InteractiveSelectableText({
       const pageX = event?.nativeEvent?.pageX ?? 0;
       const pageY = event?.nativeEvent?.pageY ?? 0;
 
-      const existingHighlight = findHighlightForWord(wordIndex, highlights);
+      const existingHighlight = findHighlightForWord(
+        wordIndex,
+        validHighlights
+      );
       onWordLongPress(
         { blockKey, wordIndex, word, pageX, pageY },
         existingHighlight,
         plainWords
       );
     },
-    [blockKey, highlights, onWordLongPress, plainWords]
+    [blockKey, validHighlights, onWordLongPress, plainWords]
   );
 
   const handleTap = useCallback(
@@ -268,7 +300,7 @@ function InteractiveSelectableText({
   return (
     <Text style={style}>
       {styledWords.map((sw, index) => {
-        const highlight = findHighlightForWord(sw.wordIndex, highlights);
+        const highlight = findHighlightForWord(sw.wordIndex, validHighlights);
         const isSelected = isWordInSelection(sw.wordIndex);
         const isWhitespace = sw.wordIndex == null;
 
@@ -293,8 +325,8 @@ function InteractiveSelectableText({
           }
           if (prevWordIndex != null && nextWordIndex != null) {
             inHighlightRange =
-              findHighlightForWord(prevWordIndex, highlights) != null &&
-              findHighlightForWord(nextWordIndex, highlights) != null;
+              findHighlightForWord(prevWordIndex, validHighlights) != null &&
+              findHighlightForWord(nextWordIndex, validHighlights) != null;
             inSelectionRange =
               isWordInSelection(prevWordIndex) &&
               isWordInSelection(nextWordIndex);

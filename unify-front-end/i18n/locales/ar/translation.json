@@ -346,7 +346,8 @@
     "announcementBody": "اضغط مطوّلًا على أي كلمة أو عبارة في الدرس لتظليلها أو لتطلب من الذكاء الاصطناعي شرحها. تُحفظ تظليلاتك ضمن 'محفوظات من التعلّم' في ملفك الشخصي.",
     "module": {
       "errorLoading": "خطأ في تحميل الوحدة: {{message}}",
-      "section": "القسم {{number}}"
+      "section": "القسم {{number}}",
+      "introduction": "مقدمة"
     },
     "submodule": {
       "learnTitle": "تعلّم",
@@ -398,9 +399,11 @@
       "errorTitle": "خطأ",
       "imagePlaceholder": "صورة",
       "submoduleFallback": "قسم فرعي",
+      "reviewRating": "{{count}} من 5 نجوم",
       "reviewTitle": "كيف كان هذا الدرس؟",
       "reviewPlaceholder": "شارك أفكارك (اختياري)",
-      "example": "مثال"
+      "example": "مثال",
+      "openImage": "فتح الصورة كاملة"
     },
     "quiz": {
       "loadingQuizzes": "جارٍ تحميل الاختبارات...",
@@ -411,7 +414,8 @@
       "startQuiz": "ابدأ الاختبار →",
       "loadingQuestion": "جارٍ تحميل السؤال...",
       "errorLoadingQuestion": "خطأ في تحميل السؤال",
-      "questionNotFound": "لم يتم العثور على السؤال"
+      "questionNotFound": "لم يتم العثور على السؤال",
+      "yourAnswer": "إجابتك"
     },
     "quizzes": {
       "errorLoading": "خطأ في تحميل الاختبارات: {{message}}",
@@ -1264,10 +1268,7 @@
           "serviceArea": "كندا وحول العالم",
           "howToStart": "ابدأ طلب عرض سعر عبر الإنترنت من خلال شريك تأمين لدى TuGo، أو اتصل على 1-855-929-8846.",
           "hours": "الاثنين–الجمعة 6:00am–5:00pm PST · السبت 7:00am–4:00pm PST · الأحد مغلق",
-          "languages": [
-            "الإنجليزية",
-            "الفرنسية"
-          ],
+          "languages": ["الإنجليزية", "الفرنسية"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "تأمين الزوار إلى كندا",
@@ -1305,10 +1306,7 @@
           "eligibility": "عرض حساب القادمين الجدد مخصص لمن هم في سن 25 عامًا فأكثر من المقيمين الدائمين، أو المقيمين المؤقتين الحاملين لتصريح عمل صالح لأكثر من 8 أشهر، ممن عاشوا في كندا 3 سنوات أو أقل وليسوا أعضاء في Desjardins بالفعل. وتغطي عروض منفصلة الأعمار 18–24 والطلاب بدوام كامل من 25 إلى 30 عامًا.",
           "howToStart": "افتح حسابًا عبر الإنترنت في نحو 15 دقيقة، أو قدّم الطلب من الخارج وأكّد هويتك في أحد مواقع الخدمة عند وصولك.",
           "hours": "المساعدة القانونية: فتح الملفات على مدار الساعة · المستشارون الاثنين–الجمعة 9:00am–8:00pm، السبت 9:00am–5:00pm",
-          "languages": [
-            "الإنجليزية",
-            "الفرنسية"
-          ],
+          "languages": ["الإنجليزية", "الفرنسية"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "الحساب الجاري للقادمين الجدد (خطة Unlimited)",
@@ -1394,7 +1392,41 @@
         "bookA11y": "احجز اجتماعًا تعريفيًا مجانيًا مع {{name}}"
       }
     },
-    "typeHerePlaceholder": "اكتب هنا"
+    "typeHerePlaceholder": "اكتب هنا",
+    "home": {
+      "heading": "استقر بثقة",
+      "subtitle": "دروس عملية تساعدك على الاستعداد للحياة في كندا.",
+      "continue": "متابعة التعلّم",
+      "moreLessons": "دروس أخرى قيد التعلّم",
+      "courses": "الدورات",
+      "all": "الكل",
+      "started": "بدأت",
+      "emptyStarted": "ستظهر الدورات التي بدأتها هنا.",
+      "modules": "الوحدات",
+      "moduleCount": "الوحدات: {{count}}",
+      "lessonCount": "الدروس: {{count}}",
+      "lessonSummary": "{{count}} دروس · {{done}} مكتملة",
+      "upNext": "التالي",
+      "close": "إغلاق",
+      "tabLabel": "تعلّم",
+      "completionSummary": "اكتمل {{completed}} من أصل {{total}} درسًا"
+    },
+    "structured": {
+      "concept": "المفهوم",
+      "example": "مثال",
+      "visual": "مثال مرئي",
+      "quickCheck": "اختبار سريع",
+      "faq": "الأسئلة الشائعة",
+      "citations": "المصادر",
+      "theory": "النظرية",
+      "practice": "في التطبيق",
+      "readingMinutes": "{{count}} دقائق للقراءة",
+      "correct": "صحيح",
+      "tryAgain": "حاول مرة أخرى",
+      "nextLesson": "الدرس التالي",
+      "lessonNumber": "الدرس {{number}}",
+      "moduleNumber": "الوحدة {{number}}"
+    }
   },
   "checklist": {
     "title": "قائمة مهام مخصصة",

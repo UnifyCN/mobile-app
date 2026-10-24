@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useMemo, useState } from 'react';
 import { View, FlatList, StyleSheet, Text, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -77,7 +78,11 @@ export default function MoreGroupsScreen() {
               style={styles.tabButton}
               accessibilityRole='tab'
               accessibilityState={{ selected: active }}
-              accessibilityLabel={tab === 'discover' ? t('groups.discoverTabLabel') : t('groups.joinedTabLabel')}
+              accessibilityLabel={
+                tab === 'discover'
+                  ? t('groups.discoverTabLabel')
+                  : t('groups.joinedTabLabel')
+              }
             >
               <Text style={[styles.tabText, active && styles.tabTextActive]}>
                 {tab === 'discover' ? t('groups.discover') : t('groups.joined')}
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabText: {
-    fontSize: 16,
+    ...typography.label,
     fontWeight: '500',
     color: Theme.textInactiveTab,
   },
@@ -159,8 +164,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
   },
-  emptyText: {
-    fontSize: 14,
-    color: Theme.textInput,
-  },
+  emptyText: { ...typography.secondary, color: Theme.textInput },
 });

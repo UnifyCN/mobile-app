@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -79,8 +80,8 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.label,
+
     color: RESOURCE_THEME.textSegmentInactive,
   },
   labelActive: {

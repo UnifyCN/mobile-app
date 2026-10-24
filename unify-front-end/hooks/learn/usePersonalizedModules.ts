@@ -135,7 +135,7 @@ interface UsePersonalizedModulesResult {
   isLoading: boolean;
   isPersonalized: boolean;
   error: Error | null;
-  refetch: () => void;
+  refetch: () => Promise<unknown>;
 }
 
 export function usePersonalizedModules(): UsePersonalizedModulesResult {
@@ -212,11 +212,8 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
     }
   }
 
-  const refetch = () => {
-    refetchSanity();
-    refetchPersonalized();
-    refetchProgress();
-  };
+  const refetch = () =>
+    Promise.all([refetchSanity(), refetchPersonalized(), refetchProgress()]);
 
   // U6: When a lesson completes (or the module auto-flips to 'completed'), the
   // lesson-save path emits a progress event. Refetch so the Learn home carousel

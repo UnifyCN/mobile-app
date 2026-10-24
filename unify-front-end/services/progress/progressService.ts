@@ -167,47 +167,63 @@ export async function updateLessonProgress(
  * cumulative one and would drag the bar backwards. Use this from activity/quiz pages so
  * learnHref can resume the user to the exact spot without regressing their progress.
  */
-export async function saveResumePosition(
+const resumeWrites = new Map<string, Promise<boolean>>();
+
+export function saveResumePosition(
   lessonId: string,
   submoduleId: string,
   moduleId: string,
-  pageType: 'intro' | 'lesson' | 'activity' | 'quiz',
+  pageType: 'intro' | 'lesson' | 'activity' | 'quiz' | 'ending',
   pageNumber: number,
   quizId?: string,
   questionNumber?: number
-): Promise<void> {
-  try {
-    if (!lessonId || !submoduleId || !moduleId) return;
-    const {
-      data: { user },
-    } = await progressClient.auth.getUser();
-    if (!user) return;
+): Promise<boolean> {
+  if (!lessonId || !submoduleId || !moduleId) return Promise.resolve(false);
+  // Capture authentication at invocation, then write in visit order, including Back.
+  const userRequest = progressClient.auth.getUser().catch(() => null);
+  const previous = resumeWrites.get(lessonId) || Promise.resolve(true);
+  const pending = previous
+    .catch(() => false)
+    .then(async () => {
+      try {
+        const auth = await userRequest;
+        const user = auth?.data.user;
+        if (!user) return false;
 
-    const upsertData: any = {
-      user_id: user.id,
-      sanity_lesson_id: lessonId,
-      sanity_submodule_id: submoduleId,
-      sanity_module_id: moduleId,
-      is_in_progress: true,
-      current_page_type: pageType,
-      current_page_number: pageNumber,
-      last_accessed_at: new Date().toISOString(),
-    };
-    if (quizId) upsertData.current_quiz_id = quizId;
-    if (questionNumber) upsertData.current_question_number = questionNumber;
+        const upsertData: any = {
+          user_id: user.id,
+          sanity_lesson_id: lessonId,
+          sanity_submodule_id: submoduleId,
+          sanity_module_id: moduleId,
+          is_in_progress: true,
+          current_page_type: pageType,
+          current_page_number: pageNumber,
+          last_accessed_at: new Date().toISOString(),
+        };
+        if (quizId) upsertData.current_quiz_id = quizId;
+        if (questionNumber) upsertData.current_question_number = questionNumber;
 
-    const { error } = await progressClient
-      .from('user_lesson_progress')
-      .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
+        const { error } = await progressClient
+          .from('user_lesson_progress')
+          .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
 
-    if (error) {
-      console.error('Error saving resume position:', error);
-    } else {
-      progressEventEmitter.emit();
-    }
-  } catch (error) {
-    console.error('Error in saveResumePosition:', error);
-  }
+        if (error) {
+          console.error('Error saving resume position:', error);
+          return false;
+        } else {
+          progressEventEmitter.emit();
+          return true;
+        }
+      } catch (error) {
+        console.error('Error in saveResumePosition:', error);
+        return false;
+      }
+    });
+  resumeWrites.set(lessonId, pending);
+  void pending.then(() => {
+    if (resumeWrites.get(lessonId) === pending) resumeWrites.delete(lessonId);
+  });
+  return pending;
 }
 
 async function completeLesson(lessonId: string): Promise<void> {
@@ -512,7 +528,9 @@ export async function submitQuizAnswer(
  * quiz starts a fresh attempt instead of resuming old answers. Kept separate from
  * completeQuizAttempt so we don't have to fabricate a score just to close it.
  */
-export async function markQuizAttemptComplete(attemptId: string): Promise<void> {
+export async function markQuizAttemptComplete(
+  attemptId: string
+): Promise<void> {
   try {
     if (!attemptId) return;
     const { error } = await progressClient
@@ -636,9 +654,7 @@ export async function getActivityInputsByPage(
 
     const { data, error } = await progressClient
       .from('user_activity_inputs')
-      .select(
-        'activity_page_key, input_field_key, input_value, is_submitted'
-      )
+      .select('activity_page_key, input_field_key, input_value, is_submitted')
       .eq('user_id', user.id)
       .eq('sanity_lesson_id', lessonId);
 

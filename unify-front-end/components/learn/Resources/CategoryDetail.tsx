@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -87,25 +88,21 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   backText: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: RESOURCE_THEME.textSecondary,
     marginLeft: 4,
+    fontWeight: '600',
   },
   title: {
-    // Same size and weight as the landing heading one tap back, rather than
-    // the spec's 24/700, so the two Resources screens read as one.
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 4,
   },
   description: {
-    fontSize: 14,
-    lineHeight: 19,
+    ...typography.secondary,
     color: RESOURCE_THEME.textSecondary,
     marginBottom: 12,
   },
   empty: { paddingVertical: 32, alignItems: 'center' },
-  emptyText: { fontSize: 14, color: RESOURCE_THEME.textMuted },
+  emptyText: { ...typography.secondary, color: RESOURCE_THEME.textMuted },
 });

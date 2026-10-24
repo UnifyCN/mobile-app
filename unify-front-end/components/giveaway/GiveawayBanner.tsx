@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState } from 'react';
 import {
   Pressable,
@@ -100,19 +101,14 @@ export function GiveawayBanner() {
   const handleDismiss = () => {
     capture(AnalyticsEvents.GIVEAWAY_BANNER_DISMISSED);
     setDismissed(true);
-    AccessibilityInfo.announceForAccessibility(
-      t('giveaway.banner.headline')
-    );
+    AccessibilityInfo.announceForAccessibility(t('giveaway.banner.headline'));
   };
 
   return (
     <View style={styles.outerWrap}>
       <View style={styles.card}>
         <Pressable
-          style={({ pressed }) => [
-            styles.pressArea,
-            pressed && styles.pressed,
-          ]}
+          style={({ pressed }) => [styles.pressArea, pressed && styles.pressed]}
           onPress={handlePress}
           accessibilityRole='button'
           accessibilityLabel={t('giveaway.banner.headline')}
@@ -187,10 +183,7 @@ function WigglingGift() {
   }, [rotation, scale]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { rotate: `${rotation.value}deg` },
-      { scale: scale.value },
-    ],
+    transform: [{ rotate: `${rotation.value}deg` }, { scale: scale.value }],
   }));
 
   return (
@@ -250,24 +243,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headline: {
+    ...typography.cardTitle,
     color: Theme.black,
-    fontSize: 16,
-    fontWeight: '700',
     letterSpacing: -0.2,
     flexShrink: 1,
   },
   headlineEntered: {
+    ...typography.cardTitle,
     color: Theme.black,
-    fontSize: 16,
-    fontWeight: '700',
     letterSpacing: -0.2,
     flexShrink: 1,
   },
   subtext: {
+    ...typography.caption,
     color: Theme.textAlternateGray,
-    fontSize: 13,
-    fontWeight: '500',
     marginTop: 2,
+    fontWeight: '500',
   },
   countdown: {
     color: Theme.textAlternateGray,

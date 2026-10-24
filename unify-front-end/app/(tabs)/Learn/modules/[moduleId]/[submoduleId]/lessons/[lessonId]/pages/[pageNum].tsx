@@ -1,24 +1,22 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { typography } from '@/constants/Typography';
+import LearnRetry from '@/components/learn/LearnRetry';
+import StructuredLesson from '@/components/learn/StructuredLesson';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
-  Dimensions,
   Modal,
-  TextInput,
   Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Feather } from '@expo/vector-icons';
 import { useSanityLesson } from '@/hooks/sanity/useSanityLessons';
 import { useSanityModule } from '@/hooks/sanity/useSanityModules';
 import { useSanityLessonQuizzes } from '@/hooks/sanity/useSanityQuizzes';
 import { useSanitySubmoduleWithLessons } from '@/hooks/sanity/useSanitySubmodules';
-import RichTextRenderer from '@/components/sanity/RichTextRenderer';
 import SubmoduleProgressBar from '@/components/learn/SubmoduleProgressBar';
 import { useAnalytics } from '@/utils/analytics';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
@@ -214,7 +212,6 @@ export default function LessonPageScreen() {
     return submoduleData.lessons[currentIndex - 1] || null;
   };
 
-  const isFirstLesson = () => getCurrentLessonIndex() === 0;
   const isLastLesson = () => {
     const currentIndex = getCurrentLessonIndex();
     return currentIndex === (submoduleData?.lessons?.length || 0) - 1;
@@ -395,7 +392,7 @@ export default function LessonPageScreen() {
             moduleId,
             submoduleId,
             lessonId: previousLesson._id,
-            pageNum: '1',
+            pageNum: String(Math.max(1, previousLesson.pages?.length || 0)),
             ...originParams,
           },
         });
@@ -449,6 +446,7 @@ export default function LessonPageScreen() {
     isLessonPageBookmarked,
     saveLessonPageMutation,
     showToast,
+    t,
     router,
   ]);
 
@@ -464,6 +462,7 @@ export default function LessonPageScreen() {
 
   if (
     !lesson ||
+    !submoduleData ||
     !currentPageData ||
     quizzesError ||
     submoduleError ||
@@ -473,6 +472,7 @@ export default function LessonPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.lesson.errorLoadingPage')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -483,6 +483,11 @@ export default function LessonPageScreen() {
       <SafeAreaView style={styles.safe}>
         {/* Progress Bar */}
         <SubmoduleProgressBar
+          lessonLayout
+          lessonPosition={
+            submoduleData.lessons.findIndex(item => item._id === lessonId) + 1
+          }
+          lessonCount={submoduleData.lessons.length}
           currentProgress={progress.currentPage}
           totalPages={progress.totalPages}
           submoduleTitle={submoduleData?.title || 'Submodule'}
@@ -499,6 +504,9 @@ export default function LessonPageScreen() {
           highlights={highlights || []}
           lessonId={lessonId || ''}
           lessonTitle={lesson?.title}
+          lessonNumber={
+            submoduleData.lessons.findIndex(item => item._id === lessonId) + 1
+          }
           saveHighlightMutation={saveHighlightMutation}
           deleteHighlightMutation={deleteHighlightMutation}
           trackLessonHighlightCreated={trackLessonHighlightCreated}
@@ -524,13 +532,23 @@ export default function LessonPageScreen() {
           <TouchableOpacity
             style={[
               styles.nextBtn,
-              { backgroundColor: moduleData?.colorTheme?.hex || '#575757' },
+              { backgroundColor: '#191919' },
               isSaving && styles.nextBtnDisabled,
             ]}
             onPress={handleNext}
             disabled={isSaving}
           >
-            <Text style={styles.nextBtnText}>{t('common.next')}</Text>
+            <Text style={styles.nextBtnText}>
+              {t(
+                currentPage === totalPages &&
+                  !lesson.activity_pages?.length &&
+                  !quizzes?.length &&
+                  !lesson.ending_pages?.length &&
+                  !isLastLesson()
+                  ? 'learn.structured.nextLesson'
+                  : 'common.next'
+              )}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -583,6 +601,7 @@ export default function LessonPageScreen() {
  * Must be rendered inside SelectionProvider.
  */
 function LessonPageContent({
+  lessonNumber,
   currentPageData,
   highlights,
   lessonId,
@@ -601,6 +620,7 @@ function LessonPageContent({
   highlights: any[];
   lessonId: string;
   lessonTitle?: string;
+  lessonNumber: number;
   saveHighlightMutation: any;
   deleteHighlightMutation: any;
   trackLessonHighlightCreated: (lessonId: string, text: string) => void;
@@ -660,6 +680,7 @@ function LessonPageContent({
     lessonId,
     trackLessonHighlightCreated,
     clearSelection,
+    t,
     navContext,
   ]);
 
@@ -684,6 +705,7 @@ function LessonPageContent({
     lessonId,
     trackLessonHighlightRemoved,
     clearSelection,
+    t,
   ]);
 
   const handleAskAI = useCallback(() => {
@@ -698,24 +720,27 @@ function LessonPageContent({
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
+      <StructuredLesson
+        key={currentPageData._key}
+        sections={
+          currentPageData.contentVersion === 2 &&
+          currentPageData.sections?.length
+            ? currentPageData.sections
+            : [
+                {
+                  _type: 'lessonConcept',
+                  _key: `${currentPageData._key}-concept`,
+                  content: currentPageData.content || [],
+                },
+              ]
+        }
+        title={currentPageData.title}
+        lessonNumber={lessonNumber}
+        readingMinutes={currentPageData.readingMinutes}
+        markDefs={currentPageData.markDefs}
+        highlights={highlights}
         onScrollBeginDrag={handleScroll}
-      >
-        {/* Page title */}
-        <Text style={styles.pageTitle}>{currentPageData.title}</Text>
-
-        {/* Page contents */}
-        <View style={styles.content}>
-          <RichTextRenderer
-            blocks={currentPageData.content || []}
-            markDefs={currentPageData.markDefs}
-            styles={{ normal: styles.contentText }}
-            highlights={highlights}
-          />
-        </View>
-      </ScrollView>
+      />
 
       {/* Selection action bubble — renders as a Modal overlay */}
       <SelectionActionBubble
@@ -746,19 +771,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 12,
   },
-  pageIndicator: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#6B7280',
-  },
+  pageIndicator: { ...typography.cardTitle, color: '#6B7280' },
 
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '600',
+    ...typography.title,
+
     color: '#000',
     marginBottom: 20,
-    lineHeight: 40,
-    textAlign: 'center',
+    textAlign: 'left',
     marginTop: 20,
   },
 
@@ -767,22 +787,17 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   contentText: {
-    fontFamily: 'Inter',
-    fontWeight: '400',
+    ...typography.reading,
+
     color: '#424242',
     marginBottom: 10,
-    fontSize: 18,
-    lineHeight: 27,
   },
 
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 
   // Navigation styles
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
@@ -792,14 +807,19 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   backBtn: {
-    backgroundColor: '#E6E6E6',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E3E3E3',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 10,
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: {
+    ...typography.button,
+    color: '#374151',
+  },
   nextBtn: {
     backgroundColor: '#1A1919',
     paddingVertical: 12,
@@ -808,7 +828,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: {
+    ...typography.button,
+    color: '#fff',
+  },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -830,16 +853,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -851,11 +872,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -863,9 +880,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

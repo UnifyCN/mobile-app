@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   View,
   StyleSheet,
@@ -48,7 +49,10 @@ const TabHeader = memo(({ activeTab, setActiveTab }: TabHeaderProps) => {
           style={[styles.tab, activeTab === tab.key && styles.activeTab]}
         >
           <Text
-            style={[styles.tabText, activeTab === tab.key && styles.activeTabText]}
+            style={[
+              styles.tabText,
+              activeTab === tab.key && styles.activeTabText,
+            ]}
           >
             {tab.label}
           </Text>
@@ -118,23 +122,19 @@ export default function Profile({ userId, initialTab }: ProfileProps) {
         onError: () => showToast?.(t('profile.userUnblockFailed')),
       });
     } else {
-      Alert.alert(
-        t('profile.blockUser'),
-        t('profile.blockUserConfirm'),
-        [
-          { text: t('common.cancel'), style: 'cancel' },
-          {
-            text: t('profile.block'),
-            style: 'destructive',
-            onPress: () => {
-              blockMutation.mutate(userId, {
-                onSuccess: () => showToast?.(t('profile.userBlocked')),
-                onError: () => showToast?.(t('profile.userBlockFailed')),
-              });
-            },
+      Alert.alert(t('profile.blockUser'), t('profile.blockUserConfirm'), [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('profile.block'),
+          style: 'destructive',
+          onPress: () => {
+            blockMutation.mutate(userId, {
+              onSuccess: () => showToast?.(t('profile.userBlocked')),
+              onError: () => showToast?.(t('profile.userBlockFailed')),
+            });
           },
-        ]
-      );
+        },
+      ]);
     }
   }, [
     blockStatusResolved,
@@ -185,7 +185,9 @@ export default function Profile({ userId, initialTab }: ProfileProps) {
           unblockMutation.isPending
         }
         hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-        accessibilityLabel={isBlockedUser ? t('profile.unblockUser') : t('profile.blockUser')}
+        accessibilityLabel={
+          isBlockedUser ? t('profile.unblockUser') : t('profile.blockUser')
+        }
         accessibilityRole='button'
         accessibilityHint={
           isBlockedUser
@@ -267,7 +269,14 @@ export default function Profile({ userId, initialTab }: ProfileProps) {
         }
       />
     );
-  }, [activeTab, isCurrentUser, useCommentsFeedHook, usePostsFeedHook, userId, t]);
+  }, [
+    activeTab,
+    isCurrentUser,
+    useCommentsFeedHook,
+    usePostsFeedHook,
+    userId,
+    t,
+  ]);
 
   const renderItem = useCallback(
     ({ item }: { item: { key: string; type: string } }) => {
@@ -376,9 +385,8 @@ const styles = StyleSheet.create({
     color: Theme.black,
   },
   emptyMessageSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 20,
   },
 });

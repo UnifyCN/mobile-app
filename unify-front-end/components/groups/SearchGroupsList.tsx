@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -53,13 +54,13 @@ export default function SearchGroupsList({
                 submessage={
                   <Text
                     style={{
-                      fontSize: 14,
+                      ...typography.secondary,
                       color: Theme.textInput,
                       textAlign: 'center',
-                      lineHeight: 20,
                     }}
                   >
-                    {t('groups.notJoinedHint')}{'\n'}
+                    {t('groups.notJoinedHint')}
+                    {'\n'}
                     {t('groups.joinToStart')}
                   </Text>
                 }
@@ -87,24 +88,11 @@ const styles = StyleSheet.create({
   groupInfo: {
     flex: 1,
   },
-  groupName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#000',
-    marginBottom: 4,
-  },
-  groupDescription: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-  },
+  groupName: { ...typography.cardTitle, color: '#000', marginBottom: 4 },
+  groupDescription: { ...typography.secondary, color: '#666', marginBottom: 4 },
   emptyStateContainer: {
     paddingVertical: 30,
     alignItems: 'center',
   },
-  emptyStateText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
+  emptyStateText: { ...typography.body, color: '#666', textAlign: 'center' },
 });

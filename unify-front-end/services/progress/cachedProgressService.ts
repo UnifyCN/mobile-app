@@ -16,8 +16,11 @@ interface CachedProgressData {
 class CachedProgressService {
   private cache: CachedProgressData = {};
   private lastFetch: number = 0;
+  private generation = 0;
+  private accountEpoch = 0;
+  private inFlight: Promise<CachedProgressData> | null = null;
   private cachedUserId: string | null = null;
-  private readonly CACHE_DURATION = 30 * 1000; // 30 seconds — fast enough for screen transitions
+  private readonly CACHE_DURATION = 30 * 1000; // 30 seconds - fast enough for screen transitions
 
   constructor() {
     // Clear cache on any auth state change (sign-in, sign-out, token refresh
@@ -26,14 +29,16 @@ class CachedProgressService {
     progressClient.auth.onAuthStateChange((_event, session) => {
       const nextUserId = session?.user?.id ?? null;
       if (nextUserId !== this.cachedUserId) {
+        this.accountEpoch += 1;
         this.cache = {};
-        this.lastFetch = 0;
+        this.invalidate();
         this.cachedUserId = nextUserId;
       }
     });
   }
 
   async getProgressData(forceRefresh = false): Promise<CachedProgressData> {
+    if (forceRefresh) this.invalidate();
     const now = Date.now();
 
     // Return cached data if it's fresh and not forcing refresh
@@ -45,6 +50,34 @@ class CachedProgressService {
       return this.cache;
     }
 
+    // Share an active read across all screen consumers. Invalidation detaches
+    // older work, so a subsequent read cannot reuse a pre-write response.
+    if (this.inFlight) return this.inFlight;
+    const generation = this.generation;
+    const request = this.fetchProgressData(generation, this.accountEpoch);
+    this.inFlight = request;
+    try {
+      return await request;
+    } finally {
+      if (this.inFlight === request) this.inFlight = null;
+    }
+  }
+
+  private currentResult(
+    generation: number,
+    accountEpoch: number
+  ): Promise<CachedProgressData> {
+    // An old account must not receive the new account's cached data.
+    if (accountEpoch !== this.accountEpoch) return Promise.resolve({});
+    // Same-account readers follow the newer load instead of showing zeroes.
+    if (generation !== this.generation) return this.getProgressData();
+    return Promise.resolve(this.cache);
+  }
+
+  private async fetchProgressData(
+    generation: number,
+    accountEpoch: number
+  ): Promise<CachedProgressData> {
     try {
       let user = null;
       try {
@@ -71,8 +104,11 @@ class CachedProgressService {
             authError
           );
         }
-        return this.cache; // Return stale cache on auth error
+        return this.currentResult(generation, accountEpoch); // Return stale cache on auth error
       }
+
+      if (generation !== this.generation)
+        return this.currentResult(generation, accountEpoch);
 
       if (!user) {
         return {};
@@ -81,7 +117,8 @@ class CachedProgressService {
       // Belt-and-suspenders against a stale cache surviving an auth swap:
       // if the auth listener hasn't run yet (e.g., race during sign-in),
       // detect the user mismatch here and discard the previous user's data.
-      if (this.cachedUserId !== null && this.cachedUserId !== user.id) {
+      if (this.cachedUserId !== user.id) {
+        accountEpoch = ++this.accountEpoch;
         this.cache = {};
         this.lastFetch = 0;
       }
@@ -102,12 +139,12 @@ class CachedProgressService {
       } catch (queryError: any) {
         console.error('Exception fetching lesson progress:', queryError);
         lessonError = queryError;
-        return this.cache; // Return stale cache on query error
+        return this.currentResult(generation, accountEpoch); // Return stale cache on query error
       }
 
       if (lessonError) {
         console.error('Error fetching lesson progress:', lessonError);
-        return this.cache; // Return stale cache on error
+        return this.currentResult(generation, accountEpoch); // Return stale cache on error
       }
 
       // Fetch all modules with submodules and lessons from Sanity
@@ -126,12 +163,12 @@ class CachedProgressService {
         modulesData = await sanityClient.fetch(sanityQuery);
       } catch (sanityError: any) {
         console.error('Error fetching from Sanity:', sanityError);
-        return this.cache; // Return stale cache on Sanity error
+        return this.currentResult(generation, accountEpoch); // Return stale cache on Sanity error
       }
 
       if (!modulesData || !Array.isArray(modulesData)) {
         console.error('Invalid Sanity data returned');
-        return this.cache;
+        return this.currentResult(generation, accountEpoch);
       }
 
       // Build progress data with actual lesson counts from Sanity
@@ -139,7 +176,7 @@ class CachedProgressService {
 
       if (!Array.isArray(modulesData)) {
         console.error('Sanity returned non-array data');
-        return this.cache;
+        return this.currentResult(generation, accountEpoch);
       }
 
       modulesData.forEach((module: any) => {
@@ -187,13 +224,15 @@ class CachedProgressService {
         });
       });
 
+      if (generation !== this.generation)
+        return this.currentResult(generation, accountEpoch);
       this.cache = progressData;
-      this.lastFetch = now;
+      this.lastFetch = Date.now();
 
       return progressData;
     } catch (error) {
       console.error('Error fetching progress data:', error);
-      return this.cache; // Return stale cache on error
+      return this.currentResult(generation, accountEpoch); // Return stale cache on error
     }
   }
 
@@ -237,6 +276,8 @@ class CachedProgressService {
 
   /** Immediately mark the cache as stale so the next read triggers a fresh fetch. */
   invalidate() {
+    this.generation += 1;
+    this.inFlight = null;
     this.lastFetch = 0;
   }
 

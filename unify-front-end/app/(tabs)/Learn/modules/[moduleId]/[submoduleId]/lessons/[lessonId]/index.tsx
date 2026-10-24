@@ -1,3 +1,4 @@
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -52,7 +53,14 @@ export default function LessonIndex() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.loading}>
-        <Text>{t('learn.lesson.redirecting')}</Text>
+        {lesson?.pages?.length ? (
+          <Text>{t('learn.lesson.redirecting')}</Text>
+        ) : (
+          <>
+            <Text>{t('learn.lesson.errorLoadingPage')}</Text>
+            <LearnRetry />
+          </>
+        )}
       </View>
     </SafeAreaView>
   );

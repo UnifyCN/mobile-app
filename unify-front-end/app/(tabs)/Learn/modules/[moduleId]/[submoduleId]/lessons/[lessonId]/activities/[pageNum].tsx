@@ -1,3 +1,6 @@
+import { typography } from '@/constants/Typography';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
@@ -500,6 +503,7 @@ export default function ActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.lesson.errorLoadingActivity')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -509,6 +513,7 @@ export default function ActivityPageScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={
@@ -516,7 +521,7 @@ export default function ActivityPageScreen() {
         }
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -529,6 +534,7 @@ export default function ActivityPageScreen() {
         {/* Instructions with embedded input fields and questions */}
         <View style={styles.instructionsContainer}>
           <RichTextRenderer
+            compactContainer
             blocks={currentPageData.instructions || []}
             markDefs={currentPageData.instructionsMarkDefs}
             inputValues={inputValues}
@@ -548,34 +554,28 @@ export default function ActivityPageScreen() {
               </Text>
             )}
             <RichTextRenderer
+              compactContainer
               blocks={currentPageData.answer_box.content || []}
               markDefs={currentPageData.answer_box.markDefs}
               styles={{
                 normal: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 bullet: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 number: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 strong: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '600',
+                  ...typography.reading,
+                  fontWeight: '700',
                   color: '#3F3F3F',
                 },
               }}
@@ -652,7 +652,7 @@ export default function ActivityPageScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
   scrollView: { flex: 1 },
-  container: { paddingHorizontal: 23, paddingBottom: 100 },
+  container: { paddingHorizontal: 20, paddingBottom: 24 },
 
   // Page indicator
   pageIndicatorContainer: {
@@ -661,18 +661,16 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   pageIndicator: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#6B7280',
+    fontWeight: '600',
   },
 
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 20,
-    lineHeight: 38,
-    textAlign: 'center',
+    textAlign: 'left',
     marginTop: 20,
   },
 
@@ -689,18 +687,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 
-  inputLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#374151',
-  },
+  inputLabel: { ...typography.cardTitle, color: '#374151' },
 
   input: {
+    ...typography.body,
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 8,
     padding: 12,
-    fontSize: 16,
     backgroundColor: '#fff',
   },
 
@@ -735,29 +729,23 @@ const styles = StyleSheet.create({
 
   // If you keep a separate title (not typical for this tip style):
   answerBoxTitle: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#3F3F3F',
     marginBottom: 10,
+    fontWeight: '600',
   },
 
   answerBoxText: {
-    // Regular 14 / 20 for paragraph text inside renderer
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
+    ...typography.secondary,
     color: '#F5F5F5',
+    fontWeight: '400',
   },
 
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 
   // Navigation styles
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 23,
@@ -774,7 +762,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: { ...typography.cardTitle, color: '#374151' },
   nextBtn: {
     backgroundColor: '#575757',
     paddingVertical: 14,
@@ -783,7 +771,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: { ...typography.cardTitle, color: '#fff' },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -805,16 +793,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -826,11 +812,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -838,9 +820,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

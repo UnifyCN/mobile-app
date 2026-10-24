@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -342,9 +343,9 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
   priorityLabel: {
-    fontSize: 12,
-    fontWeight: '700',
+    ...typography.caption,
     letterSpacing: 0.2,
+    fontWeight: '700',
   },
   trashButton: {
     width: 36,
@@ -354,17 +355,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F1F5F9',
   },
-  taskName: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#0F172A',
-    marginBottom: 8,
-    lineHeight: 28,
-  },
+  taskName: { ...typography.section, color: '#0F172A', marginBottom: 8 },
   taskDescription: {
-    fontSize: 15,
+    ...typography.secondary,
     color: '#475569',
-    lineHeight: 22,
     marginBottom: 20,
   },
   completedBanner: {
@@ -379,9 +373,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   completedBannerText: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     color: '#166534',
+    fontWeight: '600',
   },
   primaryButton: {
     flexDirection: 'row',
@@ -399,11 +393,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#059669',
   },
-  primaryButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
-  },
+  primaryButtonText: { ...typography.button, color: '#fff' },
   primaryButtonTextCompleted: {
     color: '#059669',
   },
@@ -416,9 +406,5 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     width: '100%',
   },
-  secondaryButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#E03B3B',
-  },
+  secondaryButtonText: { ...typography.button, color: '#E03B3B' },
 });

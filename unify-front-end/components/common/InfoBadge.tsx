@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -60,10 +61,10 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   text: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textAlternateGray,
-    fontWeight: '500',
     flexShrink: 1,
+    fontWeight: '500',
   },
 });
 

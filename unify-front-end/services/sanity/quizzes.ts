@@ -43,7 +43,7 @@ export async function getLessonQuizzes(
     return (quizzes || []).map(mergeI18nOverlay);
   } catch (error) {
     console.error('Error fetching lesson quizzes from Sanity:', error);
-    return [];
+    throw error;
   }
 }
 
@@ -64,6 +64,6 @@ export async function getQuizQuestions(
     return quiz ? mergeI18nOverlay(quiz).questions || [] : [];
   } catch (error) {
     console.error('Error fetching quiz questions from Sanity:', error);
-    return [];
+    throw error;
   }
 }

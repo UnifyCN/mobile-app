@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -180,7 +181,9 @@ const GroupsCarousel = memo(() => {
                 <View style={styles.viewMoreContent}>
                   <GroupViewMoreCard width={193} height={144} />
                   <View style={styles.viewMoreTextOverlay}>
-                    <Text style={styles.viewMoreText}>{t('home.joinGroups')}</Text>
+                    <Text style={styles.viewMoreText}>
+                      {t('home.joinGroups')}
+                    </Text>
                     <Text style={styles.viewMoreSubtext}>
                       {t('events.moreToCheckOut')}
                     </Text>
@@ -213,7 +216,9 @@ const GroupsCarousel = memo(() => {
                 <View style={styles.viewMoreContentFullWidth}>
                   <ViewMoreCardNews width={fullCardWidth} height={144} />
                   <View style={styles.viewMoreTextOverlay}>
-                    <Text style={styles.viewMoreText}>{t('home.joinGroups')}</Text>
+                    <Text style={styles.viewMoreText}>
+                      {t('home.joinGroups')}
+                    </Text>
                     <Text style={styles.viewMoreSubtext}>
                       {t('events.moreToCheckOut')}
                     </Text>
@@ -497,8 +502,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   tabText: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.label,
+
     color: Theme.textAlternateGray,
   },
   activeTabText: {
@@ -523,10 +528,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emptyMessageSubtext: {
-    fontSize: 14,
+    ...typography.body,
+
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 20,
   },
   groupsCarouselContainer: {
     paddingHorizontal: 20,
@@ -535,8 +540,8 @@ const styles = StyleSheet.create({
     marginBottom: -16,
   },
   groupsCarouselTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.section,
+
     paddingTop: 8,
   },
   groupsPlaceholderTitle: {
@@ -580,10 +585,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   groupCardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.label,
+
     color: Theme.white,
-    lineHeight: 20,
   },
   viewMoreCardWrapper: {
     width: 193,
@@ -608,12 +612,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   viewMoreText: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.label,
+
     color: Theme.black,
   },
   viewMoreSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
+
     color: Theme.black,
   },
   groupCardSkeleton: {

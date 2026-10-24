@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 
 import { Controller, ControllerProps } from 'react-hook-form';
@@ -16,11 +17,7 @@ const styles = {
   signOutButton: { marginVertical: 32, marginHorizontal: 16 },
   viewHeader: { marginBottom: 16 },
   viewDivider: { marginVertical: 16 },
-  errorMessageBox: {
-    color: '#f00', // Red text for error messages
-    fontSize: 14,
-    marginTop: 4,
-  },
+  errorMessageBox: { ...typography.secondary, color: '#f00', marginTop: 4 },
   linksContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -30,7 +27,8 @@ const styles = {
 };
 
 export interface TextFieldProps
-  extends Omit<TextInputProps, 'error' | 'cursorColor' | 'selectionColor'>,
+  extends
+    Omit<TextInputProps, 'error' | 'cursorColor' | 'selectionColor'>,
     Pick<ControllerProps, 'control' | 'name' | 'rules'> {
   control: ControllerProps['control'];
   error?: string;

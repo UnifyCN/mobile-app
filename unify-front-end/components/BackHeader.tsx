@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { ReactNode } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -49,7 +50,9 @@ const BackHeader = ({
       ) : (
         <View style={styles.placeholder} />
       )}
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} numberOfLines={2}>
+        {title}
+      </Text>
       {rightButton || <View style={styles.placeholder} />}
     </View>
   );
@@ -64,9 +67,11 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.white,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.section,
     color: Theme.black,
+    flex: 1,
+    textAlign: 'center',
+    marginHorizontal: 12,
   },
   placeholder: {
     width: Layout.header.iconSize,
