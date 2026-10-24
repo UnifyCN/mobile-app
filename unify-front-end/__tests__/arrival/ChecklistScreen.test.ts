@@ -1,10 +1,22 @@
 import React from 'react';
-import { act, render, screen } from '@testing-library/react-native';
+import {
+  act,
+  render as rtlRender,
+  screen,
+} from '@testing-library/react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
 
 const h = React.createElement;
+
+let client: QueryClient;
+const render = (ui: React.ReactElement) =>
+  rtlRender(ui, {
+    wrapper: ({ children }: { children: React.ReactNode }) =>
+      h(QueryClientProvider, { client }, children),
+  });
 
 const mockStore = new Map<string, string>();
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -29,12 +41,17 @@ type StageState = {
   arrivalDate: string | null;
   userId: string | null;
   refreshStage: () => Promise<void>;
+  applyConfirmedArrival: (confirmed: unknown) => void;
   isLoading: boolean;
   error: string | null;
 };
 let mockStage: StageState;
+const mockUseUserStage = jest.fn();
 jest.mock('@/hooks/onboarding/useUserStage', () => ({
-  useUserStage: () => mockStage,
+  useUserStage: (today?: Date) => {
+    mockUseUserStage(today);
+    return mockStage;
+  },
 }));
 
 const mockUseChecklistTasks = jest.fn();
@@ -66,6 +83,7 @@ jest.mock('@react-navigation/native', () => ({
   useFocusEffect: (cb: () => void) => {
     require('react').useEffect(cb, [cb]);
   },
+  useIsFocused: () => true,
 }));
 jest.mock('@react-navigation/bottom-tabs', () => ({
   useBottomTabBarHeight: () => 0,
@@ -140,6 +158,7 @@ const stage = (overrides: Partial<StageState> = {}): StageState => ({
   arrivalDate: '2026-12-02',
   userId: 'screen-user',
   refreshStage: jest.fn().mockResolvedValue(undefined),
+  applyConfirmedArrival: jest.fn(),
   isLoading: false,
   error: null,
   ...overrides,
@@ -158,6 +177,7 @@ beforeAll(async () => {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  client = new QueryClient();
   mockStore.clear();
   mockStage = stage();
   mockUseChecklistTasks.mockReturnValue({
@@ -218,7 +238,25 @@ describe('Checklist screen', () => {
       currentStage: null,
       stageChanged: true,
       persona: 'refugee',
+      isStageLoading: false,
     });
+  });
+
+  it('holds the checklist query back while the stage loads', async () => {
+    mockStage = stage({ isLoading: true, currentStage: null });
+    render(h(ChecklistScreen));
+    await flush();
+    expect(mockUseChecklistTasks).toHaveBeenLastCalledWith(
+      expect.objectContaining({ isStageLoading: true })
+    );
+  });
+
+  it('hands the stage hook the same local day the card uses', async () => {
+    render(h(ChecklistScreen));
+    await flush();
+    expect(mockUseUserStage).toHaveBeenLastCalledWith(
+      new Date(2026, 9, 23, 12, 0, 0)
+    );
   });
 
   it('does not load the persona separately', async () => {

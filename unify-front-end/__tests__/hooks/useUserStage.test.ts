@@ -46,7 +46,7 @@ const profile = (over: Record<string, unknown> = {}) => ({
   ...over,
 });
 
-const deferred = <T,>() => {
+const deferred = <T>() => {
   let resolve!: (value: T) => void;
   let reject!: (reason: unknown) => void;
   const promise = new Promise<T>((res, rej) => {
@@ -220,7 +220,9 @@ describe('useUserStage', () => {
     mockGetOnboardingProfile.mockClear();
     await act(async () => {
       first = result.current.refreshStage();
-      await waitFor(() => expect(mockGetOnboardingProfile).toHaveBeenCalledTimes(1));
+      await waitFor(() =>
+        expect(mockGetOnboardingProfile).toHaveBeenCalledTimes(1)
+      );
       second = result.current.refreshStage();
       await second;
     });
@@ -240,11 +242,18 @@ describe('useUserStage', () => {
       id === 'user-a'
         ? slowA.promise
         : Promise.resolve(
-            profile({ id: 'user-b', persona: 'refugee', arrival_date: '2026-10-23', stage: '1' })
+            profile({
+              id: 'user-b',
+              persona: 'refugee',
+              arrival_date: '2026-10-23',
+              stage: '1',
+            })
           )
     );
     const { result } = renderHook(() => useUserStage());
-    await waitFor(() => expect(mockGetOnboardingProfile).toHaveBeenCalledWith('user-a'));
+    await waitFor(() =>
+      expect(mockGetOnboardingProfile).toHaveBeenCalledWith('user-a')
+    );
 
     mockAuthUserId = 'user-b';
     await act(async () => {
@@ -263,7 +272,11 @@ describe('useUserStage', () => {
     expect(result.current.userId).toBe('user-b');
     expect(result.current.persona).toBe('refugee');
     expect(result.current.currentStage).toBe(1);
-    expect(mockSyncStageCache).not.toHaveBeenCalledWith('user-a', expect.anything(), expect.anything());
+    expect(mockSyncStageCache).not.toHaveBeenCalledWith(
+      'user-a',
+      expect.anything(),
+      expect.anything()
+    );
   });
 
   it('shows no stage for the old account while the new account loads', async () => {
@@ -282,7 +295,9 @@ describe('useUserStage', () => {
     expect(result.current.arrivalDate).toBeNull();
     expect(result.current.isLoading).toBe(true);
     await act(async () => {
-      slowB.resolve(profile({ id: 'user-b', arrival_date: '2020-01-01', stage: '4' }));
+      slowB.resolve(
+        profile({ id: 'user-b', arrival_date: '2020-01-01', stage: '4' })
+      );
       await slowB.promise;
     });
     await waitFor(() => expect(result.current.currentStage).toBe(4));
@@ -325,5 +340,97 @@ describe('useUserStage', () => {
     const { unmount } = renderHook(() => useUserStage());
     unmount();
     expect(mockUnsubscribe).toHaveBeenCalled();
+  });
+
+  describe('the local day and confirmed writes', () => {
+    it('moves the stage with the day it is given, without another profile read', async () => {
+      mockGetOnboardingProfile.mockResolvedValue(
+        profile({ arrival_date: '2026-10-24', stage: '0' })
+      );
+      const { result, rerender } = renderHook(
+        ({ today }: { today: Date }) => useUserStage(today),
+        { initialProps: { today: new Date(2026, 9, 23, 23, 59) } }
+      );
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(result.current.currentStage).toBe(0);
+      expect(result.current.stageChanged).toBe(false);
+
+      rerender({ today: new Date(2026, 9, 24, 0, 1) });
+      expect(result.current.currentStage).toBe(1);
+      expect(result.current.stageChanged).toBe(true);
+      expect(mockGetOnboardingProfile).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps the date and stage when a later profile read fails', async () => {
+      mockGetOnboardingProfile.mockResolvedValue(profile());
+      const { result } = renderHook(() => useUserStage());
+      await waitFor(() => expect(result.current.currentStage).toBe(2));
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      mockGetOnboardingProfile.mockRejectedValue(new Error('offline'));
+      await act(async () => {
+        await result.current.refreshStage();
+      });
+      expect(result.current.error).toBe('offline');
+      expect(result.current.arrivalDate).toBe('2026-02-23');
+      expect(result.current.currentStage).toBe(2);
+    });
+
+    it('takes a confirmed date for the signed-in account', async () => {
+      mockGetOnboardingProfile.mockResolvedValue(profile());
+      const { result } = renderHook(() => useUserStage());
+      await waitFor(() => expect(result.current.currentStage).toBe(2));
+      act(() =>
+        result.current.applyConfirmedArrival({
+          id: 'user-a',
+          arrival_date: '2026-10-23',
+          stage: 1,
+        })
+      );
+      expect(result.current.arrivalDate).toBe('2026-10-23');
+      expect(result.current.currentStage).toBe(1);
+      expect(result.current.previousStage).toBe(1);
+      expect(result.current.stageChanged).toBe(false);
+    });
+
+    it('ignores a confirmed date for another account', async () => {
+      mockGetOnboardingProfile.mockResolvedValue(profile());
+      const { result } = renderHook(() => useUserStage());
+      await waitFor(() => expect(result.current.currentStage).toBe(2));
+      act(() =>
+        result.current.applyConfirmedArrival({
+          id: 'someone-else',
+          arrival_date: '2026-10-23',
+          stage: 1,
+        })
+      );
+      expect(result.current.arrivalDate).toBe('2026-02-23');
+    });
+
+    it('drops a read that started before the confirmed write', async () => {
+      mockGetOnboardingProfile.mockResolvedValue(profile());
+      const { result } = renderHook(() => useUserStage());
+      await waitFor(() => expect(result.current.currentStage).toBe(2));
+
+      const oldRead = deferred<ReturnType<typeof profile>>();
+      mockGetOnboardingProfile.mockReturnValueOnce(oldRead.promise);
+      let refresh!: Promise<void>;
+      act(() => {
+        refresh = result.current.refreshStage();
+      });
+      act(() =>
+        result.current.applyConfirmedArrival({
+          id: 'user-a',
+          arrival_date: '2026-10-23',
+          stage: 1,
+        })
+      );
+      await act(async () => {
+        oldRead.resolve(profile());
+        await refresh;
+      });
+      expect(result.current.arrivalDate).toBe('2026-10-23');
+      expect(result.current.currentStage).toBe(1);
+    });
   });
 });

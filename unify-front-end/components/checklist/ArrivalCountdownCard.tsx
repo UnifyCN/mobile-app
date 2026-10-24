@@ -2,6 +2,7 @@ import React from 'react';
 import { I18nManager, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { typography } from '@/constants/Typography';
 import { tPlural } from '@/helpers/pluralKey';
 import type { ArrivalCountdownShown } from '@/utils/analytics';
 
@@ -40,9 +41,7 @@ export function ArrivalCountdownCard({ countdown, onPress }: Props) {
           color='#059669'
         />
       </View>
-      <Text style={styles.title} maxFontSizeMultiplier={1.4}>
-        {title}
-      </Text>
+      <Text style={styles.title}>{title}</Text>
       <MaterialIcons
         name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
         size={22}
@@ -83,10 +82,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECFDF5',
   },
   title: {
+    ...typography.cardTitle,
     flex: 1,
-    fontSize: 17,
-    fontWeight: '600',
-    letterSpacing: -0.2,
     color: '#000',
   },
 });

@@ -1,22 +1,27 @@
 import { supabase } from '@/lib/supabase';
 import { getArrivalStage } from '@/helpers/arrivalDate';
 import { isArrivalDateInRange } from '@/helpers/arrivalDatePicker';
+import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
+import type { StageNumber } from '@/types/checklist';
 
-export interface UpdatedArrivalProfile {
+/** What the database confirmed for one arrival-date write. */
+export interface ConfirmedArrival {
   id: string;
-  arrival_date: string | null;
-  stage: number | null;
+  arrival_date: string;
+  /** Stored stage cache, normalized. Null means unknown or unreadable. */
+  stage: StageNumber | null;
 }
 
 /**
  * Writes only arrival_date and the stage cache for one user. Not
  * saveOnboardingProfile: its upsert defaults would reset unrelated fields.
- * Throws unless the database confirms the updated row.
+ * Throws unless the database confirms the updated row. The hosted stage column
+ * is an enum, so the API returns it as a string; it is normalized here.
  */
 export const updateArrivalDate = async (
   userId: string,
   arrivalDate: string
-): Promise<UpdatedArrivalProfile> => {
+): Promise<ConfirmedArrival> => {
   const today = new Date();
   if (!isArrivalDateInRange(arrivalDate, today)) {
     throw new Error('Arrival date is invalid or out of range');
@@ -35,8 +40,12 @@ export const updateArrivalDate = async (
     throw new Error(`Failed to update arrival date: ${error.message}`);
   }
   const row = data?.length === 1 ? data[0] : null;
-  if (!row || row.arrival_date !== arrivalDate) {
+  if (!row || row.id !== userId || row.arrival_date !== arrivalDate) {
     throw new Error('Arrival date update was not confirmed');
   }
-  return row as UpdatedArrivalProfile;
+  return {
+    id: row.id,
+    arrival_date: row.arrival_date,
+    stage: resolveStoredStage(row.stage),
+  };
 };

@@ -60,6 +60,48 @@ describe('updateArrivalDate', () => {
     });
   });
 
+  it('normalizes an enum-string stage to a number', async () => {
+    mockSelect.mockResolvedValue({
+      data: [{ id: 'u1', arrival_date: '2026-12-01', stage: '0' }],
+      error: null,
+    });
+    const row = await updateArrivalDate('u1', '2026-12-01');
+    expect(row.stage).toBe(0);
+    expect(typeof row.stage).toBe('number');
+  });
+
+  it.each([[null], ['7'], ['abc'], [9]])(
+    'returns a null stage for the unusable stored value %p',
+    async stored => {
+      mockSelect.mockResolvedValue({
+        data: [{ id: 'u1', arrival_date: '2026-12-01', stage: stored }],
+        error: null,
+      });
+      const row = await updateArrivalDate('u1', '2026-12-01');
+      expect(row.stage).toBeNull();
+    }
+  );
+
+  it('returns only the confirmed fields, not the whole row', async () => {
+    mockSelect.mockResolvedValue({
+      data: [
+        {
+          id: 'u1',
+          arrival_date: '2026-12-01',
+          stage: '0',
+          persona: 'refugee',
+          wants_reminders: true,
+        },
+      ],
+      error: null,
+    });
+    await expect(updateArrivalDate('u1', '2026-12-01')).resolves.toEqual({
+      id: 'u1',
+      arrival_date: '2026-12-01',
+      stage: 0,
+    });
+  });
+
   it('fails when the update returns no row', async () => {
     mockSelect.mockResolvedValue({ data: [], error: null });
     await expect(updateArrivalDate('u1', '2026-12-01')).rejects.toThrow();

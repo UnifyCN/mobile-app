@@ -154,15 +154,68 @@ describe('ArrivalDateSheet', () => {
     expect(screen.queryByLabelText('2020')).toBeNull();
     expect(screen.queryByLabelText('2030')).toBeNull();
   });
+});
 
-  it('shows the nearest allowed date when the saved date is out of range', () => {
-    renderSheet({ arrivalDate: '2031-05-01' });
+describe('a saved date outside the allowed range', () => {
+  it('shows the saved date and keeps Save disabled', () => {
+    const { onSave } = renderSheet({ arrivalDate: '2031-05-01' });
     expect(
-      screen.getByLabelText('2029').props.accessibilityState.selected
+      screen.getByLabelText('2031').props.accessibilityState.selected
     ).toBe(true);
-    expect(
-      screen.getByLabelText('October').props.accessibilityState.selected
-    ).toBe(true);
+    expect(screen.getByLabelText('May').props.accessibilityState.selected).toBe(
+      true
+    );
+    expect(screen.getByLabelText('1').props.accessibilityState.selected).toBe(
+      true
+    );
+    expect(saveButton().props.accessibilityState.disabled).toBe(true);
+    fireEvent.press(saveButton());
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('keeps Save disabled when the shown saved row is pressed', () => {
+    const { onSave } = renderSheet({ arrivalDate: '2031-05-01' });
+    fireEvent.press(screen.getByLabelText('2031'));
+    fireEvent.press(screen.getByLabelText('May'));
+    expect(saveButton().props.accessibilityState.disabled).toBe(true);
+    fireEvent.press(saveButton());
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('enables Save only after an explicit pick, and saves a date in range', () => {
+    const { onSave } = renderSheet({ arrivalDate: '2031-05-01' });
+    fireEvent.press(screen.getByLabelText('2029'));
     expect(saveButton().props.accessibilityState.disabled).toBe(false);
+    fireEvent.press(saveButton());
+    expect(onSave).toHaveBeenCalledWith('2029-05-01');
+  });
+
+  it('offers no other out-of-range choice', () => {
+    renderSheet({ arrivalDate: '2031-05-01' });
+    expect(screen.getByLabelText('2031')).toBeTruthy();
+    expect(screen.queryByLabelText('2030')).toBeNull();
+    expect(screen.queryByLabelText('2032')).toBeNull();
+  });
+
+  it('shows a saved date before the range without editing it', () => {
+    const { onSave } = renderSheet({ arrivalDate: '2020-02-03' });
+    expect(
+      screen.getByLabelText('2020').props.accessibilityState.selected
+    ).toBe(true);
+    expect(saveButton().props.accessibilityState.disabled).toBe(true);
+    fireEvent.press(saveButton());
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('shows a saved day past the last allowed day of the last allowed month', () => {
+    // Range ends 2029-10-23. 2029-10-30 is in the last year and month.
+    const { onSave } = renderSheet({ arrivalDate: '2029-10-30' });
+    expect(screen.getByLabelText('30').props.accessibilityState.selected).toBe(
+      true
+    );
+    expect(saveButton().props.accessibilityState.disabled).toBe(true);
+    expect(screen.queryByLabelText('29')).toBeNull();
+    fireEvent.press(saveButton());
+    expect(onSave).not.toHaveBeenCalled();
   });
 });

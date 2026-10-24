@@ -1,5 +1,7 @@
+import React from 'react';
 import { act, renderHook } from '@testing-library/react-native';
 import { Alert } from 'react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const mockUpdateArrivalDate = jest.fn();
 jest.mock('@/services/onboarding/updateArrivalDate', () => ({
@@ -21,12 +23,17 @@ const TODAY = new Date(2026, 9, 23, 12, 0, 0);
 
 type Props = { userId: string | null; arrivalDate: string | null };
 
+let client: QueryClient;
+const wrapper = ({ children }: { children: React.ReactNode }) =>
+  React.createElement(QueryClientProvider, { client }, children);
+
 const setup = (
   initial: Props = { userId: 'u1', arrivalDate: '2026-12-01' }
 ) => {
   const refreshStage = jest.fn().mockResolvedValue(undefined);
   const refreshUser = jest.fn();
   const refetchChecklist = jest.fn().mockResolvedValue(undefined);
+  const applyConfirmedArrival = jest.fn();
   const hook = renderHook(
     (props: Props) =>
       useArrivalDateEditor({
@@ -34,10 +41,17 @@ const setup = (
         refreshStage,
         refreshUser,
         refetchChecklist,
+        applyConfirmedArrival,
       }),
-    { initialProps: initial }
+    { initialProps: initial, wrapper }
   );
-  return { ...hook, refreshStage, refreshUser, refetchChecklist };
+  return {
+    ...hook,
+    refreshStage,
+    refreshUser,
+    refetchChecklist,
+    applyConfirmedArrival,
+  };
 };
 
 const deferred = <T>() => {
@@ -53,6 +67,7 @@ const deferred = <T>() => {
 beforeEach(() => {
   jest.useFakeTimers().setSystemTime(TODAY);
   jest.clearAllMocks();
+  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   mockUpdateArrivalDate.mockResolvedValue({
     id: 'u1',
     arrival_date: '2026-12-15',
@@ -64,6 +79,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  client.clear();
   jest.useRealTimers();
   jest.restoreAllMocks();
 });
@@ -263,5 +279,165 @@ describe('account changes', () => {
       await result.current.save('2027-03-01');
     });
     expect(mockUpdateArrivalDate).toHaveBeenCalledWith('u2', '2027-03-01');
+  });
+});
+
+describe('confirmed result', () => {
+  it('applies the confirmed date and stage before any re-read starts', async () => {
+    const order: string[] = [];
+    const {
+      result,
+      refreshStage,
+      refreshUser,
+      refetchChecklist,
+      applyConfirmedArrival,
+    } = setup();
+    applyConfirmedArrival.mockImplementation(() => order.push('apply'));
+    refreshStage.mockImplementation(async () => order.push('refreshStage'));
+    refreshUser.mockImplementation(() => order.push('refreshUser'));
+    refetchChecklist.mockImplementation(async () => order.push('refetch'));
+    act(() => result.current.open());
+    await act(async () => {
+      await result.current.save('2026-12-15');
+    });
+    expect(applyConfirmedArrival).toHaveBeenCalledWith({
+      id: 'u1',
+      arrival_date: '2026-12-15',
+      stage: 0,
+    });
+    expect(order[0]).toBe('apply');
+    expect(order).toContain('refetch');
+  });
+
+  it('puts the confirmed date into the account caches', async () => {
+    client.setQueryData(['onboardingProfile', 'u1'], {
+      id: 'u1',
+      arrival_date: '2026-12-01',
+      stage: 0,
+      city: 'Toronto',
+    });
+    client.setQueryData(['userInfo', 'u1'], {
+      id: 'u1',
+      arrivalDate: '2026-12-01',
+      stage: 0,
+      username: 'a',
+    });
+    const { result } = setup();
+    act(() => result.current.open());
+    await act(async () => {
+      await result.current.save('2026-12-15');
+    });
+    expect(client.getQueryData(['onboardingProfile', 'u1'])).toMatchObject({
+      arrival_date: '2026-12-15',
+      city: 'Toronto',
+    });
+    expect(client.getQueryData(['userInfo', 'u1'])).toMatchObject({
+      arrivalDate: '2026-12-15',
+      username: 'a',
+    });
+  });
+
+  it('does not create a cache entry that was never loaded', async () => {
+    const { result } = setup();
+    act(() => result.current.open());
+    await act(async () => {
+      await result.current.save('2026-12-15');
+    });
+    expect(client.getQueryData(['onboardingProfile', 'u1'])).toBeUndefined();
+    expect(client.getQueryData(['userInfo', 'u1'])).toBeUndefined();
+  });
+
+  it('does not apply the date to a screen that now shows another account, but keeps the first account cache right', async () => {
+    client.setQueryData(['onboardingProfile', 'u1'], {
+      id: 'u1',
+      arrival_date: '2026-12-01',
+      stage: 0,
+    });
+    const write = deferred<unknown>();
+    mockUpdateArrivalDate.mockReturnValue(write.promise);
+    const { result, rerender, applyConfirmedArrival } = setup();
+    act(() => result.current.open());
+    let pending!: Promise<unknown>;
+    act(() => {
+      pending = result.current.save('2026-12-15');
+    });
+    rerender({ userId: 'u2', arrivalDate: '2027-02-01' });
+    await act(async () => {
+      write.resolve({ id: 'u1', arrival_date: '2026-12-15', stage: 0 });
+      await pending;
+    });
+    expect(applyConfirmedArrival).not.toHaveBeenCalled();
+    expect(client.getQueryData(['onboardingProfile', 'u1'])).toMatchObject({
+      arrival_date: '2026-12-15',
+    });
+  });
+});
+
+describe('a save that finishes after its screen is gone', () => {
+  it('sends no event and starts no refresh after an unmount', async () => {
+    const write = deferred<unknown>();
+    mockUpdateArrivalDate.mockReturnValue(write.promise);
+    const {
+      result,
+      unmount,
+      refreshStage,
+      refetchChecklist,
+      applyConfirmedArrival,
+    } = setup();
+    act(() => result.current.open());
+    let pending!: Promise<unknown>;
+    act(() => {
+      pending = result.current.save('2026-12-15');
+    });
+    unmount();
+    await act(async () => {
+      write.resolve({ id: 'u1', arrival_date: '2026-12-15', stage: 0 });
+      await pending;
+    });
+    expect(mockTrackChanged).not.toHaveBeenCalled();
+    expect(applyConfirmedArrival).not.toHaveBeenCalled();
+    expect(refreshStage).not.toHaveBeenCalled();
+    expect(refetchChecklist).not.toHaveBeenCalled();
+    expect(Alert.alert).not.toHaveBeenCalled();
+  });
+
+  it('after u1 to u2 to u1, a late first save does not close the reopened sheet or send an event', async () => {
+    const write = deferred<unknown>();
+    mockUpdateArrivalDate.mockReturnValue(write.promise);
+    const { result, rerender } = setup();
+    act(() => result.current.open());
+    let pending!: Promise<unknown>;
+    act(() => {
+      pending = result.current.save('2026-12-15');
+    });
+    rerender({ userId: 'u2', arrivalDate: '2027-02-01' });
+    rerender({ userId: 'u1', arrivalDate: '2026-12-01' });
+    act(() => result.current.open());
+    expect(result.current.isOpen).toBe(true);
+    await act(async () => {
+      write.resolve({ id: 'u1', arrival_date: '2026-12-15', stage: 0 });
+      await pending;
+    });
+    expect(result.current.isOpen).toBe(true);
+    expect(result.current.isSaving).toBe(false);
+    expect(mockTrackChanged).not.toHaveBeenCalled();
+  });
+
+  it('after u1 to u2 to u1, a late first failure shows no error', async () => {
+    const write = deferred<unknown>();
+    mockUpdateArrivalDate.mockReturnValue(write.promise);
+    const { result, rerender } = setup();
+    act(() => result.current.open());
+    let pending!: Promise<unknown>;
+    act(() => {
+      pending = result.current.save('2026-12-15');
+    });
+    rerender({ userId: 'u2', arrivalDate: '2027-02-01' });
+    rerender({ userId: 'u1', arrivalDate: '2026-12-01' });
+    await act(async () => {
+      write.reject(new Error('rls'));
+      await pending;
+    });
+    expect(Alert.alert).not.toHaveBeenCalled();
   });
 });

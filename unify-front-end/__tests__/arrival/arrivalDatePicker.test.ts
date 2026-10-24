@@ -51,6 +51,29 @@ const range = getArrivalDateRange(TODAY);
 const at = (y: number, m: number, d: number) => new Date(y, m - 1, d);
 const ymd = (d: Date) => formatLocalDate(d);
 
+describe('getPickerOptions with a shown date outside the range', () => {
+  it('adds only the shown year, month and day', () => {
+    const options = getPickerOptions(at(2031, 5, 1), range);
+    expect(options.years).toEqual([
+      2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2031,
+    ]);
+    // 2031 is outside the range, so no month is range-limited.
+    expect(options.months).toHaveLength(12);
+    expect(options.days).toContain(1);
+  });
+
+  it('keeps a saved day after the last allowed day as the only extra day', () => {
+    const options = getPickerOptions(at(2029, 10, 30), range);
+    expect(options.days.at(-1)).toBe(30);
+    expect(options.days.at(-2)).toBe(23);
+    expect(options.months.at(-1)).toBe(9);
+  });
+
+  it('does not change the options for an in-range date', () => {
+    expect(getPickerOptions(at(2029, 10, 5), range).days.at(-1)).toBe(23);
+  });
+});
+
 describe('getPickerOptions', () => {
   it('lists every year in range', () => {
     expect(getPickerOptions(at(2026, 5, 5), range).years).toEqual([

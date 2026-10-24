@@ -5,7 +5,7 @@ import {
   type SaveOnboardingResult,
 } from '@/services/onboarding/saveOnboardingProfile';
 import { OnboardingProfileInput } from '@/types/onboardingProfile';
-import { PERSONALIZED_STARTERS_QUERY_KEY } from '@/hooks/companion/usePersonalizedStarters';
+import { PERSONALIZED_STARTERS_QUERY_KEY } from '@/hooks/companion/personalizedStartersQueryKey';
 
 export const useSaveOnboardingProfile = () => {
   const queryClient = useQueryClient();

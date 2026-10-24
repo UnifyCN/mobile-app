@@ -1,19 +1,26 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { ArrivalCountdownCard } from '@/components/checklist/ArrivalCountdownCard';
 import { ArrivalDateSheet } from '@/components/checklist/ArrivalDateSheet';
 import { formatLocalDate, getArrivalCountdown } from '@/helpers/arrivalDate';
 import { useArrivalDateEditor } from '@/hooks/checklist/useArrivalDateEditor';
-import { useRefreshingToday } from '@/hooks/checklist/useRefreshingToday';
+import type { ConfirmedArrival } from '@/services/onboarding/updateArrivalDate';
 import { useAnalytics } from '@/utils/analytics';
 import { trackArrivalCountdownShownOnce } from '@/utils/arrivalCountdownShown';
 
 interface Props {
   userId: string | null;
   arrivalDate: string | null;
+  /**
+   * The screen's local day. The screen owns it, so the card, the stage and the
+   * checklist always use the same day.
+   */
+  today: Date;
   /** Reloads the current account's profile and stage. */
   refreshStage: () => Promise<unknown>;
   refreshUser: () => unknown;
   refetchChecklist: () => unknown;
+  applyConfirmedArrival: (confirmed: ConfirmedArrival) => void;
 }
 
 /**
@@ -23,11 +30,13 @@ interface Props {
 export function ArrivalCountdownSection({
   userId,
   arrivalDate,
+  today,
   refreshStage,
   refreshUser,
   refetchChecklist,
+  applyConfirmedArrival,
 }: Props) {
-  const today = useRefreshingToday();
+  const isFocused = useIsFocused();
   const { trackArrivalCountdownShown } = useAnalytics();
   const editor = useArrivalDateEditor({
     userId,
@@ -35,6 +44,7 @@ export function ArrivalCountdownSection({
     refreshStage,
     refreshUser,
     refetchChecklist,
+    applyConfirmedArrival,
   });
 
   const countdown = useMemo(
@@ -45,16 +55,27 @@ export function ArrivalCountdownSection({
 
   const userIdRef = useRef(userId);
   userIdRef.current = userId;
-
+  // False once this section is gone. A storage read that finishes later must
+  // not send the event as whichever account is signed in by then.
+  const mountedRef = useRef(true);
   useEffect(() => {
-    if (!userId || countdown.state === 'hidden') return;
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  // The card counts as shown only while the tab is in front. A retained tab
+  // that is hidden when the day rolls over claims nothing until it is focused.
+  useEffect(() => {
+    if (!isFocused || !userId || countdown.state === 'hidden') return;
     void trackArrivalCountdownShownOnce({
       userId,
       day,
-      isCurrent: () => userIdRef.current === userId,
+      isCurrent: () => mountedRef.current && userIdRef.current === userId,
       emit: () => trackArrivalCountdownShown(countdown),
     });
-  }, [userId, day, countdown, trackArrivalCountdownShown]);
+  }, [isFocused, userId, day, countdown, trackArrivalCountdownShown]);
 
   if (countdown.state === 'hidden' || !arrivalDate) return null;
 

@@ -1,5 +1,20 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  LayoutChangeEvent,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { typography } from '@/constants/Typography';
 import {
   getPickerOptions,
   setPickerPart,
@@ -7,6 +22,7 @@ import {
 } from '@/helpers/arrivalDatePicker';
 
 interface Props {
+  /** The date shown. It may lie outside min and max when it is a saved date. */
   value: Date;
   min: Date;
   max: Date;
@@ -15,42 +31,74 @@ interface Props {
   onChange: (date: Date) => void;
 }
 
-const ROW_HEIGHT = 44;
+const MIN_ROW_HEIGHT = 44;
+const ROW_PADDING = 8;
 const VISIBLE_ROWS = 5;
+const MIN_VISIBLE_ROWS = 3;
+// On a short screen the picker may not take more than this share of the window.
+const MAX_WINDOW_SHARE = 0.34;
 
 interface Option {
   value: number;
   label: string;
 }
 
+interface RowLayout {
+  y: number;
+  height: number;
+}
+
+/**
+ * One scrolling column. The selected row is centred from measured row and
+ * viewport sizes, so scaled text and wrapped labels stay centred. Same method
+ * as the onboarding MonthPicker.
+ */
 function PickerColumn({
   options,
   selected,
   flex,
+  rowHeight,
+  viewportHeight,
   onSelect,
+  onSelectedHeight,
 }: {
   options: Option[];
   selected: number;
   flex: number;
+  rowHeight: number;
+  viewportHeight: number;
   onSelect: (value: number) => void;
+  onSelectedHeight: (height: number) => void;
 }) {
   const scrollRef = useRef<ScrollView>(null);
-  const selectedIndex = options.findIndex(option => option.value === selected);
+  const rows = useRef(new Map<number, RowLayout>());
 
-  // Keep the selected row centred, also after the option list changes.
-  useEffect(() => {
-    if (selectedIndex < 0) return;
+  const center = useCallback(() => {
+    const row = rows.current.get(selected);
+    if (!row || !viewportHeight) return;
+    onSelectedHeight(row.height);
     scrollRef.current?.scrollTo({
-      y: selectedIndex * ROW_HEIGHT,
+      y: Math.max(0, row.y + row.height / 2 - viewportHeight / 2),
       animated: false,
     });
-  }, [selectedIndex, options.length]);
+  }, [selected, viewportHeight, onSelectedHeight]);
+
+  // Re-centre when the selection, the viewport or the option list changes.
+  useEffect(center, [center, options.length]);
+
+  const measure = (value: number, event: LayoutChangeEvent) => {
+    rows.current.set(value, event.nativeEvent.layout);
+    if (value === selected) center();
+  };
 
   return (
     <ScrollView
       ref={scrollRef}
       style={[styles.column, { flex }]}
-      contentContainerStyle={styles.columnContent}
+      contentContainerStyle={{
+        // Blank space above and below lets the first and last row reach the middle.
+        paddingVertical: Math.max(0, (viewportHeight - rowHeight) / 2),
+      }}
       showsVerticalScrollIndicator={false}
       nestedScrollEnabled
     >
@@ -60,14 +108,14 @@ function PickerColumn({
           <Pressable
             key={option.value}
             onPress={() => onSelect(option.value)}
+            onLayout={event => measure(option.value, event)}
             accessibilityRole='button'
             accessibilityLabel={option.label}
             accessibilityState={{ selected: isSelected }}
-            style={styles.row}
+            style={[styles.row, { minHeight: rowHeight }]}
           >
             <Text
               style={[styles.rowText, isSelected && styles.rowTextSelected]}
-              maxFontSizeMultiplier={1.3}
             >
               {option.label}
             </Text>
@@ -100,6 +148,8 @@ const columnOrder = (language: string): PickerPart[] => {
 /**
  * Day-level date picker built from three scroll columns, the same pattern as
  * the onboarding month/year picker. One implementation for iOS and Android.
+ * Row height follows the user's font scale. The viewport is shorter on a short
+ * screen, and the selection band follows the measured viewport and row.
  */
 export function ArrivalDatePicker({
   value,
@@ -108,6 +158,24 @@ export function ArrivalDatePicker({
   language,
   onChange,
 }: Props) {
+  const { fontScale, height: windowHeight } = useWindowDimensions();
+  const rowHeight = Math.max(
+    MIN_ROW_HEIGHT,
+    Math.ceil(typography.body.lineHeight * fontScale) + ROW_PADDING * 2
+  );
+  // Five rows, fewer on a short screen, never fewer than three.
+  const nominalViewport = Math.max(
+    rowHeight * MIN_VISIBLE_ROWS,
+    Math.min(rowHeight * VISIBLE_ROWS, windowHeight * MAX_WINDOW_SHARE)
+  );
+
+  const [measuredViewport, setMeasuredViewport] = useState<number | null>(null);
+  const viewportHeight = measuredViewport ?? nominalViewport;
+  const [selectedHeights, setSelectedHeights] = useState<
+    Partial<Record<PickerPart, number>>
+  >({});
+  const bandHeight = Math.max(rowHeight, ...Object.values(selectedHeights));
+
   const range = useMemo(() => ({ min, max }), [min, max]);
   const options = getPickerOptions(value, range);
 
@@ -124,13 +192,14 @@ export function ArrivalDatePicker({
   }, [language]);
 
   const columns: Record<PickerPart, { options: Option[]; flex: number }> = {
+    // Month names are the longest labels, so that column gets the most width.
     month: {
       options: options.months.map(m => ({ value: m, label: monthNames[m] })),
-      flex: 1.7,
+      flex: 2.2,
     },
     day: {
       options: options.days.map(d => ({ value: d, label: String(d) })),
-      flex: 1,
+      flex: 0.8,
     },
     year: {
       options: options.years.map(y => ({ value: y, label: String(y) })),
@@ -143,16 +212,51 @@ export function ArrivalDatePicker({
     year: value.getFullYear(),
   };
 
+  const reportHeight = useCallback(
+    (part: PickerPart) => (height: number) =>
+      setSelectedHeights(prev =>
+        prev[part] === height ? prev : { ...prev, [part]: height }
+      ),
+    []
+  );
+  const reporters = useMemo(
+    () => ({
+      month: reportHeight('month'),
+      day: reportHeight('day'),
+      year: reportHeight('year'),
+    }),
+    [reportHeight]
+  );
+
   return (
-    <View style={styles.container}>
-      <View pointerEvents='none' style={styles.selectionBand} />
+    <View
+      testID='arrival-date-picker'
+      onLayout={event => setMeasuredViewport(event.nativeEvent.layout.height)}
+      style={[styles.container, { height: nominalViewport }]}
+    >
+      <View
+        testID='arrival-date-picker-band'
+        pointerEvents='none'
+        style={[
+          styles.selectionBand,
+          { top: (viewportHeight - bandHeight) / 2, height: bandHeight },
+        ]}
+      />
       {columnOrder(language).map(part => (
         <PickerColumn
           key={part}
           options={columns[part].options}
           selected={selectedValue[part]}
           flex={columns[part].flex}
-          onSelect={next => onChange(setPickerPart(value, part, next, range))}
+          rowHeight={rowHeight}
+          viewportHeight={viewportHeight}
+          onSelect={next => {
+            // Pressing the value that is already shown changes nothing. This
+            // keeps a saved date outside the range from becoming a pick.
+            if (next === selectedValue[part]) return;
+            onChange(setPickerPart(value, part, next, range));
+          }}
+          onSelectedHeight={reporters[part]}
         />
       ))}
     </View>
@@ -161,7 +265,6 @@ export function ArrivalDatePicker({
 
 const styles = StyleSheet.create({
   container: {
-    height: ROW_HEIGHT * VISIBLE_ROWS,
     flexDirection: 'row',
     gap: 4,
   },
@@ -169,29 +272,25 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: ROW_HEIGHT * Math.floor(VISIBLE_ROWS / 2),
-    height: ROW_HEIGHT,
     borderRadius: 12,
     backgroundColor: '#F0F0F0',
   },
   column: {
-    height: ROW_HEIGHT * VISIBLE_ROWS,
-  },
-  // Blank rows above and below let the first and last option sit in the band.
-  columnContent: {
-    paddingVertical: ROW_HEIGHT * Math.floor(VISIBLE_ROWS / 2),
+    alignSelf: 'stretch',
   },
   row: {
-    height: ROW_HEIGHT,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: ROW_PADDING,
+    paddingHorizontal: 4,
   },
   rowText: {
-    fontSize: 18,
+    ...typography.body,
+    textAlign: 'center',
     color: '#686464',
   },
   rowTextSelected: {
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#000',
   },
 });
