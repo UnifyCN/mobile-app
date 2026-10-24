@@ -52,13 +52,18 @@ async function crawlSource(
   }
   const contentHash = await computeContentHash(cleanText);
   const existing = await store.findDocument(source.url);
-  const stamp = { fetchedAt: now, dateModified: extractDateModified(html) };
+  const stamp = {
+    fetchedAt: now,
+    dateModified: extractDateModified(html),
+    province: source.province,
+  };
 
   if (existing && existing.contentHash === contentHash) {
     await store.refreshMetadata(existing.id, {
       documentPatch: {
         fetched_at: stamp.fetchedAt,
         published_at: publishedAt(stamp),
+        province: stamp.province,
       },
       chunkMetadata: chunkMetadata(stamp),
     });

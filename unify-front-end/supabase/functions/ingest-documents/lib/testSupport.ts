@@ -16,6 +16,7 @@ export function makeSource(
     enabled: true,
     crawl_frequency_hours: 24,
     last_crawled_at: null,
+    province: null,
     ...overrides,
   };
 }

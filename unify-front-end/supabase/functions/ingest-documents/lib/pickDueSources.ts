@@ -5,6 +5,8 @@ export interface CrawlSource {
   enabled: boolean;
   crawl_frequency_hours: number;
   last_crawled_at: string | null;
+  /** Canonical English province or territory name. Null means national. */
+  province: string | null;
 }
 
 export function pickDueSources(

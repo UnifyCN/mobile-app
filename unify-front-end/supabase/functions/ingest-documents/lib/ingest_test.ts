@@ -241,3 +241,54 @@ Deno.test(
     }
   }
 );
+
+// Falsifier: without province in the metadata builders, the stored metadata has
+// no province key and every assertion below fails.
+Deno.test('a provincial source copies its province into document and chunk metadata', async () => {
+  const source = makeSource(1, { province: 'Ontario' });
+  const h = makeHarness([source], { [source.url]: page(prose(5_000)) });
+
+  await ingestSource(source, h.deps);
+
+  const doc = h.store.documents[0];
+  assertEquals(doc.metadata.province, 'Ontario');
+  const chunks = h.store.chunksOf(doc.id);
+  assert(chunks.length >= 2);
+  for (const c of chunks) assertEquals(c.metadata.province, 'Ontario');
+});
+
+// Falsifier: an unchanged crawl replaces chunk metadata as a whole. If the
+// refresh leaves province out, the province chunks become national and every
+// user would see them.
+Deno.test('an unchanged crawl keeps the province on document and chunks', async () => {
+  const source = makeSource(1, { province: 'British Columbia' });
+  const h = makeHarness([source], { [source.url]: page(prose(5_000)) });
+
+  await ingestSource(source, h.deps);
+  const second = await ingestSource(source, h.deps);
+
+  assertEquals(second.status, 'skipped');
+  const doc = h.store.documents[0];
+  assertEquals(doc.metadata.province, 'British Columbia');
+  const chunks = h.store.chunksOf(doc.id);
+  assert(chunks.length >= 2);
+  for (const c of chunks) assertEquals(c.metadata.province, 'British Columbia');
+});
+
+// Falsifier: a national source must never get a province key. The old
+// unchanged-crawl merge would keep a stale province on the document.
+Deno.test('a source that becomes national drops the province on the next crawl', async () => {
+  const provincial = makeSource(1, { province: 'Alberta' });
+  const h = makeHarness([provincial], {
+    [provincial.url]: page(prose(5_000)),
+  });
+  await ingestSource(provincial, h.deps);
+
+  await ingestSource({ ...provincial, province: null }, h.deps);
+
+  const doc = h.store.documents[0];
+  assertEquals(doc.metadata.province, null);
+  for (const c of h.store.chunksOf(doc.id)) {
+    assert(!('province' in c.metadata), JSON.stringify(c.metadata));
+  }
+});

@@ -14,7 +14,7 @@ function fail(error: { message: string } | null, action: string) {
 
 function createStore(supabase): IngestStore {
   const sourceColumns =
-    'id, url, label, enabled, crawl_frequency_hours, last_crawled_at';
+    'id, url, label, enabled, crawl_frequency_hours, last_crawled_at, province';
   return {
     async listCrawlSources() {
       const { data, error } = await supabase

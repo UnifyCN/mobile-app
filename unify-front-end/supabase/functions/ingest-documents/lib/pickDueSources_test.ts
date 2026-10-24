@@ -16,6 +16,7 @@ function source(id: number, overrides: Partial<CrawlSource> = {}): CrawlSource {
     enabled: true,
     crawl_frequency_hours: 24,
     last_crawled_at: hoursAgo(48),
+    province: null,
     ...overrides,
   };
 }

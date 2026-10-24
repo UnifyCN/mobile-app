@@ -5,6 +5,8 @@ export interface CrawlStamp {
   fetchedAt: string;
   /** Page Date modified (YYYY-MM-DD) or null. */
   dateModified: string | null;
+  /** Source province, or null for a national source. */
+  province: string | null;
 }
 
 /** Date used for "as of": the page's Date modified, else the fetch date. */
@@ -17,6 +19,8 @@ export function chunkMetadata(stamp: CrawlStamp): Metadata {
     source: 'crawler',
     fetched_at: stamp.fetchedAt,
     published_at: publishedAt(stamp),
+    // A national chunk has no province key. Retrieval reads absent as national.
+    ...(stamp.province === null ? {} : { province: stamp.province }),
   };
 }
 
