@@ -12,7 +12,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
   getLessonExitDestination,
@@ -32,6 +32,7 @@ import {
 } from '@/utils/submoduleProgress';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
 import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
+import { getOrderedLegacyPageNumber } from '@/utils/lessonContentBlocks';
 import {
   saveActivityInput,
   getActivityInputsByPage,
@@ -70,10 +71,15 @@ export default function ActivityPageScreen() {
   }>({});
   const [isSaving, setIsSaving] = useState(false);
 
-  const currentPage = parseInt(pageNum || '1');
+  const currentPage = Number(pageNum || '1');
   const { data: lesson, isLoading: loadingLesson } = useSanityLesson(
     lessonId || ''
   );
+  const orderedPageNumber = getOrderedLegacyPageNumber({
+    lesson,
+    pageType: 'activity',
+    pageNumber: currentPage,
+  });
   const { data: moduleData } = useSanityModule(moduleId || '');
   const {
     data: quizzes,
@@ -133,6 +139,7 @@ export default function ActivityPageScreen() {
   // Progress tracking
   const { saveLessonCompletion } = useLessonProgress();
   const currentPageData = lesson?.activity_pages?.[currentPage - 1];
+  const currentPageKey = currentPageData?._key;
   const totalPages = lesson?.activity_pages?.length || 0;
   // Canonical denominator for user_lesson_progress.total_pages.
   const lessonTotalPages = getLessonTotalPages(lesson, quizzes);
@@ -152,6 +159,7 @@ export default function ActivityPageScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      if (orderedPageNumber !== undefined || !currentPageKey) return;
       const now = Date.now();
       const pageKey = `${lessonId}-${currentPage}`;
       // Only track if: data is loaded, throttle passed, AND this is a different page than last tracked
@@ -167,7 +175,7 @@ export default function ActivityPageScreen() {
         lastTrackedPageRef.current = pageKey;
       }
       // Persist resume position so exit → re-enter lands back on this activity page.
-      if (lessonId && submoduleId && moduleId) {
+      if (currentPageKey && lessonId && submoduleId && moduleId) {
         saveResumePosition(
           lessonId,
           submoduleId,
@@ -181,6 +189,8 @@ export default function ActivityPageScreen() {
       lessonId,
       submoduleId,
       moduleId,
+      currentPageKey,
+      orderedPageNumber,
       currentPage,
       totalPages,
       trackScreen,
@@ -192,7 +202,15 @@ export default function ActivityPageScreen() {
   const contentPageCount = lesson?.pages?.length || 0;
   useFocusEffect(
     useCallback(() => {
-      if (!moduleId || !submoduleId || !lessonId || !lessonTitle) return;
+      if (
+        orderedPageNumber !== undefined ||
+        !currentPageKey ||
+        !moduleId ||
+        !submoduleId ||
+        !lessonId ||
+        !lessonTitle
+      )
+        return;
       onLessonPageFocused(
         moduleId,
         submoduleId,
@@ -205,6 +223,8 @@ export default function ActivityPageScreen() {
       submoduleId,
       lessonId,
       lessonTitle,
+      orderedPageNumber,
+      currentPageKey,
       contentPageCount,
       currentPage,
       onLessonPageFocused,
@@ -490,6 +510,24 @@ export default function ActivityPageScreen() {
           <Text>{t('learn.lesson.loadingActivity')}</Text>
         </View>
       </SafeAreaView>
+    );
+  }
+
+  if (orderedPageNumber !== undefined) {
+    return (
+      <Redirect
+        href={{
+          pathname:
+            '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum]',
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId,
+            pageNum: String(orderedPageNumber),
+            ...originParams,
+          },
+        }}
+      />
     );
   }
 

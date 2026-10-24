@@ -19,7 +19,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
   getLessonExitDestination,
@@ -46,6 +46,7 @@ import {
 } from '@/utils/submoduleProgress';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
 import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
+import { getOrderedLegacyPageNumber } from '@/utils/lessonContentBlocks';
 import { useAnalytics } from '@/utils/analytics';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import { useFocusEffect } from '@react-navigation/native';
@@ -85,11 +86,16 @@ export default function EndingPageScreen() {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
 
-  const currentPage = parseInt(pageNum || '1', 10);
+  const currentPage = Number(pageNum || '1');
 
   const { data: lesson, isLoading: loadingLesson } = useSanityLesson(
     lessonId || ''
   );
+  const orderedPageNumber = getOrderedLegacyPageNumber({
+    lesson,
+    pageType: 'ending',
+    pageNumber: currentPage,
+  });
   const {
     data: quizzes,
     isLoading: quizzesLoading,
@@ -110,6 +116,7 @@ export default function EndingPageScreen() {
     ? [...lesson.ending_pages].sort((a, b) => a.order - b.order)
     : [];
   const currentPageData = endingPages[currentPage - 1];
+  const currentPageKey = currentPageData?._key;
   const totalPages = endingPages.length;
 
   // Calculate progress for the progress bar
@@ -127,9 +134,10 @@ export default function EndingPageScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      if (orderedPageNumber !== undefined || !currentPageKey) return;
       if (
         !operationPending.current &&
-        currentPageData &&
+        currentPageKey &&
         lessonId &&
         submoduleId &&
         moduleId
@@ -161,7 +169,8 @@ export default function EndingPageScreen() {
       lessonId,
       submoduleId,
       moduleId,
-      currentPageData?._key,
+      currentPageKey,
+      orderedPageNumber,
       currentPage,
       totalPages,
       trackScreen,
@@ -386,6 +395,24 @@ export default function EndingPageScreen() {
           <Text>{t('learn.lesson.loadingEnding')}</Text>
         </View>
       </SafeAreaView>
+    );
+  }
+
+  if (orderedPageNumber !== undefined) {
+    return (
+      <Redirect
+        href={{
+          pathname:
+            '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum]',
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId,
+            pageNum: String(orderedPageNumber),
+            ...originParams,
+          },
+        }}
+      />
     );
   }
 
