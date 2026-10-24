@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import { syncStageCache } from '@/services/onboarding/syncStageCache';
+import { subscribeArrivalReconciliation } from '@/services/onboarding/arrivalReconciliation';
 import type { ConfirmedArrival } from '@/services/onboarding/updateArrivalDate';
 import { getArrivalStage } from '@/helpers/arrivalDate';
 import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
@@ -117,6 +118,9 @@ export const useUserStage = (today?: Date) => {
 
   useEffect(() => {
     void load();
+    const unsubscribeReconciliation = subscribeArrivalReconciliation(userId => {
+      if (activeUserIdRef.current === userId) void load();
+    });
 
     const {
       data: { subscription },
@@ -139,6 +143,7 @@ export const useUserStage = (today?: Date) => {
     });
 
     return () => {
+      unsubscribeReconciliation();
       subscription.unsubscribe();
       latestLoadRef.current++;
     };
