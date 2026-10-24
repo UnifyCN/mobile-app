@@ -1,6 +1,7 @@
 import {
   getArrivalDateRange,
   isArrivalDateInRange,
+  shouldStackPickerColumns,
 } from '@/helpers/arrivalDatePicker';
 import { formatLocalDate } from '@/helpers/arrivalDate';
 
@@ -136,5 +137,66 @@ describe('setPickerPart', () => {
     expect(ymd(setPickerPart(at(2026, 12, 31), 'year', 2029, range))).toBe(
       '2029-10-23'
     );
+  });
+});
+
+describe('shouldStackPickerColumns', () => {
+  const months = (language: string) =>
+    Array.from({ length: 12 }, (_, m) =>
+      new Intl.DateTimeFormat(language, { month: 'long' }).format(
+        new Date(2026, m, 1)
+      )
+    );
+  // Sheet content width: 272 on a 320 pt phone, 350 on a 390 pt phone.
+  const SMALL = 272;
+  const STANDARD = 350;
+
+  it.each([
+    ['en', STANDARD, 1],
+    ['en', SMALL, 1],
+    ['fr-CA', SMALL, 1],
+    ['ar', STANDARD, 1.3],
+    ['en', STANDARD, 1.3],
+  ])(
+    'keeps one row of columns for %s at width %i, text scale %s',
+    (lang, width, fontScale) => {
+      expect(
+        shouldStackPickerColumns({
+          width,
+          fontScale,
+          monthLabels: months(lang),
+        })
+      ).toBe(false);
+    }
+  );
+
+  it.each([
+    ['en', SMALL, 2],
+    ['en', SMALL, 3],
+    ['fr-CA', SMALL, 2],
+    ['fr-CA', SMALL, 3],
+    ['ar', SMALL, 3],
+    ['en', STANDARD, 2],
+  ])(
+    'stacks the month above day and year for %s at width %i, text scale %s',
+    (lang, width, fontScale) => {
+      expect(
+        shouldStackPickerColumns({
+          width,
+          fontScale,
+          monthLabels: months(lang),
+        })
+      ).toBe(true);
+    }
+  );
+
+  it('never stacks before the width is known', () => {
+    expect(
+      shouldStackPickerColumns({
+        width: 0,
+        fontScale: 3,
+        monthLabels: months('en'),
+      })
+    ).toBe(false);
   });
 });

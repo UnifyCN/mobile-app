@@ -17,7 +17,11 @@ import {
 import { typography } from '@/constants/Typography';
 import {
   getPickerOptions,
+  PICKER_COLUMN_FLEX,
+  PICKER_COLUMN_GAP,
+  PICKER_ROW_PADDING_X,
   setPickerPart,
+  shouldStackPickerColumns,
   type PickerPart,
 } from '@/helpers/arrivalDatePicker';
 
@@ -37,6 +41,8 @@ const VISIBLE_ROWS = 5;
 const MIN_VISIBLE_ROWS = 3;
 // On a short screen the picker may not take more than this share of the window.
 const MAX_WINDOW_SHARE = 0.34;
+// Sheet side padding. Only the first guess of the picker width, before layout.
+const SHEET_PADDING_X = 20;
 
 interface Option {
   value: number;
@@ -145,72 +151,32 @@ const columnOrder = (language: string): PickerPart[] => {
   return ['month', 'day', 'year'];
 };
 
-/**
- * Day-level date picker built from three scroll columns, the same pattern as
- * the onboarding month/year picker. One implementation for iOS and Android.
- * Row height follows the user's font scale. The viewport is shorter on a short
- * screen, and the selection band follows the measured viewport and row.
- */
-export function ArrivalDatePicker({
-  value,
-  min,
-  max,
-  language,
-  onChange,
-}: Props) {
-  const { fontScale, height: windowHeight } = useWindowDimensions();
-  const rowHeight = Math.max(
-    MIN_ROW_HEIGHT,
-    Math.ceil(typography.body.lineHeight * fontScale) + ROW_PADDING * 2
-  );
-  // Five rows, fewer on a short screen, never fewer than three.
-  const nominalViewport = Math.max(
-    rowHeight * MIN_VISIBLE_ROWS,
-    Math.min(rowHeight * VISIBLE_ROWS, windowHeight * MAX_WINDOW_SHARE)
-  );
+interface GroupProps {
+  index: number;
+  parts: PickerPart[];
+  columns: Record<PickerPart, { options: Option[] }>;
+  selectedValue: Record<PickerPart, number>;
+  rowHeight: number;
+  nominalViewport: number;
+  onSelect: (part: PickerPart, value: number) => void;
+}
 
+/** One row of columns with its own selection band and measured viewport. */
+function PickerGroup({
+  index,
+  parts,
+  columns,
+  selectedValue,
+  rowHeight,
+  nominalViewport,
+  onSelect,
+}: GroupProps) {
   const [measuredViewport, setMeasuredViewport] = useState<number | null>(null);
   const viewportHeight = measuredViewport ?? nominalViewport;
   const [selectedHeights, setSelectedHeights] = useState<
     Partial<Record<PickerPart, number>>
   >({});
   const bandHeight = Math.max(rowHeight, ...Object.values(selectedHeights));
-
-  const range = useMemo(() => ({ min, max }), [min, max]);
-  const options = getPickerOptions(value, range);
-
-  const monthNames = useMemo(() => {
-    let format: Intl.DateTimeFormat;
-    try {
-      format = new Intl.DateTimeFormat(language, { month: 'long' });
-    } catch {
-      format = new Intl.DateTimeFormat('en', { month: 'long' });
-    }
-    return Array.from({ length: 12 }, (_, m) =>
-      format.format(new Date(2026, m, 1))
-    );
-  }, [language]);
-
-  const columns: Record<PickerPart, { options: Option[]; flex: number }> = {
-    // Month names are the longest labels, so that column gets the most width.
-    month: {
-      options: options.months.map(m => ({ value: m, label: monthNames[m] })),
-      flex: 2.2,
-    },
-    day: {
-      options: options.days.map(d => ({ value: d, label: String(d) })),
-      flex: 0.8,
-    },
-    year: {
-      options: options.years.map(y => ({ value: y, label: String(y) })),
-      flex: 1.2,
-    },
-  };
-  const selectedValue: Record<PickerPart, number> = {
-    month: value.getMonth(),
-    day: value.getDate(),
-    year: value.getFullYear(),
-  };
 
   const reportHeight = useCallback(
     (part: PickerPart) => (height: number) =>
@@ -230,33 +196,130 @@ export function ArrivalDatePicker({
 
   return (
     <View
-      testID='arrival-date-picker'
+      testID={`arrival-date-picker-group-${index}`}
       onLayout={event => setMeasuredViewport(event.nativeEvent.layout.height)}
-      style={[styles.container, { height: nominalViewport }]}
+      style={[styles.group, { height: nominalViewport }]}
     >
       <View
-        testID='arrival-date-picker-band'
+        testID={`arrival-date-picker-band-${index}`}
         pointerEvents='none'
         style={[
           styles.selectionBand,
           { top: (viewportHeight - bandHeight) / 2, height: bandHeight },
         ]}
       />
-      {columnOrder(language).map(part => (
+      {parts.map(part => (
         <PickerColumn
           key={part}
           options={columns[part].options}
           selected={selectedValue[part]}
-          flex={columns[part].flex}
+          flex={parts.length === 1 ? 1 : PICKER_COLUMN_FLEX[part]}
           rowHeight={rowHeight}
           viewportHeight={viewportHeight}
-          onSelect={next => {
-            // Pressing the value that is already shown changes nothing. This
-            // keeps a saved date outside the range from becoming a pick.
-            if (next === selectedValue[part]) return;
-            onChange(setPickerPart(value, part, next, range));
-          }}
+          onSelect={next => onSelect(part, next)}
           onSelectedHeight={reporters[part]}
+        />
+      ))}
+    </View>
+  );
+}
+
+/**
+ * Day-level date picker built from three scroll columns, the same pattern as
+ * the onboarding month/year picker. One implementation for iOS and Android.
+ * Row height follows the user's font scale. The viewport is shorter on a short
+ * screen, and the selection band follows the measured viewport and row. When
+ * the labels no longer fit side by side at the user's text size, the month
+ * gets its own row above day and year, so no date part is cropped or broken.
+ */
+export function ArrivalDatePicker({
+  value,
+  min,
+  max,
+  language,
+  onChange,
+}: Props) {
+  const {
+    fontScale,
+    width: windowWidth,
+    height: windowHeight,
+  } = useWindowDimensions();
+  const rowHeight = Math.max(
+    MIN_ROW_HEIGHT,
+    Math.ceil(typography.body.lineHeight * fontScale) + ROW_PADDING * 2
+  );
+  // Five rows, fewer on a short screen, never fewer than three.
+  const nominalViewport = Math.max(
+    rowHeight * MIN_VISIBLE_ROWS,
+    Math.min(rowHeight * VISIBLE_ROWS, windowHeight * MAX_WINDOW_SHARE)
+  );
+  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null);
+  const width = measuredWidth ?? windowWidth - SHEET_PADDING_X * 2;
+
+  const range = useMemo(() => ({ min, max }), [min, max]);
+  const options = getPickerOptions(value, range);
+
+  const monthNames = useMemo(() => {
+    let format: Intl.DateTimeFormat;
+    try {
+      format = new Intl.DateTimeFormat(language, { month: 'long' });
+    } catch {
+      format = new Intl.DateTimeFormat('en', { month: 'long' });
+    }
+    return Array.from({ length: 12 }, (_, m) =>
+      format.format(new Date(2026, m, 1))
+    );
+  }, [language]);
+
+  const columns: Record<PickerPart, { options: Option[] }> = {
+    month: {
+      options: options.months.map(m => ({ value: m, label: monthNames[m] })),
+    },
+    day: { options: options.days.map(d => ({ value: d, label: String(d) })) },
+    year: {
+      options: options.years.map(y => ({ value: y, label: String(y) })),
+    },
+  };
+  const selectedValue: Record<PickerPart, number> = {
+    month: value.getMonth(),
+    day: value.getDate(),
+    year: value.getFullYear(),
+  };
+
+  const order = columnOrder(language);
+  const stacked = shouldStackPickerColumns({
+    width,
+    fontScale,
+    monthLabels: monthNames,
+  });
+  const groups: PickerPart[][] = stacked
+    ? [['month'], order.filter(part => part !== 'month')]
+    : [order];
+
+  const select = (part: PickerPart, next: number) => {
+    // Pressing the value that is already shown changes nothing. This keeps a
+    // saved date outside the range from becoming a pick.
+    if (next === selectedValue[part]) return;
+    onChange(setPickerPart(value, part, next, range));
+  };
+
+  return (
+    <View
+      testID='arrival-date-picker'
+      onLayout={event => setMeasuredWidth(event.nativeEvent.layout.width)}
+      style={styles.container}
+    >
+      {groups.map((parts, index) => (
+        <PickerGroup
+          // The group set changes with the layout; remount to drop old heights.
+          key={`${stacked}-${index}`}
+          index={index}
+          parts={parts}
+          columns={columns}
+          selectedValue={selectedValue}
+          rowHeight={rowHeight}
+          nominalViewport={nominalViewport}
+          onSelect={select}
         />
       ))}
     </View>
@@ -265,8 +328,11 @@ export function ArrivalDatePicker({
 
 const styles = StyleSheet.create({
   container: {
+    gap: PICKER_COLUMN_GAP,
+  },
+  group: {
     flexDirection: 'row',
-    gap: 4,
+    gap: PICKER_COLUMN_GAP,
   },
   selectionBand: {
     position: 'absolute',
@@ -282,7 +348,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: ROW_PADDING,
-    paddingHorizontal: 4,
+    paddingHorizontal: PICKER_ROW_PADDING_X,
   },
   rowText: {
     ...typography.body,

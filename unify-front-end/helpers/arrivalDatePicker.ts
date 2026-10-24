@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { formatLocalDate, parseArrivalDate } from '@/helpers/arrivalDate';
+import { typography } from '@/constants/Typography';
 
 export const ARRIVAL_DATE_YEARS_BACK = 5;
 export const ARRIVAL_DATE_YEARS_AHEAD = 3;
@@ -78,4 +79,55 @@ export const setPickerPart = (
   if (next < range.min) return new Date(range.min);
   if (next > range.max) return new Date(range.max);
   return next;
+};
+
+/** Share of the row width each column gets when the three sit side by side. */
+export const PICKER_COLUMN_FLEX: Record<PickerPart, number> = {
+  month: 2.2,
+  day: 0.8,
+  year: 1.2,
+};
+export const PICKER_COLUMN_GAP = 4;
+export const PICKER_ROW_PADDING_X = 4;
+
+// Widest glyph advance of the semi-bold selected label, as a share of font
+// size. Measured at 0.58 to 0.63 for month names and digits; rounded up so a
+// borderline label stacks instead of clipping.
+const GLYPH_ADVANCE = 0.65;
+
+const longest = (labels: string[]) =>
+  labels.reduce((max, label) => Math.max(max, label.length), 0);
+
+/**
+ * True when the month, day, and year labels do not fit in one row of columns
+ * at the user's text scale. The picker then puts the month in its own row, so
+ * every date part stays on one line at full size. An unknown width never
+ * stacks.
+ */
+export const shouldStackPickerColumns = ({
+  width,
+  fontScale,
+  monthLabels,
+}: {
+  width: number;
+  fontScale: number;
+  monthLabels: string[];
+}): boolean => {
+  if (width <= 0) return false;
+  const fontSize = typography.cardTitle.fontSize * fontScale;
+  const available = width - PICKER_COLUMN_GAP * 2;
+  const totalFlex = Object.values(PICKER_COLUMN_FLEX).reduce(
+    (sum, flex) => sum + flex,
+    0
+  );
+  const widest: Record<PickerPart, number> = {
+    month: longest(monthLabels),
+    day: 2,
+    year: 4,
+  };
+  return (Object.keys(widest) as PickerPart[]).some(part => {
+    const needed =
+      widest[part] * fontSize * GLYPH_ADVANCE + PICKER_ROW_PADDING_X * 2;
+    return needed > (available * PICKER_COLUMN_FLEX[part]) / totalFlex;
+  });
 };
