@@ -8,6 +8,8 @@ import {
 
 // The stage rule lives in the shared module so the edge functions use the same code.
 export type { ArrivalStage };
+// The one normalizer for a stored arrival_date (a database timestamp or a plain date).
+export { normalizeStoredArrivalDate } from '@/supabase/functions/_shared/arrivalStage';
 
 export type ArrivalCountdown =
   | { state: 'pre_arrival'; days: number }

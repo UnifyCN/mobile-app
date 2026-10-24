@@ -47,6 +47,34 @@ describe('buildCompanionProfile', () => {
     expect(prompts(row({ arrival_date: '2026-11-12', stage: '3' }))).toContain(PLANNING);
   });
 
+  it('reads the hosted timestamptz arrival date as the chosen day: stage 0, planning starter', () => {
+    const stored = row({ arrival_date: '2026-12-02T00:00:00+00:00', stage: null });
+    const profile = buildCompanionProfile(stored, TODAY);
+    expect(profile.arrival_date).toBe('2026-12-02');
+    expect(profile.stage).toBe(0);
+    const out = prompts(stored);
+    expect(out).toContain(PLANNING);
+    expect(out).toContain('How should I prepare before arriving in Canada?');
+  });
+
+  it('reads a stored timestamp from the first month as stage 1', () => {
+    const profile = buildCompanionProfile(
+      row({ arrival_date: '2026-10-20T00:00:00+00:00' }),
+      TODAY
+    );
+    expect(profile.arrival_date).toBe('2026-10-20');
+    expect(profile.stage).toBe(1);
+  });
+
+  it('gives unknown for an unreadable stored timestamp', () => {
+    const profile = buildCompanionProfile(
+      row({ arrival_date: '2026-02-30T00:00:00+00:00', stage: '1' }),
+      TODAY
+    );
+    expect(profile.arrival_date).toBeNull();
+    expect(profile.stage).toBeNull();
+  });
+
   it('gives first month from the arrival date even when no stage is stored', () => {
     expect(prompts(row({ arrival_date: '2026-10-20', stage: null }))).toContain(
       FIRST_MONTH

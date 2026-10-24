@@ -4,7 +4,10 @@ import {
   UserOnboardingProfile,
 } from '@/types/onboardingProfile';
 import { getArrivalStage } from '@/helpers/arrivalDate';
-import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
+import {
+  normalizeStoredArrivalDate,
+  resolveStoredStage,
+} from '@/supabase/functions/_shared/arrivalStage';
 import { normalizeProvince } from '@/constants/LocationData';
 import { redeemReferral, type RedeemResult } from '@/services/referrals/redeemReferral';
 
@@ -56,8 +59,12 @@ export const saveOnboardingProfile = async (
     }
 
     // The stage is a cache of the arrival date written above, so write both
-    // together. A missing or invalid date writes null (unknown).
-    supabaseData.stage = getArrivalStage(data.arrival_date);
+    // together. The caller may send a timestamp (the quiz sends the first of
+    // the month at UTC midnight), so the stage comes from the normalized
+    // calendar date. A missing or invalid date writes null (unknown).
+    supabaseData.stage = getArrivalStage(
+      normalizeStoredArrivalDate(data.arrival_date)
+    );
 
     // Upsert the profile
     const { data: result, error } = await supabase
@@ -78,7 +85,7 @@ export const saveOnboardingProfile = async (
       persona_other: result.persona_other,
       referral_source: result.referral_source,
       referral_source_other: result.referral_source_other,
-      arrival_date: result.arrival_date,
+      arrival_date: normalizeStoredArrivalDate(result.arrival_date),
       city: result.city,
       province: normalizeProvince(result.province),
       stage: resolveStoredStage(result.stage),

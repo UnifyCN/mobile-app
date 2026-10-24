@@ -41,7 +41,10 @@ const PROFILE = {
   hobbies: [],
 };
 
-function fakeSupabase(modules: () => Response) {
+function fakeSupabase(
+  modules: () => Response,
+  profile: Record<string, unknown> = PROFILE
+) {
   const calls: string[] = [];
   const realFetch = globalThis.fetch;
   globalThis.fetch = (input: Request | URL | string) => {
@@ -53,7 +56,7 @@ function fakeSupabase(modules: () => Response) {
       return Promise.resolve(json({ id: 'user-1' }));
     }
     if (url.pathname === '/rest/v1/user_onboarding_profiles') {
-      return Promise.resolve(json(PROFILE));
+      return Promise.resolve(json(profile));
     }
     if (url.pathname === '/rest/v1/learn_modules') {
       return Promise.resolve(modules());
@@ -164,4 +167,55 @@ test('all-excluded successful metadata stays empty, not null', async () => {
     ])
   );
   assertEquals(body.learn, { modules: [] });
+});
+
+// The hosted arrival_date column is a timestamptz. PostgREST returns a date
+// the user chose, 2026-12-02, as the exact string below.
+async function callCompanion(arrival_date: string | null) {
+  const fake = fakeSupabase(() => json([]), { ...PROFILE, arrival_date });
+  try {
+    const res = await handler!(
+      new Request('http://localhost/personalize?surfaces=companion', {
+        headers: { Authorization: 'Bearer test', 'x-local-date': '2026-10-23' },
+      })
+    );
+    assertEquals(res.status, 200);
+    // deno-lint-ignore no-explicit-any
+    return (await res.json()) as any;
+  } finally {
+    fake.restore();
+  }
+}
+
+// deno-lint-ignore no-explicit-any
+const starterIds = (body: any): string[] =>
+  body.companion.starters.map((s: { id: string }) => s.id);
+
+test('a stored arrival timestamp is stage 0 with the planning starter', async () => {
+  const body = await callCompanion('2026-12-02T00:00:00+00:00');
+  assertEquals(body.companion.context.stage, '0');
+  assertEquals(body.companion.context.arrival_date, '2026-12-02');
+  assert(starterIds(body).includes('stage_planning'), 'planning starter missing');
+});
+
+test('a plain stored date is still stage 0 with the planning starter', async () => {
+  const body = await callCompanion('2026-12-02');
+  assertEquals(body.companion.context.stage, '0');
+  assertEquals(body.companion.context.arrival_date, '2026-12-02');
+  assert(starterIds(body).includes('stage_planning'), 'planning starter missing');
+});
+
+test('an unreadable stored timestamp stays unknown: no stage, no stage starter', async () => {
+  const body = await callCompanion('2026-02-30T00:00:00+00:00');
+  assertEquals(body.companion.context.stage, null);
+  assertEquals(body.companion.context.arrival_date, null);
+  const ids = starterIds(body);
+  assert(!ids.includes('stage_planning'));
+  assert(!ids.includes('stage_recently_arrived'));
+});
+
+test('a missing arrival date stays unknown', async () => {
+  const body = await callCompanion(null);
+  assertEquals(body.companion.context.stage, null);
+  assertEquals(body.companion.context.arrival_date, null);
 });
