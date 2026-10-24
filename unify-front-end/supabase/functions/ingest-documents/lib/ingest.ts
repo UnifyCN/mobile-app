@@ -1,9 +1,21 @@
 import { chunkText } from './chunker.ts';
-import { chunkMetadata, documentMetadata, publishedAt } from './metadata.ts';
+import {
+  chunkMetadata,
+  documentMetadata,
+  newestPublishedAt,
+  publishedAt,
+  recordChunkMetadata,
+} from './metadata.ts';
 import { extractDateModified } from './pageDates.ts';
 import type { CrawlSource } from './pickDueSources.ts';
+import { loadSourceRecords } from './records.ts';
 import { computeContentHash, htmlToCleanText, isQualityChunk } from './text.ts';
-import type { IngestDeps, SourceResult } from './types.ts';
+import type {
+  IngestDeps,
+  Metadata,
+  SourceResult,
+  StoredDocument,
+} from './types.ts';
 
 export const EMBEDDING_BATCH_SIZE = 20;
 const MIN_CONTENT_CHARS = 100;
@@ -18,7 +30,10 @@ export async function ingestSource(
   const attemptedAt = deps.now().toISOString();
   let outcome: SourceResult;
   try {
-    outcome = await crawlSource(source, deps, attemptedAt);
+    outcome =
+      source.source_kind === 'html' || source.source_kind === undefined
+        ? await crawlHtml(source, deps, attemptedAt)
+        : await crawlRecords(source, deps, attemptedAt);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Crawl failed';
     console.error(`Crawl failed for ${source.url}: ${message}`);
@@ -39,7 +54,7 @@ export async function ingestSource(
   return outcome;
 }
 
-async function crawlSource(
+async function crawlHtml(
   source: CrawlSource,
   deps: IngestDeps,
   now: string
@@ -78,14 +93,110 @@ async function crawlSource(
     );
   }
 
+  return await replaceChunks(deps, {
+    source,
+    existing,
+    now,
+    contentHash,
+    document: {
+      title: cleanText.split('\n')[0].slice(0, 200) || source.url,
+      metadata: documentMetadata(stamp, {
+        wordCount: cleanText.split(/\s+/).length,
+        chunkCount: chunks.length,
+      }),
+    },
+    chunks: chunks.map(text => ({ text, metadata: chunkMetadata(stamp) })),
+  });
+}
+
+/**
+ * A source whose official JSON gives one record per fact. Each record is one
+ * chunk with its own dates. Records skip the prose chunker and the prose
+ * quality filter, which would drop short valid facts.
+ */
+async function crawlRecords(
+  source: CrawlSource,
+  deps: IngestDeps,
+  now: string
+): Promise<SourceResult> {
+  const { store } = deps;
+  const records = await loadSourceRecords(
+    source,
+    deps.fetchPage,
+    new Date(now)
+  );
+  if (records.length === 0) {
+    // An empty result is a broken feed, not news: keep the previous content.
+    throw new Error('No records in the source');
+  }
+  // Dates are not hashed: a changed date alone refreshes metadata without
+  // embedding again.
+  const contentHash = await computeContentHash(
+    records.map(r => r.text).join('\n')
+  );
+  const existing = await store.findDocument(source.url);
+  const stamp = { fetchedAt: now, province: source.province };
+  const chunks = records.map(record => ({
+    text: record.text,
+    metadata: recordChunkMetadata(stamp, record),
+  }));
+  const documentPatch = {
+    fetched_at: now,
+    published_at: newestPublishedAt(now, records),
+    province: source.province,
+  };
+
+  if (existing && existing.contentHash === contentHash) {
+    await store.refreshRecordMetadata(existing.id, {
+      documentPatch,
+      chunks: chunks.map((chunk, chunkIndex) => ({
+        chunkIndex,
+        metadata: chunk.metadata,
+      })),
+    });
+    return { source_id: source.id, status: 'skipped' };
+  }
+
+  return await replaceChunks(deps, {
+    source,
+    existing,
+    now,
+    contentHash,
+    document: {
+      title: source.label ?? source.url,
+      metadata: {
+        word_count: records.reduce(
+          (sum, r) => sum + r.text.split(/\s+/).length,
+          0
+        ),
+        chunk_count: records.length,
+        source: 'crawler',
+        ...documentPatch,
+      },
+    },
+    chunks,
+  });
+}
+
+interface ReplaceInput {
+  source: CrawlSource;
+  existing: StoredDocument | null;
+  now: string;
+  contentHash: string;
+  document: { title: string; metadata: Metadata };
+  chunks: Array<{ text: string; metadata: Metadata }>;
+}
+
+async function replaceChunks(
+  deps: IngestDeps,
+  { source, existing, now, contentHash, document, chunks }: ReplaceInput
+): Promise<SourceResult> {
+  const { store } = deps;
   const documentInput = {
     url: source.url,
-    title: cleanText.split('\n')[0].slice(0, 200) || source.url,
+    title: document.title,
     updatedAt: now,
-    metadata: documentMetadata(stamp, {
-      wordCount: cleanText.split(/\s+/).length,
-      chunkCount: chunks.length,
-    }),
+    metadata: document.metadata,
   };
   // A new document needs its row first to own the chunks. An existing document
   // keeps its row untouched until the new chunks are safely written.
@@ -95,15 +206,15 @@ async function crawlSource(
   try {
     for (let i = 0; i < chunks.length; i += EMBEDDING_BATCH_SIZE) {
       const batch = chunks.slice(i, i + EMBEDDING_BATCH_SIZE);
-      const embeddings = await deps.embed(batch);
+      const embeddings = await deps.embed(batch.map(chunk => chunk.text));
       await store.insertChunks(
-        batch.map((text, offset) => ({
+        batch.map((chunk, offset) => ({
           document_id: documentId,
           chunk_index: i + offset,
-          chunk_text: text,
+          chunk_text: chunk.text,
           embedding: embeddings[offset],
           updated_at: now,
-          metadata: chunkMetadata(stamp),
+          metadata: chunk.metadata,
         }))
       );
     }

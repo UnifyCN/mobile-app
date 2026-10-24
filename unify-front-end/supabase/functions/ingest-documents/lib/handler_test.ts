@@ -259,3 +259,51 @@ Deno.test('a malformed JSON body is a 400 and fetches nothing', async () => {
   await res.body?.cancel();
   assertEquals(h.fetched, []);
 });
+
+// Falsifier: if the scheduled picker ignored record sources, the two due
+// record sources would not both be crawled, one after the other.
+Deno.test(
+  'a scheduled run crawls two due record sources one at a time',
+  async () => {
+    const ee =
+      'https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json';
+    const news = 'https://api.io.canada.ca/io-server/gc/news/en/v2?x=1';
+    const sources = [
+      makeSource(7, {
+        source_kind: 'ircc_express_entry_rounds',
+        data_urls: [ee],
+        last_crawled_at: hoursAgo(30),
+      }),
+      makeSource(30, {
+        source_kind: 'ircc_newsroom',
+        data_urls: [news],
+        last_crawled_at: null,
+      }),
+      makeSource(31, { last_crawled_at: hoursAgo(500) }),
+    ];
+    const h = makeHarness(sources, {
+      [ee]: Deno.readTextFileSync(
+        new URL('./fixtures/ircc/ee_rounds_sample.json', import.meta.url)
+      ),
+      [news]: Deno.readTextFileSync(
+        new URL('./fixtures/ircc/newsroom_shape.json', import.meta.url)
+      ),
+    });
+
+    const response = await call(h, request({}));
+
+    const body = await response.json();
+    assertEquals(response.status, 200);
+    assertEquals(
+      body.results.map((r: { source_id: number; status: string }) => [
+        r.source_id,
+        r.status,
+      ]),
+      [
+        [30, 'success'],
+        [31, 'error'],
+      ]
+    );
+    assertEquals(h.fetched, [news, sources[2].url]);
+  }
+);

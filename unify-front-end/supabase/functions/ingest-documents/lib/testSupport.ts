@@ -17,6 +17,8 @@ export function makeSource(
     crawl_frequency_hours: 24,
     last_crawled_at: null,
     province: null,
+    source_kind: 'html',
+    data_urls: null,
     ...overrides,
   };
 }

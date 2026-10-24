@@ -17,6 +17,8 @@ function source(id: number, overrides: Partial<CrawlSource> = {}): CrawlSource {
     crawl_frequency_hours: 24,
     last_crawled_at: hoursAgo(48),
     province: null,
+    source_kind: 'html',
+    data_urls: null,
     ...overrides,
   };
 }

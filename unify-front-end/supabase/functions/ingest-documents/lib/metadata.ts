@@ -34,3 +34,39 @@ export function documentMetadata(
     ...chunkMetadata(stamp),
   };
 }
+
+/** Fields of one record that reach its chunk metadata. */
+export interface RecordStamp {
+  /** The record's own date (YYYY-MM-DD), or null when the source gives none. */
+  publishedAt: string | null;
+  sourceUrl?: string;
+}
+
+/**
+ * Metadata of one record's chunk. The record keeps its own date; the fetch date
+ * stands in only when the source gives none. A record with its own page keeps
+ * that address, so a citation can point at the item.
+ */
+export function recordChunkMetadata(
+  stamp: Pick<CrawlStamp, 'fetchedAt' | 'province'>,
+  record: RecordStamp
+): Metadata {
+  return {
+    source: 'crawler',
+    fetched_at: stamp.fetchedAt,
+    published_at: record.publishedAt ?? stamp.fetchedAt.slice(0, 10),
+    ...(stamp.province === null ? {} : { province: stamp.province }),
+    ...(record.sourceUrl === undefined ? {} : { source_url: record.sourceUrl }),
+  };
+}
+
+/** Newest record date, for the document. Records keep their own dates. */
+export function newestPublishedAt(
+  fetchedAt: string,
+  records: RecordStamp[]
+): string {
+  const dates = records.map(r => r.publishedAt).filter(d => d !== null);
+  return dates.length === 0
+    ? fetchedAt.slice(0, 10)
+    : dates.reduce((a, b) => (a! > b! ? a : b))!;
+}

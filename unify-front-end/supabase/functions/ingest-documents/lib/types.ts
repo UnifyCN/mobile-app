@@ -52,6 +52,17 @@ export interface IngestStore {
     documentId: number,
     input: { documentPatch: Metadata; chunkMetadata: Metadata }
   ): Promise<void>;
+  /**
+   * For record sources. Merges `documentPatch` into the document metadata and
+   * sets each listed chunk's own metadata, so every record keeps its own dates.
+   */
+  refreshRecordMetadata(
+    documentId: number,
+    input: {
+      documentPatch: Metadata;
+      chunks: Array<{ chunkIndex: number; metadata: Metadata }>;
+    }
+  ): Promise<void>;
   /** Stamps the source's last attempt, whatever its outcome. */
   recordAttempt(sourceId: number, at: string): Promise<void>;
   logCrawl(entry: CrawlLogEntry): Promise<void>;

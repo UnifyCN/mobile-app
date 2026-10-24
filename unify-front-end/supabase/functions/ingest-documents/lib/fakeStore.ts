@@ -114,6 +114,23 @@ export class FakeStore implements IngestStore {
     }
     return Promise.resolve();
   }
+  refreshRecordMetadata(
+    documentId: number,
+    input: {
+      documentPatch: Metadata;
+      chunks: Array<{ chunkIndex: number; metadata: Metadata }>;
+    }
+  ) {
+    const d = this.documents.find(x => x.id === documentId)!;
+    d.metadata = { ...d.metadata, ...input.documentPatch };
+    for (const { chunkIndex, metadata } of input.chunks) {
+      const chunk = this.chunks.find(
+        c => c.document_id === documentId && c.chunk_index === chunkIndex
+      );
+      if (chunk) chunk.metadata = { ...metadata };
+    }
+    return Promise.resolve();
+  }
   recordAttempt(sourceId: number, at: string) {
     if (this.failRecordAttemptFor.has(sourceId)) {
       return Promise.reject(new Error('database unavailable'));

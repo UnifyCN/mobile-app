@@ -1,3 +1,13 @@
+/**
+ * How a source is read. 'html' crawls the page at `url`. The other kinds read
+ * the official JSON in `data_urls` and keep `url` as the citation.
+ */
+export type SourceKind =
+  | 'html'
+  | 'ircc_express_entry_rounds'
+  | 'ircc_processing_times'
+  | 'ircc_newsroom';
+
 export interface CrawlSource {
   id: number;
   url: string;
@@ -7,6 +17,9 @@ export interface CrawlSource {
   last_crawled_at: string | null;
   /** Canonical English province or territory name. Null means national. */
   province: string | null;
+  source_kind: SourceKind;
+  /** Official JSON addresses for a non-html source. */
+  data_urls: string[] | null;
 }
 
 export function pickDueSources(
