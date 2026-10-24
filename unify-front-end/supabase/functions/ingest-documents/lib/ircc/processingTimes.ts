@@ -105,6 +105,11 @@ function convertCountryTimes(
     const codes = Object.keys(section)
       .filter(code => COUNTRY_CODE.test(code))
       .sort((a, b) => ((names.get(a) ?? a) < (names.get(b) ?? b) ? -1 : 1));
+    if (codes.length === 0) {
+      throw new Error(
+        `Processing times: no country values in ${category.key} section`
+      );
+    }
     for (const code of codes) {
       const value = section[code];
       const inCanada = code === 'CA' && category.inCanadaLabel !== undefined;

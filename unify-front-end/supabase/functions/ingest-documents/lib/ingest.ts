@@ -200,7 +200,10 @@ async function crawlRecords(
     (await store.refreshMetadata(source.id, attempt.token, {
       contentHash,
       documentPatch,
-      chunkGroups: groupByMetadata(chunks.map(chunk => chunk.metadata)),
+      chunkGroups:
+        chunks.length === 0
+          ? [{ metadata: {}, indexes: [] }]
+          : groupByMetadata(chunks.map(chunk => chunk.metadata)),
     }))
   ) {
     return { source_id: source.id, status: 'skipped' };

@@ -592,6 +592,49 @@ Deno.test(
   }
 );
 
+// Falsifier: an empty required country group removes its records while the
+// remaining groups still produce a successful partial replacement.
+Deno.test(
+  'an empty required country group preserves all stored records',
+  async () => {
+    const db = await openIngestDb();
+    try {
+      const processing = await source(db, PROCESSING_PAGE);
+      const pages = processingPages();
+      assertEquals(
+        (
+          await ingestSource(
+            processing,
+            deps(db, { at: '2026-10-24T00:00:00Z', pages })
+          )
+        ).status,
+        'success'
+      );
+      const before = await chunksOf(db, PROCESSING_PAGE);
+      const beforeDocument = await documentOf(db, PROCESSING_PAGE);
+      const country = JSON.parse(pages[JSON_BASE + 'data-ptime-en.json']);
+      country.work = {};
+      pages[JSON_BASE + 'data-ptime-en.json'] = JSON.stringify(country);
+      assertEquals(
+        await ingestSource(
+          processing,
+          deps(db, { at: '2026-10-25T00:00:00Z', pages })
+        ),
+        {
+          source_id: processing.id,
+          status: 'error',
+          error: 'Processing times: no country values in work section',
+        }
+      );
+      assertEquals(before.length, 1950);
+      assertEquals(await chunksOf(db, PROCESSING_PAGE), before);
+      assertEquals(await documentOf(db, PROCESSING_PAGE), beforeDocument);
+    } finally {
+      await db.close();
+    }
+  }
+);
+
 // Falsifier: the reviewed converter drops the malformed #402 and the crawl
 // replaces #401 and #400 with #400 alone.
 Deno.test(
@@ -709,6 +752,49 @@ Deno.test(
     }
   }
 );
+
+// Falsifier: a second valid empty window fails metadata refresh instead of
+// advancing the source metadata while retrieval stays empty.
+Deno.test('repeated valid empty news windows refresh metadata', async () => {
+  const db = await openIngestDb();
+  try {
+    const news = await source(db, NEWS_PAGE);
+    const feed = JSON.stringify({
+      feed: {
+        entry: [{ publishedDate: '2026-09-01', title: 'Expired policy' }],
+      },
+    });
+    assertEquals(
+      await ingestSource(
+        news,
+        deps(db, { at: '2026-10-24T00:00:00Z', pages: feed })
+      ),
+      { source_id: news.id, status: 'success', chunks_created: 0 }
+    );
+    assertEquals(
+      await ingestSource(
+        news,
+        deps(db, { at: '2026-10-25T00:00:00Z', pages: feed })
+      ),
+      { source_id: news.id, status: 'skipped' }
+    );
+    assertEquals(
+      (await documentOf(db, NEWS_PAGE)).fetched_at,
+      '2026-10-25T00:00:00.000Z'
+    );
+    assertEquals(
+      await rows(
+        db,
+        `select chunk_text from public.match_chunks($1::vector, 0.1, 10)`,
+        [embedding(0.5)]
+      ),
+      []
+    );
+    assertEquals(await leftovers(db), { leases: 0, staged: 0 });
+  } finally {
+    await db.close();
+  }
+});
 
 // Falsifier: the reviewed parser gives the OINP page the fetch date.
 Deno.test(
