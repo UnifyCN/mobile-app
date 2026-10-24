@@ -10,7 +10,6 @@ import {
   Alert,
   Dimensions,
   View,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,6 +29,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
+import { useRefreshingToday } from '@/hooks/checklist/useRefreshingToday';
 import { useChecklistProfile } from '@/hooks/checklist/useChecklistProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
@@ -41,6 +41,7 @@ import { upsertChecklistTaskOrder } from '@/services/checklist/checklistTaskOrde
 import { ChecklistItem } from '@/components/checklist/ChecklistItem';
 import { ChecklistSectionHeader } from '@/components/checklist/ChecklistSectionHeader';
 import { TaskDetailModal } from '@/components/checklist/TaskDetailModal';
+import { ArrivalCountdownSection } from '@/components/checklist/ArrivalCountdownSection';
 import { supabase } from '@/lib/supabase';
 import {
   ChecklistLinkTabSlug,
@@ -56,6 +57,7 @@ import {
 import { PRIORITY_CONFIG } from '@/constants/ChecklistPriority';
 import { firstPartnerHelpKey } from '@/constants/PartnerSpotlight';
 import { useHapticsPreference } from '@/context/HapticsContext';
+import { useCurrentUser } from '@/context/UserContext';
 import TabHeader from '@/components/home/HomeHeader';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -185,11 +187,19 @@ export default function ChecklistScreen() {
     trackChecklistTaskUncompleted,
     trackChecklistCustomTaskDeleted,
   } = useAnalytics();
+  // One local day for the card, the stage and the checklist. It moves on focus
+  // and when the app returns to the foreground.
+  const today = useRefreshingToday();
   const {
     currentStage,
     stageChanged,
+    arrivalDate,
+    userId,
+    refreshStage,
+    applyConfirmedArrival,
     isLoading: stageLoading,
-  } = useUserStage();
+  } = useUserStage(today);
+  const { refreshUser } = useCurrentUser();
   const {
     persona,
     province,
@@ -220,6 +230,7 @@ export default function ChecklistScreen() {
     currentStage,
     stageChanged,
     persona,
+    isStageLoading: stageLoading,
     province,
   });
 
@@ -230,7 +241,7 @@ export default function ChecklistScreen() {
   useFocusEffect(
     useCallback(() => {
       trackScreen('Checklist');
-      if (currentStage === null || !persona) return;
+      if (stageLoading || !persona) return;
       let cancelled = false;
       refreshProfile().then(skipRefetch => {
         if (!cancelled && !skipRefetch) refetch();
@@ -238,7 +249,7 @@ export default function ChecklistScreen() {
       return () => {
         cancelled = true;
       };
-    }, [currentStage, persona, refetch, refreshProfile, trackScreen])
+    }, [stageLoading, persona, refetch, refreshProfile, trackScreen])
   );
 
   const activeTasks = useMemo(
@@ -645,27 +656,6 @@ export default function ChecklistScreen() {
     ? t(PERSONA_KEYS[persona as keyof typeof PERSONA_KEYS] || 'common.user')
     : t('common.user');
 
-  // Don't show checklist if stage is null
-  if (currentStage === null) {
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-        >
-          <View style={styles.header}>
-            <View style={styles.titleRow}>
-              <Text style={styles.title}>{t('checklist.title')}</Text>
-            </View>
-            <Text style={styles.subtitle}>
-              {t('checklist.onboardingRequired')}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-
   const ListHeader = (
     <View style={styles.header}>
       <View style={styles.titleRow}>
@@ -684,6 +674,15 @@ export default function ChecklistScreen() {
       <Text style={styles.subtitle}>
         {personaDisplay} - {stageDescription}
       </Text>
+      <ArrivalCountdownSection
+        userId={userId}
+        arrivalDate={arrivalDate}
+        today={today}
+        refreshStage={refreshStage}
+        refreshUser={refreshUser}
+        refetchChecklist={refetch}
+        applyConfirmedArrival={applyConfirmedArrival}
+      />
       <View style={styles.progressContainer}>
         <View
           style={[styles.progressBar, { width: `${progressPercent * 100}%` }]}
@@ -792,9 +791,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  scrollView: {
-    flex: 1,
   },
   scrollContent: {
     paddingHorizontal: 16,

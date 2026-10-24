@@ -1,10 +1,11 @@
 import { supabase } from '@/lib/supabase';
 import { Permissions } from '@/types/permissions';
-import dayjs from 'dayjs';
 import { StageNumber } from '@/types/checklist';
 import { Persona } from '@/types/onboardingProfile';
 import { getPublicOnboardingProfile } from '@/services/onboarding/getPublicOnboardingProfile';
 import { normalizeProvince } from '@/constants/LocationData';
+import { getArrivalStage } from '@/helpers/arrivalDate';
+import { syncStageCache } from '@/services/onboarding/syncStageCache';
 
 export interface UserInfo {
   id: string;
@@ -19,25 +20,10 @@ export interface UserInfo {
   arrivalDate: string | null;
   city: string | null;
   province: string | null;
-  stage: StageNumber;
+  /** Computed from arrivalDate on every read. Null means unknown. */
+  stage: StageNumber | null;
   persona: Persona | null;
   personaOther: string | null;
-}
-
-// Helper function for calculating stages
-export function computeStage(arrivalDate: string | null): StageNumber {
-  if (!arrivalDate) return 0;
-
-  const arrival = dayjs(arrivalDate);
-  const now = dayjs();
-  const diffMonths = now.diff(arrival, 'month');
-
-  if (diffMonths < 0) return 0; // Not arrived yet
-  if (diffMonths < 3) return 1; // <3 months
-  if (diffMonths < 12) return 2; // <1 year
-  if (diffMonths < 36)
-    return 3; // <3 years
-  else return 4; // 3+ years
 }
 
 export const getUserInfo = async (userId?: string): Promise<UserInfo> => {
@@ -127,17 +113,14 @@ export const getUserInfo = async (userId?: string): Promise<UserInfo> => {
       persona_other: string | null;
       city: string | null;
       province: string | null;
-      stage: StageNumber | null;
+      stage: unknown;
     } = {
       arrival_date: onboardingData?.arrival_date ?? null,
       persona: onboardingData?.persona ?? null,
       persona_other: onboardingData?.persona_other ?? null,
       city: onboardingData?.city ?? null,
       province: normalizeProvince(onboardingData?.province),
-      stage:
-        onboardingData?.stage !== undefined && onboardingData?.stage !== null
-          ? onboardingData.stage
-          : null,
+      stage: onboardingData?.stage ?? null,
     };
 
     if (!resolvedOnboarding.persona || !resolvedOnboarding.arrival_date) {
@@ -150,29 +133,15 @@ export const getUserInfo = async (userId?: string): Promise<UserInfo> => {
     }
 
     const arrivalDate = resolvedOnboarding?.arrival_date ?? null;
-    const receivedStage = resolvedOnboarding.stage;
-    const computedStage = computeStage(arrivalDate);
+    // Never trust the stored stage: it is a cache of this computed value.
+    const computedStage = getArrivalStage(arrivalDate);
 
-    if (receivedStage !== null && receivedStage !== computedStage && isSelfView) {
-      // Best-effort persistence inside a fire-and-forget IIFE — must not block
-      // the outer profile fetch on the DB write. The isSelfView check ensures
-      // we only update the row for the currently-authenticated user
-      // (cross-user profile views would otherwise fire a guaranteed
-      // RLS-denied UPDATE round-trip).
-      void (async () => {
-        try {
-          const { error } = await supabase
-            .from('user_onboarding_profiles')
-            .update({ stage: computedStage })
-            .eq('id', targetUserId);
-
-          if (error) {
-            console.warn('Failed to update onboarding stage:', error.message);
-          }
-        } catch (error) {
-          console.error('Unexpected onboarding stage update failure:', error);
-        }
-      })();
+    if (isSelfView && onboardingData) {
+      // Best-effort persistence in a fire-and-forget call: it must not block
+      // the profile fetch. Self views only, because a cross-user write is a
+      // guaranteed RLS-denied round-trip. Null transitions and users without
+      // a persona are written too. syncStageCache never throws.
+      void syncStageCache(targetUserId, resolvedOnboarding.stage, computedStage);
     }
 
     if (followingError) {

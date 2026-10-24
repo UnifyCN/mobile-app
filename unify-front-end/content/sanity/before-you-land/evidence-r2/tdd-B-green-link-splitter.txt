@@ -1,0 +1,13 @@
+PASS __tests__/checklist/descriptionLinks.test.ts
+  splitDescriptionLinks
+    ✓ returns one text segment for a description with no URL (1 ms)
+    ✓ splits out an https URL at the end of the text, unchanged
+    ✓ keeps sentence punctuation after a URL out of the link (1 ms)
+    ✓ never links a protocol other than http or https
+    ✓ links several URLs and keeps the text between them
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.416 s, estimated 1 s
+Ran all test suites matching /__tests__\/checklist\/descriptionLinks.test.ts/i.

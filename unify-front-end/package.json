@@ -10,7 +10,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "test:ci": "jest __tests__ --runInBand --watchAll=false",
+    "test:ci": "npm run test:main && npm run test:dst",
+    "test:main": "jest __tests__ --runInBand --watchAll=false",
+    "test:dst": "TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/",
     "lint": "expo lint",
     "check-i18n": "node ./scripts/check-i18n-parity.mjs",
     "typecheck": "tsc --noEmit",
@@ -21,7 +23,11 @@
     "preset": "jest-expo",
     "moduleNameMapper": {
       "^@react-native-async-storage/async-storage$": "<rootDir>/node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock.js"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/__tests__/dst/"
+    ]
   },
   "expo": {
     "install": {

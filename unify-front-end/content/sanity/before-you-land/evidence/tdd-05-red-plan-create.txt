@@ -1,0 +1,52 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow (1 ms)
+    ✓ rejects an em dash in new copy
+    ✓ rejects a record that is not an English not_arrived checklist item
+    ✓ rejects a persona that no app persona or live record uses
+    ✓ rejects a link_tab outside the schema list and a record with no link
+    ✓ accepts the committed payload and keeps its targeting (1 ms)
+  planChanges for new records
+    ✕ creates records that are absent and leaves identical live records alone (1 ms)
+    ✕ never overwrites a live record that differs from the payload
+
+  ● planChanges for new records › creates records that are absent and leaves identical live records alone
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "noop"
+    Received: undefined
+
+      105 |     };
+      106 |     const actions = planChanges(payload, live);
+    > 107 |     expect(actions.find(a => a.id === first._id)?.kind).toBe('noop');
+          |                                                         ^
+      108 |     expect(actions.find(a => a.id === second._id)?.kind).toBe('create');
+      109 |   });
+      110 |
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:107:57)
+
+  ● planChanges for new records › never overwrites a live record that differs from the payload
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "conflict"
+    Received: undefined
+
+      116 |     };
+      117 |     const action = planChanges(payload, live).find(a => a.id === first._id);
+    > 118 |     expect(action?.kind).toBe('conflict');
+          |                          ^
+      119 |   });
+      120 | });
+      121 |
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:118:26)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 7 passed, 9 total
+Snapshots:   0 total
+Time:        0.309 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

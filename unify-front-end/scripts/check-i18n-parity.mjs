@@ -48,18 +48,40 @@ function setEqual(a, b) {
   return true;
 }
 
+// CLDR plural-category keys (`key_one`, `key_few`, ...) differ by language: en
+// has one/other, ar has zero/one/two/few/many/other, vi has other only. They
+// are compared by base key, every locale must define `_other`, and each form
+// must keep the placeholders of the baseline `_other` form.
+const PLURAL_CATEGORY_RE = /_(zero|one|two|few|many|other)$/;
+const splitPlural = flat => {
+  const plain = {};
+  const bases = {};
+  for (const [key, value] of Object.entries(flat)) {
+    const m = PLURAL_CATEGORY_RE.exec(key);
+    if (!m) {
+      plain[key] = value;
+      continue;
+    }
+    const base = key.slice(0, m.index);
+    (bases[base] ??= {})[m[1]] = value;
+  }
+  return { plain, bases };
+}
+
 const baseline = load(BASELINE);
+const baselineSplit = splitPlural(baseline);
 let hasError = false;
 
 for (const lang of LOCALES) {
   if (lang === BASELINE) continue;
-  const other = load(lang);
-  const missing = Object.keys(baseline).filter(k => !(k in other));
-  const extra = Object.keys(other).filter(k => !(k in baseline));
+  const full = load(lang);
+  const { plain: other, bases: otherBases } = splitPlural(full);
+  const missing = Object.keys(baselineSplit.plain).filter(k => !(k in other));
+  const extra = Object.keys(other).filter(k => !(k in baselineSplit.plain));
   const placeholderMismatches = [];
-  for (const key of Object.keys(baseline)) {
+  for (const key of Object.keys(baselineSplit.plain)) {
     if (!(key in other)) continue;
-    const want = extractPlaceholders(baseline[key]);
+    const want = extractPlaceholders(baselineSplit.plain[key]);
     const got = extractPlaceholders(other[key]);
     if (!setEqual(want, got)) {
       placeholderMismatches.push({
@@ -69,12 +91,37 @@ for (const lang of LOCALES) {
       });
     }
   }
+  for (const base of Object.keys(baselineSplit.bases)) {
+    const forms = otherBases[base];
+    if (!forms) {
+      missing.push(`${base}_*`);
+      continue;
+    }
+    if (!('other' in forms)) missing.push(`${base}_other`);
+    // `count` may be spelled out ("one day") in forms that name the number.
+    const want = extractPlaceholders(baselineSplit.bases[base].other);
+    want.delete('count');
+    for (const [category, value] of Object.entries(forms)) {
+      const got = extractPlaceholders(value);
+      got.delete('count');
+      if (!setEqual(want, got)) {
+        placeholderMismatches.push({
+          key: `${base}_${category}`,
+          want: [...want].sort(),
+          got: [...got].sort(),
+        });
+      }
+    }
+  }
+  for (const base of Object.keys(otherBases)) {
+    if (!(base in baselineSplit.bases)) extra.push(`${base}_*`);
+  }
   if (
     missing.length === 0 &&
     extra.length === 0 &&
     placeholderMismatches.length === 0
   ) {
-    console.log(`✔ ${lang}: ${Object.keys(other).length} keys (matches ${BASELINE})`);
+    console.log(`✔ ${lang}: ${Object.keys(full).length} keys (matches ${BASELINE})`);
   } else {
     hasError = true;
     console.error(`✗ ${lang}: drift vs ${BASELINE}`);
@@ -98,4 +145,4 @@ if (hasError) {
   console.error('\ni18n parity check FAILED. Run translations to bring locales in sync.');
   process.exit(1);
 }
-console.log(`\ni18n parity OK: ${Object.keys(baseline).length} keys per locale.`);
+console.log(`\ni18n parity OK: ${Object.keys(baselineSplit.plain).length + Object.keys(baselineSplit.bases).length} keys per locale.`);

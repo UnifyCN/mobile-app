@@ -1482,7 +1482,18 @@
       "optionalLater": "वैकल्पिक / बाद में"
     },
     "reorderTask": "{{name}} का क्रम बदलें",
-    "reorderHint": "इस आइटम का क्रम इस खंड में बदलने के लिए देर तक दबाएँ और खींचें"
+    "reorderHint": "इस आइटम का क्रम इस खंड में बदलने के लिए देर तक दबाएँ और खींचें",
+    "arrivalCountdown": {
+      "preArrival_one": "आपके पहुँचने में {{count}} दिन बाकी",
+      "preArrival_other": "आपके पहुँचने में {{count}} दिन बाकी",
+      "first30Days": "आपके पहले 30 दिन",
+      "changeHint": "अपनी आगमन तिथि बदलें"
+    },
+    "arrivalDate": {
+      "sheetTitle": "आगमन तिथि",
+      "save": "सहेजें",
+      "saveError": "हम आपकी आगमन तिथि सहेज नहीं सके। कृपया फिर से कोशिश करें।"
+    }
   },
   "companion": {
     "goBack": "वापस जाएं",

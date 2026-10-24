@@ -1,0 +1,22 @@
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✓ rejects an em dash in new copy (2 ms)
+    ✓ rejects a record that is not an English not_arrived checklist item
+    ✓ rejects a persona that no app persona or live record uses (1 ms)
+    ✓ accepts exactly the six persona values of the live checklist schema (1 ms)
+    ✓ rejects the persona other, which the live schema refuses as value.not-allowed
+    ✓ rejects a link_tab outside the schema list and a record with no link
+    ✓ accepts the committed payload and keeps its targeting (1 ms)
+    ✓ targets the six live-schema personas, including protected_person and excluding other
+    ✓ creates records that are absent and leaves identical live records alone (5 ms)
+    ✓ never overwrites a live record that differs from the payload
+    ✓ patches only title and description, guarded by the snapshot revision (1 ms)
+    ✓ refuses to patch when the live revision moved and the copy is not the target
+    ✓ does nothing when the live record already holds the target copy
+    ✓ reports a conflict when the record is missing
+    ✓ passes when every record reads back exactly as proposed (1 ms)
+    ✓ reports a missing new record and a changed new record
+    ✓ reports a change to a field the patch must not touch
+    ✓ writes only what the plan needs, with the revision guard on the patch (1 ms)
+    ✓ writes nothing when the live data already matches
+Tests:       21 passed, 21 total

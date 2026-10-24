@@ -1,18 +1,16 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
+import { getArrivalStage } from '../_shared/arrivalStage.ts';
+import { buildArrivalLine, buildStageLine } from '../_shared/stageContext.ts';
+import {
+  LOCAL_DATE_HEADER,
+  readRequestToday,
+} from '../_shared/requestToday.ts';
 
 // ============================================================================
 // CONFIG
 // ============================================================================
-
-const STAGE_DESCRIPTIONS: Record<string, string> = {
-  '0': 'pre-arrival or just arrived (0-1 months)',
-  '1': 'settling in (1-3 months)',
-  '2': 'building foundations (3-6 months)',
-  '3': 'establishing roots (6-12 months)',
-  '4': 'well-established (12+ months)',
-};
 
 const PERSONA_DESCRIPTIONS: Record<string, string> = {
   international_student: 'international student studying in Canada',
@@ -54,8 +52,7 @@ const VALID_CATEGORIES = [
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': `authorization, x-client-info, apikey, content-type, ${LOCAL_DATE_HEADER}`,
   'Content-Type': 'application/json',
 };
 
@@ -76,7 +73,7 @@ interface GeneratedTip {
 
 interface UserProfile {
   persona: string;
-  stage: string;
+  stage: number | null; // Computed from arrival_date. Null is unknown.
   city: string | null;
   province: string | null;
   goals: string[];
@@ -84,10 +81,13 @@ interface UserProfile {
   arrival_date: string | null;
 }
 
-function buildGeminiPrompt(profile: UserProfile, date: string): string {
+function buildGeminiPrompt(
+  profile: UserProfile,
+  date: string,
+  localToday: Date
+): string {
   const personaDesc =
     PERSONA_DESCRIPTIONS[profile.persona] || 'newcomer to Canada';
-  const stageDesc = STAGE_DESCRIPTIONS[profile.stage] || 'newcomer';
 
   // Build location string
   let locationLine = '';
@@ -113,27 +113,12 @@ function buildGeminiPrompt(profile: UserProfile, date: string): string {
       ? `- Interested in: ${interestLabels.join(', ')}`
       : '';
 
-  // Build arrival context
-  let arrivalLine = '';
-  if (profile.arrival_date) {
-    const arrival = new Date(profile.arrival_date);
-    const now = new Date(date);
-    const monthsInCanada = Math.max(
-      0,
-      Math.round(
-        (now.getTime() - arrival.getTime()) / (1000 * 60 * 60 * 24 * 30)
-      )
-    );
-    if (monthsInCanada <= 0) {
-      arrivalLine = '- Has not yet arrived in Canada';
-    } else {
-      arrivalLine = `- Has been in Canada for approximately ${monthsInCanada} month${monthsInCanada === 1 ? '' : 's'}`;
-    }
-  }
+  // Build arrival context from the date, not from the stored stage
+  const arrivalLine = buildArrivalLine(profile.arrival_date, localToday);
 
   const profileLines = [
     `- Persona: ${personaDesc}`,
-    `- Stage: ${stageDesc}`,
+    buildStageLine(profile.stage),
     locationLine,
     arrivalLine,
     goalsLine,
@@ -251,6 +236,13 @@ Deno.serve(async (req: Request) => {
   const supabase = createClient(supabaseUrl, serviceRoleKey);
 
   try {
+    // The stage rule uses the caller's local day. Older clients send none.
+    const requestToday = readRequestToday(req);
+    if (!requestToday.ok) {
+      return jsonResponse({ error: requestToday.message }, 400);
+    }
+    const localToday = requestToday.today;
+
     // 1. Validate auth
     const token = req.headers.get('Authorization')?.replace('Bearer ', '');
     if (!token) {
@@ -267,7 +259,7 @@ Deno.serve(async (req: Request) => {
     const { data: profile, error: profileError } = await supabase
       .from('user_onboarding_profiles')
       .select(
-        'persona, stage, city, province, goals, learning_interests, arrival_date'
+        'persona, city, province, goals, learning_interests, arrival_date'
       )
       .eq('id', authData.user.id)
       .maybeSingle();
@@ -278,7 +270,10 @@ Deno.serve(async (req: Request) => {
     }
 
     const persona: string = profile?.persona || 'other';
-    const stage: string = profile?.stage || '0';
+    // The stored stage is only a cache. Recompute it from arrival_date.
+    const computedStage = getArrivalStage(profile?.arrival_date, localToday);
+    // daily_tips.stage is NOT NULL text, so unknown is stored as 'unknown'.
+    const stage: string = computedStage === null ? 'unknown' : String(computedStage);
     const today = new Date().toISOString().split('T')[0];
 
     const userId = authData.user.id;
@@ -404,14 +399,14 @@ Deno.serve(async (req: Request) => {
     // We won the claim — generate via Gemini.
     const userProfile: UserProfile = {
       persona,
-      stage,
+      stage: computedStage,
       city: profile?.city || null,
       province: profile?.province || null,
       goals: profile?.goals || [],
       learning_interests: profile?.learning_interests || [],
       arrival_date: profile?.arrival_date || null,
     };
-    const prompt = buildGeminiPrompt(userProfile, today);
+    const prompt = buildGeminiPrompt(userProfile, today, localToday);
     let rawText = await callTipModel(prompt);
     let tip = rawText ? parseGeminiTipResponse(rawText) : null;
 

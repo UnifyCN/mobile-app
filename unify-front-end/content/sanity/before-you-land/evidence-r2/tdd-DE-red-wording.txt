@@ -1,0 +1,107 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✓ rejects an em dash in new copy
+    ✓ rejects a record that is not an English not_arrived checklist item
+    ✓ rejects a persona that no app persona or live record uses (1 ms)
+    ✓ accepts exactly the six persona values of the live checklist schema
+    ✓ rejects the persona other, which the live schema refuses as value.not-allowed
+    ✓ rejects a link_tab outside the schema list and a record with no link (1 ms)
+    ✓ accepts the committed payload and keeps its targeting
+  shared pet record targeting
+    ✓ targets the six live-schema personas, including protected_person and excluding other (1 ms)
+  source-backed wording
+    ✕ port item lists proof of settlement funds with the exemption, and keeps COPR and goods-list steps
+    ✕ health item limits IFHP basic coverage to the interval before provincial coverage
+    ✕ health item separates the longer supplemental and prescription benefits (1 ms)
+    ✕ health item names an IFHP-registered provider and keeps the officer certificate
+  planChanges for new records
+    ✓ creates records that are absent and leaves identical live records alone (5 ms)
+    ✓ never overwrites a live record that differs from the payload (1 ms)
+  planChanges for the existing port-of-entry record
+    ✓ patches only title and description, guarded by the snapshot revision
+    ✓ refuses to patch when the live revision moved and the copy is not the target
+    ✓ does nothing when the live record already holds the target copy
+    ✓ reports a conflict when the record is missing
+  verifyReadback
+    ✓ passes when every record reads back exactly as proposed (1 ms)
+    ✓ reports a missing new record and a changed new record
+    ✓ reports a change to a field the patch must not touch
+  buildMutations
+    ✓ writes only what the plan needs, with the revision guard on the patch (1 ms)
+    ✓ writes nothing when the live data already matches
+
+  ● source-backed wording › port item lists proof of settlement funds with the exemption, and keeps COPR and goods-list steps
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /proof of settlement funds \(unless you are exempt\)/
+    Received string:  "Why: You become a permanent resident when a border services officer at a Canadian port of entry examines your COPR and signs and dates it. Travel before the Valid to date on your COPR. Bring your COPR and passport (and permanent resident visa, if you have one), plus two copies of a list of the goods you bring and the goods that will follow."
+
+      140 |   it('port item lists proof of settlement funds with the exemption, and keeps COPR and goods-list steps', () => {
+      141 |     const text = port.description;
+    > 142 |     expect(text).toMatch(/proof of settlement funds \(unless you are exempt\)/);
+          |                  ^
+      143 |     expect(text).toContain('your COPR');
+      144 |     expect(text).toContain('passport');
+      145 |     expect(text).toContain('permanent resident visa (if you have one)');
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:142:18)
+
+  ● source-backed wording › health item limits IFHP basic coverage to the interval before provincial coverage
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /basic (health care|coverage)/i
+    Received string:  "Why: The Interim Federal Health Program (IFHP) gives resettled refugees temporary health coverage until provincial or territorial coverage starts. An IRCC or Canada Border Services Agency officer gives you an IFHP certificate. Show it to your health care provider, and apply for provincial or territorial health insurance as soon as you arrive."
+
+      151 |   it('health item limits IFHP basic coverage to the interval before provincial coverage', () => {
+      152 |     const text = health.description;
+    > 153 |     expect(text).toMatch(/basic (health care|coverage)/i);
+          |                  ^
+      154 |     expect(text).toMatch(/until you qualify for provincial or territorial/i);
+      155 |     expect(text).toContain(
+      156 |       'apply for provincial or territorial health insurance'
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:153:18)
+
+  ● source-backed wording › health item separates the longer supplemental and prescription benefits
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /supplemental and prescription/i
+    Received string:  "Why: The Interim Federal Health Program (IFHP) gives resettled refugees temporary health coverage until provincial or territorial coverage starts. An IRCC or Canada Border Services Agency officer gives you an IFHP certificate. Show it to your health care provider, and apply for provincial or territorial health insurance as soon as you arrive."
+
+      160 |   it('health item separates the longer supplemental and prescription benefits', () => {
+      161 |     const text = health.description;
+    > 162 |     expect(text).toMatch(/supplemental and prescription/i);
+          |                  ^
+      163 |     expect(text).toMatch(
+      164 |       /resettlement (income support|assistance)|sponsorship/i
+      165 |     );
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:162:18)
+
+  ● source-backed wording › health item names an IFHP-registered provider and keeps the officer certificate
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /registered with the (IFHP|Interim Federal)/
+    Received string:  "Why: The Interim Federal Health Program (IFHP) gives resettled refugees temporary health coverage until provincial or territorial coverage starts. An IRCC or Canada Border Services Agency officer gives you an IFHP certificate. Show it to your health care provider, and apply for provincial or territorial health insurance as soon as you arrive."
+
+      169 |   it('health item names an IFHP-registered provider and keeps the officer certificate', () => {
+      170 |     const text = health.description;
+    > 171 |     expect(text).toMatch(/registered with the (IFHP|Interim Federal)/);
+          |                  ^
+      172 |     expect(text).toContain('IFHP certificate');
+      173 |     expect(health.title).not.toMatch(/first, then provincial/);
+      174 |   });
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:171:18)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 21 passed, 25 total
+Snapshots:   0 total
+Time:        0.491 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

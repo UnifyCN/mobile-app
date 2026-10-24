@@ -1,0 +1,100 @@
+FAIL __tests__/checklist/descriptionLinks.test.ts
+  splitDescriptionLinks
+    ✓ returns one text segment for a description with no URL (1 ms)
+    ✕ splits out an https URL at the end of the text, unchanged (2 ms)
+    ✕ keeps sentence punctuation after a URL out of the link
+    ✓ never links a protocol other than http or https (1 ms)
+    ✕ links several URLs and keeps the text between them
+
+  ● splitDescriptionLinks › splits out an https URL at the end of the text, unchanged
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 1
+
+      Array [
+        Object {
+          "kind": "text",
+    -     "text": "Check the official CFIA page: ",
+    -   },
+    -   Object {
+    -     "kind": "link",
+    -     "text": "https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+    -     "url": "https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+    +     "text": "Check the official CFIA page: https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+        },
+      ]
+
+      13 |     expect(
+      14 |       splitDescriptionLinks(`Check the official CFIA page: ${CFIA}`)
+    > 15 |     ).toEqual([
+         |       ^
+      16 |       { kind: 'text', text: 'Check the official CFIA page: ' },
+      17 |       { kind: 'link', text: CFIA, url: CFIA },
+      18 |     ]);
+
+      at Object.toEqual (__tests__/checklist/descriptionLinks.test.ts:15:7)
+
+  ● splitDescriptionLinks › keeps sentence punctuation after a URL out of the link
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 10
+    + Received  +  1
+
+      Array [
+        Object {
+          "kind": "text",
+    -     "text": "See ",
+    -   },
+    -   Object {
+    -     "kind": "link",
+    -     "text": "https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+    -     "url": "https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+    -   },
+    -   Object {
+    -     "kind": "text",
+    -     "text": ". Then call.",
+    +     "text": "See https://inspection.canada.ca/en/importing-food-plants-animals/pets. Then call.",
+        },
+      ]
+
+      20 |
+      21 |   it('keeps sentence punctuation after a URL out of the link', () => {
+    > 22 |     expect(splitDescriptionLinks(`See ${CFIA}. Then call.`)).toEqual([
+         |                                                              ^
+      23 |       { kind: 'text', text: 'See ' },
+      24 |       { kind: 'link', text: CFIA, url: CFIA },
+      25 |       { kind: 'text', text: '. Then call.' },
+
+      at Object.toEqual (__tests__/checklist/descriptionLinks.test.ts:22:62)
+
+  ● splitDescriptionLinks › links several URLs and keeps the text between them
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 1
+
+    - Array [
+    -   "https://inspection.canada.ca/en/importing-food-plants-animals/pets",
+    -   "http://example.ca/a?b=1&c=2",
+    - ]
+    + Array []
+
+      41 |     const other = 'http://example.ca/a?b=1&c=2';
+      42 |     const segments = splitDescriptionLinks(`A ${CFIA} B ${other}`);
+    > 43 |     expect(segments.filter(s => s.kind === 'link').map(s => s.text)).toEqual([
+         |                                                                      ^
+      44 |       CFIA,
+      45 |       other,
+      46 |     ]);
+
+      at Object.toEqual (__tests__/checklist/descriptionLinks.test.ts:43:70)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 2 passed, 5 total
+Snapshots:   0 total
+Time:        0.562 s
+Ran all test suites matching /__tests__\/checklist\/descriptionLinks.test.ts/i.

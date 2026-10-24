@@ -1,3 +1,5 @@
+import type { StageNumber } from '@/types/checklist';
+
 export type Persona =
   | 'international_student'
   | 'skilled_worker'
@@ -67,7 +69,7 @@ export interface UserOnboardingProfile {
   arrival_date: string | null;
   city: string | null;
   province: string | null;
-  stage: string | null; // Stage enum: "0" | "1" | "2" | "3" | "4"
+  stage: StageNumber | null; // Cached arrival stage 0-4; null is unknown
 
   // Multi-select fields
   goals: Goal[];
@@ -96,7 +98,7 @@ export interface OnboardingProfileInput {
   arrival_date?: string | null;
   city?: string | null;
   province?: string | null;
-  stage?: string | null; // Stage enum: "0" | "1" | "2" | "3" | "4"
+  stage?: StageNumber | null; // Ignored on save: the stage is derived from arrival_date
   goals?: Goal[];
   goals_other?: string | null;
   learning_interests?: LearningInterest[];

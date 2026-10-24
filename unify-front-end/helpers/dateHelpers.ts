@@ -76,39 +76,15 @@ export const formatEventTimeRange = (
   return `${formatEventTime(startDate)} - ${formatEventTime(endDate)}`;
 };
 
-export const calculateUserStage = (givenTime: Date): number => {
-  const currentTime = new Date();
-
-  // If given time is in the future, return 0
-  if (givenTime > currentTime) {
-    return 0;
-  }
-
-  // Calculate difference in months
-  const diffInMs = currentTime.getTime() - givenTime.getTime();
-  const diffInMonths = diffInMs / (1000 * 60 * 60 * 24 * 30.44); // Average days per month
-
-  if (diffInMonths < 3) {
-    return 1;
-  } else if (diffInMonths < 12) {
-    return 2;
-  } else if (diffInMonths < 36) {
-    return 3;
-  } else {
-    return 4;
-  }
-};
-
 export const stageNumberToEnum = (stageNumber: number): string => {
   return stageNumber.toString();
 };
 
-export const stageEnumToNumber = (stageEnum: string): number => {
-  return parseInt(stageEnum, 10) || 0;
-};
-
-/** Map app stage (0–4) to Sanity stage slug for checklist (exactly 5 values) */
-export const stageNumberToStageSlug = (stage: number): string => {
+/**
+ * Map app stage (0–4) to Sanity stage slug for checklist (exactly 5 values).
+ * Unknown stage (null, e.g. no arrival date) maps to arrived_0_3_months.
+ */
+export const stageNumberToStageSlug = (stage: number | null): string => {
   switch (stage) {
     case 0:
       return 'not_arrived';
