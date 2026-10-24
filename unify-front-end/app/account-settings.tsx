@@ -26,7 +26,7 @@ import { useHapticsPreference } from '@/context/HapticsContext';
 import { useLanguage } from '@/hooks/useLanguage';
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n';
 import { useOnboardingProfile } from '@/hooks/onboarding/useOnboardingProfile';
-import { saveOnboardingProfile } from '@/services/onboarding/saveOnboardingProfile';
+import { updateWantsReminders } from '@/services/onboarding/updateWantsReminders';
 import { unregisterPushToken } from '@/services/push/pushNotifications';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -89,10 +89,7 @@ export default function AccountSettingsPage() {
     const newValue = !notificationsEnabled;
     setNotificationsEnabled(newValue);
     try {
-      await saveOnboardingProfile(currentUser.id, {
-        ...(onboardingProfile || {}),
-        wants_reminders: newValue,
-      });
+      await updateWantsReminders(currentUser.id, newValue);
       queryClient.invalidateQueries({ queryKey: ['onboardingProfile'] });
     } catch (err) {
       console.error('Failed to update notification preference', err);

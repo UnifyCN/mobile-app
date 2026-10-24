@@ -3,7 +3,8 @@ import {
   OnboardingProfileInput,
   UserOnboardingProfile,
 } from '@/types/onboardingProfile';
-import { calculateUserStage, stageNumberToEnum } from '@/helpers/dateHelpers';
+import { getArrivalStage } from '@/helpers/arrivalDate';
+import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
 import { normalizeProvince } from '@/constants/LocationData';
 import { redeemReferral, type RedeemResult } from '@/services/referrals/redeemReferral';
 
@@ -27,19 +28,6 @@ export const saveOnboardingProfile = async (
   extras: SaveOnboardingExtras = {}
 ): Promise<SaveOnboardingResult> => {
   try {
-    // Calculate stage if arrival_date is provided AND parses as a valid date AND
-    // onboarding is being completed. (Bug fix: previously stage was recomputed
-    // unconditionally outside the !isNaN guard, producing a bogus stage from an
-    // Invalid Date for malformed arrival_date input.)
-    let calculatedStage: string | null = null;
-    if (data.arrival_date && data.onboarding_completed) {
-      const arrivalDate = new Date(data.arrival_date);
-      if (!Number.isNaN(arrivalDate.getTime())) {
-        const stageNumber = calculateUserStage(arrivalDate);
-        calculatedStage = stageNumberToEnum(stageNumber);
-      }
-    }
-
     // Prepare the data for Supabase (convert to snake_case)
     const supabaseData: any = {
       id: userId,
@@ -67,10 +55,9 @@ export const saveOnboardingProfile = async (
       supabaseData.preferred_language = data.preferred_language;
     }
 
-    // Add stage to the data if it was calculated
-    if (calculatedStage !== null) {
-      supabaseData.stage = calculatedStage;
-    }
+    // The stage is a cache of the arrival date written above, so write both
+    // together. A missing or invalid date writes null (unknown).
+    supabaseData.stage = getArrivalStage(data.arrival_date);
 
     // Upsert the profile
     const { data: result, error } = await supabase
@@ -94,7 +81,7 @@ export const saveOnboardingProfile = async (
       arrival_date: result.arrival_date,
       city: result.city,
       province: normalizeProvince(result.province),
-      stage: result.stage,
+      stage: resolveStoredStage(result.stage),
       goals: result.goals || [],
       goals_other: result.goals_other,
       learning_interests: result.learning_interests || [],

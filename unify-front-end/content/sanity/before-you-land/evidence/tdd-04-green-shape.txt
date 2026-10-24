@@ -1,0 +1,15 @@
+PASS __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow (1 ms)
+    ✓ rejects an em dash in new copy
+    ✓ rejects a record that is not an English not_arrived checklist item
+    ✓ rejects a persona that no app persona or live record uses
+    ✓ rejects a link_tab outside the schema list and a record with no link
+    ✓ accepts the committed payload and keeps its targeting (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.371 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

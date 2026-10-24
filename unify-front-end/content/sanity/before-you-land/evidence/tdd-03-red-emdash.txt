@@ -1,0 +1,28 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✕ rejects an em dash in new copy
+
+  ● validatePayload › rejects an em dash in new copy
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /em dash/i
+    Received string:  ""
+
+      43 |       withCreate({ title: 'Gather documents \u2014 and keep copies' })
+      44 |     );
+    > 45 |     expect(errors.join('\n')).toMatch(/em dash/i);
+         |                               ^
+      46 |   });
+      47 | });
+      48 |
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:45:31)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        0.284 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.
