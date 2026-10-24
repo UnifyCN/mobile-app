@@ -232,8 +232,8 @@ export default function ChecklistScreen() {
       trackScreen('Checklist');
       if (currentStage === null || !persona) return;
       let cancelled = false;
-      refreshProfile().then(changed => {
-        if (!cancelled && !changed) refetch();
+      refreshProfile().then(skipRefetch => {
+        if (!cancelled && !skipRefetch) refetch();
       });
       return () => {
         cancelled = true;
