@@ -78,20 +78,20 @@ export async function getChecklistWithUserProgress(
     province?: string | null;
   }
 ): Promise<UserTaskWithDetails[]> {
-  const items = persona
-    ? await getChecklistByPersonaAndStage(persona, stageSlug, {
-        skipCache: true,
-        language: options.language,
-        province: options.province,
-      })
-    : [];
-
-  const rows = items.length > 0 ? await getUserTasks(userId) : [];
-  const sanityTasks =
-    items.length > 0
-      ? mergeChecklistWithUserTasks(items, rows, options.province)
-      : [];
-  const customRows = await getCustomChecklistTasks(userId);
+  const [sanityTasks, customRows] = await Promise.all([
+    (async () => {
+      const items = persona
+        ? await getChecklistByPersonaAndStage(persona, stageSlug, {
+            skipCache: true,
+            language: options.language,
+            province: options.province,
+          })
+        : [];
+      const rows = items.length > 0 ? await getUserTasks(userId) : [];
+      return mergeChecklistWithUserTasks(items, rows, options.province);
+    })(),
+    getCustomChecklistTasks(userId),
+  ]);
   const customTasks = mapCustomTasksToChecklistRows(customRows);
 
   // Interleave custom tasks into correct priority positions

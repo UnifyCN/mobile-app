@@ -66,6 +66,44 @@ test('six simultaneous module reads share one progress load', async () => {
   expect(fetchContent).toHaveBeenCalledTimes(1);
 });
 
+test('loads the public catalog while the account progress read is pending', async () => {
+  const blocked = deferred<{ data: typeof rows; error: null }>();
+  from.mockReturnValueOnce({ select: () => ({ eq: () => blocked.promise }) });
+  const request = cachedProgressService.getProgressData();
+  try {
+    await Promise.resolve();
+    expect(fetchContent).toHaveBeenCalledTimes(1);
+  } finally {
+    blocked.resolve({ data: rows, error: null });
+    await request;
+  }
+});
+
+test('returns the existing fallback on a progress error without waiting for a hung catalog', async () => {
+  const catalog = deferred<typeof tree>();
+  fetchContent.mockReturnValueOnce(catalog.promise);
+  from.mockReturnValueOnce({
+    select: () => ({
+      eq: async () => ({ data: null, error: new Error('offline') }),
+    }),
+  });
+  const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+  let finished = false;
+  const request = cachedProgressService.getProgressData().then(value => {
+    finished = true;
+    return value;
+  });
+  try {
+    for (let step = 0; step < 20; step++) await Promise.resolve();
+    expect(finished).toBe(true);
+    expect(await request).toEqual({});
+  } finally {
+    catalog.resolve(tree);
+    await request;
+    log.mockRestore();
+  }
+});
+
 test('an account change cannot return or cache an earlier account response', async () => {
   const blocked = deferred<any>();
   from.mockReturnValueOnce({ select: () => ({ eq: () => blocked.promise }) });

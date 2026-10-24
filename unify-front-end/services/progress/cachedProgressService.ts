@@ -124,33 +124,8 @@ class CachedProgressService {
       }
       this.cachedUserId = user.id;
 
-      // Fetch all lesson progress
-      let lessonProgresses = null;
-      let lessonError = null;
-
-      try {
-        const progressResult = await progressClient
-          .from('user_lesson_progress')
-          .select('*')
-          .eq('user_id', user.id);
-
-        lessonProgresses = progressResult?.data || null;
-        lessonError = progressResult?.error || null;
-      } catch (queryError: any) {
-        console.error('Exception fetching lesson progress:', queryError);
-        lessonError = queryError;
-        return this.currentResult(generation, accountEpoch); // Return stale cache on query error
-      }
-
-      if (lessonError) {
-        console.error('Error fetching lesson progress:', lessonError);
-        return this.currentResult(generation, accountEpoch); // Return stale cache on error
-      }
-
-      // Fetch all modules with submodules and lessons from Sanity
-      let modulesData = null;
-      try {
-        const sanityQuery = `*[_type == "module" && (language == "en" || !defined(language))] {
+      // The public catalog and account progress are independent reads.
+      const sanityQuery = `*[_type == "module" && (language == "en" || !defined(language))] {
           _id,
           "submodules": *[_type == "submodule" && references(^._id) && (language == "en" || !defined(language))] | order(order) {
             _id,
@@ -160,11 +135,18 @@ class CachedProgressService {
           }
         }`;
 
-        modulesData = await sanityClient.fetch(sanityQuery);
-      } catch (sanityError: any) {
-        console.error('Error fetching from Sanity:', sanityError);
-        return this.currentResult(generation, accountEpoch); // Return stale cache on Sanity error
-      }
+      const [progressResult, modulesData] = await Promise.all([
+        progressClient
+          .from('user_lesson_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .then(result => {
+            if (result?.error) throw result.error;
+            return result;
+          }),
+        sanityClient.fetch(sanityQuery),
+      ]);
+      const lessonProgresses = progressResult?.data || null;
 
       if (!modulesData || !Array.isArray(modulesData)) {
         console.error('Invalid Sanity data returned');
