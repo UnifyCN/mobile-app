@@ -95,7 +95,8 @@ const isSendButtonDisabled = (
 
 export default function CompanionScreen() {
   const { t } = useTranslation();
-  const { data: personalization } = usePersonalizedStarters();
+  const { currentUser } = useCurrentUser();
+  const { data: personalization } = usePersonalizedStarters(currentUser?.id);
   const { conversationId } = useLocalSearchParams<{
     conversationId?: string;
   }>();
@@ -211,7 +212,6 @@ export default function CompanionScreen() {
   const isNearBottomRef = useRef<boolean>(true);
 
   const { data: usage } = useChatbotUsage();
-  const { currentUser } = useCurrentUser();
   const isPremium = currentUser?.isPremium ?? false;
   const {
     sendMessage,

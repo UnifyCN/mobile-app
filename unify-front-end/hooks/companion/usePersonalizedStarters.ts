@@ -13,11 +13,19 @@ export interface CompanionPersonalization {
 }
 
 const fetchPersonalizedStarters =
-  async (localDay: Date): Promise<CompanionPersonalization | null> => {
+  async (
+    userId: string,
+    localDay: Date
+  ): Promise<CompanionPersonalization | null> => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return null;
+    // Never ask with another account's session: the answer would be cached
+    // under this account's key.
+    if (session.user?.id !== userId) {
+      throw new Error('Session does not belong to the expected account');
+    }
 
     const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
     const response = await fetch(
@@ -65,15 +73,18 @@ const fetchPersonalizedStarters =
 export { PERSONALIZED_STARTERS_QUERY_KEY };
 
 /**
- * The stage starters depend on the device's calendar day, so the day is part
- * of the query key: a list cached yesterday is never reused after midnight.
+ * Starters belong to the signed-in account and depend on the device's
+ * calendar day, so both are part of the query key: one QueryClient lives
+ * across sign-out and sign-in, and a list cached yesterday is never reused
+ * after midnight. No request is sent until the account is known.
  */
-export const usePersonalizedStarters = () => {
+export const usePersonalizedStarters = (userId: string | null | undefined) => {
   const now = new Date();
   const localDay = formatLocalDate(now);
   return useQuery<CompanionPersonalization | null, Error>({
-    queryKey: [...PERSONALIZED_STARTERS_QUERY_KEY, localDay],
-    queryFn: () => fetchPersonalizedStarters(now),
+    queryKey: [...PERSONALIZED_STARTERS_QUERY_KEY, userId ?? null, localDay],
+    queryFn: () => fetchPersonalizedStarters(userId as string, now),
+    enabled: !!userId,
     staleTime: 5 * 60 * 1000,
   });
 };

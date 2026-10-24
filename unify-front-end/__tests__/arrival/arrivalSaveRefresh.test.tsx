@@ -21,7 +21,9 @@ jest.mock('@/lib/supabase', () => ({
     auth: {
       getUser: async () => ({ data: { user: { id: mockAuthUserId } } }),
       getSession: async () => ({
-        data: { session: { access_token: 'test-token' } },
+        data: {
+          session: { access_token: 'test-token', user: { id: mockAuthUserId } },
+        },
       }),
       onAuthStateChange: () => ({
         data: { subscription: { unsubscribe: () => undefined } },
@@ -239,7 +241,7 @@ describe('Companion starters after a date change', () => {
   });
 
   it('refetches the starters after the date is saved', async () => {
-    const first = renderHook(() => usePersonalizedStarters(), { wrapper });
+    const first = renderHook(() => usePersonalizedStarters('user-a'), { wrapper });
     await waitFor(() =>
       expect(
         first.result.current.data?.starters.some(s => s.id === 'stage_planning')
@@ -256,7 +258,7 @@ describe('Companion starters after a date change', () => {
       await result.current.editor.save('2026-10-23');
     });
 
-    const reopened = renderHook(() => usePersonalizedStarters(), { wrapper });
+    const reopened = renderHook(() => usePersonalizedStarters('user-a'), { wrapper });
     await waitFor(() =>
       expect(
         reopened.result.current.data?.starters.some(
@@ -271,12 +273,12 @@ describe('Companion starters after a date change', () => {
   });
 
   it('does not reuse a cached starter list from an earlier local day', async () => {
-    const first = renderHook(() => usePersonalizedStarters(), { wrapper });
+    const first = renderHook(() => usePersonalizedStarters('user-a'), { wrapper });
     await waitFor(() => expect(first.result.current.data).toBeTruthy());
     first.unmount();
 
     jest.setSystemTime(new Date(2026, 9, 24, 0, 5));
-    const next = renderHook(() => usePersonalizedStarters(), { wrapper });
+    const next = renderHook(() => usePersonalizedStarters('user-a'), { wrapper });
     await waitFor(() => expect(requestedDays).toHaveLength(2));
     expect(requestedDays).toEqual(['2026-10-23', '2026-10-24']);
     next.unmount();
