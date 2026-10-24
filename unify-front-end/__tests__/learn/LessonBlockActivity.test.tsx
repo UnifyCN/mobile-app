@@ -80,3 +80,25 @@ it('keeps Next unavailable when an answer cannot be saved', async () => {
   expect(view.queryByText('Feedback shown')).toBeNull();
   alert.mockRestore();
 });
+
+it('keeps a completed submission open when the learner returns', async () => {
+  loadInputs.mockResolvedValue({
+    'knowledge-check': { inputValues: { reflection: 'Check the source' }, questionAnswers: { question: 'a' }, isSubmitted: true },
+  });
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(onReady).toHaveBeenLastCalledWith(true));
+  expect(view.getByText('Feedback shown')).toBeTruthy();
+  expect(saveInput).not.toHaveBeenCalled();
+});
+
+it('asks for a new submit when a returning submission no longer meets the requirements', async () => {
+  loadInputs.mockResolvedValue({
+    'knowledge-check': { inputValues: { reflection: ' ' }, questionAnswers: { question: 'a' }, isSubmitted: true },
+  });
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(view.getByTestId('reflection')).toBeTruthy());
+  expect(onReady).not.toHaveBeenCalledWith(true);
+  expect(view.queryByText('Feedback shown')).toBeNull();
+});

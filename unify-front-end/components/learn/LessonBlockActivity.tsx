@@ -49,11 +49,19 @@ export default function LessonBlockActivity({
       if (saved) {
         setInputs(current => ({ ...saved.inputValues, ...current }));
         setAnswers(current => ({ ...saved.questionAnswers, ...current }));
+        // A returning learner keeps a completed submission; Next stays open.
+        if (
+          saved.isSubmitted &&
+          canSubmitLessonActivity(activity.instructions, saved.inputValues, saved.questionAnswers)
+        ) {
+          setSubmitted(true);
+          onReady(true);
+        }
       }
       setLoading(false);
     });
     return () => { cancelled = true; };
-  }, [lessonId, activity._key, onReady]);
+  }, [lessonId, activity._key, activity.instructions, onReady]);
 
   const invalidateSubmission = () => {
     setSubmitted(false);
