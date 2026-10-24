@@ -114,16 +114,19 @@ async function startLesson(
 // reads the signed-in user when it is called, not when its turn comes.
 const lessonProgressWrites = new Map<string, Promise<unknown>>();
 
-// Every save gets this long. React Native's Android HTTP client has no default
-// timeout, so a stalled request is aborted instead of holding the queue, or
-// landing late over newer data.
-export const SAVE_DEADLINE_MS = 10000;
+// React Native's Android HTTP client has no default timeout, so every save is
+// bounded. The user read gets USER_WAIT_MS. The request gets SAVE_DEADLINE_MS
+// from when it starts, then is aborted instead of landing late over newer
+// data. The whole save settles by the sum even if the Supabase client waits
+// internally (for example on its session lock), so a queue never waits forever.
+export const USER_WAIT_MS = 10000;
+export const SAVE_DEADLINE_MS = 30000;
 
 /** Reads the signed-in user now. A failed or stalled read resolves to null. */
 export function requestUser() {
   return new Promise<Awaited<ReturnType<typeof progressClient.auth.getUser>> | null>(
     resolve => {
-      const timer = setTimeout(() => resolve(null), SAVE_DEADLINE_MS);
+      const timer = setTimeout(() => resolve(null), USER_WAIT_MS);
       progressClient.auth
         .getUser()
         .then(resolve, () => resolve(null))
@@ -132,24 +135,45 @@ export function requestUser() {
   );
 }
 
-/** An abort signal that fires after SAVE_DEADLINE_MS, and a cleanup to call when done. */
-export function saveDeadline() {
+/** Passed to a bounded save: call start() just before the request, then pass signal to it. */
+export interface SaveRequest {
+  signal: AbortSignal;
+  start: () => void;
+}
+
+/** Runs one save with the bounds above. A save that hits the hard end resolves to timedOutValue. */
+export function boundedSave<T>(
+  save: (request: SaveRequest) => Promise<T>,
+  timedOutValue: T
+): Promise<T> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), SAVE_DEADLINE_MS);
-  return { signal: controller.signal, done: () => clearTimeout(timer) };
+  let requestTimer: ReturnType<typeof setTimeout> | undefined;
+  let hardTimer: ReturnType<typeof setTimeout> | undefined;
+  const start = () => {
+    if (!requestTimer) requestTimer = setTimeout(() => controller.abort(), SAVE_DEADLINE_MS);
+  };
+  const hardEnd = new Promise<T>(resolve => {
+    hardTimer = setTimeout(() => {
+      // Aborting also cancels a request that the client starts later.
+      controller.abort();
+      resolve(timedOutValue);
+    }, USER_WAIT_MS + SAVE_DEADLINE_MS);
+  });
+  return Promise.race([save({ signal: controller.signal, start }), hardEnd]).finally(() => {
+    clearTimeout(requestTimer);
+    clearTimeout(hardTimer);
+  });
 }
 
 export function enqueueLessonProgressWrite<T>(
   lessonId: string,
-  write: (signal: AbortSignal) => Promise<T>
+  write: (request: SaveRequest) => Promise<T>,
+  timedOutValue: T
 ): Promise<T> {
   const previous = lessonProgressWrites.get(lessonId) || Promise.resolve();
   const pending = previous
     .catch(() => undefined)
-    .then(() => {
-      const deadline = saveDeadline();
-      return write(deadline.signal).finally(deadline.done);
-    });
+    .then(() => boundedSave(write, timedOutValue));
   lessonProgressWrites.set(lessonId, pending);
   const release = () => {
     if (lessonProgressWrites.get(lessonId) === pending) {
@@ -171,24 +195,27 @@ export function updateLessonProgress(
   questionNumber?: number
 ): Promise<void> {
   const userRequest = requestUser();
-  return enqueueLessonProgressWrite(lessonId, signal =>
-    writeLessonProgress(
-      signal,
-      userRequest,
-      lessonId,
-      submoduleId,
-      moduleId,
-      pageType,
-      pageNumber,
-      totalPages,
-      quizId,
-      questionNumber
-    )
+  return enqueueLessonProgressWrite(
+    lessonId,
+    request =>
+      writeLessonProgress(
+        request,
+        userRequest,
+        lessonId,
+        submoduleId,
+        moduleId,
+        pageType,
+        pageNumber,
+        totalPages,
+        quizId,
+        questionNumber
+      ),
+    undefined
   );
 }
 
 async function writeLessonProgress(
-  signal: AbortSignal,
+  request: SaveRequest,
   userRequest: ReturnType<typeof requestUser>,
   lessonId: string,
   submoduleId: string,
@@ -225,10 +252,11 @@ async function writeLessonProgress(
     if (quizId) upsertData.current_quiz_id = quizId;
     if (questionNumber) upsertData.current_question_number = questionNumber;
 
+    request.start();
     const { error } = await progressClient
       .from('user_lesson_progress')
       .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' })
-      .abortSignal(signal);
+      .abortSignal(request.signal);
 
     if (error) {
       console.error('Error updating lesson progress:', error);
@@ -260,7 +288,7 @@ export function saveResumePosition(
   if (!lessonId || !submoduleId || !moduleId) return Promise.resolve(false);
   // Capture authentication at invocation, then write in visit order, including Back.
   const userRequest = requestUser();
-  return enqueueLessonProgressWrite(lessonId, async signal => {
+  return enqueueLessonProgressWrite(lessonId, async request => {
     try {
       const auth = await userRequest;
       const user = auth?.data.user;
@@ -279,10 +307,11 @@ export function saveResumePosition(
       if (quizId) upsertData.current_quiz_id = quizId;
       if (questionNumber) upsertData.current_question_number = questionNumber;
 
+      request.start();
       const { error } = await progressClient
         .from('user_lesson_progress')
         .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' })
-        .abortSignal(signal);
+        .abortSignal(request.signal);
 
       if (error) {
         console.error('Error saving resume position:', error);
@@ -295,7 +324,7 @@ export function saveResumePosition(
       console.error('Error in saveResumePosition:', error);
       return false;
     }
-  });
+  }, false);
 }
 
 async function completeLesson(lessonId: string): Promise<void> {
@@ -660,8 +689,8 @@ export interface OrderedActivitySave {
   clearSubmitted?: boolean;
   /** The signed-in user, read when the save was queued. */
   userRequest?: ReturnType<typeof requestUser>;
-  /** Aborts the request, so a stalled save cannot hold the field's queue. */
-  signal?: AbortSignal;
+  /** Bounds the request, so a stalled save cannot hold the field's queue. */
+  request?: SaveRequest;
 }
 
 export async function saveActivityInput(
@@ -699,15 +728,16 @@ export async function saveActivityInput(
       payload.is_submitted = false;
     }
 
-    const request = progressClient
+    const upsert = progressClient
       .from('user_activity_inputs')
       .upsert(payload, {
         onConflict:
           'user_id,sanity_lesson_id,activity_page_key,input_field_key',
       });
-    const { error } = await (ordered.signal
-      ? request.abortSignal(ordered.signal)
-      : request);
+    ordered.request?.start();
+    const { error } = await (ordered.request
+      ? upsert.abortSignal(ordered.request.signal)
+      : upsert);
 
     if (error) {
       console.error('Error saving activity input:', error);

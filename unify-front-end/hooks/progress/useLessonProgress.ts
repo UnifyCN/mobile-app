@@ -25,7 +25,7 @@ export function useLessonProgress() {
         // Queue behind earlier page and resume writes for this lesson, so a
         // late one cannot mark the completed lesson as in progress again.
         const userRequest = requestUser();
-        const saved = await enqueueLessonProgressWrite(lessonId, async signal => {
+        const saved = await enqueueLessonProgressWrite(lessonId, async request => {
           const auth = await userRequest;
           const user = auth?.data.user;
           const authError = auth?.error;
@@ -35,6 +35,7 @@ export function useLessonProgress() {
             return false;
           }
 
+          request.start();
           const { error } = await progressClient
             .from('user_lesson_progress')
             .upsert(
@@ -55,14 +56,14 @@ export function useLessonProgress() {
                 onConflict: 'user_id,sanity_lesson_id',
               }
             )
-            .abortSignal(signal);
+            .abortSignal(request.signal);
 
           if (error) {
             console.error('Error saving lesson completion:', error);
             return false;
           }
           return true;
-        });
+        }, false);
         if (!saved) return false;
 
         // DO NOT await the full cache refresh here — it fetches every

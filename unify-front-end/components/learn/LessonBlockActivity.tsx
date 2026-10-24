@@ -9,7 +9,8 @@ import {
   getActivityInputsByPage,
   requestUser,
   saveActivityInput,
-  saveDeadline,
+  boundedSave,
+  type SaveRequest,
 } from '@/services/progress/progressService';
 
 // Shared by every mounted copy of an activity. The reader pushes a new screen
@@ -23,11 +24,8 @@ const activityScope = (lessonId: string, activityKey: string) => `${lessonId}|${
 
 // Each write has a deadline, so a stalled one cannot hold later writes or a
 // reopened copy's read.
-function queueFieldWrite(key: string, write: (signal: AbortSignal) => Promise<boolean>) {
-  const next = (fieldWrites.get(key) ?? Promise.resolve(true)).then(() => {
-    const deadline = saveDeadline();
-    return write(deadline.signal).finally(deadline.done);
-  });
+function queueFieldWrite(key: string, write: (request: SaveRequest) => Promise<boolean>) {
+  const next = (fieldWrites.get(key) ?? Promise.resolve(true)).then(() => boundedSave(write, false));
   fieldWrites.set(key, next);
   void next.then(() => {
     if (fieldWrites.get(key) === next) fieldWrites.delete(key);
@@ -74,9 +72,9 @@ export default function LessonBlockActivity({
   // when the write is queued, so a queued write keeps its account.
   const persist = (fieldKey: string, value: string, isSubmitted = false) => {
     const userRequest = requestUser();
-    return queueFieldWrite(scope + fieldKey, signal => saveActivityInput(
+    return queueFieldWrite(scope + fieldKey, request => saveActivityInput(
       lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted,
-      { clearSubmitted: !isSubmitted, userRequest, signal }
+      { clearSubmitted: !isSubmitted, userRequest, request }
     ));
   };
 

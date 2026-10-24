@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-native';
 import {
   SAVE_DEADLINE_MS,
+  USER_WAIT_MS,
   saveResumePosition,
   updateLessonProgress,
 } from '@/services/progress/progressService';
@@ -125,10 +126,46 @@ test('completion fails instead of waiting forever for a stalled sign-in check', 
     const { result } = renderHook(() => useLessonProgress());
     const errorLog = jest.spyOn(console, 'error').mockImplementation(() => {});
     const completion = result.current.saveLessonCompletion('auth', 'sub', 'module', 3);
-    await jest.advanceTimersByTimeAsync(SAVE_DEADLINE_MS);
+    await jest.advanceTimersByTimeAsync(USER_WAIT_MS);
     expect(await completion).toBe(false);
     expect(mockUpsert).not.toHaveBeenCalled();
     errorLog.mockRestore();
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
+test('a slow sign-in read does not shorten the time a working save gets', async () => {
+  jest.useFakeTimers();
+  try {
+    mockGetUser.mockImplementation(() => new Promise(resolve =>
+      setTimeout(() => resolve({ data: { user: { id: 'slow' } } }), USER_WAIT_MS - 1000)));
+    mockUpsert.mockImplementation((_row: unknown, _options: unknown, signal: AbortSignal) => new Promise(resolve => {
+      const timer = setTimeout(() => resolve({ error: null }), SAVE_DEADLINE_MS - 1000);
+      signal.addEventListener('abort', () => { clearTimeout(timer); resolve({ error: { message: 'aborted' } }); });
+    }));
+    const { result } = renderHook(() => useLessonProgress());
+    const completion = result.current.saveLessonCompletion('slow', 'sub', 'module', 3);
+    await jest.advanceTimersByTimeAsync(USER_WAIT_MS + SAVE_DEADLINE_MS);
+    expect(await completion).toBe(true);
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
+test('a save stuck inside the client is released at the hard end', async () => {
+  jest.useFakeTimers();
+  try {
+    mockUpsert.mockImplementationOnce(() => new Promise(() => {})).mockResolvedValue({ error: null });
+    const { result } = renderHook(() => useLessonProgress());
+    const stuck = saveResumePosition('stuck', 'sub', 'module', 'lesson', 2);
+    const completion = result.current.saveLessonCompletion('stuck', 'sub', 'module', 3);
+    await jest.advanceTimersByTimeAsync(USER_WAIT_MS + SAVE_DEADLINE_MS - 1);
+    expect(mockUpsert).toHaveBeenCalledTimes(1);
+    await jest.advanceTimersByTimeAsync(1);
+    expect(await stuck).toBe(false);
+    expect(await completion).toBe(true);
+    expect((mockUpsert.mock.calls[0][2] as AbortSignal).aborted).toBe(true);
   } finally {
     jest.useRealTimers();
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import LessonBlockActivity from '@/components/learn/LessonBlockActivity';
-import { SAVE_DEADLINE_MS, getActivityInputsByPage, requestUser, saveActivityInput } from '@/services/progress/progressService';
+import { SAVE_DEADLINE_MS, USER_WAIT_MS, getActivityInputsByPage, requestUser, saveActivityInput } from '@/services/progress/progressService';
 import type { SanityActivityPage } from '@/types/sanity';
 
 jest.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key }) }));
@@ -10,10 +10,11 @@ jest.mock('@/services/progress/progressClient', () => ({ progressClient: {} }));
 jest.mock('@/services/progress/progressService', () => ({
   ACTIVITY_QUESTION_PREFIX: 'question:',
   SAVE_DEADLINE_MS: jest.requireActual('@/services/progress/progressService').SAVE_DEADLINE_MS,
+  USER_WAIT_MS: jest.requireActual('@/services/progress/progressService').USER_WAIT_MS,
+  boundedSave: jest.requireActual('@/services/progress/progressService').boundedSave,
   getActivityInputsByPage: jest.fn(),
   requestUser: jest.fn(),
   saveActivityInput: jest.fn(),
-  saveDeadline: jest.requireActual('@/services/progress/progressService').saveDeadline,
 }));
 jest.mock('@/components/sanity/RichTextRenderer', () => {
   const React = require('react');
@@ -196,17 +197,18 @@ it('keeps the account that was signed in when a write was queued', async () => {
   expect(saveInput.mock.calls.map(call => call[7]?.userRequest)).toEqual(['account-a', 'account-a']);
 });
 
-it('opens a reopened copy after a stalled save reaches its deadline', async () => {
+it('opens a reopened copy after a stalled save reaches its hard end', async () => {
   jest.useFakeTimers();
   try {
     saveInput.mockImplementationOnce((...args) => new Promise(resolve => {
-      args[7]?.signal?.addEventListener('abort', () => resolve(false));
+      args[7]?.request?.signal.addEventListener('abort', () => resolve(false));
     }));
     const first = render(<LessonBlockActivity activity={activity} lessonId="stalled" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
     await act(async () => { await jest.advanceTimersByTimeAsync(0); });
     fireEvent.press(first.getByTestId('question'));
     const reopened = render(<LessonBlockActivity activity={activity} lessonId="stalled" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
-    await act(async () => { await jest.advanceTimersByTimeAsync(SAVE_DEADLINE_MS - 1); });
+    // The mocked save never starts its request, as when the client waits on its session lock.
+    await act(async () => { await jest.advanceTimersByTimeAsync(USER_WAIT_MS + SAVE_DEADLINE_MS - 1); });
     expect(reopened.queryByText('learn.lesson.loadingActivity')).toBeTruthy();
     await act(async () => { await jest.advanceTimersByTimeAsync(1); });
     expect(reopened.queryByText('learn.lesson.loadingActivity')).toBeNull();
