@@ -145,6 +145,7 @@ jest.mock('@/components/checklist/TaskDetailModal', () => ({
 }));
 
 import { sanityClient } from '@/sanity-custom';
+import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import ChecklistScreen from '@/app/(tabs)/Checklist/index';
 
 const mockFetch = sanityClient.fetch as jest.Mock;
@@ -219,6 +220,49 @@ describe('Checklist screen and the profile province', () => {
     expect(new Set(fetchedProvinces().slice(callsBefore))).toEqual(
       new Set(['British Columbia'])
     );
+  });
+
+  it('ends on the newest profile province when an older profile response arrives last', async () => {
+    mockProfileProvince = 'British Columbia';
+    renderScreen();
+    await waitFor(() => expect(mockFetch).toHaveBeenCalled());
+    await settle();
+    const callsBefore = mockFetch.mock.calls.length;
+
+    const answers: ((province: string) => void)[] = [];
+    (getOnboardingProfile as jest.Mock)
+      .mockImplementationOnce(
+        () =>
+          new Promise(resolve => {
+            answers[0] = province =>
+              resolve({ persona: 'international_student', province });
+          })
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise(resolve => {
+            answers[1] = province =>
+              resolve({ persona: 'international_student', province });
+          })
+      );
+    // Two focuses overlap: the first profile read is still pending.
+    await act(async () => {
+      mockLatestFocus!();
+    });
+    await act(async () => {
+      mockLatestFocus!();
+    });
+    await waitFor(() => expect(answers.length).toBe(2));
+
+    await act(async () => answers[1]('Ontario'));
+    await settle();
+    await act(async () => answers[0]('British Columbia'));
+    await settle();
+
+    const after = fetchedProvinces().slice(callsBefore);
+    expect(after).toContain('Ontario');
+    expect(after[after.length - 1]).toBe('Ontario');
+    expect(after).not.toContain('British Columbia');
   });
 
   it('refetches with the same province when the profile is unchanged', async () => {
