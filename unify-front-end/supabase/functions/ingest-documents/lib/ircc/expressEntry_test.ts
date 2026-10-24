@@ -80,6 +80,98 @@ Deno.test('a malformed draw among the ten newest fails the source', () => {
   );
 });
 
+const BAD_SIZES = [
+  'NaN',
+  'Infinity',
+  '-5',
+  '-1,000',
+  '1e3',
+  '5.0',
+  '1,00',
+  '1,0000',
+  ',100',
+  '1,,000',
+  '1,000,',
+  '12,34',
+  '1 000',
+  '5,000 invitations',
+  '0x10',
+];
+const BAD_CRS = [
+  'NaN',
+  'Infinity',
+  '-435',
+  '4e2',
+  '435.5',
+  '4,35',
+  '1,000',
+  '435 points',
+  '0x1B3',
+];
+
+// Falsifier: the reviewed converter accepts any nonempty text, so "NaN"
+// invitations or CRS reach the stored sentence.
+Deno.test('malformed current invitation counts fail the source', () => {
+  for (const drawSize of BAD_SIZES) {
+    const rounds = sample.rounds.map((row: object, i: number) =>
+      i === 0 ? { ...row, drawSize } : row
+    );
+    assertEquals(
+      errorOf({ rounds }),
+      'Express Entry rounds: malformed draw 450',
+      drawSize
+    );
+  }
+});
+
+Deno.test('malformed current CRS scores fail the source', () => {
+  for (const drawCRS of BAD_CRS) {
+    const rounds = sample.rounds.map((row: object, i: number) =>
+      i === 0 ? { ...row, drawCRS } : row
+    );
+    assertEquals(
+      errorOf({ rounds }),
+      'Express Entry rounds: malformed draw 450',
+      drawCRS
+    );
+  }
+});
+
+// Falsifier: a stricter pattern that drops the comma groups or padding the
+// official feed carries rejects real draws.
+Deno.test('official comma-grouped and plain counts stay valid', () => {
+  for (const [drawSize, shown] of [
+    ['5,000', '5,000'],
+    ['752', '752'],
+    ['1,234,567', '1,234,567'],
+    ['5000', '5000'],
+    [' 2,500 ', '2,500'],
+  ]) {
+    const rounds = sample.rounds.map((row: object, i: number) =>
+      i === 0 ? { ...row, drawSize, drawCRS: '99' } : row
+    );
+    assertEquals(
+      convertExpressEntryRounds({ rounds })[0].text,
+      `Express Entry draw #450 on October 16, 2026: French-Language proficiency 2026-Version 2, ${shown} invitations, minimum CRS 99.`
+    );
+  }
+});
+
+// Falsifier: validating every row would fail the historical draw below.
+Deno.test(
+  'a malformed historical size or CRS outside the ten is ignored',
+  () => {
+    const records = convertExpressEntryRounds({
+      rounds: [
+        ...sample.rounds,
+        { ...sample.rounds[12], drawNumber: '91b', drawSize: 'NaN' },
+        { ...sample.rounds[12], drawNumber: '90', drawCRS: '-1' },
+      ],
+    });
+    assertEquals(records.length, 10);
+  }
+);
+
 // Falsifier: rejecting every malformed row would fail the official file,
 // whose historical draws 91a and 91b carry a letter.
 Deno.test(

@@ -673,6 +673,102 @@ Deno.test(
   }
 );
 
+// Falsifier: the reviewed converter accepts any nonempty text, so the crawl
+// replaces the complete set with "NaN invitations" or "minimum CRS NaN" and
+// advances the document dates.
+for (const [field, bad] of [
+  ['drawSize', 'NaN'],
+  ['drawSize', '-1,000'],
+  ['drawSize', '1,00'],
+  ['drawCRS', 'NaN'],
+  ['drawCRS', '-500'],
+  ['drawCRS', '5e2'],
+] as const) {
+  Deno.test(
+    `a malformed newest ${field} (${bad}) keeps the previous complete set and dates`,
+    async () => {
+      const db = await openIngestDb();
+      try {
+        const ee = await source(db, EE_PAGE);
+        await ingestSource(
+          ee,
+          deps(db, {
+            at: '2026-10-22T00:00:00Z',
+            pages: JSON.stringify({ rounds: [draw(401), draw(400)] }),
+          })
+        );
+        const chunks = await chunksOf(db, EE_PAGE);
+        const document = await documentOf(db, EE_PAGE);
+
+        const result = await ingestSource(
+          ee,
+          deps(db, {
+            at: '2026-10-23T00:00:00Z',
+            pages: JSON.stringify({
+              rounds: [
+                { ...draw(402, '2026-10-21'), [field]: bad },
+                draw(401),
+                draw(400),
+              ],
+            }),
+          })
+        );
+
+        assertEquals(result, {
+          source_id: ee.id,
+          status: 'error',
+          error: 'Express Entry rounds: malformed draw 402',
+        });
+        await assertOneGeneration(db, EE_PAGE, [drawText(401), drawText(400)]);
+        assertEquals(await chunksOf(db, EE_PAGE), chunks);
+        assertEquals(await documentOf(db, EE_PAGE), document);
+        assertEquals(await leftovers(db), { leases: 0, staged: 0 });
+      } finally {
+        await db.close();
+      }
+    }
+  );
+}
+
+// Falsifier: a pattern that rejects the official comma-grouped count would
+// turn this valid refresh into an error.
+Deno.test(
+  'a valid comma-grouped count and CRS still replace the set',
+  async () => {
+    const db = await openIngestDb();
+    try {
+      const ee = await source(db, EE_PAGE);
+      await ingestSource(
+        ee,
+        deps(db, {
+          at: '2026-10-22T00:00:00Z',
+          pages: JSON.stringify({ rounds: [draw(401), draw(400)] }),
+        })
+      );
+
+      const result = await ingestSource(
+        ee,
+        deps(db, {
+          at: '2026-10-23T00:00:00Z',
+          pages: JSON.stringify({
+            rounds: [draw(402, '2026-10-21', '12,345'), draw(401), draw(400)],
+          }),
+        })
+      );
+
+      assertEquals(result.status, 'success');
+      const texts = (await chunksOf(db, EE_PAGE)).map(c => c.chunk_text);
+      assertEquals(texts.length, 3);
+      assertEquals(
+        texts[0],
+        'Express Entry draw #402 on October 21, 2026: Canadian Experience Class, 12,345 invitations, minimum CRS 500.'
+      );
+    } finally {
+      await db.close();
+    }
+  }
+);
+
 // Falsifier: the reviewed ingestion turns the valid empty window into "No
 // records in the source" and keeps the expired September 24 item searchable.
 Deno.test(

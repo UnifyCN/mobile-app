@@ -12,6 +12,11 @@ interface Draw {
   crs: string;
 }
 
+/** IRCC prints counts as "752" or "5,000": digits, grouped by commas in threes. */
+const INVITATIONS = /^(?:\d{1,3}(?:,\d{3})+|\d+)$/;
+/** A CRS score is whole digits. */
+const SCORE = /^\d+$/;
+
 function text(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const trimmed = value.replace(/\s+/g, ' ').trim();
@@ -29,6 +34,7 @@ function readDraw(row: unknown): Draw | null {
   if (!number || !/^\d+$/.test(number)) return null;
   if (!date || formatLongDate(date) === null) return null;
   if (!name || !size || !crs) return null;
+  if (!INVITATIONS.test(size) || !SCORE.test(crs)) return null;
   return { number: Number(number), date, name, size, crs };
 }
 
@@ -49,7 +55,8 @@ function malformed(row: unknown): Error {
  * Converts IRCC's ee_rounds_123_en.json into one record per draw: the ten most
  * recent, newest first. Draws are numbered in order, so the ten highest numbers
  * are the current set. Every one of them must be complete: a malformed current
- * draw fails the source, so the previous complete set stays. Older draws are
+ * draw, including its invitation count and CRS score as numbers, fails the
+ * source, so the previous complete set stays. Older draws are
  * not read, so a historical format such as draw 91b does not matter. A row
  * without a number cannot be placed and also fails the source.
  */
