@@ -113,15 +113,26 @@ async function startLesson(
 // or mark a completed lesson as in progress again. Each writer reads the
 // signed-in user when it is called, not when its turn comes.
 const lessonProgressWrites = new Map<string, Promise<unknown>>();
+const latestLessonWrites = new Map<string, () => Promise<unknown>>();
 
-// A write waits at most this long for the write before it. React Native's
-// Android HTTP client has no default timeout, so one stalled request must not
-// hold later saves, including lesson completion, forever.
+// A write waits at most this long for the write before it, and a writer waits
+// at most this long for the signed-in user. React Native's Android HTTP client
+// has no default timeout, so one stalled request must not hold later saves,
+// including lesson completion, forever.
 export const PREVIOUS_WRITE_WAIT_MS = 8000;
+export const USER_WAIT_MS = 8000;
 
-/** Reads the signed-in user now. A failed read resolves to null. */
+/** Reads the signed-in user now. A failed or stalled read resolves to null. */
 export function requestUser() {
-  return progressClient.auth.getUser().catch(() => null);
+  return new Promise<Awaited<ReturnType<typeof progressClient.auth.getUser>> | null>(
+    resolve => {
+      const timer = setTimeout(() => resolve(null), USER_WAIT_MS);
+      progressClient.auth
+        .getUser()
+        .then(resolve, () => resolve(null))
+        .finally(() => clearTimeout(timer));
+    }
+  );
 }
 
 export function enqueueLessonProgressWrite<T>(
@@ -129,16 +140,30 @@ export function enqueueLessonProgressWrite<T>(
   write: () => Promise<T>
 ): Promise<T> {
   const previous = lessonProgressWrites.get(lessonId) || Promise.resolve();
+  let skippedStalledWrite = false;
   const turn = new Promise<void>(resolve => {
-    const timer = setTimeout(resolve, PREVIOUS_WRITE_WAIT_MS);
+    const timer = setTimeout(() => {
+      skippedStalledWrite = true;
+      resolve();
+    }, PREVIOUS_WRITE_WAIT_MS);
     const done = () => {
       clearTimeout(timer);
       resolve();
     };
     previous.then(done, done);
   });
+  // When a stalled write finally lands after later writes ran, apply the
+  // latest write again so the stale data does not stay.
+  const reapplyLatest = () => {
+    if (!skippedStalledWrite) return;
+    const latest = latestLessonWrites.get(lessonId);
+    if (latest) void enqueueLessonProgressWrite(lessonId, latest).catch(() => undefined);
+  };
+  void previous.then(reapplyLatest, reapplyLatest);
+
   const pending = turn.then(write);
   lessonProgressWrites.set(lessonId, pending);
+  latestLessonWrites.set(lessonId, write);
   const release = () => {
     if (lessonProgressWrites.get(lessonId) === pending) {
       lessonProgressWrites.delete(lessonId);

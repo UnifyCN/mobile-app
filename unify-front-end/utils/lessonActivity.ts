@@ -32,22 +32,22 @@ export function canSubmitLessonActivity(
   });
 }
 
-/** Stored field keys that must be submitted before an activity counts as done. */
-export function requiredResponseKeys(
+/** Stored field keys of an activity's responses, and whether each is required. */
+export function activityResponseKeys(
   instructions: SanityActivityPage['instructions'],
   questionPrefix: string
-): string[] {
+): { key: string; required: boolean }[] {
   return instructions.flatMap(block => {
     switch (block._type) {
       case 'large_input_box':
       case 'mid_input_box':
       case 'small_input_box':
-        return block.required ? [block._key] : [];
+        return [{ key: block._key, required: Boolean(block.required) }];
       case 'multiple_choice_single':
       case 'two_options_question':
       case 'multiple_choice_multiple':
       case 'matching_question':
-        return [questionPrefix + block._key];
+        return [{ key: questionPrefix + block._key, required: true }];
       default:
         return [];
     }

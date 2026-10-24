@@ -1,5 +1,5 @@
 import { withOrderedLessonBlocks } from '@/utils/lessonContentBlocks';
-import { canSubmitLessonActivity, requiredResponseKeys } from '@/utils/lessonActivity';
+import { activityResponseKeys, canSubmitLessonActivity } from '@/utils/lessonActivity';
 import { getLessonTotalPages, calculateLessonProgress } from '@/utils/submoduleProgress';
 import type { SanityBlock, SanityLesson, SanityLessonContentBlock, SanitySubmoduleWithLessons } from '@/types/sanity';
 
@@ -94,12 +94,17 @@ describe('ordered lesson content', () => {
   });
 });
 
-it('lists required text and every question as required responses, not optional text', () => {
+it('lists every response key, with required text and every question marked required', () => {
   const instructions = [
     { _type: 'small_input_box', _key: 'required-note', label: '', placeholder: '', required: true },
     { _type: 'large_input_box', _key: 'optional-note', label: '', placeholder: '' },
     { _type: 'two_options_question', _key: 'pick', question_text: [], options: [] },
     { _type: 'matching_question', _key: 'match', question_text: [], matching_pairs: [] },
   ] as never;
-  expect(requiredResponseKeys(instructions, 'question:')).toEqual(['required-note', 'question:pick', 'question:match']);
+  expect(activityResponseKeys(instructions, 'question:')).toEqual([
+    { key: 'required-note', required: true },
+    { key: 'optional-note', required: false },
+    { key: 'question:pick', required: true },
+    { key: 'question:match', required: true },
+  ]);
 });

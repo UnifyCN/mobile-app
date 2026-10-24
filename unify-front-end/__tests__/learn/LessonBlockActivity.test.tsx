@@ -145,3 +145,34 @@ it('clears the submitted state of an answer changed after Submit', async () => {
   await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(1));
   expect(saveInput).toHaveBeenLastCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', false, true);
 });
+
+it('writes the pending draft of an older copy before a reopened copy reads', async () => {
+  let finishDraft!: (saved: boolean) => void;
+  saveInput.mockImplementationOnce(() => new Promise(resolve => { finishDraft = resolve; }));
+  const first = render(<LessonBlockActivity activity={activity} lessonId="remount" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
+  await waitFor(() => expect(first.getByTestId('reflection')).toBeTruthy());
+  fireEvent.changeText(first.getByTestId('reflection'), 'Older draft');
+  expect(loadInputs).toHaveBeenCalledTimes(1);
+  render(<LessonBlockActivity activity={activity} lessonId="remount" submoduleId="module" moduleId="course" onReady={jest.fn()} />);
+  await waitFor(() => expect(saveInput).toHaveBeenCalledWith('remount', 'module', 'course', 'knowledge-check', 'reflection', 'Older draft', false, true));
+  await act(async () => { await Promise.resolve(); });
+  expect(loadInputs).toHaveBeenCalledTimes(1);
+  await act(async () => { finishDraft(true); });
+  await waitFor(() => expect(loadInputs).toHaveBeenCalledTimes(2));
+});
+
+it('asks for a new submit when an optional answer changed after Submit', async () => {
+  const withNote = { ...activity, instructions: [
+    ...activity.instructions,
+    { _type: 'small_input_box', _key: 'note', label: 'Note', placeholder: '' },
+  ] } as typeof activity;
+  loadInputs.mockResolvedValue({
+    'knowledge-check': { inputValues: { reflection: 'Check the source', note: 'Edited later' }, questionAnswers: { question: 'a' },
+      submittedFields: { reflection: true, 'question:question': true, note: false }, isSubmitted: true },
+  });
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={withNote} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(view.getByTestId('note').props.value).toBe('Edited later'));
+  expect(onReady).not.toHaveBeenCalledWith(true);
+  expect(view.queryByText('Feedback shown')).toBeNull();
+});

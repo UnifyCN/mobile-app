@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { canSubmitLessonActivity, requiredResponseKeys } from '@/utils/lessonActivity';
+import { activityResponseKeys, canSubmitLessonActivity } from '@/utils/lessonActivity';
 import RichTextRenderer from '@/components/sanity/RichTextRenderer';
 import type { SanityActivityPage } from '@/types/sanity';
 import {
@@ -9,6 +9,38 @@ import {
   getActivityInputsByPage,
   saveActivityInput,
 } from '@/services/progress/progressService';
+
+// Shared by every mounted copy of an activity. The reader pushes a new screen
+// for Next and Back, so an older copy can still hold a pending draft or an
+// in-flight write when a newer copy loads or submits. Writes for one field run
+// in call order across copies.
+const fieldWrites = new Map<string, Promise<boolean>>();
+const pendingDrafts = new Map<string, { timer: ReturnType<typeof setTimeout>; run: () => void }>();
+
+const activityScope = (lessonId: string, activityKey: string) => `${lessonId}|${activityKey}|`;
+
+function queueFieldWrite(key: string, write: () => Promise<boolean>) {
+  const next = (fieldWrites.get(key) ?? Promise.resolve(true)).then(write);
+  fieldWrites.set(key, next);
+  void next.then(() => {
+    if (fieldWrites.get(key) === next) fieldWrites.delete(key);
+  });
+  return next;
+}
+
+/** Run (or drop) the scope's pending drafts now, instead of after the debounce. */
+function settleDrafts(scope: string, run: boolean) {
+  for (const [key, draft] of [...pendingDrafts]) {
+    if (!key.startsWith(scope)) continue;
+    clearTimeout(draft.timer);
+    pendingDrafts.delete(key);
+    if (run) draft.run();
+  }
+}
+
+function scopeWrites(scope: string) {
+  return Promise.all([...fieldWrites].filter(([key]) => key.startsWith(scope)).map(([, write]) => write));
+}
 
 type Props = {
   activity: Omit<SanityActivityPage, 'order'>;
@@ -27,37 +59,36 @@ export default function LessonBlockActivity({
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const edits = useRef(0);
-  const writes = useRef<Record<string, Promise<boolean>>>({});
+  const scope = activityScope(lessonId, activity._key);
 
-  const persist = (fieldKey: string, value: string, isSubmitted = false) => {
-    // Serialize writes per answer so a slow draft cannot overwrite a later submit.
-    // Writes run in order, so a draft clears the field's submitted state: an
-    // answer changed after Submit must be submitted again.
-    const previous = writes.current[fieldKey] ?? Promise.resolve(true);
-    const next = previous.then(() => saveActivityInput(
+  // Writes run in order, so a draft clears the field's submitted state: an
+  // answer changed after Submit must be submitted again.
+  const persist = (fieldKey: string, value: string, isSubmitted = false) =>
+    queueFieldWrite(scope + fieldKey, () => saveActivityInput(
       lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted, !isSubmitted
     ));
-    writes.current[fieldKey] = next;
-    return next;
-  };
 
   useEffect(() => {
     let cancelled = false;
     onReady(false);
-    getActivityInputsByPage(lessonId).then(byPage => {
+    // Read only after every earlier copy's drafts and writes have landed.
+    settleDrafts(scope, true);
+    scopeWrites(scope).then(() => getActivityInputsByPage(lessonId)).then(byPage => {
       if (cancelled) return;
       const saved = byPage[activity._key];
       if (saved) {
         setInputs(current => ({ ...saved.inputValues, ...current }));
         setAnswers(current => ({ ...saved.questionAnswers, ...current }));
         // A returning learner keeps a completed submission; Next stays open.
-        // Every required response must be submitted: a partly failed submit
-        // can leave some rows submitted and others not.
-        const required = requiredResponseKeys(activity.instructions, ACTIVITY_QUESTION_PREFIX);
+        // Every required response, and every saved response, must be
+        // submitted: a partly failed submit or a later edit leaves some
+        // rows not submitted.
+        const fullySubmitted = activityResponseKeys(activity.instructions, ACTIVITY_QUESTION_PREFIX)
+          .every(({ key, required }) =>
+            key in saved.submittedFields ? saved.submittedFields[key] : !required);
         if (
-          required.every(key => saved.submittedFields[key]) &&
+          fullySubmitted &&
           saved.isSubmitted &&
           canSubmitLessonActivity(activity.instructions, saved.inputValues, saved.questionAnswers)
         ) {
@@ -68,7 +99,7 @@ export default function LessonBlockActivity({
       setLoading(false);
     });
     return () => { cancelled = true; };
-  }, [lessonId, activity._key, activity.instructions, onReady]);
+  }, [scope, lessonId, activity._key, activity.instructions, onReady]);
 
   const invalidateSubmission = () => {
     edits.current += 1;
@@ -79,12 +110,18 @@ export default function LessonBlockActivity({
   const handleInput = (key: string, value: string) => {
     setInputs(current => ({ ...current, [key]: value }));
     invalidateSubmission();
-    if (timers.current[key]) clearTimeout(timers.current[key]);
-    // Do not cancel on unmount: this final write must survive Next/Back/exit.
-    timers.current[key] = setTimeout(() => {
-      void persist(key, value);
-      delete timers.current[key];
-    }, 600);
+    const draftKey = scope + key;
+    const existing = pendingDrafts.get(draftKey);
+    if (existing) clearTimeout(existing.timer);
+    // Module-level, so this final write survives Next/Back/exit.
+    const run = () => { void persist(key, value); };
+    pendingDrafts.set(draftKey, {
+      run,
+      timer: setTimeout(() => {
+        pendingDrafts.delete(draftKey);
+        run();
+      }, 600),
+    });
   };
 
   const handleAnswer = (key: string, value: string | string[]) => {
@@ -99,8 +136,7 @@ export default function LessonBlockActivity({
     if (!canSubmit || saving) return;
     setSaving(true);
     const editsAtSubmit = edits.current;
-    Object.values(timers.current).forEach(clearTimeout);
-    timers.current = {};
+    settleDrafts(scope, false);
     try {
       const results = await Promise.all([
         ...Object.entries(inputs).map(([key, value]) => persist(key, value, true)),
