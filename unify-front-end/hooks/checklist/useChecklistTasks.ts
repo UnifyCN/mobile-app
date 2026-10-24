@@ -28,6 +28,8 @@ interface UseChecklistTasksParams {
   currentStage: number | null;
   stageChanged: boolean;
   persona: string | null;
+  /** Onboarding-profile province; unmatched or missing means national items only. */
+  province: string | null;
 }
 
 async function fetchChecklistTasks(
@@ -35,14 +37,15 @@ async function fetchChecklistTasks(
   currentStage: number,
   normalizedPersona: string | null,
   stageChanged: boolean,
-  language: SanityLanguage
+  language: SanityLanguage,
+  province: string | null
 ): Promise<UserTaskWithDetails[]> {
   const stageSlug = stageNumberToStageSlug(currentStage);
   const merged = await getChecklistWithUserProgress(
     userId,
     normalizedPersona,
     stageSlug,
-    { stageChanged, language }
+    { stageChanged, language, province }
   );
   try {
     const orders = await getChecklistTaskOrders(userId);
@@ -57,6 +60,7 @@ export const useChecklistTasks = ({
   currentStage,
   stageChanged,
   persona,
+  province,
 }: UseChecklistTasksParams) => {
   const queryClient = useQueryClient();
   const language = useSanityLanguage();
@@ -99,9 +103,17 @@ export const useChecklistTasks = ({
       currentStage,
       normalizedPersona ?? 'unpersonalized',
       stageChanged,
-      language
+      language,
+      province
     );
-  }, [userId, currentStage, normalizedPersona, stageChanged, language]);
+  }, [
+    userId,
+    currentStage,
+    normalizedPersona,
+    stageChanged,
+    language,
+    province,
+  ]);
 
   const storageKey = useMemo(() => {
     if (!queryKey) {
@@ -112,7 +124,8 @@ export const useChecklistTasks = ({
       currentStage!,
       normalizedPersona ?? 'unpersonalized',
       stageChanged,
-      language
+      language,
+      province
     );
   }, [
     queryKey,
@@ -121,6 +134,7 @@ export const useChecklistTasks = ({
     normalizedPersona,
     stageChanged,
     language,
+    province,
   ]);
 
   // Hydrate React Query from memory (sync) then AsyncStorage before network fetch.
@@ -165,7 +179,8 @@ export const useChecklistTasks = ({
         currentStage!,
         normalizedPersona,
         stageChanged,
-        language
+        language,
+        province
       ),
     enabled: cacheChecked && !!queryKey && !!userId && currentStage !== null,
     // Hydrated cache renders immediately, then revalidates for newly published

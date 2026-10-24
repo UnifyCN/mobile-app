@@ -99,7 +99,8 @@ describe('checklist offline revalidation', () => {
       1,
       'skilled_worker',
       false,
-      'es'
+      'es',
+      null
     );
     await saveChecklistToDisk(key, cachedTasks);
     mockFetch.mockRejectedValue(new Error('offline'));
@@ -133,5 +134,109 @@ describe('checklist offline revalidation', () => {
     unmount();
     client.clear();
     consoleSpy.mockRestore();
+  });
+
+  describe('province targeting', () => {
+    const renderChecklist = (province: string | null) => {
+      const client = new QueryClient({
+        defaultOptions: { queries: { retry: false } },
+      });
+      const wrapper = ({ children }: PropsWithChildren) => (
+        <QueryClientProvider client={client}>{children}</QueryClientProvider>
+      );
+      const view = renderHook(
+        () =>
+          useChecklistTasks({
+            currentStage: 1,
+            stageChanged: false,
+            persona: 'skilled_worker',
+            province,
+          }),
+        { wrapper }
+      );
+      return { ...view, client };
+    };
+
+    it('asks Sanity for the user province', async () => {
+      mockFetch.mockResolvedValue([]);
+      const { result, unmount, client } = renderChecklist('Ontario');
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ province: 'Ontario' })
+      );
+
+      unmount();
+      client.clear();
+    });
+
+    it('asks for national items only when the user has no province', async () => {
+      mockFetch.mockResolvedValue([]);
+      const { result, unmount, client } = renderChecklist(null);
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ province: '' })
+      );
+
+      unmount();
+      client.clear();
+    });
+
+    it('does not show another province cached tasks while offline', async () => {
+      await saveChecklistToDisk(
+        buildChecklistCacheStorageKey(
+          'user-1',
+          1,
+          'skilled_worker',
+          false,
+          'es',
+          'British Columbia'
+        ),
+        cachedTasks
+      );
+      mockFetch.mockRejectedValue(new Error('offline'));
+      const consoleSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      const { result, unmount, client } = renderChecklist('Ontario');
+
+      await waitFor(() => expect(result.current.error).toContain('offline'));
+      expect(result.current.tasks).toEqual([]);
+
+      unmount();
+      client.clear();
+      consoleSpy.mockRestore();
+    });
+
+    it('shows the same province cached tasks while offline', async () => {
+      await saveChecklistToDisk(
+        buildChecklistCacheStorageKey(
+          'user-1',
+          1,
+          'skilled_worker',
+          false,
+          'es',
+          'Ontario'
+        ),
+        cachedTasks
+      );
+      mockFetch.mockRejectedValue(new Error('offline'));
+      const consoleSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      const { result, unmount, client } = renderChecklist('ON');
+
+      await waitFor(() => expect(result.current.error).toContain('offline'));
+      expect(result.current.tasks).toEqual(cachedTasks);
+
+      unmount();
+      client.clear();
+      consoleSpy.mockRestore();
+    });
   });
 });
