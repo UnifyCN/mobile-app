@@ -1,15 +1,18 @@
 // @ts-ignore JSR import
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 import {
   buildPool,
   type OnboardingProfile,
 } from '../_shared/companionTemplates.ts';
 import { buildCompanionProfile } from '../_shared/stageContext.ts';
+import {
+  LOCAL_DATE_HEADER,
+  readRequestToday,
+} from '../_shared/requestToday.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': `authorization, x-client-info, apikey, content-type, ${LOCAL_DATE_HEADER}`,
 };
 
 // ─── Learn surface ────────────────────────────────────────────────────────────
@@ -92,7 +95,7 @@ function scoreModule(
 }
 
 async function buildLearnSurface(
-  supabase: ReturnType<typeof createClient>,
+  supabase: SupabaseClient,
   userId: string,
   profile: OnboardingProfile
 ): Promise<{ modules: ScoredModule[] }> {
@@ -167,6 +170,15 @@ Deno.serve(async (req: Request) => {
       });
     }
 
+    // The stage rule uses the caller's local day. Older clients send none.
+    const requestToday = readRequestToday(req);
+    if (!requestToday.ok) {
+      return new Response(JSON.stringify({ error: requestToday.message }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       return new Response(
@@ -213,7 +225,10 @@ Deno.serve(async (req: Request) => {
     }
 
     // The stored stage is only a cache. Recompute it from arrival_date.
-    const profile: OnboardingProfile = buildCompanionProfile(profileData);
+    const profile: OnboardingProfile = buildCompanionProfile(
+      profileData,
+      requestToday.today
+    );
 
     const responseBody: Record<string, unknown> = {};
 

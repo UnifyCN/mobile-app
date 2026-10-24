@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import { syncStageCache } from '@/services/onboarding/syncStageCache';
+import type { ConfirmedArrival } from '@/services/onboarding/updateArrivalDate';
 import { getArrivalStage } from '@/helpers/arrivalDate';
 import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
 import { supabase } from '@/lib/supabase';
@@ -10,10 +11,10 @@ interface UserStageState {
   userId: string | null;
   arrivalDate: string | null;
   persona: string | null;
-  /** Computed from arrivalDate on every read. Null means unknown. */
-  currentStage: StageNumber | null;
+  /** Stored stage cache as last read or confirmed. Never used without recomputing. */
   previousStage: StageNumber | null;
-  stageChanged: boolean;
+  /** True once a profile read, or a confirmed write, has filled this state. */
+  loaded: boolean;
   isLoading: boolean;
   error: string | null;
 }
@@ -22,16 +23,22 @@ const EMPTY_STATE: UserStageState = {
   userId: null,
   arrivalDate: null,
   persona: null,
-  currentStage: null,
   previousStage: null,
-  stageChanged: false,
+  loaded: false,
   isLoading: true,
   error: null,
 };
 
-export const useUserStage = () => {
+/**
+ * The signed-in user's profile fields and arrival stage. The stage is a pure
+ * function of the arrival date and `today`, so a screen that passes its
+ * refreshing local day sees the stage change at midnight with no profile read.
+ */
+export const useUserStage = (today?: Date) => {
   const [state, setState] = useState<UserStageState>(EMPTY_STATE);
   const activeUserIdRef = useRef<string | null>(null);
+  // The account whose profile fields are in state. Null until a load lands.
+  const loadedUserIdRef = useRef<string | null>(null);
   const latestLoadRef = useRef(0);
   const latestPromiseRef = useRef<Promise<void>>(Promise.resolve());
 
@@ -56,6 +63,7 @@ export const useUserStage = () => {
         if (activeUserIdRef.current !== user.id) {
           // A different account: drop the old account's data at once.
           activeUserIdRef.current = user.id;
+          loadedUserIdRef.current = null;
           setState({ ...EMPTY_STATE, userId: user.id });
         }
 
@@ -65,15 +73,14 @@ export const useUserStage = () => {
         const arrivalDate = profile?.arrival_date ?? null;
         // The stored stage is a cache. Never use it without recomputing.
         const computedStage = getArrivalStage(arrivalDate);
-        const storedStage = resolveStoredStage(profile?.stage);
 
+        loadedUserIdRef.current = user.id;
         setState({
           userId: user.id,
           arrivalDate,
           persona: profile?.persona ?? null,
-          currentStage: computedStage,
-          previousStage: storedStage,
-          stageChanged: storedStage !== computedStage,
+          previousStage: resolveStoredStage(profile?.stage),
+          loaded: true,
           isLoading: false,
           error: null,
         });
@@ -88,9 +95,10 @@ export const useUserStage = () => {
       } catch (err) {
         if (isStale()) return;
         console.error('Error checking user stage:', err);
+        // Keep what the screen already knows. A failed read must not erase a
+        // confirmed arrival date.
         setState(prev => ({
           ...prev,
-          currentStage: null,
           isLoading: false,
           error: err instanceof Error ? err.message : 'Unknown error',
         }));
@@ -117,6 +125,7 @@ export const useUserStage = () => {
       if (nextUserId === activeUserIdRef.current) return;
       // Account changed or signed out: clear old state and reload.
       activeUserIdRef.current = nextUserId;
+      loadedUserIdRef.current = null;
       setState(
         nextUserId
           ? { ...EMPTY_STATE, userId: nextUserId }
@@ -138,5 +147,44 @@ export const useUserStage = () => {
   /** Reload the current account's profile and recompute the stage. */
   const refreshStage = useCallback((): Promise<void> => load(), [load]);
 
-  return { ...state, refreshStage };
+  /**
+   * Take a confirmed arrival-date write into state before any re-read. It
+   * drops reads that started earlier, so an older answer cannot bring back the
+   * previous date. Ignored for another account or before the first load.
+   */
+  const applyConfirmedArrival = useCallback(
+    (confirmed: ConfirmedArrival): void => {
+      if (
+        activeUserIdRef.current !== confirmed.id ||
+        loadedUserIdRef.current !== confirmed.id
+      ) {
+        return;
+      }
+      latestLoadRef.current++;
+      setState(prev =>
+        prev.userId !== confirmed.id
+          ? prev
+          : {
+              ...prev,
+              arrivalDate: confirmed.arrival_date,
+              previousStage: confirmed.stage,
+              isLoading: false,
+              error: null,
+            }
+      );
+    },
+    []
+  );
+
+  const currentStage = getArrivalStage(state.arrivalDate, today ?? new Date());
+  const { loaded, ...fields } = state;
+
+  return {
+    ...fields,
+    /** Computed from arrivalDate and today on every read. Null means unknown. */
+    currentStage,
+    stageChanged: loaded && state.previousStage !== currentStage,
+    refreshStage,
+    applyConfirmedArrival,
+  };
 };

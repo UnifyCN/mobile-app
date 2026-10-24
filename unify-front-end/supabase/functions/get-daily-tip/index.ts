@@ -3,6 +3,10 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { getArrivalStage } from '../_shared/arrivalStage.ts';
 import { buildArrivalLine, buildStageLine } from '../_shared/stageContext.ts';
+import {
+  LOCAL_DATE_HEADER,
+  readRequestToday,
+} from '../_shared/requestToday.ts';
 
 // ============================================================================
 // CONFIG
@@ -48,8 +52,7 @@ const VALID_CATEGORIES = [
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': `authorization, x-client-info, apikey, content-type, ${LOCAL_DATE_HEADER}`,
   'Content-Type': 'application/json',
 };
 
@@ -78,7 +81,11 @@ interface UserProfile {
   arrival_date: string | null;
 }
 
-function buildGeminiPrompt(profile: UserProfile, date: string): string {
+function buildGeminiPrompt(
+  profile: UserProfile,
+  date: string,
+  localToday: Date
+): string {
   const personaDesc =
     PERSONA_DESCRIPTIONS[profile.persona] || 'newcomer to Canada';
 
@@ -107,7 +114,7 @@ function buildGeminiPrompt(profile: UserProfile, date: string): string {
       : '';
 
   // Build arrival context from the date, not from the stored stage
-  const arrivalLine = buildArrivalLine(profile.arrival_date);
+  const arrivalLine = buildArrivalLine(profile.arrival_date, localToday);
 
   const profileLines = [
     `- Persona: ${personaDesc}`,
@@ -229,6 +236,13 @@ Deno.serve(async (req: Request) => {
   const supabase = createClient(supabaseUrl, serviceRoleKey);
 
   try {
+    // The stage rule uses the caller's local day. Older clients send none.
+    const requestToday = readRequestToday(req);
+    if (!requestToday.ok) {
+      return jsonResponse({ error: requestToday.message }, 400);
+    }
+    const localToday = requestToday.today;
+
     // 1. Validate auth
     const token = req.headers.get('Authorization')?.replace('Bearer ', '');
     if (!token) {
@@ -257,7 +271,7 @@ Deno.serve(async (req: Request) => {
 
     const persona: string = profile?.persona || 'other';
     // The stored stage is only a cache. Recompute it from arrival_date.
-    const computedStage = getArrivalStage(profile?.arrival_date);
+    const computedStage = getArrivalStage(profile?.arrival_date, localToday);
     // daily_tips.stage is NOT NULL text, so unknown is stored as 'unknown'.
     const stage: string = computedStage === null ? 'unknown' : String(computedStage);
     const today = new Date().toISOString().split('T')[0];
@@ -392,7 +406,7 @@ Deno.serve(async (req: Request) => {
       learning_interests: profile?.learning_interests || [],
       arrival_date: profile?.arrival_date || null,
     };
-    const prompt = buildGeminiPrompt(userProfile, today);
+    const prompt = buildGeminiPrompt(userProfile, today, localToday);
     let rawText = await callTipModel(prompt);
     let tip = rawText ? parseGeminiTipResponse(rawText) : null;
 

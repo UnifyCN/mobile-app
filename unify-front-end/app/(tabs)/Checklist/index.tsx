@@ -29,6 +29,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
+import { useRefreshingToday } from '@/hooks/checklist/useRefreshingToday';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
 import {
@@ -185,6 +186,9 @@ export default function ChecklistScreen() {
     trackChecklistTaskUncompleted,
     trackChecklistCustomTaskDeleted,
   } = useAnalytics();
+  // One local day for the card, the stage and the checklist. It moves on focus
+  // and when the app returns to the foreground.
+  const today = useRefreshingToday();
   const {
     currentStage,
     stageChanged,
@@ -192,8 +196,9 @@ export default function ChecklistScreen() {
     arrivalDate,
     userId,
     refreshStage,
+    applyConfirmedArrival,
     isLoading: stageLoading,
-  } = useUserStage();
+  } = useUserStage(today);
   const { refreshUser } = useCurrentUser();
   const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
     null
@@ -219,6 +224,7 @@ export default function ChecklistScreen() {
     currentStage,
     stageChanged,
     persona,
+    isStageLoading: stageLoading,
   });
 
   // Refetch when Checklist tab is focused so new/updated Sanity tasks show up
@@ -656,9 +662,11 @@ export default function ChecklistScreen() {
       <ArrivalCountdownSection
         userId={userId}
         arrivalDate={arrivalDate}
+        today={today}
         refreshStage={refreshStage}
         refreshUser={refreshUser}
         refetchChecklist={refetch}
+        applyConfirmedArrival={applyConfirmedArrival}
       />
       <View style={styles.progressContainer}>
         <View

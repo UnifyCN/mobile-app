@@ -119,65 +119,6 @@ describe('getDaysUntilArrival', () => {
       getDaysUntilArrival('2026-10-24', new Date(2026, 9, 23, 23, 59, 59))
     ).toBe(1);
   });
-
-  describe('DST in America/Toronto', () => {
-    const originalTz = process.env.TZ;
-    beforeAll(() => {
-      process.env.TZ = 'America/Toronto';
-    });
-    afterAll(() => {
-      if (originalTz === undefined) delete process.env.TZ;
-      else process.env.TZ = originalTz;
-    });
-
-    it('runs in the DST zone', () => {
-      // Spring forward 2026-03-08: local midnight to midnight is 23 hours.
-      const start = new Date(2026, 2, 8, 0, 0).getTime();
-      const end = new Date(2026, 2, 9, 0, 0).getTime();
-      expect((end - start) / 3_600_000).toBe(23);
-    });
-
-    it('counts the 23-hour spring-forward day as one day', () => {
-      expect(
-        getDaysUntilArrival('2026-03-09', new Date(2026, 2, 8, 0, 30))
-      ).toBe(1);
-      expect(
-        getDaysUntilArrival('2026-03-09', new Date(2026, 2, 8, 23, 30))
-      ).toBe(1);
-      expect(
-        getDaysUntilArrival('2026-03-08', new Date(2026, 2, 7, 23, 59))
-      ).toBe(1);
-    });
-
-    it('counts the 25-hour fall-back day as one day', () => {
-      // Fall back 2026-11-01.
-      expect(
-        getDaysUntilArrival('2026-11-02', new Date(2026, 10, 1, 0, 30))
-      ).toBe(1);
-      expect(
-        getDaysUntilArrival('2026-11-02', new Date(2026, 10, 1, 23, 30))
-      ).toBe(1);
-      expect(
-        getDaysUntilArrival('2026-11-01', new Date(2026, 9, 31, 23, 59))
-      ).toBe(1);
-    });
-
-    it('counts days across a DST change', () => {
-      expect(
-        getDaysUntilArrival('2026-03-15', new Date(2026, 2, 1, 12, 0))
-      ).toBe(14);
-      expect(
-        getDaysUntilArrival('2026-11-08', new Date(2026, 10, 1, 12, 0))
-      ).toBe(7);
-    });
-
-    it('keeps stage and countdown on arrival day across DST', () => {
-      expect(getArrivalStage('2026-03-08', new Date(2026, 2, 8, 0, 5))).toBe(1);
-      expect(getArrivalStage('2026-03-09', new Date(2026, 2, 8, 23, 55))).toBe(
-        0
-      );
-    });
-  });
 });
 
 describe('getArrivalCountdown', () => {

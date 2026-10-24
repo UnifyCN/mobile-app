@@ -31,7 +31,16 @@ type PickerRange = { min: Date; max: Date };
 const sequence = (from: number, to: number): number[] =>
   Array.from({ length: Math.max(0, to - from + 1) }, (_, i) => from + i);
 
-/** Values the year, month, and day wheels may show for the selected date. */
+const withValue = (options: number[], value: number): number[] =>
+  options.includes(value)
+    ? options
+    : [...options, value].sort((left, right) => left - right);
+
+/**
+ * Values the year, month, and day wheels may show for the selected date. The
+ * selected value is always shown, so a saved date outside the range stays
+ * visible. Every other choice is inside the range.
+ */
 export const getPickerOptions = (selected: Date, range: PickerRange) => {
   const year = selected.getFullYear();
   const month = selected.getMonth();
@@ -42,11 +51,14 @@ export const getPickerOptions = (selected: Date, range: PickerRange) => {
   const atMaxMonth = year === max.getFullYear() && month === max.getMonth();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   return {
-    years: sequence(min.getFullYear(), max.getFullYear()),
-    months: sequence(monthFrom, monthTo),
-    days: sequence(
-      atMinMonth ? min.getDate() : 1,
-      atMaxMonth ? max.getDate() : daysInMonth
+    years: withValue(sequence(min.getFullYear(), max.getFullYear()), year),
+    months: withValue(sequence(monthFrom, monthTo), month),
+    days: withValue(
+      sequence(
+        atMinMonth ? min.getDate() : 1,
+        atMaxMonth ? max.getDate() : daysInMonth
+      ),
+      selected.getDate()
     ),
   };
 };
