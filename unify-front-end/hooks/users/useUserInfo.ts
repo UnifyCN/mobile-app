@@ -1,14 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo, UserInfo } from '@/services/users/getUserInfo';
-import { getArrivalStage } from '@/helpers/arrivalDate';
+import {
+  getArrivalStage,
+  normalizeStoredArrivalDate,
+} from '@/helpers/arrivalDate';
 
 /**
  * Cached user info can be hours old. Recompute the stage from the arrival
- * date on every read instead of trusting the stored value.
+ * date on every read instead of trusting the stored value. A cached entry may
+ * still hold a raw database timestamp, so the date is normalized here too.
  */
 export const withComputedStage = (info: UserInfo): UserInfo => {
-  const stage = getArrivalStage(info.arrivalDate);
-  return stage === info.stage ? info : { ...info, stage };
+  const arrivalDate = normalizeStoredArrivalDate(info.arrivalDate);
+  const stage = getArrivalStage(arrivalDate);
+  return stage === info.stage && arrivalDate === info.arrivalDate
+    ? info
+    : { ...info, arrivalDate, stage };
 };
 
 export const useUserInfo = (userId?: string) => {
