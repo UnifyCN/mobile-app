@@ -1,6 +1,9 @@
 import type { Partner, PartnerCategory } from '@/types/partner';
 import { CATEGORY_ORDER } from '@/types/partner';
-import { isVisibleForProvince } from '@/supabase/functions/_shared/province';
+import {
+  isVisibleForProvince,
+  resolveUserProvince,
+} from '@/supabase/functions/_shared/province';
 
 /**
  * Partner directory. Hardcoded for V1 (initial outreach stage).
@@ -840,7 +843,9 @@ const selectLiveListings = <T extends Pick<Partner, 'active' | 'displayOrder'>>(
 /**
  * Active partners a reader in `province` may see, sorted by displayOrder.
  * A partner with no `provinces` is national and shows to everyone; a reader
- * with no recognized province sees national partners only.
+ * with no recognized province sees national partners only. `province` is a
+ * stored profile string, so aliases ("BC", "ON") are resolved here; a
+ * partner's own `provinces` tags stay strict canonical names.
  *
  * `province` has no default on purpose: a caller that forgets it must not
  * quietly show every province's partners.
@@ -850,10 +855,12 @@ export const selectActivePartners = <
 >(
   partners: T[],
   province: string | null | undefined
-): T[] =>
-  selectLiveListings(partners).filter(p =>
-    isVisibleForProvince(p.provinces, province)
+): T[] => {
+  const readerProvince = resolveUserProvince(province);
+  return selectLiveListings(partners).filter(p =>
+    isVisibleForProvince(p.provinces, readerProvince)
   );
+};
 
 /** Active partners for a reader in `province`, sorted by displayOrder. */
 export const getActivePartners = (province: string | null | undefined) =>

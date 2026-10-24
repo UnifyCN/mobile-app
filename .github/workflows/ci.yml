@@ -76,8 +76,9 @@ jobs:
 
       - name: Run Edge Function unit tests
         run: >-
-          deno test
+          deno test --allow-env
           unify-front-end/supabase/functions/_shared/interview/*.test.ts
+          unify-front-end/supabase/functions/personalize/index_test.ts
 
   backend-dependencies:
     name: Backend Dependencies
