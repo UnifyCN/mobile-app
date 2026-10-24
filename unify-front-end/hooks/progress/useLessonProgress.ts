@@ -2,7 +2,10 @@ import { useCallback } from 'react';
 import { progressClient } from '@/services/progress/progressClient';
 import { cachedProgressService } from '@/services/progress/cachedProgressService';
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
-import { updateLessonProgress } from '@/services/progress/progressService';
+import {
+  enqueueLessonProgressWrite,
+  updateLessonProgress,
+} from '@/services/progress/progressService';
 import { maybeMarkModuleCompleted } from '@/services/learn/moduleProgressService';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 
@@ -18,42 +21,47 @@ export function useLessonProgress() {
       totalPages: number
     ) => {
       try {
-        // Get the current user
-        const {
-          data: { user },
-          error: authError,
-        } = await progressClient.auth.getUser();
+        // Queue behind earlier page and resume writes for this lesson, so a
+        // late one cannot mark the completed lesson as in progress again.
+        const saved = await enqueueLessonProgressWrite(lessonId, async () => {
+          const {
+            data: { user },
+            error: authError,
+          } = await progressClient.auth.getUser();
 
-        if (authError || !user) {
-          console.error('No authenticated user found:', authError);
-          return false;
-        }
+          if (authError || !user) {
+            console.error('No authenticated user found:', authError);
+            return false;
+          }
 
-        const { data, error } = await progressClient
-          .from('user_lesson_progress')
-          .upsert(
-            {
-              user_id: user.id, // Use actual authenticated user ID
-              sanity_lesson_id: lessonId,
-              sanity_submodule_id: submoduleId,
-              sanity_module_id: moduleId,
-              progress_percent: 100.0,
-              total_pages: totalPages,
-              completed_pages: totalPages,
-              is_completed: true,
-              is_in_progress: false,
-              completed_at: new Date().toISOString(),
-              last_accessed_at: new Date().toISOString(),
-            },
-            {
-              onConflict: 'user_id,sanity_lesson_id',
-            }
-          );
+          const { error } = await progressClient
+            .from('user_lesson_progress')
+            .upsert(
+              {
+                user_id: user.id, // Use actual authenticated user ID
+                sanity_lesson_id: lessonId,
+                sanity_submodule_id: submoduleId,
+                sanity_module_id: moduleId,
+                progress_percent: 100.0,
+                total_pages: totalPages,
+                completed_pages: totalPages,
+                is_completed: true,
+                is_in_progress: false,
+                completed_at: new Date().toISOString(),
+                last_accessed_at: new Date().toISOString(),
+              },
+              {
+                onConflict: 'user_id,sanity_lesson_id',
+              }
+            );
 
-        if (error) {
-          console.error('Error saving lesson completion:', error);
-          return false;
-        }
+          if (error) {
+            console.error('Error saving lesson completion:', error);
+            return false;
+          }
+          return true;
+        });
+        if (!saved) return false;
 
         // DO NOT await the full cache refresh here — it fetches every
         // user_lesson_progress row AND runs a huge GROQ for all modules /

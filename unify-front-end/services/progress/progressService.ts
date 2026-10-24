@@ -107,7 +107,53 @@ async function startLesson(
   }
 }
 
-export async function updateLessonProgress(
+// Every writer of a lesson's user_lesson_progress row (page progress, resume
+// position, completion) runs through one queue per lesson, in call order. A
+// slow earlier write can otherwise land last and move the resume point back,
+// or mark a completed lesson as in progress again.
+const lessonProgressWrites = new Map<string, Promise<unknown>>();
+
+export function enqueueLessonProgressWrite<T>(
+  lessonId: string,
+  write: () => Promise<T>
+): Promise<T> {
+  const previous = lessonProgressWrites.get(lessonId) || Promise.resolve();
+  const pending = previous.catch(() => undefined).then(write);
+  lessonProgressWrites.set(lessonId, pending);
+  const release = () => {
+    if (lessonProgressWrites.get(lessonId) === pending) {
+      lessonProgressWrites.delete(lessonId);
+    }
+  };
+  void pending.then(release, release);
+  return pending;
+}
+
+export function updateLessonProgress(
+  lessonId: string,
+  submoduleId: string,
+  moduleId: string,
+  pageType: 'intro' | 'lesson' | 'activity' | 'quiz',
+  pageNumber: number,
+  totalPages: number,
+  quizId?: string,
+  questionNumber?: number
+): Promise<void> {
+  return enqueueLessonProgressWrite(lessonId, () =>
+    writeLessonProgress(
+      lessonId,
+      submoduleId,
+      moduleId,
+      pageType,
+      pageNumber,
+      totalPages,
+      quizId,
+      questionNumber
+    )
+  );
+}
+
+async function writeLessonProgress(
   lessonId: string,
   submoduleId: string,
   moduleId: string,
@@ -167,8 +213,6 @@ export async function updateLessonProgress(
  * cumulative one and would drag the bar backwards. Use this from activity/quiz pages so
  * learnHref can resume the user to the exact spot without regressing their progress.
  */
-const resumeWrites = new Map<string, Promise<boolean>>();
-
 export function saveResumePosition(
   lessonId: string,
   submoduleId: string,
@@ -181,49 +225,41 @@ export function saveResumePosition(
   if (!lessonId || !submoduleId || !moduleId) return Promise.resolve(false);
   // Capture authentication at invocation, then write in visit order, including Back.
   const userRequest = progressClient.auth.getUser().catch(() => null);
-  const previous = resumeWrites.get(lessonId) || Promise.resolve(true);
-  const pending = previous
-    .catch(() => false)
-    .then(async () => {
-      try {
-        const auth = await userRequest;
-        const user = auth?.data.user;
-        if (!user) return false;
+  return enqueueLessonProgressWrite(lessonId, async () => {
+    try {
+      const auth = await userRequest;
+      const user = auth?.data.user;
+      if (!user) return false;
 
-        const upsertData: any = {
-          user_id: user.id,
-          sanity_lesson_id: lessonId,
-          sanity_submodule_id: submoduleId,
-          sanity_module_id: moduleId,
-          is_in_progress: true,
-          current_page_type: pageType,
-          current_page_number: pageNumber,
-          last_accessed_at: new Date().toISOString(),
-        };
-        if (quizId) upsertData.current_quiz_id = quizId;
-        if (questionNumber) upsertData.current_question_number = questionNumber;
+      const upsertData: any = {
+        user_id: user.id,
+        sanity_lesson_id: lessonId,
+        sanity_submodule_id: submoduleId,
+        sanity_module_id: moduleId,
+        is_in_progress: true,
+        current_page_type: pageType,
+        current_page_number: pageNumber,
+        last_accessed_at: new Date().toISOString(),
+      };
+      if (quizId) upsertData.current_quiz_id = quizId;
+      if (questionNumber) upsertData.current_question_number = questionNumber;
 
-        const { error } = await progressClient
-          .from('user_lesson_progress')
-          .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
+      const { error } = await progressClient
+        .from('user_lesson_progress')
+        .upsert(upsertData, { onConflict: 'user_id,sanity_lesson_id' });
 
-        if (error) {
-          console.error('Error saving resume position:', error);
-          return false;
-        } else {
-          progressEventEmitter.emit();
-          return true;
-        }
-      } catch (error) {
-        console.error('Error in saveResumePosition:', error);
+      if (error) {
+        console.error('Error saving resume position:', error);
         return false;
+      } else {
+        progressEventEmitter.emit();
+        return true;
       }
-    });
-  resumeWrites.set(lessonId, pending);
-  void pending.then(() => {
-    if (resumeWrites.get(lessonId) === pending) resumeWrites.delete(lessonId);
+    } catch (error) {
+      console.error('Error in saveResumePosition:', error);
+      return false;
+    }
   });
-  return pending;
 }
 
 async function completeLesson(lessonId: string): Promise<void> {
