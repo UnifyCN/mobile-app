@@ -1,4 +1,5 @@
 import { parseLongDate } from './dates.ts';
+import { decodeHtmlEntities } from './htmlEntities.ts';
 import type { SourceRecord } from './types.ts';
 
 export interface ProcessingTimeFiles {
@@ -79,9 +80,12 @@ function countryNameMap(countryNames: unknown): Map<string, string> {
   const names = isObject(countryNames) ? countryNames['country-name'] : null;
   if (!isObject(names)) throw new Error('Processing times: no country names');
   return new Map(
-    Object.entries(names).filter(
-      (entry): entry is [string, string] => typeof entry[1] === 'string'
-    )
+    Object.entries(names)
+      .filter(
+        (entry): entry is [string, string] => typeof entry[1] === 'string'
+      )
+      // IRCC writes display names with HTML character references.
+      .map(([code, name]) => [code, decodeHtmlEntities(name)])
   );
 }
 

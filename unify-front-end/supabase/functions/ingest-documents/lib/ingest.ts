@@ -61,6 +61,10 @@ export async function ingestSource(
 
   let outcome: SourceResult;
   try {
+    // Stored before any external call, so a call that stalls or is stopped
+    // still moves the source behind the others in the due queue. If the
+    // stamp fails, the crawl does not start and the lease is released below.
+    await deps.store.recordAttempt(source.id, attemptedAt);
     const attempt = { now: attemptedAt, token };
     try {
       outcome =
@@ -72,9 +76,6 @@ export async function ingestSource(
       console.error(`Crawl failed for ${source.url}: ${message}`);
       outcome = { source_id: source.id, status: 'error', error: message };
     }
-    // A failed attempt still advances last_crawled_at so one broken source
-    // cannot keep being picked first.
-    await deps.store.recordAttempt(source.id, attemptedAt);
   } finally {
     // Best effort: an unreleased lease expires on its own.
     await deps.store

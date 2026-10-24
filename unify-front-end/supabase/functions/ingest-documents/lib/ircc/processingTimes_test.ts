@@ -107,6 +107,73 @@ Deno.test('privately sponsored refugee values are read at the leaf', () => {
   ]);
 });
 
+// Falsifier: a converter that copies the official name unchanged prints
+// "People&rsquo;s" and "Côte d&rsquo;Ivoire" into the text that is embedded.
+Deno.test(
+  'official HTML entities in country names are shown as the characters',
+  () => {
+    const { records } = convertProcessingTimes(processingFiles());
+
+    assertEquals(
+      find(
+        records,
+        'Processing time for Visitor visa (from outside Canada) (China'
+      ).map(r => r.text),
+      [
+        'Processing time for Visitor visa (from outside Canada) (China (People’s Republic of)): 42 days.',
+      ]
+    );
+    assertEquals(
+      find(
+        records,
+        'Processing time for Visitor visa (from outside Canada) (Côte'
+      ).map(r => r.text),
+      [
+        'Processing time for Visitor visa (from outside Canada) (Côte d’Ivoire): 46 days.',
+      ]
+    );
+    assertEquals(records.filter(r => /&[#a-zA-Z0-9]+;/.test(r.text)).length, 0);
+  }
+);
+
+// Falsifier: a decoder that strips markup or normalises text would damage a
+// name that is already correct; one that decodes twice turns the official
+// text "&amp;rsquo;" into a quote.
+Deno.test(
+  'names that are already plain Unicode, or encoded as numbers, keep their characters',
+  () => {
+    const files = processingFiles();
+    (files.countryTimes as Record<string, Record<string, unknown>>).work.GL =
+      '20 weeks';
+    (files.countryTimes as Record<string, Record<string, unknown>>).work.GP =
+      '21 weeks';
+    (files.countryTimes as Record<string, Record<string, unknown>>).work.GU =
+      '22 weeks';
+    const names = (
+      files.countryNames as Record<string, Record<string, string>>
+    )['country-name'];
+    names.GL = 'Curaçao <Test> 日本';
+    names.GP = 'S&#227;o Tom&#xE9; &amp; Pr&iacute;ncipe';
+    names.GU = 'Fake &amp;rsquo; &unknown;';
+
+    const { records } = convertProcessingTimes(files);
+
+    const work = (name: string) =>
+      find(records, 'Processing time for Work permit (from outside Canada)')
+        .filter(r => r.text.includes(`(${name})`))
+        .map(r => r.text);
+    assertEquals(work('Curaçao <Test> 日本'), [
+      'Processing time for Work permit (from outside Canada) (Curaçao <Test> 日本): 20 weeks.',
+    ]);
+    assertEquals(work('São Tomé & Príncipe'), [
+      'Processing time for Work permit (from outside Canada) (São Tomé & Príncipe): 21 weeks.',
+    ]);
+    assertEquals(work('Fake &rsquo; &unknown;'), [
+      'Processing time for Work permit (from outside Canada) (Fake &rsquo; &unknown;): 22 weeks.',
+    ]);
+  }
+);
+
 Deno.test(
   'a country code with no name keeps its time and shows the code',
   () => {
