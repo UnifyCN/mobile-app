@@ -71,12 +71,17 @@ export async function getChecklistWithUserProgress(
   userId: string,
   persona: string | null,
   stageSlug: string,
-  options: { stageChanged?: boolean; language?: SanityLanguage }
+  options: {
+    stageChanged?: boolean;
+    language?: SanityLanguage;
+    province?: string | null;
+  }
 ): Promise<UserTaskWithDetails[]> {
   const items = persona
     ? await getChecklistByPersonaAndStage(persona, stageSlug, {
         skipCache: true,
         language: options.language,
+        province: options.province,
       })
     : [];
 
