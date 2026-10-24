@@ -4,6 +4,7 @@ import {
   buildPool,
   type OnboardingProfile,
 } from '../_shared/companionTemplates.ts';
+import { buildCompanionProfile } from '../_shared/stageContext.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -198,7 +199,7 @@ Deno.serve(async (req: Request) => {
     const { data: profileData, error: profileError } = await supabaseClient
       .from('user_onboarding_profiles')
       .select(
-        'persona, city, province, arrival_date, stage, goals, learning_interests, hobbies'
+        'persona, city, province, arrival_date, goals, learning_interests, hobbies'
       )
       .eq('id', user.id)
       .maybeSingle();
@@ -211,16 +212,8 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const profile: OnboardingProfile = {
-      persona: profileData.persona ?? null,
-      city: profileData.city ?? null,
-      province: profileData.province ?? null,
-      arrival_date: profileData.arrival_date ?? null,
-      stage: profileData.stage ?? null,
-      goals: profileData.goals ?? [],
-      learning_interests: profileData.learning_interests ?? [],
-      hobbies: profileData.hobbies ?? [],
-    };
+    // The stored stage is only a cache. Recompute it from arrival_date.
+    const profile: OnboardingProfile = buildCompanionProfile(profileData);
 
     const responseBody: Record<string, unknown> = {};
 
@@ -231,7 +224,7 @@ Deno.serve(async (req: Request) => {
           city: profile.city,
           province: profile.province,
           arrival_date: profile.arrival_date,
-          stage: profile.stage,
+          stage: profile.stage === null ? null : String(profile.stage),
           goals: profile.goals,
           interests: profile.learning_interests,
           hobbies: profile.hobbies,

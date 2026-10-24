@@ -1,7 +1,8 @@
 import React, { createContext, use, useEffect, useState } from 'react';
 import { isAuthApiError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
-import { useUserInfo } from '@/hooks/users/useUserInfo';
+import { useUserInfo, withComputedStage } from '@/hooks/users/useUserInfo';
+import type { UserInfo } from '@/services/users/getUserInfo';
 import { useQueryClient } from '@tanstack/react-query';
 import { StageNumber } from '@/types/checklist';
 import { Persona } from '@/types/onboardingProfile';
@@ -17,7 +18,8 @@ interface CurrentUser {
   arrivalDate: string | null;
   city: string | null;
   province: string | null;
-  stage: StageNumber;
+  /** Computed from arrivalDate on every read. Null means unknown. */
+  stage: StageNumber | null;
   persona: Persona | null;
   personaOther: string | null;
 }
@@ -25,7 +27,8 @@ interface CurrentUser {
 interface UserContextType {
   currentUser: CurrentUser | null;
   isLoading: boolean;
-  refreshUser: () => void;
+  /** Reload the signed-in user's profile. Resolves when the reload finishes. */
+  refreshUser: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -38,8 +41,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   // Try to get cached userInfo immediately when userId changes
   const cachedUserInfo = userId
-    ? queryClient.getQueryData(['userInfo', userId])
-    : null;
+    ? queryClient.getQueryData<UserInfo>(['userInfo', userId])
+    : undefined;
 
   // Get user ID and email from auth
   useEffect(() => {
@@ -87,13 +90,17 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const refreshUser = () => {
-    // This will trigger a refetch via React Query invalidation
-    // The context will automatically update when userInfo changes
+  // Refetch the signed-in user's profile (for example after the arrival date
+  // changes). The context updates when the query data changes.
+  const refreshUser = async (): Promise<void> => {
+    if (!userId) return;
+    await queryClient.invalidateQueries({ queryKey: ['userInfo', userId] });
   };
 
-  // Use cached data if available, otherwise use fetched data
-  const effectiveUserInfo = (cachedUserInfo || userInfo) as typeof userInfo;
+  // Use cached data if available, otherwise use fetched data. Cached data
+  // does not pass through the query's select, so recompute the stage here.
+  const rawUserInfo = cachedUserInfo ?? userInfo;
+  const effectiveUserInfo = rawUserInfo ? withComputedStage(rawUserInfo) : undefined;
 
   const currentUser: CurrentUser | null =
     userId && userEmail && effectiveUserInfo
