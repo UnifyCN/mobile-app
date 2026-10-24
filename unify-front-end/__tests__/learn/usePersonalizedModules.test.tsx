@@ -171,6 +171,26 @@ describe('Learn module list for a user in a province', () => {
     expect(result.current.modules).toEqual([]);
   });
 
+  it('keeps a successful empty ranking empty even with eligible national modules', async () => {
+    mockProvince = 'Ontario';
+    respondWith([]);
+    const { result } = setup();
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.modules).toEqual([]);
+    expect(result.current.isPersonalized).toBe(true);
+  });
+
+  it.each([BC, null])(
+    'keeps a successful empty ranking empty for province %s',
+    async province => {
+      mockProvince = province;
+      respondWith([]);
+      const { result } = setup();
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(result.current.modules).toEqual([]);
+    }
+  );
+
   it('does not restore a filtered module when the ranking is empty', async () => {
     mockProvince = 'Ontario';
     respondWith([]);

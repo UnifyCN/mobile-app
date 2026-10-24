@@ -6,21 +6,29 @@ import type { SanityModule } from '@/types/sanity';
 
 type ModuleProvince = Awaited<ReturnType<typeof getModuleProvince>>;
 
+type ModuleAccess = 'unknown' | 'allowed' | 'denied';
+
 /**
  * Whether the signed-in user may open a Learn module.
  *
- * `unknown` while the profile or the module's tag is still loading, `denied`
- * for a module tagged with another province, `allowed` otherwise. A route with
- * no module, or a module that does not exist, is `allowed`: the screen keeps
- * its own not-found behavior.
+ * `access` is `unknown` while the profile or the module's tag is still
+ * loading, `denied` for a module tagged with another province, `allowed`
+ * otherwise. A route with no module, or a module that does not exist, is
+ * `allowed`: the screen keeps its own not-found behavior.
+ *
+ * When the tag lookup has failed all its attempts, `access` stays `unknown`
+ * (unknown content is never allowed) and `lookupFailed` is true until `retry()`
+ * runs the lookup again.
  */
-export function useModuleAccess(
-  moduleId: string | undefined
-): 'unknown' | 'allowed' | 'denied' {
+export function useModuleAccess(moduleId: string | undefined): {
+  access: ModuleAccess;
+  lookupFailed: boolean;
+  retry: () => void;
+} {
   const queryClient = useQueryClient();
   const { province, isLoading: provinceLoading } = useLearnProvince();
 
-  const { data } = useQuery<ModuleProvince>({
+  const { data, isError, isFetching, refetch } = useQuery<ModuleProvince>({
     queryKey: ['sanity', 'moduleProvince', moduleId],
     queryFn: () => getModuleProvince(moduleId!),
     enabled: !!moduleId,
@@ -39,8 +47,18 @@ export function useModuleAccess(
     },
   });
 
-  if (!moduleId) return 'allowed';
-  if (provinceLoading || !data) return 'unknown';
-  if (!data.found) return 'allowed';
-  return isVisibleForProvince(data.province, province) ? 'allowed' : 'denied';
+  const retry = () => {
+    void refetch();
+  };
+  const lookupFailed = !!moduleId && !data && isError && !isFetching;
+
+  let access: ModuleAccess;
+  if (!moduleId) access = 'allowed';
+  else if (provinceLoading || !data) access = 'unknown';
+  else if (!data.found) access = 'allowed';
+  else
+    access = isVisibleForProvince(data.province, province)
+      ? 'allowed'
+      : 'denied';
+  return { access, lookupFailed, retry };
 }

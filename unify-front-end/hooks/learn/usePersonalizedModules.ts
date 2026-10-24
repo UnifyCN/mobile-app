@@ -158,6 +158,7 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
   const {
     data: personalizedData,
     isLoading: personalizeLoading,
+    isPlaceholderData: personalizeIsPlaceholder,
     refetch: refetchPersonalized,
   } = useQuery({
     queryKey: ['personalize', 'learn', province],
@@ -188,7 +189,10 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
   );
 
   // An empty ranking is a valid answer (the edge function filters by province
-  // too); only a missing response means personalization is unavailable.
+  // too): it means this user has no module, even when eligible Sanity modules
+  // have not synced to learn_modules yet. Only a missing response means
+  // personalization is unavailable. A ranking kept from the previous province
+  // while the new one loads does not answer for this province.
   const isPersonalized =
     Array.isArray(personalizedData?.modules) && !!sanityModules;
 
@@ -196,11 +200,14 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
 
   if (sanityModules) {
     if (isPersonalized && personalizedData) {
-      modules = mergePersonalizedWithSanity(
-        personalizedData.modules,
-        sanityModules,
-        progressMap
-      );
+      modules =
+        personalizedData.modules.length === 0 && !personalizeIsPlaceholder
+          ? []
+          : mergePersonalizedWithSanity(
+              personalizedData.modules,
+              sanityModules,
+              progressMap
+            );
     } else {
       // Fallback: Sanity order, unscored — but still show real progress badges
       modules = sanityModules.map(m => ({

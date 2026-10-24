@@ -154,4 +154,80 @@ describe('Continue learning cards for a user in a province', () => {
       expect(moduleIds(result.current.lessons)).toEqual(['banking'])
     );
   });
+
+  describe('when the profile province changes from BC to Ontario', () => {
+    // Every committed render of the hook, with the province it rendered for.
+    function renderRecorded() {
+      const commits: { province: string | null; moduleIds: string[] }[] = [];
+      const hook = renderHook(() => {
+        const value = useInProgressLessons();
+        commits.push({
+          province: mockProvince,
+          moduleIds: value.lessons.map(l => l.moduleId),
+        });
+        return value;
+      });
+      return { ...hook, commits };
+    }
+
+    const ontarioCommitsWithSfu = (
+      commits: { province: string | null; moduleIds: string[] }[]
+    ) =>
+      commits.filter(c => c.province === 'Ontario' && c.moduleIds.includes('sfu'));
+
+    it('never commits the BC card while the replacement request is deferred', async () => {
+      mockProvince = BC;
+      mockLessonRows = [progressOn('sfu-lesson')];
+      const { result, rerender, commits } = renderRecorded();
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(moduleIds(result.current.lessons)).toEqual(['sfu']);
+
+      let release: ((value: unknown) => void) | undefined;
+      (sanityClient.fetch as jest.Mock).mockImplementation(
+        () => new Promise(resolve => (release = resolve))
+      );
+      mockProvince = 'Ontario';
+      rerender({});
+      expect(ontarioCommitsWithSfu(commits)).toEqual([]);
+      expect(moduleIds(result.current.lessons)).not.toContain('sfu');
+
+      await waitFor(() => expect(release).toBeDefined());
+      await act(async () => release!(CONTENT));
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(ontarioCommitsWithSfu(commits)).toEqual([]);
+      expect(moduleIds(result.current.lessons)).not.toContain('sfu');
+    });
+
+    it('never commits the BC card when the replacement request fails', async () => {
+      mockProvince = BC;
+      mockLessonRows = [progressOn('sfu-lesson')];
+      const { result, rerender, commits } = renderRecorded();
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+      const consoleError = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      (sanityClient.fetch as jest.Mock).mockRejectedValue(
+        new Error('offline Sanity')
+      );
+      mockProvince = 'Ontario';
+      rerender({});
+      await waitFor(() => expect(result.current.error).not.toBeNull());
+      consoleError.mockRestore();
+      expect(ontarioCommitsWithSfu(commits)).toEqual([]);
+      expect(moduleIds(result.current.lessons)).not.toContain('sfu');
+    });
+
+    it('keeps the national resume card of an Ontario user across the change', async () => {
+      mockProvince = BC;
+      mockLessonRows = [progressOn('banking-lesson')];
+      const { result, rerender, commits } = renderRecorded();
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      mockProvince = 'Ontario';
+      rerender({});
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(moduleIds(result.current.lessons)).toEqual(['banking']);
+      expect(ontarioCommitsWithSfu(commits)).toEqual([]);
+    });
+  });
 });

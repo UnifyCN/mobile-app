@@ -3,7 +3,7 @@ import {
   lessonResumeHref,
   ResumeProgress,
 } from '@/utils/lessonResume';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { progressClient } from '@/services/progress/progressClient';
 import { sanityClient } from '@/sanity-custom';
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
@@ -23,6 +23,9 @@ interface ContinueLesson {
   description: string;
   moduleId: string;
   moduleTitle: string;
+  // The module's province tag, kept so the cards can be checked again against
+  // the current profile province on every render.
+  moduleProvince?: string | null;
   submoduleId: string;
   submoduleTitle: string;
   currentPage: number;
@@ -173,6 +176,7 @@ export function useInProgressLessons() {
               description: activeLesson.description || '',
               moduleId: module._id,
               moduleTitle: module.title || 'Unknown Module',
+              moduleProvince: module.province ?? null,
               submoduleId: activeSubmodule._id,
               submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
               currentPage,
@@ -255,8 +259,19 @@ export function useInProgressLessons() {
     return unsubscribe;
   }, [fetchInProgressLessons]);
 
+  // The cards were built for the province of the request that made them. A
+  // profile change renders before the next request starts, so the returned
+  // cards are checked against the province of this render.
+  const visibleLessons = useMemo(
+    () =>
+      lessons.filter(lesson =>
+        isVisibleForProvince(lesson.moduleProvince, province)
+      ),
+    [lessons, province]
+  );
+
   return {
-    lessons,
+    lessons: visibleLessons,
     isLoading,
     error,
     refresh: fetchInProgressLessons,
