@@ -1,0 +1,12 @@
+PASS __tests__/checklist/TaskDetailModalLinks.test.tsx
+  TaskDetailModal description links
+    ✓ opens the exact CFIA https URL when the pet task link is pressed (134 ms)
+    ✓ keeps the rest of the pet description as plain text (3 ms)
+    ✓ leaves an ordinary description unchanged and adds no link (2 ms)
+    ✓ does not open anything for a non-web scheme in the description (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.503 s, estimated 1 s
+Ran all test suites matching /__tests__\/checklist\/TaskDetailModalLinks.test.tsx/i.

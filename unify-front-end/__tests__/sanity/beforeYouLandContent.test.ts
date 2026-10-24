@@ -61,6 +61,28 @@ describe('validatePayload', () => {
     expect(errors.join('\n')).toMatch(/persona/);
   });
 
+  it('accepts exactly the six persona values of the live checklist schema', () => {
+    const live = [
+      'international_student',
+      'refugee',
+      'protected_person',
+      'skilled_worker',
+      'immigrant',
+      'pr',
+    ];
+    for (const persona of live) {
+      expect(validatePayload(withCreate({ personas: [persona] }))).toEqual([]);
+    }
+    expect(validatePayload(withCreate({ personas: live }))).toEqual([]);
+  });
+
+  it('rejects the persona other, which the live schema refuses as value.not-allowed', () => {
+    const errors = validatePayload(
+      withCreate({ personas: ['refugee', 'other'] })
+    );
+    expect(errors.join('\n')).toMatch(/persona "other"/);
+  });
+
   it('rejects a link_tab outside the schema list and a record with no link', () => {
     expect(
       validatePayload(withCreate({ link_tab: 'settings' })).join('\n')
@@ -90,6 +112,65 @@ describe('validatePayload', () => {
     );
     expect(payload.create).toHaveLength(5);
     expect(payload.patch).toHaveLength(1);
+  });
+});
+
+describe('shared pet record targeting', () => {
+  it('targets the six live-schema personas, including protected_person and excluding other', () => {
+    const pet = loadPayload().create.find(r => /dog or cat/.test(r.title));
+    expect([...(pet?.personas ?? [])].sort()).toEqual(
+      [
+        'immigrant',
+        'international_student',
+        'pr',
+        'protected_person',
+        'refugee',
+        'skilled_worker',
+      ].sort()
+    );
+    expect(pet?.personas).not.toContain('other');
+  });
+});
+
+describe('source-backed wording', () => {
+  const payload = loadPayload();
+  const port = payload.patch[0].set;
+  const health = payload.create.find(r => /Interim Federal/.test(r.title))!;
+
+  it('port item lists proof of settlement funds with the exemption, and keeps COPR and goods-list steps', () => {
+    const text = port.description;
+    expect(text).toMatch(/proof of settlement funds \(unless you are exempt\)/);
+    expect(text).toContain('your COPR');
+    expect(text).toContain('passport');
+    expect(text).toContain('permanent resident visa (if you have one)');
+    expect(text).toContain('two copies of a list of the goods');
+    expect(text).toContain('Valid to date');
+    expect(port.description.length).toBeLessThanOrEqual(450);
+  });
+
+  it('health item limits IFHP basic coverage to the interval before provincial coverage', () => {
+    const text = health.description;
+    expect(text).toMatch(/basic (health care|coverage)/i);
+    expect(text).toMatch(/until you qualify for provincial or territorial/i);
+    expect(text).toMatch(
+      /apply for provincial or territorial health insurance/i
+    );
+  });
+
+  it('health item separates the longer supplemental and prescription benefits', () => {
+    const text = health.description;
+    expect(text).toMatch(/supplemental and prescription/i);
+    expect(text).toMatch(
+      /resettlement (income support|assistance)|sponsorship/i
+    );
+    expect(text).not.toMatch(/IFHP[^.]*(ends|stops) when provincial/i);
+  });
+
+  it('health item names an IFHP-registered provider and keeps the officer certificate', () => {
+    const text = health.description;
+    expect(text).toMatch(/registered with the (IFHP|Interim Federal)/);
+    expect(text).toContain('IFHP certificate');
+    expect(health.title).not.toMatch(/first, then provincial/);
   });
 });
 

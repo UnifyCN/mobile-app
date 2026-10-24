@@ -30,14 +30,15 @@ function textOf(record: { title: string; description: string }): string {
   return `${record.title}\n${record.description}`;
 }
 
+// The six values of the deployed checklist schema allowed-value rule (level error).
+// The app also reads 'other', but the schema rejects it as value.not-allowed.
 const PERSONAS = [
   'international_student',
+  'refugee',
+  'protected_person',
   'skilled_worker',
   'immigrant',
   'pr',
-  'refugee',
-  'protected_person',
-  'other',
 ];
 const LINK_TABS = ['home', 'community', 'companion', 'checklist', 'learn'];
 const MAX_TITLE = 170;
