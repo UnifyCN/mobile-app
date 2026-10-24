@@ -9,7 +9,6 @@ import {
   Alert,
   Dimensions,
   View,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -29,7 +28,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
-import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
 import {
@@ -40,6 +38,7 @@ import { upsertChecklistTaskOrder } from '@/services/checklist/checklistTaskOrde
 import { ChecklistItem } from '@/components/checklist/ChecklistItem';
 import { ChecklistSectionHeader } from '@/components/checklist/ChecklistSectionHeader';
 import { TaskDetailModal } from '@/components/checklist/TaskDetailModal';
+import { ArrivalCountdownSection } from '@/components/checklist/ArrivalCountdownSection';
 import { supabase } from '@/lib/supabase';
 import {
   ChecklistLinkTabSlug,
@@ -55,6 +54,7 @@ import {
 import { PRIORITY_CONFIG } from '@/constants/ChecklistPriority';
 import { firstPartnerHelpKey } from '@/constants/PartnerSpotlight';
 import { useHapticsPreference } from '@/context/HapticsContext';
+import { useCurrentUser } from '@/context/UserContext';
 import TabHeader from '@/components/home/HomeHeader';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -187,10 +187,13 @@ export default function ChecklistScreen() {
   const {
     currentStage,
     stageChanged,
+    persona,
+    arrivalDate,
+    userId,
+    refreshStage,
     isLoading: stageLoading,
   } = useUserStage();
-  const [persona, setPersona] = useState<string | null>(null);
-  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const { refreshUser } = useCurrentUser();
   const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
     null
   );
@@ -204,27 +207,6 @@ export default function ChecklistScreen() {
         clearTimeout(confettiTimeoutRef.current);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    const fetchPersona = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (user) {
-          const profile = await getOnboardingProfile(user.id);
-          setPersona(profile?.persona || null);
-        }
-      } catch (error) {
-        console.error('Error fetching persona:', error);
-      } finally {
-        setIsLoadingProfile(false);
-      }
-    };
-
-    fetchPersona();
   }, []);
 
   const {
@@ -242,10 +224,10 @@ export default function ChecklistScreen() {
   useFocusEffect(
     useCallback(() => {
       trackScreen('Checklist');
-      if (currentStage !== null && persona) {
+      if (!stageLoading && persona) {
         refetch();
       }
-    }, [currentStage, persona, refetch, trackScreen])
+    }, [stageLoading, persona, refetch, trackScreen])
   );
 
   const activeTasks = useMemo(
@@ -260,7 +242,7 @@ export default function ChecklistScreen() {
   const completedTasks = activeTasks.filter(task => task.completed).length;
   const progressPercent = totalTasks > 0 ? completedTasks / totalTasks : 0;
 
-  const isLoading = stageLoading || isLoadingProfile || tasksLoading;
+  const isLoading = stageLoading || tasksLoading;
 
   const { hapticsEnabled } = useHapticsPreference();
   const tabBarHeight = useBottomTabBarHeight();
@@ -652,27 +634,6 @@ export default function ChecklistScreen() {
     ? t(PERSONA_KEYS[persona as keyof typeof PERSONA_KEYS] || 'common.user')
     : t('common.user');
 
-  // Don't show checklist if stage is null
-  if (currentStage === null) {
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-        >
-          <View style={styles.header}>
-            <View style={styles.titleRow}>
-              <Text style={styles.title}>{t('checklist.title')}</Text>
-            </View>
-            <Text style={styles.subtitle}>
-              {t('checklist.onboardingRequired')}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-
   const ListHeader = (
     <View style={styles.header}>
       <View style={styles.titleRow}>
@@ -691,6 +652,13 @@ export default function ChecklistScreen() {
       <Text style={styles.subtitle}>
         {personaDisplay} - {stageDescription}
       </Text>
+      <ArrivalCountdownSection
+        userId={userId}
+        arrivalDate={arrivalDate}
+        refreshStage={refreshStage}
+        refreshUser={refreshUser}
+        refetchChecklist={refetch}
+      />
       <View style={styles.progressContainer}>
         <View
           style={[styles.progressBar, { width: `${progressPercent * 100}%` }]}
@@ -799,9 +767,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  scrollView: {
-    flex: 1,
   },
   scrollContent: {
     paddingHorizontal: 16,
