@@ -353,7 +353,10 @@ const styles = StyleSheet.create({
     color: Theme.white,
   },
   genreTagsContainer: {
+    // ScrollView defaults to flexShrink: 1, so the FlatList below squeezes
+    // the chip row and clips the bottom of each chip.
     flexGrow: 0,
+    flexShrink: 0,
     marginBottom: 16,
   },
   genreTagsContent: {
