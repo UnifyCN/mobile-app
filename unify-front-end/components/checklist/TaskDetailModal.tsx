@@ -33,6 +33,7 @@ import {
 } from '@/constants/ChecklistPriority';
 import { normalizeChecklistPriority } from '@/utils/checklistOrder';
 import { formatRelativeTime } from '@/helpers/dateHelpers';
+import { LinkedDescription } from './LinkedDescription';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const ANIM_IN_MS = 280;
@@ -220,10 +221,13 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               <Text style={styles.taskName}>{task.task.task_name}</Text>
 
               {/* Description */}
-              <Text style={styles.taskDescription}>
-                {task.task.longer_description?.trim() ||
-                  task.task.task_description}
-              </Text>
+              <LinkedDescription
+                style={styles.taskDescription}
+                text={
+                  task.task.longer_description?.trim() ||
+                  task.task.task_description
+                }
+              />
 
               {/* Completion timestamp */}
               {completedLabel && (

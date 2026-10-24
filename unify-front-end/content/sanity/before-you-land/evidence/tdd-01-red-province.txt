@@ -1,0 +1,26 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✕ rejects province wording in a new record (1 ms)
+
+  ● validatePayload › rejects province wording in a new record
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /province/i
+    Received string:  ""
+
+      31 |       })
+      32 |     );
+    > 33 |     expect(errors.join('\n')).toMatch(/province/i);
+         |                               ^
+      34 |   });
+      35 | });
+      36 |
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:33:31)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.762 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

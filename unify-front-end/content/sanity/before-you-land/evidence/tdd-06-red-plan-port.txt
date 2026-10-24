@@ -1,0 +1,91 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✓ rejects an em dash in new copy
+    ✓ rejects a record that is not an English not_arrived checklist item (1 ms)
+    ✓ rejects a persona that no app persona or live record uses
+    ✓ rejects a link_tab outside the schema list and a record with no link
+    ✓ accepts the committed payload and keeps its targeting (1 ms)
+  planChanges for new records
+    ✓ creates records that are absent and leaves identical live records alone (5 ms)
+    ✓ never overwrites a live record that differs from the payload
+  planChanges for the existing port-of-entry record
+    ✕ patches only title and description, guarded by the snapshot revision
+    ✕ refuses to patch when the live revision moved and the copy is not the target (1 ms)
+    ✕ does nothing when the live record already holds the target copy
+    ✕ reports a conflict when the record is missing
+
+  ● planChanges for the existing port-of-entry record › patches only title and description, guarded by the snapshot revision
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "patch"
+    Received: undefined
+
+      136 |   it('patches only title and description, guarded by the snapshot revision', () => {
+      137 |     const { payload, found } = livePorts(before);
+    > 138 |     expect(found?.kind).toBe('patch');
+          |                         ^
+      139 |     expect(found?.ifRevisionID).toBe(before._rev);
+      140 |     expect(found?.set).toEqual(payload.patch[0].set);
+      141 |     expect(Object.keys(found?.set ?? {}).sort()).toEqual([
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:138:25)
+
+  ● planChanges for the existing port-of-entry record › refuses to patch when the live revision moved and the copy is not the target
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "conflict"
+    Received: undefined
+
+      151 |       title: 'Edited in Studio',
+      152 |     });
+    > 153 |     expect(found?.kind).toBe('conflict');
+          |                         ^
+      154 |   });
+      155 |
+      156 |   it('does nothing when the live record already holds the target copy', () => {
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:153:25)
+
+  ● planChanges for the existing port-of-entry record › does nothing when the live record already holds the target copy
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "noop"
+    Received: undefined
+
+      161 |       ...payload.patch[0].set,
+      162 |     });
+    > 163 |     expect(found?.kind).toBe('noop');
+          |                         ^
+      164 |   });
+      165 |
+      166 |   it('reports a conflict when the record is missing', () => {
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:163:25)
+
+  ● planChanges for the existing port-of-entry record › reports a conflict when the record is missing
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "conflict"
+    Received: undefined
+
+      165 |
+      166 |   it('reports a conflict when the record is missing', () => {
+    > 167 |     expect(livePorts(null).found?.kind).toBe('conflict');
+          |                                         ^
+      168 |   });
+      169 | });
+      170 |
+
+      at Object.toBe (__tests__/sanity/beforeYouLandContent.test.ts:167:41)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 9 passed, 13 total
+Snapshots:   0 total
+Time:        0.315 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.

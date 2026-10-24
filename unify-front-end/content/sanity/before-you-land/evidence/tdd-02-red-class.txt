@@ -1,0 +1,27 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✕ rejects a class that the live schema does not allow
+
+  ● validatePayload › rejects a class that the live schema does not allow
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /class/
+    Received string:  ""
+
+      36 |   it('rejects a class that the live schema does not allow', () => {
+      37 |     const errors = validatePayload(withCreate({ class: 'do_later' }));
+    > 38 |     expect(errors.join('\n')).toMatch(/class/);
+         |                               ^
+      39 |   });
+      40 | });
+      41 |
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:38:31)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        0.335 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.
