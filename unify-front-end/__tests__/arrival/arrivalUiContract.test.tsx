@@ -1,7 +1,7 @@
 /**
  * The arrival card, sheet and picker follow the shared typography roles, keep
  * user font scaling, grow their geometry with scaled text, and keep enabled
- * Save text at 4.5:1 contrast or better.
+ * Save text at 4.5:1 contrast or better, also while Save is held down.
  */
 import React from 'react';
 import {
@@ -100,6 +100,16 @@ const luminance = (color: string) => {
 const contrast = (a: string, b: string) => {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
+};
+
+/** The color seen when `color` at `alpha` opacity covers white. */
+const overWhite = (color: string, alpha: number) => {
+  const hex = expandHex(color);
+  return `#${[1, 3, 5]
+    .map(i => parseInt(hex.slice(i, i + 2), 16))
+    .map(v => Math.round(alpha * v + (1 - alpha) * 255))
+    .map(v => v.toString(16).padStart(2, '0'))
+    .join('')}`;
 };
 
 const role = (name: keyof typeof typography) => ({
@@ -203,6 +213,32 @@ describe('Save contrast', () => {
       String(flat(button).backgroundColor)
     );
     expect(ratio).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('keeps the held-down Save label at 4.5:1 or better on the white sheet', () => {
+    renderSheet();
+    fireEvent.press(screen.getByLabelText('15'));
+    // The Pressable that renders the host button owns the style function.
+    let pressable = screen.getByRole('button', { name: 'Save' }).parent;
+    while (pressable && typeof pressable.props.style !== 'function') {
+      pressable = pressable.parent;
+    }
+    expect(pressable).toBeTruthy();
+    const pressed = StyleSheet.flatten(
+      pressable!.props.style({ pressed: true, hovered: false })
+    ) as Record<string, unknown>;
+    const label = flat(
+      within(screen.getByRole('button', { name: 'Save' })).getByText('Save')
+    );
+    // Opacity on the button blends the label and its background with the
+    // white sheet behind them.
+    const alpha = Number(pressed.opacity ?? 1);
+    const ratio = contrast(
+      overWhite(String(label.color), alpha),
+      overWhite(String(pressed.backgroundColor), alpha)
+    );
+    expect(ratio).toBeGreaterThanOrEqual(4.5);
+    expect(label.opacity ?? 1).toBe(1);
   });
 });
 
