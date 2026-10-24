@@ -11,7 +11,9 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Theme } from '@/constants/Theme';
+import { getBottomSheetPadding } from '@/utils/safeAreaSpacing';
 
 interface MonthPickerProps {
   value: Date | null;
@@ -52,6 +54,7 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
   maximumDate = new Date(new Date().getFullYear() + 10, 11),
 }) => {
   const { t, i18n } = useTranslation();
+  const insets = useSafeAreaInsets();
   const [showPicker, setShowPicker] = useState(false);
   const [selectedYear, setSelectedYear] = useState(
     value?.getFullYear() ?? new Date().getFullYear()
@@ -197,7 +200,12 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
               </View>
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View
+              style={[
+                styles.buttonContainer,
+                { paddingBottom: getBottomSheetPadding(insets.bottom, 16) },
+              ]}
+            >
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={handleCancel}

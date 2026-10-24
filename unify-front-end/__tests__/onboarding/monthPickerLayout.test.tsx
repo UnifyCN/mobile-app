@@ -3,6 +3,10 @@ import { ScrollView } from 'react-native';
 import { fireEvent, render } from '@testing-library/react-native';
 import MonthPicker from '@/components/onboarding/MonthPicker';
 
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 34, left: 0 }),
+}));
+
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key, i18n: { language: 'en' } }),
 }));
@@ -14,14 +18,21 @@ const layout = (y: number, height: number) => ({
 describe('MonthPicker measured scroll position', () => {
   let scroll: jest.SpyInstance;
   beforeEach(() => {
-    scroll = jest.spyOn(ScrollView.prototype, 'scrollTo').mockImplementation(() => {}).mockClear();
+    scroll = jest
+      .spyOn(ScrollView.prototype, 'scrollTo')
+      .mockImplementation(() => {})
+      .mockClear();
   });
   afterEach(() => jest.restoreAllMocks());
 
   function open() {
     const screen = render(
-      <MonthPicker value={new Date(2006, 0, 1)} onChange={jest.fn()}
-        minimumDate={new Date(2000, 0, 1)} maximumDate={new Date(2030, 11, 1)} />
+      <MonthPicker
+        value={new Date(2006, 0, 1)}
+        onChange={jest.fn()}
+        minimumDate={new Date(2000, 0, 1)}
+        maximumDate={new Date(2030, 11, 1)}
+      />
     );
     fireEvent.press(screen.getByText('January 2006'));
     return screen;
@@ -29,7 +40,11 @@ describe('MonthPicker measured scroll position', () => {
 
   it('centers the selected year using its actual offset and height', () => {
     const screen = open();
-    fireEvent(screen.getByTestId('month-picker-years'), 'layout', layout(0, 220));
+    fireEvent(
+      screen.getByTestId('month-picker-years'),
+      'layout',
+      layout(0, 220)
+    );
     fireEvent(screen.getByText('2006'), 'layout', layout(900, 60));
     expect(scroll).toHaveBeenLastCalledWith({ y: 820, animated: false });
   });
@@ -38,7 +53,11 @@ describe('MonthPicker measured scroll position', () => {
     const screen = open();
     fireEvent(screen.getByText('2006'), 'layout', layout(900, 60));
     expect(scroll).not.toHaveBeenCalled();
-    fireEvent(screen.getByTestId('month-picker-years'), 'layout', layout(0, 220));
+    fireEvent(
+      screen.getByTestId('month-picker-years'),
+      'layout',
+      layout(0, 220)
+    );
     expect(scroll).toHaveBeenLastCalledWith({ y: 820, animated: false });
     fireEvent(screen.getByText('2006'), 'layout', layout(1200, 90));
     expect(scroll).toHaveBeenLastCalledWith({ y: 1135, animated: false });
@@ -46,7 +65,11 @@ describe('MonthPicker measured scroll position', () => {
 
   it('clamps the first month to the top', () => {
     const screen = open();
-    fireEvent(screen.getByTestId('month-picker-months'), 'layout', layout(0, 220));
+    fireEvent(
+      screen.getByTestId('month-picker-months'),
+      'layout',
+      layout(0, 220)
+    );
     fireEvent(screen.getByText('January'), 'layout', layout(0, 60));
     expect(scroll).toHaveBeenLastCalledWith({ y: 0, animated: false });
   });

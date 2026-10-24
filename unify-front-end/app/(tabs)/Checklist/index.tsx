@@ -364,11 +364,19 @@ export default function ChecklistScreen() {
     if (resolvedTab && TAB_SLUG_TO_ROUTE[resolvedTab]) {
       router.push(TAB_SLUG_TO_ROUTE[resolvedTab] as any);
     } else if (linkSubmoduleId && linkModuleId) {
-      router.push(
-        `/(tabs)/Learn/modules/${linkModuleId}/${linkSubmoduleId}` as any
-      );
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
+        params: {
+          moduleId: linkModuleId,
+          submoduleId: linkSubmoduleId,
+          origin: 'checklist',
+        },
+      });
     } else if (linkModuleId) {
-      router.push(`/(tabs)/Learn/modules/${linkModuleId}` as any);
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
+        params: { moduleId: linkModuleId, origin: 'checklist' },
+      });
     } else {
       router.push('/(tabs)/Learn');
     }

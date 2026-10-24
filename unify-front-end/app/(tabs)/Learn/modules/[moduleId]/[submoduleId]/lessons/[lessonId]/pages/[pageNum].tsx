@@ -43,16 +43,29 @@ import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
 import { useToast } from '@/context/ToastContext';
 import { useLessonPageSaved } from '@/hooks/learn/useLessonPageSaved';
 import { useMutateSaveLessonPage } from '@/hooks/learn/useMutateSaveLessonPage';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 export default function LessonPageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, lessonId, pageNum } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    pageNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     lessonId: string;
     pageNum: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const {
     trackScreen,
     trackLessonPageViewed,
@@ -210,6 +223,10 @@ export default function LessonPageScreen() {
 
   const handleSaveAndLeave = () => {
     setShowExitModal(false);
+    if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
+      return;
+    }
     router.push({
       pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
       params: { moduleId, submoduleId },
@@ -240,6 +257,7 @@ export default function LessonPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage + 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -250,7 +268,13 @@ export default function LessonPageScreen() {
         router.push({
           pathname:
             '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/activities/[pageNum]' as any,
-          params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId,
+            pageNum: '1',
+            ...originParams,
+          },
         });
       } else {
         // No activity pages, check if there are quizzes
@@ -263,7 +287,13 @@ export default function LessonPageScreen() {
           router.push({
             pathname:
               '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId]' as any,
-            params: { moduleId, submoduleId, lessonId, quizId: firstQuiz._id },
+            params: {
+              moduleId,
+              submoduleId,
+              lessonId,
+              quizId: firstQuiz._id,
+              ...originParams,
+            },
           });
         } else {
           // No quizzes, check if there are ending pages
@@ -273,7 +303,13 @@ export default function LessonPageScreen() {
             router.push({
               pathname:
                 '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum]' as any,
-              params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+              params: {
+                moduleId,
+                submoduleId,
+                lessonId,
+                pageNum: '1',
+                ...originParams,
+              },
             });
           } else {
             // No ending pages, save this lesson as completed before navigating
@@ -300,7 +336,12 @@ export default function LessonPageScreen() {
               router.dismissTo({
                 pathname:
                   '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-                params: { moduleId, submoduleId, justCompletedLearn: '1' },
+                params: {
+                  moduleId,
+                  submoduleId,
+                  justCompletedLearn: '1',
+                  ...originParams,
+                },
               });
             } else {
               // Go to next lesson
@@ -314,6 +355,7 @@ export default function LessonPageScreen() {
                     submoduleId,
                     lessonId: nextLesson._id,
                     pageNum: '1',
+                    ...originParams,
                   },
                 });
               }
@@ -335,9 +377,14 @@ export default function LessonPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage - 1).toString(),
+          ...originParams,
         },
       });
     } else {
+      if (origin === 'checklist') {
+        router.replace('/(tabs)/Checklist');
+        return;
+      }
       // First page, go to previous lesson or map
       const previousLesson = getPreviousLesson();
       if (previousLesson) {
@@ -350,12 +397,13 @@ export default function LessonPageScreen() {
             submoduleId,
             lessonId: previousLesson._id,
             pageNum: '1',
+            ...originParams,
           },
         });
       } else {
         router.push({
           pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-          params: { moduleId, submoduleId },
+          params: { moduleId, submoduleId, ...originParams },
         });
       }
     }

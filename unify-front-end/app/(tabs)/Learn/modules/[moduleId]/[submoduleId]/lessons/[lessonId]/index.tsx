@@ -4,15 +4,23 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSanityLesson } from '@/hooks/sanity/useSanityLessons';
 import LessonPageSkeletonLoader from '@/components/learn/lesson-page-skeleton-loader/LessonPageSkeletonLoader';
+import { normalizeLearnOrigin } from '@/utils/learnOriginNavigation';
 
 export default function LessonIndex() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, lessonId } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     lessonId: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
 
   const { data: lesson, isLoading } = useSanityLesson(lessonId || '');
 
@@ -22,10 +30,16 @@ export default function LessonIndex() {
       router.replace({
         pathname:
           '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum]' as any,
-        params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+        params: {
+          moduleId,
+          submoduleId,
+          lessonId,
+          pageNum: '1',
+          ...(origin ? { origin } : {}),
+        },
       });
     }
-  }, [lesson, moduleId, submoduleId, lessonId, router]);
+  }, [lesson, moduleId, submoduleId, lessonId, origin, router]);
 
   if (isLoading) {
     return (

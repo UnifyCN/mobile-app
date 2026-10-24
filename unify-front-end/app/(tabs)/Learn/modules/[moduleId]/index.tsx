@@ -32,6 +32,10 @@ import {
 } from '@/services/learn/moduleProgressService';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 import { ModuleIndexSkeletonLoader } from '@/components/learn/module-index-skeleton-loader';
 import Blob3 from '@/assets/images/Blob3.svg';
 import Blob8 from '@/assets/images/Blob8.svg';
@@ -174,13 +178,20 @@ export default function ModuleIndex() {
   const { trackScreen, trackModuleViewed } = useAnalytics();
   const { onLearnHubFocused } = useLearnEvents();
   const insets = useSafeAreaInsets();
-  const { moduleId, blobIndex, whyTag, highlightSubmoduleId } =
-    useLocalSearchParams<{
-      moduleId: string;
-      blobIndex?: string;
-      whyTag?: string;
-      highlightSubmoduleId?: string;
-    }>();
+  const {
+    moduleId,
+    blobIndex,
+    whyTag,
+    highlightSubmoduleId,
+    origin: originParam,
+  } = useLocalSearchParams<{
+    moduleId: string;
+    blobIndex?: string;
+    whyTag?: string;
+    highlightSubmoduleId?: string;
+    origin?: string | string[];
+  }>();
+  const origin = normalizeLearnOrigin(originParam);
 
   // U2: Strip whitespace and require non-empty content before we render the
   // "Why this?" banner — otherwise an empty or whitespace-only personalization
@@ -269,7 +280,9 @@ export default function ModuleIndex() {
 
   const handleDisclaimerBack = () => {
     setShowDisclaimer(false);
-    router.replace('/(tabs)/Learn');
+    router.replace(
+      origin === 'checklist' ? '/(tabs)/Checklist' : '/(tabs)/Learn'
+    );
   };
 
   // Fetch submodule progress and determine resume destinations
@@ -692,12 +705,18 @@ export default function ModuleIndex() {
       }
       router.push({
         pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-        params: { moduleId, submoduleId: section.id },
+        params: {
+          moduleId,
+          submoduleId: section.id,
+          ...(origin ? { origin } : {}),
+        },
       });
     } catch (navError: any) {
       console.error('[ModuleIndex] Error navigating to section:', navError);
       try {
-        router.replace('/(tabs)/Learn');
+        router.replace(
+          getLessonExitDestination(origin, '/(tabs)/Learn') as any
+        );
       } catch (fallbackError: any) {
         console.error(
           '[ModuleIndex] Error in fallback navigation:',
@@ -808,7 +827,9 @@ export default function ModuleIndex() {
             message: error?.message || t('common.unknownError'),
           })}
         </Text>
-        <Link href='/(tabs)/Learn'>{t('common.goBackToLearn')}</Link>
+        <Link href={getLessonExitDestination(origin, '/(tabs)/Learn') as any}>
+          {t(origin === 'checklist' ? 'common.goBack' : 'common.goBackToLearn')}
+        </Link>
       </View>
     );
   }
@@ -851,7 +872,11 @@ export default function ModuleIndex() {
         </View>
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            onPress={() => router.replace('/(tabs)/Learn')}
+            onPress={() =>
+              router.replace(
+                origin === 'checklist' ? '/(tabs)/Checklist' : '/(tabs)/Learn'
+              )
+            }
             style={styles.backButton}
           >
             <Feather

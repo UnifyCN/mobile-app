@@ -36,6 +36,10 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@/constants/Layout';
+import {
+  normalizeLearnOrigin,
+  withLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 const SUBJECT_COLOR = '#10B981'; // green for Learn (active)
 
@@ -131,13 +135,16 @@ export default function SubmoduleIndex() {
     justCompletedLearn,
     justCompletedTasks,
     justCompletedPractice,
+    origin: originParam,
   } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     justCompletedLearn?: string;
     justCompletedTasks?: string;
     justCompletedPractice?: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
 
   const completedSectionId = getCompletedSectionId({
     justCompletedLearn,
@@ -319,7 +326,7 @@ export default function SubmoduleIndex() {
           ? `${base}/lessons/${firstLessonId}/pages/1`
           : null;
       setIsResolvingLearnHref(false);
-      if (href) router.push(href as any);
+      if (href) router.push(withLearnOrigin(href, origin) as any);
       return;
     }
 
@@ -355,7 +362,7 @@ export default function SubmoduleIndex() {
         lessonProgresses
       );
       if (href) {
-        router.push(href as any);
+        router.push(withLearnOrigin(href, origin) as any);
       }
     } finally {
       setIsResolvingLearnHref(false);
@@ -471,7 +478,7 @@ export default function SubmoduleIndex() {
     ) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -479,7 +486,7 @@ export default function SubmoduleIndex() {
     if (!moduleData?.submodules) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -493,7 +500,7 @@ export default function SubmoduleIndex() {
     if (currentSubmoduleIndex === -1) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -504,12 +511,18 @@ export default function SubmoduleIndex() {
     if (nextSubmoduleId) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId, highlightSubmoduleId: nextSubmoduleId },
+        params: {
+          moduleId,
+          highlightSubmoduleId: nextSubmoduleId,
+          ...(origin ? { origin } : {}),
+        },
       });
       return;
     }
 
-    router.replace('/(tabs)/Learn');
+    router.replace(
+      origin === 'checklist' ? '/(tabs)/Checklist' : '/(tabs)/Learn'
+    );
   }, [
     isModuleLoading,
     isLearnProgressLoading,
@@ -526,6 +539,7 @@ export default function SubmoduleIndex() {
     completedSectionId,
     moduleData?.submodules,
     moduleId,
+    origin,
     practices,
     requestedNextSectionId,
     router,
@@ -711,12 +725,16 @@ export default function SubmoduleIndex() {
       >
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
+              if (origin === 'checklist') {
+                router.replace('/(tabs)/Checklist');
+                return;
+              }
               router.replace({
                 pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
                 params: { moduleId },
-              })
-            }
+              });
+            }}
             style={styles.backButton}
           >
             <Feather name='chevron-left' size={28} color='#000' />

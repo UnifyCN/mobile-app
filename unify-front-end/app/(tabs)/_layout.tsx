@@ -14,6 +14,8 @@ import SocialIcon from '@/components/icons/SocialIcon';
 import { useAnalytics } from '@/utils/analytics';
 import ChecklistIcon from '@/components/icons/ChecklistIcon';
 import { useHapticsPreference } from '@/context/HapticsContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { getTabBarBottomPadding } from '@/utils/safeAreaSpacing';
 
 const TabIcon = ({ IconComponent, title, focused }: any) => {
   return (
@@ -42,6 +44,8 @@ export default function TabLayout() {
   const { trackTabSwitch } = useAnalytics();
   const { hapticsEnabled } = useHapticsPreference();
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+  const tabBarBottomPadding = getTabBarBottomPadding(insets.bottom);
 
   const getTabDisplayName = (routeName: string) => {
     switch (routeName) {
@@ -104,7 +108,8 @@ export default function TabLayout() {
             : {
                 flexDirection: 'row',
                 paddingTop: 12,
-                paddingBottom: 52,
+                paddingBottom: tabBarBottomPadding,
+                height: 56 + tabBarBottomPadding,
                 borderTopWidth: 1,
                 borderTopColor: '#F0F0F0',
               },

@@ -4,7 +4,7 @@ Status: Approved Option A implemented on design/app-typography. Base: main at a3
 
 ## Contract
 
-Use the native system font and shared roles in unify-front-end/constants/Typography.ts. The role table and coverage are documented in docs/designs/app-typography.md.
+Use the native system font and shared roles in unify-front-end/constants/Typography.ts. The role table and coverage are documented in CONTRACT.md.
 
 Preserve compact Checklist task text at 15/20, weight 500, with the approved two-line limit. SpotlightRow remains unchanged. Preserve lesson body text at 18/27, paragraph margin 10, side padding 20, and existing bullet spacing. Keep geometric text and monospace exceptions explicit.
 
@@ -16,7 +16,7 @@ The temporary preview route and sample translation keys were removed. Local nati
 
 ## Verification
 
-- Jest: 47 suites and 401 tests passed.
+- Jest: 51 suites and 418 tests passed.
 - TypeScript passed.
 - Translation key parity passed: 1610 keys in each of seven locales.
 - Lint: zero errors and 94 warnings.
@@ -37,3 +37,7 @@ Some earlier flows failed on route assertions or development-client loading. Tho
 ## Limits
 
 Native checks sample English iOS screens. Android rendering, VoiceOver, all translated layouts, and every app route remain unverified. MonthPicker geometry has controlled tests; native modal reopening timing remains unverified. This branch uses the main-based lesson reader, not the separate structured Learn reader. No production release occurred.
+
+## PR integration
+
+Merged main through c14a49e5 before PR creation. Retained its quiz, navigation, Android safe-area, and profile-save fixes. Repeated TypeScript, all tests, and both native exports after integration. Native screenshots and the independent review predate this integration.
