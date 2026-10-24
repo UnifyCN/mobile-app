@@ -243,7 +243,9 @@ describe('Save contrast', () => {
 });
 
 describe('picker geometry with scaled text', () => {
-  const picker = () => screen.getByTestId('arrival-date-picker');
+  // The picker is one or two rows of columns; each row owns its viewport and
+  // selection band. The month sits in the first row at every text size.
+  const picker = () => screen.getByTestId('arrival-date-picker-group-0');
   const rowOf = (label: string) => screen.getByLabelText(label);
 
   it('keeps the 44-point rows at normal text size', () => {
@@ -290,7 +292,7 @@ describe('picker geometry with scaled text', () => {
     fireEvent(rowOf('December'), 'layout', {
       nativeEvent: { layout: { x: 0, y: 400, width: 120, height: 90 } },
     });
-    const band = flat(screen.getByTestId('arrival-date-picker-band'));
+    const band = flat(screen.getByTestId('arrival-date-picker-band-0'));
     expect(band.height).toBe(90);
     expect(band.top).toBe((300 - 90) / 2);
   });
