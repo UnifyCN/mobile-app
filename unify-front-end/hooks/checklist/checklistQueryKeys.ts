@@ -1,7 +1,8 @@
 import { QueryClient } from '@tanstack/react-query';
 import type { SanityLanguage } from '@/services/sanity/i18n';
+import { checklistProvinceKeyPart } from '@/utils/checklistProvince';
 
-/** Prefix for all checklist task list queries (persona + stage + user). */
+/** Prefix for all checklist task list queries (persona + stage + province + user). */
 export const CHECKLIST_TASKS_QUERY_ROOT = 'checklist' as const;
 
 export function checklistTasksQueryKey(
@@ -9,7 +10,8 @@ export function checklistTasksQueryKey(
   stage: number,
   personaSlug: string,
   stageChanged: boolean,
-  language: SanityLanguage
+  language: SanityLanguage,
+  province: string | null | undefined
 ) {
   return [
     CHECKLIST_TASKS_QUERY_ROOT,
@@ -18,6 +20,7 @@ export function checklistTasksQueryKey(
     personaSlug,
     stageChanged,
     language,
+    checklistProvinceKeyPart(province),
   ] as const;
 }
 

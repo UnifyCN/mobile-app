@@ -190,6 +190,7 @@ export default function ChecklistScreen() {
     isLoading: stageLoading,
   } = useUserStage();
   const [persona, setPersona] = useState<string | null>(null);
+  const [province, setProvince] = useState<string | null>(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
     null
@@ -216,6 +217,7 @@ export default function ChecklistScreen() {
         if (user) {
           const profile = await getOnboardingProfile(user.id);
           setPersona(profile?.persona || null);
+          setProvince(profile?.province ?? null);
         }
       } catch (error) {
         console.error('Error fetching persona:', error);
@@ -236,6 +238,7 @@ export default function ChecklistScreen() {
     currentStage,
     stageChanged,
     persona,
+    province,
   });
 
   // Refetch when Checklist tab is focused so new/updated Sanity tasks show up

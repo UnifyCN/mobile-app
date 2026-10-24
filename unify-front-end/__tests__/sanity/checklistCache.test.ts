@@ -19,7 +19,8 @@ describe('checklist translation cache freshness', () => {
       1,
       'skilled_worker',
       false,
-      'es'
+      'es',
+      null
     );
 
     setChecklistMemoryCache(key, tasks);
