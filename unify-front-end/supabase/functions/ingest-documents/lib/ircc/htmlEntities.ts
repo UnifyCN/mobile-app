@@ -14,7 +14,7 @@ const NAMED: Record<string, string> = {
   ldquo: '“',
   rdquo: '”',
   ndash: '–',
-  mdash: '—',
+  mdash: '\u2014',
   hellip: '…',
   aacute: 'á',
   agrave: 'à',
@@ -66,7 +66,7 @@ export function decodeHtmlEntities(text: string): string {
       if (decimal !== undefined)
         return fromCodePoint(parseInt(decimal, 10), original);
       if (hex !== undefined) return fromCodePoint(parseInt(hex, 16), original);
-      return NAMED[name!] ?? original;
+      return Object.hasOwn(NAMED, name!) ? NAMED[name!] : original;
     }
   );
 }

@@ -495,3 +495,36 @@ Deno.test(
 );
 
 type Json = Record<string, unknown>;
+
+// Falsifier: a lookup that reads inherited object properties prints the text
+// of a JavaScript function into every record of the country.
+Deno.test(
+  'a country name with a name inherited from Object keeps its text as written',
+  () => {
+    for (const name of [
+      'constructor',
+      'toString',
+      'valueOf',
+      'hasOwnProperty',
+    ]) {
+      const files = processingFiles();
+      (files.countryNames as Record<string, Record<string, string>>)[
+        'country-name'
+      ].CN = `China &${name};`;
+
+      const { records } = convertProcessingTimes(files);
+
+      assertEquals(
+        records.filter(r => r.text.includes(`(China &${name};)`)).length,
+        9,
+        name
+      );
+      assertEquals(
+        records.filter(r => r.text.includes('native code')).length,
+        0,
+        name
+      );
+      assertEquals(records.length, 1950);
+    }
+  }
+);

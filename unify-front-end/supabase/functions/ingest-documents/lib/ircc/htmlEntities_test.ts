@@ -23,3 +23,27 @@ Deno.test(
 Deno.test('a reference is decoded once', () => {
   assertEquals(decodeHtmlEntities('&amp;rsquo; &amp;#39;'), '&rsquo; &#39;');
 });
+
+// Falsifier: a lookup that reads inherited object properties turns these
+// names into JavaScript function text instead of leaving them as written.
+Deno.test(
+  'names inherited from Object are not entities and stay as written',
+  () => {
+    for (const name of [
+      'constructor',
+      'toString',
+      'valueOf',
+      'hasOwnProperty',
+      'isPrototypeOf',
+      'propertyIsEnumerable',
+      'toLocaleString',
+      '__proto__',
+    ]) {
+      assertEquals(decodeHtmlEntities(`a &${name}; b`), `a &${name}; b`);
+    }
+  }
+);
+
+Deno.test('the dash references still decode to their characters', () => {
+  assertEquals(decodeHtmlEntities('&mdash;&ndash;'), '\u2014–');
+});
