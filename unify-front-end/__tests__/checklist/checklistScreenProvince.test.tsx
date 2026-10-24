@@ -22,6 +22,7 @@ jest.mock('@react-navigation/native', () => {
         return typeof cleanup === 'function' ? cleanup : undefined;
       }, [callback]);
     },
+    useIsFocused: () => true,
   };
 });
 
@@ -70,6 +71,8 @@ jest.mock('@/utils/analytics', () => {
     trackChecklistTaskCompleted: jest.fn(),
     trackChecklistTaskUncompleted: jest.fn(),
     trackChecklistCustomTaskDeleted: jest.fn(),
+    trackArrivalCountdownShown: jest.fn(),
+    trackArrivalDateChanged: jest.fn(),
   };
   return { useAnalytics: () => analytics };
 });
@@ -77,8 +80,26 @@ jest.mock('@/hooks/onboarding/useUserStage', () => ({
   useUserStage: () => ({
     currentStage: 1,
     stageChanged: false,
+    arrivalDate: null,
+    userId: mockUserId,
+    refreshStage: jest.fn().mockResolvedValue(undefined),
+    applyConfirmedArrival: jest.fn(),
     isLoading: false,
   }),
+}));
+// The countdown card sits above the list. These stand-ins keep it inert.
+jest.mock('@/hooks/checklist/useRefreshingToday', () => ({
+  useRefreshingToday: () => new Date(2026, 9, 23, 12, 0, 0),
+}));
+jest.mock('@/context/UserContext', () => ({
+  useCurrentUser: () => ({ refreshUser: jest.fn() }),
+}));
+jest.mock('@/components/common/BottomSheet', () => ({
+  __esModule: true,
+  default: () => null,
+}));
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));
 jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
   useSanityLanguage: () => 'en',

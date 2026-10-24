@@ -2,6 +2,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import type { PersonalizedStarter } from '@/supabase/functions/_shared/companionTemplates';
+import { formatLocalDate } from '@/helpers/arrivalDate';
+import { localDateHeaders } from '@/helpers/localDateHeader';
+import { PERSONALIZED_STARTERS_QUERY_KEY } from '@/hooks/companion/personalizedStartersQueryKey';
 
 export type { PersonalizedStarter };
 
@@ -10,11 +13,19 @@ export interface CompanionPersonalization {
 }
 
 const fetchPersonalizedStarters =
-  async (): Promise<CompanionPersonalization | null> => {
+  async (
+    userId: string,
+    localDay: Date
+  ): Promise<CompanionPersonalization | null> => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return null;
+    // Never ask with another account's session: the answer would be cached
+    // under this account's key.
+    if (session.user?.id !== userId) {
+      throw new Error('Session does not belong to the expected account');
+    }
 
     const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
     const response = await fetch(
@@ -23,6 +34,7 @@ const fetchPersonalizedStarters =
         headers: {
           Authorization: `Bearer ${session.access_token}`,
           'Content-Type': 'application/json',
+          ...localDateHeaders(localDay),
         },
       }
     );
@@ -58,12 +70,21 @@ const fetchPersonalizedStarters =
     return { starters: valid };
   };
 
-export const PERSONALIZED_STARTERS_QUERY_KEY = ['personalizedStarters', 'v2'] as const;
+export { PERSONALIZED_STARTERS_QUERY_KEY };
 
-export const usePersonalizedStarters = () => {
+/**
+ * Starters belong to the signed-in account and depend on the device's
+ * calendar day, so both are part of the query key: one QueryClient lives
+ * across sign-out and sign-in, and a list cached yesterday is never reused
+ * after midnight. No request is sent until the account is known.
+ */
+export const usePersonalizedStarters = (userId: string | null | undefined) => {
+  const now = new Date();
+  const localDay = formatLocalDate(now);
   return useQuery<CompanionPersonalization | null, Error>({
-    queryKey: PERSONALIZED_STARTERS_QUERY_KEY,
-    queryFn: fetchPersonalizedStarters,
+    queryKey: [...PERSONALIZED_STARTERS_QUERY_KEY, userId ?? null, localDay],
+    queryFn: () => fetchPersonalizedStarters(userId as string, now),
+    enabled: !!userId,
     staleTime: 5 * 60 * 1000,
   });
 };

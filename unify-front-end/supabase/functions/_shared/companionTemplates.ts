@@ -7,7 +7,9 @@ export interface OnboardingProfile {
   city: string | null;
   province: string | null;
   arrival_date: string | null;
-  stage: string | null;
+  // Arrival stage 0-4 (a number, or the enum label "0"-"4"). Null is unknown.
+  // The caller recomputes it from arrival_date; see _shared/arrivalStage.ts.
+  stage: number | string | null;
   goals: string[];
   learning_interests: string[];
   hobbies: string[];
@@ -117,6 +119,11 @@ function cityCategory(city: string): keyof typeof CATEGORY_META {
   return (KNOWN_CITY_CATEGORIES.has(city) ? city : 'Your City') as keyof typeof CATEGORY_META;
 }
 
+// The stage is a number or the enum label "0"-"4". Anything else matches no stage.
+function stageIs(stage: OnboardingProfile['stage'], expected: number): boolean {
+  return stage !== null && String(stage) === String(expected);
+}
+
 function monthsSince(isoDate: string): number {
   const then = new Date(isoDate);
   if (isNaN(then.getTime())) return Infinity;
@@ -169,15 +176,15 @@ TEMPLATES.push(
     );
   },
 
-  // stage-based
-  (p) => p.stage === '1' ? makeStarter(
+  // stage-based: planning before arrival, first month right after
+  (p) => stageIs(p.stage, 0) ? makeStarter(
     'stage_planning',
     'Documents',
-    'I\'m still planning my move — what documents do I need to start?',
+    'I\'m still planning my move - what documents do I need to start?',
     6,
   ) : null,
 
-  (p) => p.stage === '3' ? makeStarter(
+  (p) => stageIs(p.stage, 1) ? makeStarter(
     'stage_recently_arrived',
     'Settlement',
     'What should I prioritize in my first month here?',

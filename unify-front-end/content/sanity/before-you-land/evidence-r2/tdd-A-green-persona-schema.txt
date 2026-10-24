@@ -1,0 +1,54 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects a persona that no app persona or live record uses (2 ms)
+    ✕ accepts exactly the six persona values of the live checklist schema (1 ms)
+    ✓ rejects the persona other, which the live schema refuses as value.not-allowed
+    ○ skipped rejects province wording in a new record
+    ○ skipped rejects a class that the live schema does not allow
+    ○ skipped rejects an em dash in new copy
+    ○ skipped rejects a record that is not an English not_arrived checklist item
+    ○ skipped rejects a link_tab outside the schema list and a record with no link
+    ○ skipped accepts the committed payload and keeps its targeting
+  planChanges for new records
+    ○ skipped creates records that are absent and leaves identical live records alone
+    ○ skipped never overwrites a live record that differs from the payload
+  planChanges for the existing port-of-entry record
+    ○ skipped patches only title and description, guarded by the snapshot revision
+    ○ skipped refuses to patch when the live revision moved and the copy is not the target
+    ○ skipped does nothing when the live record already holds the target copy
+    ○ skipped reports a conflict when the record is missing
+  verifyReadback
+    ○ skipped passes when every record reads back exactly as proposed
+    ○ skipped reports a missing new record and a changed new record
+    ○ skipped reports a change to a field the patch must not touch
+  buildMutations
+    ○ skipped writes only what the plan needs, with the revision guard on the patch
+    ○ skipped writes nothing when the live data already matches
+
+  ● validatePayload › accepts exactly the six persona values of the live checklist schema
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "3b85715f-8c76-4086-ad66-92217b61a06d: persona \"other\" is not allowed",
+    + ]
+
+      72 |     ];
+      73 |     for (const persona of live) {
+    > 74 |       expect(validatePayload(withCreate({ personas: [persona] }))).toEqual([]);
+         |                                                                    ^
+      75 |     }
+      76 |     expect(validatePayload(withCreate({ personas: live }))).toEqual([]);
+      77 |   });
+
+      at Object.toEqual (__tests__/sanity/beforeYouLandContent.test.ts:74:68)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 17 skipped, 2 passed, 20 total
+Snapshots:   0 total
+Time:        0.496 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i with tests matching "persona".

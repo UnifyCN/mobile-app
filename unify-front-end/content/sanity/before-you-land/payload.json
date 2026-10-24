@@ -1,0 +1,85 @@
+{
+  "ticket": 342,
+  "spec": 325,
+  "preparedOn": "2026-10-24",
+  "expectedDataset": "production",
+  "documentType": "checklist",
+  "notes": [
+    "English only. No translation documents or translation.metadata are created.",
+    "New records are created as published documents with fixed _id values, so a second run is a no-op.",
+    "The schema has no URL field. The CFIA link is a bare https URL at the end of the pet description. The task detail sheet renders it as a pressable link (components/checklist/LinkedDescription.tsx).",
+    "The pet record targets the six persona values of the deployed schema: international_student, skilled_worker, immigrant, pr, refugee, protected_person. It excludes 'other' because the schema rejects it (value.not-allowed). Users with no persona or 'other' do not get this item. A schema change for 'other' is outside this ticket."
+  ],
+  "create": [
+    {
+      "_id": "67c02a10-cb2d-4dde-9456-2fbf1dba5bfe",
+      "_type": "checklist",
+      "language": "en",
+      "stage": "not_arrived",
+      "personas": ["refugee"],
+      "class": "do_now",
+      "class_order": 1,
+      "link_tab": "companion",
+      "title": "Keep your Confirmation of Permanent Residence, travel document, and other IRCC papers together in your hand luggage",
+      "description": "Why: You show your COPR to a border services officer when you arrive in Canada. Check that your name and date of birth match your passport or travel document, and travel before the Valid to date on your COPR. Keep digital and paper copies of every document in two places in case one is lost."
+    },
+    {
+      "_id": "b35d1e3d-2fe1-4367-96e7-e06f848310fc",
+      "_type": "checklist",
+      "language": "en",
+      "stage": "not_arrived",
+      "personas": ["refugee"],
+      "class": "do_now",
+      "class_order": 2,
+      "link_tab": "companion",
+      "title": "Confirm who will arrange your first housing in Canada and who will meet you at the airport",
+      "description": "Why: Government-assisted refugees get temporary housing and help finding permanent housing from a Resettlement Assistance Program service provider. If you have sponsors, your sponsoring group gives you these services. Know your first address and your contact person before you travel."
+    },
+    {
+      "_id": "c74753ba-57eb-4b5b-8171-8b624a6ed8d0",
+      "_type": "checklist",
+      "language": "en",
+      "stage": "not_arrived",
+      "personas": ["refugee"],
+      "class": "do_soon",
+      "class_order": 1,
+      "link_tab": "companion",
+      "title": "Learn how your health care is covered when you arrive: Interim Federal Health Program coverage, and how to apply for provincial or territorial health insurance",
+      "description": "Why: The Interim Federal Health Program (IFHP) pays for your basic health care until you qualify for provincial or territorial coverage. Apply for provincial or territorial health insurance as soon as you arrive. Supplemental and prescription benefits can last longer, while you get resettlement income support or sponsorship financial assistance. An officer gives you an IFHP certificate. Show it to a provider registered with the IFHP."
+    },
+    {
+      "_id": "36c70b31-3e64-46ed-99ab-2a40788061d3",
+      "_type": "checklist",
+      "language": "en",
+      "stage": "not_arrived",
+      "personas": ["refugee"],
+      "class": "explore_and_connect",
+      "class_order": 1,
+      "link_tab": "community",
+      "title": "Find the settlement organization near your destination and save its contact information",
+      "description": "Why: All resettled refugees can use settlement services: information and orientation, referrals to community resources, translation and interpretation, language training, and job-related services. If you have sponsors, ask them which services you can use. Save one contact before you travel."
+    },
+    {
+      "_id": "3b85715f-8c76-4086-ad66-92217b61a06d",
+      "_type": "checklist",
+      "language": "en",
+      "stage": "not_arrived",
+      "personas": ["international_student", "skilled_worker", "immigrant", "pr", "refugee", "protected_person"],
+      "class": "do_soon",
+      "class_order": 7,
+      "link_tab": "companion",
+      "title": "If you are bringing a dog or cat, check what the Canadian Food Inspection Agency requires before you travel",
+      "description": "Why: Without the right paperwork at the border, your pet can be delayed or refused entry. Dogs and cats that are three months or older usually need a rabies vaccination certificate from a veterinarian, in English or French. Rules depend on age and the country you travel from. Check the official CFIA page: https://inspection.canada.ca/en/importing-food-plants-animals/pets"
+    }
+  ],
+  "patch": [
+    {
+      "_id": "8a1d0045-58ac-4928-90be-5267edf196e1",
+      "expectedRev": "fU1GG1h0UZ892Cv6evsyuZ",
+      "set": {
+        "title": "If you are arriving as a new PR holder, check your COPR and plan what to bring to the port of entry to activate your status",
+        "description": "Why: You become a permanent resident when a border services officer at a Canadian port of entry examines your COPR and signs and dates it. Travel before the Valid to date on your COPR. Bring your COPR, your passport, your permanent resident visa (if you have one), and proof of settlement funds (unless you are exempt). Also bring two copies of a list of the goods you bring and the goods that will follow."
+      }
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+  console.error
+    An update to Icon inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at Object.enqueueSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16926:13)
+      at Icon.Object.<anonymous>.process.env.NODE_ENV.Component.setState (node_modules/react/cjs/react.development.js:655:20)
+      at Icon.setState (node_modules/@expo/vector-icons/src/createIconSet.tsx:181:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    An update to Icon inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at Object.enqueueSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16926:13)
+      at Icon.Object.<anonymous>.process.env.NODE_ENV.Component.setState (node_modules/react/cjs/react.development.js:655:20)
+      at Icon.setState (node_modules/@expo/vector-icons/src/createIconSet.tsx:181:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    An update to Icon inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at Object.enqueueSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16926:13)
+      at Icon.Object.<anonymous>.process.env.NODE_ENV.Component.setState (node_modules/react/cjs/react.development.js:655:20)
+      at Icon.setState (node_modules/@expo/vector-icons/src/createIconSet.tsx:181:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL __tests__/checklist/TaskDetailModalLinks.test.tsx
+  TaskDetailModal description links
+    ✕ opens the exact CFIA https URL when the pet task link is pressed (1154 ms)
+    ✕ keeps the rest of the pet description as plain text (3 ms)
+    ✓ leaves an ordinary description unchanged and adds no link (3 ms)
+    ✓ does not open anything for a non-web scheme in the description (2 ms)
+
+  ● TaskDetailModal description links › opens the exact CFIA https URL when the pet task link is pressed
+
+    Unable to find an element with text: https://inspection.canada.ca/en/importing-food-plants-animals/pets
+
+    [36m<Modal>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text />[39m
+                [36m<Text>[39m
+                  [0mchecklist.priority.doSoon[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mIf you are bringing a dog or cat, check what the Canadian Food Inspection Agency requires before you travel[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mWhy: Without the right paperwork at the border, your pet can be delayed or refused entry. Dogs and cats that are three months or older usually need a rabies vaccination certificate from a veterinarian, in English or French. Rules depend on age and the country you travel from. Check the official CFIA page: https://inspection.canada.ca/en/importing-food-plants-animals/pets[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text />[39m
+              [36m<Text>[39m
+                [0mchecklist.markAsComplete[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mchecklist.learnHow[0m
+              [36m</Text>[39m
+              [36m<Text />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</Modal>[39m
+
+      107 |   it('opens the exact CFIA https URL when the pet task link is pressed', () => {
+      108 |     const { onLearnHow } = renderModal(taskFor(petRecord));
+    > 109 |     fireEvent.press(screen.getByText(CFIA_URL));
+          |                            ^
+      110 |     expect(openURL).toHaveBeenCalledTimes(1);
+      111 |     expect(openURL).toHaveBeenCalledWith(CFIA_URL);
+      112 |     expect(onLearnHow).not.toHaveBeenCalled();
+
+      at Object.getByText (__tests__/checklist/TaskDetailModalLinks.test.tsx:109:28)
+
+  ● TaskDetailModal description links › opens the exact CFIA https URL when the pet task link is pressed
+
+    You are passing an undefined module! Please check the object you are passing to i18next.use()
+
+      109 |   syncLayoutDirection(lng);
+      110 |
+    > 111 |   await i18n.use(initReactI18next).init({
+          |              ^
+      112 |     resources: {
+      113 |       en: { translation: en },
+      114 |       vi: { translation: vi },
+
+      at I18n.use (node_modules/i18next/dist/cjs/i18next.js:2104:24)
+      at use (i18n/index.ts:111:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● TaskDetailModal description links › keeps the rest of the pet description as plain text
+
+    Unable to find an element with role: link
+
+    [36m<Modal>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0m[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mchecklist.priority.doSoon[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<Text>[39m
+              [0mIf you are bringing a dog or cat, check what the Canadian Food Inspection Agency requires before you travel[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mWhy: Without the right paperwork at the border, your pet can be delayed or refused entry. Dogs and cats that are three months or older usually need a rabies vaccination certificate from a veterinarian, in English or French. Rules depend on age and the country you travel from. Check the official CFIA page: https://inspection.canada.ca/en/importing-food-plants-animals/pets[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0m[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0mchecklist.markAsComplete[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+            [36m<View[39m
+              [33maccessibilityRole[39m=[32m"button"[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mchecklist.learnHow[0m
+              [36m</Text>[39m
+              [36m<Text>[39m
+                [0m[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</Modal>[39m
+
+      115 |   it('keeps the rest of the pet description as plain text', () => {
+      116 |     renderModal(taskFor(petRecord));
+    > 117 |     const link = screen.getByRole('link');
+          |                         ^
+      118 |     expect(link).toHaveTextContent(CFIA_URL);
+      119 |     const description: string = petRecord.description;
+      120 |     expect(
+
+      at Object.getByRole (__tests__/checklist/TaskDetailModalLinks.test.tsx:117:25)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 passed, 4 total
+Snapshots:   0 total
+Time:        2.465 s
+Ran all test suites matching /__tests__\/checklist\/TaskDetailModalLinks.test.tsx/i.

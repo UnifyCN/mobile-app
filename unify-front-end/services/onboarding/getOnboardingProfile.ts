@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { UserOnboardingProfile } from '@/types/onboardingProfile';
 import { normalizeProvince } from '@/constants/LocationData';
+import { resolveStoredStage } from '@/supabase/functions/_shared/arrivalStage';
 
 export const getOnboardingProfile = async (
   userId?: string
@@ -47,7 +48,7 @@ export const getOnboardingProfile = async (
       arrival_date: data.arrival_date,
       city: data.city,
       province: normalizeProvince(data.province),
-      stage: data.stage,
+      stage: resolveStoredStage(data.stage),
       goals: data.goals || [],
       goals_other: data.goals_other,
       learning_interests: data.learning_interests || [],

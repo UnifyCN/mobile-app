@@ -1,0 +1,66 @@
+FAIL __tests__/sanity/beforeYouLandContent.test.ts
+  validatePayload
+    ✓ rejects province wording in a new record (1 ms)
+    ✓ rejects a class that the live schema does not allow
+    ✓ rejects an em dash in new copy
+    ✕ rejects a record that is not an English not_arrived checklist item (1 ms)
+    ✕ rejects a persona that no app persona or live record uses
+    ✕ rejects a link_tab outside the schema list and a record with no link (1 ms)
+    ✓ accepts the committed payload and keeps its targeting
+
+  ● validatePayload › rejects a record that is not an English not_arrived checklist item
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /language/
+    Received string:  ""
+
+      50 |       withCreate({ language: 'fr-CA', stage: 'months_3_12' })
+      51 |     );
+    > 52 |     expect(errors.join('\n')).toMatch(/language/);
+         |                               ^
+      53 |     expect(errors.join('\n')).toMatch(/stage/);
+      54 |   });
+      55 |
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:52:31)
+
+  ● validatePayload › rejects a persona that no app persona or live record uses
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /persona/
+    Received string:  ""
+
+      56 |   it('rejects a persona that no app persona or live record uses', () => {
+      57 |     const errors = validatePayload(withCreate({ personas: ['tourist'] }));
+    > 58 |     expect(errors.join('\n')).toMatch(/persona/);
+         |                               ^
+      59 |   });
+      60 |
+      61 |   it('rejects a link_tab outside the schema list and a record with no link', () => {
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:58:31)
+
+  ● validatePayload › rejects a link_tab outside the schema list and a record with no link
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /link_tab/
+    Received string:  ""
+
+      62 |     expect(
+      63 |       validatePayload(withCreate({ link_tab: 'settings' })).join('\n')
+    > 64 |     ).toMatch(/link_tab/);
+         |       ^
+      65 |     expect(
+      66 |       validatePayload(withCreate({ link_tab: undefined })).join('\n')
+      67 |     ).toMatch(/link/);
+
+      at Object.toMatch (__tests__/sanity/beforeYouLandContent.test.ts:64:7)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 4 passed, 7 total
+Snapshots:   0 total
+Time:        0.279 s, estimated 1 s
+Ran all test suites matching /__tests__\/sanity\/beforeYouLandContent.test.ts/i.
