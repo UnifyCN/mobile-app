@@ -12,6 +12,7 @@ import { getPartnersByCategory } from '@/constants/Partners';
 import { useCurrentUser } from '@/context/UserContext';
 import { RESOURCE_THEME } from '@/constants/ResourceTheme';
 import { localizePartners } from '@/utils/localizePartner';
+import MorePartnersNote from './MorePartnersNote';
 import PartnerRow from './PartnerRow';
 
 type Props = {
@@ -50,6 +51,7 @@ export default function CategoryDetail({ category, onBack }: Props) {
 
       <Text style={styles.title}>{label}</Text>
       <Text style={styles.description}>{description}</Text>
+      <MorePartnersNote />
 
       {partners.length === 0 ? (
         <View style={styles.empty}>

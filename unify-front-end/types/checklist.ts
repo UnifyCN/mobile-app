@@ -1,9 +1,29 @@
+import type { SanityLanguage } from '@/services/sanity/i18n';
+import {
+  isVisibleForProvince,
+  resolveUserProvince,
+} from '@/supabase/functions/_shared/province';
+
 export type Priority =
   | 'Do now'
   | 'Do soon'
   | 'Explore and connect'
   | 'Explore & connect'
   | 'Optional / later';
+
+/**
+ * Everything that distinguishes one cached checklist from another. The React
+ * Query key and the disk/memory key both take this one object.
+ */
+export interface ChecklistCacheContext {
+  userId: string;
+  stage: number;
+  personaSlug: string;
+  stageChanged: boolean;
+  language: SanityLanguage;
+  /** Onboarding-profile province; unmatched or missing keys as `none`. */
+  province: string | null | undefined;
+}
 
 export type CustomPriority =
   | 'Do now'
@@ -37,8 +57,14 @@ export interface SanityChecklistItem {
   stage: string;
   /** Link to a tab (home | community | companion | checklist | learn); when set, module/submodule are unused. Schema field: link_tab. */
   link_tab?: ChecklistLinkTabSlug | string | null;
-  module?: { _id: string; title: string } | null;
-  submodule?: { _id: string; title: string; moduleId?: string } | null;
+  module?: { _id: string; title: string; province?: string | null } | null;
+  submodule?: {
+    _id: string;
+    title: string;
+    moduleId?: string;
+    /** Province tag of the submodule's parent module. */
+    moduleProvince?: string | null;
+  } | null;
 }
 
 const SANITY_CLASS_TO_PRIORITY: Record<SanityChecklistItem['class'], Priority> =
@@ -57,10 +83,25 @@ function normalizeLinkTab(
   return slug.length > 0 ? (slug as ChecklistLinkTabSlug) : undefined;
 }
 
+/**
+ * The task as shown to a user in `userProvince`. A national task stays, but its
+ * "Learn how" target is dropped when the linked module is tagged with another
+ * province; the Learn tab it falls back to is open to everyone. The Sanity
+ * reference itself is untouched.
+ */
 export function sanityChecklistItemToTaskDetails(
-  item: SanityChecklistItem
+  item: SanityChecklistItem,
+  userProvince?: string | null
 ): ChecklistTaskDetails {
-  const moduleOrSub = item.module ?? item.submodule;
+  const linkedModuleProvince = item.module
+    ? item.module.province
+    : item.submodule?.moduleProvince;
+  const moduleOrSub = isVisibleForProvince(
+    linkedModuleProvince,
+    resolveUserProvince(userProvince)
+  )
+    ? (item.module ?? item.submodule)
+    : null;
   const linkTab = normalizeLinkTab(item.link_tab);
   return {
     task_name: item.title,
@@ -71,8 +112,10 @@ export function sanityChecklistItemToTaskDetails(
     linkTab,
     linkModuleId: linkTab
       ? undefined
-      : (item.module?._id ?? item.submodule?.moduleId),
-    linkSubmoduleId: linkTab ? undefined : item.submodule?._id,
+      : moduleOrSub
+        ? (item.module?._id ?? item.submodule?.moduleId)
+        : undefined,
+    linkSubmoduleId: linkTab || !moduleOrSub ? undefined : item.submodule?._id,
     linkModuleTitle: moduleOrSub?.title,
   };
 }

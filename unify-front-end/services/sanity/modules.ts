@@ -50,6 +50,7 @@ export async function getAllModules(
       description,
       colorTheme { hex },
       icon,
+      province,
       ${i18nOverlay('title, description')}
     }`;
 
@@ -75,6 +76,7 @@ export async function getAllModulesWithSubmodules(
       description,
       colorTheme { hex },
       icon,
+      province,
       ${i18nOverlay('title, description')},
       "submodules": *[_type == "submodule" && references(^._id) && ${BASE_LANGUAGE_FILTER}] | order(order) {
         _id,
@@ -110,6 +112,7 @@ export async function getModule(
       description,
       colorTheme { hex },
       icon,
+      province,
       ${i18nOverlay('title, description')}
     }`;
 
@@ -139,6 +142,7 @@ export async function getModuleWithSubmodules(
       description,
       colorTheme { hex },
       icon,
+      province,
       ${i18nOverlay('title, description')},
       "submodules": *[_type == "submodule" && references(^._id) && ${BASE_LANGUAGE_FILTER}] | order(order) {
         _id,
@@ -181,4 +185,19 @@ export async function getModuleWithSubmodules(
     console.error('Error fetching module with submodules from Sanity:', error);
     return null;
   }
+}
+
+/**
+ * The province tag of one module, for deciding whether the signed-in user may
+ * open it. `found` is false when no such module exists, so a route can leave
+ * that case to its own not-found state.
+ */
+export async function getModuleProvince(
+  moduleId: string
+): Promise<{ found: boolean; province: string | null }> {
+  const row = await sanityClient.fetch<{ province?: string | null } | null>(
+    `*[_type == "module" && _id == $moduleId && ${BASE_LANGUAGE_FILTER}][0] { province }`,
+    { moduleId }
+  );
+  return { found: row != null, province: row?.province ?? null };
 }

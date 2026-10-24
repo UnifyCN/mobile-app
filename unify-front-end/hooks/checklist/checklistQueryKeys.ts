@@ -1,18 +1,18 @@
 import { QueryClient } from '@tanstack/react-query';
-import type { SanityLanguage } from '@/services/sanity/i18n';
+import type { ChecklistCacheContext } from '@/types/checklist';
 import { checklistProvinceKeyPart } from '@/utils/checklistProvince';
 
 /** Prefix for all checklist task list queries (persona + stage + province + user). */
 export const CHECKLIST_TASKS_QUERY_ROOT = 'checklist' as const;
 
-export function checklistTasksQueryKey(
-  userId: string,
-  stage: number,
-  personaSlug: string,
-  stageChanged: boolean,
-  language: SanityLanguage,
-  province: string | null | undefined
-) {
+export function checklistTasksQueryKey({
+  userId,
+  stage,
+  personaSlug,
+  stageChanged,
+  language,
+  province,
+}: ChecklistCacheContext) {
   return [
     CHECKLIST_TASKS_QUERY_ROOT,
     userId,

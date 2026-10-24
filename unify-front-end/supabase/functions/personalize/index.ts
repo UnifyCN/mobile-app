@@ -1,5 +1,5 @@
 // @ts-ignore JSR import
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 import {
   buildPool,
   type OnboardingProfile,
@@ -20,7 +20,8 @@ const corsHeaders = {
 // ─── Learn surface ────────────────────────────────────────────────────────────
 
 async function buildLearnSurface(
-  supabase: ReturnType<typeof createClient>,
+  // deno-lint-ignore no-explicit-any
+  supabase: SupabaseClient<any, 'public', any>,
   userId: string,
   profile: OnboardingProfile
 ): Promise<{ modules: ScoredModule[] }> {

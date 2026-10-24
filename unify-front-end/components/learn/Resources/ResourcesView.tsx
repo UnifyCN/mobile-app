@@ -11,7 +11,6 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
 import { useCurrentUser } from '@/context/UserContext';
-import { getMorePartnersNoteProvince } from '@/utils/morePartnersNote';
 import {
   getActivePartners,
   getCategoriesWithPartners,
@@ -25,6 +24,7 @@ import { localizePartners } from '@/utils/localizePartner';
 import { selectPartnersMatching } from '@/utils/searchPartners';
 import CategoryTile from './CategoryTile';
 import CategoryDetail from './CategoryDetail';
+import MorePartnersNote from './MorePartnersNote';
 import HowWeChooseSheet from './HowWeChooseSheet';
 import PartnerRow from './PartnerRow';
 import ResourcesSearchBar from './ResourcesSearchBar';
@@ -59,7 +59,6 @@ export default function ResourcesView() {
   const { currentUser } = useCurrentUser();
   const province = currentUser?.province;
   const categories = getCategoriesWithPartners(province);
-  const noteProvince = getMorePartnersNoteProvince(province);
 
   useEffect(() => {
     trackResourcesViewed();
@@ -138,13 +137,7 @@ export default function ResourcesView() {
           <ResourcesSearchBar value={query} onChangeText={setQuery} />
         </View>
 
-        {noteProvince && (
-          <Text style={styles.moreComingNote}>
-            {t('learn.resources.morePartnersComingSoon', {
-              province: noteProvince,
-            })}
-          </Text>
-        )}
+        <MorePartnersNote />
 
         {isSearching ? (
           results.length === 0 ? (
@@ -245,12 +238,6 @@ const styles = StyleSheet.create({
   // closes the block before the input.
   linkButton: { marginTop: 6 },
   searchWrapper: { marginTop: 18, marginBottom: 12 },
-  moreComingNote: {
-    fontSize: 13,
-    lineHeight: 18,
-    color: RESOURCE_THEME.textSecondary,
-    marginBottom: 12,
-  },
   gridRow: { flexDirection: 'row', gap: 10, marginBottom: 10 },
   gridFiller: { flex: 1 },
   resultCount: {

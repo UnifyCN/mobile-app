@@ -6,6 +6,10 @@ jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
   useSanityLanguage: () => mockLanguage,
 }));
 
+jest.mock('@/context/UserContext', () => ({
+  useCurrentUser: () => ({ currentUser: { province: null }, isLoading: false }),
+}));
+
 jest.mock('@/services/progress/progressClient', () => ({
   progressClient: {
     auth: {
