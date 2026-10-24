@@ -252,6 +252,7 @@ function SectionBody({
   const rich = (content: LessonRichContent, compact = false) => (
     <RichTextRenderer
       compactContainer={compact}
+      trimEndSpacing
       blocks={content}
       markDefs={markDefs}
       highlights={highlights}

@@ -22,3 +22,9 @@ Preserve the redesigned Learn layouts, cached progress reads, resume destination
 - iOS Simulator checks opened Learn home, Finance, and a structured lesson. Section navigation reached FAQ and Citations. The citation links and bottom actions were visible. FAQ open and close actions passed.
 
 Native checks use English on iPhone 17 Pro, iOS 26.4. These checks do not establish every locale, Android rendering, VoiceOver, or release-device behavior. Local account screenshots remain outside git. No content publication or production release is included.
+
+## Quick check spacing correction
+
+The structured reader removes trailing blank paragraph spacers and the final paragraph, list item, or dropdown bottom margin. The existing 32-point section gap controls the space before Quick check. Interior paragraph and bullet spacing, body size 18/27, and side padding 20 remain unchanged. The old reader keeps its previous spacing.
+
+The renderer retains the original block array and indices. It does not change content keys or saved-highlight coordinates. Six regression tests cover empty trailing blocks, interior whitespace, original indices, legacy defaults, bullet margins, and the final dropdown in both states. The iOS Simulator check shows the corrected gap in Finance lesson 1.2, Budgeting Methods and Categories.

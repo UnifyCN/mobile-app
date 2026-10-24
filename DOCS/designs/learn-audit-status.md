@@ -40,7 +40,17 @@ The English catalog corrections are published. App changes run in the local deve
 
 ## Limits and remaining release work
 
-- This audit and the new editorial content cover the English catalog. Existing translations remain available. The latest English additions and factual corrections are not fully translated. Sanity generation quota was exhausted; no budget change was made.
+- This audit and the new editorial content cover the English catalog. Existing translations remain available. The latest English additions and factual corrections are not fully translated. A no-write translation request on October 23 returned HTTP 429 with `AI Usage quota limit reached`. No budget change or content write was made.
 - The mobile and web source protections are not released to existing production clients. Older clients can still have their previous display behavior.
 - VoiceOver announcements, all large-text sizes, and every lesson interaction were not tested end to end. Opening every page does not prove every interaction.
 - Historical audit captures describe the pre-fix state. Do not use them as evidence of the final UI.
+
+## Translation readiness, October 23
+
+A direct production read returned 1,456 published lesson documents. Each of the six non-English languages has 208 lessons and 408 pages. Of the 401 teaching pages per language, 38 use the new structure and 363 still need the new sections. This gives 2,178 page updates across six languages. The seven completion pages per language are separate.
+
+Local unpublished files contain 287 candidate lesson records covering 431 page updates. Of these records, 251 still match both source and target revisions; 36 need comparison with current content. All candidates need semantic review before publication. At least 1,747 page updates still need preparation. Previously reviewed additions are already live.
+
+These counts measure structure, not semantic correctness. Later English corrections to original teaching text require separate translation work. The current additions script does not perform that work. It also cannot refresh an already structured target and assumes deterministic translation IDs; four Getting Support translations use metadata-linked IDs instead.
+
+The live read and revision recheck returned the same document revisions. Public reads do not prove that authenticated drafts are absent. Before publication, check drafts and both revisions, review meaning, validate the legacy projection, and publish only the approved changes. The current generation check is blocked by HTTP 429, as recorded above. No translations were published during this check.

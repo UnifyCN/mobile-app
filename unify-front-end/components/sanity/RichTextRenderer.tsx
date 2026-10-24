@@ -30,6 +30,8 @@ interface RichTextRendererProps {
   showQuestionFeedback?: boolean;
   /** When true, root container does not use flex: 1 so it sizes to content (e.g. for option text alignment). */
   compactContainer?: boolean;
+  /** Let the structured section gap own trailing whitespace. */
+  trimEndSpacing?: boolean;
   /** Persisted highlights for this page — passed to SelectableText for rendering */
   highlights?: Highlight[];
 }
@@ -44,6 +46,7 @@ export default function RichTextRenderer({
   onQuestionAnswer,
   showQuestionFeedback = false,
   compactContainer = false,
+  trimEndSpacing = false,
   highlights = [],
 }: RichTextRendererProps) {
   const { t } = useTranslation();
@@ -557,6 +560,20 @@ export default function RichTextRenderer({
     return !hasContent;
   };
 
+  let lastVisibleIndex = blocks.length - 1;
+  if (trimEndSpacing) {
+    while (
+      lastVisibleIndex >= 0 &&
+      isEmptyBlock(blocks[lastVisibleIndex]) &&
+      (!Array.isArray(blocks[lastVisibleIndex].children) ||
+        blocks[lastVisibleIndex].children.every(
+          (child: any) => typeof child === 'string' || child?._type === 'span'
+        ))
+    ) {
+      lastVisibleIndex -= 1;
+    }
+  }
+
   const renderBlock = (
     block: any,
     index: number,
@@ -609,7 +626,10 @@ export default function RichTextRenderer({
 
         const containerStyle = [
           styles.listItemContainer,
-          { marginLeft: indentLevel, marginBottom: 10 },
+          {
+            marginLeft: indentLevel,
+            marginBottom: trimEndSpacing && index === lastVisibleIndex ? 0 : 10,
+          },
         ];
 
         return (
@@ -687,6 +707,9 @@ export default function RichTextRenderer({
       const blockStyle = {
         ...mergedStyles[style],
         textAlign: finalTextAlign,
+        ...(trimEndSpacing && index === lastVisibleIndex
+          ? { marginBottom: 0 }
+          : {}),
       };
 
       switch (style) {
@@ -862,6 +885,7 @@ export default function RichTextRenderer({
         <DropdownBlock
           block={block}
           index={index}
+          trimEndSpacing={trimEndSpacing && index === lastVisibleIndex}
           renderRichText={dropdownBlocks => (
             <RichTextRenderer
               blocks={dropdownBlocks}
@@ -1461,6 +1485,7 @@ export default function RichTextRenderer({
     >
       {blocks
         .map((block, index) => {
+          if (trimEndSpacing && index > lastVisibleIndex) return null;
           const isLastInList = isLastListItem(index);
           const afterSkipLine = isAfterSkipLine(index);
           const isFirstInList = isFirstListItem(index);
