@@ -34,6 +34,7 @@ import ExplainTermModal from '@/components/learn/ExplainTermModal';
 // Progress related imports
 import {
   calculateLessonProgress,
+  getLastLessonPageNumber,
   getLessonTotalPages,
 } from '@/utils/submoduleProgress'; // static
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
@@ -407,7 +408,7 @@ export default function LessonPageScreen() {
             moduleId,
             submoduleId,
             lessonId: previousLesson._id,
-            pageNum: String(Math.max(1, previousLesson.pages?.length || 0)),
+            pageNum: String(getLastLessonPageNumber(previousLesson)),
             ...originParams,
           },
         });
