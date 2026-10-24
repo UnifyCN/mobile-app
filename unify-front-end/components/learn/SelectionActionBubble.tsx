@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -63,7 +64,9 @@ export default function SelectionActionBubble({
               color='#fff'
             />
             <Text style={styles.buttonText}>
-              {isHighlighted ? t('learn.selectionBubble.remove') : t('learn.selectionBubble.highlight')}
+              {isHighlighted
+                ? t('learn.selectionBubble.remove')
+                : t('learn.selectionBubble.highlight')}
             </Text>
           </Pressable>
 
@@ -71,7 +74,9 @@ export default function SelectionActionBubble({
 
           <Pressable style={styles.button} onPress={onAskAI}>
             <Feather name='help-circle' size={16} color='#fff' />
-            <Text style={styles.buttonText}>{t('learn.selectionBubble.askAI')}</Text>
+            <Text style={styles.buttonText}>
+              {t('learn.selectionBubble.askAI')}
+            </Text>
           </Pressable>
         </View>
 
@@ -111,11 +116,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     gap: 6,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  buttonText: { ...typography.button, color: '#fff' },
   divider: {
     width: 1,
     height: 20,

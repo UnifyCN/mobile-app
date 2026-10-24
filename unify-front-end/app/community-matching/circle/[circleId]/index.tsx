@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -110,10 +111,7 @@ export default function CircleDetailsScreen() {
       router.push(`/community-matching/circle/${circleId}/chat` as const);
     } catch (error) {
       console.error('Failed to join circle chat', error);
-      Alert.alert(
-        t('circles.unableToJoin'),
-        t('circles.unableToJoinMessage')
-      );
+      Alert.alert(t('circles.unableToJoin'), t('circles.unableToJoinMessage'));
     } finally {
       setIsProcessing(false);
     }
@@ -207,14 +205,14 @@ export default function CircleDetailsScreen() {
   if (circleError || !circle) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>
-          {t('circles.circleNotFound')}
-        </Text>
+        <Text style={styles.errorText}>{t('circles.circleNotFound')}</Text>
         <TouchableOpacity
           style={styles.primaryButton}
           onPress={() => router.replace('/community-matching' as const)}
         >
-          <Text style={styles.primaryButtonText}>{t('circles.backToMatching')}</Text>
+          <Text style={styles.primaryButtonText}>
+            {t('circles.backToMatching')}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -240,20 +238,22 @@ export default function CircleDetailsScreen() {
           dateRange={formattedDates}
           countdownText={countdownText}
           isActive={isActive}
-          statusText={circle.status === 'active' ? undefined : t('circles.circleEnded')}
+          statusText={
+            circle.status === 'active' ? undefined : t('circles.circleEnded')
+          }
         />
 
         {hasLeftCircle && (
           <View style={styles.infoCard}>
             <Text style={styles.infoTitle}>{t('circles.youLeftCircle')}</Text>
-            <Text style={styles.infoBody}>
-              {t('circles.rejoinMessage')}
-            </Text>
+            <Text style={styles.infoBody}>{t('circles.rejoinMessage')}</Text>
             <TouchableOpacity
               style={[styles.primaryButton, styles.infoButton]}
               onPress={() => router.replace('/community-matching' as const)}
             >
-              <Text style={styles.primaryButtonText}>{t('circles.startMatchingAgain')}</Text>
+              <Text style={styles.primaryButtonText}>
+                {t('circles.startMatchingAgain')}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -262,7 +262,9 @@ export default function CircleDetailsScreen() {
         {!isActive && (
           <View style={styles.graduationCard}>
             <View style={styles.graduationHeader}>
-              <Text style={styles.graduationTitle}>{t('circles.circleCompleted')}</Text>
+              <Text style={styles.graduationTitle}>
+                {t('circles.circleCompleted')}
+              </Text>
               <Text style={styles.graduationSubtitle}>
                 {t('circles.circleCompletedMessage')}
               </Text>
@@ -306,7 +308,8 @@ export default function CircleDetailsScreen() {
         <View style={styles.membersHeader}>
           <Text style={styles.membersTitle}>{t('circles.members')}</Text>
           <Text style={styles.membersCount}>
-            {members?.filter(m => !m.left_at).length || 0}{t('circles.activeCount')}
+            {members?.filter(m => !m.left_at).length || 0}
+            {t('circles.activeCount')}
           </Text>
         </View>
 
@@ -359,7 +362,9 @@ export default function CircleDetailsScreen() {
             {isProcessing ? (
               <ActivityIndicator color='#fff' />
             ) : (
-              <Text style={styles.primaryButtonText}>{t('circles.joinCircleChat')}</Text>
+              <Text style={styles.primaryButtonText}>
+                {t('circles.joinCircleChat')}
+              </Text>
             )}
           </TouchableOpacity>
         )}
@@ -368,13 +373,17 @@ export default function CircleDetailsScreen() {
             style={styles.primaryButton}
             onPress={handleOpenChat}
           >
-            <Text style={styles.primaryButtonText}>{t('circles.openCircleChat')}</Text>
+            <Text style={styles.primaryButtonText}>
+              {t('circles.openCircleChat')}
+            </Text>
           </TouchableOpacity>
         )}
         {!hasLeftCircle && (
           <TouchableOpacity style={styles.leaveButton} onPress={handleLeave}>
             <Text style={styles.leaveText}>
-              {isActive ? t('circles.leaveCircle') : t('circles.startMatchingAgain')}
+              {isActive
+                ? t('circles.leaveCircle')
+                : t('circles.startMatchingAgain')}
             </Text>
           </TouchableOpacity>
         )}
@@ -396,11 +405,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     gap: 16,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#444',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.body, color: '#444', textAlign: 'center' },
   scrollContent: {
     paddingHorizontal: 24,
     paddingTop: 8,
@@ -409,10 +414,7 @@ const styles = StyleSheet.create({
   backBtn: {
     marginBottom: 12,
   },
-  backText: {
-    color: '#6E6E6E',
-    fontSize: 15,
-  },
+  backText: { ...typography.secondary, color: '#6E6E6E' },
   infoCard: {
     marginTop: 20,
     borderRadius: 16,
@@ -420,11 +422,7 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 8,
   },
-  infoTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#2A1B3D',
-  },
+  infoTitle: { ...typography.cardTitle, color: '#2A1B3D' },
   infoBody: {
     color: '#4C4376',
     lineHeight: 20,
@@ -438,10 +436,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  membersTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
+  membersTitle: { ...typography.cardTitle },
   membersCount: {
     color: '#6E6E6E',
   },
@@ -476,14 +471,8 @@ const styles = StyleSheet.create({
   memberInfo: {
     flex: 1,
   },
-  memberName: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  memberStatus: {
-    fontSize: 13,
-    color: '#6E6E6E',
-  },
+  memberName: { ...typography.cardTitle },
+  memberStatus: { ...typography.caption, color: '#6E6E6E' },
   footer: {
     padding: 24,
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -499,11 +488,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  primaryButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  primaryButtonText: { ...typography.button, color: '#fff' },
   leaveButton: {
     borderWidth: 1,
     borderColor: '#E74C3C',
@@ -537,16 +522,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   graduationTitle: {
-    fontSize: 22,
-    fontWeight: '800',
+    ...typography.section,
     color: '#0C4A6E',
     textAlign: 'center',
   },
   graduationSubtitle: {
-    fontSize: 15,
+    ...typography.secondary,
     color: '#475569',
     textAlign: 'center',
-    lineHeight: 22,
   },
   graduationMembers: {
     padding: 16,
@@ -568,13 +551,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     backgroundColor: '#CBD5E1',
   },
-  graduationMemberName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1E293B',
-  },
-  graduationMemberRole: {
-    fontSize: 13,
-    color: '#64748B',
-  },
+  graduationMemberName: { ...typography.cardTitle, color: '#1E293B' },
+  graduationMemberRole: { ...typography.caption, color: '#64748B' },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
@@ -466,17 +467,12 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: Theme.disabledGatherRed,
   },
-  postButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '400',
-  },
+  postButtonText: { ...typography.button, color: 'white' },
   titleContainer: {
     marginTop: 8,
   },
   titleInput: {
-    fontSize: 32,
-    fontWeight: '600',
+    ...typography.title,
     color: Theme.black,
     paddingTop: 24,
     paddingBottom: 4,
@@ -512,11 +508,7 @@ const styles = StyleSheet.create({
   toolbarButtonBlocked: {
     opacity: 0.3,
   },
-  toolbarButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-  },
+  toolbarButtonText: { ...typography.button, color: Theme.black },
   toolbarButtonTextActive: {
     color: 'white',
   },
@@ -577,7 +569,7 @@ const styles = StyleSheet.create({
     minHeight: 80,
   },
   contentInput: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.black,
     paddingTop: 8,
     paddingBottom: 4,
@@ -587,7 +579,7 @@ const styles = StyleSheet.create({
     minHeight: 60,
   },
   charCount: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textAlternateGray,
     textAlign: 'right',
     marginTop: 4,
@@ -609,25 +601,20 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 24,
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 20,
-  },
+  modalTitle: { ...typography.cardTitle, color: Theme.black, marginBottom: 20 },
   modalLabel: {
-    fontSize: 13,
-    fontWeight: '500',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     marginBottom: 6,
+    fontWeight: '500',
   },
   modalInput: {
+    ...typography.body,
     borderWidth: 1,
     borderColor: Theme.surfaceGray,
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    fontSize: 15,
     color: Theme.black,
     marginBottom: 16,
   },
@@ -645,9 +632,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalCancelText: {
-    fontSize: 15,
-    fontWeight: '500',
+    ...typography.secondary,
     color: Theme.textAlternateGray,
+    fontWeight: '500',
   },
   modalInsertButton: {
     flex: 1,
@@ -657,8 +644,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalInsertText: {
-    fontSize: 15,
-    fontWeight: '500',
+    ...typography.secondary,
     color: '#fff',
+    fontWeight: '500',
   },
 });

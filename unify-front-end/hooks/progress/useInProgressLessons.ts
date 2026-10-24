@@ -1,9 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  isResumable,
+  lessonResumeHref,
+  ResumeProgress,
+} from '@/utils/lessonResume';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { progressClient } from '@/services/progress/progressClient';
 import { sanityClient } from '@/sanity-custom';
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
 import { getLessonTotalPages } from '@/utils/submoduleProgress';
 import { useSanityLanguage } from '@/hooks/sanity/useSanityLanguage';
+import { useLearnProvince } from '@/hooks/learn/useLearnProvince';
+import { isVisibleForProvince } from '@/supabase/functions/_shared/province';
 import {
   BASE_LANGUAGE_FILTER,
   i18nOverlay,
@@ -16,6 +23,9 @@ interface ContinueLesson {
   description: string;
   moduleId: string;
   moduleTitle: string;
+  // The module's province tag, kept so the cards can be checked again against
+  // the current profile province on every render.
+  moduleProvince?: string | null;
   submoduleId: string;
   submoduleTitle: string;
   currentPage: number;
@@ -24,9 +34,10 @@ interface ContinueLesson {
   currentSection: number;
   totalSections: number;
   href: string;
+  isNext?: boolean;
 }
 
-interface LessonProgressRow {
+interface LessonProgressRow extends ResumeProgress {
   sanity_lesson_id: string;
   sanity_submodule_id: string;
   is_completed: boolean;
@@ -38,12 +49,15 @@ interface LessonProgressRow {
 
 export function useInProgressLessons() {
   const language = useSanityLanguage();
+  const { province, isLoading: provinceLoading } = useLearnProvince();
   const [lessons, setLessons] = useState<ContinueLesson[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const requestSequence = useRef(0);
 
   const fetchInProgressLessons = useCallback(async () => {
+    // Until the profile loads, null does not yet mean "no province".
+    if (provinceLoading) return;
     const requestId = ++requestSequence.current;
     const isLatestRequest = () => requestId === requestSequence.current;
     try {
@@ -64,7 +78,7 @@ export function useInProgressLessons() {
         await progressClient
           .from('user_lesson_progress')
           .select(
-            'sanity_lesson_id,sanity_submodule_id,is_completed,is_in_progress,completed_pages,current_page_number,last_accessed_at'
+            'sanity_lesson_id,sanity_submodule_id,is_completed,is_in_progress,completed_pages,current_page_number,current_page_type,current_quiz_id,current_question_number,last_accessed_at'
           )
           .eq('user_id', user.id)
           .order('last_accessed_at', { ascending: false });
@@ -78,9 +92,10 @@ export function useInProgressLessons() {
       }
 
       // Fetch modules/submodules/lessons with compact page counts from Sanity
-      const modulesQuery = `*[_type == "module" && ${BASE_LANGUAGE_FILTER}] {
+      const modulesQuery = `*[_type == "module" && ${BASE_LANGUAGE_FILTER}] | order(order, _id) {
           _id,
           title,
+          province,
           ${i18nOverlay('title')},
           "submodules": *[_type == "submodule" && references(^._id) && ${BASE_LANGUAGE_FILTER}] | order(order) {
             _id,
@@ -107,15 +122,21 @@ export function useInProgressLessons() {
       const rawModules = await sanityClient.fetch(modulesQuery, {
         lang: language,
       });
-      const modulesData = (rawModules ?? []).map((module: any) => ({
-        ...mergeI18nOverlay(module),
-        submodules: (module.submodules ?? []).map((submodule: any) => ({
-          ...mergeI18nOverlay(submodule),
-          lessons: (submodule.lessons ?? []).map((lesson: any) =>
-            mergeI18nOverlay(lesson)
-          ),
-        })),
-      }));
+      // A card is built per module, so a module for another province never
+      // reaches the loop below, with or without saved progress.
+      const modulesData = (rawModules ?? [])
+        .filter((module: any) =>
+          isVisibleForProvince(module.province, province)
+        )
+        .map((module: any) => ({
+          ...mergeI18nOverlay(module),
+          submodules: (module.submodules ?? []).map((submodule: any) => ({
+            ...mergeI18nOverlay(submodule),
+            lessons: (submodule.lessons ?? []).map((lesson: any) =>
+              mergeI18nOverlay(lesson)
+            ),
+          })),
+        }));
 
       const progressRows = (lessonProgresses || []) as LessonProgressRow[];
 
@@ -126,62 +147,54 @@ export function useInProgressLessons() {
       }
 
       const availableLessons: ContinueLesson[] = [];
+      const catalogLessons: ContinueLesson[] = [];
 
       for (const module of modulesData || []) {
-        let activeLesson: any = null;
-        let activeSubmodule: any = null;
+        for (const activeSubmodule of module.submodules || []) {
+          for (const activeLesson of activeSubmodule.lessons || []) {
+            const lessonProgress = progressByLessonId.get(activeLesson._id);
+            if (!getLessonTotalPages(activeLesson)) continue;
 
-        for (const submodule of module?.submodules || []) {
-          for (const lesson of submodule?.lessons || []) {
-            const lessonProgress = progressByLessonId.get(lesson._id);
-            const isCompleted = Boolean(lessonProgress?.is_completed);
+            const totalPages = getLessonTotalPages(activeLesson);
+            const progressPercent =
+              lessonProgress && totalPages > 0
+                ? Math.round(
+                    (lessonProgress.completed_pages / totalPages) * 100
+                  )
+                : 0;
 
-            // All lessons are unlocked: pick the first not completed lesson.
-            if (!isCompleted) {
-              activeLesson = lesson;
-              activeSubmodule = submodule;
-              break;
-            }
-          }
+            const currentPage = lessonProgress?.current_page_number || 1;
+            const submoduleIndex = (module.submodules || []).findIndex(
+              (s: any) => s._id === activeSubmodule._id
+            );
+            const currentSection = submoduleIndex >= 0 ? submoduleIndex + 1 : 1;
+            const totalSections = module.submodules?.length || 0;
 
-          if (activeLesson) {
-            break;
+            const candidate: ContinueLesson = {
+              id: activeLesson._id,
+              title: activeLesson.title || 'Untitled Lesson',
+              description: activeLesson.description || '',
+              moduleId: module._id,
+              moduleTitle: module.title || 'Unknown Module',
+              moduleProvince: module.province ?? null,
+              submoduleId: activeSubmodule._id,
+              submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
+              currentPage,
+              totalPages,
+              progressPercent,
+              currentSection,
+              totalSections,
+              href: lessonResumeHref(
+                module._id,
+                activeSubmodule._id,
+                activeLesson._id,
+                lessonProgress
+              ),
+            };
+            catalogLessons.push(candidate);
+            if (isResumable(lessonProgress)) availableLessons.push(candidate);
           }
         }
-
-        if (!activeLesson || !activeSubmodule) {
-          continue;
-        }
-
-        const lessonProgress = progressByLessonId.get(activeLesson._id);
-        const totalPages = getLessonTotalPages(activeLesson);
-        const progressPercent =
-          lessonProgress && totalPages > 0
-            ? Math.round((lessonProgress.completed_pages / totalPages) * 100)
-            : 0;
-
-        const currentPage = lessonProgress?.current_page_number || 1;
-        const submoduleIndex = (module.submodules || []).findIndex(
-          (s: any) => s._id === activeSubmodule._id
-        );
-        const currentSection = submoduleIndex >= 0 ? submoduleIndex + 1 : 1;
-        const totalSections = module.submodules?.length || 0;
-
-        availableLessons.push({
-          id: activeLesson._id,
-          title: activeLesson.title || 'Untitled Lesson',
-          description: activeLesson.description || '',
-          moduleId: module._id,
-          moduleTitle: module.title || 'Unknown Module',
-          submoduleId: activeSubmodule._id,
-          submoduleTitle: activeSubmodule.title || 'Unknown Submodule',
-          currentPage,
-          totalPages,
-          progressPercent,
-          currentSection,
-          totalSections,
-          href: `/(tabs)/Learn/modules/${module._id}/${activeSubmodule._id}/lessons/${activeLesson._id}/pages/${currentPage}` as any,
-        });
       }
 
       // Sort by most recently accessed using O(1) lookups.
@@ -196,6 +209,27 @@ export function useInProgressLessons() {
         return new Date(bAccess).getTime() - new Date(aAccess).getTime();
       });
 
+      if (!inProgressLessons.length) {
+        const latest = progressRows.find(row =>
+          catalogLessons.some(lesson => lesson.id === row.sanity_lesson_id)
+        );
+        const pivot = catalogLessons.findIndex(
+          lesson => lesson.id === latest?.sanity_lesson_id
+        );
+        const ordered = [
+          ...catalogLessons.slice(pivot + 1),
+          ...catalogLessons.slice(0, pivot + 1),
+        ];
+        const next = ordered.find(
+          lesson => !progressByLessonId.get(lesson.id)?.is_completed
+        );
+        if (next)
+          inProgressLessons.push({
+            ...next,
+            isNext: true,
+            href: lessonResumeHref(next.moduleId, next.submoduleId, next.id),
+          });
+      }
       if (isLatestRequest()) setLessons(inProgressLessons);
     } catch (error) {
       if (isLatestRequest()) {
@@ -205,7 +239,7 @@ export function useInProgressLessons() {
     } finally {
       if (isLatestRequest()) setIsLoading(false);
     }
-  }, [language]);
+  }, [language, province, provinceLoading]);
 
   // Fetch on mount and whenever the content language changes.
   useEffect(() => {
@@ -225,8 +259,19 @@ export function useInProgressLessons() {
     return unsubscribe;
   }, [fetchInProgressLessons]);
 
+  // The cards were built for the province of the request that made them. A
+  // profile change renders before the next request starts, so the returned
+  // cards are checked against the province of this render.
+  const visibleLessons = useMemo(
+    () =>
+      lessons.filter(lesson =>
+        isVisibleForProvince(lesson.moduleProvince, province)
+      ),
+    [lessons, province]
+  );
+
   return {
-    lessons,
+    lessons: visibleLessons,
     isLoading,
     error,
     refresh: fetchInProgressLessons,

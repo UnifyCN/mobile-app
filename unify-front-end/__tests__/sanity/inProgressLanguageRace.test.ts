@@ -1,9 +1,24 @@
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
+import { sanityClient } from '@/sanity-custom';
+import { useInProgressLessons } from '@/hooks/progress/useInProgressLessons';
+
 let mockLanguage = 'en';
+let mockProgress = [
+  {
+    sanity_lesson_id: 'lesson-1',
+    is_in_progress: true,
+    is_completed: false,
+    last_accessed_at: '2026-10-21T00:00:00Z',
+  },
+];
 
 jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
   useSanityLanguage: () => mockLanguage,
+}));
+
+jest.mock('@/context/UserContext', () => ({
+  useCurrentUser: () => ({ currentUser: { province: null }, isLoading: false }),
 }));
 
 jest.mock('@/services/progress/progressClient', () => ({
@@ -16,7 +31,10 @@ jest.mock('@/services/progress/progressClient', () => ({
     from: jest.fn(() => ({
       select: jest.fn(() => ({
         eq: jest.fn(() => ({
-          order: jest.fn().mockResolvedValue({ data: [], error: null }),
+          order: jest.fn().mockImplementation(async () => ({
+            data: mockProgress,
+            error: null,
+          })),
         })),
       })),
     })),
@@ -30,9 +48,6 @@ jest.mock('@/sanity-custom', () => ({
 jest.mock('@/utils/progressEventEmitter', () => ({
   progressEventEmitter: { subscribe: jest.fn(() => jest.fn()) },
 }));
-
-import { sanityClient } from '@/sanity-custom';
-import { useInProgressLessons } from '@/hooks/progress/useInProgressLessons';
 
 const mockFetch = sanityClient.fetch as jest.Mock;
 
@@ -65,6 +80,74 @@ describe('Continue Learning language changes', () => {
   beforeEach(() => {
     mockLanguage = 'en';
     mockFetch.mockReset();
+    mockProgress = [
+      {
+        sanity_lesson_id: 'lesson-1',
+        is_in_progress: true,
+        is_completed: false,
+        last_accessed_at: '2026-10-21T00:00:00Z',
+      },
+    ];
+  });
+
+  it('returns every active lesson in one category, newest first', async () => {
+    mockProgress.push({
+      sanity_lesson_id: 'lesson-2',
+      is_in_progress: true,
+      is_completed: false,
+      last_accessed_at: '2026-10-22T00:00:00Z',
+    });
+    const modules = content('First');
+    modules[0].submodules[0].lessons.push({
+      ...modules[0].submodules[0].lessons[0],
+      _id: 'lesson-2',
+      title: 'Second',
+    });
+    mockFetch.mockResolvedValue(modules);
+    const { result } = renderHook(() => useInProgressLessons());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.lessons.map(lesson => lesson.id)).toEqual([
+      'lesson-2',
+      'lesson-1',
+    ]);
+  });
+
+  it('recommends the next unfinished lesson after a completed lesson', async () => {
+    mockProgress[0].is_completed = true;
+    const modules = content('Completed');
+    modules[0].submodules[0].lessons.push({
+      ...modules[0].submodules[0].lessons[0],
+      _id: 'lesson-2',
+      title: 'Next',
+    });
+    mockFetch.mockResolvedValue(modules);
+    const { result } = renderHook(() => useInProgressLessons());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.lessons).toHaveLength(1);
+    expect(result.current.lessons[0]).toMatchObject({
+      id: 'lesson-2',
+      isNext: true,
+      href: '/(tabs)/Learn/modules/module-1/submodule-1/lessons/lesson-2/pages/1',
+    });
+  });
+
+  it('does not recommend completed content when the catalog is finished', async () => {
+    mockProgress[0].is_completed = true;
+    mockFetch.mockResolvedValue(content('Completed'));
+    const { result } = renderHook(() => useInProgressLessons());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.lessons).toEqual([]);
+  });
+
+  it('starts a new learner at the first lesson', async () => {
+    mockProgress = [];
+    mockFetch.mockResolvedValue(content('First'));
+    const { result } = renderHook(() => useInProgressLessons());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.lessons[0]).toMatchObject({
+      id: 'lesson-1',
+      isNext: true,
+    });
   });
 
   it('ignores an old-language response that resolves after the new language', async () => {

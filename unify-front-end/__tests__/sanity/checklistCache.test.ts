@@ -14,13 +14,14 @@ describe('checklist translation cache freshness', () => {
   it('expires memory and persisted content so newly published translations revalidate', async () => {
     const now = 1_700_000_000_000;
     const nowSpy = jest.spyOn(Date, 'now').mockReturnValue(now);
-    const key = buildChecklistCacheStorageKey(
-      'cache-test-user',
-      1,
-      'skilled_worker',
-      false,
-      'es'
-    );
+    const key = buildChecklistCacheStorageKey({
+      userId: 'cache-test-user',
+      stage: 1,
+      personaSlug: 'skilled_worker',
+      stageChanged: false,
+      language: 'es',
+      province: null,
+    });
 
     setChecklistMemoryCache(key, tasks);
     await saveChecklistToDisk(key, tasks);

@@ -37,7 +37,7 @@ An AI chatbot powered by **RAG** (Retrieval-Augmented Generation) over Sanity CM
 Personalized onboarding tasks based on the user's **persona** (international student, refugee, protected person, skilled worker, immigrant, PR) and **time in Canada** (0–3 months through 3+ years). Tasks are defined in Sanity CMS. Users can also create custom tasks.
 
 ### Learn
-Structured educational modules (Sanity CMS) with lessons, quizzes, practice exercises, and progress tracking. Hero carousel highlights in-progress lessons.
+Structured educational modules (Sanity CMS) with lessons, quizzes, practice exercises, and progress tracking. A compact resume row opens the most recent unfinished lesson. Category and module lists show progress. The versioned lesson reader supports structured content sections. See [the Learn content contract](DOCS/designs/learn-content-v2.md).
 
 ### Additional Features
 - **Auth**: Email + OTP, Google OAuth, Apple Sign-In (iOS)

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +24,10 @@ export const ChecklistSectionHeader: React.FC<ChecklistSectionHeaderProps> = ({
   return (
     <View style={styles.container}>
       <View
-        style={[styles.iconContainer, { backgroundColor: config.backgroundColor }]}
+        style={[
+          styles.iconContainer,
+          { backgroundColor: config.backgroundColor },
+        ]}
       >
         <MaterialIcons name={config.icon} size={32} color={config.color} />
       </View>
@@ -59,12 +63,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   priority: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.section,
+
     color: '#000',
   },
   count: {
-    fontSize: 14,
+    ...typography.secondary,
+
     color: '#000',
     marginTop: 2,
   },

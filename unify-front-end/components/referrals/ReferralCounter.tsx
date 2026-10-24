@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   text: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     textAlign: 'center',
   },

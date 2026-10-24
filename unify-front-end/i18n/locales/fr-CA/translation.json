@@ -318,6 +318,9 @@
   "report": {
     "sendReport": "Envoyer le signalement"
   },
+  "resources": {
+    "morePartnersComingSoon": "D'autres partenaires arrivent bientôt pour votre province : {{province}}."
+  },
   "learn": {
     "subtitle": "Commencez par des leçons pour comprendre les bases de la culture canadienne et comment vous établir en tant que nouvel arrivant.",
     "greeting": {
@@ -343,7 +346,8 @@
     "announcementBody": "Maintenez enfoncé n'importe quel mot ou expression dans une leçon pour le surligner ou demander à l'IA de l'expliquer. Vos surlignements sont enregistrés sous « Enregistré depuis Apprendre » dans votre profil.",
     "module": {
       "errorLoading": "Erreur de chargement du module : {{message}}",
-      "section": "Section {{number}}"
+      "section": "Section {{number}}",
+      "introduction": "Introduction"
     },
     "submodule": {
       "learnTitle": "Apprendre",
@@ -395,9 +399,11 @@
       "errorTitle": "Erreur",
       "imagePlaceholder": "Image",
       "submoduleFallback": "Sous-module",
+      "reviewRating": "{{count}} étoiles sur 5",
       "reviewTitle": "Comment avez-vous trouvé cette leçon?",
       "reviewPlaceholder": "Partagez vos impressions (facultatif)",
-      "example": "EXEMPLE"
+      "example": "EXEMPLE",
+      "openImage": "Ouvrir l’image complète"
     },
     "quiz": {
       "loadingQuizzes": "Chargement des questionnaires…",
@@ -408,7 +414,8 @@
       "startQuiz": "Commencer le questionnaire →",
       "loadingQuestion": "Chargement de la question…",
       "errorLoadingQuestion": "Erreur de chargement de la question",
-      "questionNotFound": "Question introuvable"
+      "questionNotFound": "Question introuvable",
+      "yourAnswer": "Votre réponse"
     },
     "quizzes": {
       "errorLoading": "Erreur de chargement des questionnaires : {{message}}",
@@ -1261,10 +1268,7 @@
           "serviceArea": "Canada et partout dans le monde",
           "howToStart": "Demandez une soumission en ligne auprès d'un partenaire assureur de TuGo, ou composez le 1-855-929-8846.",
           "hours": "lun.-ven. 6 h à 17 h HNP · sam. 7 h à 16 h HNP · dim. fermé",
-          "languages": [
-            "Anglais",
-            "Français"
-          ],
+          "languages": ["Anglais", "Français"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Assurance Visitors to Canada",
@@ -1302,10 +1306,7 @@
           "eligibility": "L'offre de compte pour nouveaux arrivants s'adresse aux personnes de 25 ans et plus qui sont résidentes permanentes, ou résidentes temporaires avec un permis de travail valide pour plus de 8 mois, qui habitent le Canada depuis 3 ans ou moins et qui ne sont pas déjà membres de Desjardins. Des offres distinctes visent les 18 à 24 ans et les étudiants à temps plein de 25 à 30 ans.",
           "howToStart": "Ouvrez un compte en ligne en environ 15 minutes, ou faites une demande depuis l'étranger et confirmez votre identité dans un point de service à votre arrivée.",
           "hours": "Assistance juridique : ouverture de dossier 24 h sur 24, 7 jours sur 7 · conseillers lun.-ven. 9 h à 20 h, sam. 9 h à 17 h",
-          "languages": [
-            "Anglais",
-            "Français"
-          ],
+          "languages": ["Anglais", "Français"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Compte chèques pour nouveaux arrivants (forfait Illimité)",
@@ -1391,7 +1392,41 @@
         "bookA11y": "Réserver une première rencontre gratuite avec {{name}}"
       }
     },
-    "typeHerePlaceholder": "Écrivez ici"
+    "typeHerePlaceholder": "Écrivez ici",
+    "home": {
+      "heading": "Installez-vous en toute confiance",
+      "subtitle": "Des leçons pratiques pour vous préparer à la vie au Canada.",
+      "continue": "Continuer à apprendre",
+      "moreLessons": "Autres leçons en cours",
+      "courses": "Cours",
+      "all": "Tous",
+      "started": "Commencés",
+      "emptyStarted": "Vos cours commencés apparaîtront ici.",
+      "modules": "Modules",
+      "moduleCount": "Modules : {{count}}",
+      "lessonCount": "Leçons : {{count}}",
+      "lessonSummary": "{{count}} leçons · {{done}} terminées",
+      "upNext": "À suivre",
+      "close": "Fermer",
+      "tabLabel": "Apprendre",
+      "completionSummary": "{{completed}} leçons terminées sur {{total}}"
+    },
+    "structured": {
+      "concept": "Concept",
+      "example": "Exemple",
+      "visual": "Exemple visuel",
+      "quickCheck": "Vérification rapide",
+      "faq": "Questions fréquentes",
+      "citations": "Sources",
+      "theory": "Théorie",
+      "practice": "En pratique",
+      "readingMinutes": "{{count}} min de lecture",
+      "correct": "Bonne réponse",
+      "tryAgain": "Réessayez",
+      "nextLesson": "Leçon suivante",
+      "lessonNumber": "Leçon {{number}}",
+      "moduleNumber": "Module {{number}}"
+    }
   },
   "checklist": {
     "title": "Liste personnalisée",

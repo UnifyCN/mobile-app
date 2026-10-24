@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { memo, useCallback, useRef, useState } from 'react';
 import {
   StyleSheet,
@@ -77,7 +78,8 @@ const GroupDiscoveryCard = memo(
     cardWidth: number;
   }) => {
     const { t } = useTranslation();
-    const description = group.description?.trim() || t('groups.recommendedCommunity');
+    const description =
+      group.description?.trim() || t('groups.recommendedCommunity');
 
     return (
       <TouchableOpacity
@@ -187,7 +189,9 @@ const GroupsForYouSection = () => {
               pressed ? { opacity: 0.85 } : null,
             ]}
           >
-            <Text style={styles.requestButtonText}>{t('groups.requestGroup')}</Text>
+            <Text style={styles.requestButtonText}>
+              {t('groups.requestGroup')}
+            </Text>
           </Pressable>
         </View>
         <RequestGroupModal
@@ -248,7 +252,9 @@ const GroupsForYouSection = () => {
             pressed ? { opacity: 0.85 } : null,
           ]}
         >
-          <Text style={styles.requestButtonText}>{t('groups.requestGroup')}</Text>
+          <Text style={styles.requestButtonText}>
+            {t('groups.requestGroup')}
+          </Text>
         </Pressable>
       </View>
       <RequestGroupModal
@@ -263,7 +269,10 @@ const GatherHeader = memo(() => {
   const { t } = useTranslation();
   return (
     <View style={styles.eventsCarousel}>
-      <EventsCarousel title={t('events.title')} titleStyle={styles.headerText} />
+      <EventsCarousel
+        title={t('events.title')}
+        titleStyle={styles.headerText}
+      />
     </View>
   );
 });
@@ -336,11 +345,10 @@ const styles = StyleSheet.create({
     height: 36,
   },
   searchPlaceholder: {
-    fontSize: 14,
+    ...typography.body,
   },
   headerText: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.section,
   },
   eventsCarousel: {
     marginTop: 30,
@@ -362,9 +370,9 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   seeAllText: {
-    fontSize: 14,
+    ...typography.secondary,
+
     color: '#6A6A6A',
-    fontWeight: '500',
   },
   groupsCarousel: {
     marginBottom: 2,
@@ -383,7 +391,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 12,
-    height: GROUP_CARD_HEIGHT,
+    minHeight: GROUP_CARD_HEIGHT,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
@@ -412,16 +420,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   discoveryCardTitle: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    ...typography.label,
+
     color: Theme.black,
     marginBottom: 2,
   },
   discoveryCardDescription: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
+    ...typography.secondary,
+
     color: Theme.black,
   },
   emptyStateContainer: {
@@ -441,8 +447,8 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.white,
   },
   requestButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.button,
+
     color: '#111',
   },
   skeletonThumb: {

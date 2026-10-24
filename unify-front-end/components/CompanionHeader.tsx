@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { ReactNode } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -95,8 +96,8 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.section,
+
     color: Theme.black,
   },
   placeholder: {

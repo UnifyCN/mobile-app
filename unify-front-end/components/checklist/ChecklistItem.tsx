@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -66,9 +67,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   taskName: {
+    ...typography.label,
     fontSize: 15,
     lineHeight: 20,
-    fontWeight: '500',
+
     color: '#0F172A',
   },
   taskNameCompleted: {

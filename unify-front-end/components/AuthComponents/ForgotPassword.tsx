@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -84,12 +85,14 @@ export default function ForgotPassword({
 
   return (
     <ViewContainer style={styles.container}>
-      <BackHeader title={t('auth.resetPassword')} onBack={onBack} backIcon='x' />
+      <BackHeader
+        title={t('auth.resetPassword')}
+        onBack={onBack}
+        backIcon='x'
+      />
 
       <View style={styles.content}>
-        <Text style={styles.description}>
-          {t('auth.resetPasswordDesc')}
-        </Text>
+        <Text style={styles.description}>{t('auth.resetPasswordDesc')}</Text>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>{t('auth.emailAddress')}</Text>
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   description: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     marginBottom: 32,
     marginTop: 16,
@@ -163,12 +166,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 24,
   },
-  label: {
-    fontSize: 16 * 0.87,
-    fontWeight: '400',
-    color: '#000',
-    marginBottom: 8,
-  },
+  label: { ...typography.label, color: '#000', marginBottom: 8 },
   textField: {
     backgroundColor: '#fff',
     color: '#000',
@@ -193,15 +191,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 32,
   },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  message: {
-    fontSize: 14 * 0.87,
-    marginBottom: 16,
-  },
+  buttonText: { ...typography.button, color: 'white', textAlign: 'center' },
+  message: { ...typography.secondary, marginBottom: 16 },
   errorMessage: {
     color: '#f00',
   },

@@ -1,3 +1,4 @@
+import { highlightRangeMatches } from '@/utils/highlightRange';
 import { supabase } from '@/lib/supabase';
 
 export interface Highlight {
@@ -70,9 +71,29 @@ export async function saveHighlight(
     pageNum: number;
   }
 ): Promise<Highlight> {
+  if (
+    !highlightRangeMatches(
+      allWordsInBlock,
+      startWordIndex,
+      endWordIndex,
+      selectedText
+    )
+  ) {
+    throw new Error('The selected text no longer matches the lesson content.');
+  }
   // Filter out optimistic (non-UUID) entries before checking overlaps
   const realHighlights = existingHighlights.filter(
-    h => !h.id.startsWith('optimistic-')
+    h =>
+      !h.id.startsWith('optimistic-') &&
+      h.lesson_id === lessonId &&
+      h.page_key === pageKey &&
+      h.block_key === blockKey &&
+      highlightRangeMatches(
+        allWordsInBlock,
+        h.start_word_index,
+        h.end_word_index,
+        h.selected_text
+      )
   );
 
   // Check for overlapping highlights in the same block

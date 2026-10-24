@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState, useRef } from 'react';
 import {
   Alert,
@@ -152,12 +153,7 @@ const stepStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    flex: 1,
-    color: '#374151',
-    fontSize: 15,
-    lineHeight: 21,
-  },
+  text: { ...typography.secondary, flex: 1, color: '#374151' },
 });
 
 export default function WaitingRoomScreen() {
@@ -260,10 +256,7 @@ export default function WaitingRoomScreen() {
               router.replace('/community-matching' as Href);
             } catch (error) {
               console.error('Failed to leave waitlist', error);
-              Alert.alert(
-                t('common.somethingWentWrong'),
-                t('common.tryAgain')
-              );
+              Alert.alert(t('common.somethingWentWrong'), t('common.tryAgain'));
             }
           },
         },
@@ -298,13 +291,13 @@ export default function WaitingRoomScreen() {
 
         {/* Title section */}
         <Text style={styles.title}>{t('circles.hangTight')}</Text>
-        <Text style={styles.subtitle}>
-          {t('circles.findingNewcomers')}
-        </Text>
+        <Text style={styles.subtitle}>{t('circles.findingNewcomers')}</Text>
 
         {/* Your matching criteria */}
         <View style={styles.criteriaCard}>
-          <Text style={styles.criteriaLabel}>{t('circles.yourMatchingGroup')}</Text>
+          <Text style={styles.criteriaLabel}>
+            {t('circles.yourMatchingGroup')}
+          </Text>
           <View style={styles.criteriaRow}>
             <Feather name='user' size={16} color='#ff820b' />
             <Text style={styles.criteriaText}>
@@ -321,25 +314,20 @@ export default function WaitingRoomScreen() {
 
         {/* How it works section */}
         <View style={styles.stepsCard}>
-          <Text style={styles.stepsHeading}>{t('circles.howMatchingWorks')}</Text>
-          <StepItem
-            text={t('circles.checkMatches')}
-            icon='clock'
-          />
-          <StepItem
-            text={t('circles.groupsForm')}
-            icon='users'
-          />
-          <StepItem
-            text={t('circles.notifiedWhenMatched')}
-            icon='bell'
-          />
+          <Text style={styles.stepsHeading}>
+            {t('circles.howMatchingWorks')}
+          </Text>
+          <StepItem text={t('circles.checkMatches')} icon='clock' />
+          <StepItem text={t('circles.groupsForm')} icon='users' />
+          <StepItem text={t('circles.notifiedWhenMatched')} icon='bell' />
         </View>
 
         {/* Joined timestamp */}
         <View style={styles.joinedInfo}>
           <Feather name='check-circle' size={16} color='#0F8B54' />
-          <Text style={styles.joinedText}>{t('circles.joinedTime', { time: timeAgo })}</Text>
+          <Text style={styles.joinedText}>
+            {t('circles.joinedTime', { time: timeAgo })}
+          </Text>
         </View>
       </ScrollView>
 
@@ -350,7 +338,9 @@ export default function WaitingRoomScreen() {
           onPress={handleLeave}
           activeOpacity={0.7}
         >
-          <Text style={styles.leaveButtonText}>{t('circles.leaveWaitlist')}</Text>
+          <Text style={styles.leaveButtonText}>
+            {t('circles.leaveWaitlist')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -384,23 +374,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#10B981',
   },
-  statusText: {
-    color: '#059669',
-    fontWeight: '600',
-    fontSize: 14,
-  },
+  statusText: { ...typography.secondary, color: '#059669', fontWeight: '600' },
   title: {
-    fontSize: 32,
-    fontWeight: '800',
+    ...typography.title,
     color: '#111827',
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
     textAlign: 'center',
-    lineHeight: 24,
     marginBottom: 24,
     paddingHorizontal: 16,
   },
@@ -413,12 +397,12 @@ const styles = StyleSheet.create({
     borderColor: '#E2E8F0',
   },
   criteriaLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#94A3B8',
+    ...typography.caption,
+    color: '#62605B',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 12,
+    fontWeight: '600',
   },
   criteriaRow: {
     flexDirection: 'row',
@@ -427,7 +411,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   criteriaText: {
-    fontSize: 15,
+    ...typography.secondary,
     color: '#334155',
     fontWeight: '500',
   },
@@ -439,12 +423,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E8F0',
   },
-  stepsHeading: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 8,
-  },
+  stepsHeading: { ...typography.cardTitle, color: '#111827', marginBottom: 8 },
   joinedInfo: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -452,11 +431,7 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 12,
   },
-  joinedText: {
-    color: '#0F8B54',
-    fontSize: 14,
-    fontWeight: '500',
-  },
+  joinedText: { ...typography.secondary, color: '#0F8B54', fontWeight: '500' },
   footer: {
     position: 'absolute',
     bottom: 0,
@@ -476,9 +451,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#FEE2E2',
   },
-  leaveButtonText: {
-    color: '#DC2626',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  leaveButtonText: { ...typography.button, color: '#DC2626' },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { Stack } from 'expo-router';
 
 export default function CommunityMatchingLayout() {
@@ -5,11 +6,7 @@ export default function CommunityMatchingLayout() {
     <Stack
       screenOptions={{
         headerShown: true,
-        headerTitleStyle: {
-          fontWeight: '700',
-          fontSize: 18,
-          color: '#111827',
-        },
+        headerTitleStyle: { ...typography.cardTitle, color: '#111827' },
         headerShadowVisible: false,
         headerTintColor: '#111827',
       }}

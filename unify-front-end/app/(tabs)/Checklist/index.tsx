@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useEffect,
   useRef,
@@ -29,7 +30,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
-import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
+import { useChecklistProfile } from '@/hooks/checklist/useChecklistProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
 import {
@@ -189,8 +190,12 @@ export default function ChecklistScreen() {
     stageChanged,
     isLoading: stageLoading,
   } = useUserStage();
-  const [persona, setPersona] = useState<string | null>(null);
-  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const {
+    persona,
+    province,
+    isLoading: isLoadingProfile,
+    refresh: refreshProfile,
+  } = useChecklistProfile();
   const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
     null
   );
@@ -206,27 +211,6 @@ export default function ChecklistScreen() {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchPersona = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (user) {
-          const profile = await getOnboardingProfile(user.id);
-          setPersona(profile?.persona || null);
-        }
-      } catch (error) {
-        console.error('Error fetching persona:', error);
-      } finally {
-        setIsLoadingProfile(false);
-      }
-    };
-
-    fetchPersona();
-  }, []);
-
   const {
     tasks,
     isLoading: tasksLoading,
@@ -236,16 +220,25 @@ export default function ChecklistScreen() {
     currentStage,
     stageChanged,
     persona,
+    province,
   });
 
-  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up
+  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up.
+  // The profile is read again first: when its province or persona changed, the
+  // task query fetches with the new values by itself, so refetching here would
+  // fetch with the old ones.
   useFocusEffect(
     useCallback(() => {
       trackScreen('Checklist');
-      if (currentStage !== null && persona) {
-        refetch();
-      }
-    }, [currentStage, persona, refetch, trackScreen])
+      if (currentStage === null || !persona) return;
+      let cancelled = false;
+      refreshProfile().then(skipRefetch => {
+        if (!cancelled && !skipRefetch) refetch();
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [currentStage, persona, refetch, refreshProfile, trackScreen])
   );
 
   const activeTasks = useMemo(
@@ -815,9 +808,9 @@ const styles = StyleSheet.create({
     borderTopColor: '#E2E8F0',
   },
   removedTitle: {
+    ...typography.label,
+
     marginBottom: 8,
-    fontSize: 14,
-    fontWeight: '600',
     color: '#64748B',
   },
   removedRow: {
@@ -828,13 +821,14 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   removedTaskName: {
+    ...typography.secondary,
+
     flex: 1,
-    fontSize: 14,
     color: '#64748B',
   },
   restoreText: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.button,
+
     color: '#E03B3B',
   },
   header: {
@@ -846,8 +840,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
+    flexShrink: 1,
+    marginRight: 12,
+
     color: '#000',
   },
   addButton: {
@@ -862,13 +858,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   addButtonLabel: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.secondary,
+
     color: '#111',
   },
   subtitle: {
+    ...typography.body,
+
     marginTop: 6,
-    fontSize: 16,
     color: '#000',
   },
   progressContainer: {
@@ -954,8 +951,8 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   addOwnRowText: {
-    fontSize: 15,
-    fontWeight: '500',
+    ...typography.label,
+
     color: '#6B6B6B',
   },
   emptyContainer: {
@@ -963,7 +960,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 16,
+    ...typography.body,
+
     color: '#A0AEC0',
     textAlign: 'center',
   },

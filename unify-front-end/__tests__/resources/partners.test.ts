@@ -5,9 +5,15 @@ import {
   getPartnersByCategory,
   getCategoriesWithPartners,
   getPartnerBySlug,
+  getSpotlightPartner,
   selectActivePartnerBySlug,
 } from '@/constants/Partners';
-import { CATEGORY_ORDER, type PartnerCategory } from '@/types/partner';
+import {
+  CATEGORY_ORDER,
+  type Partner,
+  type PartnerCategory,
+} from '@/types/partner';
+import { PROVINCES } from '@/supabase/functions/_shared/province';
 import { programKeySegment } from '@/utils/localizePartner';
 import en from '@/i18n/locales/en/translation.json';
 
@@ -36,14 +42,17 @@ describe('partner data', () => {
   // one. Remove it from this list once that listing is verified or replaced —
   // the category should not ship thin for long, because a single paid
   // consultancy reads as an endorsement.
+  //
+  // Money is not listed: its one partner, Desjardins, serves Quebec and
+  // Ontario only, so a BC reader (whose directory this audits) has no Money
+  // category at all.
   const SINGLE_ORG_EXCEPTIONS: PartnerCategory[] = [
     'immigrationHelp',
     'insurance',
-    'money',
   ];
 
   it('no category ships with fewer than 2 partners, except the known singles', () => {
-    const thin = getCategoriesWithPartners()
+    const thin = getCategoriesWithPartners('British Columbia')
       .filter(c => c.partnerCount < 2)
       .map(c => c.category);
     expect(thin.sort()).toEqual([...SINGLE_ORG_EXCEPTIONS].sort());
@@ -66,7 +75,9 @@ describe('partner data', () => {
   });
 
   it('getCategoriesWithPartners returns categories in CATEGORY_ORDER with correct counts', () => {
-    const cats = getCategoriesWithPartners();
+    // A BC reader: Desjardins serves Quebec and Ontario only, so Money &
+    // Banking has no BC listing and drops out of the grid.
+    const cats = getCategoriesWithPartners('British Columbia');
     expect(cats.map(c => c.category)).toEqual([
       'gettingSettled',
       'findWork',
@@ -76,7 +87,6 @@ describe('partner data', () => {
       'networksPlanning',
       'internationalStudents',
       'insurance',
-      'money',
     ]);
     const counts = Object.fromEntries(
       cats.map(c => [c.category, c.partnerCount])
@@ -91,12 +101,14 @@ describe('partner data', () => {
       networksPlanning: 3,
       internationalStudents: 2,
       insurance: 1,
-      money: 1,
     });
   });
 
   it('getPartnersByCategory returns only that category, sorted by displayOrder', () => {
-    const libs = getPartnersByCategory('librariesLearning' as PartnerCategory);
+    const libs = getPartnersByCategory(
+      'librariesLearning' as PartnerCategory,
+      'British Columbia'
+    );
     expect(libs).toHaveLength(3);
     expect(libs.every(p => p.category === 'librariesLearning')).toBe(true);
     const orders = libs.map(p => p.displayOrder);
@@ -115,10 +127,11 @@ describe('partner data', () => {
     ).toBeUndefined();
   });
 
-  it('getActivePartners returns every active partner, sorted by displayOrder', () => {
-    const active = getActivePartners();
-    // 19 of 20: global-connect-immigration is held inactive.
-    expect(active).toHaveLength(19);
+  it('getActivePartners returns every active partner a BC reader may see, sorted by displayOrder', () => {
+    const active = getActivePartners('British Columbia');
+    // 19 of 20 are active (global-connect-immigration is held), and Desjardins
+    // is Quebec and Ontario only, so 18 reach a BC reader.
+    expect(active).toHaveLength(18);
     expect(active.every(p => p.active)).toBe(true);
     const orders = active.map(p => p.displayOrder);
     expect(orders).toEqual([...orders].sort((a, b) => a - b));
@@ -128,11 +141,14 @@ describe('partner data', () => {
     // Every shipped partner is active, so feed the real filter a list that
     // isn't — this exercises the helper instead of re-implementing it.
     const inactive = { ...PARTNERS[0], slug: 'test-inactive', active: false };
-    const result = selectActivePartners([
-      inactive,
-      { ...PARTNERS[0], slug: 'b', active: true, displayOrder: 2 },
-      { ...PARTNERS[0], slug: 'a', active: true, displayOrder: 1 },
-    ]);
+    const result = selectActivePartners(
+      [
+        inactive,
+        { ...PARTNERS[0], slug: 'b', active: true, displayOrder: 2 },
+        { ...PARTNERS[0], slug: 'a', active: true, displayOrder: 1 },
+      ],
+      'British Columbia'
+    );
     expect(result.map(p => p.slug)).toEqual(['a', 'b']);
   });
 
@@ -189,5 +205,185 @@ describe('partner data', () => {
           ].name
       )
     ).toEqual(['TalentConnect', 'MentorConnect']);
+  });
+});
+
+describe('partner province eligibility', () => {
+  const base = PARTNERS[0];
+  const fixture = (
+    slug: string,
+    provinces?: Partner['provinces']
+  ): Partner => ({
+    ...base,
+    slug,
+    provinces,
+    active: true,
+  });
+  const DIRECTORY: Partner[] = [
+    fixture('bc-only', ['British Columbia']),
+    fixture('bc-and-ab', ['British Columbia', 'Alberta']),
+    fixture('national'),
+    fixture('national-empty-list', []),
+  ];
+  const slugs = (list: Partner[]) => list.map(p => p.slug).sort();
+
+  it('shows a user in Ontario national partners only', () => {
+    expect(slugs(selectActivePartners(DIRECTORY, 'Ontario'))).toEqual([
+      'national',
+      'national-empty-list',
+    ]);
+  });
+
+  it('shows a BC user every partner that lists BC, plus national ones', () => {
+    expect(slugs(selectActivePartners(DIRECTORY, 'British Columbia'))).toEqual([
+      'bc-and-ab',
+      'bc-only',
+      'national',
+      'national-empty-list',
+    ]);
+  });
+
+  it('shows a multi-province partner only in its listed provinces', () => {
+    expect(slugs(selectActivePartners(DIRECTORY, 'Alberta'))).toEqual([
+      'bc-and-ab',
+      'national',
+      'national-empty-list',
+    ]);
+  });
+
+  it('shows a user with no province, or an unrecognized one, national partners only', () => {
+    const national = ['national', 'national-empty-list'];
+    expect(slugs(selectActivePartners(DIRECTORY, null))).toEqual(national);
+    expect(slugs(selectActivePartners(DIRECTORY, undefined))).toEqual(national);
+    expect(slugs(selectActivePartners(DIRECTORY, 'Somewhere Else'))).toEqual(
+      national
+    );
+  });
+
+  it('still drops inactive partners and sorts by displayOrder', () => {
+    const result = selectActivePartners(
+      [
+        { ...fixture('later', ['Ontario']), displayOrder: 2 },
+        { ...fixture('hidden', ['Ontario']), active: false },
+        { ...fixture('first', ['Ontario']), displayOrder: 1 },
+      ],
+      'Ontario'
+    );
+    expect(result.map(p => p.slug)).toEqual(['first', 'later']);
+  });
+
+  // The shipped classification. Eligibility wins over delivery channel: an
+  // online service only for BC residents is a BC partner. Evidence for the
+  // uncertain calls is in the #336 hand-off report.
+  const NATIONAL = [
+    'canada-shaw-immigration', // RCIC consultancy, clients worldwide
+    'newcomer-jobs-canada', // national job board
+    'tugo', // licensed in every province and territory
+  ];
+  const ACTIVE_SLUGS = PARTNERS.filter(p => p.active).map(p => p.slug);
+
+  it('shows a user in Ontario the national partners and Desjardins, and no BC-only partner', () => {
+    expect(slugs(getActivePartners('Ontario'))).toEqual(
+      [...NATIONAL, 'desjardins'].sort()
+    );
+  });
+
+  it('shows a user in Quebec the same set as Ontario', () => {
+    expect(slugs(getActivePartners('Quebec'))).toEqual(
+      slugs(getActivePartners('Ontario'))
+    );
+  });
+
+  it('shows a user in Alberta, with no province, or with an unknown one only the national partners', () => {
+    expect(slugs(getActivePartners('Alberta'))).toEqual([...NATIONAL].sort());
+    expect(slugs(getActivePartners(null))).toEqual([...NATIONAL].sort());
+    expect(slugs(getActivePartners('Somewhere Else'))).toEqual(
+      [...NATIONAL].sort()
+    );
+  });
+
+  it('keeps every other currently active partner for a BC user', () => {
+    // Desjardins publishes "You are a resident of Quebec or Ontario" as an
+    // eligibility rule, so it is the one active partner a BC user no longer
+    // sees. A second name appearing here is a regression.
+    expect(slugs(getActivePartners('British Columbia'))).toEqual(
+      ACTIVE_SLUGS.filter(slug => slug !== 'desjardins').sort()
+    );
+  });
+
+  it('lists the categories that have a partner for the reader', () => {
+    expect(getCategoriesWithPartners('Ontario')).toEqual([
+      { category: 'findWork', partnerCount: 1 },
+      { category: 'immigrationHelp', partnerCount: 1 },
+      { category: 'insurance', partnerCount: 1 },
+      { category: 'money', partnerCount: 1 },
+    ]);
+    expect(getCategoriesWithPartners(null).map(c => c.category)).toEqual([
+      'findWork',
+      'immigrationHelp',
+      'insurance',
+    ]);
+  });
+
+  it('types every province tag to the 13 names, with no empty or repeated list', () => {
+    for (const p of PARTNERS) {
+      if (p.provinces === undefined) continue;
+      expect(p.provinces.length).toBeGreaterThan(0);
+      expect(new Set(p.provinces).size).toBe(p.provinces.length);
+      for (const province of p.provinces) expect(PROVINCES).toContain(province);
+    }
+  });
+
+  it('keeps the promoted spotlight partner national', () => {
+    // The Companion banner and the Checklist help rows show it to everyone.
+    expect(getSpotlightPartner()?.provinces).toBeUndefined();
+  });
+});
+
+describe('partner province aliases (selector boundary)', () => {
+  const ids = (list: Partner[]) => list.map(p => p.slug);
+  const canonical = (province: string) => ids(getActivePartners(province));
+
+  it('treats stored BC spellings exactly like British Columbia', () => {
+    const expected = canonical('British Columbia');
+    expect(expected.length).toBeGreaterThan(1);
+    for (const alias of ['BC', 'bc', 'B.C.', ' b.c ']) {
+      expect(ids(getActivePartners(alias))).toEqual(expected);
+    }
+  });
+
+  it('treats stored ON and QC spellings exactly like the full names', () => {
+    expect(ids(getActivePartners('ON'))).toEqual(canonical('Ontario'));
+    expect(ids(getActivePartners('ON'))).toContain('desjardins');
+    expect(ids(getActivePartners('QC'))).toEqual(canonical('Quebec'));
+    expect(ids(getActivePartners('Québec'))).toEqual(canonical('Quebec'));
+  });
+
+  it('feeds the same result to the category and search consumers', () => {
+    expect(getPartnersByCategory('money', 'ON').map(p => p.slug)).toEqual([
+      'desjardins',
+    ]);
+    expect(getCategoriesWithPartners('BC')).toEqual(
+      getCategoriesWithPartners('British Columbia')
+    );
+    expect(getCategoriesWithPartners('ON')).toEqual(
+      getCategoriesWithPartners('Ontario')
+    );
+  });
+
+  it('still gives free text and blanks national partners only', () => {
+    const national = ids(getActivePartners(null));
+    expect(ids(getActivePartners('Somewhere Else'))).toEqual(national);
+    expect(ids(getActivePartners('   '))).toEqual(national);
+  });
+
+  it('keeps content province tags strict: an alias tag never matches', () => {
+    const tagged = {
+      active: true,
+      displayOrder: 0,
+      provinces: ['BC'] as unknown as Partner['provinces'],
+    };
+    expect(selectActivePartners([tagged], 'British Columbia')).toEqual([]);
+    expect(selectActivePartners([tagged], 'BC')).toEqual([]);
   });
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect } from 'react';
 import {
   View,
@@ -75,12 +76,8 @@ export default function ReferAFriendScreen() {
         style={styles.content}
         contentContainerStyle={styles.contentContainer}
       >
-        <Text style={styles.headline}>
-          {t('referrals.inviteDesc')}
-        </Text>
-        <Text style={styles.subhead}>
-          {t('referrals.newcomersBenefit')}
-        </Text>
+        <Text style={styles.headline}>{t('referrals.inviteDesc')}</Text>
+        <Text style={styles.subhead}>{t('referrals.newcomersBenefit')}</Text>
 
         <TouchableOpacity
           onPress={invite}
@@ -96,24 +93,24 @@ export default function ReferAFriendScreen() {
           {inviting ? (
             <ActivityIndicator color={Theme.white} />
           ) : (
-            <Text style={styles.primaryCtaText}>{t('referrals.inviteAFriend')}</Text>
+            <Text style={styles.primaryCtaText}>
+              {t('referrals.inviteAFriend')}
+            </Text>
           )}
         </TouchableOpacity>
 
         {isAndroid ? (
-          <Text style={styles.androidNotice}>
-            {t('referrals.iosOnly')}
-          </Text>
+          <Text style={styles.androidNotice}>{t('referrals.iosOnly')}</Text>
         ) : null}
 
         {error ? (
-          <Text style={styles.errorText}>
-            {t('referrals.couldntGenerate')}
-          </Text>
+          <Text style={styles.errorText}>{t('referrals.couldntGenerate')}</Text>
         ) : null}
 
         <View style={styles.codeSection}>
-          <Text style={styles.codeSectionLabel}>{t('referrals.yourInviteCode')}</Text>
+          <Text style={styles.codeSectionLabel}>
+            {t('referrals.yourInviteCode')}
+          </Text>
           <Text style={styles.codeSectionExplainer}>
             {t('referrals.inviteCodeHint')}
           </Text>
@@ -128,7 +125,9 @@ export default function ReferAFriendScreen() {
             ]}
             accessibilityRole='button'
             accessibilityLabel={
-              code ? `${t('referrals.yourInviteCode')}: ${code}` : t('referrals.loadingInviteCode')
+              code
+                ? `${t('referrals.yourInviteCode')}: ${code}`
+                : t('referrals.loadingInviteCode')
             }
           >
             {loading || !code ? (
@@ -136,7 +135,11 @@ export default function ReferAFriendScreen() {
             ) : (
               <>
                 <Text style={styles.codePillText}>{code}</Text>
-                <Feather name='copy' size={16} color={Theme.textAlternateGray} />
+                <Feather
+                  name='copy'
+                  size={16}
+                  color={Theme.textAlternateGray}
+                />
               </>
             )}
           </Pressable>
@@ -160,17 +163,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  headline: {
-    fontSize: 28,
-    lineHeight: 32,
-    fontWeight: '700',
-    color: Theme.black,
-  },
-  subhead: {
-    fontSize: 16,
-    lineHeight: 22,
-    color: Theme.textAlternateGray,
-  },
+  headline: { ...typography.title, color: Theme.black },
+  subhead: { ...typography.body, color: Theme.textAlternateGray },
   primaryCta: {
     height: 56,
     borderRadius: 14,
@@ -180,19 +174,15 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   primaryCtaDisabled: { backgroundColor: Theme.disabledGatherRed },
-  primaryCtaText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
+  primaryCtaText: { ...typography.button, color: Theme.white },
   androidNotice: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.textPostTime,
     textAlign: 'center',
   },
   errorText: {
+    ...typography.secondary,
     color: Theme.destructive,
-    fontSize: 14,
     textAlign: 'center',
   },
   codeSection: {
@@ -200,17 +190,13 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   codeSectionLabel: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
-  codeSectionExplainer: {
-    fontSize: 13,
-    lineHeight: 18,
-    color: Theme.textPostTime,
-  },
+  codeSectionExplainer: { ...typography.caption, color: Theme.textPostTime },
   codePill: {
     flexDirection: 'row',
     alignItems: 'center',

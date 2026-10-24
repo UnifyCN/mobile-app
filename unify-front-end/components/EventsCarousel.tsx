@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -143,10 +144,9 @@ export const EventsCarousel = ({
             submessage={
               <Text
                 style={{
-                  fontSize: 14,
+                  ...typography.secondary,
                   color: Theme.textInput,
                   textAlign: 'center',
-                  lineHeight: 20,
                 }}
               >
                 {t('events.checkBackLater')}
@@ -212,13 +212,14 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   viewMoreText: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.label,
+
     color: Theme.black,
   },
   viewMoreSubtext: {
-    fontSize: 14,
-    color: Theme.black,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
 });
 

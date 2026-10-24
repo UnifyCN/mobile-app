@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -454,7 +455,11 @@ export default function OnboardingQuiz({
                 value: 'refugee',
                 label: t('quiz.options.persona.refugee'),
               },
-              { value: 'other', label: t('quiz.options.persona.other'), hasOther: true },
+              {
+                value: 'other',
+                label: t('quiz.options.persona.other'),
+                hasOther: true,
+              },
             ]}
             selectedValue={persona}
             otherValue={personaOther}
@@ -470,13 +475,32 @@ export default function OnboardingQuiz({
             <SingleSelectQuestion
               question={t('quiz.q.referralSource')}
               options={[
-                { value: 'facebook_instagram', label: t('quiz.options.referral.facebookInstagram') },
-                { value: 'google_search', label: t('quiz.options.referral.googleSearch') },
-                { value: 'app_store', label: t('quiz.options.referral.appStore') },
-                { value: 'friends_family', label: t('quiz.options.referral.friendsFamily') },
-                { value: 'news_article', label: t('quiz.options.referral.newsArticle') },
+                {
+                  value: 'facebook_instagram',
+                  label: t('quiz.options.referral.facebookInstagram'),
+                },
+                {
+                  value: 'google_search',
+                  label: t('quiz.options.referral.googleSearch'),
+                },
+                {
+                  value: 'app_store',
+                  label: t('quiz.options.referral.appStore'),
+                },
+                {
+                  value: 'friends_family',
+                  label: t('quiz.options.referral.friendsFamily'),
+                },
+                {
+                  value: 'news_article',
+                  label: t('quiz.options.referral.newsArticle'),
+                },
                 { value: 'tiktok', label: t('quiz.options.referral.tiktok') },
-                { value: 'other', label: t('quiz.options.referral.other'), hasOther: true },
+                {
+                  value: 'other',
+                  label: t('quiz.options.referral.other'),
+                  hasOther: true,
+                },
               ]}
               selectedValue={referralSource}
               otherValue={referralSourceOther}
@@ -505,9 +529,7 @@ export default function OnboardingQuiz({
       case 4:
         return (
           <View style={styles.container}>
-            <Text style={styles.question}>
-              {t('quiz.q.arrivalDate')}
-            </Text>
+            <Text style={styles.question}>{t('quiz.q.arrivalDate')}</Text>
 
             {errors[4] && <Text style={styles.errorText}>{errors[4]}</Text>}
 
@@ -584,7 +606,11 @@ export default function OnboardingQuiz({
                 label: t('quiz.options.interests.finance'),
                 icon: 'credit-card',
               },
-              { value: 'housing', label: t('quiz.options.interests.housing'), icon: 'home' },
+              {
+                value: 'housing',
+                label: t('quiz.options.interests.housing'),
+                icon: 'home',
+              },
               {
                 value: 'pr_immigration',
                 label: t('quiz.options.interests.prImmigration'),
@@ -595,7 +621,11 @@ export default function OnboardingQuiz({
                 label: t('quiz.options.interests.healthcare'),
                 icon: 'heart',
               },
-              { value: 'family_kids', label: t('quiz.options.interests.familyKids'), icon: 'users' },
+              {
+                value: 'family_kids',
+                label: t('quiz.options.interests.familyKids'),
+                icon: 'users',
+              },
               {
                 value: 'transit',
                 label: t('quiz.options.interests.transit'),
@@ -673,7 +703,11 @@ export default function OnboardingQuiz({
                 label: t('quiz.options.hobbies.foodCooking'),
                 icon: 'coffee',
               },
-              { value: 'movies', label: t('quiz.options.hobbies.movies'), icon: 'film' },
+              {
+                value: 'movies',
+                label: t('quiz.options.hobbies.movies'),
+                icon: 'film',
+              },
             ]}
             selectedValues={hobbies}
             otherValue={null}
@@ -685,12 +719,8 @@ export default function OnboardingQuiz({
       case 9:
         return (
           <View style={styles.container}>
-            <Text style={styles.question}>
-              {t('quiz.q.reminders')}
-            </Text>
-            <Text style={styles.subtitle}>
-              {t('quiz.reminders.subtitle')}
-            </Text>
+            <Text style={styles.question}>{t('quiz.q.reminders')}</Text>
+            <Text style={styles.subtitle}>{t('quiz.reminders.subtitle')}</Text>
             {errors[9] && <Text style={styles.errorText}>{errors[9]}</Text>}
             <View style={styles.optionsContainer}>
               <TouchableOpacity
@@ -843,7 +873,9 @@ export default function OnboardingQuiz({
             ) : (
               <>
                 <Text style={styles.nextButtonText}>
-                  {isRedo ? t('quiz.cta.saveChanges') : t('quiz.cta.exploreUnify')}
+                  {isRedo
+                    ? t('quiz.cta.saveChanges')
+                    : t('quiz.cta.exploreUnify')}
                 </Text>
                 <Feather name='chevron-right' size={24} color={Theme.white} />
               </>
@@ -871,18 +903,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
   },
-  question: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 12,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Theme.textInput,
-    marginBottom: 24,
-    lineHeight: 22,
-  },
+  question: { ...typography.title, color: Theme.black, marginBottom: 12 },
+  subtitle: { ...typography.body, color: Theme.textInput, marginBottom: 24 },
   optionsContainer: {
     gap: 12,
   },
@@ -920,19 +942,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: Theme.primaryGatherRed,
   },
-  optionText: {
-    fontSize: 16,
-    color: Theme.black,
-    flex: 1,
-  },
+  optionText: { ...typography.body, color: Theme.black, flex: 1 },
   optionTextSelected: {
     fontWeight: '600',
   },
-  errorText: {
-    fontSize: 14,
-    color: '#f00',
-    marginBottom: 16,
-  },
+  errorText: { ...typography.secondary, color: '#f00', marginBottom: 16 },
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -950,11 +964,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     paddingHorizontal: 4,
   },
-  navButtonText: {
-    fontSize: 16,
-    color: Theme.black,
-    fontWeight: '600',
-  },
+  navButtonText: { ...typography.button, color: Theme.black },
   nextButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -971,11 +981,7 @@ const styles = StyleSheet.create({
   nextButtonDisabled: {
     backgroundColor: Theme.disabledGatherRed,
   },
-  nextButtonText: {
-    fontSize: 15,
-    color: Theme.white,
-    fontWeight: '600',
-  },
+  nextButtonText: { ...typography.button, color: Theme.white },
   finalStepText: {
     fontWeight: '700',
   },
@@ -986,12 +992,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   dateInput: {
+    ...typography.body,
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
     backgroundColor: Theme.white,
-    fontSize: 16,
     color: Theme.black,
   },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback, useMemo } from 'react';
 import {
   View,
@@ -379,7 +380,11 @@ export default function SavedLessonsPage() {
           {/* Pages */}
           {section.pages.length > 0 && (
             <>
-              {hasBoth && <Text style={styles.subHeader}>{t('savedLessons.savedPages')}</Text>}
+              {hasBoth && (
+                <Text style={styles.subHeader}>
+                  {t('savedLessons.savedPages')}
+                </Text>
+              )}
               {section.pages.map(page => (
                 <SavedLessonCard
                   key={page.id}
@@ -396,7 +401,11 @@ export default function SavedLessonsPage() {
           {/* Highlights */}
           {section.highlights.length > 0 && (
             <>
-              {hasBoth && <Text style={styles.subHeader}>{t('savedLessons.highlights')}</Text>}
+              {hasBoth && (
+                <Text style={styles.subHeader}>
+                  {t('savedLessons.highlights')}
+                </Text>
+              )}
               {section.highlights.map(h => (
                 <HighlightItem
                   key={h.id}
@@ -430,7 +439,9 @@ export default function SavedLessonsPage() {
       <View style={styles.container}>
         <BackHeader title={t('savedLessons.title')} />
         <View style={styles.centered}>
-          <Text style={styles.errorText}>{t('savedLessons.errorLoadingContent')}</Text>
+          <Text style={styles.errorText}>
+            {t('savedLessons.errorLoadingContent')}
+          </Text>
         </View>
       </View>
     );
@@ -481,7 +492,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   countLabel: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.textInput,
     paddingHorizontal: 20,
     paddingTop: 4,
@@ -502,7 +513,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   errorText: {
-    fontSize: 15,
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'center',
   },
@@ -535,11 +546,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sectionTitle: {
+    ...typography.secondary,
     flex: 1,
-    fontSize: 14,
-    fontWeight: '700',
     color: Theme.black,
-    lineHeight: 18,
+    fontWeight: '700',
   },
   sectionCountBadge: {
     borderRadius: 10,
@@ -548,19 +558,16 @@ const styles = StyleSheet.create({
     minWidth: 24,
     alignItems: 'center',
   },
-  sectionCount: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
+  sectionCount: { ...typography.caption, fontWeight: '700' },
   subHeader: {
-    fontSize: 10,
-    fontWeight: '700',
+    ...typography.caption,
     color: Theme.textInactiveTab,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
     marginHorizontal: 14,
     marginTop: 4,
     marginBottom: 6,
+    fontWeight: '700',
   },
 
   // Highlight item
@@ -586,10 +593,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   highlightText: {
+    ...typography.caption,
     flex: 1,
-    fontSize: 13,
     color: Theme.black,
-    lineHeight: 19,
     fontStyle: 'italic',
   },
   highlightChevron: {
@@ -631,46 +637,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   moduleLabel: {
-    fontSize: 11,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textInput,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 2,
+    fontWeight: '600',
   },
   pageTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.black,
-    lineHeight: 20,
     marginBottom: 3,
+    fontWeight: '600',
   },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  lessonTitle: {
-    fontSize: 13,
-    color: Theme.textInput,
-    flexShrink: 1,
-  },
+  lessonTitle: { ...typography.caption, color: Theme.textInput, flexShrink: 1 },
   dotSeparator: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.textInactiveTab,
     marginHorizontal: 5,
   },
-  timeAgo: {
-    fontSize: 13,
-    color: Theme.textInactiveTab,
-  },
+  timeAgo: { ...typography.caption, color: Theme.textInactiveTab },
   chevron: {
     marginLeft: 4,
   },
 
   emptyMessageSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 20,
   },
 });

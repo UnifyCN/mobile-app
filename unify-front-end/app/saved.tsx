@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -38,9 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   emptyMessageSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 20,
   },
 });

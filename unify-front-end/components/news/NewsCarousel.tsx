@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -75,10 +76,9 @@ export const NewsCarousel = () => {
             submessage={
               <Text
                 style={{
-                  fontSize: 14,
+                  ...typography.secondary,
                   color: Theme.textInput,
                   textAlign: 'center',
-                  lineHeight: 20,
                 }}
               >
                 {t('news.checkBackLater')}
@@ -117,8 +117,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   headerText: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.section,
   },
   viewMoreCardContainer: {
     width: 332,
@@ -145,12 +144,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   viewMoreText: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.label,
+
     color: '#000',
   },
   viewMoreSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
+
     color: '#000',
   },
 });

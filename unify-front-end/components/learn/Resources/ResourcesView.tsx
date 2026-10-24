@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   View,
@@ -10,6 +11,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAnalytics } from '@/utils/analytics';
+import { useCurrentUser } from '@/context/UserContext';
 import {
   getActivePartners,
   getCategoriesWithPartners,
@@ -23,6 +25,7 @@ import { localizePartners } from '@/utils/localizePartner';
 import { selectPartnersMatching } from '@/utils/searchPartners';
 import CategoryTile from './CategoryTile';
 import CategoryDetail from './CategoryDetail';
+import MorePartnersNote from './MorePartnersNote';
 import HowWeChooseSheet from './HowWeChooseSheet';
 import PartnerRow from './PartnerRow';
 import ResourcesSearchBar from './ResourcesSearchBar';
@@ -54,7 +57,9 @@ export default function ResourcesView() {
   const router = useRouter();
   const { t } = useTranslation();
   const { trackResourcesViewed, trackResourcesCategoryOpened } = useAnalytics();
-  const categories = getCategoriesWithPartners();
+  const { currentUser } = useCurrentUser();
+  const province = currentUser?.province;
+  const categories = getCategoriesWithPartners(province);
 
   useEffect(() => {
     trackResourcesViewed();
@@ -69,9 +74,13 @@ export default function ResourcesView() {
   // Search runs over the copy the person is reading, so the whole directory is
   // localized first. `t` is the dependency: react-i18next hands back a new one
   // on languageChanged, which re-resolves every string.
-  const partners = useMemo(() => localizePartners(getActivePartners(), t), [t]);
+  const partners = useMemo(
+    () => localizePartners(getActivePartners(province), t),
+    [province, t]
+  );
   const results = useMemo(
-    () => (isSearching ? selectPartnersMatching(partners, query, labelFor) : []),
+    () =>
+      isSearching ? selectPartnersMatching(partners, query, labelFor) : [],
     [isSearching, partners, query, labelFor]
   );
 
@@ -129,6 +138,8 @@ export default function ResourcesView() {
         <View style={styles.searchWrapper}>
           <ResourcesSearchBar value={query} onChangeText={setQuery} />
         </View>
+
+        <MorePartnersNote />
 
         {isSearching ? (
           results.length === 0 ? (
@@ -207,19 +218,11 @@ const styles = StyleSheet.create({
   scrollContent: { padding: 16, paddingBottom: 100 },
   spotlight: { marginBottom: 10 },
   heading: {
-    // Same size and weight as the Lessons greeting it sits opposite.
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 8,
   },
-  subtitle: {
-    // Matches the Lessons page subtitle so the two views read as one screen.
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 20,
-    color: RESOURCE_THEME.textSubtitle,
-  },
+  subtitle: { ...typography.body, color: RESOURCE_THEME.textSubtitle },
   link: {
     color: RESOURCE_THEME.link,
     textDecorationLine: 'underline',
@@ -232,10 +235,10 @@ const styles = StyleSheet.create({
   gridRow: { flexDirection: 'row', gap: 10, marginBottom: 10 },
   gridFiller: { flex: 1 },
   resultCount: {
-    fontWeight: '500',
-    fontSize: 12,
+    ...typography.caption,
     color: RESOURCE_THEME.textCount,
     marginBottom: 4,
+    fontWeight: '500',
   },
   empty: {
     paddingVertical: 48,
@@ -245,16 +248,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   emptyTitle: {
-    fontWeight: '700',
-    fontSize: 16,
+    ...typography.cardTitle,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 6,
   },
   emptyText: {
-    fontWeight: '400',
-    fontSize: 13,
+    ...typography.caption,
     color: RESOURCE_THEME.textSecondary,
     textAlign: 'center',
-    lineHeight: 18,
+    fontWeight: '400',
   },
 });

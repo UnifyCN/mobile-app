@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { memo, useCallback, useState } from 'react';
 import {
   ActivityIndicator,
@@ -18,7 +19,7 @@ import {
 } from '@/services/posts/translateContent';
 
 const TRANSLATED_TAG_STYLES: Record<string, MixedStyleDeclaration> = {
-  body: { fontSize: 16, lineHeight: 22, color: Theme.black },
+  body: { ...typography.body, color: Theme.black },
   a: { color: '#f68b26', textDecorationLine: 'underline' },
   strong: { fontWeight: '700' },
   b: { fontWeight: '700' },
@@ -149,11 +150,7 @@ const styles = StyleSheet.create({
   spinner: {
     marginEnd: 6,
   },
-  buttonText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: Theme.textPostTime,
-  },
+  buttonText: { ...typography.button, color: Theme.textPostTime },
   errorText: {
     color: Theme.destructive,
   },
@@ -164,29 +161,21 @@ const styles = StyleSheet.create({
     borderTopColor: '#E5E5E5',
   },
   translatedTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     marginBottom: 4,
   },
-  translatedPlainText: {
-    fontSize: 16,
-    lineHeight: 22,
-    color: Theme.black,
-  },
+  translatedPlainText: { ...typography.body, color: Theme.black },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 4,
   },
-  attribution: {
-    fontSize: 12,
-    color: Theme.textPostTime,
-  },
+  attribution: { ...typography.caption, color: Theme.textPostTime },
   linkText: {
-    fontSize: 12,
-    fontWeight: '500',
+    ...typography.caption,
     color: Theme.textPostTime,
     textDecorationLine: 'underline',
+    fontWeight: '500',
   },
 });

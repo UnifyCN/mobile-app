@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -237,10 +238,9 @@ const EventsScreen = () => {
             submessage={
               <Text
                 style={{
-                  fontSize: 14,
+                  ...typography.secondary,
                   color: Theme.textInput,
                   textAlign: 'center',
-                  lineHeight: 20,
                 }}
               >
                 {t('events.checkBackLater')}
@@ -271,10 +271,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#666',
-  },
+  loadingText: { ...typography.body, color: '#666' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -282,7 +279,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   errorText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     marginBottom: 16,
     textAlign: 'center',
@@ -293,11 +290,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
   },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  retryButtonText: { ...typography.button, color: '#fff' },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -305,17 +298,12 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
   },
   emptyText: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#333',
     marginTop: 16,
     marginBottom: 8,
   },
-  emptySubtext: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
-  },
+  emptySubtext: { ...typography.secondary, color: '#666', textAlign: 'center' },
   searchContainer: {
     paddingHorizontal: 20,
   },
@@ -333,8 +321,8 @@ const styles = StyleSheet.create({
     marginRight: 0,
   },
   searchInput: {
+    ...typography.body,
     flex: 1,
-    fontSize: 14,
     color: Theme.textAlternateGray,
   },
   tagsContainer: {
@@ -357,9 +345,9 @@ const styles = StyleSheet.create({
     borderColor: Theme.black,
   },
   tagText: {
-    fontSize: 14,
-    fontWeight: '500',
+    ...typography.secondary,
     color: Theme.textInactiveTab,
+    fontWeight: '500',
   },
   tagTextSelected: {
     color: Theme.white,
@@ -386,9 +374,9 @@ const styles = StyleSheet.create({
     opacity: 0.72,
   },
   genreTagText: {
-    fontSize: 12,
-    fontWeight: '500',
+    ...typography.caption,
     color: Theme.textAlternateGray,
+    fontWeight: '500',
   },
   genreTagTextSelected: {
     color: Theme.white,

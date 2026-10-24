@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -67,12 +68,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headline: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.section,
     color: Theme.black,
     textAlign: 'center',
     marginBottom: 16,
-    lineHeight: 32,
   },
   headlineItalic: {
     fontStyle: 'italic',
@@ -80,10 +79,9 @@ const styles = StyleSheet.create({
     color: Theme.primaryGatherRed,
   },
   body: {
-    fontSize: 20,
+    ...typography.section,
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 24,
     paddingHorizontal: 10,
   },
 });

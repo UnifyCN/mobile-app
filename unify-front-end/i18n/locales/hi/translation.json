@@ -318,6 +318,9 @@
   "report": {
     "sendReport": "रिपोर्ट भेजें"
   },
+  "resources": {
+    "morePartnersComingSoon": "{{province}} में और साझेदार जल्द ही आ रहे हैं।"
+  },
   "learn": {
     "subtitle": "कनाडा की संस्कृति की मूल बातें समझने और एक नवागंतुक के रूप में बसने के लिए पाठों से शुरुआत करें।",
     "greeting": {
@@ -343,7 +346,8 @@
     "announcementBody": "किसी भी शब्द या वाक्यांश को हाइलाइट करने या AI से समझाने के लिए पाठ में लंबे समय तक दबाएं। आपकी हाइलाइट्स आपकी प्रोफ़ाइल में 'सीखें से सहेजा गया' में सहेजी जाती हैं।",
     "module": {
       "errorLoading": "मॉड्यूल लोड करने में त्रुटि: {{message}}",
-      "section": "अनुभाग {{number}}"
+      "section": "अनुभाग {{number}}",
+      "introduction": "परिचय"
     },
     "submodule": {
       "learnTitle": "सीखें",
@@ -395,9 +399,11 @@
       "errorTitle": "त्रुटि",
       "imagePlaceholder": "छवि",
       "submoduleFallback": "उप-मॉड्यूल",
+      "reviewRating": "5 में से {{count}} सितारे",
       "reviewTitle": "यह पाठ कैसा था?",
       "reviewPlaceholder": "अपने विचार साझा करें (वैकल्पिक)",
-      "example": "उदाहरण"
+      "example": "उदाहरण",
+      "openImage": "पूरी तस्वीर खोलें"
     },
     "quiz": {
       "loadingQuizzes": "क्विज़ लोड हो रहे हैं...",
@@ -408,7 +414,8 @@
       "startQuiz": "क्विज़ शुरू करें →",
       "loadingQuestion": "प्रश्न लोड हो रहा है...",
       "errorLoadingQuestion": "प्रश्न लोड करने में त्रुटि",
-      "questionNotFound": "प्रश्न नहीं मिला"
+      "questionNotFound": "प्रश्न नहीं मिला",
+      "yourAnswer": "आपका उत्तर"
     },
     "quizzes": {
       "errorLoading": "क्विज़ लोड करने में त्रुटि: {{message}}",
@@ -1261,10 +1268,7 @@
           "serviceArea": "कनाडा और दुनिया भर",
           "howToStart": "किसी TuGo बीमा साझेदार के ज़रिए ऑनलाइन कोटेशन शुरू करें, या 1-855-929-8846 पर कॉल करें।",
           "hours": "सोम–शुक्र 6:00am–5:00pm PST · शनि 7:00am–4:00pm PST · रवि बंद",
-          "languages": [
-            "अंग्रेज़ी",
-            "फ़्रेंच"
-          ],
+          "languages": ["अंग्रेज़ी", "फ़्रेंच"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Visitors to Canada बीमा",
@@ -1302,10 +1306,7 @@
           "eligibility": "नवागंतुक खाते की पेशकश 25 वर्ष और उससे अधिक उम्र के उन लोगों के लिए है, जो स्थायी निवासी हैं, या ऐसे अस्थायी निवासी हैं जिनका वर्क परमिट 8 महीने से ज़्यादा के लिए वैध है, जो कनाडा में 3 साल या उससे कम समय से रह रहे हैं, और जो पहले से Desjardins के सदस्य नहीं हैं। 18–24 वर्ष के लोगों और 25–30 वर्ष के पूर्णकालिक छात्रों के लिए अलग पेशकशें हैं।",
           "howToStart": "लगभग 15 मिनट में ऑनलाइन खाता खोलें, या विदेश से आवेदन करें और पहुँचने पर किसी सेवा केंद्र पर अपनी पहचान की पुष्टि करें।",
           "hours": "कानूनी सहायता: फ़ाइल खोलना 24/7 · सलाहकार सोम–शुक्र 9:00am–8:00pm, शनि 9:00am–5:00pm",
-          "languages": [
-            "अंग्रेज़ी",
-            "फ़्रेंच"
-          ],
+          "languages": ["अंग्रेज़ी", "फ़्रेंच"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "नवागंतुक चेकिंग खाता (Unlimited plan)",
@@ -1391,7 +1392,41 @@
         "bookA11y": "{{name}} के साथ निःशुल्क परिचय बैठक बुक करें"
       }
     },
-    "typeHerePlaceholder": "यहाँ लिखें"
+    "typeHerePlaceholder": "यहाँ लिखें",
+    "home": {
+      "heading": "आत्मविश्वास के साथ बसें",
+      "subtitle": "कनाडा में जीवन की तैयारी में आपकी मदद करने वाले व्यावहारिक पाठ।",
+      "continue": "सीखना जारी रखें",
+      "moreLessons": "अन्य जारी पाठ",
+      "courses": "पाठ्यक्रम",
+      "all": "सभी",
+      "started": "शुरू किए गए",
+      "emptyStarted": "आपके शुरू किए गए पाठ्यक्रम यहाँ दिखाई देंगे।",
+      "modules": "मॉड्यूल",
+      "moduleCount": "मॉड्यूल: {{count}}",
+      "lessonCount": "पाठ: {{count}}",
+      "lessonSummary": "{{count}} पाठ · {{done}} पूरे",
+      "upNext": "अगला",
+      "close": "बंद करें",
+      "tabLabel": "सीखें",
+      "completionSummary": "{{total}} में से {{completed}} पाठ पूरे हुए"
+    },
+    "structured": {
+      "concept": "अवधारणा",
+      "example": "उदाहरण",
+      "visual": "दृश्य उदाहरण",
+      "quickCheck": "त्वरित जाँच",
+      "faq": "अक्सर पूछे जाने वाले प्रश्न",
+      "citations": "स्रोत",
+      "theory": "सिद्धांत",
+      "practice": "व्यवहार में",
+      "readingMinutes": "पढ़ने का समय {{count}} मिनट",
+      "correct": "सही",
+      "tryAgain": "फिर से प्रयास करें",
+      "nextLesson": "अगला पाठ",
+      "lessonNumber": "पाठ {{number}}",
+      "moduleNumber": "मॉड्यूल {{number}}"
+    }
   },
   "checklist": {
     "title": "व्यक्तिगत चेकलिस्ट",

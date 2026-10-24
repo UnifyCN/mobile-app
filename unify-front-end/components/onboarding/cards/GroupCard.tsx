@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -73,11 +74,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   name: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#000',
   },
   members: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#9B9797',
   },
 });

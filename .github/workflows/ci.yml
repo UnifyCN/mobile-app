@@ -78,6 +78,7 @@ jobs:
         run: >-
           deno test --allow-read --allow-env
           unify-front-end/supabase/functions/_shared/interview/*.test.ts
+          unify-front-end/supabase/functions/personalize/index_test.ts
           unify-front-end/supabase/functions/ingest-documents/lib/
           unify-front-end/supabase/tests/
 

@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { NewsDetails } from '@/types/news';
@@ -53,7 +54,7 @@ export function NewsCard({ news, maxWidth, onPress }: NewsCardProps) {
 const styles = StyleSheet.create({
   newsCard: {
     width: 332,
-    height: 132,
+    minHeight: 132,
     backgroundColor: Theme.white,
     borderColor: Theme.borderCard,
     borderWidth: 1,
@@ -83,16 +84,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   newsTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
+
     color: Theme.black,
     marginBottom: 6,
-    lineHeight: 24,
   },
   newsDescription: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: Theme.textInput,
-    lineHeight: 20,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -216,31 +217,27 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   categoryText: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     letterSpacing: 0.3,
+    fontWeight: '600',
   },
   date: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textInput,
     paddingHorizontal: 20,
     marginTop: 20,
     marginBottom: 8,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     paddingHorizontal: 20,
     marginBottom: 8,
-    lineHeight: 34,
   },
   description: {
-    fontSize: 16,
-    fontWeight: '500',
+    ...typography.body,
     color: Theme.textAlternateGray,
     paddingHorizontal: 20,
-    lineHeight: 22,
   },
   divider: {
     height: 1,
@@ -248,12 +245,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
   },
-  tipText: {
-    fontSize: 18,
-    color: Theme.black,
-    paddingHorizontal: 20,
-    lineHeight: 28,
-  },
+  tipText: { ...typography.reading, color: Theme.black, paddingHorizontal: 20 },
   translateRow: {
     paddingHorizontal: 20,
   },
@@ -262,12 +254,12 @@ const styles = StyleSheet.create({
     marginTop: 28,
   },
   sourcesTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.textInput,
     marginBottom: 10,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   sourceItem: {
     flexDirection: 'row',
@@ -275,11 +267,7 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 8,
   },
-  sourceText: {
-    fontSize: 15,
-    color: Theme.surfaceBlue,
-    flex: 1,
-  },
+  sourceText: { ...typography.secondary, color: Theme.surfaceBlue, flex: 1 },
   pastTipsButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -292,9 +280,9 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.surfaceGray,
   },
   pastTipsText: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.surfaceBlue,
+    fontWeight: '600',
   },
   errorContainer: {
     flex: 1,
@@ -302,10 +290,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#666',
-  },
+  errorText: { ...typography.body, color: '#666' },
 });
 
 export default TipDetailScreen;

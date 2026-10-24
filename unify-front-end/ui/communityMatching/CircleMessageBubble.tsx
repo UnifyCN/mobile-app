@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { CommunityMessage } from '@/types/matching';
@@ -213,27 +214,17 @@ const styles = StyleSheet.create({
   otherEnd: {
     borderBottomLeftRadius: 6,
   },
-  messageText: {
-    color: '#1F2937',
-    fontSize: 16,
-    lineHeight: 22,
-  },
+  messageText: { ...typography.body, color: '#1F2937' },
   messageTextOwn: {
     color: '#fff',
   },
   senderName: {
+    ...typography.caption,
     color: '#667085',
-    fontSize: 12,
-    lineHeight: 15,
     marginBottom: 4,
     fontWeight: '600',
   },
-  timestamp: {
-    fontSize: 11,
-    color: '#98A2B3',
-    lineHeight: 14,
-    marginTop: 4,
-  },
+  timestamp: { ...typography.caption, color: '#62605B', marginTop: 4 },
   timestampOwn: {
     textAlign: 'right',
     marginRight: 4,
@@ -257,9 +248,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   systemText: {
+    ...typography.secondary,
     color: '#D97706',
-    fontSize: 14,
     textAlign: 'center',
-    lineHeight: 20,
   },
 });
