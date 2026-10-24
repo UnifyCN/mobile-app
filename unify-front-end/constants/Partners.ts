@@ -1,5 +1,9 @@
 import type { Partner, PartnerCategory } from '@/types/partner';
 import { CATEGORY_ORDER } from '@/types/partner';
+import {
+  isVisibleForProvince,
+  resolveUserProvince,
+} from '@/supabase/functions/_shared/province';
 
 /**
  * Partner directory. Hardcoded for V1 (initial outreach stage).
@@ -27,6 +31,7 @@ export const PARTNERS: Partner[] = [
     name: 'DIVERSEcity',
     category: 'gettingSettled',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.dcrs.ca/',
     phone: '604-597-0205',
     email: 'info@dcrs.ca',
@@ -78,6 +83,7 @@ export const PARTNERS: Partner[] = [
     name: 'Burnaby Neighbourhood House',
     category: 'gettingSettled',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://burnabynh.ca/',
     phone: '(604) 431-0400',
     email: 'receptiona@burnabynh.ca',
@@ -121,6 +127,7 @@ export const PARTNERS: Partner[] = [
     name: 'YMCA BC',
     category: 'gettingSettled',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.ymcabc.ca/',
     cost: 'mixed',
     phone: '604-681-9622',
@@ -174,6 +181,7 @@ export const PARTNERS: Partner[] = [
     name: 'Immigrant Employment Council of BC',
     category: 'findWork',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://iecbc.ca/',
     cost: 'free',
     phone: '(604) 629-5364',
@@ -261,6 +269,7 @@ export const PARTNERS: Partner[] = [
     name: 'Global Connect Immigration',
     category: 'immigrationHelp',
     partnershipType: 'referral',
+    provinces: ['British Columbia'],
     website: 'https://globalconnectmigration.com/',
     cost: 'paid',
     phone: '+1 (604) 495-1927',
@@ -281,6 +290,7 @@ export const PARTNERS: Partner[] = [
     name: 'Burnaby Public Library',
     category: 'librariesLearning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://bpl.bc.ca/',
     ctaLabelKey: 'learn.resources.cta.joinLibrary',
     cost: 'free',
@@ -327,6 +337,7 @@ export const PARTNERS: Partner[] = [
     name: 'Surrey Libraries',
     category: 'librariesLearning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.surreylibraries.ca/',
     ctaLabelKey: 'learn.resources.cta.visitWelcomeCentre',
     cost: 'free',
@@ -380,6 +391,7 @@ export const PARTNERS: Partner[] = [
     name: 'Vancouver Public Library',
     category: 'librariesLearning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.vpl.ca/',
     ctaLabelKey: 'learn.resources.cta.joinLibrary',
     cost: 'free',
@@ -428,6 +440,7 @@ export const PARTNERS: Partner[] = [
     name: 'Big Brothers Big Sisters',
     category: 'communityBelonging',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.bigbrothersvancouver.com/',
     // Contact points at the Greater Vancouver agency rather than the Toronto
     // national office, because that is the agency a person here would apply to.
@@ -470,6 +483,7 @@ export const PARTNERS: Partner[] = [
     name: 'United Way BC',
     category: 'communityBelonging',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://uwbc.ca/',
     phone: '604-294-8929',
     email: 'info@uwbc.ca',
@@ -516,6 +530,7 @@ export const PARTNERS: Partner[] = [
     name: 'Trout Lake Community Centre',
     category: 'communityBelonging',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://troutlakecc.com/',
     cost: 'mixed',
     phone: '604-257-6955',
@@ -555,6 +570,7 @@ export const PARTNERS: Partner[] = [
     name: 'AMSSA',
     category: 'networksPlanning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.amssa.org/',
     cost: 'mixed',
     phone: '604-718-2780',
@@ -594,6 +610,7 @@ export const PARTNERS: Partner[] = [
     name: 'Surrey Local Immigration Partnership',
     category: 'networksPlanning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.surreylip.ca/',
     programs: [
       {
@@ -630,6 +647,7 @@ export const PARTNERS: Partner[] = [
     name: 'Delta Local Immigration Partnership',
     category: 'networksPlanning',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://deltalip.ca/',
     email: 'deltalip@dcrs.ca',
     programs: [
@@ -658,6 +676,7 @@ export const PARTNERS: Partner[] = [
     name: 'SFU International Services for Students',
     category: 'internationalStudents',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.sfu.ca/students/iss.html',
     ctaLabelKey: 'learn.resources.cta.bookAdvising',
     phone: '778-782-4232',
@@ -698,6 +717,7 @@ export const PARTNERS: Partner[] = [
     name: 'Fraser International College',
     category: 'internationalStudents',
     partnershipType: 'resource',
+    provinces: ['British Columbia'],
     website: 'https://www.fraseric.ca/',
     ctaLabelKey: 'learn.resources.cta.applyOnline',
     cost: 'paid',
@@ -781,6 +801,7 @@ export const PARTNERS: Partner[] = [
     name: 'Desjardins',
     category: 'money',
     partnershipType: 'referral',
+    provinces: ['Ontario', 'Quebec'],
     website: 'https://www.desjardins.com/ca/personal/you-are/newcomers-canada/',
     cost: 'mixed',
     phone: '1-877-435-6098',
@@ -808,44 +829,74 @@ export const PARTNERS: Partner[] = [
 ];
 
 /**
- * Active partners from an arbitrary list, sorted by displayOrder.
- * Split out from `getActivePartners` so the filter is testable without an
- * inactive partner in the shipped data.
+ * Active listings from an arbitrary list, sorted by displayOrder, whatever the
+ * reader's province. For the directory as a whole (a slug lookup, the
+ * spotlight); anything a person browses goes through `selectActivePartners`.
  */
-export const selectActivePartners = (partners: Partner[]): Partner[] =>
+const selectLiveListings = <T extends Pick<Partner, 'active' | 'displayOrder'>>(
+  partners: T[]
+): T[] =>
   partners
     .filter(p => p.active)
     .sort((a, b) => a.displayOrder - b.displayOrder);
 
-/** Active partners only, sorted by displayOrder. */
-export const getActivePartners = (): Partner[] =>
-  selectActivePartners(PARTNERS);
+/**
+ * Active partners a reader in `province` may see, sorted by displayOrder.
+ * A partner with no `provinces` is national and shows to everyone; a reader
+ * with no recognized province sees national partners only. `province` is a
+ * stored profile string, so aliases ("BC", "ON") are resolved here; a
+ * partner's own `provinces` tags stay strict canonical names.
+ *
+ * `province` has no default on purpose: a caller that forgets it must not
+ * quietly show every province's partners.
+ */
+export const selectActivePartners = <
+  T extends Pick<Partner, 'active' | 'displayOrder' | 'provinces'>,
+>(
+  partners: T[],
+  province: string | null | undefined
+): T[] => {
+  const readerProvince = resolveUserProvince(province);
+  return selectLiveListings(partners).filter(p =>
+    isVisibleForProvince(p.provinces, readerProvince)
+  );
+};
 
-/** Active partners in a category, sorted by displayOrder. */
-export const getPartnersByCategory = (category: PartnerCategory): Partner[] =>
-  getActivePartners().filter(p => p.category === category);
+/** Active partners for a reader in `province`, sorted by displayOrder. */
+export const getActivePartners = (province: string | null | undefined) =>
+  selectActivePartners(PARTNERS, province);
+
+/** Active partners in a category for a reader in `province`. */
+export const getPartnersByCategory = (
+  category: PartnerCategory,
+  province: string | null | undefined
+): Partner[] =>
+  getActivePartners(province).filter(p => p.category === category);
 
 /** Selects an active partner by slug from an arbitrary directory. */
 export const selectActivePartnerBySlug = (
   partners: Partner[],
   slug: string
 ): Partner | undefined =>
-  selectActivePartners(partners).find(p => p.slug === slug);
+  selectLiveListings(partners).find(p => p.slug === slug);
 
 /** A single active partner by slug for the detail route. */
 export const getPartnerBySlug = (slug: string): Partner | undefined =>
   selectActivePartnerBySlug(PARTNERS, slug);
 
 /**
- * Categories that have ≥1 active partner, in CATEGORY_ORDER, with counts.
+ * Categories that have ≥1 active partner for a reader in `province`, in
+ * CATEGORY_ORDER, with counts.
  * Empty categories are omitted.
  */
-export const getCategoriesWithPartners = (): {
+export const getCategoriesWithPartners = (
+  province: string | null | undefined
+): {
   category: PartnerCategory;
   partnerCount: number;
 }[] => {
   const counts = new Map<PartnerCategory, number>();
-  for (const p of getActivePartners()) {
+  for (const p of getActivePartners(province)) {
     counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
   }
   return CATEGORY_ORDER.filter(c => counts.has(c)).map(category => ({
@@ -857,7 +908,7 @@ export const getCategoriesWithPartners = (): {
 /** The first active spotlight partner in an arbitrary directory. */
 export const selectSpotlightPartner = (
   partners: Partner[]
-): Partner | undefined => selectActivePartners(partners).find(p => p.spotlight);
+): Partner | undefined => selectLiveListings(partners).find(p => p.spotlight);
 
 /** The partner promoted outside the directory, if any. */
 export const getSpotlightPartner = (): Partner | undefined =>

@@ -180,6 +180,11 @@ beforeEach(() => {
   client = new QueryClient();
   mockStore.clear();
   mockStage = stage();
+  // The persona and province come from the profile hook, not the stage hook.
+  mockGetOnboardingProfile.mockResolvedValue({
+    persona: 'refugee',
+    province: 'Ontario',
+  });
   mockUseChecklistTasks.mockReturnValue({
     tasks: [],
     isLoading: false,
@@ -224,11 +229,11 @@ describe('Checklist screen', () => {
     expect(screen.queryByRole('button', { name: /until you land/ })).toBeNull();
   });
 
-  it('feeds the stage hook values to the checklist query', async () => {
+  it('feeds the stage hook and profile values to the checklist query', async () => {
     mockStage = stage({
       currentStage: null,
       stageChanged: true,
-      persona: 'refugee',
+      persona: 'skilled_worker',
       arrivalDate: null,
       userId: 'query-user',
     });
@@ -239,6 +244,7 @@ describe('Checklist screen', () => {
       stageChanged: true,
       persona: 'refugee',
       isStageLoading: false,
+      province: 'Ontario',
     });
   });
 
@@ -259,10 +265,17 @@ describe('Checklist screen', () => {
     );
   });
 
-  it('does not load the persona separately', async () => {
+  it('reads the persona and province from the signed-in user profile only', async () => {
     render(h(ChecklistScreen));
     await flush();
-    expect(mockGetOnboardingProfile).not.toHaveBeenCalled();
+    expect(mockGetOnboardingProfile).toHaveBeenCalled();
+    for (const call of mockGetOnboardingProfile.mock.calls) {
+      expect(call).toEqual(['screen-user']);
+    }
+    // The stage hook's persona is not what the checklist query gets.
+    expect(mockUseChecklistTasks).toHaveBeenLastCalledWith(
+      expect.objectContaining({ persona: 'refugee' })
+    );
   });
 
   it('shows the loading screen while the stage loads', async () => {

@@ -1,20 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserTaskWithDetails } from '@/types/checklist';
-import type { SanityLanguage } from '@/services/sanity/i18n';
+import type {
+  ChecklistCacheContext,
+  UserTaskWithDetails,
+} from '@/types/checklist';
+import { checklistProvinceKeyPart } from '@/utils/checklistProvince';
 
 const STORAGE_PREFIX = '@checklist_tasks_v1';
 export const CHECKLIST_CACHE_TTL_MS = 10 * 60 * 1000;
 
-export function buildChecklistCacheStorageKey(
-  userId: string,
-  stage: number,
-  personaSlug: string,
-  stageChanged: boolean,
-  language: SanityLanguage
-): string {
+export function buildChecklistCacheStorageKey({
+  userId,
+  stage,
+  personaSlug,
+  stageChanged,
+  language,
+  province,
+}: ChecklistCacheContext): string {
   return `${STORAGE_PREFIX}:${userId}:${stage}:${personaSlug}:${
     stageChanged ? '1' : '0'
-  }:${language}`;
+  }:${language}:${checklistProvinceKeyPart(province)}`;
 }
 
 interface ChecklistCacheEntry {

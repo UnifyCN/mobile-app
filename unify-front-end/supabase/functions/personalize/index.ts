@@ -9,6 +9,12 @@ import {
   LOCAL_DATE_HEADER,
   readRequestToday,
 } from '../_shared/requestToday.ts';
+import {
+  rankLearnModules,
+  type LearnModuleRow,
+  type LearnProgressRow,
+  type ScoredModule,
+} from '../_shared/learnRanking.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,93 +23,17 @@ const corsHeaders = {
 
 // ─── Learn surface ────────────────────────────────────────────────────────────
 
-interface LearnModule {
-  sanity_id: string;
-  title: string;
-  personas: string[];
-  interests: string[];
-}
-
-interface LearnProgressRow {
-  module_id: string;
-  status: 'not_started' | 'in_progress' | 'completed';
-  completed_at: string | null;
-}
-
-interface ScoredModule {
-  sanity_id: string;
-  title: string;
-  score: number;
-  progress: 'not_started' | 'in_progress' | 'completed';
-  completed_at: string | null;
-  why_tag: string;
-}
-
-const PERSONA_LABELS: Record<string, string> = {
-  international_student: 'international students',
-  skilled_worker: 'skilled workers & immigrants',
-  refugee: 'refugees & protected persons',
-};
-
-const INTEREST_LABELS: Record<string, string> = {
-  documents: 'documents & IDs',
-  employment: 'jobs & career',
-  finance: 'money & banking',
-  housing: 'housing',
-  pr_immigration: 'PR & immigration',
-  healthcare: 'healthcare',
-  family_kids: 'family & kids',
-  transit: 'transit',
-};
-
-function scoreModule(
-  module: LearnModule,
-  profile: OnboardingProfile
-): { score: number; why_tag: string } {
-  const hasInterestMatch =
-    module.interests.length > 0 &&
-    profile.learning_interests.some(i => module.interests.includes(i));
-
-  const hasPersonaMatch =
-    module.personas.length > 0 &&
-    !!profile.persona &&
-    module.personas.includes(profile.persona);
-
-  const score = (hasInterestMatch ? 0.7 : 0) + (hasPersonaMatch ? 0.3 : 0);
-
-  // Build why_tag from matched signals
-  let why_tag = '';
-  const matchedInterest = hasInterestMatch
-    ? profile.learning_interests.find(i => module.interests.includes(i))
-    : null;
-  const interestLabel = matchedInterest
-    ? INTEREST_LABELS[matchedInterest] ?? matchedInterest.replace(/_/g, ' ')
-    : '';
-  const personaLabel = hasPersonaMatch && profile.persona
-    ? PERSONA_LABELS[profile.persona] ?? profile.persona.replace(/_/g, ' ')
-    : '';
-
-  if (hasInterestMatch && hasPersonaMatch) {
-    why_tag = `Recommended for ${personaLabel} interested in ${interestLabel}`;
-  } else if (hasInterestMatch) {
-    why_tag = `Based on your interest in ${interestLabel}`;
-  } else if (hasPersonaMatch) {
-    why_tag = `Recommended for ${personaLabel}`;
-  }
-
-  return { score, why_tag };
-}
-
 async function buildLearnSurface(
-  supabase: SupabaseClient,
+  // deno-lint-ignore no-explicit-any
+  supabase: SupabaseClient<any, 'public', any>,
   userId: string,
   profile: OnboardingProfile
-): Promise<{ modules: ScoredModule[] }> {
+): Promise<{ modules: ScoredModule[] } | null> {
   // Parallel fetch: module metadata + user progress
   const [modulesResult, progressResult] = await Promise.all([
     supabase
       .from('learn_modules')
-      .select('sanity_id, title, personas, interests'),
+      .select('sanity_id, title, personas, interests, province'),
     supabase
       .from('learn_progress')
       .select('module_id, status, completed_at')
@@ -112,43 +42,20 @@ async function buildLearnSurface(
 
   if (modulesResult.error) {
     console.error('personalize/learn: modules fetch error', modulesResult.error);
-    return { modules: [] };
+    // Unavailable, not empty: the client treats `modules: []` as an
+    // authoritative ranking and would hide eligible fallback content.
+    return null;
   }
 
-  const progressByModule = new Map<string, LearnProgressRow>();
-  for (const row of (progressResult.data as LearnProgressRow[]) ?? []) {
-    progressByModule.set(row.module_id, row);
-  }
+  // Province filtering and scoring live in rankLearnModules, which drops
+  // modules for other provinces before scoring.
+  const modules = rankLearnModules(
+    (modulesResult.data as LearnModuleRow[]) ?? [],
+    (progressResult.data as LearnProgressRow[]) ?? [],
+    profile
+  );
 
-  // Score each module
-  const scored: ScoredModule[] = ((modulesResult.data as LearnModule[]) ?? []).map(m => {
-    const { score, why_tag } = scoreModule(m, profile);
-    const progress = progressByModule.get(m.sanity_id);
-    return {
-      sanity_id: m.sanity_id,
-      title: m.title,
-      score,
-      progress: progress?.status ?? 'not_started',
-      completed_at: progress?.completed_at ?? null,
-      why_tag,
-    };
-  });
-
-  // Sort: in_progress first → then by score desc → ties by title asc → completed last
-  scored.sort((a, b) => {
-    const aInProgress = a.progress === 'in_progress' ? 0 : 1;
-    const bInProgress = b.progress === 'in_progress' ? 0 : 1;
-    if (aInProgress !== bInProgress) return aInProgress - bInProgress;
-
-    const aCompleted = a.progress === 'completed' ? 1 : 0;
-    const bCompleted = b.progress === 'completed' ? 1 : 0;
-    if (aCompleted !== bCompleted) return aCompleted - bCompleted;
-
-    if (b.score !== a.score) return b.score - a.score;
-    return a.title.localeCompare(b.title);
-  });
-
-  return { modules: scored };
+  return { modules };
 }
 
 // ─── Handler ──────────────────────────────────────────────────────────────────

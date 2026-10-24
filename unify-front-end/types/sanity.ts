@@ -45,6 +45,8 @@ export interface SanityModule extends SanityDocument {
     hex: string;
   };
   icon?: string;
+  /** One of the 13 province names for a province-only module; empty is national. */
+  province?: string | null;
 }
 
 // Submodule type

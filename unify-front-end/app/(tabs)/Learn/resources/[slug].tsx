@@ -21,6 +21,8 @@ import * as WebBrowser from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import TabHeader from '@/components/home/HomeHeader';
 import { getPartnerBySlug, isVerifiedPartner } from '@/constants/Partners';
+import { useLearnProvince } from '@/hooks/learn/useLearnProvince';
+import { isVisibleForProvince } from '@/supabase/functions/_shared/province';
 import { COST_CHIP, RESOURCE_THEME } from '@/constants/ResourceTheme';
 import {
   PARTNER_CATEGORY_LABEL_KEYS,
@@ -174,7 +176,17 @@ export default function PartnerDetailScreen() {
     trackResourcesProgramClicked,
     trackResourcesLinkFailed,
   } = useAnalytics();
-  const record = slug ? getPartnerBySlug(slug) : undefined;
+  const { province, isLoading: provinceLoading } = useLearnProvince();
+  const found = slug ? getPartnerBySlug(slug) : undefined;
+  // A listing for another province is not found, even by direct link. Until
+  // the profile loads, a listing with a province tag is neither shown nor
+  // reported missing.
+  const awaitingProfile =
+    provinceLoading && !!found && (found.provinces?.length ?? 0) > 0;
+  const record =
+    found && !awaitingProfile && isVisibleForProvince(found.provinces, province)
+      ? found
+      : undefined;
   // Copy lives in the locale files, so the record is resolved for the active
   // language before anything reads a string off it.
   const partner = useMemo(
@@ -251,6 +263,15 @@ export default function PartnerDetailScreen() {
       <Text style={styles.backText}>{backLabel}</Text>
     </TouchableOpacity>
   );
+
+  if (awaitingProfile) {
+    return (
+      <View style={styles.root}>
+        {screenOptions}
+        <TabHeader variant='minimal' />
+      </View>
+    );
+  }
 
   if (!partner) {
     return (

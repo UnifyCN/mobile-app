@@ -30,6 +30,7 @@ import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
 import { useRefreshingToday } from '@/hooks/checklist/useRefreshingToday';
+import { useChecklistProfile } from '@/hooks/checklist/useChecklistProfile';
 import { setChecklistItemCompletion } from '@/services/checklist/setChecklistItemCompletion';
 import { setChecklistItemDismissed } from '@/services/checklist/setChecklistItemDismissed';
 import {
@@ -192,7 +193,6 @@ export default function ChecklistScreen() {
   const {
     currentStage,
     stageChanged,
-    persona,
     arrivalDate,
     userId,
     refreshStage,
@@ -200,6 +200,12 @@ export default function ChecklistScreen() {
     isLoading: stageLoading,
   } = useUserStage(today);
   const { refreshUser } = useCurrentUser();
+  const {
+    persona,
+    province,
+    isLoading: isLoadingProfile,
+    refresh: refreshProfile,
+  } = useChecklistProfile();
   const [selectedTask, setSelectedTask] = useState<UserTaskWithDetails | null>(
     null
   );
@@ -225,16 +231,25 @@ export default function ChecklistScreen() {
     stageChanged,
     persona,
     isStageLoading: stageLoading,
+    province,
   });
 
-  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up
+  // Refetch when Checklist tab is focused so new/updated Sanity tasks show up.
+  // The profile is read again first: when its province or persona changed, the
+  // task query fetches with the new values by itself, so refetching here would
+  // fetch with the old ones.
   useFocusEffect(
     useCallback(() => {
       trackScreen('Checklist');
-      if (!stageLoading && persona) {
-        refetch();
-      }
-    }, [stageLoading, persona, refetch, trackScreen])
+      if (stageLoading || !persona) return;
+      let cancelled = false;
+      refreshProfile().then(skipRefetch => {
+        if (!cancelled && !skipRefetch) refetch();
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [stageLoading, persona, refetch, refreshProfile, trackScreen])
   );
 
   const activeTasks = useMemo(
@@ -249,7 +264,7 @@ export default function ChecklistScreen() {
   const completedTasks = activeTasks.filter(task => task.completed).length;
   const progressPercent = totalTasks > 0 ? completedTasks / totalTasks : 0;
 
-  const isLoading = stageLoading || tasksLoading;
+  const isLoading = stageLoading || isLoadingProfile || tasksLoading;
 
   const { hapticsEnabled } = useHapticsPreference();
   const tabBarHeight = useBottomTabBarHeight();

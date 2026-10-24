@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { getAllModulesWithSubmodules } from '@/services/sanity/modules';
@@ -11,6 +11,8 @@ import type {
 import type { SanityModuleWithSubmodules } from '@/types/sanity';
 import { sanityQueryKeys } from '@/hooks/sanity/sanityQueryKeys';
 import { useSanityLanguage } from '@/hooks/sanity/useSanityLanguage';
+import { useLearnProvince } from '@/hooks/learn/useLearnProvince';
+import { isVisibleForProvince } from '@/supabase/functions/_shared/province';
 
 // ─── Personalize fetch ────────────────────────────────────────────────────────
 
@@ -80,13 +82,16 @@ async function fetchAllModuleProgress(): Promise<
 // ─── Merge helper ─────────────────────────────────────────────────────────────
 
 /**
- * Merge personalized ranking with full Sanity module data.
- * Preserves the edge function's order (do NOT re-sort).
- * Sanity modules with no learn_modules row are appended at the end with score 0.
+ * Merge personalized ranking with the Sanity modules this user may see.
+ * Preserves the edge function's order (do NOT re-sort). A ranked module that
+ * is not in `sanityModules` (filtered by province) is dropped. Eligible Sanity
+ * modules with no learn_modules row are appended at the end with score 0 and
+ * their saved progress.
  */
 function mergePersonalizedWithSanity(
   personalized: PersonalizedModule[],
-  sanityModules: SanityModuleWithSubmodules[]
+  sanityModules: SanityModuleWithSubmodules[],
+  progressMap: Map<string, ModuleProgressStatus> | undefined
 ): PersonalizedSanityModule[] {
   const sanityById = new Map(sanityModules.map(m => [m._id, m]));
   const result: PersonalizedSanityModule[] = [];
@@ -108,7 +113,7 @@ function mergePersonalizedWithSanity(
   for (const remaining of sanityById.values()) {
     result.push({
       ...remaining,
-      progress: 'not_started',
+      progress: progressMap?.get(remaining._id) ?? 'not_started',
       score: 0,
       why_tag: '',
     });
@@ -135,9 +140,10 @@ interface UsePersonalizedModulesResult {
 
 export function usePersonalizedModules(): UsePersonalizedModulesResult {
   const language = useSanityLanguage();
+  const { province, isLoading: provinceLoading } = useLearnProvince();
   // Always fetch Sanity modules (they own colorTheme, icon, submodules)
   const {
-    data: sanityModules,
+    data: allSanityModules,
     isLoading: sanityLoading,
     error: sanityError,
     refetch: refetchSanity,
@@ -152,9 +158,10 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
   const {
     data: personalizedData,
     isLoading: personalizeLoading,
+    isPlaceholderData: personalizeIsPlaceholder,
     refetch: refetchPersonalized,
   } = useQuery({
-    queryKey: ['personalize', 'learn'],
+    queryKey: ['personalize', 'learn', province],
     queryFn: fetchPersonalizedLearn,
     staleTime: 15 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
@@ -171,19 +178,36 @@ export function usePersonalizedModules(): UsePersonalizedModulesResult {
     gcTime: 15 * 60 * 1000,
   });
 
-  const isLoading = sanityLoading || personalizeLoading;
+  const isLoading = sanityLoading || personalizeLoading || provinceLoading;
 
+  // Sanity owns the province tag, so it decides what this user may see on every
+  // path: the merged ranking, the fallback and the loading state.
+  const sanityModules = useMemo(
+    () =>
+      allSanityModules?.filter(m => isVisibleForProvince(m.province, province)),
+    [allSanityModules, province]
+  );
+
+  // An empty ranking is a valid answer (the edge function filters by province
+  // too): it means this user has no module, even when eligible Sanity modules
+  // have not synced to learn_modules yet. Only a missing response means
+  // personalization is unavailable. A ranking kept from the previous province
+  // while the new one loads does not answer for this province.
   const isPersonalized =
-    !!personalizedData?.modules?.length && !!sanityModules?.length;
+    Array.isArray(personalizedData?.modules) && !!sanityModules;
 
   let modules: PersonalizedSanityModule[] | undefined;
 
   if (sanityModules) {
     if (isPersonalized && personalizedData) {
-      modules = mergePersonalizedWithSanity(
-        personalizedData.modules,
-        sanityModules
-      );
+      modules =
+        personalizedData.modules.length === 0 && !personalizeIsPlaceholder
+          ? []
+          : mergePersonalizedWithSanity(
+              personalizedData.modules,
+              sanityModules,
+              progressMap
+            );
     } else {
       // Fallback: Sanity order, unscored — but still show real progress badges
       modules = sanityModules.map(m => ({

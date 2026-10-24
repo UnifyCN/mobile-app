@@ -321,7 +321,10 @@ describe('search runs over the translated directory', () => {
   });
 
   const directory = () =>
-    localizePartners(selectActivePartners(PARTNERS), instance.t);
+    localizePartners(
+      selectActivePartners(PARTNERS, 'British Columbia'),
+      instance.t
+    );
 
   it('matches a Spanish tagline that has no English counterpart', () => {
     const hits = selectPartnersMatching(directory(), 'espacios', labelFor);

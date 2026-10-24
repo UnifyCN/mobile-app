@@ -1,6 +1,7 @@
 import {
   CANADIAN_PROVINCES,
   normalizeProvince,
+  resolveUserProvince,
 } from '@/constants/LocationData';
 
 describe('normalizeProvince', () => {
@@ -18,6 +19,13 @@ describe('normalizeProvince', () => {
     expect(normalizeProvince('NL')).toBe('Newfoundland and Labrador');
     expect(normalizeProvince('PEI')).toBe('Prince Edward Island');
     expect(normalizeProvince('NWT')).toBe('Northwest Territories');
+  });
+
+  it('reads B.C. and B.C as British Columbia', () => {
+    expect(normalizeProvince('B.C.')).toBe('British Columbia');
+    expect(normalizeProvince('b.c.')).toBe('British Columbia');
+    expect(normalizeProvince(' B.C ')).toBe('British Columbia');
+    expect(resolveUserProvince('B.C.')).toBe('British Columbia');
   });
 
   it('is case and whitespace insensitive', () => {

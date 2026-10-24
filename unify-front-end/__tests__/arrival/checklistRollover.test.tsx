@@ -26,8 +26,12 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     },
   },
 }));
+// One client for every render, as the real provider gives. A new object per
+// render would change trackScreen, and with it the focus callback, on every
+// render.
+const mockPostHog = { capture: jest.fn(), screen: jest.fn() };
 jest.mock('posthog-react-native', () => ({
-  usePostHog: () => ({ capture: jest.fn(), screen: jest.fn() }),
+  usePostHog: () => mockPostHog,
 }));
 
 const mockGetOnboardingProfile = jest.fn();

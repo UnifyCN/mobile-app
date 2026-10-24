@@ -16,7 +16,8 @@ import type { SanityLanguage } from '@/services/sanity/i18n';
 
 function mergeChecklistWithUserTasks(
   items: SanityChecklistItem[],
-  rows: UserTaskWithDetails[]
+  rows: UserTaskWithDetails[],
+  province: string | null | undefined
 ): UserTaskWithDetails[] {
   const bySanityId = new Map<string, UserTaskWithDetails>();
   rows.forEach(r => {
@@ -35,7 +36,7 @@ function mergeChecklistWithUserTasks(
       completed_at: row?.completed_at ?? null,
       dismissed_at: row?.dismissed_at ?? null,
       source: 'sanity',
-      task: sanityChecklistItemToTaskDetails(item),
+      task: sanityChecklistItemToTaskDetails(item, province),
     };
   });
 }
@@ -71,18 +72,25 @@ export async function getChecklistWithUserProgress(
   userId: string,
   persona: string | null,
   stageSlug: string,
-  options: { stageChanged?: boolean; language?: SanityLanguage }
+  options: {
+    stageChanged?: boolean;
+    language?: SanityLanguage;
+    province?: string | null;
+  }
 ): Promise<UserTaskWithDetails[]> {
   const items = persona
     ? await getChecklistByPersonaAndStage(persona, stageSlug, {
         skipCache: true,
         language: options.language,
+        province: options.province,
       })
     : [];
 
   const rows = items.length > 0 ? await getUserTasks(userId) : [];
   const sanityTasks =
-    items.length > 0 ? mergeChecklistWithUserTasks(items, rows) : [];
+    items.length > 0
+      ? mergeChecklistWithUserTasks(items, rows, options.province)
+      : [];
   const customRows = await getCustomChecklistTasks(userId);
   const customTasks = mapCustomTasksToChecklistRows(customRows);
 

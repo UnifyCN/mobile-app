@@ -56,6 +56,7 @@ describe('useChecklistTasks stage mapping', () => {
       currentStage,
       stageChanged: false,
       persona: 'skilled_worker',
+      province: null,
     });
     await waitFor(() => expect(mockGetChecklist).toHaveBeenCalled());
     expect(mockGetChecklist).toHaveBeenCalledWith(
@@ -74,6 +75,7 @@ describe('useChecklistTasks stage mapping', () => {
       currentStage: null,
       stageChanged: false,
       persona: null,
+      province: null,
     });
     await waitFor(() => expect(mockGetChecklist).toHaveBeenCalled());
     expect(mockGetChecklist).toHaveBeenCalledWith(
@@ -93,6 +95,7 @@ describe('useChecklistTasks stage mapping', () => {
       currentStage: 0,
       stageChanged: false,
       persona: null,
+      province: null,
     });
     await waitFor(() => expect(mockGetChecklist).toHaveBeenCalled());
     expect(mockGetChecklist).toHaveBeenCalledWith(
@@ -110,6 +113,7 @@ describe('useChecklistTasks stage mapping', () => {
       currentStage: null,
       stageChanged: false,
       persona: 'skilled_worker',
+      province: null,
       isStageLoading: true,
     });
     await waitFor(() => expect(result.current.isLoading).toBe(true));
@@ -133,6 +137,7 @@ describe('useChecklistTasks stage mapping', () => {
           currentStage: null,
           stageChanged: false,
           persona: 'skilled_worker',
+          province: null,
           isStageLoading: loading,
         }),
       { wrapper }
