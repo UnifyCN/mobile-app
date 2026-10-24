@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -66,7 +67,11 @@ export const FollowButton = ({
       disabled={followUserMutation.isPending}
     >
       <Text style={compact ? styles.buttonTextCompact : styles.buttonText}>
-        {localIsFollowing ? (compact ? t('profile.following') : t('profile.unfollow')) : t('profile.follow')}
+        {localIsFollowing
+          ? compact
+            ? t('profile.following')
+            : t('profile.unfollow')
+          : t('profile.follow')}
       </Text>
     </TouchableOpacity>
   );
@@ -95,14 +100,6 @@ const styles = StyleSheet.create({
   followingButton: {
     backgroundColor: Theme.primaryGatherRed,
   },
-  buttonText: {
-    color: Theme.white,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  buttonTextCompact: {
-    color: Theme.white,
-    fontSize: 13,
-    fontWeight: '600',
-  },
+  buttonText: { ...typography.button, color: Theme.white },
+  buttonTextCompact: { ...typography.button, color: Theme.white },
 });

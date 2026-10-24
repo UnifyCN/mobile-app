@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   View,
@@ -71,7 +72,8 @@ export default function ResourcesView() {
   // on languageChanged, which re-resolves every string.
   const partners = useMemo(() => localizePartners(getActivePartners(), t), [t]);
   const results = useMemo(
-    () => (isSearching ? selectPartnersMatching(partners, query, labelFor) : []),
+    () =>
+      isSearching ? selectPartnersMatching(partners, query, labelFor) : [],
     [isSearching, partners, query, labelFor]
   );
 
@@ -207,19 +209,11 @@ const styles = StyleSheet.create({
   scrollContent: { padding: 16, paddingBottom: 100 },
   spotlight: { marginBottom: 10 },
   heading: {
-    // Same size and weight as the Lessons greeting it sits opposite.
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 8,
   },
-  subtitle: {
-    // Matches the Lessons page subtitle so the two views read as one screen.
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 20,
-    color: RESOURCE_THEME.textSubtitle,
-  },
+  subtitle: { ...typography.body, color: RESOURCE_THEME.textSubtitle },
   link: {
     color: RESOURCE_THEME.link,
     textDecorationLine: 'underline',
@@ -232,10 +226,10 @@ const styles = StyleSheet.create({
   gridRow: { flexDirection: 'row', gap: 10, marginBottom: 10 },
   gridFiller: { flex: 1 },
   resultCount: {
-    fontWeight: '500',
-    fontSize: 12,
+    ...typography.caption,
     color: RESOURCE_THEME.textCount,
     marginBottom: 4,
+    fontWeight: '500',
   },
   empty: {
     paddingVertical: 48,
@@ -245,16 +239,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   emptyTitle: {
-    fontWeight: '700',
-    fontSize: 16,
+    ...typography.cardTitle,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 6,
   },
   emptyText: {
-    fontWeight: '400',
-    fontSize: 13,
+    ...typography.caption,
     color: RESOURCE_THEME.textSecondary,
     textAlign: 'center',
-    lineHeight: 18,
+    fontWeight: '400',
   },
 });

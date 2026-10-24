@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import LearnRetry from '@/components/learn/LearnRetry';
 import TabHeader from '@/components/home/HomeHeader';
 import { categorySymbol } from '@/components/learn/CategorySymbol';
@@ -37,6 +38,10 @@ import {
   LearnSectionId,
 } from '@/utils/learnCompletionNavigation';
 import { useFocusEffect } from '@react-navigation/native';
+import {
+  normalizeLearnOrigin,
+  withLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 const SUBJECT_COLOR = '#10B981'; // green for Learn (active)
 
@@ -61,13 +66,16 @@ export default function SubmoduleIndex() {
     justCompletedLearn,
     justCompletedTasks,
     justCompletedPractice,
+    origin: originParam,
   } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     justCompletedLearn?: string;
     justCompletedTasks?: string;
     justCompletedPractice?: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
 
   const lessonStatus = useLessonStatuses(submoduleId || '');
 
@@ -246,7 +254,7 @@ export default function SubmoduleIndex() {
           ? `${base}/lessons/${firstLessonId}/pages/1`
           : null;
       setIsResolvingLearnHref(false);
-      if (href) router.push(href as any);
+      if (href) router.push(withLearnOrigin(href, origin) as any);
       return;
     }
 
@@ -282,7 +290,7 @@ export default function SubmoduleIndex() {
         lessonProgresses
       );
       if (href) {
-        router.push(href as any);
+        router.push(withLearnOrigin(href, origin) as any);
       }
     } finally {
       setIsResolvingLearnHref(false);
@@ -388,7 +396,7 @@ export default function SubmoduleIndex() {
     ) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -396,7 +404,7 @@ export default function SubmoduleIndex() {
     if (!moduleData?.submodules) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -410,7 +418,7 @@ export default function SubmoduleIndex() {
     if (currentSubmoduleIndex === -1) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId },
+        params: { moduleId, ...(origin ? { origin } : {}) },
       });
       return;
     }
@@ -421,12 +429,18 @@ export default function SubmoduleIndex() {
     if (nextSubmoduleId) {
       router.replace({
         pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
-        params: { moduleId, highlightSubmoduleId: nextSubmoduleId },
+        params: {
+          moduleId,
+          highlightSubmoduleId: nextSubmoduleId,
+          ...(origin ? { origin } : {}),
+        },
       });
       return;
     }
 
-    router.replace('/(tabs)/Learn');
+    router.replace(
+      origin === 'checklist' ? '/(tabs)/Checklist' : '/(tabs)/Learn'
+    );
   }, [
     isModuleLoading,
     isLearnProgressLoading,
@@ -443,6 +457,7 @@ export default function SubmoduleIndex() {
     completedSectionId,
     moduleData?.submodules,
     moduleId,
+    origin,
     practices,
     requestedNextSectionId,
     router,
@@ -510,7 +525,7 @@ export default function SubmoduleIndex() {
           onPress={() =>
             router.replace({
               pathname: '/(tabs)/Learn/modules/[moduleId]',
-              params: { moduleId },
+              params: { moduleId, ...(origin ? { origin } : {}) },
             })
           }
         />
@@ -522,9 +537,7 @@ export default function SubmoduleIndex() {
           <View style={{ gap: 10 }}>
             <Text
               style={{
-                fontSize: 16,
-                lineHeight: 22,
-                fontWeight: '600',
+                ...typography.cardTitle,
                 color: categoryColor,
               }}
             >
@@ -548,7 +561,10 @@ export default function SubmoduleIndex() {
             style={ui.card}
             onPress={() =>
               router.push(
-                `/(tabs)/Learn/modules/${moduleId}/${submoduleId}/intro/1` as any
+                withLearnOrigin(
+                  `/(tabs)/Learn/modules/${moduleId}/${submoduleId}/intro/1`,
+                  origin
+                ) as any
               )
             }
           >
@@ -605,11 +621,14 @@ export default function SubmoduleIndex() {
                         return;
                       }
                       router.push(
-                        lessonResumeHref(
-                          moduleId,
-                          submoduleId,
-                          lesson._id,
-                          done ? undefined : progress
+                        withLearnOrigin(
+                          lessonResumeHref(
+                            moduleId,
+                            submoduleId,
+                            lesson._id,
+                            done ? undefined : progress
+                          ),
+                          origin
                         ) as any
                       );
                     }}
@@ -709,6 +728,6 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 16,
   },
-  loadingText: { fontSize: 16, color: '#686464' },
-  errorText: { fontSize: 16, color: '#686464' },
+  loadingText: { ...typography.body, color: '#62605B' },
+  errorText: { ...typography.body, color: '#62605B' },
 });

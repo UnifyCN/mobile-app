@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { categorySymbol } from '@/components/learn/CategorySymbol';
 import StructuredLesson from '@/components/learn/StructuredLesson';
 import LearnRetry from '@/components/learn/LearnRetry';
@@ -26,6 +27,10 @@ import {
   getLessonTotalPages,
 } from '@/utils/submoduleProgress';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 const getSanityImageUrl = (assetRef: string | undefined): string | null => {
   if (!assetRef) return null;
@@ -38,11 +43,19 @@ const getSanityImageUrl = (assetRef: string | undefined): string | null => {
 export default function SubmoduleIntroScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, pageNum } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    pageNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     pageNum: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const [showExitModal, setShowExitModal] = useState(false);
   const { saveCurrentPage } = useLessonProgress();
 
@@ -63,6 +76,10 @@ export default function SubmoduleIntroScreen() {
 
   const handleSaveAndLeave = () => {
     setShowExitModal(false);
+    if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
+      return;
+    }
     router.push({
       pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
       params: { moduleId, submoduleId },
@@ -82,8 +99,11 @@ export default function SubmoduleIntroScreen() {
           moduleId,
           submoduleId,
           pageNum: (currentPage - 1).toString(),
+          ...originParams,
         },
       });
+    } else if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
     }
   };
 
@@ -116,6 +136,7 @@ export default function SubmoduleIntroScreen() {
           moduleId,
           submoduleId,
           pageNum: (currentPage + 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -124,12 +145,17 @@ export default function SubmoduleIntroScreen() {
         router.push({
           pathname:
             '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]' as any,
-          params: { moduleId, submoduleId, lessonId: firstLesson._id },
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId: firstLesson._id,
+            ...originParams,
+          },
         });
       } else {
         router.push({
           pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-          params: { moduleId, submoduleId },
+          params: { moduleId, submoduleId, ...originParams },
         });
       }
     }
@@ -391,17 +417,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   pageIndicator: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#6B7280',
+    fontWeight: '600',
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: '600',
+    ...typography.title,
     color: '#000',
     marginBottom: 20,
-    lineHeight: 40,
     textAlign: 'center',
     marginTop: 20,
   },
@@ -415,11 +439,7 @@ const styles = StyleSheet.create({
   textSection: {
     gap: 8,
   },
-  textContent: {
-    fontSize: 16,
-    color: '#374151',
-    lineHeight: 24,
-  },
+  textContent: { ...typography.body, color: '#374151' },
   boldText: {
     fontWeight: '700',
   },
@@ -428,18 +448,8 @@ const styles = StyleSheet.create({
   listSection: {
     gap: 12,
   },
-  listTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#000',
-    marginBottom: 8,
-  },
-  listItem: {
-    fontSize: 16,
-    color: '#374151',
-    lineHeight: 24,
-    marginLeft: 8,
-  },
+  listTitle: { ...typography.cardTitle, color: '#000', marginBottom: 8 },
+  listItem: { ...typography.body, color: '#374151', marginLeft: 8 },
 
   // Definition items
   definitionItem: {
@@ -455,25 +465,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginRight: 8,
   },
-  definitionText: {
-    flex: 1,
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  term: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#000',
-  },
-  separator: {
-    fontSize: 16,
-    color: '#000',
-  },
-  definition: {
-    fontSize: 16,
-    color: '#374151',
-    lineHeight: 24,
-  },
+  definitionText: { ...typography.body, flex: 1 },
+  term: { ...typography.cardTitle, color: '#000' },
+  separator: { ...typography.body, color: '#000' },
+  definition: { ...typography.body, color: '#374151' },
 
   // Image sections
   imageSection: {
@@ -495,7 +490,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imagePlaceholderText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
     textAlign: 'center',
   },
@@ -519,11 +514,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  backBtnText: {
-    color: '#374151',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  backBtnText: { ...typography.cardTitle, color: '#374151' },
   nextBtn: {
     flex: 1,
     backgroundColor: '#575757',
@@ -531,7 +522,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: { ...typography.cardTitle, color: '#fff' },
 
   // Modal styles
   modalOverlay: {
@@ -550,16 +541,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -571,11 +560,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -583,9 +568,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

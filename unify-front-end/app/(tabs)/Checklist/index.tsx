@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useEffect,
   useRef,
@@ -363,11 +364,19 @@ export default function ChecklistScreen() {
     if (resolvedTab && TAB_SLUG_TO_ROUTE[resolvedTab]) {
       router.push(TAB_SLUG_TO_ROUTE[resolvedTab] as any);
     } else if (linkSubmoduleId && linkModuleId) {
-      router.push(
-        `/(tabs)/Learn/modules/${linkModuleId}/${linkSubmoduleId}` as any
-      );
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
+        params: {
+          moduleId: linkModuleId,
+          submoduleId: linkSubmoduleId,
+          origin: 'checklist',
+        },
+      });
     } else if (linkModuleId) {
-      router.push(`/(tabs)/Learn/modules/${linkModuleId}` as any);
+      router.push({
+        pathname: '/(tabs)/Learn/modules/[moduleId]' as any,
+        params: { moduleId: linkModuleId, origin: 'checklist' },
+      });
     } else {
       router.push('/(tabs)/Learn');
     }
@@ -807,9 +816,9 @@ const styles = StyleSheet.create({
     borderTopColor: '#E2E8F0',
   },
   removedTitle: {
+    ...typography.label,
+
     marginBottom: 8,
-    fontSize: 14,
-    fontWeight: '600',
     color: '#64748B',
   },
   removedRow: {
@@ -820,13 +829,14 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   removedTaskName: {
+    ...typography.secondary,
+
     flex: 1,
-    fontSize: 14,
     color: '#64748B',
   },
   restoreText: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.button,
+
     color: '#E03B3B',
   },
   header: {
@@ -838,8 +848,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
+    flexShrink: 1,
+    marginRight: 12,
+
     color: '#000',
   },
   addButton: {
@@ -854,13 +866,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   addButtonLabel: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.secondary,
+
     color: '#111',
   },
   subtitle: {
+    ...typography.body,
+
     marginTop: 6,
-    fontSize: 16,
     color: '#000',
   },
   progressContainer: {
@@ -946,8 +959,8 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   addOwnRowText: {
-    fontSize: 15,
-    fontWeight: '500',
+    ...typography.label,
+
     color: '#6B6B6B',
   },
   emptyContainer: {
@@ -955,7 +968,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 16,
+    ...typography.body,
+
     color: '#A0AEC0',
     textAlign: 'center',
   },

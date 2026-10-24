@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 /**
  * ChecklistCheckboxBlock
  *
@@ -78,16 +79,6 @@ const styles = StyleSheet.create({
   checkboxChecked: {
     backgroundColor: '#000',
   },
-  checkmark: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-    lineHeight: 16,
-  },
-  label: {
-    flex: 1,
-    fontSize: 18,
-    lineHeight: 27,
-    color: '#374151',
-  },
+  checkmark: { ...typography.caption, color: '#fff', fontWeight: 'bold' },
+  label: { ...typography.reading, flex: 1, color: '#374151' },
 });

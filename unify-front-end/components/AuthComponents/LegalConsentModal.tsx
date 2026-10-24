@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -120,7 +121,9 @@ export default function LegalConsentModal({
                         style={styles.linkText}
                         onPress={() => openDocument('termsOfService')}
                         accessibilityRole='link'
-                        accessibilityLabel={t('auth.accessibility.termsOfService')}
+                        accessibilityLabel={t(
+                          'auth.accessibility.termsOfService'
+                        )}
                       />
                     ),
                     privacy: (
@@ -129,7 +132,9 @@ export default function LegalConsentModal({
                         style={styles.linkText}
                         onPress={() => openDocument('privacyPolicy')}
                         accessibilityRole='link'
-                        accessibilityLabel={t('auth.accessibility.privacyPolicy')}
+                        accessibilityLabel={t(
+                          'auth.accessibility.privacyPolicy'
+                        )}
                       />
                     ),
                     guidelines: (
@@ -138,7 +143,9 @@ export default function LegalConsentModal({
                         style={styles.linkText}
                         onPress={() => openDocument('communityGuidelines')}
                         accessibilityRole='link'
-                        accessibilityLabel={t('auth.accessibility.communityGuidelines')}
+                        accessibilityLabel={t(
+                          'auth.accessibility.communityGuidelines'
+                        )}
                       />
                     ),
                   }}
@@ -197,18 +204,8 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 12,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Theme.textInput,
-    marginBottom: 32,
-    lineHeight: 24,
-  },
+  title: { ...typography.title, color: Theme.black, marginBottom: 12 },
+  subtitle: { ...typography.body, color: Theme.textInput, marginBottom: 32 },
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -220,22 +217,13 @@ const styles = StyleSheet.create({
     margin: 0,
     marginRight: 8,
   },
-  checkboxText: {
-    flex: 1,
-    fontSize: 16,
-    color: Theme.black,
-    lineHeight: 24,
-  },
+  checkboxText: { ...typography.body, flex: 1, color: Theme.black },
   linkText: {
     color: '#5182C7',
     textDecorationLine: 'underline',
     fontWeight: '600',
   },
-  errorText: {
-    color: '#f00',
-    fontSize: 14,
-    marginTop: 16,
-  },
+  errorText: { ...typography.secondary, color: '#f00', marginTop: 16 },
   buttonContainer: {
     paddingHorizontal: 24,
     gap: 12,
@@ -251,17 +239,10 @@ const styles = StyleSheet.create({
   continueButtonDisabled: {
     backgroundColor: '#E7E7E9',
   },
-  continueButtonText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  continueButtonText: { ...typography.button, color: Theme.white },
   cancelButton: {
     paddingVertical: 12,
     alignItems: 'center',
   },
-  cancelButtonText: {
-    color: Theme.textInput,
-    fontSize: 16,
-  },
+  cancelButtonText: { ...typography.button, color: Theme.textInput },
 });

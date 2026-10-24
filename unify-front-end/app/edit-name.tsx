@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   View,
   Text,
@@ -6,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -16,12 +18,14 @@ import { useCurrentUser } from '@/context/UserContext';
 import { updateUsername } from '@/services/users/updateUsername';
 import { updateFirstName } from '@/services/users/updateFirstName';
 import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/context/ToastContext';
 
 export default function EditNamePage() {
   const router = useRouter();
   const { t } = useTranslation();
   const { currentUser } = useCurrentUser();
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
   const [firstName, setFirstName] = useState(currentUser?.firstName ?? '');
   const [username, setUsername] = useState(currentUser?.username || '');
   const [firstNameError, setFirstNameError] = useState<string | null>(null);
@@ -77,12 +81,10 @@ export default function EditNamePage() {
       }
 
       if (firstNameSucceeded && usernameSucceeded) {
-        queryClient.invalidateQueries({ queryKey: ['userInfo'] });
-        Alert.alert(
-          t('editName.successTitle'),
-          t('editName.successMessage'),
-          [{ text: t('common.ok'), onPress: () => router.back() }]
-        );
+        void queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+        Keyboard.dismiss();
+        router.back();
+        showToast(t('editName.successMessage'));
       } else {
         // Partial success — invalidate so the screen reflects the saved fields,
         // stay on the page so the user can retry the failed field.
@@ -173,43 +175,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
   },
-  label: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 12,
-  },
+  label: { ...typography.section, color: Theme.black, marginBottom: 12 },
   labelSpaced: {
     marginTop: 24,
   },
   input: {
+    ...typography.body,
     height: 56,
     borderWidth: 1,
     borderColor: Theme.black,
     borderRadius: 10,
     paddingHorizontal: 20,
-    fontSize: 16,
     color: Theme.black,
   },
   inputError: {
     borderColor: '#f00',
   },
   characterCount: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textPostTime,
     marginTop: 8,
     textAlign: 'left',
   },
-  helper: {
-    fontSize: 12,
-    color: Theme.textPostTime,
-    marginTop: 4,
-  },
-  errorText: {
-    fontSize: 12,
-    color: '#f00',
-    marginTop: 4,
-  },
+  helper: { ...typography.caption, color: Theme.textPostTime, marginTop: 4 },
+  errorText: { ...typography.caption, color: '#f00', marginTop: 4 },
   saveButton: {
     marginTop: 32,
     backgroundColor: Theme.primaryGatherRed,
@@ -221,9 +210,5 @@ const styles = StyleSheet.create({
   saveButtonDisabled: {
     opacity: 0.6,
   },
-  saveButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.white,
-  },
+  saveButtonText: { ...typography.button, color: Theme.white },
 });

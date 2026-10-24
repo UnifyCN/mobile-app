@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { StyleSheet, View, FlatList, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -50,10 +51,9 @@ const PastTipsScreen = () => {
             submessage={
               <Text
                 style={{
-                  fontSize: 14,
+                  ...typography.secondary,
                   color: Theme.textInput,
                   textAlign: 'center',
-                  lineHeight: 20,
                 }}
               >
                 {t('tips.checkBackTomorrow')}
@@ -97,10 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  loadingText: {
-    fontSize: 16,
-    color: Theme.textInput,
-  },
+  loadingText: { ...typography.body, color: Theme.textInput },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',

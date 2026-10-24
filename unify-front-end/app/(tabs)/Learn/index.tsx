@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import React from 'react';
 import {
@@ -122,8 +123,7 @@ export default function Learn() {
             <Text
               accessibilityRole='header'
               style={{
-                fontSize: 24,
-                fontWeight: '600',
+                ...typography.title,
                 color: RESOURCE_THEME.textHeading,
               }}
             >
@@ -131,9 +131,7 @@ export default function Learn() {
             </Text>
             <Text
               style={{
-                fontSize: 16,
-                fontWeight: '400',
-                lineHeight: 20,
+                ...typography.body,
                 color: RESOURCE_THEME.textSubtitle,
               }}
             >
@@ -176,9 +174,7 @@ export default function Learn() {
           >
             <Text
               style={{
-                fontSize: 16,
-                lineHeight: 20,
-                fontWeight: '700',
+                ...typography.section,
                 color: '#191919',
               }}
             >
@@ -206,8 +202,8 @@ export default function Learn() {
                     style={[
                       s.meta,
                       {
-                        fontSize: 12,
-                        color: value === filter ? '#181818' : '#777777',
+                        ...typography.secondary,
+                        color: value === filter ? '#181818' : '#62605B',
                         fontWeight: value === filter ? '500' : '400',
                       },
                     ]}

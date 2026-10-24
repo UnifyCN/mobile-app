@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { categorySymbol } from '@/components/learn/CategorySymbol';
 import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -492,9 +493,8 @@ export default function PracticeQuizQuestionPage() {
                 markDefs={currentQuestion.questionMarkDefs}
                 styles={{
                   normal: {
-                    fontSize: 17,
+                    ...typography.reading,
                     color: '#000',
-                    lineHeight: 30,
                     textAlign: 'center',
                   },
                 }}
@@ -657,30 +657,23 @@ export default function PracticeQuizQuestionPage() {
                   markDefs={currentQuestion.answer_box.markDefs}
                   styles={{
                     normal: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     bullet: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     number: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     strong: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '600',
+                      ...typography.reading,
+                      fontWeight: '700',
                       color: '#3F3F3F',
                     },
                   }}
@@ -772,10 +765,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  loadingText: { ...typography.body, color: '#6B7280' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -783,21 +773,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#DC2626',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.body, color: '#DC2626', textAlign: 'center' },
   content: {
     padding: 20,
     flex: 1,
   },
   quizTitle: {
-    fontSize: 34,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 12,
-    lineHeight: 40,
     textAlign: 'left',
   },
   questionContainer: {
@@ -891,21 +875,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EF4444',
     marginTop: 0,
   },
-  checkmark: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+  checkmark: { ...typography.caption, color: '#fff', fontWeight: 'bold' },
   optionContent: {
     flex: 1,
     minHeight: 20,
   },
-  optionText: {
-    fontSize: 14,
-    color: '#374151',
-    lineHeight: 20,
-    fontWeight: '700',
-  },
+  optionText: { ...typography.secondary, color: '#374151', fontWeight: '700' },
   footer: {
     flexShrink: 0,
     flexDirection: 'row',
@@ -926,11 +901,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  backButtonText: {
-    color: '#191919',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  backButtonText: { ...typography.button, color: '#191919' },
   checkButton: {
     backgroundColor: '#575757',
     paddingVertical: 14,
@@ -939,11 +910,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  checkButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  checkButtonText: { ...typography.button, color: '#fff' },
   checkButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -984,7 +951,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF2F2',
   },
   matchingItemText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#374151',
     textAlign: 'center',
     fontWeight: '500',
@@ -1001,11 +968,7 @@ const styles = StyleSheet.create({
   matchingCheckButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  matchingCheckButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  matchingCheckButtonText: { ...typography.button, color: '#fff' },
   matchingCheckButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -1033,16 +996,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -1054,11 +1015,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -1066,9 +1023,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

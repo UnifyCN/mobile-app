@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -125,13 +126,17 @@ export default function PathwayCard({
         {isInProgress && (
           <View style={styles.progressBadge}>
             <View style={styles.progressDot} />
-            <Text style={styles.progressBadgeText}>{t('learn.pathwayCard.continue')}</Text>
+            <Text style={styles.progressBadgeText}>
+              {t('learn.pathwayCard.continue')}
+            </Text>
           </View>
         )}
         {isCompleted && (
           <View style={[styles.progressBadge, styles.completedBadge]}>
             <Feather name='check' size={10} color='#FFFFFF' />
-            <Text style={styles.progressBadgeText}>{t('learn.pathwayCard.done')}</Text>
+            <Text style={styles.progressBadgeText}>
+              {t('learn.pathwayCard.done')}
+            </Text>
           </View>
         )}
 
@@ -168,7 +173,7 @@ export default function PathwayCard({
 const styles = StyleSheet.create({
   card: {
     width: '48%',
-    height: 118,
+    minHeight: 148,
     borderRadius: 20,
     overflow: 'hidden',
     backgroundColor: '#fff',
@@ -184,9 +189,9 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: '100%',
-    height: '100%',
+    minHeight: 148,
     borderRadius: 20,
-    paddingTop: 16,
+    paddingTop: 48,
     paddingHorizontal: 16,
     paddingBottom: 16,
     position: 'relative',
@@ -270,8 +275,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   progressBadgeText: {
-    fontSize: 10,
-    fontWeight: '600',
+    ...typography.caption,
+
     color: '#FFFFFF',
     letterSpacing: 0.2,
   },
@@ -279,15 +284,14 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
   },
   title: {
-    fontSize: 16,
-    fontWeight: '700',
+    ...typography.cardTitle,
+
     color: '#FFFFFF',
     marginBottom: 0,
-    lineHeight: 24,
   },
   meta: {
-    fontSize: 14,
+    ...typography.secondary,
+
     color: '#FFFFFF',
-    fontWeight: '500',
   },
 });

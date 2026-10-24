@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { lessonPresentation } from '@/utils/lessonPresentation';
 import React, { useRef, useState } from 'react';
 import {
@@ -112,8 +113,7 @@ export default function StructuredLesson({
           >
             <Text
               style={{
-                fontSize: 14,
-                lineHeight: 20,
+                ...typography.secondary,
                 fontWeight: '600',
                 color: selected === section._key ? '#FFFFFF' : '#33312D',
               }}
@@ -178,9 +178,7 @@ export default function StructuredLesson({
                 .toLocaleUpperCase()}
             </Text>
           ) : null}
-          <Text style={[s.title, { fontSize: 34, lineHeight: 40 }]}>
-            {title}
-          </Text>
+          <Text style={s.title}>{title}</Text>
         </View>
         {sections.map(section => (
           <View
@@ -204,7 +202,7 @@ export default function StructuredLesson({
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ color: '#FFFFFF', fontSize: 12 }}>
+                  <Text style={{ ...typography.caption, color: '#FFFFFF' }}>
                     {navigationSections.findIndex(
                       item => item._key === section._key
                     ) + 1}
@@ -213,8 +211,7 @@ export default function StructuredLesson({
                 <Text
                   accessibilityRole='header'
                   style={{
-                    fontSize: 20,
-                    lineHeight: 26,
+                    ...typography.section,
                     fontWeight: '600',
                     color: '#191919',
                     flex: 1,
@@ -259,12 +256,11 @@ function SectionBody({
       markDefs={markDefs}
       highlights={highlights}
       styles={{
-        h1: { fontSize: 19, lineHeight: 26, marginTop: 12, marginBottom: 10 },
-        h2: { fontSize: 19, lineHeight: 26, marginTop: 12, marginBottom: 10 },
-        h3: { fontSize: 18, lineHeight: 25, marginTop: 10, marginBottom: 10 },
+        h1: { ...typography.section, marginTop: 12, marginBottom: 10 },
+        h2: { ...typography.section, marginTop: 12, marginBottom: 10 },
+        h3: { ...typography.section, marginTop: 10, marginBottom: 10 },
         normal: {
-          fontSize: 18,
-          lineHeight: 27,
+          ...typography.reading,
           marginBottom: 10,
           ...(compact ? { marginTop: 0 } : {}),
           color: '#191919',
@@ -288,16 +284,14 @@ function SectionBody({
           alignSelf: 'stretch',
         },
         tipBodyText: {
-          fontSize: 18,
-          lineHeight: 27,
+          ...typography.reading,
           fontWeight: '400',
           color: '#191919',
           marginTop: 0,
           marginBottom: 0,
         },
         tipTitleText: {
-          fontSize: 18,
-          lineHeight: 27,
+          ...typography.reading,
           fontWeight: '600',
           color: '#191919',
         },
@@ -341,8 +335,7 @@ function SectionBody({
                   style={[
                     s.meta,
                     {
-                      fontSize: 15,
-                      lineHeight: 20,
+                      ...typography.label,
                       fontWeight: '500',
                       color: '#191919',
                       textAlign: 'center',
@@ -384,9 +377,7 @@ function SectionBody({
               style={[
                 s.meta,
                 {
-                  fontFamily: 'Inter',
-                  fontSize: 16,
-                  lineHeight: 24,
+                  ...typography.body,
                   color: '#191919',
                   backgroundColor: '#FFFFFF',
                   borderWidth: 1,
@@ -409,8 +400,7 @@ function SectionBody({
             style={[
               s.meta,
               {
-                fontSize: 17,
-                lineHeight: 23,
+                ...typography.cardTitle,
                 fontWeight: '600',
                 color: '#191919',
               },
@@ -419,10 +409,7 @@ function SectionBody({
             {t('learn.structured.quickCheck')}
           </Text>
           <Text
-            style={[
-              s.rowTitle,
-              { fontFamily: 'Inter', fontSize: 18, lineHeight: 27 },
-            ]}
+            style={[s.rowTitle, { ...typography.reading, fontWeight: '600' }]}
           >
             {section.question}
           </Text>
@@ -448,9 +435,7 @@ function SectionBody({
             >
               <Text
                 style={{
-                  fontFamily: 'Inter',
-                  fontSize: 18,
-                  lineHeight: 27,
+                  ...typography.reading,
                   color: '#191919',
                 }}
               >
@@ -463,7 +448,7 @@ function SectionBody({
               <Text
                 style={[
                   s.rowTitle,
-                  { fontFamily: 'Inter', fontSize: 18, lineHeight: 27 },
+                  { ...typography.reading, fontWeight: '600' },
                 ]}
               >
                 {t(
@@ -473,12 +458,7 @@ function SectionBody({
                     : 'learn.structured.tryAgain'
                 )}
               </Text>
-              <Text
-                style={[
-                  s.subtitle,
-                  { fontFamily: 'Inter', fontSize: 18, lineHeight: 27 },
-                ]}
-              >
+              <Text style={[s.subtitle, { ...typography.reading }]}>
                 {section.explanation}
               </Text>
             </View>
@@ -514,9 +494,8 @@ function SectionBody({
                     s.rowTitle,
                     {
                       flex: 1,
-                      fontFamily: 'Inter',
-                      fontSize: 18,
-                      lineHeight: 25,
+                      ...typography.reading,
+                      fontWeight: '600',
                     },
                   ]}
                 >
@@ -557,14 +536,12 @@ function SectionBody({
             >
               <Text style={s.meta}>[{index + 1}]</Text>
               <View style={s.grow}>
-                <Text style={[s.meta, { fontSize: 13, lineHeight: 18 }]}>
+                <Text style={[s.meta, { ...typography.caption }]}>
                   {[source.publisher, source.year].filter(Boolean).join(' · ')}
                 </Text>
                 <Text
                   style={{
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    lineHeight: 24,
+                    ...typography.body,
                     color: '#2C4976',
                   }}
                 >

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -103,23 +104,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   questionText: {
-    fontWeight: 'bold',
-    fontSize: 17,
+    ...typography.cardTitle,
     marginHorizontal: 50,
     textAlign: 'center',
   },
-  noText: {
-    color: '#000',
-    fontWeight: '600',
-    fontSize: 16,
-    paddingHorizontal: 25,
-  },
-  yesText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 16,
-    paddingHorizontal: 25,
-  },
+  noText: { ...typography.cardTitle, color: '#000', paddingHorizontal: 25 },
+  yesText: { ...typography.cardTitle, color: '#fff', paddingHorizontal: 25 },
   image: {
     alignSelf: 'center',
     marginTop: 35,

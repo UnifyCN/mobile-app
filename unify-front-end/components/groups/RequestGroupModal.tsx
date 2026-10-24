@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -104,7 +105,10 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
         onClose();
       }, 2000);
     } catch (e: any) {
-      Alert.alert(t('common.error'), e?.message ?? t('groups.failedSendRequest'));
+      Alert.alert(
+        t('common.error'),
+        e?.message ?? t('groups.failedSendRequest')
+      );
     } finally {
       setSubmitting(false);
     }
@@ -123,7 +127,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
           <View style={styles.sheet}>
             <View style={styles.header}>
               <Text style={styles.title}>
-                {showSuccess ? t('groups.requestSent') : t('groups.requestGroup')}
+                {showSuccess
+                  ? t('groups.requestSent')
+                  : t('groups.requestGroup')}
               </Text>
               <Pressable onPress={handleDismiss} style={styles.closeBtn}>
                 <Text style={styles.closeText}>✕</Text>
@@ -147,7 +153,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
                 showsVerticalScrollIndicator={false}
                 automaticallyAdjustKeyboardInsets
               >
-                <Text style={styles.label}>{t('groups.requestForm.groupNameLabel')}</Text>
+                <Text style={styles.label}>
+                  {t('groups.requestForm.groupNameLabel')}
+                </Text>
                 <TextInput
                   value={groupName}
                   onChangeText={setGroupName}
@@ -156,7 +164,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
                   editable={!submitting}
                 />
 
-                <Text style={styles.label}>{t('groups.requestForm.audienceLabel')}</Text>
+                <Text style={styles.label}>
+                  {t('groups.requestForm.audienceLabel')}
+                </Text>
                 <TextInput
                   value={audience}
                   onChangeText={setAudience}
@@ -177,7 +187,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
                   editable={!submitting}
                 />
 
-                <Text style={styles.label}>{t('groups.requestForm.emailLabel')}</Text>
+                <Text style={styles.label}>
+                  {t('groups.requestForm.emailLabel')}
+                </Text>
                 <TextInput
                   value={requesterEmail}
                   onChangeText={setRequesterEmail}
@@ -188,7 +200,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
                   editable={!submitting}
                 />
 
-                <Text style={styles.label}>{t('groups.requestForm.extraNotesLabel')}</Text>
+                <Text style={styles.label}>
+                  {t('groups.requestForm.extraNotesLabel')}
+                </Text>
                 <TextInput
                   value={extraNotes}
                   onChangeText={setExtraNotes}
@@ -216,7 +230,9 @@ export default function RequestGroupModal({ visible, onClose }: Props) {
                   {submitting ? (
                     <ActivityIndicator />
                   ) : (
-                    <Text style={styles.submitText}>{t('groups.sendRequest')}</Text>
+                    <Text style={styles.submitText}>
+                      {t('groups.sendRequest')}
+                    </Text>
                   )}
                 </Pressable>
 
@@ -256,19 +272,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  title: { fontSize: 18, fontWeight: '700' },
+  title: { ...typography.cardTitle },
   closeBtn: { padding: 6 },
-  closeText: { fontSize: 18 },
+  closeText: { ...typography.body },
 
   content: { padding: 16, gap: 8 },
-  label: { fontSize: 13, fontWeight: '600' },
+  label: { ...typography.caption, fontWeight: '600' },
   input: {
+    ...typography.body,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    fontSize: 14,
     backgroundColor: '#fff',
   },
   textArea: { minHeight: 90, textAlignVertical: 'top' },
@@ -281,8 +297,8 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     backgroundColor: '#fff',
   },
-  submitText: { fontSize: 16, fontWeight: '700' },
-  helper: { marginTop: 6, fontSize: 12, color: '#666' },
+  submitText: { ...typography.button },
+  helper: { ...typography.caption, marginTop: 6, color: '#666' },
 
   // Success state styles
   successContainer: {
@@ -295,16 +311,10 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginBottom: 16,
   },
-  successTitle: {
-    fontSize: 22,
-    fontWeight: '700',
-    marginBottom: 8,
-    color: '#000',
-  },
+  successTitle: { ...typography.section, marginBottom: 8, color: '#000' },
   successMessage: {
-    fontSize: 15,
+    ...typography.secondary,
     color: '#666',
     textAlign: 'center',
-    lineHeight: 22,
   },
 });

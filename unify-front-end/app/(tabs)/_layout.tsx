@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Tabs, useRouter, usePathname } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -13,6 +14,8 @@ import SocialIcon from '@/components/icons/SocialIcon';
 import { useAnalytics } from '@/utils/analytics';
 import ChecklistIcon from '@/components/icons/ChecklistIcon';
 import { useHapticsPreference } from '@/context/HapticsContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { getTabBarBottomPadding } from '@/utils/safeAreaSpacing';
 
 const TabIcon = ({ IconComponent, title, focused }: any) => {
   return (
@@ -41,6 +44,8 @@ export default function TabLayout() {
   const { trackTabSwitch } = useAnalytics();
   const { hapticsEnabled } = useHapticsPreference();
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+  const tabBarBottomPadding = getTabBarBottomPadding(insets.bottom);
 
   const getTabDisplayName = (routeName: string) => {
     switch (routeName) {
@@ -103,7 +108,8 @@ export default function TabLayout() {
             : {
                 flexDirection: 'row',
                 paddingTop: 12,
-                paddingBottom: 52,
+                paddingBottom: tabBarBottomPadding,
+                height: 56 + tabBarBottomPadding,
                 borderTopWidth: 1,
                 borderTopColor: '#F0F0F0',
               },
@@ -219,8 +225,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   tabText: {
-    fontSize: 10,
-    fontFamily: 'Inter',
+    ...typography.tab,
   },
   tabIcon: {
     height: 24,
@@ -232,6 +237,6 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   inactiveTab: {
-    color: '#878787',
+    color: '#62605B',
   },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
@@ -149,6 +150,6 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#fff',
   },
-  text: { marginTop: 12, fontSize: 16, color: '#6B7280' },
-  error: { fontSize: 16, color: '#EF4444', textAlign: 'center' },
+  text: { ...typography.body, marginTop: 12, color: '#6B7280' },
+  error: { ...typography.body, color: '#EF4444', textAlign: 'center' },
 });

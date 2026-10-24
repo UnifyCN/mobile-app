@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -104,7 +105,7 @@ export default function SubmoduleProgressBar({
           ]}
         >
           {lessonLayout && lessonPosition && lessonCount ? (
-            <Text style={{ fontSize: 13, color: '#777777' }}>
+            <Text style={{ ...typography.caption, color: '#62605B' }}>
               {lessonPosition} / {lessonCount}
             </Text>
           ) : null}
@@ -188,9 +189,8 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   title: {
+    ...typography.cardTitle,
     flex: 1,
-    fontSize: 15,
-    fontWeight: '600',
     color: '#343434',
     textAlign: 'center',
   },
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   label: {
-    fontSize: 12,
+    ...typography.caption,
     color: '#6B7280',
     marginTop: 8,
     textAlign: 'center',

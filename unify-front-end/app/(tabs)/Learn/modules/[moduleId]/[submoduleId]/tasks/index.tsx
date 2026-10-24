@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect } from 'react';
 import {
   View,
@@ -62,7 +63,9 @@ export default function TasksEntryScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.center}>
           <ActivityIndicator size='large' color='#10B981' />
-          <Text style={styles.loadingText}>{t('learn.tasks.loadingTasks')}</Text>
+          <Text style={styles.loadingText}>
+            {t('learn.tasks.loadingTasks')}
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -112,11 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  loadingText: { marginTop: 12, fontSize: 16, color: '#6B7280' },
-  errorText: { fontSize: 16, color: '#EF4444', textAlign: 'center' },
-  emptyText: {
-    fontSize: 16,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
+  loadingText: { ...typography.body, marginTop: 12, color: '#6B7280' },
+  errorText: { ...typography.body, color: '#EF4444', textAlign: 'center' },
+  emptyText: { ...typography.body, color: '#6B7280', textAlign: 'center' },
 });

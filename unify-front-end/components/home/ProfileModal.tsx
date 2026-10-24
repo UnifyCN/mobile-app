@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback } from 'react';
 import { View, Text, Pressable, StyleSheet, Linking } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -85,7 +86,8 @@ export default function ProfileModal({ visible, onClose }: ProfileModalProps) {
           <Text style={styles.username}>@{currentUser.username}</Text>
         )}
         <Text style={styles.counts}>
-          {followerCount} {t('common.followers')}{'  '}·{'  '}
+          {followerCount} {t('common.followers')}
+          {'  '}·{'  '}
           {followingCount} {t('common.following')}
         </Text>
       </View>
@@ -128,28 +130,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 20,
   },
-  username: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Theme.black,
-    marginTop: 12,
-  },
-  displayName: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Theme.black,
-    marginTop: 12,
-  },
-  handle: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 2,
-  },
-  counts: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
+  username: { ...typography.cardTitle, color: Theme.black, marginTop: 12 },
+  displayName: { ...typography.cardTitle, color: Theme.black, marginTop: 12 },
+  handle: { ...typography.secondary, color: '#666', marginTop: 2 },
+  counts: { ...typography.secondary, color: '#666', marginTop: 4 },
   menuSection: {
     paddingTop: 4,
   },
@@ -172,9 +156,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 14,
   },
-  menuRowLabel: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#1a1a1a',
-  },
+  menuRowLabel: { ...typography.label, color: '#1a1a1a' },
 });

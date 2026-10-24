@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -93,7 +94,9 @@ export default function ExplainTermModal({
           <View style={styles.header}>
             <View style={styles.headerLeft}>
               <Feather name='help-circle' size={18} color='#6B7280' />
-              <Text style={styles.headerTitle}>{t('learn.explainTerm.title')}</Text>
+              <Text style={styles.headerTitle}>
+                {t('learn.explainTerm.title')}
+              </Text>
             </View>
             <TouchableOpacity onPress={onClose} hitSlop={8}>
               <Feather name='x' size={20} color='#9CA3AF' />
@@ -108,7 +111,9 @@ export default function ExplainTermModal({
             {loading && (
               <View style={styles.loadingContainer}>
                 <ActivityIndicator size='small' color='#6B7280' />
-                <Text style={styles.loadingText}>{t('learn.explainTerm.gettingExplanation')}</Text>
+                <Text style={styles.loadingText}>
+                  {t('learn.explainTerm.gettingExplanation')}
+                </Text>
               </View>
             )}
 
@@ -124,7 +129,9 @@ export default function ExplainTermModal({
                   onPress={handleRetry}
                 >
                   <Feather name='refresh-cw' size={14} color='#fff' />
-                  <Text style={styles.retryButtonText}>{t('learn.explainTerm.tryAgain')}</Text>
+                  <Text style={styles.retryButtonText}>
+                    {t('learn.explainTerm.tryAgain')}
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -162,11 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  headerTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#374151',
-  },
+  headerTitle: { ...typography.cardTitle, color: '#374151' },
   termContainer: {
     backgroundColor: '#F9FAFB',
     borderRadius: 8,
@@ -174,12 +177,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginBottom: 16,
   },
-  termText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#111827',
-    fontStyle: 'italic',
-  },
+  termText: { ...typography.cardTitle, color: '#111827', fontStyle: 'italic' },
   content: {
     minHeight: 60,
   },
@@ -189,25 +187,14 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingVertical: 12,
   },
-  loadingText: {
-    fontSize: 14,
-    color: '#6B7280',
-  },
-  explanationText: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#374151',
-  },
+  loadingText: { ...typography.secondary, color: '#6B7280' },
+  explanationText: { ...typography.body, color: '#374151' },
   errorContainer: {
     alignItems: 'center',
     gap: 12,
     paddingVertical: 8,
   },
-  errorText: {
-    fontSize: 14,
-    color: '#EF4444',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.secondary, color: '#EF4444', textAlign: 'center' },
   retryButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -217,9 +204,5 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
   },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  retryButtonText: { ...typography.button, color: '#fff' },
 });

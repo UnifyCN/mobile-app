@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import { memo } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -46,7 +47,7 @@ const EventCard = memo(
 
     return (
       <TouchableOpacity
-        style={[styles.eventCard, { width, height: cardHeight }]}
+        style={[styles.eventCard, { width, minHeight: cardHeight }]}
         onPress={onPress}
       >
         <View style={[styles.imageContainer, { height: imageHeight }]}>
@@ -64,7 +65,7 @@ const EventCard = memo(
           </View>
         </View>
         <View style={styles.eventContent}>
-          <Text style={styles.eventTitle} numberOfLines={1}>
+          <Text style={styles.eventTitle} numberOfLines={2}>
             {event.title}
           </Text>
           <View style={styles.eventDetailRow}>
@@ -116,8 +117,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 12,
-    width: 42,
-    height: 42,
+    minWidth: 42,
+    minHeight: 42,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
     borderRadius: 21,
     backgroundColor: 'rgba(255, 255, 255, 0.82)',
     borderColor: 'rgba(255, 255, 255, 0.55)',
@@ -126,16 +129,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   datePillDay: {
-    fontSize: 15,
-    lineHeight: 15,
-    fontWeight: '500',
+    ...typography.secondary,
     color: Theme.secondaryBlack,
+    fontWeight: '500',
   },
   datePillMonth: {
-    fontSize: 15,
-    lineHeight: 15,
-    fontWeight: '500',
+    ...typography.secondary,
     color: Theme.secondaryBlack,
+    fontWeight: '500',
   },
   eventContent: {
     paddingHorizontal: 16,
@@ -143,11 +144,10 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   eventTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
+
     color: Theme.black,
     marginBottom: 6,
-    lineHeight: 24,
   },
   eventDetailRow: {
     flexDirection: 'row',
@@ -156,11 +156,10 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   eventDetailText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#9B9797',
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
     flex: 1,
-    lineHeight: 20,
   },
 });
 

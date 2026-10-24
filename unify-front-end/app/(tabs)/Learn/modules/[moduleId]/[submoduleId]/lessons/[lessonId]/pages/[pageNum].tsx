@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import LearnRetry from '@/components/learn/LearnRetry';
 import StructuredLesson from '@/components/learn/StructuredLesson';
 import React, { useState, useRef, useCallback } from 'react';
@@ -39,16 +40,29 @@ import { hasLoadedContentItem } from '@/utils/learnCompletionNavigation';
 import { useToast } from '@/context/ToastContext';
 import { useLessonPageSaved } from '@/hooks/learn/useLessonPageSaved';
 import { useMutateSaveLessonPage } from '@/hooks/learn/useMutateSaveLessonPage';
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
 
 export default function LessonPageScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { moduleId, submoduleId, lessonId, pageNum } = useLocalSearchParams<{
+  const {
+    moduleId,
+    submoduleId,
+    lessonId,
+    pageNum,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     submoduleId: string;
     lessonId: string;
     pageNum: string;
+    origin?: string | string[];
   }>();
+  const origin = normalizeLearnOrigin(originParam);
+  const originParams = origin ? { origin } : {};
   const {
     trackScreen,
     trackLessonPageViewed,
@@ -205,6 +219,10 @@ export default function LessonPageScreen() {
 
   const handleSaveAndLeave = () => {
     setShowExitModal(false);
+    if (origin === 'checklist') {
+      router.replace(getLessonExitDestination(origin, '') as any);
+      return;
+    }
     router.push({
       pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
       params: { moduleId, submoduleId },
@@ -235,6 +253,7 @@ export default function LessonPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage + 1).toString(),
+          ...originParams,
         },
       });
     } else {
@@ -245,7 +264,13 @@ export default function LessonPageScreen() {
         router.push({
           pathname:
             '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/activities/[pageNum]' as any,
-          params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+          params: {
+            moduleId,
+            submoduleId,
+            lessonId,
+            pageNum: '1',
+            ...originParams,
+          },
         });
       } else {
         // No activity pages, check if there are quizzes
@@ -258,7 +283,13 @@ export default function LessonPageScreen() {
           router.push({
             pathname:
               '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId]' as any,
-            params: { moduleId, submoduleId, lessonId, quizId: firstQuiz._id },
+            params: {
+              moduleId,
+              submoduleId,
+              lessonId,
+              quizId: firstQuiz._id,
+              ...originParams,
+            },
           });
         } else {
           // No quizzes, check if there are ending pages
@@ -268,7 +299,13 @@ export default function LessonPageScreen() {
             router.push({
               pathname:
                 '/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum]' as any,
-              params: { moduleId, submoduleId, lessonId, pageNum: '1' },
+              params: {
+                moduleId,
+                submoduleId,
+                lessonId,
+                pageNum: '1',
+                ...originParams,
+              },
             });
           } else {
             // No ending pages, save this lesson as completed before navigating
@@ -295,7 +332,12 @@ export default function LessonPageScreen() {
               router.dismissTo({
                 pathname:
                   '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-                params: { moduleId, submoduleId, justCompletedLearn: '1' },
+                params: {
+                  moduleId,
+                  submoduleId,
+                  justCompletedLearn: '1',
+                  ...originParams,
+                },
               });
             } else {
               // Go to next lesson
@@ -309,6 +351,7 @@ export default function LessonPageScreen() {
                     submoduleId,
                     lessonId: nextLesson._id,
                     pageNum: '1',
+                    ...originParams,
                   },
                 });
               }
@@ -330,9 +373,14 @@ export default function LessonPageScreen() {
           submoduleId,
           lessonId,
           pageNum: (currentPage - 1).toString(),
+          ...originParams,
         },
       });
     } else {
+      if (origin === 'checklist') {
+        router.replace('/(tabs)/Checklist');
+        return;
+      }
       // First page, go to previous lesson or map
       const previousLesson = getPreviousLesson();
       if (previousLesson) {
@@ -345,12 +393,13 @@ export default function LessonPageScreen() {
             submoduleId,
             lessonId: previousLesson._id,
             pageNum: String(Math.max(1, previousLesson.pages?.length || 0)),
+            ...originParams,
           },
         });
       } else {
         router.push({
           pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-          params: { moduleId, submoduleId },
+          params: { moduleId, submoduleId, ...originParams },
         });
       }
     }
@@ -722,18 +771,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 12,
   },
-  pageIndicator: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#6B7280',
-  },
+  pageIndicator: { ...typography.cardTitle, color: '#6B7280' },
 
   pageTitle: {
-    fontSize: 28,
-    fontWeight: '700',
+    ...typography.title,
+
     color: '#000',
     marginBottom: 20,
-    lineHeight: 40,
     textAlign: 'left',
     marginTop: 20,
   },
@@ -743,11 +787,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   contentText: {
-    fontWeight: '400',
+    ...typography.reading,
+
     color: '#424242',
     marginBottom: 10,
-    fontSize: 16,
-    lineHeight: 24,
   },
 
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -773,7 +816,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: {
+    ...typography.button,
+    color: '#374151',
+  },
   nextBtn: {
     backgroundColor: '#1A1919',
     paddingVertical: 12,
@@ -782,7 +828,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: {
+    ...typography.button,
+    color: '#fff',
+  },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -804,16 +853,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -825,11 +872,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -837,9 +880,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

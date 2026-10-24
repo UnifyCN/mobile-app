@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { typography } from '@/constants/Typography';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,15 +8,43 @@ import {
   Modal,
   Platform,
   ScrollView,
+  LayoutChangeEvent,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Theme } from '@/constants/Theme';
+import { getBottomSheetPadding } from '@/utils/safeAreaSpacing';
 
 interface MonthPickerProps {
   value: Date | null;
   onChange: (date: Date) => void;
   minimumDate?: Date;
   maximumDate?: Date;
+}
+
+// Measure rows and the viewport so translated labels and Dynamic Type stay centered.
+function useCenteredPickerScroll(selectedKey: number) {
+  const ref = useRef<ScrollView>(null);
+  const viewportHeight = useRef(0);
+  const rows = useRef(new Map<number, { y: number; height: number }>());
+  const center = useCallback(() => {
+    const row = rows.current.get(selectedKey);
+    if (!row || !viewportHeight.current) return;
+    ref.current?.scrollTo({
+      y: Math.max(0, row.y + row.height / 2 - viewportHeight.current / 2),
+      animated: false,
+    });
+  }, [selectedKey]);
+  useEffect(center, [center]);
+  const onLayout = (event: LayoutChangeEvent) => {
+    viewportHeight.current = event.nativeEvent.layout.height;
+    center();
+  };
+  const measure = (key: number, event: LayoutChangeEvent) => {
+    rows.current.set(key, event.nativeEvent.layout);
+    if (key === selectedKey) center();
+  };
+  return { ref, onLayout, measure, center };
 }
 
 const MonthPicker: React.FC<MonthPickerProps> = ({
@@ -25,6 +54,7 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
   maximumDate = new Date(new Date().getFullYear() + 10, 11),
 }) => {
   const { t, i18n } = useTranslation();
+  const insets = useSafeAreaInsets();
   const [showPicker, setShowPicker] = useState(false);
   const [selectedYear, setSelectedYear] = useState(
     value?.getFullYear() ?? new Date().getFullYear()
@@ -51,33 +81,10 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
   };
 
   const years = generateYears();
-  const yearScrollRef = useRef<ScrollView>(null);
-  const monthScrollRef = useRef<ScrollView>(null);
+  const yearScroll = useCenteredPickerScroll(selectedYear);
+  const monthScroll = useCenteredPickerScroll(selectedMonth);
 
-  const ITEM_HEIGHT = 45; // paddingVertical(12)*2 + lineHeight(~20) + border(1)
-  const SCROLL_LIST_HEIGHT = 300 - 33; // scrollContainer height minus columnTitle
-
-  const handleOpenPicker = useCallback(() => {
-    setShowPicker(true);
-    // Scroll to selected year/month after modal renders
-    setTimeout(() => {
-      const yearIndex = years.indexOf(selectedYear);
-      if (yearIndex >= 0 && yearScrollRef.current) {
-        const offset = Math.max(
-          0,
-          yearIndex * ITEM_HEIGHT - SCROLL_LIST_HEIGHT / 2 + ITEM_HEIGHT / 2
-        );
-        yearScrollRef.current.scrollTo({ y: offset, animated: false });
-      }
-      if (monthScrollRef.current) {
-        const monthOffset = Math.max(
-          0,
-          selectedMonth * ITEM_HEIGHT - SCROLL_LIST_HEIGHT / 2 + ITEM_HEIGHT / 2
-        );
-        monthScrollRef.current.scrollTo({ y: monthOffset, animated: false });
-      }
-    }, 100);
-  }, [selectedYear, selectedMonth, years]);
+  const handleOpenPicker = () => setShowPicker(true);
 
   const handleConfirm = () => {
     const newDate = new Date(selectedYear, selectedMonth, 1);
@@ -92,7 +99,12 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
   return (
     <>
       <TouchableOpacity style={styles.dateInput} onPress={handleOpenPicker}>
-        <Text style={{ color: value ? Theme.black : Theme.textInput }}>
+        <Text
+          style={[
+            typography.body,
+            { color: value ? Theme.black : Theme.textInput },
+          ]}
+        >
           {value
             ? value.toLocaleDateString(i18n.language, {
                 month: 'long',
@@ -111,17 +123,28 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
         <View style={styles.modalOverlay}>
           <View style={styles.pickerContainer}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>{t('onboarding.monthPickerTitle')}</Text>
+              <Text style={styles.headerText}>
+                {t('onboarding.monthPickerTitle')}
+              </Text>
             </View>
 
             <View style={styles.scrollContainer}>
               {/* Month Selector */}
               <View style={styles.column}>
-                <Text style={styles.columnTitle}>{t('onboarding.monthLabel')}</Text>
-                <ScrollView ref={monthScrollRef} style={styles.scrollList}>
+                <Text style={styles.columnTitle}>
+                  {t('onboarding.monthLabel')}
+                </Text>
+                <ScrollView
+                  testID='month-picker-months'
+                  ref={monthScroll.ref}
+                  style={styles.scrollList}
+                  onLayout={monthScroll.onLayout}
+                  onContentSizeChange={monthScroll.center}
+                >
                   {months.map((month, index) => (
                     <TouchableOpacity
                       key={month}
+                      onLayout={event => monthScroll.measure(index, event)}
                       style={[
                         styles.item,
                         selectedMonth === index && styles.selectedItem,
@@ -143,11 +166,20 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
 
               {/* Year Selector */}
               <View style={styles.column}>
-                <Text style={styles.columnTitle}>{t('onboarding.yearLabel')}</Text>
-                <ScrollView ref={yearScrollRef} style={styles.scrollList}>
+                <Text style={styles.columnTitle}>
+                  {t('onboarding.yearLabel')}
+                </Text>
+                <ScrollView
+                  testID='month-picker-years'
+                  ref={yearScroll.ref}
+                  style={styles.scrollList}
+                  onLayout={yearScroll.onLayout}
+                  onContentSizeChange={yearScroll.center}
+                >
                   {years.map(year => (
                     <TouchableOpacity
                       key={year}
+                      onLayout={event => yearScroll.measure(year, event)}
                       style={[
                         styles.item,
                         selectedYear === year && styles.selectedItem,
@@ -168,18 +200,27 @@ const MonthPicker: React.FC<MonthPickerProps> = ({
               </View>
             </View>
 
-            <View style={styles.buttonContainer}>
+            <View
+              style={[
+                styles.buttonContainer,
+                { paddingBottom: getBottomSheetPadding(insets.bottom, 16) },
+              ]}
+            >
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={handleCancel}
               >
-                <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
+                <Text style={styles.cancelButtonText}>
+                  {t('common.cancel')}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.confirmButton]}
                 onPress={handleConfirm}
               >
-                <Text style={styles.confirmButtonText}>{t('onboarding.confirm')}</Text>
+                <Text style={styles.confirmButtonText}>
+                  {t('onboarding.confirm')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -215,8 +256,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Theme.surfaceGray,
   },
   headerText: {
-    fontSize: 18,
-    fontWeight: '700',
+    ...typography.cardTitle,
     color: Theme.black,
     textAlign: 'center',
   },
@@ -230,13 +270,13 @@ const styles = StyleSheet.create({
     borderRightColor: Theme.surfaceGray,
   },
   columnTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: Theme.surfaceGray,
+    fontWeight: '600',
   },
   scrollList: {
     flex: 1,
@@ -250,11 +290,7 @@ const styles = StyleSheet.create({
   selectedItem: {
     backgroundColor: '#FFF5F3',
   },
-  itemText: {
-    fontSize: 16,
-    color: Theme.black,
-    textAlign: 'center',
-  },
+  itemText: { ...typography.body, color: Theme.black, textAlign: 'center' },
   selectedItemText: {
     fontWeight: '700',
     color: Theme.primaryGatherRed,
@@ -278,16 +314,8 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: Theme.primaryGatherRed,
   },
-  cancelButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-  },
-  confirmButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.white,
-  },
+  cancelButtonText: { ...typography.button, color: Theme.black },
+  confirmButtonText: { ...typography.button, color: Theme.white },
 });
 
 export default MonthPicker;

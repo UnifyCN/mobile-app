@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -336,7 +337,9 @@ const GroupDetailScreen = () => {
               {isMember && (
                 <View style={styles.memberBadge}>
                   <Feather name='check-circle' size={14} color='#4CAF50' />
-                  <Text style={styles.memberBadgeText}>{t('groups.joined')}</Text>
+                  <Text style={styles.memberBadgeText}>
+                    {t('groups.joined')}
+                  </Text>
                 </View>
               )}
             </View>
@@ -397,10 +400,9 @@ const GroupDetailScreen = () => {
               submessage={
                 <Text
                   style={{
-                    fontSize: 18,
+                    ...typography.body,
                     color: Theme.textInput,
                     textAlign: 'center',
-                    lineHeight: 20,
                   }}
                 >
                   {t('groups.beFirstPost')}
@@ -436,13 +438,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: 20,
   },
-  groupTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 12,
-    lineHeight: 28,
-  },
+  groupTitle: { ...typography.title, color: Theme.black, marginBottom: 12 },
   groupImage: {
     width: '100%',
     height: 200,
@@ -469,11 +465,7 @@ const styles = StyleSheet.create({
   metadataIcon: {
     marginRight: 10,
   },
-  metadataText: {
-    fontSize: 16,
-    color: Theme.black,
-    lineHeight: 22,
-  },
+  metadataText: { ...typography.body, color: Theme.black },
   memberBadge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -484,10 +476,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   memberBadgeText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#4CAF50',
-    fontWeight: '500',
     marginLeft: 4,
+    fontWeight: '500',
   },
   ctaButton: {
     borderRadius: 12,
@@ -506,22 +498,9 @@ const styles = StyleSheet.create({
   ctaButtonDisabled: {
     opacity: 0.7,
   },
-  ctaButtonText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  aboutTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 6,
-  },
-  aboutText: {
-    fontSize: 18,
-    color: Theme.black,
-    lineHeight: 27,
-  },
+  ctaButtonText: { ...typography.button, color: Theme.white },
+  aboutTitle: { ...typography.cardTitle, color: Theme.black, marginBottom: 6 },
+  aboutText: { ...typography.body, color: Theme.black },
   sectionDivider: {
     height: 1,
     backgroundColor: Theme.surfaceGray,
@@ -530,7 +509,7 @@ const styles = StyleSheet.create({
     marginHorizontal: -20,
   },
   loadingText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     textAlign: 'center',
     marginTop: 40,

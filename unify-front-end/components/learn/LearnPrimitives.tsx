@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -12,10 +13,10 @@ export const learnStyles = StyleSheet.create({
     paddingBottom: 100,
     gap: 20,
   },
-  title: { fontSize: 28, lineHeight: 32, fontWeight: '700', color: '#191919' },
-  subtitle: { fontSize: 16, lineHeight: 24, color: '#353535' },
-  heading: { fontSize: 20, fontWeight: '700', color: '#191919' },
-  meta: { fontSize: 12, lineHeight: 18, color: '#686464' },
+  title: { ...typography.title, color: '#191919' },
+  subtitle: { ...typography.body, color: '#353535' },
+  heading: { ...typography.section, color: '#191919' },
+  meta: { ...typography.caption, color: '#62605B' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   grow: { flex: 1, gap: 4 },
   card: {
@@ -26,9 +27,7 @@ export const learnStyles = StyleSheet.create({
     gap: 12,
   },
   rowTitle: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#191919',
   },
   pressed: { opacity: 0.65 },
@@ -41,7 +40,7 @@ export const learnStyles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#191919',
   },
-  actionText: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },
+  actionText: { ...typography.button, color: '#FFFFFF' },
 });
 
 export function LearnBack({
@@ -72,7 +71,7 @@ export function LearnBack({
       ]}
     >
       <Feather name='chevron-left' size={20} color='#242424' />
-      <Text style={{ fontSize: 16, color: '#242424', flexShrink: 1 }}>
+      <Text style={{ ...typography.label, color: '#242424', flexShrink: 1 }}>
         {title}
       </Text>
     </Pressable>
@@ -150,10 +149,12 @@ export function ResumeRow({
     >
       <CategorySymbol moduleId={moduleId} icon={icon} size={38} />
       <View style={learnStyles.grow}>
-        <Text style={{ fontSize: 12, fontWeight: '600', color: '#2C4976' }}>
+        <Text
+          style={{ ...typography.caption, fontWeight: '600', color: '#2C4976' }}
+        >
           {t(isNext ? 'learn.home.upNext' : 'learn.home.continue')}
         </Text>
-        <Text style={[learnStyles.rowTitle, { fontSize: 15 }]}>{title}</Text>
+        <Text style={learnStyles.rowTitle}>{title}</Text>
         <Text style={learnStyles.meta}>{subtitle}</Text>
       </View>
       <Feather name='chevron-right' size={18} color='#8E8E93' />

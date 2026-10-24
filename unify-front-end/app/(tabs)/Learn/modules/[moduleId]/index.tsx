@@ -1,3 +1,8 @@
+import {
+  getLessonExitDestination,
+  normalizeLearnOrigin,
+} from '@/utils/learnOriginNavigation';
+import { typography } from '@/constants/Typography';
 import { useLearnEvents } from '@/hooks/learn/useLearnEvents';
 import TabHeader from '@/components/home/HomeHeader';
 import CategorySymbol, {
@@ -68,12 +73,19 @@ export default function ModuleIndex() {
       onLearnHubFocused();
     }, [onLearnHubFocused])
   );
-  const { moduleId, whyTag } = useLocalSearchParams<{
+  const {
+    moduleId,
+    whyTag,
+    origin: originParam,
+  } = useLocalSearchParams<{
     moduleId: string;
     blobIndex?: string;
     whyTag?: string;
     highlightSubmoduleId?: string;
+    origin?: string | string[];
   }>();
+
+  const origin = normalizeLearnOrigin(originParam);
 
   // U2: Strip whitespace and require non-empty content before we render the
   // "Why this?" banner — otherwise an empty or whitespace-only personalization
@@ -253,12 +265,18 @@ export default function ModuleIndex() {
       }
       router.push({
         pathname: '/(tabs)/Learn/modules/[moduleId]/[submoduleId]' as any,
-        params: { moduleId, submoduleId: section.id },
+        params: {
+          moduleId,
+          submoduleId: section.id,
+          ...(origin ? { origin } : {}),
+        },
       });
     } catch (navError: any) {
       console.error('[ModuleIndex] Error navigating to section:', navError);
       try {
-        router.replace('/(tabs)/Learn');
+        router.replace(
+          getLessonExitDestination(origin, '/(tabs)/Learn') as any
+        );
       } catch (fallbackError: any) {
         console.error(
           '[ModuleIndex] Error in fallback navigation:',
@@ -302,7 +320,7 @@ export default function ModuleIndex() {
               justifyContent: 'center',
             }}
           >
-            <Text style={{ color: '#FFFFFF', fontWeight: '600', fontSize: 16 }}>
+            <Text style={{ ...typography.button, color: '#FFFFFF' }}>
               {index + 1}
             </Text>
           </View>
@@ -344,7 +362,9 @@ export default function ModuleIndex() {
             message: error?.message || t('common.unknownError'),
           })}
         </Text>
-        <Link href='/(tabs)/Learn'>{t('common.goBackToLearn')}</Link>
+        <Link href={getLessonExitDestination(origin, '/(tabs)/Learn') as any}>
+          {t(origin === 'checklist' ? 'common.goBack' : 'common.goBackToLearn')}
+        </Link>
       </View>
     );
   }
@@ -361,7 +381,11 @@ export default function ModuleIndex() {
       >
         <LearnBack
           title={t('learn.home.tabLabel')}
-          onPress={() => router.replace('/(tabs)/Learn')}
+          onPress={() =>
+            router.replace(
+              getLessonExitDestination(origin, '/(tabs)/Learn') as any
+            )
+          }
         />
         <View style={ui.row}>
           <CategorySymbol
@@ -396,5 +420,5 @@ const styles = StyleSheet.create({
     gap: 16,
     backgroundColor: '#FFFFFF',
   },
-  errorText: { fontSize: 16, color: '#686464' },
+  errorText: { ...typography.body, color: '#62605B' },
 });

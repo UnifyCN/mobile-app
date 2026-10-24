@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -49,8 +50,5 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     gap: 15,
   },
-  searchPlaceholder: {
-    fontSize: 16,
-    color: Theme.textAlternateGray,
-  },
+  searchPlaceholder: { ...typography.body, color: Theme.textAlternateGray },
 });

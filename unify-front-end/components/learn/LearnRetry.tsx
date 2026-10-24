@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Pressable, Text } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,7 +16,7 @@ export default function LearnRetry() {
       }}
       style={{ minHeight: 44, padding: 12, justifyContent: 'center' }}
     >
-      <Text style={{ fontSize: 16, fontWeight: '600', color: '#191919' }}>
+      <Text style={{ ...typography.button, color: '#191919' }}>
         {t('common.retry')}
       </Text>
     </Pressable>

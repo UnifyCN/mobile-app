@@ -1,3 +1,5 @@
+import { isTextAnswerQuestion } from './quizAnswer';
+
 /** Grade stored answer values without treating a string as an array. */
 export function gradeQuizAnswer(
   question: any,
@@ -7,9 +9,13 @@ export function gradeQuizAnswer(
   const values = Array.isArray(question.correct_answer?.value)
     ? question.correct_answer.value
     : [question.correct_answer?.value];
-  if (question.question_type === 'short_answer') {
+  if (isTextAnswerQuestion(question.question_type)) {
     const normalize = (value: string) => {
-      const text = value.normalize('NFKC').trim().toLocaleLowerCase();
+      const text = value
+        .normalize('NFKC')
+        .trim()
+        .toLocaleLowerCase()
+        .replace(/\s+/g, ' ');
       const numeric = text.replace(/[$,\s]/g, '');
       return /^[-+]?\d+(\.\d+)?$/.test(numeric)
         ? String(Number(numeric))

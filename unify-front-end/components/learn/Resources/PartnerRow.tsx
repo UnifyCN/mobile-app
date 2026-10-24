@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -58,7 +59,9 @@ export default function PartnerRow({ partner, onPress }: Props) {
             </Text>
           </View>
           {costLabel && costChip && (
-            <View style={[styles.chip, { backgroundColor: costChip.background }]}>
+            <View
+              style={[styles.chip, { backgroundColor: costChip.background }]}
+            >
               <Text
                 style={[styles.chipText, { color: costChip.text }]}
                 numberOfLines={1}
@@ -101,11 +104,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   body: { flex: 1, gap: 5 },
-  name: { fontSize: 15, fontWeight: '800', color: RESOURCE_THEME.textCard },
+  name: {
+    ...typography.cardTitle,
+    color: RESOURCE_THEME.textCard,
+  },
   tagline: {
-    fontSize: 13,
-    lineHeight: 18,
-    color: RESOURCE_THEME.textSecondary,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   chip: {
@@ -118,9 +124,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
   },
   chipText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: RESOURCE_THEME.textSecondary,
+    ...typography.caption,
+
+    color: typographyColors.secondary,
   },
   chevronWrap: { alignSelf: 'stretch', justifyContent: 'center' },
 });

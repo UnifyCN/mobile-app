@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -90,11 +91,7 @@ const styles = StyleSheet.create({
   userAvatar: {
     marginRight: 12,
   },
-  userName: {
-    fontSize: 16,
-    color: Theme.black,
-    fontWeight: '500',
-  },
+  userName: { ...typography.body, color: Theme.black },
   userItemSeparator: {
     height: 1,
     backgroundColor: Theme.surfaceGray,
@@ -105,12 +102,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
-    fontSize: 14,
-    color: Theme.textAlternateGray,
-  },
-  emptyText: {
-    fontSize: 14,
-    color: Theme.textInput,
-  },
+  loadingText: { ...typography.secondary, color: Theme.textAlternateGray },
+  emptyText: { ...typography.secondary, color: Theme.textInput },
 });
