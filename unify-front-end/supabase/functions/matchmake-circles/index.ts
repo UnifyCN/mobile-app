@@ -1,6 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 // @ts-ignore
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 import {
   buildI18n,
   getPreferredLanguages,
@@ -77,8 +77,6 @@ const DAILY_PROMPT_LIBRARY = {
     ],
   } as Record<string, string[]>,
 };
-
-type SupabaseClient = ReturnType<typeof createClient>;
 
 type WaitlistRow = {
   user_id: string;
@@ -259,8 +257,8 @@ async function isAuthorizedRequest(req: Request): Promise<boolean> {
   if (
     Boolean(
       serviceRoleKey &&
-        authorization &&
-        authorization === `Bearer ${serviceRoleKey}`
+      authorization &&
+      authorization === `Bearer ${serviceRoleKey}`
     )
   ) {
     return true;
@@ -300,7 +298,28 @@ Deno.serve(async (req: Request) => {
     );
   }
 
-  const supabase = createClient(supabaseUrl, serviceKey);
+  const supabase = createClient(supabaseUrl, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  // Check before creating a run, reading Circle data, or sending notifications.
+  const { data: circlesEnabled, error: featureError } = await supabase.rpc(
+    'circles_feature_enabled'
+  );
+  if (featureError) {
+    return new Response(
+      JSON.stringify({ ok: false, error: 'Feature unavailable' }),
+      {
+        status: 503,
+        headers: responseHeaders,
+      }
+    );
+  }
+  if (circlesEnabled !== true) {
+    return new Response(JSON.stringify({ ok: true, paused: true }), {
+      status: 200,
+      headers: responseHeaders,
+    });
+  }
   const runId = await startMatchingRun(supabase);
 
   const summary = {
@@ -683,8 +702,8 @@ function scoreCandidate(
 function sameRecognizedPersona(a: WaitlistRow, b: WaitlistRow) {
   return Boolean(
     isRecognizedPersona(a.persona) &&
-      isRecognizedPersona(b.persona) &&
-      a.persona === b.persona
+    isRecognizedPersona(b.persona) &&
+    a.persona === b.persona
   );
 }
 
@@ -712,7 +731,7 @@ function sharedTopicCount(a: WaitlistRow, b: WaitlistRow) {
 function isRecognizedPersona(persona?: string | null) {
   return Boolean(
     persona &&
-      ['international_student', 'skilled_worker', 'refugee'].includes(persona)
+    ['international_student', 'skilled_worker', 'refugee'].includes(persona)
   );
 }
 
@@ -867,6 +886,12 @@ async function createCircleForGroup(
     .filter('data->>circle_id', 'eq', circleId);
 
   if (i18nError) {
+    const { data: enabled, error: featureError } = await supabase.rpc(
+      'circles_feature_enabled'
+    );
+    if (featureError || enabled !== true) {
+      throw new Error('Circles are paused');
+    }
     console.error(
       'matchmake-circles: failed to attach i18n payload to notifications',
       i18nError
@@ -1254,6 +1279,12 @@ async function sendPushNotifications(
   const staleTokens: string[] = [];
 
   for (let index = 0; index < messages.length; index += batchSize) {
+    // A pause during a matching run must also stop its remaining push batches.
+    const { data: enabled, error: featureError } = await supabase.rpc(
+      'circles_feature_enabled'
+    );
+    if (featureError || enabled !== true) return deliveredUserIds;
+
     const batch = messages.slice(index, index + batchSize);
     // Strip user_id from the wire payload — Expo only accepts known fields
     const expoBatch = batch.map(({ user_id: _omit, ...msg }) => msg);

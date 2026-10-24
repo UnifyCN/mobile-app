@@ -9,6 +9,7 @@ import {
 } from '@/services/push/pushNotifications';
 import { useAnalytics } from '@/utils/analytics';
 import type { Subscription } from 'expo-notifications';
+import { CIRCLES_ENABLED, isCircleNotification } from '@/constants/Features';
 
 /**
  * Validates that a circle_id is a non-empty string
@@ -70,6 +71,11 @@ export function usePushNotifications() {
       const data = response.notification.request.content.data;
       const notificationType =
         typeof data?.type === 'string' ? data.type : 'unknown';
+
+      if (!CIRCLES_ENABLED && isCircleNotification(notificationType, data)) {
+        trackNotificationOpened(notificationType, null);
+        return;
+      }
 
       let deepLinkTarget: string | null = null;
 

@@ -3,15 +3,20 @@ import * as Device from 'expo-device';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 import { supabase } from '@/lib/supabase';
+import { CIRCLES_ENABLED, isCircleNotification } from '@/constants/Features';
 
 // Configure how notifications are handled when app is in foreground
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
+  handleNotification: async notification => {
+    const data = notification.request.content.data;
+    const show = CIRCLES_ENABLED || !isCircleNotification(data?.type, data);
+    return {
+      shouldPlaySound: show,
+      shouldSetBadge: show,
+      shouldShowBanner: show,
+      shouldShowList: show,
+    };
+  },
 });
 
 export interface PushRegistrationResult {
@@ -58,7 +63,10 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
   }
 
   if (finalStatus !== 'granted') {
-    console.warn('[Push] Skipped: permission not granted, status:', finalStatus);
+    console.warn(
+      '[Push] Skipped: permission not granted, status:',
+      finalStatus
+    );
     return {
       token: null,
       previousPermission: existingStatus,
@@ -145,7 +153,12 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
         updated_at: new Date().toISOString(),
       });
       if (error) {
-        console.error('[Push] Failed to store updated token:', error.message, error.code, error.details);
+        console.error(
+          '[Push] Failed to store updated token:',
+          error.message,
+          error.code,
+          error.details
+        );
       } else {
         console.log('[Push] Token updated successfully');
       }
@@ -158,7 +171,12 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
         updated_at: new Date().toISOString(),
       });
       if (error) {
-        console.error('[Push] Failed to store new token:', error.message, error.code, error.details);
+        console.error(
+          '[Push] Failed to store new token:',
+          error.message,
+          error.code,
+          error.details
+        );
       } else {
         console.log('[Push] Token registered successfully');
       }

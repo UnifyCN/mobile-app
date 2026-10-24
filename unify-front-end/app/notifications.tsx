@@ -20,6 +20,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { useAnalytics } from '@/utils/analytics';
 import { formatRelativeTime } from '@/helpers/dateHelpers';
 import { getNotificationText } from '@/utils/notificationText';
+import { CIRCLES_ENABLED, isCircleNotification } from '@/constants/Features';
 
 function getNotificationIcon(type: CommunityNotification['type']): string {
   switch (type) {
@@ -75,6 +76,13 @@ export default function NotificationsScreen() {
 
   const handleNotificationPress = useCallback(
     (notification: CommunityNotification) => {
+      if (
+        !CIRCLES_ENABLED &&
+        isCircleNotification(notification.type, notification.data)
+      ) {
+        return;
+      }
+
       trackNotificationOpened(notification.type);
       if (!notification.read_at) {
         markAsRead(notification.id);

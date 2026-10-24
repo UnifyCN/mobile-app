@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import EventCard from '../cards/EventCard';
 import GroupCard from '../cards/GroupCard';
 import CirclesCard from '../cards/CirclesCard';
+import { CIRCLES_ENABLED } from '@/constants/Features';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -27,7 +28,8 @@ const S = Math.min(SCREEN_WIDTH / FIGMA_WIDTH, 1.05);
 const CARD_S = S * 0.85;
 
 const CONTAINER_W = 300 * S;
-const CONTAINER_H = 350 * S;
+const CARD_TOP_OFFSET = CIRCLES_ENABLED ? 0 : 67 * CARD_S;
+const CONTAINER_H = 350 * S - CARD_TOP_OFFSET;
 
 export default function BelongingScreen() {
   const { t } = useTranslation();
@@ -44,24 +46,25 @@ export default function BelongingScreen() {
         <View
           style={[
             styles.cardPosition,
-            { left: 0, top: 67 * CARD_S, zIndex: 1 },
+            { left: 0, top: 67 * CARD_S - CARD_TOP_OFFSET, zIndex: 1 },
           ]}
         >
           <EventCard scale={CARD_S} />
         </View>
 
-        {/* Circles card — overlaps top-right of events card */}
-        <View
-          style={[styles.cardPosition, { left: 110 * S, top: 0, zIndex: 2 }]}
-        >
-          <CirclesCard scale={CARD_S} />
-        </View>
+        {CIRCLES_ENABLED ? (
+          <View
+            style={[styles.cardPosition, { left: 110 * S, top: 0, zIndex: 2 }]}
+          >
+            <CirclesCard scale={CARD_S} />
+          </View>
+        ) : null}
 
         {/* Groups card — bottom-right */}
         <View
           style={[
             styles.cardPosition,
-            { left: 120 * S, top: 210 * CARD_S, zIndex: 2 },
+            { left: 120 * S, top: 210 * CARD_S - CARD_TOP_OFFSET, zIndex: 2 },
           ]}
         >
           <GroupCard scale={CARD_S} />

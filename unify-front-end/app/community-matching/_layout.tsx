@@ -1,7 +1,12 @@
 import { typography } from '@/constants/Typography';
-import { Stack } from 'expo-router';
+import { CIRCLES_ENABLED } from '@/constants/Features';
+import { Redirect, Stack } from 'expo-router';
 
 export default function CommunityMatchingLayout() {
+  if (!CIRCLES_ENABLED) {
+    return <Redirect href='/(tabs)/Gather/gather' />;
+  }
+
   return (
     <Stack
       screenOptions={{
