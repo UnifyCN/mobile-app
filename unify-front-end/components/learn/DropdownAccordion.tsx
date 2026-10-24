@@ -27,10 +27,12 @@ type AccordionItem = {
 
 export default function DropdownAccordion({
   items,
+  trimEndSpacing = false,
   titleTextStyle,
   renderRichText,
 }: {
   items: AccordionItem[];
+  trimEndSpacing?: boolean;
   titleTextStyle?: TextStyle;
   renderRichText?: (blocks: any[]) => React.ReactNode;
 }) {
@@ -43,12 +45,19 @@ export default function DropdownAccordion({
 
   return (
     <View style={styles.container}>
-      {items.map(item => {
+      {items.map((item, index) => {
         const open = item.id === openId;
         return (
           <View key={item.id}>
             <TouchableOpacity
-              style={styles.header}
+              style={[
+                styles.header,
+                trimEndSpacing &&
+                  index === items.length - 1 &&
+                  !open && { marginBottom: 0 },
+              ]}
+              accessibilityRole='button'
+              accessibilityState={{ expanded: open }}
               onPress={() => toggle(item.id)}
             >
               <Text style={[styles.headerText, titleTextStyle]}>
@@ -62,7 +71,13 @@ export default function DropdownAccordion({
               />
             </TouchableOpacity>
             {open && (
-              <View style={styles.body}>
+              <View
+                style={[
+                  styles.body,
+                  trimEndSpacing &&
+                    index === items.length - 1 && { marginBottom: 0 },
+                ]}
+              >
                 {typeof item.body === 'string' ? (
                   <Text style={styles.bodyText}>{item.body}</Text>
                 ) : (

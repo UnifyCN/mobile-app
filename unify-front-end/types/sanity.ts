@@ -95,6 +95,9 @@ export interface SanityLessonPage {
   _key: string;
   title: string;
   order: number;
+  contentVersion?: 2;
+  sections?: import('./lessonSections').LessonSection[];
+  readingMinutes?: number;
   content: (
     | SanityBlock
     | SanityImage
@@ -111,7 +114,7 @@ export interface SanityDropdown {
   _type: 'dropdown';
   _key: string;
   label: string;
-  content: string;
+  content: (SanityBlock | SanityChecklistCheckbox)[] | string;
 }
 
 export interface SanityExampleBox {

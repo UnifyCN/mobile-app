@@ -32,7 +32,31 @@ export async function getLesson(
       query,
       { lessonId, lang: language }
     );
-    return lesson ? mergeI18nOverlay(lesson) : null;
+    if (!lesson) return null;
+    const merged = mergeI18nOverlay(lesson);
+    if (language === 'en') return merged;
+
+    // Section keys can change independently during authoring. Never merge an
+    // English section tree into a translated page. Page positions remain fixed.
+    const translatedPages = new Map(
+      (lesson.i18n?.pages ?? []).map(page => [page._key, page])
+    );
+    return {
+      ...merged,
+      pages: merged.pages?.map(page => {
+        const translated = translatedPages.get(page._key);
+        if (translated?.contentVersion === 2 && translated.sections?.length) {
+          return {
+            ...page,
+            contentVersion: 2,
+            sections: translated.sections,
+            readingMinutes: translated.readingMinutes,
+          };
+        }
+        // Existing translated content remains readable until its sections exist.
+        return { ...page, contentVersion: undefined, sections: undefined };
+      }),
+    };
   } catch (error) {
     console.error('Error fetching lesson from Sanity:', error);
     return null;

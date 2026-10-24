@@ -343,7 +343,8 @@
     "announcementBody": "Nhấn giữ bất kỳ từ hoặc cụm từ nào trong bài học để tô sáng hoặc nhờ AI giải thích. Các đoạn tô sáng được lưu trong 'Đã lưu từ Học' trên hồ sơ của bạn.",
     "module": {
       "errorLoading": "Lỗi tải mô-đun: {{message}}",
-      "section": "Phần {{number}}"
+      "section": "Phần {{number}}",
+      "introduction": "Giới thiệu"
     },
     "submodule": {
       "learnTitle": "Học",
@@ -395,9 +396,11 @@
       "errorTitle": "Lỗi",
       "imagePlaceholder": "Hình ảnh",
       "submoduleFallback": "Mô-đun phụ",
+      "reviewRating": "{{count}} trên 5 sao",
       "reviewTitle": "Bạn thấy bài học này thế nào?",
       "reviewPlaceholder": "Chia sẻ suy nghĩ của bạn (tùy chọn)",
-      "example": "VÍ DỤ"
+      "example": "VÍ DỤ",
+      "openImage": "Mở ảnh đầy đủ"
     },
     "quiz": {
       "loadingQuizzes": "Đang tải bài kiểm tra...",
@@ -408,7 +411,8 @@
       "startQuiz": "Bắt đầu kiểm tra →",
       "loadingQuestion": "Đang tải câu hỏi...",
       "errorLoadingQuestion": "Lỗi tải câu hỏi",
-      "questionNotFound": "Không tìm thấy câu hỏi"
+      "questionNotFound": "Không tìm thấy câu hỏi",
+      "yourAnswer": "Câu trả lời của bạn"
     },
     "quizzes": {
       "errorLoading": "Lỗi tải bài kiểm tra: {{message}}",
@@ -1261,10 +1265,7 @@
           "serviceArea": "Canada và toàn thế giới",
           "howToStart": "Hãy lấy báo giá trực tuyến qua một đối tác bảo hiểm của TuGo, hoặc gọi 1-855-929-8846.",
           "hours": "Thứ 2–Thứ 6 6:00am–5:00pm PST · Thứ 7 7:00am–4:00pm PST · Chủ Nhật nghỉ",
-          "languages": [
-            "Tiếng Anh",
-            "Tiếng Pháp"
-          ],
+          "languages": ["Tiếng Anh", "Tiếng Pháp"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Bảo hiểm Visitors to Canada",
@@ -1302,10 +1303,7 @@
           "eligibility": "Ưu đãi tài khoản cho người mới đến dành cho người từ 25 tuổi trở lên là thường trú nhân, hoặc là cư dân tạm trú có giấy phép lao động còn hiệu lực trên 8 tháng, đã sống tại Canada 3 năm trở xuống và chưa là thành viên Desjardins. Có ưu đãi riêng cho người 18–24 tuổi và sinh viên toàn thời gian 25–30 tuổi.",
           "howToStart": "Hãy mở tài khoản trực tuyến trong khoảng 15 phút, hoặc nộp đơn từ nước ngoài rồi xác nhận danh tính tại một điểm giao dịch khi bạn đến nơi.",
           "hours": "Trợ giúp pháp lý: mở hồ sơ 24/7 · chuyên viên tư vấn Thứ 2–Thứ 6 9:00am–8:00pm, Thứ 7 9:00am–5:00pm",
-          "languages": [
-            "Tiếng Anh",
-            "Tiếng Pháp"
-          ],
+          "languages": ["Tiếng Anh", "Tiếng Pháp"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Tài khoản chi tiêu cho người mới đến (gói Unlimited)",
@@ -1391,7 +1389,41 @@
         "bookA11y": "Đặt lịch gặp giới thiệu miễn phí với {{name}}"
       }
     },
-    "typeHerePlaceholder": "Nhập tại đây"
+    "typeHerePlaceholder": "Nhập tại đây",
+    "home": {
+      "heading": "Tự tin ổn định cuộc sống",
+      "subtitle": "Các bài học thực tế giúp bạn chuẩn bị cho cuộc sống tại Canada.",
+      "continue": "Tiếp tục học",
+      "moreLessons": "Các bài học khác đang học",
+      "courses": "Khóa học",
+      "all": "Tất cả",
+      "started": "Đã bắt đầu",
+      "emptyStarted": "Các khóa học bạn đã bắt đầu sẽ xuất hiện ở đây.",
+      "modules": "Mô-đun",
+      "moduleCount": "Mô-đun: {{count}}",
+      "lessonCount": "Bài học: {{count}}",
+      "lessonSummary": "{{count}} bài học · {{done}} đã xong",
+      "upNext": "Tiếp theo",
+      "close": "Đóng",
+      "tabLabel": "Học",
+      "completionSummary": "Đã hoàn thành {{completed}} trên {{total}} bài học"
+    },
+    "structured": {
+      "concept": "Khái niệm",
+      "example": "Ví dụ",
+      "visual": "Ví dụ trực quan",
+      "quickCheck": "Kiểm tra nhanh",
+      "faq": "Câu hỏi thường gặp",
+      "citations": "Nguồn tham khảo",
+      "theory": "Lý thuyết",
+      "practice": "Trong thực tế",
+      "readingMinutes": "{{count}} phút đọc",
+      "correct": "Chính xác",
+      "tryAgain": "Thử lại",
+      "nextLesson": "Bài học tiếp theo",
+      "lessonNumber": "Bài học {{number}}",
+      "moduleNumber": "Học phần {{number}}"
+    }
   },
   "checklist": {
     "title": "Danh sách cá nhân",

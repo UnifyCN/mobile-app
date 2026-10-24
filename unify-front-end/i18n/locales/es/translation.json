@@ -343,7 +343,8 @@
     "announcementBody": "Mantén presionada cualquier palabra o frase en una lección para resaltarla o pedirle a la IA que la explique. Tus resaltados se guardan en 'Guardado de Aprender' en tu perfil.",
     "module": {
       "errorLoading": "Error al cargar el módulo: {{message}}",
-      "section": "Sección {{number}}"
+      "section": "Sección {{number}}",
+      "introduction": "Introducción"
     },
     "submodule": {
       "learnTitle": "Aprender",
@@ -395,9 +396,11 @@
       "errorTitle": "Error",
       "imagePlaceholder": "Imagen",
       "submoduleFallback": "Submódulo",
+      "reviewRating": "{{count}} de 5 estrellas",
       "reviewTitle": "¿Cómo te pareció esta lección?",
       "reviewPlaceholder": "Comparte tus pensamientos (opcional)",
-      "example": "EJEMPLO"
+      "example": "EJEMPLO",
+      "openImage": "Abrir imagen completa"
     },
     "quiz": {
       "loadingQuizzes": "Cargando cuestionarios...",
@@ -408,7 +411,8 @@
       "startQuiz": "Iniciar cuestionario →",
       "loadingQuestion": "Cargando pregunta...",
       "errorLoadingQuestion": "Error al cargar la pregunta",
-      "questionNotFound": "Pregunta no encontrada"
+      "questionNotFound": "Pregunta no encontrada",
+      "yourAnswer": "Tu respuesta"
     },
     "quizzes": {
       "errorLoading": "Error al cargar los cuestionarios: {{message}}",
@@ -1261,10 +1265,7 @@
           "serviceArea": "Canadá y todo el mundo",
           "howToStart": "Pide una cotización en línea con un socio asegurador de TuGo, o llama al 1-855-929-8846.",
           "hours": "Lun–Vie 6:00am–5:00pm PST · Sáb 7:00am–4:00pm PST · Dom cerrado",
-          "languages": [
-            "Inglés",
-            "Francés"
-          ],
+          "languages": ["Inglés", "Francés"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Seguro Visitors to Canada",
@@ -1302,10 +1303,7 @@
           "eligibility": "La oferta de cuenta para recién llegados es para personas de 25 años o más que sean residentes permanentes, o residentes temporales con un permiso de trabajo válido por más de 8 meses, que hayan vivido en Canadá 3 años o menos y que no sean ya miembros de Desjardins. Hay ofertas aparte para las personas de 18 a 24 años y para los estudiantes de tiempo completo de 25 a 30 años.",
           "howToStart": "Abre una cuenta en línea en unos 15 minutos, o solicítala desde el extranjero y confirma tu identidad en un punto de servicio al llegar.",
           "hours": "Asistencia legal: apertura de expediente 24/7 · asesores Lun–Vie 9:00am–8:00pm, Sáb 9:00am–5:00pm",
-          "languages": [
-            "Inglés",
-            "Francés"
-          ],
+          "languages": ["Inglés", "Francés"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Cuenta corriente para recién llegados (plan Unlimited)",
@@ -1391,7 +1389,41 @@
         "bookA11y": "Reservar una primera reunión gratuita con {{name}}"
       }
     },
-    "typeHerePlaceholder": "Escribe aquí"
+    "typeHerePlaceholder": "Escribe aquí",
+    "home": {
+      "heading": "Establécete con confianza",
+      "subtitle": "Lecciones prácticas para ayudarte a prepararte para la vida en Canadá.",
+      "continue": "Continuar aprendiendo",
+      "moreLessons": "Más lecciones en curso",
+      "courses": "Cursos",
+      "all": "Todos",
+      "started": "Iniciados",
+      "emptyStarted": "Tus cursos iniciados aparecerán aquí.",
+      "modules": "Módulos",
+      "moduleCount": "Módulos: {{count}}",
+      "lessonCount": "Lecciones: {{count}}",
+      "lessonSummary": "{{count}} lecciones · {{done}} completadas",
+      "upNext": "A continuación",
+      "close": "Cerrar",
+      "tabLabel": "Aprender",
+      "completionSummary": "{{completed}} de {{total}} lecciones completadas"
+    },
+    "structured": {
+      "concept": "Concepto",
+      "example": "Ejemplo",
+      "visual": "Ejemplo visual",
+      "quickCheck": "Comprobación rápida",
+      "faq": "Preguntas frecuentes",
+      "citations": "Fuentes",
+      "theory": "Teoría",
+      "practice": "En la práctica",
+      "readingMinutes": "{{count}} min de lectura",
+      "correct": "Correcto",
+      "tryAgain": "Inténtalo de nuevo",
+      "nextLesson": "Siguiente lección",
+      "lessonNumber": "Lección {{number}}",
+      "moduleNumber": "Módulo {{number}}"
+    }
   },
   "checklist": {
     "title": "Lista personalizada",
