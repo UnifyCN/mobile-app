@@ -79,6 +79,7 @@ describe('checklist offline revalidation', () => {
           currentStage: 4,
           stageChanged: false,
           persona: 'other',
+          province: null,
         }),
       { wrapper }
     );
@@ -118,6 +119,7 @@ describe('checklist offline revalidation', () => {
           currentStage: 1,
           stageChanged: false,
           persona: 'skilled_worker',
+          province: null,
         }),
       { wrapper }
     );
