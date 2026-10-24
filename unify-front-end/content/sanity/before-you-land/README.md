@@ -2,7 +2,7 @@
 
 Files:
 
-- `payload.json`: the proposed records. 5 new `checklist` records and 1 guarded patch.
+- `payload.json`: the published records. 5 new `checklist` records and 1 guarded patch.
 - `snapshot-before.json`: the live port-of-entry record and a manifest of all 33 English `not_arrived` records, captured 2026-10-24.
 - `sources.md`: the official source for each claim, with the page text that supports it.
 - `evidence/`: red and green TDD logs, the live dry run, and a negative-control readback.
@@ -10,11 +10,21 @@ Files:
 
 Target: Sanity project of the app Sanity client (`EXPO_PUBLIC_SANITY_PROJECT_ID`), dataset `production`. The project ID is not stored in this public repo.
 
+## Publication
+
+Published on 2026-10-24 UTC after independent content review. The reviewed payload SHA256 is `ff8d51abdeca6bd5a3a11d1ce04ffc1de7123c40fb8190e392cee4247f548036`.
+
+The CLI transaction failed for insufficient create permission and made no changes. The connected Sanity tools then created the five new drafts and the port draft. The port draft used the original published revision as a guard. Complete draft readback matched the payload and preserved the other port fields. All six drafts were published with their exact draft revisions as guards.
+
+After publication, `--verify` passed for all six records. An authenticated read found six published target records and zero target drafts. The same English pre-arrival query returned 38 records, up from 33. All 32 other captured records kept their revisions. A repeat plan returned six no-ops.
+
+This confirms hosted content publication. It does not confirm a native link tap or an app release. The existing port translations remain outside this ticket.
+
 ## Review, then apply
 
 ```
 cd unify-front-end
-# 1. Read-only plan. Expect: 5 create, 1 patch.
+# 1. Read-only plan. After publication, expect: 6 no-ops.
 SANITY_PROJECT_ID=<id> SANITY_DATASET=production npx tsx scripts/sanity-before-you-land/apply.ts
 # 2. Write. One atomic transaction.
 SANITY_PROJECT_ID=<id> SANITY_DATASET=production SANITY_API_TOKEN=<write token> \

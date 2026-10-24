@@ -343,7 +343,8 @@
     "announcementBody": "Long press any word or phrase in a lesson to highlight it or ask AI to explain it. Your highlights are saved under 'Saved from Learn' in your profile.",
     "module": {
       "errorLoading": "Error loading module: {{message}}",
-      "section": "Section {{number}}"
+      "section": "Section {{number}}",
+      "introduction": "Introduction"
     },
     "submodule": {
       "learnTitle": "Learn",
@@ -395,9 +396,11 @@
       "errorTitle": "Error",
       "imagePlaceholder": "Image",
       "submoduleFallback": "Submodule",
+      "reviewRating": "{{count}} out of 5 stars",
       "reviewTitle": "How was this lesson?",
       "reviewPlaceholder": "Share your thoughts (optional)",
-      "example": "EXAMPLE"
+      "example": "EXAMPLE",
+      "openImage": "Open full image"
     },
     "quiz": {
       "loadingQuizzes": "Loading quizzes...",
@@ -408,7 +411,8 @@
       "startQuiz": "Start Quiz →",
       "loadingQuestion": "Loading question...",
       "errorLoadingQuestion": "Error loading question",
-      "questionNotFound": "Question not found"
+      "questionNotFound": "Question not found",
+      "yourAnswer": "Your answer"
     },
     "quizzes": {
       "errorLoading": "Error loading quizzes: {{message}}",
@@ -1261,10 +1265,7 @@
           "serviceArea": "Canada and worldwide",
           "howToStart": "Start a quote online through a TuGo insurance partner, or call 1-855-929-8846.",
           "hours": "Mon–Fri 6:00am–5:00pm PST · Sat 7:00am–4:00pm PST · Sun closed",
-          "languages": [
-            "English",
-            "French"
-          ],
+          "languages": ["English", "French"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Visitors to Canada Insurance",
@@ -1302,10 +1303,7 @@
           "eligibility": "The newcomer account offer is for people aged 25 and over who are permanent residents, or temporary residents with a work permit valid for more than 8 months, who have lived in Canada 3 years or less and are not already Desjardins members. Separate offers cover ages 18–24 and full-time students aged 25–30.",
           "howToStart": "Open an account online in about 15 minutes, or apply from abroad and confirm your identity at a service location on arrival.",
           "hours": "Legal assistance: file opening 24/7 · advisors Mon–Fri 9:00am–8:00pm, Sat 9:00am–5:00pm",
-          "languages": [
-            "English",
-            "French"
-          ],
+          "languages": ["English", "French"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Newcomers chequing account (Unlimited plan)",
@@ -1391,7 +1389,41 @@
         "bookA11y": "Book a free intro meeting with {{name}}"
       }
     },
-    "typeHerePlaceholder": "Type here"
+    "typeHerePlaceholder": "Type here",
+    "home": {
+      "heading": "Settle in with confidence",
+      "subtitle": "Practical lessons to help you prepare for life in Canada.",
+      "continue": "Continue learning",
+      "moreLessons": "More lessons in progress",
+      "courses": "Courses",
+      "all": "All",
+      "started": "Started",
+      "emptyStarted": "Your started courses will appear here.",
+      "modules": "Modules",
+      "moduleCount": "Modules: {{count}}",
+      "lessonCount": "Lessons: {{count}}",
+      "lessonSummary": "{{count}} lessons · {{done}} done",
+      "upNext": "Up next",
+      "close": "Close",
+      "tabLabel": "Learn",
+      "completionSummary": "{{completed}} of {{total}} lessons completed"
+    },
+    "structured": {
+      "concept": "Concept",
+      "example": "Example",
+      "visual": "Visual example",
+      "quickCheck": "Quick check",
+      "faq": "FAQ",
+      "citations": "Citations",
+      "theory": "Theory",
+      "practice": "In practice",
+      "readingMinutes": "{{count}} min read",
+      "correct": "Correct",
+      "tryAgain": "Try again",
+      "nextLesson": "Next lesson",
+      "lessonNumber": "Lesson {{number}}",
+      "moduleNumber": "Module {{number}}"
+    }
   },
   "checklist": {
     "title": "Personalized Checklist",

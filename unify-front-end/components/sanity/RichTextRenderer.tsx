@@ -30,6 +30,8 @@ interface RichTextRendererProps {
   showQuestionFeedback?: boolean;
   /** When true, root container does not use flex: 1 so it sizes to content (e.g. for option text alignment). */
   compactContainer?: boolean;
+  /** Let the structured section gap own trailing whitespace. */
+  trimEndSpacing?: boolean;
   /** Persisted highlights for this page — passed to SelectableText for rendering */
   highlights?: Highlight[];
 }
@@ -44,6 +46,7 @@ export default function RichTextRenderer({
   onQuestionAnswer,
   showQuestionFeedback = false,
   compactContainer = false,
+  trimEndSpacing = false,
   highlights = [],
 }: RichTextRendererProps) {
   const { t } = useTranslation();
@@ -89,27 +92,25 @@ export default function RichTextRenderer({
 
   if (!blocks || !Array.isArray(blocks)) return null;
 
-  // Create numbering map for ordered lists (keep prev behavior)
-  const createNumberingMap = (blocks: any[]) => {
-    const numberingMap: { [key: string]: number } = {};
-    let currentNumber = 1;
-    let inOrderedList = false;
-
-    blocks.forEach((block, index) => {
-      if (block._type === 'block' && block.listItem === 'number') {
-        if (!inOrderedList) {
-          currentNumber = 1;
-          inOrderedList = true;
-        }
-        numberingMap[block._key || index] = currentNumber;
-        currentNumber++;
-      } else if (block._type === 'block' && !block.listItem) {
-        inOrderedList = false;
-        currentNumber = 1;
+  // Count each nesting level independently; child descriptions do not consume parent numbers.
+  const createNumberingMap = (items: any[]) => {
+    const map: Record<string, number> = {};
+    const counters: Record<number, number> = {};
+    items.forEach((block, index) => {
+      if (block._type !== 'block' || !block.listItem) {
+        Object.keys(counters).forEach(key => delete counters[Number(key)]);
+        return;
       }
+      const level = block.level || 1;
+      Object.keys(counters).forEach(key => {
+        if (Number(key) > level) delete counters[Number(key)];
+      });
+      if (block.listItem === 'number') {
+        counters[level] = (counters[level] || 0) + 1;
+        map[block._key || index] = counters[level];
+      } else delete counters[level];
     });
-
-    return numberingMap;
+    return map;
   };
 
   const numberingMap = createNumberingMap(blocks);
@@ -559,6 +560,20 @@ export default function RichTextRenderer({
     return !hasContent;
   };
 
+  let lastVisibleIndex = blocks.length - 1;
+  if (trimEndSpacing) {
+    while (
+      lastVisibleIndex >= 0 &&
+      isEmptyBlock(blocks[lastVisibleIndex]) &&
+      (!Array.isArray(blocks[lastVisibleIndex].children) ||
+        blocks[lastVisibleIndex].children.every(
+          (child: any) => typeof child === 'string' || child?._type === 'span'
+        ))
+    ) {
+      lastVisibleIndex -= 1;
+    }
+  }
+
   const renderBlock = (
     block: any,
     index: number,
@@ -611,7 +626,10 @@ export default function RichTextRenderer({
 
         const containerStyle = [
           styles.listItemContainer,
-          { marginLeft: indentLevel, marginBottom: 10 },
+          {
+            marginLeft: indentLevel,
+            marginBottom: trimEndSpacing && index === lastVisibleIndex ? 0 : 10,
+          },
         ];
 
         return (
@@ -689,6 +707,9 @@ export default function RichTextRenderer({
       const blockStyle = {
         ...mergedStyles[style],
         textAlign: finalTextAlign,
+        ...(trimEndSpacing && index === lastVisibleIndex
+          ? { marginBottom: 0 }
+          : {}),
       };
 
       switch (style) {
@@ -797,6 +818,8 @@ export default function RichTextRenderer({
     }
 
     if (block._type === 'image') {
+      // An empty decorative image is an authoring placeholder, not learner content.
+      if (!block.asset?._ref) return null;
       const imageUrl = block.asset?._ref
         ? `https://cdn.sanity.io/images/fercgabp/production/${block.asset._ref
             .replace('image-', '')
@@ -813,13 +836,37 @@ export default function RichTextRenderer({
                 setSelectedImage(imageUrl);
               }}
               activeOpacity={0.9}
+              accessibilityRole='button'
+              accessibilityLabel={block.alt || t('learn.lesson.openImage')}
+              accessibilityHint={t('learn.lesson.openImage')}
             >
               <ExpoImage
                 source={imageUrl}
-                style={mergedStyles.image}
-                contentFit='cover'
+                style={[
+                  mergedStyles.image,
+                  {
+                    height: undefined,
+                    aspectRatio: (() => {
+                      const dimensions =
+                        block.asset._ref.match(/-(\d+)x(\d+)-/);
+                      return dimensions
+                        ? Number(dimensions[1]) / Number(dimensions[2])
+                        : 1;
+                    })(),
+                  },
+                ]}
+                contentFit='contain'
                 cachePolicy='memory-disk'
               />
+              <Text
+                style={{
+                  ...typography.secondary,
+                  color: '#535353',
+                  marginBottom: 12,
+                }}
+              >
+                {t('learn.lesson.openImage')}
+              </Text>
             </TouchableOpacity>
           ) : (
             <View style={mergedStyles.imagePlaceholder}>
@@ -838,6 +885,7 @@ export default function RichTextRenderer({
         <DropdownBlock
           block={block}
           index={index}
+          trimEndSpacing={trimEndSpacing && index === lastVisibleIndex}
           renderRichText={dropdownBlocks => (
             <RichTextRenderer
               blocks={dropdownBlocks}
@@ -1437,6 +1485,7 @@ export default function RichTextRenderer({
     >
       {blocks
         .map((block, index) => {
+          if (trimEndSpacing && index > lastVisibleIndex) return null;
           const isLastInList = isLastListItem(index);
           const afterSkipLine = isAfterSkipLine(index);
           const isFirstInList = isFirstListItem(index);
@@ -1650,7 +1699,7 @@ const styles = StyleSheet.create({
     borderColor: '#DCDCDC',
     borderRadius: 8,
     padding: 16,
-    minWidth: 170,
+    minWidth: 0,
     minHeight: 80,
     alignItems: 'center',
     justifyContent: 'center',

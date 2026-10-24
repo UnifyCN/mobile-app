@@ -1,4 +1,6 @@
 import { typography } from '@/constants/Typography';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
@@ -403,6 +405,7 @@ export default function PracticeActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.practice.failedToLoad')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -413,6 +416,7 @@ export default function PracticeActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.practice.pageNotFound')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -421,6 +425,7 @@ export default function PracticeActivityPageScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={
@@ -428,7 +433,7 @@ export default function PracticeActivityPageScreen() {
         }
         submoduleOrder={submoduleData?.order ?? 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -470,6 +475,7 @@ export default function PracticeActivityPageScreen() {
                   <View key={key} style={styles.activityQuestionContainer}>
                     <View style={styles.activityQuestionContent}>
                       <RichTextRenderer
+                        compactContainer
                         blocks={block.question_text || []}
                         markDefs={markDefs}
                       />
@@ -515,6 +521,7 @@ export default function PracticeActivityPageScreen() {
                               </View>
                               <View style={styles.activityOptionContent}>
                                 <RichTextRenderer
+                                  compactContainer
                                   blocks={option.text || []}
                                   markDefs={option.textMarkDefs}
                                   styles={{
@@ -535,6 +542,7 @@ export default function PracticeActivityPageScreen() {
                                   style={styles.activityExplanationContainer}
                                 >
                                   <RichTextRenderer
+                                    compactContainer
                                     blocks={option.explanation}
                                     markDefs={option.explanationMarkDefs}
                                     styles={{
@@ -560,6 +568,7 @@ export default function PracticeActivityPageScreen() {
               }
               return (
                 <RichTextRenderer
+                  compactContainer
                   key={key}
                   blocks={[block]}
                   markDefs={markDefs}
@@ -582,6 +591,7 @@ export default function PracticeActivityPageScreen() {
               </Text>
             )}
             <RichTextRenderer
+              compactContainer
               blocks={currentPageData.answer_box.content || []}
               markDefs={currentPageData.answer_box.markDefs}
               styles={{
@@ -682,13 +692,13 @@ export default function PracticeActivityPageScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
-  container: { paddingHorizontal: 23, paddingBottom: 100 },
+  container: { paddingHorizontal: 20, paddingBottom: 24 },
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   pageTitle: {
     ...typography.title,
     color: '#000',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     marginTop: 20,
   },
   instructionsContainer: { marginBottom: 15 },
@@ -815,10 +825,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 23,
