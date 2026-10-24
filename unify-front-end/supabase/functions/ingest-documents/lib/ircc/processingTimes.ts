@@ -57,20 +57,22 @@ const COUNTRY_CATEGORIES: CountryCategory[] = [
 ];
 
 const COUNTRY_CODE = /^[A-Z]{2}$/;
-const UNAVAILABLE = new Set([
-  'no processing time available',
-  'not enough data',
-]);
 
 function isObject(value: unknown): value is Json {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-/** The time as IRCC wrote it, or null when the entry says no time is available. */
-function readTime(value: unknown): string | null {
-  if (typeof value !== 'string') return null;
-  const time = value.replace(/\s+/g, ' ').trim();
-  return time === '' || UNAVAILABLE.has(time.toLowerCase()) ? null : time;
+/**
+ * The time as IRCC wrote it. An official "No processing time available" or
+ * "Not enough data" is kept word for word, so no number is ever invented. A
+ * value that is not text is malformed and fails the whole source, so a broken
+ * file never replaces a complete one.
+ */
+function readTime(value: unknown, where: string): string {
+  const time =
+    typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '';
+  if (time === '') throw new Error(`Processing times: malformed ${where}`);
+  return time;
 }
 
 function countryNameMap(countryNames: unknown): Map<string, string> {
@@ -89,8 +91,7 @@ function count(skipped: Record<string, number>, reason: string) {
 
 function convertCountryTimes(
   countryTimes: unknown,
-  names: Map<string, string>,
-  skipped: Record<string, number>
+  names: Map<string, string>
 ): SourceRecord[] {
   if (!isObject(countryTimes))
     throw new Error('Processing times: no country file');
@@ -110,21 +111,18 @@ function convertCountryTimes(
       const country = inCanada
         ? null
         : (names.get(code) ?? `country code ${code}`);
+      const where = `${category.key} value for ${code}`;
+      if (category.steps && !isObject(value)) {
+        throw new Error(`Processing times: malformed ${where}`);
+      }
       const leaves: Array<[string, unknown]> = category.steps
         ? Object.entries(category.steps).map(([step, label]) => [
             `${category.label}, ${label}`,
-            isObject(value) ? value[step] : undefined,
+            (value as Json)[step],
           ])
         : [[inCanada ? category.inCanadaLabel! : category.label, value]];
       for (const [label, leaf] of leaves) {
-        const time = readTime(leaf);
-        if (time === null) {
-          count(
-            skipped,
-            typeof leaf === 'string' ? 'unavailable' : 'malformed'
-          );
-          continue;
-        }
+        const time = readTime(leaf, where);
         records.push({
           text: `Processing time for ${label}${country === null ? '' : ` (${country})`}: ${time}.`,
           publishedAt,
@@ -194,17 +192,14 @@ function convertNonCountryTimes(
   // Records come out in the order of NON_COUNTRY_LABELS, never file order.
   const records: SourceRecord[] = [];
   for (const [group, labels] of Object.entries(NON_COUNTRY_LABELS)) {
+    // Every labelled group is required: a partial file must not replace a
+    // complete one.
     const entries = nonCountryTimes[group];
     if (!isObject(entries)) {
-      count(skipped, 'malformed');
-      continue;
+      throw new Error(`Processing times: no ${group} group`);
     }
     for (const [key, label] of Object.entries(labels)) {
-      const read = readTime(entries[key]);
-      if (read === null) {
-        count(skipped, 'unavailable');
-        continue;
-      }
+      const read = readTime(entries[key], `${group}.${key} value`);
       const { part, time } = splitPart(read);
       records.push({
         text: `Processing time for ${label}${part === null ? '' : ` (${part})`}: ${time}.`,
@@ -269,6 +264,15 @@ const EXTENSION_QUEUE_LABELS: Record<string, string> = {
   'WP-EXT': 'Work permit extension in Canada',
 };
 
+// The extension pages show their estimate under "If you apply today". The
+// work permit page also lists what the one shared estimate includes. It is not
+// a separate PGWP estimate, and not a wait for an application already sent.
+const EXTENSION_QUEUE_NOTES: Record<string, string> = {
+  'SP-EXT': ' (if you apply today).',
+  'WP-EXT':
+    ' (if you apply today). This shared estimate includes new post-graduation work permits (PGWPs), bridging open work permits and change of conditions to a work permit.',
+};
+
 /**
  * Durations from a file's current-flpt section. total-people, people-ahead and
  * wait-times are queue counts and history, not durations, and are never read.
@@ -277,18 +281,15 @@ function convertCurrentDurations(
   current: unknown,
   labels: Record<string, string>,
   publishedAt: string | null,
-  skipped: Record<string, number>
+  skipped: Record<string, number>,
+  notes: Record<string, string> = {}
 ): SourceRecord[] {
   const section = current as Json;
   const records: SourceRecord[] = [];
   for (const [key, label] of Object.entries(labels)) {
-    const time = readTime(section[key]);
-    if (time === null) {
-      count(skipped, 'unavailable');
-      continue;
-    }
+    const time = readTime(section[key], `current-flpt ${key} value`);
     records.push({
-      text: `Processing time for ${label}: ${time}.`,
+      text: `Processing time for ${label}: ${time}${notes[key] ?? '.'}`,
       publishedAt,
     });
   }
@@ -326,7 +327,8 @@ function convertExtensionQueue(
     current,
     EXTENSION_QUEUE_LABELS,
     publishedAt,
-    skipped
+    skipped,
+    EXTENSION_QUEUE_NOTES
   );
 }
 
@@ -336,7 +338,7 @@ export function convertProcessingTimes(
   const skipped: Record<string, number> = {};
   const names = countryNameMap(files.countryNames);
   const records = [
-    ...convertCountryTimes(files.countryTimes, names, skipped),
+    ...convertCountryTimes(files.countryTimes, names),
     ...convertNonCountryTimes(files.nonCountryTimes, skipped),
     ...convertFlpt(files.flpt, skipped),
     ...convertExtensionQueue(files.flptByWeek, skipped),

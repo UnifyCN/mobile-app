@@ -11,37 +11,78 @@ import type { CrawlSource } from './pickDueSources.ts';
 import { loadSourceRecords } from './records.ts';
 import { computeContentHash, htmlToCleanText, isQualityChunk } from './text.ts';
 import type {
+  ChunkMetadataGroup,
   IngestDeps,
   Metadata,
   SourceResult,
-  StoredDocument,
 } from './types.ts';
 
 export const EMBEDDING_BATCH_SIZE = 20;
+/**
+ * How long a claim lasts without progress. Each staged batch renews it, so only
+ * a stalled or stopped call loses it. Then the next call may take the source.
+ */
+export const LEASE_SECONDS = 300;
+export const SOURCE_BUSY = 'Another call is refreshing this source';
 const MIN_CONTENT_CHARS = 100;
+
+interface Attempt {
+  /** The fetch time, the chunk write time and the source's last-attempt stamp. */
+  now: string;
+  /** This call's claim on the source. */
+  token: string;
+}
 
 export async function ingestSource(
   source: CrawlSource,
   deps: IngestDeps
 ): Promise<SourceResult> {
   const startedAt = performance.now();
-  // One timestamp per attempt: it is the fetch time, the chunk write time and
-  // the source's last-attempt stamp.
   const attemptedAt = deps.now().toISOString();
+  const token = await deps.store.claimSource(source.id, LEASE_SECONDS);
+  if (token === null) {
+    // The other call stamps and logs its own attempt.
+    const busy: SourceResult = {
+      source_id: source.id,
+      status: 'skipped',
+      error: SOURCE_BUSY,
+    };
+    await deps.store.logCrawl({
+      crawl_source_id: source.id,
+      url: source.url,
+      status: busy.status,
+      content_changed: false,
+      chunks_created: 0,
+      error_message: SOURCE_BUSY,
+      duration_ms: Math.round(performance.now() - startedAt),
+    });
+    return busy;
+  }
+
   let outcome: SourceResult;
   try {
-    outcome =
-      source.source_kind === 'html' || source.source_kind === undefined
-        ? await crawlHtml(source, deps, attemptedAt)
-        : await crawlRecords(source, deps, attemptedAt);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Crawl failed';
-    console.error(`Crawl failed for ${source.url}: ${message}`);
-    outcome = { source_id: source.id, status: 'error', error: message };
+    const attempt = { now: attemptedAt, token };
+    try {
+      outcome =
+        source.source_kind === 'html' || source.source_kind === undefined
+          ? await crawlHtml(source, deps, attempt)
+          : await crawlRecords(source, deps, attempt);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Crawl failed';
+      console.error(`Crawl failed for ${source.url}: ${message}`);
+      outcome = { source_id: source.id, status: 'error', error: message };
+    }
+    // A failed attempt still advances last_crawled_at so one broken source
+    // cannot keep being picked first.
+    await deps.store.recordAttempt(source.id, attemptedAt);
+  } finally {
+    // Best effort: an unreleased lease expires on its own.
+    await deps.store
+      .releaseSource(source.id, token)
+      .catch(error =>
+        console.error(`Lease release failed for ${source.url}: ${error}`)
+      );
   }
-  // A failed attempt still advances last_crawled_at so one broken source cannot
-  // keep being picked first.
-  await deps.store.recordAttempt(source.id, attemptedAt);
   await deps.store.logCrawl({
     crawl_source_id: source.id,
     url: source.url,
@@ -57,9 +98,10 @@ export async function ingestSource(
 async function crawlHtml(
   source: CrawlSource,
   deps: IngestDeps,
-  now: string
+  attempt: Attempt
 ): Promise<SourceResult> {
   const { store } = deps;
+  const { now } = attempt;
   const html = await deps.fetchPage(source.url);
   const cleanText = htmlToCleanText(html);
   if (cleanText.length < MIN_CONTENT_CHARS) {
@@ -73,15 +115,19 @@ async function crawlHtml(
     province: source.province,
   };
 
-  if (existing && existing.contentHash === contentHash) {
-    await store.refreshMetadata(existing.id, {
+  if (
+    existing &&
+    existing.contentHash === contentHash &&
+    (await store.refreshMetadata(source.id, attempt.token, {
+      contentHash,
       documentPatch: {
         fetched_at: stamp.fetchedAt,
         published_at: publishedAt(stamp),
         province: stamp.province,
       },
-      chunkMetadata: chunkMetadata(stamp),
-    });
+      chunkGroups: [{ metadata: chunkMetadata(stamp), indexes: null }],
+    }))
+  ) {
     return { source_id: source.id, status: 'skipped' };
   }
 
@@ -95,8 +141,7 @@ async function crawlHtml(
 
   return await replaceChunks(deps, {
     source,
-    existing,
-    now,
+    attempt,
     contentHash,
     document: {
       title: cleanText.split('\n')[0].slice(0, 200) || source.url,
@@ -117,16 +162,19 @@ async function crawlHtml(
 async function crawlRecords(
   source: CrawlSource,
   deps: IngestDeps,
-  now: string
+  attempt: Attempt
 ): Promise<SourceResult> {
   const { store } = deps;
+  const { now } = attempt;
   const records = await loadSourceRecords(
     source,
     deps.fetchPage,
     new Date(now)
   );
-  if (records.length === 0) {
-    // An empty result is a broken feed, not news: keep the previous content.
+  // Only the newsroom can be validly empty: a readable feed with no item in
+  // the last 30 days. Its expired items must then leave the knowledge base.
+  // The converters throw on a broken file, so the previous content stays.
+  if (records.length === 0 && source.source_kind !== 'ircc_newsroom') {
     throw new Error('No records in the source');
   }
   // Dates are not hashed: a changed date alone refreshes metadata without
@@ -146,21 +194,21 @@ async function crawlRecords(
     province: source.province,
   };
 
-  if (existing && existing.contentHash === contentHash) {
-    await store.refreshRecordMetadata(existing.id, {
+  if (
+    existing &&
+    existing.contentHash === contentHash &&
+    (await store.refreshMetadata(source.id, attempt.token, {
+      contentHash,
       documentPatch,
-      chunks: chunks.map((chunk, chunkIndex) => ({
-        chunkIndex,
-        metadata: chunk.metadata,
-      })),
-    });
+      chunkGroups: groupByMetadata(chunks.map(chunk => chunk.metadata)),
+    }))
+  ) {
     return { source_id: source.id, status: 'skipped' };
   }
 
   return await replaceChunks(deps, {
     source,
-    existing,
-    now,
+    attempt,
     contentHash,
     document: {
       title: source.label ?? source.url,
@@ -178,57 +226,67 @@ async function crawlRecords(
   });
 }
 
+/**
+ * Record indexes that share one metadata value travel together. A source has a
+ * handful of distinct dates, not one per record.
+ */
+function groupByMetadata(metadata: Metadata[]): ChunkMetadataGroup[] {
+  const groups = new Map<string, { metadata: Metadata; indexes: number[] }>();
+  metadata.forEach((value, index) => {
+    const key = JSON.stringify(value);
+    const group = groups.get(key) ?? { metadata: value, indexes: [] };
+    group.indexes.push(index);
+    groups.set(key, group);
+  });
+  return [...groups.values()];
+}
+
 interface ReplaceInput {
   source: CrawlSource;
-  existing: StoredDocument | null;
-  now: string;
+  attempt: Attempt;
   contentHash: string;
   document: { title: string; metadata: Metadata };
   chunks: Array<{ text: string; metadata: Metadata }>;
 }
 
+/**
+ * Embeds and stages the chunks batch by batch, so at most one batch of
+ * embeddings is in memory, then promotes the complete generation in one
+ * database transaction. Until then readers see only the previous version, and
+ * any failure leaves it whole.
+ */
 async function replaceChunks(
   deps: IngestDeps,
-  { source, existing, now, contentHash, document, chunks }: ReplaceInput
+  { source, attempt, contentHash, document, chunks }: ReplaceInput
 ): Promise<SourceResult> {
   const { store } = deps;
-  const documentInput = {
-    url: source.url,
-    title: document.title,
-    updatedAt: now,
-    metadata: document.metadata,
-  };
-  // A new document needs its row first to own the chunks. An existing document
-  // keeps its row untouched until the new chunks are safely written.
-  const documentId =
-    existing?.id ?? (await store.saveDocument({ id: null, ...documentInput }));
-
-  try {
-    for (let i = 0; i < chunks.length; i += EMBEDDING_BATCH_SIZE) {
-      const batch = chunks.slice(i, i + EMBEDDING_BATCH_SIZE);
-      const embeddings = await deps.embed(batch.map(chunk => chunk.text));
-      await store.insertChunks(
-        batch.map((chunk, offset) => ({
-          document_id: documentId,
-          chunk_index: i + offset,
-          chunk_text: chunk.text,
-          embedding: embeddings[offset],
-          updated_at: now,
-          metadata: chunk.metadata,
-        }))
+  for (let i = 0; i < chunks.length; i += EMBEDDING_BATCH_SIZE) {
+    const batch = chunks.slice(i, i + EMBEDDING_BATCH_SIZE);
+    const embeddings = await deps.embed(batch.map(chunk => chunk.text));
+    if (embeddings.length !== batch.length) {
+      throw new Error(
+        `Embedding returned ${embeddings.length} of ${batch.length} vectors`
       );
     }
-  } catch (error) {
-    // Drop what this attempt wrote so the previous chunks stay the only copy.
-    await store.deleteChunksAt(documentId, now).catch(() => undefined);
-    throw error;
+    await store.stageChunks(
+      source.id,
+      attempt.token,
+      batch.map((chunk, offset) => ({
+        chunk_index: i + offset,
+        chunk_text: chunk.text,
+        embedding: embeddings[offset],
+        metadata: chunk.metadata,
+      })),
+      LEASE_SECONDS
+    );
   }
-
-  if (existing) {
-    await store.saveDocument({ id: existing.id, ...documentInput });
-    await store.deleteChunksBefore(documentId, now);
-  }
-  await store.setContentHash(documentId, contentHash);
+  await store.promoteGeneration(source.id, attempt.token, {
+    title: document.title,
+    metadata: document.metadata,
+    contentHash,
+    chunkCount: chunks.length,
+    updatedAt: attempt.now,
+  });
   return {
     source_id: source.id,
     status: 'success',

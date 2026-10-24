@@ -7,13 +7,18 @@ export interface StoredDocument {
   contentHash: string | null;
 }
 
-export interface ChunkRow {
-  document_id: number;
+/** One chunk of a new generation, staged before the generation is promoted. */
+export interface StagedChunk {
   chunk_index: number;
   chunk_text: string;
   embedding: number[];
-  updated_at: string;
   metadata: Metadata;
+}
+
+/** Chunks that get the same metadata. `indexes: null` means every chunk. */
+export interface ChunkMetadataGroup {
+  metadata: Metadata;
+  indexes: number[] | null;
 }
 
 export interface CrawlLogEntry {
@@ -26,44 +31,64 @@ export interface CrawlLogEntry {
   duration_ms: number;
 }
 
-/** Database boundary. The Supabase implementation lives in index.ts. */
+/**
+ * Database boundary. The Supabase implementation is supabaseStore.ts.
+ *
+ * A refresh writes nothing visible until it promotes. It first claims the
+ * source and gets a token. Each embedding batch is staged with that token, and
+ * one promotion replaces the document and all its chunks in one transaction.
+ * Every write with a token fails once a newer claim has replaced it, so a
+ * stalled call can never overwrite a newer one.
+ */
 export interface IngestStore {
   listCrawlSources(): Promise<CrawlSource[]>;
   getCrawlSource(id: number | string): Promise<CrawlSource | null>;
   /** Only an enabled source may match. */
   findEnabledCrawlSourceByUrl(url: string): Promise<CrawlSource | null>;
   findDocument(url: string): Promise<StoredDocument | null>;
-  /** Inserts when `id` is null, updates otherwise. Returns the document id. */
-  saveDocument(input: {
-    id: number | null;
-    url: string;
-    title: string;
-    updatedAt: string;
-    metadata: Metadata;
-  }): Promise<number>;
-  insertChunks(rows: ChunkRow[]): Promise<void>;
-  setContentHash(documentId: number, hash: string): Promise<void>;
-  /** Removes chunks of the document whose updated_at is before `before`. */
-  deleteChunksBefore(documentId: number, before: string): Promise<void>;
-  /** Removes chunks of the document written at exactly `at`. */
-  deleteChunksAt(documentId: number, at: string): Promise<void>;
-  /** Merges `documentPatch` into the document metadata and replaces every chunk's metadata. */
-  refreshMetadata(
-    documentId: number,
-    input: { documentPatch: Metadata; chunkMetadata: Metadata }
+  /** A token for this refresh, or null while another call holds the source. */
+  claimSource(sourceId: number, leaseSeconds: number): Promise<string | null>;
+  /** Stores one batch of at most 20 chunks and renews the lease. */
+  stageChunks(
+    sourceId: number,
+    token: string,
+    chunks: StagedChunk[],
+    leaseSeconds: number
   ): Promise<void>;
   /**
-   * For record sources. Merges `documentPatch` into the document metadata and
-   * sets each listed chunk's own metadata, so every record keeps its own dates.
+   * Replaces the document (title, metadata, hash) and all its chunks with the
+   * staged generation, in one transaction. Throws and changes nothing when the
+   * token is no longer the owner or the staged chunks are incomplete.
    */
-  refreshRecordMetadata(
-    documentId: number,
+  promoteGeneration(
+    sourceId: number,
+    token: string,
     input: {
-      documentPatch: Metadata;
-      chunks: Array<{ chunkIndex: number; metadata: Metadata }>;
+      title: string;
+      metadata: Metadata;
+      contentHash: string;
+      chunkCount: number;
+      updatedAt: string;
     }
   ): Promise<void>;
-  /** Stamps the source's last attempt, whatever its outcome. */
+  /**
+   * For an unchanged document: merges `documentPatch` into its metadata and
+   * sets each group's chunk metadata. Returns false, and changes nothing, when
+   * the stored chunks are not exactly one generation with `contentHash`; the
+   * caller then replaces them.
+   */
+  refreshMetadata(
+    sourceId: number,
+    token: string,
+    input: {
+      contentHash: string;
+      documentPatch: Metadata;
+      chunkGroups: ChunkMetadataGroup[];
+    }
+  ): Promise<boolean>;
+  /** Ends the lease and drops staged chunks of this token only. */
+  releaseSource(sourceId: number, token: string): Promise<void>;
+  /** Stamps the source's last attempt, whatever its outcome. Never moves it back. */
   recordAttempt(sourceId: number, at: string): Promise<void>;
   logCrawl(entry: CrawlLogEntry): Promise<void>;
 }

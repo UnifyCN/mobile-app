@@ -52,27 +52,36 @@ Deno.test('CA in the study and work lists is the in-Canada application', () => {
   );
 });
 
-// Guards (green on arrival, covered by mutation checks): unavailable entries
-// and nested values.
+// Falsifier: the converter drops the official unavailable text, as the
+// reviewed version did for 1,485 rows, or writes a number in its place.
 Deno.test(
-  'entries without a time are left out and never become a number',
+  'an unavailable entry keeps its official text, identity and date',
   () => {
-    const { records, skipped } = convertProcessingTimes(processingFiles());
+    const { records } = convertProcessingTimes(processingFiles());
 
-    assertEquals(
-      records.filter(r =>
-        /No processing time available|Not enough data/i.test(r.text)
-      ),
-      []
-    );
     assertEquals(
       find(
         records,
         'Processing time for Work permit (from outside Canada) (Afghanistan)'
       ),
-      []
+      [
+        {
+          text: 'Processing time for Work permit (from outside Canada) (Afghanistan): No processing time available.',
+          publishedAt: '2026-10-21',
+        },
+      ]
     );
-    assertEquals(skipped.unavailable! > 1000, true);
+    for (const text of [
+      'Processing time for International Experience Canada (last season): Not enough data.',
+      'Processing time for Skilled trades (federal): Online via Express Entry: Not enough data.',
+      'Processing time for Resumption of citizenship: Not enough data.',
+    ]) {
+      assertEquals(
+        records.filter(r => r.text === text),
+        [{ text, publishedAt: '2026-10-21' }],
+        text
+      );
+    }
   }
 );
 
@@ -87,12 +96,15 @@ Deno.test('privately sponsored refugee values are read at the leaf', () => {
     'Processing time for Privately sponsored refugees, Step 1 sponsorship application (India): 28 months.',
     'Processing time for Privately sponsored refugees, Step 2 refugee application (India): 17 months.',
   ]);
-  // Only one of the two steps has a time.
+  // Only one of the two steps has a time. The other keeps the official text.
   assertEquals(texts('Djibouti'), [
+    'Processing time for Privately sponsored refugees, Step 1 sponsorship application (Djibouti): Not enough data.',
     'Processing time for Privately sponsored refugees, Step 2 refugee application (Djibouti): 38 months.',
   ]);
-  // Both steps are "Not enough data".
-  assertEquals(texts('Afghanistan'), []);
+  assertEquals(texts('Afghanistan'), [
+    'Processing time for Privately sponsored refugees, Step 1 sponsorship application (Afghanistan): Not enough data.',
+    'Processing time for Privately sponsored refugees, Step 2 refugee application (Afghanistan): Not enough data.',
+  ]);
 });
 
 Deno.test(
@@ -113,26 +125,6 @@ Deno.test(
         'Processing time for Work permit (from outside Canada) (country code GL): 20 weeks.',
       ]
     );
-  }
-);
-
-Deno.test(
-  'a non-object value where steps are expected is skipped, not guessed',
-  () => {
-    const files = processingFiles();
-    (
-      files.countryTimes as Record<string, Record<string, unknown>>
-    ).refugees_private.IN = '10 months';
-
-    const { records, skipped } = convertProcessingTimes(files);
-
-    assertEquals(
-      find(records, 'Processing time for Privately sponsored refugees').filter(
-        r => r.text.includes('(India)')
-      ),
-      []
-    );
-    assertEquals(skipped.malformed! >= 2, true);
   }
 );
 
@@ -246,11 +238,11 @@ Deno.test(
       records.filter(r => r.text.includes('extension in Canada')),
       [
         {
-          text: 'Processing time for Study permit extension in Canada: 8 weeks.',
+          text: 'Processing time for Study permit extension in Canada: 8 weeks (if you apply today).',
           publishedAt: '2026-10-17',
         },
         {
-          text: 'Processing time for Work permit extension in Canada: 12 weeks.',
+          text: 'Processing time for Work permit extension in Canada: 12 weeks (if you apply today). This shared estimate includes new post-graduation work permits (PGWPs), bridging open work permits and change of conditions to a work permit.',
           publishedAt: '2026-10-17',
         },
       ]
@@ -267,20 +259,37 @@ Deno.test(
   }
 );
 
-Deno.test('the fixture files give 465 records, none from PGWP wording', () => {
-  const { records, skipped } = convertProcessingTimes(processingFiles());
+// Falsifier: dropping unavailable rows gives 465; a dedicated PGWP row, or a
+// PGWP note on any record other than the shared WP-EXT estimate, fails the
+// filter below. Expected counts come from an independent walk of the official
+// files (proof-mobile-fixes/01-source-audit.log): 1,907 country leaves, 17
+// labelled non-country keys, 24 labelled flpt keys and 2 extension keys.
+Deno.test(
+  'the fixture files give every row, and PGWPs only as the shared estimate',
+  () => {
+    const { records, skipped } = convertProcessingTimes(processingFiles());
 
-  assertEquals(records.length, 425 + 14 + 24 + 2);
-  assertEquals(
-    records.filter(r => /PGWP|post-graduation/i.test(r.text)),
-    []
-  );
-  assertEquals(skipped, {
-    unavailable: skipped.unavailable,
-    notShownOnPage: 2,
-    unlabelled: 4,
-  });
-});
+    assertEquals(records.length, 1907 + 17 + 24 + 2);
+    const byDate: Record<string, number> = {};
+    for (const r of records) {
+      byDate[r.publishedAt!] = (byDate[r.publishedAt!] ?? 0) + 1;
+    }
+    assertEquals(byDate, {
+      '2026-10-21': 1907 + 17,
+      '2026-10-09': 24,
+      '2026-10-17': 2,
+    });
+    assertEquals(
+      records
+        .filter(r => /PGWP|post-graduation/i.test(r.text))
+        .map(r => r.text.split('.')[0]),
+      [
+        'Processing time for Work permit extension in Canada: 12 weeks (if you apply today)',
+      ]
+    );
+    assertEquals(skipped, { notShownOnPage: 2, unlabelled: 4 });
+  }
+);
 
 // Falsifier: a converter that keeps file order changes the hash when IRCC
 // reorders keys.
@@ -309,57 +318,113 @@ Deno.test('record order does not depend on the key order of the files', () => {
   assertEquals(reversed, normal);
 });
 
-Deno.test('a missing section is an error so old content stays', () => {
-  const cases: Array<
-    [string, (f: ReturnType<typeof processingFiles>) => void, string]
-  > = [
-    [
-      'country names',
-      f => {
-        f.countryNames = {};
-      },
-      'Processing times: no country names',
-    ],
-    [
-      'category',
-      f => {
-        delete (f.countryTimes as Json).work;
-      },
-      'Processing times: no work section',
-    ],
-    [
-      'flpt',
-      f => {
-        delete (f.flpt as Json)['current-flpt'];
-      },
-      'Processing times: no current-flpt section',
-    ],
-    [
-      'by week',
-      f => {
-        delete (f.flptByWeek as Json)['current-flpt'];
-      },
-      'Processing times: no extension queue section',
-    ],
-    [
-      'non-country',
-      f => {
-        f.nonCountryTimes = null;
-      },
-      'Processing times: no non-country file',
-    ],
-  ];
-  for (const [name, mutate, message] of cases) {
-    const files = processingFiles();
-    mutate(files);
-    let actual = '';
-    try {
-      convertProcessingTimes(files);
-    } catch (error) {
-      actual = (error as Error).message;
+Deno.test(
+  'a missing or malformed section is an error so old content stays',
+  () => {
+    const cases: Array<
+      [string, (f: ReturnType<typeof processingFiles>) => void, string]
+    > = [
+      [
+        'country names',
+        f => {
+          f.countryNames = {};
+        },
+        'Processing times: no country names',
+      ],
+      [
+        'category',
+        f => {
+          delete (f.countryTimes as Json).work;
+        },
+        'Processing times: no work section',
+      ],
+      [
+        'flpt',
+        f => {
+          delete (f.flpt as Json)['current-flpt'];
+        },
+        'Processing times: no current-flpt section',
+      ],
+      [
+        'by week',
+        f => {
+          delete (f.flptByWeek as Json)['current-flpt'];
+        },
+        'Processing times: no extension queue section',
+      ],
+      [
+        'non-country',
+        f => {
+          f.nonCountryTimes = null;
+        },
+        'Processing times: no non-country file',
+      ],
+      [
+        'empty non-country file',
+        f => {
+          f.nonCountryTimes = {};
+        },
+        'Processing times: no visitor_inside_canada group',
+      ],
+      [
+        'non-country key',
+        f => {
+          delete (f.nonCountryTimes as Record<string, Json>).citizenship
+            .cit_search;
+        },
+        'Processing times: malformed citizenship.cit_search value',
+      ],
+      [
+        'non-string country value',
+        f => {
+          (f.countryTimes as Record<string, Json>).study.AF = null;
+        },
+        'Processing times: malformed study value for AF',
+      ],
+      [
+        'steps value that is not an object',
+        f => {
+          (f.countryTimes as Record<string, Json>).refugees_private.IN =
+            '10 months';
+        },
+        'Processing times: malformed refugees_private value for IN',
+      ],
+      [
+        'missing step',
+        f => {
+          delete (
+            (f.countryTimes as Record<string, Json>).refugees_private.IN as Json
+          ).refugee;
+        },
+        'Processing times: malformed refugees_private value for IN',
+      ],
+      [
+        'flpt key',
+        f => {
+          delete ((f.flpt as Json)['current-flpt'] as Json).cec;
+        },
+        'Processing times: malformed current-flpt cec value',
+      ],
+      [
+        'empty extension value',
+        f => {
+          ((f.flptByWeek as Json)['current-flpt'] as Json)['WP-EXT'] = ' ';
+        },
+        'Processing times: malformed current-flpt WP-EXT value',
+      ],
+    ];
+    for (const [name, mutate, message] of cases) {
+      const files = processingFiles();
+      mutate(files);
+      let actual = '';
+      try {
+        convertProcessingTimes(files);
+      } catch (error) {
+        actual = (error as Error).message;
+      }
+      assertEquals(actual, message, name);
     }
-    assertEquals(actual, message, name);
   }
-});
+);
 
 type Json = Record<string, unknown>;

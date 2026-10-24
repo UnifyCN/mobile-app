@@ -10,6 +10,8 @@
 //   * .single() and .maybeSingle() fail on the wrong row count (PGRST116 for
 //     more than one row, and for none with .single());
 //   * rows come back as JSON would: timestamps as ISO strings, bigint as number.
+//   * rpc() calls a function by named arguments, as PostgREST does, and a
+//     raised exception comes back as an error with its SQLSTATE.
 // What it does not prove: PostgREST's own URL parsing, row-level security, or
 // request size limits. Those are noted in the report.
 import type { Db } from './sharedDb.ts';
@@ -22,7 +24,7 @@ interface Filter {
 
 export interface RequestLog {
   table: string;
-  action: 'select' | 'insert' | 'update' | 'delete';
+  action: 'select' | 'insert' | 'update' | 'delete' | 'rpc';
   filters: string[];
   /** Largest value list in an `in` filter. */
   largestInList: number;
@@ -275,10 +277,85 @@ function fail(code: string, message: string) {
   return { data: null, error: { code, message } as ApiError };
 }
 
+/**
+ * Calls public.<fn> with named arguments. The overload is the one whose
+ * argument names are exactly the given keys, as PostgREST chooses. A scalar
+ * result comes back as the value, a void result as null.
+ */
+async function rpc(
+  db: Db,
+  fn: string,
+  args: Record<string, unknown>,
+  log: RequestLog[]
+): Promise<{ data: unknown; error: ApiError | null }> {
+  const overloads = await db.query<{
+    names: string[] | null;
+    types: string[];
+    returns: string;
+  }>(
+    `select p.proargnames as names,
+            array(select format_type(t, null) from unnest(p.proargtypes) t) as types,
+            format_type(p.prorettype, null) as returns
+       from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+      where n.nspname = 'public' and p.proname = $1`,
+    [fn]
+  );
+  const keys = Object.keys(args).sort();
+  const match = overloads.rows.find(
+    o => JSON.stringify([...(o.names ?? [])].sort()) === JSON.stringify(keys)
+  );
+  if (!match) {
+    return fail('PGRST202', `Could not find the function public.${fn}`);
+  }
+  const params: unknown[] = [];
+  const named = (match.names ?? []).map((name, i) => {
+    const type = match.types[i];
+    const value = args[name];
+    params.push(
+      value === null || value === undefined
+        ? null
+        : type === 'jsonb' || type === 'json'
+          ? JSON.stringify(value)
+          : value
+    );
+    return `"${name}" => $${params.length}::${type}`;
+  });
+  try {
+    const result = await db.query<{ result: unknown }>(
+      `select public."${fn}"(${named.join(', ')}) as result`,
+      params
+    );
+    log.push({
+      table: fn,
+      action: 'rpc',
+      filters: [],
+      largestInList: 0,
+      rowCount: result.rows.length,
+    });
+    const value = result.rows[0]?.result;
+    return {
+      data:
+        match.returns === 'void'
+          ? null
+          : typeof value === 'bigint'
+            ? Number(value)
+            : value,
+      error: null,
+    };
+  } catch (error) {
+    const e = error as { code?: string; message?: string };
+    return fail(e.code ?? 'XX000', e.message ?? String(error));
+  }
+}
+
 export function postgrestShim(db: Db) {
   const requests: RequestLog[] = [];
   return {
-    client: { from: (table: string) => new Query(db, table, requests) },
+    client: {
+      from: (table: string) => new Query(db, table, requests),
+      rpc: (fn: string, args: Record<string, unknown> = {}) =>
+        rpc(db, fn, args, requests),
+    },
     requests,
   };
 }

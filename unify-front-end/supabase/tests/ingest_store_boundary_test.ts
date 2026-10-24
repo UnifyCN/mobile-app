@@ -14,13 +14,9 @@ import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
+import { INGEST_RELEASE_ORDER, openIngestDb } from './support/ingestDb.ts';
 import { postgrestShim } from './support/postgrestShim.ts';
-import {
-  applyMigration,
-  openBaselineDb,
-  rows,
-  type Db,
-} from './support/sharedDb.ts';
+import { rows, type Db } from './support/sharedDb.ts';
 
 const FIXTURES = new URL(
   '../functions/ingest-documents/lib/fixtures/ircc/',
@@ -35,29 +31,17 @@ const EE_PAGE =
 const PROCESSING_PAGE =
   'https://www.canada.ca/en/immigration-refugees-citizenship/services/application/check-processing-times.html';
 
-async function openDb(
+function openDb(
   options: { recordSources: boolean } = { recordSources: true }
 ): Promise<Db> {
-  const db = await openBaselineDb();
-  // crawl_logs is created by the ingestion migration, outside the baseline slice.
-  const ingestion = await Deno.readTextFile(
-    new URL(
-      '../migrations/20260320_rag_ingestion_pipeline.sql',
-      import.meta.url
-    )
+  return openIngestDb(
+    options.recordSources
+      ? INGEST_RELEASE_ORDER
+      : INGEST_RELEASE_ORDER.slice(
+          0,
+          INGEST_RELEASE_ORDER.indexOf('crawl_sources_record_sources')
+        )
   );
-  await db.exec(
-    ingestion.match(
-      /create table if not exists public\.crawl_logs \([\s\S]*?\);/
-    )![0]
-  );
-  await applyMigration(db, 'crawl_sources_province');
-  if (options.recordSources) {
-    await applyMigration(db, 'crawl_sources_record_sources');
-    await applyMigration(db, 'seed_province_crawl_sources');
-    await applyMigration(db, 'seed_ircc_record_sources');
-  }
-  return db;
 }
 
 const VECTOR = new Array(1536).fill(0.01);
@@ -323,9 +307,9 @@ Deno.test(
     const run = depsFor(db, pages, clock);
     assertEquals(
       (await ingestSource(processing, run.deps)).chunks_created,
-      465
+      1950
     );
-    assertEquals((await chunkRows(db)).length, 465);
+    assertEquals((await chunkRows(db)).length, 1950);
 
     const country = JSON.parse(pages[JSON_BASE + 'data-ptime-en.json']);
     country.work.lastupdated = 'October 28, 2026';
@@ -347,38 +331,37 @@ Deno.test(
             bool_and(metadata->>'fetched_at' = '2026-10-24T12:00:00.000Z') as fresh
        from public.knowledge_chunks group by 1 order by 1`
     );
+    // Work permit rows: 61 with a time and 151 "No processing time available".
     assertEquals(byDate, [
       { d: '2026-10-09', n: 24, fresh: true },
       { d: '2026-10-17', n: 2, fresh: true },
-      { d: '2026-10-21', n: 378, fresh: true },
-      { d: '2026-10-28', n: 61, fresh: true },
+      { d: '2026-10-21', n: 1712, fresh: true },
+      { d: '2026-10-28', n: 212, fresh: true },
     ]);
     const workDates = await rows(
       db,
       `select distinct metadata->>'published_at' as d from public.knowledge_chunks where chunk_text like '%Work permit (from outside Canada)%'`
     );
     assertEquals(workDates, [{ d: '2026-10-28' }]);
-    const chunkUpdates = run.requests.filter(
-      r => r.table === 'knowledge_chunks' && r.action === 'update'
-    );
-    // 378 + 61 + 24 + 2 records in groups of at most 100: 4 + 1 + 1 + 1 requests.
-    assertEquals(chunkUpdates.length, 7);
-    assert(chunkUpdates.every(r => r.largestInList <= 100));
+    // One fenced refresh call carries the four date groups. No chunk row is
+    // written through the table API, and nothing is embedded again.
     assertEquals(
-      chunkUpdates.reduce((n, r) => n + r.rowCount, 0),
-      465
-    );
-    assert(
-      chunkUpdates.every(
-        r => r.filters.join() === 'eq:document_id,in:chunk_index'
-      )
+      run.requests
+        .filter(r => r.action === 'rpc' || r.table === 'knowledge_chunks')
+        .map(r => r.table),
+      [
+        'claim_crawl_source',
+        'refresh_knowledge_metadata',
+        'record_crawl_attempt',
+        'release_crawl_source',
+      ]
     );
     await db.close();
   }
 );
 
-// Falsifier: if the failed attempt's cleanup were unfiltered or used the wrong
-// time, the earlier chunks would be deleted with it.
+// Falsifier: if a failed attempt wrote its chunks where readers see them, or
+// left staged rows behind, the state below would change.
 Deno.test(
   'a failed changed crawl leaves the previous chunks and document untouched',
   async () => {
@@ -434,7 +417,7 @@ Deno.test(
 );
 
 Deno.test(
-  'a partial write is removed by its exact write time and nothing older',
+  'a failure after two staged batches leaves the previous chunks and no staged rows',
   async () => {
     const db = await openDb();
     const processing = await source(db, PROCESSING_PAGE);
@@ -463,12 +446,19 @@ Deno.test(
 
     assertEquals(result.status, 'error');
     assertEquals(await chunkRows(db), before);
+    assertEquals(
+      await rows(
+        db,
+        `select count(*)::int as n from public.knowledge_chunk_staging`
+      ),
+      [{ n: 0 }]
+    );
     await db.close();
   }
 );
 
 Deno.test(
-  'a processing source of 465 records is embedded in batches of 20 and stored',
+  'a processing source of 1,950 records is staged in batches of 20 and stored',
   async () => {
     const db = await openDb();
     const processing = await source(db, PROCESSING_PAGE);
@@ -487,14 +477,19 @@ Deno.test(
 
     await ingestSource(processing, run.deps);
 
-    const inserts = run.requests.filter(
-      r => r.table === 'knowledge_chunks' && r.action === 'insert'
+    // 1,950 records: 97 batches of 20 and one of 10. Each batch is one call;
+    // the database refuses a call with more than 20 rows.
+    const staged = run.requests.filter(
+      r => r.table === 'stage_knowledge_chunks'
     );
-    assertEquals(inserts.length, 24);
-    assert(inserts.every(r => r.rowCount <= 20));
+    assertEquals(staged.length, 98);
+    assertEquals(
+      run.requests.filter(r => r.table === 'knowledge_chunks'),
+      []
+    );
     assertEquals(
       (await chunkRows(db)).map(c => c.chunk_index),
-      Array.from({ length: 465 }, (_, i) => i)
+      Array.from({ length: 1950 }, (_, i) => i)
     );
     await db.close();
   }

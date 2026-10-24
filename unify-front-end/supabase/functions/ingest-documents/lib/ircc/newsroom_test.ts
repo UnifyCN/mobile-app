@@ -55,7 +55,12 @@ Deno.test('the 30th day back is in and the 31st is out', () => {
         entry: [
           entry('2026-09-24', 'In'),
           entry('2026-09-23', 'Out'),
-          entry('2026-10-24', 'Today'),
+          // Published at the run instant (midnight Eastern): the upper bound is
+          // inclusive.
+          {
+            ...entry('2026-10-24', 'Today'),
+            publishedDate: '2026-10-24T00:00:00-04:00',
+          },
         ],
       },
     },
@@ -165,7 +170,7 @@ Deno.test('a missing link is allowed, a non-https link is dropped', () => {
 });
 
 Deno.test(
-  'a feed without an entry list is an error, an empty one is not',
+  'a feed without an entry list or a readable entry is an error',
   () => {
     for (const bad of [null, {}, { feed: {} }, { feed: { entry: 'x' } }]) {
       let message = '';
@@ -176,6 +181,54 @@ Deno.test(
       }
       assertEquals(message, 'Newsroom: no entry list');
     }
-    assertEquals(convertNewsroom({ feed: { entry: [] } }, NOW), []);
+    // The API always returns its latest items, old or new. A list with no
+    // readable item is a broken response, not an empty window.
+    for (const bad of [
+      { feed: { entry: [] } },
+      { feed: { entry: [{ title: 'No date' }] } },
+    ]) {
+      let message = '';
+      try {
+        convertNewsroom(bad, NOW);
+      } catch (error) {
+        message = (error as Error).message;
+      }
+      assertEquals(message, 'Newsroom: no readable entries');
+    }
   }
 );
+
+// Falsifier: a filter with only the lower bound keeps the later item.
+Deno.test('an item published after the run is left out', () => {
+  const records = convertNewsroom(
+    {
+      feed: {
+        entry: [
+          entry('2026-10-25', 'Future bulletin'),
+          {
+            ...entry('2026-10-24', 'Later today'),
+            publishedDate: '2026-10-24T00:30:00-04:00',
+          },
+          {
+            ...entry('2026-10-23', 'Just published'),
+            publishedDate: '2026-10-23T23:59:00-04:00',
+          },
+        ],
+      },
+    },
+    NOW
+  );
+
+  assertEquals(
+    records.map(r => [r.publishedAt, r.text]),
+    [['2026-10-23', 'October 23, 2026: Just published. A summary.']]
+  );
+});
+
+// Falsifier: an error here keeps an expired item searchable forever.
+Deno.test('a readable feed with no item in the window gives no records', () => {
+  assertEquals(
+    convertNewsroom({ feed: { entry: [entry('2026-09-01', 'Old')] } }, NOW),
+    []
+  );
+});

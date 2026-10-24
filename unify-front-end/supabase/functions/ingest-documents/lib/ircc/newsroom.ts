@@ -56,16 +56,22 @@ function cutoffDate(now: Date): string {
 
 /**
  * Converts the Government of Canada news API response for IRCC into one record
- * per item published in the last 30 days, newest first. Each record keeps the
- * address of its own item.
+ * per item published in the last 30 days and not after `now`, newest first.
+ * Each record keeps its own date and the address of its own item. The API
+ * always returns its latest items, so a response with no readable item is
+ * broken and is an error. A readable response with no item in the window gives
+ * no records: the window is simply empty.
  */
 export function convertNewsroom(json: unknown, now: Date): SourceRecord[] {
   const entries = (json as { feed?: { entry?: unknown } } | null)?.feed?.entry;
   if (!Array.isArray(entries)) throw new Error('Newsroom: no entry list');
-  const cutoff = cutoffDate(now);
-  return entries
+  const items = entries
     .map(readItem)
-    .filter((item): item is Item => item !== null && item.date >= cutoff)
+    .filter((item): item is Item => item !== null);
+  if (items.length === 0) throw new Error('Newsroom: no readable entries');
+  const cutoff = cutoffDate(now);
+  return items
+    .filter(item => item.date >= cutoff && item.time <= now.getTime())
     .sort((a, b) =>
       a.time === b.time ? (a.title < b.title ? -1 : 1) : b.time - a.time
     )

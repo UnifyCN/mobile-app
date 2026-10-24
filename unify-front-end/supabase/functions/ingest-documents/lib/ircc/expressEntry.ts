@@ -32,22 +32,46 @@ function readDraw(row: unknown): Draw | null {
   return { number: Number(number), date, name, size, crs };
 }
 
+/** The leading digits of the draw number ("91b" is 91), or null. */
+function drawRank(row: unknown): number | null {
+  const number = (row as { drawNumber?: unknown } | null)?.drawNumber;
+  const digits =
+    typeof number === 'string' ? /^\s*(\d+)/.exec(number)?.[1] : undefined;
+  return digits === undefined ? null : Number(digits);
+}
+
+function malformed(row: unknown): Error {
+  const number = (row as { drawNumber?: unknown } | null)?.drawNumber;
+  return new Error(`Express Entry rounds: malformed draw ${String(number)}`);
+}
+
 /**
  * Converts IRCC's ee_rounds_123_en.json into one record per draw: the ten most
- * recent, newest first. A row with a missing or invalid field is skipped.
+ * recent, newest first. Draws are numbered in order, so the ten highest numbers
+ * are the current set. Every one of them must be complete: a malformed current
+ * draw fails the source, so the previous complete set stays. Older draws are
+ * not read, so a historical format such as draw 91b does not matter. A row
+ * without a number cannot be placed and also fails the source.
  */
 export function convertExpressEntryRounds(json: unknown): SourceRecord[] {
   const rounds = (json as { rounds?: unknown } | null)?.rounds;
   if (!Array.isArray(rounds)) {
     throw new Error('Express Entry rounds: no rounds list');
   }
-  return rounds
-    .map(readDraw)
-    .filter((draw): draw is Draw => draw !== null)
+  const ranked = rounds.map(row => ({ row, rank: drawRank(row) }));
+  const unplaced = ranked.find(r => r.rank === null);
+  if (unplaced) throw malformed(unplaced.row);
+  return ranked
+    .sort((a, b) => b.rank! - a.rank!)
+    .slice(0, EXPRESS_ENTRY_DRAW_LIMIT)
+    .map(({ row }) => {
+      const draw = readDraw(row);
+      if (draw === null) throw malformed(row);
+      return draw;
+    })
     .sort((a, b) =>
       a.date === b.date ? b.number - a.number : a.date < b.date ? 1 : -1
     )
-    .slice(0, EXPRESS_ENTRY_DRAW_LIMIT)
     .map(draw => ({
       text: `Express Entry draw #${draw.number} on ${formatLongDate(draw.date)}: ${draw.name}, ${draw.size} invitations, minimum CRS ${draw.crs}.`,
       publishedAt: draw.date,

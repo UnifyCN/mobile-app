@@ -7,10 +7,9 @@ import type { IngestStore } from './types.ts';
 // deno-lint-ignore no-explicit-any
 export interface SupabaseLike {
   from(table: string): any;
+  // deno-lint-ignore no-explicit-any
+  rpc(fn: string, args: Record<string, unknown>): any;
 }
-
-/** Rows per request when a group of chunks is addressed by chunk_index. */
-export const CHUNK_INDEX_FILTER_LIMIT = 100;
 
 function fail(error: { message: string } | null, action: string) {
   if (error) throw new Error(`${action} failed: ${error.message}`);
@@ -46,122 +45,66 @@ export function createStore(supabase: SupabaseLike): IngestStore {
       return data ?? null;
     },
     async findDocument(url) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('knowledge_documents')
         .select('id, content_hash')
         .eq('source_url', url)
         .maybeSingle();
+      fail(error, 'Document read');
       return data ? { id: data.id, contentHash: data.content_hash } : null;
     },
-    async saveDocument({ id, url, title, updatedAt, metadata }) {
-      if (id !== null) {
-        const { error } = await supabase
-          .from('knowledge_documents')
-          .update({ title, source_url: url, updated_at: updatedAt, metadata })
-          .eq('id', id);
-        fail(error, 'Document update');
-        return id;
-      }
-      const { data, error } = await supabase
-        .from('knowledge_documents')
-        .insert({
-          title,
-          storage_path: '',
-          source_url: url,
-          updated_at: updatedAt,
-          metadata,
-        })
-        .select('id')
-        .single();
-      fail(error, 'Document insert');
-      return data.id;
+    async claimSource(sourceId, leaseSeconds) {
+      const { data, error } = await supabase.rpc('claim_crawl_source', {
+        p_source_id: sourceId,
+        p_lease_seconds: leaseSeconds,
+      });
+      fail(error, 'Claiming the source');
+      return (data as string | null) ?? null;
     },
-    async insertChunks(rows) {
-      const { error } = await supabase.from('knowledge_chunks').insert(rows);
-      fail(error, 'Chunk insert');
+    async stageChunks(sourceId, token, chunks, leaseSeconds) {
+      const { error } = await supabase.rpc('stage_knowledge_chunks', {
+        p_source_id: sourceId,
+        p_token: token,
+        p_rows: chunks,
+        p_lease_seconds: leaseSeconds,
+      });
+      fail(error, 'Chunk staging');
     },
-    async setContentHash(documentId, hash) {
-      const { error } = await supabase
-        .from('knowledge_documents')
-        .update({ content_hash: hash })
-        .eq('id', documentId);
-      fail(error, 'Content hash update');
+    async promoteGeneration(sourceId, token, input) {
+      const { error } = await supabase.rpc('promote_knowledge_generation', {
+        p_source_id: sourceId,
+        p_token: token,
+        p_title: input.title,
+        p_metadata: input.metadata,
+        p_content_hash: input.contentHash,
+        p_chunk_count: input.chunkCount,
+        p_updated_at: input.updatedAt,
+      });
+      fail(error, 'Promoting the new chunks');
     },
-    async deleteChunksBefore(documentId, before) {
-      const { error } = await supabase
-        .from('knowledge_chunks')
-        .delete()
-        .eq('document_id', documentId)
-        .lt('updated_at', before);
-      // Non-fatal: new chunks are already in place.
-      if (error) console.error(`Old chunk cleanup failed: ${error.message}`);
+    async refreshMetadata(sourceId, token, input) {
+      const { data, error } = await supabase.rpc('refresh_knowledge_metadata', {
+        p_source_id: sourceId,
+        p_token: token,
+        p_content_hash: input.contentHash,
+        p_document_patch: input.documentPatch,
+        p_chunk_groups: input.chunkGroups,
+      });
+      fail(error, 'Metadata refresh');
+      return data === true;
     },
-    async deleteChunksAt(documentId, at) {
-      const { error } = await supabase
-        .from('knowledge_chunks')
-        .delete()
-        .eq('document_id', documentId)
-        .eq('updated_at', at);
-      fail(error, 'Partial chunk cleanup');
-    },
-    async refreshMetadata(documentId, { documentPatch, chunkMetadata }) {
-      const { data, error: readError } = await supabase
-        .from('knowledge_documents')
-        .select('metadata')
-        .eq('id', documentId)
-        .single();
-      fail(readError, 'Document metadata read');
-      const { error: docError } = await supabase
-        .from('knowledge_documents')
-        .update({ metadata: { ...(data?.metadata ?? {}), ...documentPatch } })
-        .eq('id', documentId);
-      fail(docError, 'Document metadata refresh');
-      const { error: chunkError } = await supabase
-        .from('knowledge_chunks')
-        .update({ metadata: chunkMetadata })
-        .eq('document_id', documentId);
-      fail(chunkError, 'Chunk metadata refresh');
-    },
-    async refreshRecordMetadata(documentId, { documentPatch, chunks }) {
-      const { data, error: readError } = await supabase
-        .from('knowledge_documents')
-        .select('metadata')
-        .eq('id', documentId)
-        .single();
-      fail(readError, 'Document metadata read');
-      const { error: docError } = await supabase
-        .from('knowledge_documents')
-        .update({ metadata: { ...(data?.metadata ?? {}), ...documentPatch } })
-        .eq('id', documentId);
-      fail(docError, 'Document metadata refresh');
-      // Records that share one metadata value are updated together. A source
-      // has a handful of distinct dates, not one per record.
-      const groups = new Map<
-        string,
-        { metadata: unknown; indexes: number[] }
-      >();
-      for (const { chunkIndex, metadata } of chunks) {
-        const key = JSON.stringify(metadata);
-        const group = groups.get(key) ?? { metadata, indexes: [] };
-        group.indexes.push(chunkIndex);
-        groups.set(key, group);
-      }
-      for (const { metadata, indexes } of groups.values()) {
-        for (let i = 0; i < indexes.length; i += CHUNK_INDEX_FILTER_LIMIT) {
-          const { error } = await supabase
-            .from('knowledge_chunks')
-            .update({ metadata })
-            .eq('document_id', documentId)
-            .in('chunk_index', indexes.slice(i, i + CHUNK_INDEX_FILTER_LIMIT));
-          fail(error, 'Chunk metadata refresh');
-        }
-      }
+    async releaseSource(sourceId, token) {
+      const { error } = await supabase.rpc('release_crawl_source', {
+        p_source_id: sourceId,
+        p_token: token,
+      });
+      fail(error, 'Releasing the source');
     },
     async recordAttempt(sourceId, at) {
-      const { error } = await supabase
-        .from('crawl_sources')
-        .update({ last_crawled_at: at })
-        .eq('id', sourceId);
+      const { error } = await supabase.rpc('record_crawl_attempt', {
+        p_source_id: sourceId,
+        p_at: at,
+      });
       fail(error, 'Recording the crawl attempt');
     },
     async logCrawl(entry) {

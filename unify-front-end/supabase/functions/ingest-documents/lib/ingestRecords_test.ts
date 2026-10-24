@@ -116,13 +116,13 @@ Deno.test(
     assertEquals(result, {
       source_id: 3,
       status: 'success',
-      chunks_created: 465,
+      chunks_created: 1950,
     });
     const chunks = h.store.chunksOf(h.store.documents[0].id);
-    assertEquals(chunks.length, 465);
+    assertEquals(chunks.length, 1950);
     assertEquals(
       h.embedBatches.reduce((a, b) => a + b, 0),
-      465
+      1950
     );
     assert(h.embedBatches.every(n => n <= 20));
     // Each file keeps its own date: country and non-country 2026-10-21, flpt
@@ -133,7 +133,7 @@ Deno.test(
       dates.set(d, (dates.get(d) ?? 0) + 1);
     }
     assertEquals(Object.fromEntries(dates), {
-      '2026-10-21': 439,
+      '2026-10-21': 1924,
       '2026-10-09': 24,
       '2026-10-17': 2,
     });
@@ -305,7 +305,11 @@ Deno.test(
       ['{"rounds": []}', 'No records in the source'],
       [
         JSON.stringify({ rounds: [{ drawNumber: 'x' }] }),
-        'No records in the source',
+        'Express Entry rounds: malformed draw x',
+      ],
+      [
+        JSON.stringify({ rounds: [{ drawNumber: '402' }] }),
+        'Express Entry rounds: malformed draw 402',
       ],
     ]) {
       pages[EE_URL] = body;
@@ -463,5 +467,57 @@ Deno.test(
     const after = texts(h);
     assertEquals(after.length, 7);
     assert(!after.some(t => t.startsWith('September 25, 2026')));
+  }
+);
+
+// Falsifier: an error for the empty window keeps the expired item forever.
+Deno.test(
+  'a readable feed with no item left in the window clears the news',
+  async () => {
+    const source = newsSource();
+    const clock = { now: new Date('2026-10-23T12:00:00.000Z') };
+    const h = makeHarness([source], {
+      [NEWS_URL]: fixtureText('newsroom_shape.json'),
+    });
+    h.deps.now = () => clock.now;
+    await ingestSource(source, h.deps);
+    clock.now = new Date('2026-12-01T12:00:00.000Z');
+
+    const second = await ingestSource(source, h.deps);
+
+    assertEquals(second, {
+      source_id: 30,
+      status: 'success',
+      chunks_created: 0,
+    });
+    assertEquals(texts(h), []);
+    assertEquals(h.store.documents[0].metadata.published_at, '2026-12-01');
+  }
+);
+
+// Falsifier: a second call that does not respect the claim writes a second
+// version while the first is still embedding.
+Deno.test(
+  'a call for a source that is being refreshed is skipped',
+  async () => {
+    const source = eeSource();
+    const h = makeHarness([source], {
+      [EE_URL]: fixtureText('ee_rounds_sample.json'),
+    });
+    await h.store.claimSource(source.id);
+
+    const result = await ingestSource(source, h.deps);
+
+    assertEquals(result, {
+      source_id: 7,
+      status: 'skipped',
+      error: 'Another call is refreshing this source',
+    });
+    assertEquals(h.fetched, []);
+    assertEquals(h.store.sources[0].last_crawled_at, null);
+    assertEquals(
+      h.store.logs.at(-1)?.error_message,
+      'Another call is refreshing this source'
+    );
   }
 );

@@ -40,30 +40,65 @@ Deno.test('orders by draw date, not by file order', () => {
   assertEquals(records[9].publishedAt, '2026-09-04');
 });
 
-// Falsifier: a converter that does not check fields writes "undefined" or
-// "minimum CRS " into a chunk.
-Deno.test('skips a malformed draw and still returns ten valid ones', () => {
-  const broken = {
-    rounds: [
-      { ...sample.rounds[0], drawCRS: '' },
-      { ...sample.rounds[1], drawDate: 'not a date' },
-      { ...sample.rounds[2], drawNumber: undefined },
-      ...sample.rounds.slice(3),
-    ],
-  };
+function errorOf(json: unknown): string {
+  try {
+    convertExpressEntryRounds(json);
+  } catch (error) {
+    return (error as Error).message;
+  }
+  return '';
+}
 
-  const records = convertExpressEntryRounds(broken);
-
-  assertEquals(records.length, 10);
+// Falsifier: the reviewed converter silently drops a malformed current draw
+// and returns fewer or older draws, which then replace the complete set.
+Deno.test('a malformed draw among the ten newest fails the source', () => {
+  const cases: Array<[number, Record<string, unknown>, string]> = [
+    [0, { drawCRS: '' }, '450'],
+    [1, { drawSize: null }, '449'],
+    [2, { drawDate: 'not a date' }, '448'],
+    [9, { drawNumber: '441b' }, '441b'],
+  ];
+  for (const [index, patch, number] of cases) {
+    const rounds = sample.rounds.map((row: object, i: number) =>
+      i === index ? { ...row, ...patch } : row
+    );
+    assertEquals(
+      errorOf({ rounds }),
+      `Express Entry rounds: malformed draw ${number}`,
+      JSON.stringify(patch)
+    );
+  }
+  // A draw with no number cannot be placed, so it may be current.
   assertEquals(
-    records.map(r => r.text.match(/#(\d+)/)![1]),
-    ['447', '446', '445', '444', '443', '442', '441', '440', '439', '1']
-  );
-  assertEquals(
-    records.filter(r => /undefined|CRS \.|null/.test(r.text)).length,
-    0
+    errorOf({
+      rounds: [
+        { ...sample.rounds[0], drawNumber: undefined },
+        ...sample.rounds,
+      ],
+    }),
+    'Express Entry rounds: malformed draw undefined'
   );
 });
+
+// Falsifier: rejecting every malformed row would fail the official file,
+// whose historical draws 91a and 91b carry a letter.
+Deno.test(
+  'a malformed historical draw outside the ten newest is ignored',
+  () => {
+    const records = convertExpressEntryRounds({
+      rounds: [
+        ...sample.rounds,
+        { ...sample.rounds[12], drawNumber: '91b', drawDate: '2018-05-30' },
+        { ...sample.rounds[12], drawNumber: '90', drawSize: '' },
+      ],
+    });
+
+    assertEquals(
+      records.map(r => r.text.match(/#(\d+)/)![1]),
+      ['450', '449', '448', '447', '446', '445', '444', '443', '442', '441']
+    );
+  }
+);
 
 Deno.test(
   'a file without a rounds list is an error, not an empty source',

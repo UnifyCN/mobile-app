@@ -17,9 +17,10 @@
 --   2. match_chunks_province_filter (earlier ticket)
 --   3. this migration
 --   4. match_chunks_chunk_source_url
---   5. deploy ingest-documents with record source support
---   6. seed_province_crawl_sources, then seed_ircc_record_sources
---   7. the hourly driver migration (ingest_documents_single_scheduled_call)
+--   5. ingest_refresh_generations (the lease, staging and promotion functions)
+--   6. deploy ingest-documents with record source support
+--   7. seed_province_crawl_sources, then seed_ircc_record_sources
+--   8. the hourly driver migration (ingest_documents_single_scheduled_call)
 -- A seed activates unattended crawls, so it comes after the function that can
 -- read it. The driver migration can be applied after the function is live.
 alter table public.crawl_sources
