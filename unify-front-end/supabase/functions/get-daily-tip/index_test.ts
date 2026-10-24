@@ -129,16 +129,29 @@ test('a plain stored date is still stage 0 with both prompt lines', async () => 
   assert(prompt?.includes('- Has not yet arrived in Canada'), 'arrival line');
 });
 
+// Every arrival line buildArrivalLine can emit (_shared/stageContext.ts).
+const ARRIVAL_LINES = [
+  'Has not yet arrived in Canada',
+  'Arrived in Canada within the last month',
+  'Has been in Canada',
+];
+
+function assertNoArrivalContext(prompt: string | undefined) {
+  assert(prompt !== undefined, 'prompt was not captured');
+  assert(!prompt.includes('Stage (time since arrival)'), 'stage line present');
+  for (const line of ARRIVAL_LINES) {
+    assert(!prompt.includes(line), `arrival line present: ${line}`);
+  }
+}
+
 test('an unreadable stored timestamp is unknown: no stage line, no arrival line', async () => {
   const { claimedStage, prompt } = await callTip('2026-02-30T00:00:00+00:00');
   assertEquals(claimedStage, 'unknown');
-  assert(!prompt?.includes('Stage (time since arrival)'), 'stage line present');
-  assert(!prompt?.includes('Has not yet arrived'), 'arrival line present');
-  assert(!prompt?.includes('Has been in Canada'), 'arrival line present');
+  assertNoArrivalContext(prompt);
 });
 
-test('a missing arrival date is unknown', async () => {
+test('a missing arrival date is unknown: no stage line, no arrival line', async () => {
   const { claimedStage, prompt } = await callTip(null);
   assertEquals(claimedStage, 'unknown');
-  assert(!prompt?.includes('Stage (time since arrival)'));
+  assertNoArrivalContext(prompt);
 });
