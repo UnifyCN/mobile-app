@@ -134,7 +134,7 @@ export default function EndingPageScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      if (orderedPageNumber !== undefined) return;
+      if (orderedPageNumber !== undefined || !currentPageKey) return;
       if (
         !operationPending.current &&
         currentPageKey &&

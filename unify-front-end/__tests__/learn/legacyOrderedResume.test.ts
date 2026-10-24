@@ -246,6 +246,7 @@ test.each([
       expect(mockRouter.replace).not.toHaveBeenCalled();
       expect(mockSaveResumePosition).not.toHaveBeenCalled();
       expect(mockPageFocused).not.toHaveBeenCalled();
+      expect(mockTrackScreen).not.toHaveBeenCalled();
     });
   }
 );

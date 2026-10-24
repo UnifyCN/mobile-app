@@ -159,7 +159,7 @@ export default function ActivityPageScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      if (orderedPageNumber !== undefined) return;
+      if (orderedPageNumber !== undefined || !currentPageKey) return;
       const now = Date.now();
       const pageKey = `${lessonId}-${currentPage}`;
       // Only track if: data is loaded, throttle passed, AND this is a different page than last tracked
