@@ -107,8 +107,11 @@ export const stageEnumToNumber = (stageEnum: string): number => {
   return parseInt(stageEnum, 10) || 0;
 };
 
-/** Map app stage (0–4) to Sanity stage slug for checklist (exactly 5 values) */
-export const stageNumberToStageSlug = (stage: number): string => {
+/**
+ * Map app stage (0–4) to Sanity stage slug for checklist (exactly 5 values).
+ * Unknown stage (null, e.g. no arrival date) maps to arrived_0_3_months.
+ */
+export const stageNumberToStageSlug = (stage: number | null): string => {
   switch (stage) {
     case 0:
       return 'not_arrived';
