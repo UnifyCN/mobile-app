@@ -38,9 +38,7 @@ export async function applyMigration(db: Db, slug: string): Promise<void> {
   if (matches.length !== 1) {
     throw new Error(`Expected one migration for ${slug}, found ${matches}`);
   }
-  await db.exec(
-    await Deno.readTextFile(new URL(matches[0], MIGRATIONS_DIR))
-  );
+  await db.exec(await Deno.readTextFile(new URL(matches[0], MIGRATIONS_DIR)));
 }
 
 /** A 1536-dimension vector literal: `weight` on dimension 0, the rest on dimension 1. */
@@ -59,12 +57,9 @@ export async function rows<T = Record<string, unknown>>(
   return (await db.query<T>(sql, params)).rows;
 }
 
-// The mobile app's own list is the source of truth for the 13 names.
+// The mobile app's own list is the source of truth for the 13 names. Since
+// #347 constants/LocationData.ts re-exports it from the shared module.
 export async function canadianProvinces(): Promise<string[]> {
-  const source = await Deno.readTextFile(
-    new URL('../../../constants/LocationData.ts', import.meta.url)
-  );
-  const list = source.match(/CANADIAN_PROVINCES = \[([^\]]*)\]/);
-  if (!list) throw new Error('CANADIAN_PROVINCES not found');
-  return [...list[1].matchAll(/'([^']+)'/g)].map(m => m[1]);
+  const { PROVINCES } = await import('../../functions/_shared/province.ts');
+  return [...PROVINCES];
 }
