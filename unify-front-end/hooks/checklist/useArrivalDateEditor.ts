@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import { getDaysUntilArrival } from '@/helpers/arrivalDate';
-import { applyArrivalToQueryCaches } from '@/services/onboarding/arrivalCache';
+import { beginArrivalWrite } from '@/services/onboarding/arrivalCache';
 import {
   updateArrivalDate,
   type ConfirmedArrival,
@@ -90,10 +90,14 @@ export const useArrivalDateEditor = ({
       savingRef.current = true;
       setIsSaving(true);
 
+      // Orders this write against every other one for the account, including
+      // writes from editors that have unmounted.
+      const write = beginArrivalWrite(queryClient, saveUserId);
       let confirmed: ConfirmedArrival;
       try {
         confirmed = await updateArrivalDate(saveUserId, newDate);
       } catch (error) {
+        write.fail();
         if (!isCurrent()) return;
         console.error('Error saving arrival date:', error);
         savingRef.current = false;
@@ -104,9 +108,10 @@ export const useArrivalDateEditor = ({
 
       // The write landed. Everything below must never look like a failed save.
       // Query caches belong to the account, not to this screen, so they take
-      // the confirmed date even if the screen has gone.
+      // the confirmed date even if the screen has gone, unless a newer write
+      // for the account has replaced it.
       try {
-        applyArrivalToQueryCaches(queryClient, confirmed);
+        await write.confirm(confirmed);
       } catch (error) {
         console.warn('[arrival date] cache update failed after save:', error);
       }

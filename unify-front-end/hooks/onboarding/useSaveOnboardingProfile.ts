@@ -5,7 +5,7 @@ import {
   type SaveOnboardingResult,
 } from '@/services/onboarding/saveOnboardingProfile';
 import { OnboardingProfileInput } from '@/types/onboardingProfile';
-import { PERSONALIZED_STARTERS_QUERY_KEY } from '@/hooks/companion/personalizedStartersQueryKey';
+import { personalizedStartersAccountKey } from '@/hooks/companion/personalizedStartersQueryKey';
 
 export const useSaveOnboardingProfile = () => {
   const queryClient = useQueryClient();
@@ -26,7 +26,9 @@ export const useSaveOnboardingProfile = () => {
         ['onboardingProfile', variables.userId],
         result.profile
       );
-      queryClient.invalidateQueries({ queryKey: PERSONALIZED_STARTERS_QUERY_KEY });
+      queryClient.invalidateQueries({
+        queryKey: personalizedStartersAccountKey(variables.userId),
+      });
     },
   });
 };

@@ -117,6 +117,9 @@ const MAX_SNAP_POINT = 0.9;
 
 // White on this green is 5.48:1, above the 4.5:1 minimum for normal text.
 const SAVE_BACKGROUND = '#047857';
+// Held down, Save darkens instead of fading: fading over the white sheet
+// would drop the label below 4.5:1. White on this green is 7.68:1.
+const SAVE_PRESSED_BACKGROUND = '#065F46';
 const SAVE_TEXT_COLOR = '#FFFFFF';
 
 const styles = StyleSheet.create({
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   saveButtonPressed: {
-    opacity: 0.8,
+    backgroundColor: SAVE_PRESSED_BACKGROUND,
   },
   saveText: {
     ...typography.button,
