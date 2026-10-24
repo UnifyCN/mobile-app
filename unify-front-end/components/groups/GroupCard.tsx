@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { memo } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Group } from '@/types/groups';
@@ -59,18 +60,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   groupTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
-    lineHeight: 20,
+    fontWeight: '600',
   },
   groupDetailText: {
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 20,
+    ...typography.secondary,
     marginTop: 2,
     color: Theme.black,
     flex: 1,
+    fontWeight: '400',
   },
 });
 

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -114,17 +115,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 28,
   },
-  question: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 16,
-  },
-  errorText: {
-    fontSize: 14,
-    color: '#f00',
-    marginBottom: 12,
-  },
+  question: { ...typography.title, color: Theme.black, marginBottom: 16 },
+  errorText: { ...typography.secondary, color: '#f00', marginBottom: 12 },
   optionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -180,17 +172,8 @@ const styles = StyleSheet.create({
     borderColor: Theme.primaryGatherRed,
     backgroundColor: Theme.primaryGatherRed,
   },
-  checkmark: {
-    color: Theme.white,
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  optionText: {
-    fontSize: 16,
-    color: Theme.black,
-    lineHeight: 20,
-    paddingRight: 18,
-  },
+  checkmark: { ...typography.caption, color: Theme.white, fontWeight: '700' },
+  optionText: { ...typography.body, color: Theme.black, paddingRight: 18 },
   optionTextSelected: {
     fontWeight: '600',
   },
@@ -198,12 +181,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   otherInput: {
+    ...typography.body,
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
     backgroundColor: Theme.white,
-    fontSize: 16,
     color: Theme.black,
   },
 });

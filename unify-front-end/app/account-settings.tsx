@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   View,
   Text,
@@ -549,23 +550,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  userName: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Theme.black,
-  },
+  userName: { ...typography.section, color: Theme.black },
   nameStack: {
     flexDirection: 'column',
   },
-  userHandle: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 2,
-  },
-  userEmail: {
-    fontSize: 14,
-    color: '#343434',
-  },
+  userHandle: { ...typography.secondary, color: '#666', marginTop: 2 },
+  userEmail: { ...typography.secondary, color: '#343434' },
   settingsCard: {
     flexDirection: 'column',
     gap: 15,
@@ -583,11 +573,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   rowLabelContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 18,
   },
   toggleTrack: {
+    flexShrink: 0,
     width: 52,
     height: 30,
     borderRadius: 999,
@@ -618,34 +610,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  rowText: {
-    fontSize: 18,
-    color: Theme.black,
-  },
+  rowText: { ...typography.body, color: Theme.black, flexShrink: 1 },
   rowTextDanger: {
-    fontSize: 18,
+    ...typography.body,
     color: ACCOUNT_ROW_DANGER_COLOR,
+    flexShrink: 1,
   },
   divider: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: '#e4e4e4',
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.textInput,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   languageValueContainer: {
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
   },
-  languageValueText: {
-    fontSize: 16,
-    color: '#8E8E93',
-  },
+  languageValueText: { ...typography.body, color: '#62605B', flexShrink: 1 },
   languageModalCard: {
     backgroundColor: Theme.white,
     borderRadius: 16,
@@ -654,8 +642,7 @@ const styles = StyleSheet.create({
     maxWidth: 340,
   },
   languageModalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -671,10 +658,7 @@ const styles = StyleSheet.create({
   languageOptionSelected: {
     backgroundColor: '#F5F5F5',
   },
-  languageOptionText: {
-    fontSize: 17,
-    color: '#333',
-  },
+  languageOptionText: { ...typography.body, color: '#333' },
   languageOptionTextSelected: {
     fontWeight: '600',
     color: Theme.black,
@@ -694,15 +678,13 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   deleteModalTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    ...typography.section,
     color: Theme.black,
     marginBottom: 12,
   },
   deleteModalMessage: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.textInput,
-    lineHeight: 22,
     marginBottom: 24,
   },
   deleteModalButtons: {
@@ -719,11 +701,7 @@ const styles = StyleSheet.create({
     borderColor: Theme.surfaceTextInput,
     alignItems: 'center',
   },
-  deleteModalCancelText: {
-    fontSize: 16,
-    color: Theme.black,
-    fontWeight: '500',
-  },
+  deleteModalCancelText: { ...typography.body, color: Theme.black },
   deleteModalConfirm: {
     width: '50%',
     paddingVertical: 12,
@@ -732,9 +710,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  deleteModalConfirmText: {
-    fontSize: 16,
-    color: Theme.white,
-    fontWeight: '600',
-  },
+  deleteModalConfirmText: { ...typography.cardTitle, color: Theme.white },
 });

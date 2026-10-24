@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useState, useRef } from 'react';
 import {
   ActivityIndicator,
@@ -443,17 +444,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
     color: COLORS.white,
     textAlign: 'center',
     marginBottom: 10,
   },
   headerSubtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: COLORS.white,
     textAlign: 'center',
-    lineHeight: 22,
     paddingHorizontal: 20,
   },
   // Content
@@ -494,12 +493,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  selectionLabel: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
-    color: COLORS.text,
-  },
+  selectionLabel: { ...typography.label, flex: 1, color: COLORS.text },
   // Radio & Checkbox
   radio: {
     width: 20,
@@ -535,15 +529,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     gap: 6,
   },
-  selectedCountText: {
-    fontSize: 16,
-    color: COLORS.success,
-    fontWeight: '500',
-  },
+  selectedCountText: { ...typography.body, color: COLORS.success },
   // Error
   errorText: {
+    ...typography.body,
     color: '#EF4444',
-    fontSize: 16,
     textAlign: 'center',
     marginTop: 16,
   },
@@ -578,16 +568,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   completionTitle: {
-    fontSize: 28,
-    fontWeight: '700',
+    ...typography.title,
     color: COLORS.text,
     marginBottom: 12,
   },
   completionSubtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: COLORS.textSecondary,
     textAlign: 'center',
-    lineHeight: 24,
     marginBottom: 24,
   },
   summaryCard: {
@@ -598,23 +586,19 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   summaryLabel: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: COLORS.textSecondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 4,
+    fontWeight: '600',
   },
   summaryRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
   },
-  summaryText: {
-    fontSize: 16,
-    color: COLORS.text,
-    fontWeight: '500',
-  },
+  summaryText: { ...typography.body, color: COLORS.text },
   // Footer
   footer: {
     paddingHorizontal: 40,
@@ -633,11 +617,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: COLORS.text,
-  },
+  backButtonText: { ...typography.button, color: COLORS.text },
   nextButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -651,11 +631,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.white,
     gap: 12,
   },
-  nextButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.white,
-  },
+  nextButtonText: { ...typography.button, color: COLORS.white },
   joinButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -667,9 +643,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     gap: 12,
   },
-  joinButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.white,
-  },
+  joinButtonText: { ...typography.button, color: COLORS.white },
 });

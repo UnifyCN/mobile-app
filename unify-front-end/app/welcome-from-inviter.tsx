@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
@@ -60,9 +61,11 @@ export default function WelcomeFromInviterScreen() {
   const [joining, setJoining] = useState(false);
 
   useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion).catch(() => {
-      // ignore — default false
-    });
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then(setReduceMotion)
+      .catch(() => {
+        // ignore — default false
+      });
   }, []);
 
   const inviter = data?.inviter ?? null;
@@ -136,7 +139,9 @@ export default function WelcomeFromInviterScreen() {
             style={styles.primaryCta}
             activeOpacity={0.85}
           >
-            <Text style={styles.primaryCtaText}>{t('welcome.continueButton')}</Text>
+            <Text style={styles.primaryCtaText}>
+              {t('welcome.continueButton')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -148,7 +153,10 @@ export default function WelcomeFromInviterScreen() {
     ? `${inviterName} ${t('welcome.fromCity', { city: inviter.city })}`
     : inviterName;
   const sayHiLabel = t('welcome.sayHi', { name: inviterName });
-  const joinLabel = t('welcome.joinGroups', { name: inviterName, count: groups.length });
+  const joinLabel = t('welcome.joinGroups', {
+    name: inviterName,
+    count: groups.length,
+  });
 
   return (
     <View style={styles.container}>
@@ -161,12 +169,7 @@ export default function WelcomeFromInviterScreen() {
             autoStart
             explosionSpeed={350}
             fallSpeed={1500}
-            colors={[
-              Theme.primaryGatherRed,
-              '#FFD9A8',
-              '#FAF6F0',
-              '#FCEBD0',
-            ]}
+            colors={[Theme.primaryGatherRed, '#FFD9A8', '#FAF6F0', '#FCEBD0']}
           />
         </View>
       )}
@@ -184,10 +187,7 @@ export default function WelcomeFromInviterScreen() {
             />
           </View>
 
-          <Text
-            style={styles.headline}
-            accessibilityRole='header'
-          >
+          <Text style={styles.headline} accessibilityRole='header'>
             {t('welcome.becauseOf', { name: inviterName })}
           </Text>
 
@@ -274,16 +274,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
   },
   headline: {
-    fontSize: 30,
-    lineHeight: 34,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     textAlign: 'center',
     letterSpacing: -0.4,
   },
   subhead: {
-    fontSize: 16,
-    lineHeight: 22,
+    ...typography.body,
     color: Theme.textAlternateGray,
     textAlign: 'center',
     paddingHorizontal: 8,
@@ -299,9 +296,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   primaryCtaText: {
+    ...typography.button,
     color: Theme.white,
-    fontSize: 16,
-    fontWeight: '700',
     textAlign: 'center',
   },
   secondaryCta: {
@@ -317,9 +313,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   secondaryCtaText: {
+    ...typography.button,
     color: Theme.black,
-    fontSize: 16,
-    fontWeight: '600',
     textAlign: 'center',
   },
   skipPressable: {
@@ -327,8 +322,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   skipText: {
-    fontSize: 14,
-    color: Theme.textInput, // 5.7:1 contrast — passes WCAG AA
+    ...typography.secondary,
+    color: Theme.textInput,
     textAlign: 'center',
   },
 });

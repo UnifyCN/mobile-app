@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useState,
   useCallback,
@@ -807,30 +808,24 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   headerSectionLabel: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: '#5A6270',
     letterSpacing: 0.4,
     textTransform: 'uppercase',
+    fontWeight: '600',
   },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#101114',
-    letterSpacing: -0.4,
-  },
+  headerTitle: { ...typography.title, color: '#101114', letterSpacing: -0.4 },
   headerDescriptionWrap: {
     paddingHorizontal: 16,
     marginTop: 2,
     paddingBottom: 4,
   },
   headerDescription: {
-    fontSize: 15,
-    fontWeight: '400',
+    ...typography.secondary,
     color: '#4B5563',
-    lineHeight: 22,
     marginLeft: 16,
     marginRight: 10,
+    fontWeight: '400',
   },
   headerCenterWrap: {
     flex: 1,
@@ -840,8 +835,7 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
   },
   headerModuleName: {
-    fontSize: 20,
-    fontWeight: '600',
+    ...typography.section,
     color: '#111111',
     letterSpacing: -0.2,
   },
@@ -935,11 +929,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 1,
   },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-  },
+  cardTitle: { ...typography.cardTitle, color: '#1A1A1A' },
   cardTitleOpened: {
     color: '#FFFFFF',
   },
@@ -950,19 +940,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   sectionDescription: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#888888',
+    ...typography.secondary,
+    color: '#62605B',
     marginBottom: 0,
+    fontWeight: '400',
   },
   lessonCountOpened: {
     color: 'rgba(255,255,255,0.85)',
   },
   sectionStatus: {
-    fontSize: 11,
-    fontWeight: '500',
-    color: '#9CA3AF',
+    ...typography.caption,
+    color: '#62605B',
     marginTop: 4,
+    fontWeight: '500',
   },
   sectionStatusOpened: {
     color: 'rgba(255,255,255,0.8)',
@@ -980,24 +970,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  startCtaText: {
-    fontSize: 13,
-    fontWeight: '600',
-  },
+  startCtaText: { ...typography.button },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-    marginTop: 12,
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#EF4444',
-    textAlign: 'center',
-  },
+  loadingText: { ...typography.body, color: '#6B7280', marginTop: 12 },
+  errorText: { ...typography.body, color: '#EF4444', textAlign: 'center' },
 });

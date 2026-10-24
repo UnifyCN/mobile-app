@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React, { memo, useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -60,7 +61,7 @@ export interface PostItemProps {
 }
 
 const HTML_TAG_STYLES: Record<string, MixedStyleDeclaration> = {
-  body: { fontSize: 16, lineHeight: 22, color: Theme.black },
+  body: { ...typography.body, color: Theme.black },
   a: { color: '#f68b26', textDecorationLine: 'underline' },
   strong: { fontWeight: '700' },
   b: { fontWeight: '700' },
@@ -460,35 +461,31 @@ export const PostItem = memo(
     };
 
     const handleDeletePost = () => {
-      Alert.alert(
-        t('home.deletePost'),
-        t('home.confirmDeletePost'),
-        [
-          {
-            text: t('common.cancel'),
-            style: 'cancel',
-            onPress: () => setDeleteModalVisible(false),
+      Alert.alert(t('home.deletePost'), t('home.confirmDeletePost'), [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+          onPress: () => setDeleteModalVisible(false),
+        },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: () => {
+            deletePostMutation.mutate(post.id, {
+              onSuccess: () => {
+                trackPostDeleted(String(post.id));
+                setDeleteModalVisible(false);
+              },
+              onError: error => {
+                Alert.alert(
+                  t('common.error'),
+                  error.message || t('home.failedDeletePost')
+                );
+              },
+            });
           },
-          {
-            text: t('common.delete'),
-            style: 'destructive',
-            onPress: () => {
-              deletePostMutation.mutate(post.id, {
-                onSuccess: () => {
-                  trackPostDeleted(String(post.id));
-                  setDeleteModalVisible(false);
-                },
-                onError: error => {
-                  Alert.alert(
-                    t('common.error'),
-                    error.message || t('home.failedDeletePost')
-                  );
-                },
-              });
-            },
-          },
-        ]
-      );
+        },
+      ]);
     };
 
     // Use batch-loaded metadata with loading state
@@ -615,47 +612,54 @@ export const PostItem = memo(
 
     // 'react-native-render-HTML' HTML rendering config
     // Warning text for when links are being opened
-    const handleLinkPress = useCallback((_: any, href: string) => {
-      let parsedUrl: URL;
-      try {
-        parsedUrl = new URL(href);
-      } catch {
-        Alert.alert(t('home.leavingUnify'), t('home.invalidLink'));
-        return;
-      }
+    const handleLinkPress = useCallback(
+      (_: any, href: string) => {
+        let parsedUrl: URL;
+        try {
+          parsedUrl = new URL(href);
+        } catch {
+          Alert.alert(t('home.leavingUnify'), t('home.invalidLink'));
+          return;
+        }
 
-      if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
-        Alert.alert(t('home.leavingUnify'), t('home.secureLinksOnly'));
-        return;
-      }
+        if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+          Alert.alert(t('home.leavingUnify'), t('home.secureLinksOnly'));
+          return;
+        }
 
-      Alert.alert(t('home.leavingUnify'), t('home.externalLinkWarning', { href }), [
-        { text: t('home.goBackButton'), style: 'cancel' },
-        {
-          text: t('home.openLink'),
-          onPress: () => {
-            void Linking.canOpenURL(href)
-              .then(canOpen => {
-                if (!canOpen) {
-                  Alert.alert(
-                    t('home.unableOpenLink'),
-                    t('home.linkNotSupported')
-                  );
-                  return;
-                }
+        Alert.alert(
+          t('home.leavingUnify'),
+          t('home.externalLinkWarning', { href }),
+          [
+            { text: t('home.goBackButton'), style: 'cancel' },
+            {
+              text: t('home.openLink'),
+              onPress: () => {
+                void Linking.canOpenURL(href)
+                  .then(canOpen => {
+                    if (!canOpen) {
+                      Alert.alert(
+                        t('home.unableOpenLink'),
+                        t('home.linkNotSupported')
+                      );
+                      return;
+                    }
 
-                return Linking.openURL(href);
-              })
-              .catch(() => {
-                Alert.alert(
-                  t('home.unableOpenLink'),
-                  t('home.linkOpenError')
-                );
-              });
-          },
-        },
-      ]);
-    }, [t]);
+                    return Linking.openURL(href);
+                  })
+                  .catch(() => {
+                    Alert.alert(
+                      t('home.unableOpenLink'),
+                      t('home.linkOpenError')
+                    );
+                  });
+              },
+            },
+          ]
+        );
+      },
+      [t]
+    );
 
     const renderersProps = useMemo(
       () => ({
@@ -765,7 +769,9 @@ export const PostItem = memo(
                         renderersProps={renderersProps}
                       />
                       {shouldShowReadMore && (
-                        <Text style={styles.readMoreText}>{t('common.readMore')}</Text>
+                        <Text style={styles.readMoreText}>
+                          {t('common.readMore')}
+                        </Text>
                       )}
                     </View>
                   )}
@@ -819,7 +825,9 @@ export const PostItem = memo(
                     </Text>
                     {post.isPinned && (
                       <View style={styles.pinnedBadge}>
-                        <Text style={styles.pinnedText}>{t('common.pinned')}</Text>
+                        <Text style={styles.pinnedText}>
+                          {t('common.pinned')}
+                        </Text>
                       </View>
                     )}
                   </View>
@@ -954,14 +962,18 @@ export const PostItem = memo(
                       color={Theme.black}
                       style={styles.optionIcon}
                     />
-                    <Text style={styles.modalOptionText}>{t('home.reportPost')}</Text>
+                    <Text style={styles.modalOptionText}>
+                      {t('home.reportPost')}
+                    </Text>
                   </TouchableOpacity>
                 )}
                 <TouchableOpacity
                   style={styles.modalOption}
                   onPress={() => setDeleteModalVisible(false)}
                 >
-                  <Text style={styles.modalOptionText}>{t('common.cancel')}</Text>
+                  <Text style={styles.modalOptionText}>
+                    {t('common.cancel')}
+                  </Text>
                 </TouchableOpacity>
               </Pressable>
             </View>
@@ -1025,13 +1037,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   header: {
+    ...typography.caption,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    fontSize: 12,
     color: '#000',
     textAlign: 'left',
-    lineHeight: 16,
     marginBottom: 6,
   },
   headerLeft: {
@@ -1074,10 +1085,9 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   homeMetaGroup: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: Theme.textPostTime,
-    fontWeight: '500',
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
     flexShrink: 1,
   },
   menuButton: {
@@ -1090,43 +1100,28 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#f0f0f0',
   },
-  name: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-  },
+  name: { ...typography.cardTitle, color: Theme.black },
   homeName: {
-    fontSize: 14,
-    fontWeight: '500',
+    ...typography.label,
+
     color: Theme.black,
-    lineHeight: 18,
     flexShrink: 1,
   },
-  group: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: Theme.black,
-  },
+  group: { ...typography.secondary, color: Theme.black, fontWeight: '600' },
   time: {
-    fontSize: 14,
-    color: Theme.textPostTime,
+    ...typography.secondary,
+    color: typographyColors.secondary,
     fontWeight: '500',
   },
   homeTime: {
-    fontSize: 14,
-    color: Theme.textPostTime,
-    fontWeight: '400',
-    lineHeight: 18,
+    ...typography.caption,
+
+    color: typographyColors.secondary,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    lineHeight: 22,
-  },
+  title: { ...typography.cardTitle },
   homeTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    lineHeight: 26,
+    ...typography.cardTitle,
+
     color: Theme.black,
     minHeight: 24,
     marginTop: 6,
@@ -1176,12 +1171,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 3,
   },
-  footerText: {
-    fontSize: 14,
-  },
+  footerText: { ...typography.secondary },
   homeFooterText: {
+    ...typography.secondary,
+
     color: Theme.textAlternateGray,
-    fontWeight: '500',
   },
   homeSaveButton: {
     marginLeft: 16,
@@ -1229,12 +1223,7 @@ const styles = StyleSheet.create({
   optionIcon: {
     marginRight: 8,
   },
-  modalOptionText: {
-    fontSize: 18,
-    color: Theme.black,
-    fontWeight: '500',
-    flex: 1,
-  },
+  modalOptionText: { ...typography.body, color: Theme.black, flex: 1 },
   deleteText: {
     color: Theme.destructive,
   },
@@ -1245,11 +1234,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginLeft: 4,
   },
-  pinnedText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#666',
-  },
+  pinnedText: { ...typography.caption, color: '#666', fontWeight: '500' },
   carouselWrapper: {
     marginTop: 12,
   },

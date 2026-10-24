@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -69,33 +70,31 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     marginBottom: 16,
     textAlign: 'center',
   },
   body: {
-    fontSize: 18,
+    ...typography.body,
     color: Theme.textInput,
     textAlign: 'center',
-    lineHeight: 28,
     maxWidth: '90%',
     marginBottom: 32,
   },
   input: {
+    ...typography.body,
     width: '100%',
     height: 56,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
     borderRadius: 12,
     paddingHorizontal: 20,
-    fontSize: 18,
     color: Theme.black,
     textAlign: 'center',
   },
   errorText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#f00',
     marginTop: 12,
     textAlign: 'center',

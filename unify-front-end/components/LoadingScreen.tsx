@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,9 +13,7 @@ type LoadingScreenProps = {
   message?: string;
 };
 
-export default function LoadingScreen({
-  message,
-}: LoadingScreenProps) {
+export default function LoadingScreen({ message }: LoadingScreenProps) {
   const { t } = useTranslation();
   const displayMessage = message ?? t('loadingScreen.message');
   const { width, height } = useWindowDimensions();
@@ -73,12 +72,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   message: {
+    ...typography.section,
     maxWidth: 300,
     textAlign: 'center',
     color: Theme.black,
-    fontSize: 23,
-    lineHeight: 31,
-    fontWeight: '700',
     letterSpacing: -0.2,
   },
   dotsContainer: {

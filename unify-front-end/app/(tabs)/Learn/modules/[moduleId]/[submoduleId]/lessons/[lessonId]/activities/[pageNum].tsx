@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
@@ -513,30 +514,23 @@ export default function ActivityPageScreen() {
               markDefs={currentPageData.answer_box.markDefs}
               styles={{
                 normal: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 bullet: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 number: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 strong: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '600',
+                  ...typography.reading,
+                  fontWeight: '700',
                   color: '#3F3F3F',
                 },
               }}
@@ -622,17 +616,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   pageIndicator: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#6B7280',
+    fontWeight: '600',
   },
 
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 20,
-    lineHeight: 38,
     textAlign: 'center',
     marginTop: 20,
   },
@@ -650,18 +642,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 
-  inputLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#374151',
-  },
+  inputLabel: { ...typography.cardTitle, color: '#374151' },
 
   input: {
+    ...typography.body,
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 8,
     padding: 12,
-    fontSize: 16,
     backgroundColor: '#fff',
   },
 
@@ -696,19 +684,16 @@ const styles = StyleSheet.create({
 
   // If you keep a separate title (not typical for this tip style):
   answerBoxTitle: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#3F3F3F',
     marginBottom: 10,
+    fontWeight: '600',
   },
 
   answerBoxText: {
-    // Regular 14 / 20 for paragraph text inside renderer
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
+    ...typography.secondary,
     color: '#F5F5F5',
+    fontWeight: '400',
   },
 
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -735,7 +720,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: { ...typography.cardTitle, color: '#374151' },
   nextBtn: {
     backgroundColor: '#575757',
     paddingVertical: 14,
@@ -744,7 +729,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: { ...typography.cardTitle, color: '#fff' },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -766,16 +751,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -787,11 +770,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -799,9 +778,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

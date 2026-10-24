@@ -12,9 +12,9 @@ export const Theme = {
   secondaryBlack: '#171616',
 
   textInput: '#686464',
-  textInactiveTab: '#B5B1B1',
+  textInactiveTab: '#62605B',
   textAlternateGray: '#575757',
-  textPostTime: '#9F9D9D',
+  textPostTime: '#62605B',
 
   surfaceTextInput: '#E6E6E6',
   surfaceGray: '#F0F0F0',

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useRef } from 'react';
 import {
   View,
@@ -81,12 +82,11 @@ export default function OTPVerification({
       });
 
       if (verifyError) {
-        const isExpiredOrInvalid =
-          /expired|invalid/i.test(verifyError.message ?? '');
+        const isExpiredOrInvalid = /expired|invalid/i.test(
+          verifyError.message ?? ''
+        );
         setErrorMessage(
-          isExpiredOrInvalid
-            ? t('auth.otpExpired')
-            : t('auth.unexpectedError')
+          isExpiredOrInvalid ? t('auth.otpExpired') : t('auth.unexpectedError')
         );
         setLoading(false);
         return;
@@ -209,7 +209,9 @@ export default function OTPVerification({
 
         <TouchableOpacity style={styles.backButton} onPress={onBackToSignUp}>
           <MaterialIcons name='arrow-back' size={20} color='#666' />
-          <Text style={styles.backButtonText}>{t('auth.otp.backToSignUp')}</Text>
+          <Text style={styles.backButtonText}>
+            {t('auth.otp.backToSignUp')}
+          </Text>
         </TouchableOpacity>
       </ViewSection>
     </ViewContainer>
@@ -225,21 +227,19 @@ const styles = StyleSheet.create({
     paddingRight: 24 * 0.87,
   },
   header: {
-    fontSize: 34 * 0.87,
-    fontWeight: '700' as '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 7 * 0.87,
     marginTop: 110 * 0.87,
   },
   subtitle: {
-    fontSize: 16 * 0.87,
+    ...typography.body,
     color: '#666',
     textAlign: 'center',
     marginBottom: 8 * 0.87,
   },
   emailText: {
-    fontSize: 16 * 0.87,
-    fontWeight: '600' as '600',
+    ...typography.cardTitle,
     color: '#000',
     textAlign: 'center',
     marginBottom: 32 * 0.87,
@@ -278,8 +278,8 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   errorMessage: {
+    ...typography.secondary,
     color: '#f00',
-    fontSize: 14 * 0.87,
     textAlign: 'center',
     marginBottom: 16 * 0.87,
   },
@@ -287,17 +287,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#343434',
     borderRadius: 40 * 0.87,
     marginTop: 16 * 0.87,
-    width: 200 * 0.87,
-    height: 42 * 0.87,
+    minWidth: 200 * 0.87,
+    maxWidth: '100%',
+    minHeight: 44,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     alignSelf: 'center' as 'center',
     justifyContent: 'center' as 'center',
     alignItems: 'center' as 'center',
   },
   verifyButtonText: {
+    ...typography.button,
     color: 'white',
     textAlign: 'center' as 'center',
-    fontSize: 16 * 0.87,
-    fontWeight: '600' as '600',
   },
   resendContainer: {
     flexDirection: 'row' as 'row',
@@ -305,15 +307,12 @@ const styles = StyleSheet.create({
     alignItems: 'center' as 'center',
     marginTop: 24 * 0.87,
   },
-  resendText: {
-    fontSize: 14 * 0.87,
-    color: '#666',
-  },
+  resendText: { ...typography.secondary, color: '#666' },
   resendLink: {
-    fontSize: 14 * 0.87,
+    ...typography.secondary,
     color: '#5182C7',
-    fontWeight: '600' as '600',
     textDecorationLine: 'underline' as 'underline',
+    fontWeight: '600' as '600',
   },
   backButton: {
     flexDirection: 'row' as 'row',
@@ -321,9 +320,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center' as 'center',
     marginTop: 32 * 0.87,
   },
-  backButtonText: {
-    fontSize: 14 * 0.87,
-    color: '#666',
-    marginLeft: 8 * 0.87,
-  },
+  backButtonText: { ...typography.button, color: '#666', marginLeft: 8 * 0.87 },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
@@ -97,26 +98,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   value: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     letterSpacing: -0.5,
     fontVariant: ['tabular-nums'],
-    lineHeight: 36,
   },
   label: {
-    fontSize: 11,
-    fontWeight: '700',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
     marginTop: 6,
+    fontWeight: '700',
   },
   separator: {
-    fontSize: 28,
-    fontWeight: '300',
+    ...typography.title,
     color: Theme.textInactiveTab,
-    lineHeight: 36,
     marginTop: -10,
   },
 });

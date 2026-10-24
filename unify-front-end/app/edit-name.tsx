@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   View,
   Text,
@@ -78,11 +79,9 @@ export default function EditNamePage() {
 
       if (firstNameSucceeded && usernameSucceeded) {
         queryClient.invalidateQueries({ queryKey: ['userInfo'] });
-        Alert.alert(
-          t('editName.successTitle'),
-          t('editName.successMessage'),
-          [{ text: t('common.ok'), onPress: () => router.back() }]
-        );
+        Alert.alert(t('editName.successTitle'), t('editName.successMessage'), [
+          { text: t('common.ok'), onPress: () => router.back() },
+        ]);
       } else {
         // Partial success — invalidate so the screen reflects the saved fields,
         // stay on the page so the user can retry the failed field.
@@ -173,43 +172,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
   },
-  label: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 12,
-  },
+  label: { ...typography.section, color: Theme.black, marginBottom: 12 },
   labelSpaced: {
     marginTop: 24,
   },
   input: {
+    ...typography.body,
     height: 56,
     borderWidth: 1,
     borderColor: Theme.black,
     borderRadius: 10,
     paddingHorizontal: 20,
-    fontSize: 16,
     color: Theme.black,
   },
   inputError: {
     borderColor: '#f00',
   },
   characterCount: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textPostTime,
     marginTop: 8,
     textAlign: 'left',
   },
-  helper: {
-    fontSize: 12,
-    color: Theme.textPostTime,
-    marginTop: 4,
-  },
-  errorText: {
-    fontSize: 12,
-    color: '#f00',
-    marginTop: 4,
-  },
+  helper: { ...typography.caption, color: Theme.textPostTime, marginTop: 4 },
+  errorText: { ...typography.caption, color: '#f00', marginTop: 4 },
   saveButton: {
     marginTop: 32,
     backgroundColor: Theme.primaryGatherRed,
@@ -221,9 +207,5 @@ const styles = StyleSheet.create({
   saveButtonDisabled: {
     opacity: 0.6,
   },
-  saveButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.white,
-  },
+  saveButtonText: { ...typography.button, color: Theme.white },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -81,14 +82,10 @@ const NewsDetailScreen = () => {
           </Text>
         )}
         {author && !date && (
-          <Text style={styles.metadata}>
-            {t('news.byAuthor', { author })}
-          </Text>
+          <Text style={styles.metadata}>{t('news.byAuthor', { author })}</Text>
         )}
         {!author && date && (
-          <Text style={styles.metadata}>
-            {formatDate(date, i18n.language)}
-          </Text>
+          <Text style={styles.metadata}>{formatDate(date, i18n.language)}</Text>
         )}
 
         {/* Article Image */}
@@ -139,23 +136,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 20,
   },
-  articleTitle: {
-    fontSize: 32,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 6,
-    lineHeight: 36,
-  },
-  metadata: {
-    fontSize: 16,
-    color: Theme.black,
-    marginBottom: 20,
-    lineHeight: 20,
-  },
-  authorText: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
+  articleTitle: { ...typography.title, color: Theme.black, marginBottom: 6 },
+  metadata: { ...typography.body, color: Theme.black, marginBottom: 20 },
+  authorText: { ...typography.cardTitle },
   articleImage: {
     width: '100%',
     height: 200,
@@ -170,27 +153,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: Theme.imagePlaceholder,
   },
-  descriptionText: {
-    fontSize: 18,
-    color: Theme.black,
-    lineHeight: 27,
-    fontWeight: '600',
-  },
-  contentText: {
-    fontSize: 18,
-    color: Theme.black,
-    lineHeight: 27,
-  },
+  descriptionText: { ...typography.cardTitle, color: Theme.black },
+  contentText: { ...typography.reading, color: Theme.black },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#666',
-  },
+  errorText: { ...typography.body, color: '#666' },
   divide: {
     height: 1,
     backgroundColor: Theme.surfaceGray,
@@ -201,7 +172,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   linkText: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.surfaceBlue,
     textDecorationLine: 'underline',
   },

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useMemo,
   useState,
@@ -25,7 +26,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSanityModuleWithSubmodules } from '@/hooks/sanity/useSanityModules';
 import { cachedProgressService } from '@/services/progress/cachedProgressService';
 import { progressClient } from '@/services/progress/progressClient';
-import { upsertModuleProgress, getModuleProgressStatus } from '@/services/learn/moduleProgressService';
+import {
+  upsertModuleProgress,
+  getModuleProgressStatus,
+} from '@/services/learn/moduleProgressService';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ModuleIndexSkeletonLoader } from '@/components/learn/module-index-skeleton-loader';
@@ -613,11 +617,7 @@ export default function ModuleIndex() {
   // Initialize openedCardId to the highlighted section when data is ready
   useEffect(() => {
     // Only set when we have data loaded and a highlighted section
-    if (
-      highlightedSectionId &&
-      !isLoading &&
-      moduleData?.submodules
-    ) {
+    if (highlightedSectionId && !isLoading && moduleData?.submodules) {
       // Always update to the highlighted section when opening the module
       // This ensures the correct section is highlighted even if user navigated away and came back
       setOpenedCardId(highlightedSectionId);
@@ -804,7 +804,9 @@ export default function ModuleIndex() {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorText}>
-          {t('common.errorLoadingModule', { message: error?.message || t('common.unknownError') })}
+          {t('common.errorLoadingModule', {
+            message: error?.message || t('common.unknownError'),
+          })}
         </Text>
         <Link href='/(tabs)/Learn'>{t('common.goBackToLearn')}</Link>
       </View>
@@ -884,10 +886,13 @@ export default function ModuleIndex() {
         {/* Why this? personalization context — inside header area */}
         {decodedWhyTag ? (
           <View style={styles.whyBanner}>
-            <Feather name='info' size={12} color='#FFFFFF' style={{ opacity: 0.85 }} />
-            <Text style={styles.whyBannerText}>
-              {decodedWhyTag}
-            </Text>
+            <Feather
+              name='info'
+              size={12}
+              color='#FFFFFF'
+              style={{ opacity: 0.85 }}
+            />
+            <Text style={styles.whyBannerText}>{decodedWhyTag}</Text>
           </View>
         ) : null}
       </View>
@@ -945,8 +950,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   headerTitle: {
-    fontSize: 24, // Matches user preference
-    fontWeight: '800',
+    ...typography.title,
     color: '#FFFFFF',
     paddingLeft: Layout.header.horizontalPadding,
   },
@@ -956,11 +960,9 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   headerDescription: {
-    fontSize: 16,
-    fontWeight: '400',
+    ...typography.body,
     color: '#FFFFFF',
     opacity: 0.9,
-    lineHeight: 20,
     marginLeft: Layout.header.horizontalPadding,
   },
   headerRightPlaceholder: {
@@ -1102,11 +1104,7 @@ const styles = StyleSheet.create({
   cardLocked: {
     opacity: 0.5,
   },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-  },
+  cardTitle: { ...typography.cardTitle, color: '#1A1A1A' },
   cardTitleOpened: {
     color: '#FFFFFF',
   },
@@ -1123,10 +1121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 8, // Reduced margin
   },
-  ctaText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  ctaText: { ...typography.button },
 
   // Loading / Error
   loadingContainer: {
@@ -1135,10 +1130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#666666',
-  },
+  loadingText: { ...typography.body, color: '#666666' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -1147,7 +1139,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   errorText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#EF4444',
     marginBottom: 16,
     textAlign: 'center',
@@ -1169,21 +1161,11 @@ const styles = StyleSheet.create({
     maxWidth: 360,
     alignItems: 'center',
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginBottom: 16,
-  },
+  modalTitle: { ...typography.cardTitle, color: '#1A1A1A', marginBottom: 16 },
   modalTextContainer: {
     marginBottom: 24,
   },
-  modalText: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: '#666666',
-    textAlign: 'center',
-  },
+  modalText: { ...typography.secondary, color: '#666666', textAlign: 'center' },
   modalButtons: {
     flexDirection: 'row',
     width: '100%',
@@ -1197,11 +1179,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalButtonBackText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-  },
+  modalButtonBackText: { ...typography.button, color: '#1A1A1A' },
   modalButtonContinue: {
     flex: 1,
     height: 48,
@@ -1209,11 +1187,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalButtonContinueText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
-  },
+  modalButtonContinueText: { ...typography.button, color: '#FFFFFF' },
 
   // Why-this personalization banner
   whyBanner: {
@@ -1229,10 +1203,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.18)',
   },
   whyBannerText: {
-    fontSize: 12,
-    fontWeight: '500',
+    ...typography.caption,
     color: '#FFFFFF',
     opacity: 0.9,
     flex: 1,
+    fontWeight: '500',
   },
 });

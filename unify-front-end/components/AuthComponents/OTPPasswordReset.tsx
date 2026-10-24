@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -126,7 +127,11 @@ export default function OTPPasswordReset({
 
   return (
     <ViewContainer style={styles.container}>
-      <BackHeader title={t('auth.resetPassword')} onBack={onBack} backIcon='x' />
+      <BackHeader
+        title={t('auth.resetPassword')}
+        onBack={onBack}
+        backIcon='x'
+      />
 
       <View style={styles.content}>
         <Text style={styles.description}>
@@ -134,7 +139,9 @@ export default function OTPPasswordReset({
         </Text>
 
         <View>
-          <Text style={styles.label}>{t('auth.otpReset.verificationCode')}</Text>
+          <Text style={styles.label}>
+            {t('auth.otpReset.verificationCode')}
+          </Text>
           <SimpleTextField
             value={otp}
             onChangeText={text => {
@@ -251,14 +258,13 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   description: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     marginBottom: 32,
     marginTop: 16,
   },
   label: {
-    fontSize: 16 * SCALE_FACTOR,
-    fontWeight: '400' as '400',
+    ...typography.label,
     color: '#000',
     marginBottom: 8 * SCALE_FACTOR,
     marginTop: 13 * SCALE_FACTOR,
@@ -288,16 +294,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 32,
   },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  message: {
-    fontSize: 14 * SCALE_FACTOR,
-    marginBottom: 16,
-    textAlign: 'left',
-  },
+  buttonText: { ...typography.button, color: 'white', textAlign: 'center' },
+  message: { ...typography.secondary, marginBottom: 16, textAlign: 'left' },
   errorMessage: {
     color: '#f00',
   },

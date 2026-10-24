@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useState,
   useEffect,
@@ -587,8 +588,8 @@ export default function QuizQuestionPage() {
         // the resulting boolean | undefined to the boolean UI state contract.
         isAnswerCorrect = Boolean(
           selectedAnswer === correctAnswerId ||
-            currentQuestion.options?.find(opt => opt._key === selectedAnswer)
-              ?.is_correct
+          currentQuestion.options?.find(opt => opt._key === selectedAnswer)
+            ?.is_correct
         );
       }
 
@@ -748,9 +749,8 @@ export default function QuizQuestionPage() {
                 markDefs={currentQuestion.questionMarkDefs}
                 styles={{
                   normal: {
-                    fontSize: 18,
+                    ...typography.reading,
                     color: '#000',
-                    lineHeight: 27,
                     textAlign: 'center',
                   },
                 }}
@@ -924,31 +924,24 @@ export default function QuizQuestionPage() {
                   markDefs={currentQuestion.answer_box.markDefs}
                   styles={{
                     normal: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     bullet: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     number: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '400',
+                      ...typography.reading,
                       color: '#3F3F3F',
                       marginBottom: 0,
                     },
                     strong: {
-                      fontSize: 18,
-                      lineHeight: 27,
-                      fontWeight: '600',
+                      ...typography.reading,
                       color: '#3F3F3F',
+                      fontWeight: '600',
                     },
                   }}
                 />
@@ -1074,10 +1067,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  loadingText: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
+  loadingText: { ...typography.body, color: '#6B7280' },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -1085,11 +1075,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#DC2626',
-    textAlign: 'center',
-  },
+  errorText: { ...typography.body, color: '#DC2626', textAlign: 'center' },
   header: {
     paddingHorizontal: 20,
     paddingTop: 10,
@@ -1101,18 +1087,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 15,
   },
-  closeButton: {
-    fontSize: 18,
-    color: '#000',
-    fontWeight: '600',
-  },
+  closeButton: { ...typography.button, color: '#000' },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#000',
     flex: 1,
     textAlign: 'center',
-    marginRight: 18, // Compensate for close button width
+    marginRight: 18,
   },
   progressBar: {
     height: 4,
@@ -1130,20 +1111,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   questionCounter: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: '#6B7280',
+    fontWeight: '600',
   },
   content: {
     padding: 20,
     flex: 1,
   },
   quizTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 12,
-    lineHeight: 38,
     textAlign: 'center',
   },
   questionContainer: {
@@ -1153,11 +1132,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     alignItems: 'center',
   },
-  questionText: {
-    fontSize: 25,
-    color: '#000',
-    lineHeight: 30,
-  },
+  questionText: { ...typography.title, color: '#000' },
   optionsContainer: {
     gap: 17,
   },
@@ -1242,21 +1217,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EF4444',
     marginTop: 0,
   },
-  checkmark: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+  checkmark: { ...typography.caption, color: '#fff', fontWeight: 'bold' },
   optionContent: {
     flex: 1,
     minHeight: 20,
   },
-  optionText: {
-    fontSize: 18,
-    color: '#374151',
-    lineHeight: 27,
-    fontWeight: '700',
-  },
+  optionText: { ...typography.reading, color: '#374151', fontWeight: '700' },
   footer: {
     position: 'absolute',
     bottom: 0,
@@ -1277,11 +1243,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  backButtonText: {
-    color: '#6B7280',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  backButtonText: { ...typography.button, color: '#6B7280' },
   checkButton: {
     backgroundColor: '#575757',
     paddingVertical: 14,
@@ -1292,11 +1254,7 @@ const styles = StyleSheet.create({
   checkButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  checkButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  checkButtonText: { ...typography.button, color: '#fff' },
   checkButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -1345,7 +1303,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF2F2',
   },
   matchingItemText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#374151',
     textAlign: 'center',
     fontWeight: '500',
@@ -1362,11 +1320,7 @@ const styles = StyleSheet.create({
   matchingCheckButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  matchingCheckButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  matchingCheckButtonText: { ...typography.button, color: '#fff' },
   matchingCheckButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -1402,16 +1356,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -1423,11 +1375,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -1435,9 +1383,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

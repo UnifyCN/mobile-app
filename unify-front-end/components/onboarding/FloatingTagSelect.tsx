@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   View,
@@ -326,14 +327,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   question: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.title,
     color: Theme.black,
     marginBottom: 24,
     paddingHorizontal: 8,
   },
   errorText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#f00',
     marginBottom: 12,
     paddingHorizontal: 8,
@@ -354,11 +354,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: 7,
   },
-  tagText: {
-    fontSize: 15,
-    fontWeight: '500',
-    lineHeight: 20,
-  },
+  tagText: { ...typography.secondary, fontWeight: '500' },
   tagTextSelected: {
     fontWeight: '700',
   },
@@ -376,12 +372,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   otherInput: {
+    ...typography.body,
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
     backgroundColor: Theme.white,
-    fontSize: 16,
     color: Theme.black,
   },
 });

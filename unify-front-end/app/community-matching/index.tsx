@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useEffect } from 'react';
 import {
   ScrollView,
@@ -77,16 +78,8 @@ const featureStyles = StyleSheet.create({
     flex: 1,
     gap: 5,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: COLORS.titleColor,
-  },
-  description: {
-    fontSize: 16,
-    color: COLORS.titleColor,
-    lineHeight: 22,
-  },
+  title: { ...typography.section, color: COLORS.titleColor },
+  description: { ...typography.body, color: COLORS.titleColor },
 });
 
 export default function CommunityMatchingHome() {
@@ -147,7 +140,9 @@ export default function CommunityMatchingHome() {
           <View style={styles.incompleteIconCircle}>
             <MaterialIcons name='person-add' size={32} color={COLORS.white} />
           </View>
-          <Text style={styles.incompleteTitle}>{t('circles.completeProfile')}</Text>
+          <Text style={styles.incompleteTitle}>
+            {t('circles.completeProfile')}
+          </Text>
           <Text style={styles.incompleteBody}>
             {t('circles.completeProfileBody')}
           </Text>
@@ -158,7 +153,9 @@ export default function CommunityMatchingHome() {
             }
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>{t('circles.completeOnboarding')}</Text>
+            <Text style={styles.primaryButtonText}>
+              {t('circles.completeOnboarding')}
+            </Text>
             <Feather name='arrow-right' size={18} color={COLORS.white} />
           </TouchableOpacity>
         </View>
@@ -179,9 +176,7 @@ export default function CommunityMatchingHome() {
             <MaterialIcons name='group-add' size={34} color={COLORS.white} />
           </View>
           <Text style={styles.heroTitle}>{t('circles.title')}</Text>
-          <Text style={styles.heroSubtitle}>
-            {t('circles.description')}
-          </Text>
+          <Text style={styles.heroSubtitle}>{t('circles.description')}</Text>
         </View>
 
         {/* Features section */}
@@ -214,7 +209,9 @@ export default function CommunityMatchingHome() {
           onPress={() => router.push('/community-matching/onboarding' as const)}
           activeOpacity={0.8}
         >
-          <Text style={styles.primaryButtonText}>{t('circles.startMatching')}</Text>
+          <Text style={styles.primaryButtonText}>
+            {t('circles.startMatching')}
+          </Text>
           <Feather name='arrow-right' size={18} color={COLORS.white} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -222,7 +219,9 @@ export default function CommunityMatchingHome() {
           onPress={() => router.back()}
           activeOpacity={0.6}
         >
-          <Text style={styles.secondaryText}>{t('circles.backToCommunity')}</Text>
+          <Text style={styles.secondaryText}>
+            {t('circles.backToCommunity')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -254,16 +253,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   heroTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    ...typography.title,
     color: COLORS.titleColor,
     marginBottom: 10,
   },
   heroSubtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: COLORS.descriptionColor,
     textAlign: 'center',
-    lineHeight: 24,
     paddingHorizontal: 24,
   },
   // Features section
@@ -292,20 +289,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 12,
   },
-  primaryButtonText: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  primaryButtonText: { ...typography.button, color: COLORS.white },
   secondaryButton: {
     alignItems: 'center',
     paddingVertical: 10,
   },
-  secondaryText: {
-    color: COLORS.backLinkColor,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  secondaryText: { ...typography.cardTitle, color: COLORS.backLinkColor },
   // Incomplete onboarding state
   incompleteContainer: {
     flex: 1,
@@ -324,15 +313,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   incompleteTitle: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.title,
     color: COLORS.titleColor,
     textAlign: 'center',
   },
   incompleteBody: {
-    fontSize: 16,
+    ...typography.body,
     color: COLORS.descriptionColor,
     textAlign: 'center',
-    lineHeight: 24,
   },
 });

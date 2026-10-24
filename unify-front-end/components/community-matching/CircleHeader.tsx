@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { Feather } from '@expo/vector-icons';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
@@ -90,22 +91,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#1F1300',
-    textAlign: 'center',
-    lineHeight: 34,
-  },
+  title: { ...typography.title, color: '#1F1300', textAlign: 'center' },
   subtitle: {
+    ...typography.body,
     marginTop: 6,
-    fontSize: 18,
     color: '#4A3F35',
     textAlign: 'center',
   },
   meta: {
+    ...typography.secondary,
     marginTop: 8,
-    fontSize: 14,
     color: '#6E6E6E',
     textAlign: 'center',
   },

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
@@ -264,11 +265,9 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
   container: { paddingHorizontal: 23, paddingBottom: 100 },
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '600',
+    ...typography.title,
     color: '#000',
     marginBottom: 20,
-    lineHeight: 40,
     textAlign: 'center',
     marginTop: 20,
   },
@@ -276,21 +275,15 @@ const styles = StyleSheet.create({
     gap: 20,
     marginBottom: 30,
   },
-  contentText: {
-    fontWeight: '400',
-    color: '#424242',
-    marginBottom: 15,
-    fontSize: 18,
-    lineHeight: 27,
-  },
+  contentText: { ...typography.reading, color: '#424242', marginBottom: 15 },
   loading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
-  loadingText: { marginTop: 12, fontSize: 16, color: '#6B7280' },
-  errorText: { fontSize: 16, color: '#EF4444', textAlign: 'center' },
+  loadingText: { ...typography.body, marginTop: 12, color: '#6B7280' },
+  errorText: { ...typography.body, color: '#EF4444', textAlign: 'center' },
 
   navigationContainer: {
     position: 'absolute',
@@ -313,7 +306,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: { ...typography.cardTitle, color: '#374151' },
   nextBtn: {
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -321,7 +314,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: { ...typography.cardTitle, color: '#fff' },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -342,16 +335,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -363,11 +354,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -375,9 +362,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

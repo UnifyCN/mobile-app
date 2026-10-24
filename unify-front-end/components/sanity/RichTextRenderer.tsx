@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 // RichTextRenderer.tsx
 import React, { useState, useMemo } from 'react';
 import {
@@ -120,46 +121,31 @@ export default function RichTextRenderer({
   // Body copy: same font size & line height as news article content (`app/news-detail` contentText)
   const defaultStyles = {
     // Headings (in-content; page title uses screen styles)
-    h1: {
-      fontSize: 32,
-      lineHeight: 40,
-      fontWeight: '600',
-      color: '#000',
-      marginBottom: 20,
-      marginTop: 0,
-    },
+    h1: { ...typography.title, color: '#000', marginBottom: 20, marginTop: 0 },
     h2: {
-      fontSize: 24,
-      lineHeight: 32,
-      fontWeight: '600',
+      ...typography.section,
       color: '#000',
       marginBottom: 16,
       marginTop: 16,
     },
     h3: {
-      fontSize: 20,
-      lineHeight: 28,
-      fontWeight: '600',
+      ...typography.section,
       color: '#000',
       marginBottom: 12,
       marginTop: 12,
     },
     h4: {
-      fontSize: 18,
-      lineHeight: 27,
-      fontWeight: '600',
+      ...typography.reading,
       color: '#000',
       marginBottom: 10,
       marginTop: 10,
+      fontWeight: '600',
     },
 
     // Paragraphs
     normal: {
-      fontFamily: 'Inter',
-      fontWeight: '400',
+      ...typography.reading,
       fontStyle: 'normal',
-      fontSize: 18,
-      lineHeight: 27,
       letterSpacing: 0,
       color: '#424242',
       marginBottom: 10,
@@ -168,11 +154,8 @@ export default function RichTextRenderer({
 
     // Lists — same metrics as body; vertical gap comes from list row View, not Text
     bullet: {
-      fontFamily: 'Inter',
-      fontWeight: '400',
+      ...typography.reading,
       fontStyle: 'normal',
-      fontSize: 18,
-      lineHeight: 27,
       letterSpacing: 0,
       color: '#424242',
       marginBottom: 0,
@@ -180,11 +163,8 @@ export default function RichTextRenderer({
       ...textMetricsTight,
     },
     number: {
-      fontFamily: 'Inter',
-      fontWeight: '400',
+      ...typography.reading,
       fontStyle: 'normal',
-      fontSize: 18,
-      lineHeight: 27,
       letterSpacing: 0,
       color: '#424242',
       marginBottom: 0,
@@ -193,14 +173,12 @@ export default function RichTextRenderer({
     },
 
     strong: {
-      fontFamily: 'Inter',
-      fontWeight: '700',
+      ...typography.reading,
       fontStyle: 'normal',
-      fontSize: 18,
-      lineHeight: 27,
       letterSpacing: 0,
       color: '#424242',
       ...textMetricsTight,
+      fontWeight: '700',
     },
     // Quote / callout strip (border-l 5 #3F3F3F); text matches body
     blockquote: {
@@ -211,9 +189,7 @@ export default function RichTextRenderer({
       borderLeftColor: '#3F3F3F',
     },
     blockquoteText: {
-      fontFamily: 'Inter',
-      fontSize: 18,
-      lineHeight: 27,
+      ...typography.reading,
       color: '#424242',
       fontStyle: 'normal',
     },
@@ -241,7 +217,7 @@ export default function RichTextRenderer({
       marginVertical: 16,
     },
     imagePlaceholderText: {
-      fontSize: 16,
+      ...typography.body,
       color: '#6B7280',
       textAlign: 'center',
     },
@@ -266,20 +242,15 @@ export default function RichTextRenderer({
       borderColor: '#C9C9C9',
     },
     exampleBoxTitle: {
-      fontFamily: 'Inter',
-      fontSize: 18,
-      fontWeight: '600',
-      lineHeight: 27,
+      ...typography.reading,
       color: '#424242',
       marginBottom: 0,
       textTransform: 'uppercase',
+      fontWeight: '600',
     },
     exampleText: {
-      fontFamily: 'Inter',
-      fontWeight: '400',
+      ...typography.reading,
       fontStyle: 'normal',
-      fontSize: 18,
-      lineHeight: 27,
       letterSpacing: 0,
       color: '#424242',
     },
@@ -301,20 +272,11 @@ export default function RichTextRenderer({
       marginBottom: 30,
     },
     tipTitleText: {
-      fontFamily: 'Inter',
-      fontSize: 18,
-      lineHeight: 27,
+      ...typography.reading,
+      color: '#424242',
       fontWeight: '600',
-      color: '#424242',
     },
-    tipBodyText: {
-      fontFamily: 'Inter',
-      fontSize: 18,
-      lineHeight: 27,
-      fontWeight: '400',
-      color: '#424242',
-      marginBottom: 0,
-    },
+    tipBodyText: { ...typography.reading, color: '#424242', marginBottom: 0 },
 
     // Note box — Figma frame 3743:67154 (symmetric py-16, pl-22 pr-14, radius 12)
     noteBox: {
@@ -330,10 +292,7 @@ export default function RichTextRenderer({
       overflow: 'hidden',
     },
     noteBoxText: {
-      fontFamily: 'Inter',
-      fontSize: 18,
-      lineHeight: 27,
-      fontWeight: '400',
+      ...typography.reading,
       color: '#424242',
       marginTop: 0,
       marginBottom: 0,
@@ -864,7 +823,9 @@ export default function RichTextRenderer({
             </TouchableOpacity>
           ) : (
             <View style={mergedStyles.imagePlaceholder}>
-              <Text style={mergedStyles.imagePlaceholderText}>{t('learn.lesson.imagePlaceholder')}</Text>
+              <Text style={mergedStyles.imagePlaceholderText}>
+                {t('learn.lesson.imagePlaceholder')}
+              </Text>
             </View>
           )}
         </View>
@@ -897,7 +858,9 @@ export default function RichTextRenderer({
       // keep your current example override
       return (
         <View key={block._key || index} style={mergedStyles.exampleBox}>
-          <Text style={mergedStyles.exampleBoxTitle}>{t('learn.lesson.example')}</Text>
+          <Text style={mergedStyles.exampleBoxTitle}>
+            {t('learn.lesson.example')}
+          </Text>
           <RichTextRenderer
             blocks={block.content || []}
             markDefs={markDefs}
@@ -986,19 +949,19 @@ export default function RichTextRenderer({
           <TextInput
             style={[
               {
+                ...typography.reading,
                 borderWidth: 1,
                 borderColor: '#9CA3AF',
                 borderRadius: 8,
                 paddingHorizontal: 20,
                 paddingVertical: 20,
-                fontSize: 18,
                 backgroundColor: '#fff',
                 minHeight: 44,
                 marginBottom: 30,
               },
               isLarge && { height: 300, textAlignVertical: 'top' },
               isMid && { height: 160, textAlignVertical: 'top' },
-              isSmall && { height: 60, textAlignVertical: 'top' },
+              isSmall && { minHeight: 69, textAlignVertical: 'top' },
             ]}
             placeholder={block.placeholder || t('learn.typeHerePlaceholder')}
             value={inputValues[block._key] || ''}
@@ -1524,19 +1487,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
   },
-  inputLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 8,
-  },
+  inputLabel: { ...typography.cardTitle, color: '#374151', marginBottom: 8 },
   input: {
+    ...typography.body,
     borderWidth: 2,
     borderColor: '#9CA3AF',
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    fontSize: 16,
     backgroundColor: '#fff',
     minHeight: 44,
   },
@@ -1641,20 +1599,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   questionCheckmark: {
+    ...typography.caption,
     color: '#fff',
-    fontSize: 12,
     fontWeight: 'bold',
   },
   questionOptionContent: {
     flex: 1,
     justifyContent: 'center',
   },
-  questionOptionText: {
-    fontSize: 18,
-    color: '#374151',
-    lineHeight: 27,
-    fontWeight: '400',
-  },
+  questionOptionText: { ...typography.reading, color: '#374151' },
   explanationContainer: {
     marginTop: 12,
     paddingTop: 12,
@@ -1662,9 +1615,8 @@ const styles = StyleSheet.create({
     borderTopColor: '#E5E7EB',
   },
   explanationText: {
-    fontSize: 18,
+    ...typography.reading,
     color: '#6B7280',
-    lineHeight: 27,
     fontStyle: 'italic',
   },
   matchingPairsContainer: {
@@ -1678,11 +1630,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
-  matchingPairText: {
-    fontSize: 18,
-    color: '#374151',
-    lineHeight: 27,
-  },
+  matchingPairText: { ...typography.reading, color: '#374151' },
   // Matching question styles (same as quiz)
   matchingContainer: {
     marginTop: 20,
@@ -1721,11 +1669,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF2F2',
   },
   matchingItemText: {
-    fontSize: 18,
+    ...typography.reading,
     color: '#374151',
-    lineHeight: 27,
     textAlign: 'center',
-    fontWeight: '500',
   },
   matchingCheckButton: {
     backgroundColor: '#575757',
@@ -1739,11 +1685,7 @@ const styles = StyleSheet.create({
   matchingCheckButtonDisabled: {
     backgroundColor: '#F3F4F6',
   },
-  matchingCheckButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  matchingCheckButtonText: { ...typography.button, color: '#fff' },
   matchingCheckButtonTextDisabled: {
     color: '#9CA3AF',
   },
@@ -1806,18 +1748,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   twoOptionText: {
-    fontSize: 16,
+    ...typography.cardTitle,
     color: '#000',
-    lineHeight: 24,
-    fontWeight: '700',
     textAlign: 'center',
     fontStyle: 'normal',
   },
   twoOptionTextBold: {
-    fontSize: 16,
+    ...typography.cardTitle,
     color: '#000',
-    lineHeight: 24,
-    fontWeight: '700',
     textAlign: 'center',
     fontStyle: 'normal',
   },
@@ -1828,5 +1766,4 @@ const styles = StyleSheet.create({
     borderTopColor: '#E5E7EB',
     width: '100%',
   },
-
 });

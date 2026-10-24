@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -600,7 +601,9 @@ export default function CircleChatScreen() {
                   </TouchableOpacity>
                 ))}
             </View>
-            <Text style={styles.presenceText}>{t('circles.online', { count: onlineMembers.size })}</Text>
+            <Text style={styles.presenceText}>
+              {t('circles.online', { count: onlineMembers.size })}
+            </Text>
           </View>
         )}
 
@@ -760,7 +763,9 @@ export default function CircleChatScreen() {
               </View>
 
               <View style={styles.commonGroundSection}>
-                <Text style={styles.commonGroundTitle}>{t('circles.sharedJourney')}</Text>
+                <Text style={styles.commonGroundTitle}>
+                  {t('circles.sharedJourney')}
+                </Text>
                 <View style={styles.commonGroundItem}>
                   <Feather name='map-pin' size={16} color='#ff820b' />
                   <Text style={styles.commonGroundText}>
@@ -777,7 +782,9 @@ export default function CircleChatScreen() {
                   style={styles.viewProfileBtn}
                   onPress={viewFullProfile}
                 >
-                  <Text style={styles.viewProfileText}>{t('circles.viewProfile')}</Text>
+                  <Text style={styles.viewProfileText}>
+                    {t('circles.viewProfile')}
+                  </Text>
                 </TouchableOpacity>
                 <View style={styles.modalFollowBtn}>
                   <FollowButton targetUserId={selectedMember.user_id} />
@@ -824,11 +831,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF4E4',
     alignItems: 'center',
   },
-  bannerText: {
-    color: '#7C4A00',
-    fontSize: 14,
-    lineHeight: 18,
-  },
+  bannerText: { ...typography.secondary, color: '#7C4A00' },
   loader: {
     flex: 1,
     alignItems: 'center',
@@ -844,10 +847,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   dateSeparatorText: {
-    fontSize: 12,
-    color: '#98A2B3',
-    fontWeight: '600',
+    ...typography.caption,
+    color: '#62605B',
     letterSpacing: 0.15,
+    fontWeight: '600',
   },
   inputContainer: {
     paddingTop: 8,
@@ -881,14 +884,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   input: {
+    ...typography.body,
     flex: 1,
     minHeight: 38,
     maxHeight: 112,
     paddingHorizontal: 0,
     paddingTop: Platform.OS === 'ios' ? 8 : 6,
     paddingBottom: Platform.OS === 'ios' ? 8 : 6,
-    fontSize: 16,
-    lineHeight: 20,
     color: '#1F2937',
   },
   inputDisabled: {
@@ -955,24 +957,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#fff',
   },
-  presenceText: {
-    marginLeft: 8,
-    fontSize: 13,
-    lineHeight: 17,
-    color: '#64748B',
-  },
+  presenceText: { ...typography.caption, marginLeft: 8, color: '#64748B' },
   // Typing indicator styles
   typingIndicator: {
     paddingHorizontal: 16,
     paddingVertical: 6,
     backgroundColor: '#F8FAFC',
   },
-  typingText: {
-    fontSize: 13,
-    lineHeight: 17,
-    color: '#64748B',
-    fontStyle: 'italic',
-  },
+  typingText: { ...typography.caption, color: '#64748B', fontStyle: 'italic' },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -1014,16 +1006,8 @@ const styles = StyleSheet.create({
   modalUserInfo: {
     flex: 1,
   },
-  modalUsername: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#1F2937',
-  },
-  modalRole: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginTop: 2,
-  },
+  modalUsername: { ...typography.section, color: '#1F2937' },
+  modalRole: { ...typography.secondary, color: '#6B7280', marginTop: 2 },
   modalCloseBtn: {
     padding: 4,
   },
@@ -1034,24 +1018,19 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   commonGroundTitle: {
-    fontSize: 12,
-    fontWeight: '700',
+    ...typography.caption,
     color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 12,
+    fontWeight: '700',
   },
   commonGroundItem: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
   },
-  commonGroundText: {
-    fontSize: 15,
-    color: '#374151',
-    lineHeight: 20,
-    flex: 1,
-  },
+  commonGroundText: { ...typography.secondary, color: '#374151', flex: 1 },
   highlight: {
     fontWeight: '600',
     color: '#1F2937',
@@ -1069,9 +1048,9 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
   },
   viewProfileText: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#374151',
+    fontWeight: '600',
   },
   modalFollowBtn: {
     flex: 1,

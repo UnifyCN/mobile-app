@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useMemo } from 'react';
 import {
   View,
@@ -101,9 +102,7 @@ export default function GroupSelectionSheet({
     } catch (error) {
       Alert.alert(
         t('posts.failedToJoin'),
-        error instanceof Error
-          ? error.message
-          : t('posts.couldNotJoin')
+        error instanceof Error ? error.message : t('posts.couldNotJoin')
       );
     } finally {
       setJoiningGroupId(null);
@@ -174,14 +173,18 @@ export default function GroupSelectionSheet({
           {isLoading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size='large' color={Theme.primaryGatherRed} />
-              <Text style={styles.loadingText}>{t('groups.loadingGroups')}</Text>
+              <Text style={styles.loadingText}>
+                {t('groups.loadingGroups')}
+              </Text>
             </View>
           ) : (
             <>
               {/* Your Groups Section */}
               {hasJoinedGroups && (
                 <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>{t('groups.yourGroups')}</Text>
+                  <Text style={styles.sectionTitle}>
+                    {t('groups.yourGroups')}
+                  </Text>
                   <View style={styles.groupsList}>
                     {filteredJoinedGroups.length > 0 ? (
                       filteredJoinedGroups.map(group =>
@@ -269,11 +272,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     gap: 15,
   },
-  searchInput: {
-    flex: 1,
-    fontSize: 14,
-    color: Theme.black,
-  },
+  searchInput: { ...typography.body, flex: 1, color: Theme.black },
   content: {
     flex: 1,
   },
@@ -283,22 +282,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 60,
   },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#666',
-  },
+  loadingText: { ...typography.body, marginTop: 16, color: '#666' },
   section: {
     marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     marginBottom: 4,
   },
   sectionSubtitle: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     marginBottom: 12,
   },
@@ -314,16 +308,8 @@ const styles = StyleSheet.create({
   groupInfo: {
     flex: 1,
   },
-  groupName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 2,
-  },
-  groupDescription: {
-    fontSize: 14,
-    color: '#666',
-  },
+  groupName: { ...typography.cardTitle, color: Theme.black, marginBottom: 2 },
+  groupDescription: { ...typography.secondary, color: '#666' },
   joinButton: {
     backgroundColor: Theme.primaryGatherRed,
     paddingVertical: 8,
@@ -332,13 +318,9 @@ const styles = StyleSheet.create({
     minWidth: 90,
     alignItems: 'center',
   },
-  joinButtonText: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: '600',
-  },
+  joinButtonText: { ...typography.button, color: '#fff' },
   noResultsText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     textAlign: 'center',
     paddingVertical: 16,
@@ -347,14 +329,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 40,
   },
-  emptyTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 8,
-  },
+  emptyTitle: { ...typography.cardTitle, color: Theme.black, marginBottom: 8 },
   emptySubtitle: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     textAlign: 'center',
   },

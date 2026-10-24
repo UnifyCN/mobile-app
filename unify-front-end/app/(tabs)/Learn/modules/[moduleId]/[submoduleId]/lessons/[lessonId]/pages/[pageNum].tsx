@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
@@ -663,7 +664,13 @@ function LessonPageContent({
           <RichTextRenderer
             blocks={currentPageData.content || []}
             markDefs={currentPageData.markDefs}
-            styles={{ normal: styles.contentText }}
+            styles={{
+              normal: styles.contentText,
+              h1: typography.title,
+              h2: typography.section,
+              h3: typography.section,
+              h4: typography.cardTitle,
+            }}
             highlights={highlights}
           />
         </View>
@@ -698,18 +705,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 12,
   },
-  pageIndicator: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#6B7280',
-  },
+  pageIndicator: { ...typography.cardTitle, color: '#6B7280' },
 
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '600',
+    ...typography.title,
+
     color: '#000',
     marginBottom: 20,
-    lineHeight: 40,
     textAlign: 'center',
     marginTop: 20,
   },
@@ -719,12 +721,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   contentText: {
-    fontFamily: 'Inter',
-    fontWeight: '400',
+    ...typography.reading,
+
     color: '#424242',
     marginBottom: 10,
-    fontSize: 18,
-    lineHeight: 27,
   },
 
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -751,7 +751,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: {
+    ...typography.button,
+    color: '#374151',
+  },
   nextBtn: {
     backgroundColor: '#1A1919',
     paddingVertical: 12,
@@ -760,7 +763,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: {
+    ...typography.button,
+    color: '#fff',
+  },
   nextBtnDisabled: {
     opacity: 0.7,
   },
@@ -782,16 +788,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 16,
+    ...typography.body,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -803,11 +807,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -815,9 +815,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

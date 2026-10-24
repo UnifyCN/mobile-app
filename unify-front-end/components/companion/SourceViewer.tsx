@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
@@ -308,7 +309,9 @@ export default function SourceViewer({
           {loading && (
             <View style={styles.centerContainer}>
               <ActivityIndicator size='large' color={Theme.surfaceBlue} />
-              <Text style={styles.loadingText}>{t('companion.loadingSource')}</Text>
+              <Text style={styles.loadingText}>
+                {t('companion.loadingSource')}
+              </Text>
             </View>
           )}
 
@@ -333,7 +336,9 @@ export default function SourceViewer({
                 onPress={handleOpenInBrowser}
                 style={styles.browserLinkButton}
               >
-                <Text style={styles.browserLinkText}>{t('companion.openInBrowser')}</Text>
+                <Text style={styles.browserLinkText}>
+                  {t('companion.openInBrowser')}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -376,8 +381,7 @@ const styles = StyleSheet.create({
     marginRight: -4,
   },
   title: {
-    fontSize: 17,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     flex: 1,
     textAlign: 'center',
@@ -392,16 +396,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: Theme.textInput,
-  },
+  loadingText: { ...typography.body, marginTop: 16, color: Theme.textInput },
   errorIcon: {
     marginBottom: 16,
   },
   errorText: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.textInput,
     textAlign: 'center',
     marginBottom: 24,
@@ -413,85 +413,59 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 12,
   },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  retryButtonText: { ...typography.button, color: '#fff' },
   browserLinkButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
   },
-  browserLinkText: {
-    color: Theme.surfaceBlue,
-    fontSize: 16,
-    fontWeight: '500',
-  },
+  browserLinkText: { ...typography.body, color: Theme.surfaceBlue },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     padding: 16,
   },
-  contentText: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: '#333',
-  },
+  contentText: { ...typography.secondary, color: '#333' },
   // Markdown styles
   mdContainer: {
     flex: 1,
   },
   mdHeader: {
-    fontSize: 22,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginTop: 20,
     marginBottom: 12,
   },
   mdSubheader: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#000',
     marginTop: 16,
     marginBottom: 10,
   },
-  mdParagraph: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: '#333',
-    marginBottom: 12,
-  },
+  mdParagraph: { ...typography.secondary, color: '#333', marginBottom: 12 },
   mdBulletContainer: {
     flexDirection: 'row',
     marginBottom: 8,
     paddingLeft: 8,
   },
   mdBullet: {
-    fontSize: 15,
-    lineHeight: 24,
+    ...typography.secondary,
     color: Theme.surfaceBlue,
     marginRight: 12,
     fontWeight: '600',
   },
-  mdBulletText: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: '#333',
-    flex: 1,
-  },
+  mdBulletText: { ...typography.secondary, color: '#333', flex: 1 },
   mdNumberedContainer: {
     flexDirection: 'row',
     marginBottom: 8,
     paddingLeft: 8,
   },
   mdNumber: {
-    fontSize: 15,
-    lineHeight: 24,
+    ...typography.secondary,
     color: '#000',
     marginRight: 8,
-    fontWeight: '600',
     minWidth: 24,
+    fontWeight: '600',
   },
   mdSpacing: {
     height: 8,

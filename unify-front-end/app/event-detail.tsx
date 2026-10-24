@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -246,13 +247,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingHorizontal: 20,
   },
-  eventTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 12,
-    lineHeight: 28,
-  },
+  eventTitle: { ...typography.title, color: Theme.black, marginBottom: 12 },
   eventImage: {
     width: '100%',
     height: 200,
@@ -279,16 +274,8 @@ const styles = StyleSheet.create({
   metadataContent: {
     flex: 1,
   },
-  metadataText: {
-    fontSize: 16,
-    color: Theme.black,
-    lineHeight: 22,
-  },
-  metadataSecondary: {
-    fontSize: 16,
-    color: Theme.textPostTime,
-    lineHeight: 22,
-  },
+  metadataText: { ...typography.body, color: Theme.black },
+  metadataSecondary: { ...typography.body, color: Theme.textPostTime },
   metadataHighlight: {
     fontWeight: '700',
   },
@@ -303,23 +290,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 24,
   },
-  ctaButtonText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '600',
-    marginRight: 8,
-  },
-  aboutTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 12,
-  },
-  aboutText: {
-    fontSize: 18,
-    color: Theme.black,
-    lineHeight: 27,
-  },
+  ctaButtonText: { ...typography.button, color: Theme.white, marginRight: 8 },
+  aboutTitle: { ...typography.cardTitle, color: Theme.black, marginBottom: 12 },
+  aboutText: { ...typography.body, color: Theme.black },
 });
 
 export default EventDetailScreen;

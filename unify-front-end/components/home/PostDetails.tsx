@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -298,10 +299,9 @@ const PostDetails = () => {
                 submessage={
                   <Text
                     style={{
-                      fontSize: 14,
+                      ...typography.secondary,
                       color: Theme.textInput,
                       textAlign: 'center',
-                      lineHeight: 20,
                     }}
                   >
                     {t('home.beFirstComment')}
@@ -328,7 +328,9 @@ const PostDetails = () => {
           ref={inputRef}
           placeholder={
             replyingTo
-              ? t('home.replyPlaceholder', { username: replyingTo.comment.username })
+              ? t('home.replyPlaceholder', {
+                  username: replyingTo.comment.username,
+                })
               : t('home.replyPlaceholder', { username: post.user.name })
           }
           value={commentTextBox}
@@ -394,11 +396,12 @@ const styles = StyleSheet.create({
     borderTopColor: '#E5E5E5',
   },
   replyingToText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textPostTime,
     fontWeight: '500',
   },
   commentInput: {
+    ...typography.body,
     flex: 1,
     borderWidth: 1,
     borderColor: '#e0e0e0',
@@ -406,8 +409,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     maxHeight: 100,
-    fontSize: 16,
-    height: 44,
+    minHeight: 46,
     backgroundColor: Theme.surfaceTextInput,
   },
   postMessageButton: {
@@ -445,18 +447,16 @@ const styles = StyleSheet.create({
     maxWidth: 280,
   },
   emptyStateTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    ...typography.section,
     color: '#333',
     textAlign: 'center',
     marginTop: 16,
     marginBottom: 8,
   },
   emptyStateSubtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     textAlign: 'center',
-    lineHeight: 22,
   },
 });
 

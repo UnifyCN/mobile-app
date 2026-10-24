@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -179,7 +180,10 @@ export const ProfilePictureUpload = ({
           );
         }
       } else {
-        Alert.alert(t('common.error'), uploadResult.error || t('profilePicture.uploadFailed'));
+        Alert.alert(
+          t('common.error'),
+          uploadResult.error || t('profilePicture.uploadFailed')
+        );
       }
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -215,7 +219,10 @@ export const ProfilePictureUpload = ({
                 }
                 // Invalidate and refetch user info and all post feeds
                 invalidateAllQueries();
-                Alert.alert(t('common.success'), t('profilePicture.removeSuccess'));
+                Alert.alert(
+                  t('common.success'),
+                  t('profilePicture.removeSuccess')
+                );
               } else {
                 Alert.alert(
                   t('common.error'),
@@ -224,10 +231,7 @@ export const ProfilePictureUpload = ({
               }
             } catch (error) {
               console.error('Error removing picture:', error);
-              Alert.alert(
-                t('common.error'),
-                t('profilePicture.removeFailed')
-              );
+              Alert.alert(t('common.error'), t('profilePicture.removeFailed'));
             } finally {
               setIsUploading(false);
             }
@@ -269,7 +273,9 @@ export const ProfilePictureUpload = ({
                   color={Theme.black}
                   style={styles.optionIcon}
                 />
-                <Text style={styles.modalOptionText}>{t('profilePicture.chooseFromLibrary')}</Text>
+                <Text style={styles.modalOptionText}>
+                  {t('profilePicture.chooseFromLibrary')}
+                </Text>
               </TouchableOpacity>
 
               {currentPictureUrl && (
@@ -333,12 +339,7 @@ const styles = StyleSheet.create({
   optionIcon: {
     marginRight: 8,
   },
-  modalOptionText: {
-    fontSize: 18,
-    color: Theme.black,
-    fontWeight: '500',
-    flex: 1,
-  },
+  modalOptionText: { ...typography.body, color: Theme.black, flex: 1 },
   avatarButton: {
     position: 'absolute',
     top: 0,
