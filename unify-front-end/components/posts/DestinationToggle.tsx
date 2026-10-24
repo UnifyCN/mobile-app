@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -100,11 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.primaryGatherRed,
     borderColor: Theme.primaryGatherRed,
   },
-  toggleText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.textAlternateGray,
-  },
+  toggleText: { ...typography.cardTitle, color: Theme.textAlternateGray },
   toggleTextActive: {
     color: '#fff',
   },
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     minHeight: 20,
   },
   indicatorText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     fontStyle: 'italic',
   },
@@ -123,16 +120,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   groupIndicatorText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.black,
     fontWeight: '500',
   },
   clearButton: {
     padding: 4,
   },
-  clearButtonText: {
-    fontSize: 16,
-    color: Theme.textAlternateGray,
-    fontWeight: '600',
-  },
+  clearButtonText: { ...typography.button, color: Theme.textAlternateGray },
 });

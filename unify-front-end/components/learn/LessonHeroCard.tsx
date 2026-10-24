@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link, Href } from 'expo-router';
@@ -85,7 +86,9 @@ export default function LessonHeroCard({
                 colorHex ? { backgroundColor: colorHex } : null,
               ]}
             >
-              <Text style={styles.continueButtonText}>{t('learn.heroCard.continue')}</Text>
+              <Text style={styles.continueButtonText}>
+                {t('learn.heroCard.continue')}
+              </Text>
             </View>
           </View>
         )}
@@ -110,7 +113,9 @@ export default function LessonHeroCard({
         <TouchableOpacity
           accessibilityRole='link'
           accessibilityLabel={
-            submoduleTitle ? t('learn.heroCard.resumeSubmodule', { title: submoduleTitle }) : t('learn.heroCard.resumeLesson')
+            submoduleTitle
+              ? t('learn.heroCard.resumeSubmodule', { title: submoduleTitle })
+              : t('learn.heroCard.resumeLesson')
           }
         >
           {cardContent}
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   content: {
-    minHeight: 160,
+    minHeight: 184,
     borderRadius: 16,
     backgroundColor: '#fff',
     padding: 20,
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
     right: 20,
     zIndex: 2,
     minWidth: 101,
-    height: 36,
+    height: 44,
     borderRadius: 10,
   },
   continueButton: {
@@ -175,11 +180,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   continueButtonText: {
+    ...typography.button,
+
     color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
     letterSpacing: 0,
-    lineHeight: 22,
   },
   textContainer: {
     position: 'absolute',
@@ -189,14 +193,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   metaText: {
+    ...typography.secondary,
+
     color: '#000000',
-    fontSize: 14,
     marginBottom: 4,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '800',
+    ...typography.section,
+
     color: '#000000',
-    lineHeight: 28,
   },
 });

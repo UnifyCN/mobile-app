@@ -1,3 +1,4 @@
+import { highlightRangeMatches } from '@/utils/highlightRange';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   getHighlightsForPage,
@@ -92,6 +93,12 @@ export function useSaveHighlight(lessonId: string, pageKey: string) {
         const nonOverlapping = existing.filter(
           h =>
             h.block_key !== blockKey ||
+            !highlightRangeMatches(
+              variables.allWordsInBlock,
+              h.start_word_index,
+              h.end_word_index,
+              h.selected_text
+            ) ||
             h.start_word_index > endWordIndex ||
             h.end_word_index < startWordIndex
         );

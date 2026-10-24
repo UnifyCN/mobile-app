@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -131,8 +132,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '700',
+    ...typography.section,
+
     color: '#000',
   },
   searchBar: {
@@ -150,8 +151,9 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   searchPlaceholder: {
-    fontSize: 15,
-    color: '#999',
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
   bellButton: {
     marginLeft: 10,
@@ -172,19 +174,15 @@ const styles = StyleSheet.create({
     right: -8,
     backgroundColor: '#FF7A18',
     borderRadius: 10,
-    minWidth: 18,
-    height: 18,
+    minWidth: 22,
+    minHeight: 22,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 4,
     borderWidth: 2,
     borderColor: '#fff',
   },
-  badgeText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: '700',
-  },
+  badgeText: { ...typography.caption, color: '#fff', fontWeight: '700' },
 });
 
 export default TabHeader;

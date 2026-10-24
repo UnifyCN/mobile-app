@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -143,19 +144,22 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   dateDay: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#050505',
     textAlign: 'center',
   },
   dateMonth: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#050505',
     textAlign: 'center',
     marginTop: -4,
   },
   title: {
     position: 'absolute',
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#000',
   },
   infoRow: {
@@ -164,7 +168,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#9B9797',
   },
 });

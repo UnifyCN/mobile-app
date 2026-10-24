@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -105,7 +106,9 @@ export default function LegalWebView({
         {error ? (
           <View style={styles.errorContainer}>
             <Feather name='alert-circle' size={48} color={Theme.textInput} />
-            <Text style={styles.errorText}>{t('legalWebView.couldntLoad')}</Text>
+            <Text style={styles.errorText}>
+              {t('legalWebView.couldntLoad')}
+            </Text>
             <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
               <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
             </TouchableOpacity>
@@ -163,8 +166,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     flex: 1,
     textAlign: 'center',
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   errorText: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.textInput,
     marginTop: 16,
     marginBottom: 24,
@@ -204,9 +206,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 24,
   },
-  retryButtonText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  retryButtonText: { ...typography.button, color: Theme.white },
 });

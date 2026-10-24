@@ -120,7 +120,7 @@ describe('Continue learning cards for a user in a province', () => {
     mockLessonRows = [progressOn('sfu-lesson')];
     const { result } = renderHook(() => useInProgressLessons());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(moduleIds(result.current.lessons)).toEqual(['banking', 'sfu']);
+    expect(moduleIds(result.current.lessons)).toEqual(['sfu']);
     expect(
       result.current.lessons.find(l => l.moduleId === 'sfu')?.currentPage
     ).toBe(2);
@@ -143,6 +143,7 @@ describe('Continue learning cards for a user in a province', () => {
 
   it('drops the BC card when the profile province changes to Ontario', async () => {
     mockProvince = BC;
+    mockLessonRows = [progressOn('sfu-lesson')];
     const { result, rerender } = renderHook(() => useInProgressLessons());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(moduleIds(result.current.lessons)).toContain('sfu');

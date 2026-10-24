@@ -1,3 +1,6 @@
+import { typography } from '@/constants/Typography';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
@@ -402,6 +405,7 @@ export default function PracticeActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.practice.failedToLoad')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -412,6 +416,7 @@ export default function PracticeActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.practice.pageNotFound')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -420,6 +425,7 @@ export default function PracticeActivityPageScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={
@@ -427,7 +433,7 @@ export default function PracticeActivityPageScreen() {
         }
         submoduleOrder={submoduleData?.order ?? 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -469,6 +475,7 @@ export default function PracticeActivityPageScreen() {
                   <View key={key} style={styles.activityQuestionContainer}>
                     <View style={styles.activityQuestionContent}>
                       <RichTextRenderer
+                        compactContainer
                         blocks={block.question_text || []}
                         markDefs={markDefs}
                       />
@@ -514,14 +521,13 @@ export default function PracticeActivityPageScreen() {
                               </View>
                               <View style={styles.activityOptionContent}>
                                 <RichTextRenderer
+                                  compactContainer
                                   blocks={option.text || []}
                                   markDefs={option.textMarkDefs}
                                   styles={{
                                     normal: {
-                                      fontSize: 18,
+                                      ...typography.reading,
                                       color: '#374151',
-                                      lineHeight: 27,
-                                      fontWeight: '400',
                                       marginBottom: 0,
                                       marginTop: 0,
                                     },
@@ -536,13 +542,13 @@ export default function PracticeActivityPageScreen() {
                                   style={styles.activityExplanationContainer}
                                 >
                                   <RichTextRenderer
+                                    compactContainer
                                     blocks={option.explanation}
                                     markDefs={option.explanationMarkDefs}
                                     styles={{
                                       normal: {
-                                        fontSize: 18,
+                                        ...typography.reading,
                                         color: '#6B7280',
-                                        lineHeight: 27,
                                         fontStyle: 'italic',
                                         marginTop: 12,
                                         paddingTop: 12,
@@ -562,6 +568,7 @@ export default function PracticeActivityPageScreen() {
               }
               return (
                 <RichTextRenderer
+                  compactContainer
                   key={key}
                   blocks={[block]}
                   markDefs={markDefs}
@@ -584,34 +591,28 @@ export default function PracticeActivityPageScreen() {
               </Text>
             )}
             <RichTextRenderer
+              compactContainer
               blocks={currentPageData.answer_box.content || []}
               markDefs={currentPageData.answer_box.markDefs}
               styles={{
                 normal: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 bullet: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 number: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '400',
+                  ...typography.reading,
                   color: '#3F3F3F',
                   marginBottom: 0,
                 },
                 strong: {
-                  fontSize: 18,
-                  lineHeight: 27,
-                  fontWeight: '600',
+                  ...typography.reading,
+                  fontWeight: '700',
                   color: '#3F3F3F',
                 },
               }}
@@ -691,15 +692,13 @@ export default function PracticeActivityPageScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
-  container: { paddingHorizontal: 23, paddingBottom: 100 },
+  container: { paddingHorizontal: 20, paddingBottom: 24 },
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    ...typography.title,
     color: '#000',
     marginBottom: 20,
-    lineHeight: 38,
-    textAlign: 'center',
+    textAlign: 'left',
     marginTop: 20,
   },
   instructionsContainer: { marginBottom: 15 },
@@ -793,8 +792,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activityCheckmark: {
+    ...typography.caption,
     color: '#fff',
-    fontSize: 12,
     fontWeight: 'bold',
   },
   activityOptionContent: {
@@ -820,17 +819,13 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   answerBoxTitle: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    ...typography.secondary,
     color: '#3F3F3F',
     marginBottom: 10,
+    fontWeight: '600',
   },
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 23,
@@ -847,7 +842,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  backBtnText: { color: '#374151', fontSize: 16, fontWeight: '600' },
+  backBtnText: { ...typography.cardTitle, color: '#374151' },
   nextBtn: {
     backgroundColor: '#575757',
     paddingVertical: 14,
@@ -856,7 +851,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  nextBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  nextBtnText: { ...typography.cardTitle, color: '#fff' },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -873,16 +868,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.section,
     color: '#000',
     marginBottom: 12,
     textAlign: 'center',
   },
   modalDesc: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#6B7280',
-    lineHeight: 20,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -894,7 +887,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  modalPrimaryBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  modalPrimaryBtnText: { ...typography.cardTitle, color: '#fff' },
   modalSecondaryBtn: {
     width: '100%',
     backgroundColor: '#E5E7EB',
@@ -902,5 +895,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
-  modalSecondaryBtnText: { color: '#000', fontSize: 16, fontWeight: '600' },
+  modalSecondaryBtnText: { ...typography.cardTitle, color: '#000' },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import {
   StyleSheet,
   View,
@@ -190,7 +191,9 @@ const SearchScreen = () => {
     // user is typing but hasn't submitted yet — show the helper frame
     searchHistory = (
       <View style={{ marginTop: 10 }}>
-        <Text style={styles.recentSectionHeader}>{t('search.recentSearches')}</Text>
+        <Text style={styles.recentSectionHeader}>
+          {t('search.recentSearches')}
+        </Text>
         {recentSearches.map((recentSearch, index) => (
           <TouchableOpacity
             key={index}
@@ -212,7 +215,7 @@ const SearchScreen = () => {
                 color='#666'
                 style={{ marginRight: 8 }}
               />
-              <Text style={{ color: Theme.black, fontSize: 14 }}>
+              <Text style={{ ...typography.secondary, color: Theme.black }}>
                 {recentSearch}
               </Text>
             </View>
@@ -223,9 +226,7 @@ const SearchScreen = () => {
   } else {
     searchHistory = (
       <View style={styles.searchFrame}>
-        <Text style={styles.containerText}>
-          {t('search.discoverPrompt')}
-        </Text>
+        <Text style={styles.containerText}>{t('search.discoverPrompt')}</Text>
       </View>
     );
   }
@@ -233,7 +234,9 @@ const SearchScreen = () => {
   if (recentGroups.length > 0 && searchInput.trim().length === 0) {
     groupsHistory = (
       <View>
-        <Text style={styles.recentSectionHeader}>{t('search.recentlyViewedGroups')}</Text>
+        <Text style={styles.recentSectionHeader}>
+          {t('search.recentlyViewedGroups')}
+        </Text>
         {recentGroups.map(group => (
           <View style={[styles.cardItem, { marginBottom: 20 }]} key={group.id}>
             <GroupCard group={group} onPress={() => groupPress(group)} />
@@ -274,7 +277,9 @@ const SearchScreen = () => {
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           >
             <ActivityIndicator size='small' color='#666' />
-            <Text style={{ marginTop: 8, color: '#666' }}>{t('common.loading')}</Text>
+            <Text style={{ marginTop: 8, color: '#666' }}>
+              {t('common.loading')}
+            </Text>
           </View>
         ) : (
           <>
@@ -289,14 +294,18 @@ const SearchScreen = () => {
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           >
             <ActivityIndicator size='small' color='#666' />
-            <Text style={{ marginTop: 8, color: '#666' }}>{t('common.loading')}</Text>
+            <Text style={{ marginTop: 8, color: '#666' }}>
+              {t('common.loading')}
+            </Text>
           </View>
         ) : (
           <>
             {searchQuery && foundUser && (
               <View>
                 <View style={[styles.postsHeader, { marginBottom: 12 }]}>
-                  <Text style={styles.resultHeaderText}>{t('search.people')}</Text>
+                  <Text style={styles.resultHeaderText}>
+                    {t('search.people')}
+                  </Text>
                   {filterUsers.length > 3 && (
                     <TouchableOpacity
                       onPress={() =>
@@ -306,7 +315,9 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
+                      <Text style={styles.seeMoreText}>
+                        {t('common.seeMore')}
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -337,7 +348,9 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
+                      <Text style={styles.seeMoreText}>
+                        {t('common.seeMore')}
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -353,7 +366,9 @@ const SearchScreen = () => {
             {searchQuery && foundGroup && (
               <View>
                 <View style={[styles.postsHeader, { marginBottom: 20 }]}>
-                  <Text style={styles.resultHeaderText}>{t('search.groups')}</Text>
+                  <Text style={styles.resultHeaderText}>
+                    {t('search.groups')}
+                  </Text>
                   {(filterGroups?.length ?? 0) > 3 && (
                     <TouchableOpacity
                       onPress={() =>
@@ -363,7 +378,9 @@ const SearchScreen = () => {
                         })
                       }
                     >
-                      <Text style={styles.seeMoreText}>{t('common.seeMore')}</Text>
+                      <Text style={styles.seeMoreText}>
+                        {t('common.seeMore')}
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -402,51 +419,45 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   containerText: {
-    fontSize: 14,
+    ...typography.secondary,
     color: Theme.textInput,
     textAlign: 'left',
-    lineHeight: 18,
   },
   emptyText: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#464646ff',
     marginTop: 16,
     marginBottom: 8,
   },
   recentSectionHeader: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textAlternateGray,
-    fontWeight: '600',
     marginTop: 16,
-    lineHeight: 14,
     marginBottom: 12,
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   postsHeader: {
+    ...typography.caption,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontSize: 12,
-    fontWeight: '700',
     color: Theme.textAlternateGray,
     marginTop: 16,
     marginBottom: 0,
-    lineHeight: 16,
+    fontWeight: '700',
   },
   resultHeaderText: {
-    fontSize: 12,
-    fontWeight: '700',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     marginBottom: 0,
-    lineHeight: 16,
+    fontWeight: '700',
   },
   seeMoreText: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     marginBottom: 0,
-    lineHeight: 16,
+    fontWeight: '600',
   },
   searchContainer: {
     paddingHorizontal: 20,
@@ -464,8 +475,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   searchInput: {
+    ...typography.body,
     flex: 1,
-    fontSize: 14,
     color: Theme.textAlternateGray,
   },
   userItem: {
@@ -476,11 +487,7 @@ const styles = StyleSheet.create({
   userAvatar: {
     marginRight: 12,
   },
-  userName: {
-    fontSize: 16,
-    color: Theme.black,
-    fontWeight: '500',
-  },
+  userName: { ...typography.body, color: Theme.black },
   userItemSeparator: {
     height: 1,
     backgroundColor: Theme.surfaceGray,

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -26,10 +27,12 @@ type AccordionItem = {
 
 export default function DropdownAccordion({
   items,
+  trimEndSpacing = false,
   titleTextStyle,
   renderRichText,
 }: {
   items: AccordionItem[];
+  trimEndSpacing?: boolean;
   titleTextStyle?: TextStyle;
   renderRichText?: (blocks: any[]) => React.ReactNode;
 }) {
@@ -42,12 +45,19 @@ export default function DropdownAccordion({
 
   return (
     <View style={styles.container}>
-      {items.map(item => {
+      {items.map((item, index) => {
         const open = item.id === openId;
         return (
           <View key={item.id}>
             <TouchableOpacity
-              style={styles.header}
+              style={[
+                styles.header,
+                trimEndSpacing &&
+                  index === items.length - 1 &&
+                  !open && { marginBottom: 0 },
+              ]}
+              accessibilityRole='button'
+              accessibilityState={{ expanded: open }}
               onPress={() => toggle(item.id)}
             >
               <Text style={[styles.headerText, titleTextStyle]}>
@@ -61,7 +71,13 @@ export default function DropdownAccordion({
               />
             </TouchableOpacity>
             {open && (
-              <View style={styles.body}>
+              <View
+                style={[
+                  styles.body,
+                  trimEndSpacing &&
+                    index === items.length - 1 && { marginBottom: 0 },
+                ]}
+              >
                 {typeof item.body === 'string' ? (
                   <Text style={styles.bodyText}>{item.body}</Text>
                 ) : (
@@ -91,9 +107,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   headerText: {
+    ...typography.body,
     flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
     color: '#111827',
     marginRight: 12,
   },
@@ -104,9 +119,5 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     marginBottom: 8,
   },
-  bodyText: {
-    fontSize: 15,
-    color: '#111827',
-    lineHeight: 22,
-  },
+  bodyText: { ...typography.secondary, color: '#111827' },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { useCallback } from 'react';
 import {
   ActivityIndicator,
@@ -160,9 +161,7 @@ export default function NotificationsScreen() {
           <Feather name='bell-off' size={40} color='#D0D0D0' />
         </View>
         <Text style={styles.emptyTitle}>{t('notifications.empty')}</Text>
-        <Text style={styles.emptyBody}>
-          {t('notifications.emptyHint')}
-        </Text>
+        <Text style={styles.emptyBody}>{t('notifications.emptyHint')}</Text>
       </View>
     </View>
   );
@@ -177,7 +176,9 @@ export default function NotificationsScreen() {
         {isMarkingAllAsRead ? (
           <ActivityIndicator size='small' color={Theme.primaryGatherRed} />
         ) : (
-          <Text style={styles.markAllText}>{t('notifications.markAllRead')}</Text>
+          <Text style={styles.markAllText}>
+            {t('notifications.markAllRead')}
+          </Text>
         )}
       </TouchableOpacity>
     ) : null;
@@ -189,7 +190,7 @@ export default function NotificationsScreen() {
   return (
     <View style={styles.root}>
       <BackHeader
-        title=''
+        title={t('notifications.title')}
         onBack={() => router.back()}
         rightButton={<MarkAllButton />}
       />
@@ -220,9 +221,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   markAllText: {
+    ...typography.secondary,
     color: Theme.primaryGatherRed,
     fontWeight: '600',
-    fontSize: 14,
   },
   listContent: {
     paddingBottom: 20,
@@ -263,28 +264,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 2,
   },
-  title: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#1F1300',
-    marginRight: 8,
-  },
+  title: { ...typography.body, flex: 1, color: '#1F1300', marginRight: 8 },
   titleUnread: {
     fontWeight: '700',
   },
-  body: {
-    fontSize: 14,
-    color: '#6E6E6E',
-    lineHeight: 20,
-  },
+  body: { ...typography.secondary, color: '#6E6E6E' },
   bodyUnread: {
     color: '#333333',
   },
-  timestamp: {
-    fontSize: 12,
-    color: '#9E9E9E',
-  },
+  timestamp: { ...typography.caption, color: '#62605B' },
   unreadDot: {
     width: 10,
     height: 10,
@@ -318,15 +306,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 8,
   },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#1F1300',
-  },
-  emptyBody: {
-    fontSize: 15,
-    color: '#6E6E6E',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
+  emptyTitle: { ...typography.section, color: '#1F1300' },
+  emptyBody: { ...typography.secondary, color: '#6E6E6E', textAlign: 'center' },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   FlatList,
@@ -169,7 +170,9 @@ export const ProfileHeader = ({
               activeOpacity={0.7}
             >
               <Text style={styles.statNumber}>{userInfo.followerCount}</Text>
-              <Text style={styles.statLabel}>{t('profile.followersLabel')}</Text>
+              <Text style={styles.statLabel}>
+                {t('profile.followersLabel')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.statItem}
@@ -177,7 +180,9 @@ export const ProfileHeader = ({
               activeOpacity={0.7}
             >
               <Text style={styles.statNumber}>{userInfo.followingCount}</Text>
-              <Text style={styles.statLabel}>{t('profile.followingLabel')}</Text>
+              <Text style={styles.statLabel}>
+                {t('profile.followingLabel')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -236,7 +241,9 @@ export const ProfileHeader = ({
             ))}
           </View>
         ) : groupsError ? (
-          <Text style={styles.emptyGroupsText}>{t('profile.unableLoadGroups')}</Text>
+          <Text style={styles.emptyGroupsText}>
+            {t('profile.unableLoadGroups')}
+          </Text>
         ) : joinedGroups.length > 0 ? (
           <FlatList
             data={joinedGroups}
@@ -299,12 +306,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  nameText: {
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '700',
-    color: Theme.black,
-  },
+  nameText: { ...typography.section, color: Theme.black },
   badgesRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -355,18 +357,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 120,
   },
-  statNumber: {
-    fontSize: 20,
-    lineHeight: 24,
-    fontWeight: '700',
-    color: Theme.black,
-  },
+  statNumber: { ...typography.section, color: Theme.black },
   statLabel: {
+    ...typography.caption,
     marginTop: 1,
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '500',
     color: Theme.textAlternateGray,
+    fontWeight: '500',
   },
   statLabelSkeleton: {
     marginTop: 6,
@@ -375,12 +371,7 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 14,
   },
-  groupsTitle: {
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '700',
-    color: Theme.black,
-  },
+  groupsTitle: { ...typography.title, color: Theme.black },
   groupsList: {
     paddingRight: 20,
     gap: 10,
@@ -398,11 +389,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Theme.surfaceTextInput,
   },
-  emptyGroupsText: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: Theme.textInput,
-  },
+  emptyGroupsText: { ...typography.secondary, color: Theme.textInput },
   groupSkeletonRow: {
     flexDirection: 'row',
     gap: 12,

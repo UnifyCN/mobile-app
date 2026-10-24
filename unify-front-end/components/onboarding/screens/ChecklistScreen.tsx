@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -79,17 +80,9 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 40,
   },
-  title: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 24,
-    lineHeight: 30,
-    color: '#000',
-    textAlign: 'center',
-  },
+  title: { ...typography.title, color: '#000', textAlign: 'center' },
   description: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    ...typography.body,
     color: '#000',
     textAlign: 'center',
     maxWidth: 313,

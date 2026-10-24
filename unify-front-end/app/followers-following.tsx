@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -62,11 +63,7 @@ const UserListItem = ({ user, currentUserId, source }: UserListItemProps) => {
         <Text style={styles.username}>{user.username}</Text>
       </View>
       {!isCurrentUser && (
-        <FollowButton
-          targetUserId={user.id}
-          compact={true}
-          source={source}
-        />
+        <FollowButton targetUserId={user.id} compact={true} source={source} />
       )}
     </TouchableOpacity>
   );
@@ -135,7 +132,10 @@ export default function FollowersFollowingScreen() {
         {/* eslint-disable-next-line i18next/no-literal-string -- tab ids, not copy; the visible label comes from t() below */}
         {(['followers', 'following'] as TabType[]).map(tab => {
           const active = activeTab === tab;
-          const label = tab === 'followers' ? t('profile.followersTab') : t('profile.followingTab');
+          const label =
+            tab === 'followers'
+              ? t('profile.followersTab')
+              : t('profile.followingTab');
 
           return (
             <Pressable
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabText: {
-    fontSize: 16,
+    ...typography.label,
     fontWeight: '500',
     color: Theme.textInactiveTab,
   },
@@ -234,22 +234,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Theme.imagePlaceholder,
   },
-  username: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-    flex: 1,
-  },
+  username: { ...typography.cardTitle, color: Theme.black, flex: 1 },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 40,
   },
-  emptyText: {
-    fontSize: 16,
-    color: Theme.textInput,
-  },
+  emptyText: { ...typography.body, color: Theme.textInput },
   emptyListContainer: {
     flexGrow: 1,
   },

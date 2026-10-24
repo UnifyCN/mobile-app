@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { View, Text, SectionList, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import BottomSheet from '@/components/common/BottomSheet';
@@ -91,11 +92,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Theme.surfaceGray,
     marginBottom: 4,
   },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: Theme.black,
-  },
+  headerTitle: { ...typography.section, color: Theme.black },
   countPill: {
     marginLeft: 8,
     backgroundColor: Theme.surfaceGray,
@@ -104,9 +101,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   countText: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textAlternateGray,
+    fontWeight: '600',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -121,11 +118,11 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   sectionTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   mutualsSectionTitle: {
     color: Theme.primaryGatherRed,

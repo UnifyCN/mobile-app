@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
@@ -98,7 +99,9 @@ export default function PreLoginOnboarding({
       <View style={styles.header}>
         {currentStep > 0 ? (
           <Pressable onPress={handleBack} hitSlop={12}>
-            <Text style={styles.headerButtonText}>{t('onboarding.backButton')}</Text>
+            <Text style={styles.headerButtonText}>
+              {t('onboarding.backButton')}
+            </Text>
           </Pressable>
         ) : (
           <View />
@@ -117,7 +120,9 @@ export default function PreLoginOnboarding({
             </Text>
           </Pressable>
           <Pressable onPress={handleFinish} hitSlop={12}>
-            <Text style={styles.headerButtonText}>{t('onboarding.skipButton')}</Text>
+            <Text style={styles.headerButtonText}>
+              {t('onboarding.skipButton')}
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -149,7 +154,9 @@ export default function PreLoginOnboarding({
           onPress={handleContinue}
         >
           <Text style={styles.continueText}>
-            {currentStep === TOTAL_STEPS - 1 ? t('onboarding.startNow') : t('onboarding.continue')}
+            {currentStep === TOTAL_STEPS - 1
+              ? t('onboarding.startNow')
+              : t('onboarding.continue')}
           </Text>
         </Pressable>
 
@@ -178,34 +185,38 @@ export default function PreLoginOnboarding({
               <Text style={styles.modalTitle}>
                 {t('language.selectLanguage')}
               </Text>
-              {(Object.entries(SUPPORTED_LANGUAGES) as [SupportedLanguage, string][]).map(
-                ([code, label]) => (
-                  <TouchableOpacity
-                    key={code}
+              {(
+                Object.entries(SUPPORTED_LANGUAGES) as [
+                  SupportedLanguage,
+                  string,
+                ][]
+              ).map(([code, label]) => (
+                <TouchableOpacity
+                  key={code}
+                  style={[
+                    styles.languageOption,
+                    currentLanguage === code && styles.languageOptionSelected,
+                  ]}
+                  onPress={async () => {
+                    await changeLanguage(code);
+                    setLanguageModalVisible(false);
+                  }}
+                  activeOpacity={0.7}
+                >
+                  <Text
                     style={[
-                      styles.languageOption,
-                      currentLanguage === code && styles.languageOptionSelected,
+                      styles.languageOptionText,
+                      currentLanguage === code &&
+                        styles.languageOptionTextSelected,
                     ]}
-                    onPress={async () => {
-                      await changeLanguage(code);
-                      setLanguageModalVisible(false);
-                    }}
-                    activeOpacity={0.7}
                   >
-                    <Text
-                      style={[
-                        styles.languageOptionText,
-                        currentLanguage === code && styles.languageOptionTextSelected,
-                      ]}
-                    >
-                      {label}
-                    </Text>
-                    {currentLanguage === code && (
-                      <Feather name='check' size={20} color='#000' />
-                    )}
-                  </TouchableOpacity>
-                )
-              )}
+                    {label}
+                  </Text>
+                  {currentLanguage === code && (
+                    <Feather name='check' size={20} color='#000' />
+                  )}
+                </TouchableOpacity>
+              ))}
             </Pressable>
           </View>
         </Pressable>
@@ -240,15 +251,9 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: '#F5F5F5',
   },
-  languagePillText: {
-    fontFamily: 'FunnelSans_500Medium',
-    fontSize: 13,
-    color: '#535353',
-  },
+  languagePillText: { ...typography.caption, color: '#535353' },
   headerButtonText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    ...typography.button,
     color: '#535353',
     textAlign: 'center',
   },
@@ -274,12 +279,7 @@ const styles = StyleSheet.create({
   continueButtonPressed: {
     opacity: 0.85,
   },
-  continueText: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 17.5,
-    lineHeight: 18,
-    color: '#fff',
-  },
+  continueText: { ...typography.button, color: '#fff' },
   paginationWrapper: {
     alignItems: 'center',
   },
@@ -298,8 +298,7 @@ const styles = StyleSheet.create({
     maxWidth: 340,
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: '#000',
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -315,10 +314,7 @@ const styles = StyleSheet.create({
   languageOptionSelected: {
     backgroundColor: '#F5F5F5',
   },
-  languageOptionText: {
-    fontSize: 17,
-    color: '#333',
-  },
+  languageOptionText: { ...typography.body, color: '#333' },
   languageOptionTextSelected: {
     fontWeight: '600',
     color: '#000',

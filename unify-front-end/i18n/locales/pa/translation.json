@@ -346,7 +346,8 @@
     "announcementBody": "ਪਾਠ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸ਼ਬਦ ਜਾਂ ਵਾਕੰਸ਼ ਨੂੰ ਹਾਈਲਾਈਟ ਕਰਨ ਜਾਂ AI ਤੋਂ ਸਮਝਾਉਣ ਲਈ ਪੁੱਛਣ ਵਾਸਤੇ ਲੰਬੀ ਦਬਾਓ। ਤੁਹਾਡੀਆਂ ਹਾਈਲਾਈਟਸ ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ ਵਿੱਚ 'Learn ਤੋਂ ਸੇਵ ਕੀਤਾ' ਹੇਠ ਸੇਵ ਹੁੰਦੀਆਂ ਹਨ।",
     "module": {
       "errorLoading": "ਮੌਡਿਊਲ ਲੋਡ ਕਰਨ ਵਿੱਚ ਗੜਬੜ: {{message}}",
-      "section": "ਸੈਕਸ਼ਨ {{number}}"
+      "section": "ਸੈਕਸ਼ਨ {{number}}",
+      "introduction": "ਜਾਣ-ਪਛਾਣ"
     },
     "submodule": {
       "learnTitle": "ਸਿੱਖੋ",
@@ -398,9 +399,11 @@
       "errorTitle": "ਗੜਬੜ",
       "imagePlaceholder": "ਤਸਵੀਰ",
       "submoduleFallback": "ਸਬ-ਮੌਡਿਊਲ",
+      "reviewRating": "5 ਵਿੱਚੋਂ {{count}} ਸਿਤਾਰੇ",
       "reviewTitle": "ਇਹ ਪਾਠ ਕਿਹੋ ਜਿਹਾ ਸੀ?",
       "reviewPlaceholder": "ਆਪਣੇ ਵਿਚਾਰ ਸਾਂਝੇ ਕਰੋ (ਵਿਕਲਪਿਕ)",
-      "example": "ਉਦਾਹਰਨ"
+      "example": "ਉਦਾਹਰਨ",
+      "openImage": "ਪੂਰੀ ਤਸਵੀਰ ਖੋਲ੍ਹੋ"
     },
     "quiz": {
       "loadingQuizzes": "ਕਵਿਜ਼ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
@@ -411,7 +414,8 @@
       "startQuiz": "ਕਵਿਜ਼ ਸ਼ੁਰੂ ਕਰੋ →",
       "loadingQuestion": "ਸਵਾਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
       "errorLoadingQuestion": "ਸਵਾਲ ਲੋਡ ਕਰਨ ਵਿੱਚ ਗੜਬੜ",
-      "questionNotFound": "ਸਵਾਲ ਨਹੀਂ ਮਿਲਿਆ"
+      "questionNotFound": "ਸਵਾਲ ਨਹੀਂ ਮਿਲਿਆ",
+      "yourAnswer": "ਤੁਹਾਡਾ ਜਵਾਬ"
     },
     "quizzes": {
       "errorLoading": "ਕਵਿਜ਼ ਲੋਡ ਕਰਨ ਵਿੱਚ ਗੜਬੜ: {{message}}",
@@ -1264,10 +1268,7 @@
           "serviceArea": "ਕੈਨੇਡਾ ਅਤੇ ਦੁਨੀਆ ਭਰ ਵਿੱਚ",
           "howToStart": "ਕਿਸੇ TuGo ਬੀਮਾ ਭਾਈਵਾਲ ਰਾਹੀਂ ਔਨਲਾਈਨ ਕੋਟ ਲੈਣਾ ਸ਼ੁਰੂ ਕਰੋ, ਜਾਂ 1-855-929-8846 ’ਤੇ ਕਾਲ ਕਰੋ।",
           "hours": "ਸੋਮ–ਸ਼ੁੱਕਰ 6:00am–5:00pm PST · ਸ਼ਨਿੱਚਰ 7:00am–4:00pm PST · ਐਤਵਾਰ ਬੰਦ",
-          "languages": [
-            "ਅੰਗਰੇਜ਼ੀ",
-            "ਫ਼ਰਾਂਸੀਸੀ"
-          ],
+          "languages": ["ਅੰਗਰੇਜ਼ੀ", "ਫ਼ਰਾਂਸੀਸੀ"],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Visitors to Canada ਬੀਮਾ",
@@ -1305,10 +1306,7 @@
           "eligibility": "ਨਵੇਂ ਆਏ ਲੋਕਾਂ ਵਾਲੇ ਖਾਤੇ ਦੀ ਪੇਸ਼ਕਸ਼ 25 ਸਾਲ ਅਤੇ ਇਸ ਤੋਂ ਵੱਧ ਉਮਰ ਦੇ ਉਹਨਾਂ ਲੋਕਾਂ ਲਈ ਹੈ ਜੋ ਪਰਮਾਨੈਂਟ ਰੈਜ਼ੀਡੈਂਟ ਹਨ, ਜਾਂ 8 ਮਹੀਨਿਆਂ ਤੋਂ ਵੱਧ ਸਮੇਂ ਲਈ ਯੋਗ ਵਰਕ ਪਰਮਿਟ ਵਾਲੇ ਆਰਜ਼ੀ ਨਿਵਾਸੀ ਹਨ, ਜੋ ਕੈਨੇਡਾ ਵਿੱਚ 3 ਸਾਲ ਜਾਂ ਇਸ ਤੋਂ ਘੱਟ ਸਮੇਂ ਤੋਂ ਰਹਿ ਰਹੇ ਹਨ, ਅਤੇ ਜੋ ਪਹਿਲਾਂ ਤੋਂ Desjardins ਦੇ ਮੈਂਬਰ ਨਹੀਂ ਹਨ। 18–24 ਸਾਲ ਦੀ ਉਮਰ ਅਤੇ 25–30 ਸਾਲ ਦੇ ਫੁੱਲ-ਟਾਈਮ ਵਿਦਿਆਰਥੀਆਂ ਲਈ ਵੱਖਰੀਆਂ ਪੇਸ਼ਕਸ਼ਾਂ ਹਨ।",
           "howToStart": "ਲਗਭਗ 15 ਮਿੰਟਾਂ ਵਿੱਚ ਔਨਲਾਈਨ ਖਾਤਾ ਖੋਲ੍ਹੋ, ਜਾਂ ਵਿਦੇਸ਼ ਤੋਂ ਅਪਲਾਈ ਕਰੋ ਅਤੇ ਕੈਨੇਡਾ ਪਹੁੰਚ ਕੇ ਕਿਸੇ ਸੇਵਾ ਕੇਂਦਰ ’ਤੇ ਆਪਣੀ ਪਛਾਣ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ।",
           "hours": "ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ: ਫਾਈਲ ਖੋਲ੍ਹਣਾ 24/7 · ਸਲਾਹਕਾਰ ਸੋਮ–ਸ਼ੁੱਕਰ 9:00am–8:00pm, ਸ਼ਨਿੱਚਰ 9:00am–5:00pm",
-          "languages": [
-            "ਅੰਗਰੇਜ਼ੀ",
-            "ਫ਼ਰਾਂਸੀਸੀ"
-          ],
+          "languages": ["ਅੰਗਰੇਜ਼ੀ", "ਫ਼ਰਾਂਸੀਸੀ"],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "ਨਵੇਂ ਆਏ ਲੋਕਾਂ ਲਈ ਚੈਕਿੰਗ ਖਾਤਾ (Unlimited plan)",
@@ -1394,7 +1392,41 @@
         "bookA11y": "{{name}} ਨਾਲ ਮੁਫ਼ਤ ਜਾਣ-ਪਛਾਣ ਮੀਟਿੰਗ ਬੁੱਕ ਕਰੋ"
       }
     },
-    "typeHerePlaceholder": "ਇੱਥੇ ਲਿਖੋ"
+    "typeHerePlaceholder": "ਇੱਥੇ ਲਿਖੋ",
+    "home": {
+      "heading": "ਭਰੋਸੇ ਨਾਲ ਵੱਸੋ",
+      "subtitle": "ਕੈਨੇਡਾ ਵਿੱਚ ਜੀਵਨ ਦੀ ਤਿਆਰੀ ਵਿੱਚ ਤੁਹਾਡੀ ਮਦਦ ਕਰਨ ਲਈ ਵਿਹਾਰਕ ਪਾਠ।",
+      "continue": "ਸਿੱਖਣਾ ਜਾਰੀ ਰੱਖੋ",
+      "moreLessons": "ਹੋਰ ਜਾਰੀ ਪਾਠ",
+      "courses": "ਕੋਰਸ",
+      "all": "ਸਾਰੇ",
+      "started": "ਸ਼ੁਰੂ ਕੀਤੇ",
+      "emptyStarted": "ਤੁਹਾਡੇ ਸ਼ੁਰੂ ਕੀਤੇ ਕੋਰਸ ਇੱਥੇ ਦਿਖਾਈ ਦੇਣਗੇ।",
+      "modules": "ਮੋਡੀਊਲ",
+      "moduleCount": "ਮੋਡੀਊਲ: {{count}}",
+      "lessonCount": "ਪਾਠ: {{count}}",
+      "lessonSummary": "{{count}} ਪਾਠ · {{done}} ਪੂਰੇ",
+      "upNext": "ਅੱਗੇ",
+      "close": "ਬੰਦ ਕਰੋ",
+      "tabLabel": "ਸਿੱਖੋ",
+      "completionSummary": "{{total}} ਵਿੱਚੋਂ {{completed}} ਪਾਠ ਪੂਰੇ ਹੋਏ"
+    },
+    "structured": {
+      "concept": "ਧਾਰਨਾ",
+      "example": "ਉਦਾਹਰਨ",
+      "visual": "ਦ੍ਰਿਸ਼ਟੀਗਤ ਉਦਾਹਰਨ",
+      "quickCheck": "ਤੁਰੰਤ ਜਾਂਚ",
+      "faq": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
+      "citations": "ਸਰੋਤ",
+      "theory": "ਸਿਧਾਂਤ",
+      "practice": "ਅਮਲ ਵਿੱਚ",
+      "readingMinutes": "ਪੜ੍ਹਨ ਲਈ {{count}} ਮਿੰਟ",
+      "correct": "ਸਹੀ",
+      "tryAgain": "ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+      "nextLesson": "ਅਗਲਾ ਪਾਠ",
+      "lessonNumber": "ਪਾਠ {{number}}",
+      "moduleNumber": "ਮੋਡੀਊਲ {{number}}"
+    }
   },
   "checklist": {
     "title": "ਵਿਅਕਤੀਗਤ ਚੈੱਕਲਿਸਟ",

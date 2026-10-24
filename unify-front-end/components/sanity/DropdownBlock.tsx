@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import DropdownAccordion from '@/components/learn/DropdownAccordion';
@@ -5,12 +6,14 @@ import DropdownAccordion from '@/components/learn/DropdownAccordion';
 interface DropdownBlockProps {
   block: any;
   index: number;
+  trimEndSpacing?: boolean;
   renderRichText: (blocks: any[]) => React.ReactNode;
 }
 
 export default function DropdownBlock({
   block,
   index,
+  trimEndSpacing = false,
   renderRichText,
 }: DropdownBlockProps) {
   // Check if we have the required fields for this dropdown structure
@@ -31,6 +34,7 @@ export default function DropdownBlock({
     <View key={block._key || index}>
       <DropdownAccordion
         items={dropdownItems}
+        trimEndSpacing={trimEndSpacing}
         titleTextStyle={styles.closedTitle}
         renderRichText={renderRichText}
       />
@@ -40,14 +44,8 @@ export default function DropdownBlock({
 
 const styles = StyleSheet.create({
   closedTitle: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
+    ...typography.reading,
     fontStyle: 'normal',
-    fontSize: 18,
-    lineHeight: 27,
-
-    //if needed:
-    //color: '#FFFFFF',
-    //letterSpacing: 0,
+    fontWeight: '700',
   },
 });

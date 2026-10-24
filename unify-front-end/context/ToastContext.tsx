@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   createContext,
   use,
@@ -181,9 +182,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   toastText: {
+    flexShrink: 1,
     color: Theme.black,
-    fontSize: 14,
-    fontWeight: '500',
+    ...typography.secondary,
     textAlign: 'center',
   },
   chevron: {

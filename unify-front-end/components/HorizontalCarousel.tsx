@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -116,18 +117,22 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   headerText: {
-    fontSize: 18,
-    fontWeight: '600',
+    flex: 1,
+    marginRight: 12,
+    ...typography.section,
+
     color: '#000',
   },
   seeAllButton: {
+    flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
   },
   seeAllText: {
-    fontSize: 14,
-    color: SEE_ALL_COLOR,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
   carousel: {
     marginBottom: 30,

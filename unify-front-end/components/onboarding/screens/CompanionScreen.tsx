@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5B7FC7',
   },
   userBubbleText: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#fff',
   },
   // AI response
@@ -282,15 +283,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   aiHeading: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#000',
   },
   aiBody: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#000',
   },
   aiBold: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
   },
   // Feature cards
   featureCard: {
@@ -314,11 +317,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   featureTitle: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#000',
   },
   featureDescription: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#686464',
   },
   // Bottom text
@@ -327,17 +331,9 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 40,
   },
-  title: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 24,
-    lineHeight: 30,
-    color: '#000',
-    textAlign: 'center',
-  },
+  title: { ...typography.title, color: '#000', textAlign: 'center' },
   description: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    ...typography.body,
     color: '#000',
     textAlign: 'center',
     maxWidth: 313,

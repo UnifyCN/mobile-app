@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -56,18 +57,16 @@ export default function HowWeChooseSheet({ visible, onClose }: Props) {
 const styles = StyleSheet.create({
   content: { paddingTop: 4, paddingBottom: 32 },
   title: {
-    fontWeight: '700',
-    fontSize: 20,
+    ...typography.section,
     letterSpacing: -0.3,
     color: RESOURCE_THEME.textHeading,
     marginBottom: 8,
   },
   intro: {
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 20,
+    ...typography.secondary,
     color: RESOURCE_THEME.textSecondary,
     marginBottom: 18,
+    fontWeight: '400',
   },
   bulletRow: { flexDirection: 'row', gap: 10, marginBottom: 14 },
   bulletDot: {
@@ -78,17 +77,15 @@ const styles = StyleSheet.create({
     backgroundColor: RESOURCE_THEME.link,
   },
   bulletText: {
+    ...typography.secondary,
     flex: 1,
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 20,
     color: RESOURCE_THEME.textBody,
+    fontWeight: '400',
   },
   footnote: {
+    ...typography.caption,
     marginTop: 6,
-    fontWeight: '400',
-    fontSize: 12.5,
-    lineHeight: 18,
     color: RESOURCE_THEME.textSecondary,
+    fontWeight: '400',
   },
 });

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -26,8 +27,7 @@ export default function MorePartnersNote() {
 
 const styles = StyleSheet.create({
   note: {
-    fontSize: 13,
-    lineHeight: 18,
+    ...typography.caption,
     color: RESOURCE_THEME.textSecondary,
     marginBottom: 12,
   },

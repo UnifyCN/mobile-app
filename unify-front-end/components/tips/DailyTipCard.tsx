@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -102,7 +103,9 @@ export function DailyTipCard({ tip, maxWidth, onPress }: DailyTipCardProps) {
           <View
             style={[styles.badge, { backgroundColor: config.accent + '14' }]}
           >
-            <Text style={[styles.badgeText, { color: config.accent }]}>
+            <Text
+              style={[styles.badgeText, { color: typographyColors.secondary }]}
+            >
               {t('tips.dailyTip')}
             </Text>
           </View>
@@ -135,7 +138,7 @@ export function DailyTipCard({ tip, maxWidth, onPress }: DailyTipCardProps) {
 const styles = StyleSheet.create({
   card: {
     width: 332,
-    height: 132,
+    minHeight: 168,
     borderRadius: 16,
     overflow: 'hidden',
   },
@@ -155,8 +158,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   badgeText: {
-    fontSize: 11,
-    fontWeight: '600',
+    ...typography.caption,
+
     letterSpacing: 0.3,
   },
   iconContainer: {
@@ -171,16 +174,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 16,
-    fontWeight: '700',
+    ...typography.cardTitle,
+
     color: '#1a1a1a',
     marginBottom: 4,
-    lineHeight: 20,
   },
   tipText: {
-    fontSize: 13,
-    fontWeight: '400',
-    color: '#555',
-    lineHeight: 18,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
   },
 });

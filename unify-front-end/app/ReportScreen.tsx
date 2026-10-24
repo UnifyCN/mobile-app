@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -32,7 +33,9 @@ export default function ReportScreen() {
   const submitting = mutation.isPending;
   const isPost = type === 'post';
 
-  const title = isPost ? t('reportScreen.titlePost') : t('reportScreen.titleUser');
+  const title = isPost
+    ? t('reportScreen.titlePost')
+    : t('reportScreen.titleUser');
   const subtitle = isPost
     ? t('reportScreen.subtitlePost')
     : t('reportScreen.subtitleUser');
@@ -140,23 +143,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   header: { marginBottom: 12 },
-  title: { fontSize: 20, fontWeight: '600', marginBottom: 6, color: '#111' },
-  subtitle: { fontSize: 13, color: '#666' },
+  title: { ...typography.section, marginBottom: 6, color: '#111' },
+  subtitle: { ...typography.caption, color: '#666' },
   input: {
+    ...typography.body,
     minHeight: 140,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#EEE',
     padding: 12,
     marginTop: 14,
-    fontSize: 15,
     color: '#111',
   },
   counter: {
+    ...typography.caption,
     alignSelf: 'flex-end',
     marginTop: 6,
-    color: '#999',
-    fontSize: 12,
+    color: '#62605B',
   },
   actions: {
     flexDirection: 'row',

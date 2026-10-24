@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import {
   View,
@@ -44,15 +45,17 @@ export default function LocationStep({
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   // Get province for selected city if it's a pre-defined city
-  const autoFilledProvince = selectedCity && !isOtherSelected
-    ? getProvinceForCity(selectedCity)
-    : null;
+  const autoFilledProvince =
+    selectedCity && !isOtherSelected ? getProvinceForCity(selectedCity) : null;
   const displayProvince = autoFilledProvince || selectedProvince;
 
-  const filteredCities = [...CANADIAN_CITIES, OTHER_CITY_SENTINEL].filter(city => {
-    const label = city === OTHER_CITY_SENTINEL ? t('onboarding.otherSpecify') : city;
-    return label.toLowerCase().includes(citySearchQuery.toLowerCase());
-  });
+  const filteredCities = [...CANADIAN_CITIES, OTHER_CITY_SENTINEL].filter(
+    city => {
+      const label =
+        city === OTHER_CITY_SENTINEL ? t('onboarding.otherSpecify') : city;
+      return label.toLowerCase().includes(citySearchQuery.toLowerCase());
+    }
+  );
 
   const filteredProvinces = CANADIAN_PROVINCES.filter(province =>
     province.toLowerCase().includes(provinceSearchQuery.toLowerCase())
@@ -107,7 +110,7 @@ export default function LocationStep({
             ]}
           >
             {isOtherSelected
-              ? (customCity?.trim() || t('onboarding.otherSpecifyBelow'))
+              ? customCity?.trim() || t('onboarding.otherSpecifyBelow')
               : selectedCity || t('onboarding.selectCity')}
           </Text>
           <Feather name='chevron-down' size={20} color={Theme.textInput} />
@@ -153,7 +156,9 @@ export default function LocationStep({
             <Feather name='chevron-down' size={20} color={Theme.textInput} />
           )}
           {autoFilledProvince && (
-            <Text style={styles.autoFilledBadge}>{t('onboarding.autoFilled')}</Text>
+            <Text style={styles.autoFilledBadge}>
+              {t('onboarding.autoFilled')}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
@@ -168,7 +173,9 @@ export default function LocationStep({
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>{t('onboarding.selectCity')}</Text>
+              <Text style={styles.modalTitle}>
+                {t('onboarding.selectCity')}
+              </Text>
               <TouchableOpacity onPress={() => setShowCityModal(false)}>
                 <Feather name='x' size={24} color={Theme.black} />
               </TouchableOpacity>
@@ -226,7 +233,9 @@ export default function LocationStep({
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>{t('onboarding.selectProvince')}</Text>
+                <Text style={styles.modalTitle}>
+                  {t('onboarding.selectProvince')}
+                </Text>
                 <TouchableOpacity onPress={() => setShowProvinceModal(false)}>
                   <Feather name='x' size={24} color={Theme.black} />
                 </TouchableOpacity>
@@ -281,26 +290,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 8,
   },
-  question: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: Theme.black,
-    marginBottom: 24,
-  },
-  errorText: {
-    fontSize: 14,
-    color: '#DC2626',
-    marginBottom: 16,
-  },
+  question: { ...typography.title, color: Theme.black, marginBottom: 24 },
+  errorText: { ...typography.secondary, color: '#DC2626', marginBottom: 16 },
   fieldWrapper: {
     marginBottom: 24,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Theme.black,
-    marginBottom: 8,
-  },
+  label: { ...typography.cardTitle, color: Theme.black, marginBottom: 8 },
   dropdown: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -323,11 +318,7 @@ const styles = StyleSheet.create({
   dropdownError: {
     borderColor: '#DC2626',
   },
-  dropdownText: {
-    fontSize: 16,
-    color: Theme.black,
-    flex: 1,
-  },
+  dropdownText: { ...typography.body, color: Theme.black, flex: 1 },
   placeholderText: {
     color: Theme.textInput,
   },
@@ -335,18 +326,18 @@ const styles = StyleSheet.create({
     color: '#0EA5E9',
   },
   autoFilledBadge: {
-    fontSize: 12,
+    ...typography.caption,
     color: '#0EA5E9',
     fontWeight: '600',
   },
   customInput: {
+    ...typography.body,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
     backgroundColor: Theme.white,
-    fontSize: 16,
     color: Theme.black,
   },
   modalOverlay: {
@@ -369,12 +360,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Theme.borderInfoText,
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-  },
+  modalTitle: { ...typography.cardTitle, color: Theme.black },
   searchInput: {
+    ...typography.body,
     marginHorizontal: 24,
     marginVertical: 12,
     paddingHorizontal: 12,
@@ -382,7 +370,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
-    fontSize: 16,
     color: Theme.black,
   },
   modalOption: {
@@ -394,10 +381,7 @@ const styles = StyleSheet.create({
   modalOptionSelected: {
     backgroundColor: '#FFF5F3',
   },
-  modalOptionText: {
-    fontSize: 16,
-    color: Theme.black,
-  },
+  modalOptionText: { ...typography.body, color: Theme.black },
   modalOptionTextSelected: {
     fontWeight: '600',
     color: Theme.primaryGatherRed,

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -281,63 +282,60 @@ export default function GiveawayScreen() {
           entering={FadeIn.duration(220)}
           style={styles.stepWrap}
         >
-        {step === 'welcome' && <WelcomeStep />}
-        {step === 'question' && (
-          <QuestionStep
-            value={shortAnswer}
-            onChange={text => {
-              setShortAnswer(text);
-              if (questionError) setQuestionError(null);
-            }}
-            error={questionError}
-          />
-        )}
-        {step === 'details' && (
-          <DetailsStep
-            firstName={firstName}
-            lastName={lastName}
-            email={email}
-            phone={phone}
-            skillAnswer={skillAnswer}
-            consent={consent}
-            onFirstName={v => {
-              setFirstName(v);
-              clearDetailsError('firstName');
-            }}
-            onLastName={v => {
-              setLastName(v);
-              clearDetailsError('lastName');
-            }}
-            onEmail={v => {
-              setEmail(v);
-              clearDetailsError('email');
-            }}
-            onPhone={setPhone}
-            onSkillAnswer={v => {
-              setSkillAnswer(v);
-              clearDetailsError('skillAnswer');
-            }}
-            onConsentChange={value => {
-              setConsent(value);
-              clearDetailsError('consent');
-            }}
-            errors={detailsErrors}
-            submitError={submitError}
-          />
-        )}
-        {step === 'success' && (
-          <SuccessStep
-            firstName={existingEntry?.first_name ?? firstName.trim()}
-          />
-        )}
+          {step === 'welcome' && <WelcomeStep />}
+          {step === 'question' && (
+            <QuestionStep
+              value={shortAnswer}
+              onChange={text => {
+                setShortAnswer(text);
+                if (questionError) setQuestionError(null);
+              }}
+              error={questionError}
+            />
+          )}
+          {step === 'details' && (
+            <DetailsStep
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              phone={phone}
+              skillAnswer={skillAnswer}
+              consent={consent}
+              onFirstName={v => {
+                setFirstName(v);
+                clearDetailsError('firstName');
+              }}
+              onLastName={v => {
+                setLastName(v);
+                clearDetailsError('lastName');
+              }}
+              onEmail={v => {
+                setEmail(v);
+                clearDetailsError('email');
+              }}
+              onPhone={setPhone}
+              onSkillAnswer={v => {
+                setSkillAnswer(v);
+                clearDetailsError('skillAnswer');
+              }}
+              onConsentChange={value => {
+                setConsent(value);
+                clearDetailsError('consent');
+              }}
+              errors={detailsErrors}
+              submitError={submitError}
+            />
+          )}
+          {step === 'success' && (
+            <SuccessStep
+              firstName={existingEntry?.first_name ?? firstName.trim()}
+            />
+          )}
         </Animated.View>
       </ScrollView>
 
       <View
-        style={[
-          styles.footer,
-          { paddingBottom: Math.max(insets.bottom, 16) },
-        ]}
+        style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 16) }]}
       >
         <Pressable
           onPress={handlePrimary}
@@ -386,7 +384,9 @@ function WelcomeStep() {
       </View>
       <Text style={styles.title}>{t('giveaway.welcome.title')}</Text>
       <Text style={styles.subtitle}>{t('giveaway.welcome.subtitle')}</Text>
-      <Text style={styles.sectionTitle}>{t('giveaway.welcome.rulesTitle')}</Text>
+      <Text style={styles.sectionTitle}>
+        {t('giveaway.welcome.rulesTitle')}
+      </Text>
       <View style={styles.rulesList}>
         {rules.map((rule, idx) => (
           <View key={idx} style={styles.ruleRow}>
@@ -423,11 +423,7 @@ function QuestionStep({ value, onChange, error }: QuestionStepProps) {
         accessibilityLabel={t('giveaway.question.prompt')}
       />
       <View style={styles.belowInputRow}>
-        {error ? (
-          <Text style={styles.errorText}>{error}</Text>
-        ) : (
-          <View />
-        )}
+        {error ? <Text style={styles.errorText}>{error}</Text> : <View />}
         <Text style={styles.charCount}>
           {t('giveaway.question.charCount', { count: value.length })}
         </Text>
@@ -549,10 +545,7 @@ function DetailsStep({
       )}
 
       <Pressable
-        style={({ pressed }) => [
-          styles.consentRow,
-          pressed && styles.pressed,
-        ]}
+        style={({ pressed }) => [styles.consentRow, pressed && styles.pressed]}
         onPress={() => onConsentChange(!consent)}
         accessibilityRole='checkbox'
         accessibilityState={{ checked: consent }}
@@ -564,13 +557,9 @@ function DetailsStep({
             !!errors.consent && !consent && styles.checkboxError,
           ]}
         >
-          {consent && (
-            <Check color={Theme.white} size={14} strokeWidth={3} />
-          )}
+          {consent && <Check color={Theme.white} size={14} strokeWidth={3} />}
         </View>
-        <Text style={styles.consentText}>
-          {t('giveaway.details.consent')}
-        </Text>
+        <Text style={styles.consentText}>{t('giveaway.details.consent')}</Text>
       </Pressable>
       {!!errors.consent && (
         <Text style={[styles.errorText, styles.consentErrorText]}>
@@ -589,7 +578,9 @@ function DetailsStep({
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
-  return <Text style={[styles.errorText, styles.fieldErrorText]}>{message}</Text>;
+  return (
+    <Text style={[styles.errorText, styles.fieldErrorText]}>{message}</Text>
+  );
 }
 
 function SuccessStep({ firstName }: { firstName: string }) {
@@ -597,7 +588,9 @@ function SuccessStep({ firstName }: { firstName: string }) {
   return (
     <View style={styles.successWrap}>
       <SuccessCelebration />
-      <Text style={[styles.title, styles.successTitle]}>{t('giveaway.success.title')}</Text>
+      <Text style={[styles.title, styles.successTitle]}>
+        {t('giveaway.success.title')}
+      </Text>
       <Text style={[styles.subtitle, styles.successSubtitle]}>
         {firstName
           ? t('giveaway.success.subtitlePersonalized', { name: firstName })
@@ -647,9 +640,9 @@ const styles = StyleSheet.create({
     height: 36,
   },
   stepIndicator: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: Theme.textAlternateGray,
+    fontWeight: '600',
   },
   scrollView: {
     flex: 1,
@@ -669,22 +662,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: Theme.black,
-    lineHeight: 34,
-    marginBottom: 12,
-  },
+  title: { ...typography.title, color: Theme.black, marginBottom: 12 },
   subtitle: {
-    fontSize: 16,
-    lineHeight: 22,
+    ...typography.body,
     color: Theme.textAlternateGray,
     marginBottom: 24,
   },
   prompt: {
-    fontSize: 16,
-    lineHeight: 22,
+    ...typography.body,
     color: Theme.textAlternateGray,
     marginBottom: 16,
   },
@@ -708,12 +693,12 @@ const styles = StyleSheet.create({
     color: Theme.textAlternateGray,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
+    ...typography.secondary,
     color: Theme.textAlternateGray,
     textTransform: 'uppercase',
     letterSpacing: 0.6,
     marginBottom: 12,
+    fontWeight: '700',
   },
   rulesList: {
     gap: 12,
@@ -730,21 +715,15 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.black,
     marginTop: 8,
   },
-  ruleText: {
-    flex: 1,
-    fontSize: 15,
-    lineHeight: 22,
-    color: Theme.black,
-  },
+  ruleText: { ...typography.secondary, flex: 1, color: Theme.black },
   textArea: {
+    ...typography.body,
     minHeight: 140,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Theme.borderCard,
     borderRadius: 16,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    fontSize: 16,
-    lineHeight: 22,
     color: Theme.black,
     backgroundColor: Theme.white,
   },
@@ -759,12 +738,12 @@ const styles = StyleSheet.create({
     minHeight: 18,
   },
   charCount: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textInactiveTab,
     fontWeight: '500',
   },
   errorText: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.destructive,
     fontWeight: '500',
   },
@@ -779,24 +758,24 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   fieldLabel: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textAlternateGray,
     marginTop: 18,
     marginBottom: 6,
+    fontWeight: '600',
   },
   textInput: {
+    ...typography.body,
     height: 48,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Theme.borderCard,
     borderRadius: 12,
     paddingHorizontal: 14,
-    fontSize: 16,
     color: Theme.black,
     backgroundColor: Theme.white,
   },
   skillHelp: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textInactiveTab,
     marginBottom: 8,
   },
@@ -808,8 +787,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   skillQuestionText: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
     color: Theme.black,
     fontVariant: ['tabular-nums'],
   },
@@ -837,9 +815,8 @@ const styles = StyleSheet.create({
     borderColor: Theme.destructive,
   },
   consentText: {
+    ...typography.secondary,
     flex: 1,
-    fontSize: 14,
-    lineHeight: 20,
     color: Theme.textAlternateGray,
   },
   successWrap: {
@@ -868,11 +845,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     marginTop: 16,
   },
-  successDeadlineValue: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Theme.black,
-  },
+  successDeadlineValue: { ...typography.cardTitle, color: Theme.black },
   footer: {
     paddingHorizontal: 24,
     paddingTop: 12,
@@ -893,11 +866,7 @@ const styles = StyleSheet.create({
   primaryButtonDisabled: {
     backgroundColor: Theme.textAlternateGray,
   },
-  primaryButtonText: {
-    color: Theme.white,
-    fontSize: 16,
-    fontWeight: '700',
-  },
+  primaryButtonText: { ...typography.button, color: Theme.white },
   pressed: {
     opacity: 0.6,
   },
