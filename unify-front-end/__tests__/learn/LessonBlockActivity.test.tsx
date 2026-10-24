@@ -62,8 +62,8 @@ it('restores answers, submits them, shows feedback, then enables navigation', as
   fireEvent.press(view.getByText('common.submit'));
   await waitFor(() => expect(onReady).toHaveBeenLastCalledWith(true));
   expect(view.getByText('Feedback shown')).toBeTruthy();
-  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'reflection', 'Check the source', true);
-  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', true);
+  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'reflection', 'Check the source', true, false);
+  expect(saveInput).toHaveBeenCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', true, false);
 });
 
 it('keeps Next unavailable when an answer cannot be saved', async () => {
@@ -135,4 +135,13 @@ it('does not open Next for an edit made while the submit was saving', async () =
   await act(async () => { await Promise.resolve(); });
   expect(onReady).not.toHaveBeenCalledWith(true);
   expect(view.queryByText('Feedback shown')).toBeNull();
+});
+
+it('clears the submitted state of an answer changed after Submit', async () => {
+  const onReady = jest.fn();
+  const view = render(<LessonBlockActivity activity={activity} lessonId="lesson" submoduleId="module" moduleId="course" onReady={onReady} />);
+  await waitFor(() => expect(view.getByTestId('question')).toBeTruthy());
+  fireEvent.press(view.getByTestId('question'));
+  await waitFor(() => expect(saveInput).toHaveBeenCalledTimes(1));
+  expect(saveInput).toHaveBeenLastCalledWith('lesson', 'module', 'course', 'knowledge-check', 'question:question', '"a"', false, true);
 });

@@ -110,15 +110,34 @@ async function startLesson(
 // Every writer of a lesson's user_lesson_progress row (page progress, resume
 // position, completion) runs through one queue per lesson, in call order. A
 // slow earlier write can otherwise land last and move the resume point back,
-// or mark a completed lesson as in progress again.
+// or mark a completed lesson as in progress again. Each writer reads the
+// signed-in user when it is called, not when its turn comes.
 const lessonProgressWrites = new Map<string, Promise<unknown>>();
+
+// A write waits at most this long for the write before it. React Native's
+// Android HTTP client has no default timeout, so one stalled request must not
+// hold later saves, including lesson completion, forever.
+export const PREVIOUS_WRITE_WAIT_MS = 8000;
+
+/** Reads the signed-in user now. A failed read resolves to null. */
+export function requestUser() {
+  return progressClient.auth.getUser().catch(() => null);
+}
 
 export function enqueueLessonProgressWrite<T>(
   lessonId: string,
   write: () => Promise<T>
 ): Promise<T> {
   const previous = lessonProgressWrites.get(lessonId) || Promise.resolve();
-  const pending = previous.catch(() => undefined).then(write);
+  const turn = new Promise<void>(resolve => {
+    const timer = setTimeout(resolve, PREVIOUS_WRITE_WAIT_MS);
+    const done = () => {
+      clearTimeout(timer);
+      resolve();
+    };
+    previous.then(done, done);
+  });
+  const pending = turn.then(write);
   lessonProgressWrites.set(lessonId, pending);
   const release = () => {
     if (lessonProgressWrites.get(lessonId) === pending) {
@@ -139,8 +158,10 @@ export function updateLessonProgress(
   quizId?: string,
   questionNumber?: number
 ): Promise<void> {
+  const userRequest = requestUser();
   return enqueueLessonProgressWrite(lessonId, () =>
     writeLessonProgress(
+      userRequest,
       lessonId,
       submoduleId,
       moduleId,
@@ -154,6 +175,7 @@ export function updateLessonProgress(
 }
 
 async function writeLessonProgress(
+  userRequest: ReturnType<typeof requestUser>,
   lessonId: string,
   submoduleId: string,
   moduleId: string,
@@ -164,9 +186,7 @@ async function writeLessonProgress(
   questionNumber?: number
 ): Promise<void> {
   try {
-    const {
-      data: { user },
-    } = await progressClient.auth.getUser();
+    const user = (await userRequest)?.data.user;
     if (!user) return;
 
     // Page N clicked → pages 1..N are now done
@@ -224,7 +244,7 @@ export function saveResumePosition(
 ): Promise<boolean> {
   if (!lessonId || !submoduleId || !moduleId) return Promise.resolve(false);
   // Capture authentication at invocation, then write in visit order, including Back.
-  const userRequest = progressClient.auth.getUser().catch(() => null);
+  const userRequest = requestUser();
   return enqueueLessonProgressWrite(lessonId, async () => {
     try {
       const auth = await userRequest;
@@ -625,7 +645,8 @@ export async function saveActivityInput(
   pageKey: string,
   fieldKey: string,
   value: string,
-  isSubmitted = false
+  isSubmitted = false,
+  clearSubmitted = false
 ): Promise<boolean> {
   try {
     const {
@@ -648,6 +669,10 @@ export async function saveActivityInput(
     if (isSubmitted) {
       payload.is_submitted = true;
       payload.submitted_at = new Date().toISOString();
+    } else if (clearSubmitted) {
+      // Only for callers that write each field in order: a later edit then
+      // means the submitted answer is no longer the stored one.
+      payload.is_submitted = false;
     }
 
     const { error } = await progressClient

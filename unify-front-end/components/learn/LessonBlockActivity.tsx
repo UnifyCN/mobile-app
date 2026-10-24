@@ -33,9 +33,11 @@ export default function LessonBlockActivity({
 
   const persist = (fieldKey: string, value: string, isSubmitted = false) => {
     // Serialize writes per answer so a slow draft cannot overwrite a later submit.
+    // Writes run in order, so a draft clears the field's submitted state: an
+    // answer changed after Submit must be submitted again.
     const previous = writes.current[fieldKey] ?? Promise.resolve(true);
     const next = previous.then(() => saveActivityInput(
-      lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted
+      lessonId, submoduleId, moduleId, activity._key, fieldKey, value, isSubmitted, !isSubmitted
     ));
     writes.current[fieldKey] = next;
     return next;

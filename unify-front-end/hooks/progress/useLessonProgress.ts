@@ -4,6 +4,7 @@ import { cachedProgressService } from '@/services/progress/cachedProgressService
 import { progressEventEmitter } from '@/utils/progressEventEmitter';
 import {
   enqueueLessonProgressWrite,
+  requestUser,
   updateLessonProgress,
 } from '@/services/progress/progressService';
 import { maybeMarkModuleCompleted } from '@/services/learn/moduleProgressService';
@@ -23,11 +24,11 @@ export function useLessonProgress() {
       try {
         // Queue behind earlier page and resume writes for this lesson, so a
         // late one cannot mark the completed lesson as in progress again.
+        const userRequest = requestUser();
         const saved = await enqueueLessonProgressWrite(lessonId, async () => {
-          const {
-            data: { user },
-            error: authError,
-          } = await progressClient.auth.getUser();
+          const auth = await userRequest;
+          const user = auth?.data.user;
+          const authError = auth?.error;
 
           if (authError || !user) {
             console.error('No authenticated user found:', authError);

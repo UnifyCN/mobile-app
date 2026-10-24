@@ -1,5 +1,9 @@
 import { renderHook } from '@testing-library/react-native';
-import { saveResumePosition, updateLessonProgress } from '@/services/progress/progressService';
+import {
+  PREVIOUS_WRITE_WAIT_MS,
+  saveResumePosition,
+  updateLessonProgress,
+} from '@/services/progress/progressService';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
 
 const mockGetUser = jest.fn();
@@ -22,7 +26,7 @@ function deferred<T>() {
 }
 const flush = async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); };
 
-type Row = { current_page_number?: number; is_completed?: boolean };
+type Row = { current_page_number?: number; is_completed?: boolean; user_id?: string };
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -69,4 +73,35 @@ test('different lessons do not wait for each other', async () => {
   const other = saveResumePosition('other', 'sub', 'module', 'lesson', 1);
   expect(await other).toBe(true);
   first.resolve({ error: null });
+});
+
+test('a stalled earlier write does not hold lesson completion forever', async () => {
+  jest.useFakeTimers();
+  try {
+    mockUpsert.mockImplementationOnce(() => new Promise(() => {})).mockResolvedValue({ error: null });
+    const { result } = renderHook(() => useLessonProgress());
+    void saveResumePosition('stalled', 'sub', 'module', 'lesson', 2);
+    const completion = result.current.saveLessonCompletion('stalled', 'sub', 'module', 3);
+    await jest.advanceTimersByTimeAsync(PREVIOUS_WRITE_WAIT_MS - 1);
+    expect(mockUpsert).toHaveBeenCalledTimes(1);
+    await jest.advanceTimersByTimeAsync(1);
+    expect(await completion).toBe(true);
+    expect(mockUpsert).toHaveBeenCalledTimes(2);
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
+test('queued writes keep the learner who was signed in when they were called', async () => {
+  const { first, stored } = holdFirstUpsert();
+  mockGetUser.mockResolvedValue({ data: { user: { id: 'a' } } });
+  const { result } = renderHook(() => useLessonProgress());
+  const focus = saveResumePosition('switch', 'sub', 'module', 'lesson', 1);
+  const next = updateLessonProgress('switch', 'sub', 'module', 'lesson', 2, 3);
+  const completion = result.current.saveLessonCompletion('switch', 'sub', 'module', 3);
+  await flush();
+  mockGetUser.mockResolvedValue({ data: { user: { id: 'b' } } });
+  first.resolve({ error: null });
+  await Promise.all([focus, next, completion]);
+  expect(stored.map(row => row.user_id)).toEqual(['a', 'a', 'a']);
 });
