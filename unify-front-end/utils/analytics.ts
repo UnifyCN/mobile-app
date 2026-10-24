@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { usePostHog } from 'posthog-react-native';
+import type { ArrivalCountdown } from '@/helpers/arrivalDate';
 import type {
   PartnershipType,
   ResourceLinkFailureReason,
@@ -122,6 +123,8 @@ export const AnalyticsEvents = {
   CHECKLIST_TASK_UNCOMPLETED: 'checklist_task_uncompleted',
   CHECKLIST_CUSTOM_TASK_CREATED: 'checklist_custom_task_created',
   CHECKLIST_CUSTOM_TASK_DELETED: 'checklist_custom_task_deleted',
+  ARRIVAL_COUNTDOWN_SHOWN: 'arrival_countdown_shown',
+  ARRIVAL_DATE_CHANGED: 'arrival_date_changed',
 
   // Reports
   REPORT_SUBMITTED: 'report_submitted',
@@ -325,6 +328,12 @@ export interface InviteShareCompletedProperties {
   result: 'sent' | 'dismissed' | 'unknown';
   activity_type?: string | null;
 }
+
+/** A visible arrival countdown card; the hidden state is never tracked. */
+export type ArrivalCountdownShown = Exclude<
+  ArrivalCountdown,
+  { state: 'hidden' }
+>;
 
 // Hook for analytics tracking
 export function useAnalytics() {
@@ -744,6 +753,20 @@ export function useAnalytics() {
       },
       trackChecklistCustomTaskDeleted: () => {
         posthog?.capture(AnalyticsEvents.CHECKLIST_CUSTOM_TASK_DELETED);
+      },
+      trackArrivalCountdownShown: (countdown: ArrivalCountdownShown) => {
+        posthog?.capture(
+          AnalyticsEvents.ARRIVAL_COUNTDOWN_SHOWN,
+          countdown.state === 'pre_arrival'
+            ? { state: countdown.state, days_until_arrival: countdown.days }
+            : { state: countdown.state }
+        );
+      },
+      /** `daysUntilArrival` is for the new date; negative when in the past. */
+      trackArrivalDateChanged: (daysUntilArrival: number) => {
+        posthog?.capture(AnalyticsEvents.ARRIVAL_DATE_CHANGED, {
+          days_until_arrival: daysUntilArrival,
+        });
       },
 
       // Reports

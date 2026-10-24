@@ -1447,7 +1447,17 @@
       "optionalLater": "Tùy chọn / để sau"
     },
     "reorderTask": "Sắp xếp lại {{name}}",
-    "reorderHint": "Nhấn giữ và kéo để thay đổi thứ tự của mục này trong phần"
+    "reorderHint": "Nhấn giữ và kéo để thay đổi thứ tự của mục này trong phần",
+    "arrivalCountdown": {
+      "preArrival_other": "Còn {{count}} ngày nữa bạn sẽ đến",
+      "first30Days": "30 ngày đầu tiên của bạn",
+      "changeHint": "Đổi ngày đến của bạn"
+    },
+    "arrivalDate": {
+      "sheetTitle": "Ngày đến",
+      "save": "Lưu",
+      "saveError": "Không thể lưu ngày đến của bạn. Vui lòng thử lại."
+    }
   },
   "companion": {
     "goBack": "Quay lại",
