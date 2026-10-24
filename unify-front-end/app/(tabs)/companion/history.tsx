@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useMemo, useState } from 'react';
 import {
   View,
@@ -129,17 +130,23 @@ export default function ConversationHistoryScreen() {
                 onPress={handleNewChatPress}
               >
                 <NewChatIcon width={20} height={20} />
-                <Text style={styles.newChatText}>{t('companion.history.newChat')}</Text>
+                <Text style={styles.newChatText}>
+                  {t('companion.history.newChat')}
+                </Text>
               </TouchableOpacity>
             }
             ListEmptyComponent={
               hasNoSearchResults ? (
                 <View style={styles.emptyMessageContainer}>
-                  <Text style={styles.emptyText}>{t('companion.history.noConversationsFound')}</Text>
+                  <Text style={styles.emptyText}>
+                    {t('companion.history.noConversationsFound')}
+                  </Text>
                 </View>
               ) : hasNoConversations ? (
                 <View style={styles.emptyMessageContainer}>
-                  <Text style={styles.emptyText}>{t('companion.history.noConversationsYet')}</Text>
+                  <Text style={styles.emptyText}>
+                    {t('companion.history.noConversationsYet')}
+                  </Text>
                 </View>
               ) : null
             }
@@ -160,19 +167,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
-    fontSize: 16,
-    color: Theme.textInput,
-  },
+  loadingText: { ...typography.body, color: Theme.textInput },
   emptyMessageContainer: {
     paddingTop: 40,
     paddingBottom: 20,
     alignItems: 'center',
   },
-  emptyText: {
-    fontSize: 16,
-    color: Theme.textInput,
-  },
+  emptyText: { ...typography.body, color: Theme.textInput },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -185,12 +186,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Theme.borderInfoText,
   },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: Theme.black,
-    padding: 0,
-  },
+  searchInput: { ...typography.body, flex: 1, color: Theme.black, padding: 0 },
   searchIcon: {
     marginLeft: 12,
   },
@@ -203,17 +199,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
   },
-  newChatText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Theme.black,
-    marginLeft: 18,
-  },
+  newChatText: { ...typography.cardTitle, color: Theme.black, marginLeft: 18 },
   section: {
     marginBottom: 15,
   },
   sectionHeader: {
-    fontSize: 16,
+    ...typography.body,
     color: Theme.textInput,
     marginBottom: 15,
   },
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   conversationTitle: {
-    fontSize: 18,
+    ...typography.body,
     color: Theme.black,
     marginLeft: 18,
     flex: 1,

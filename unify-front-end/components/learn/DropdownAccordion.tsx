@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -91,9 +92,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   headerText: {
+    ...typography.body,
     flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
     color: '#111827',
     marginRight: 12,
   },
@@ -104,9 +104,5 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     marginBottom: 8,
   },
-  bodyText: {
-    fontSize: 15,
-    color: '#111827',
-    lineHeight: 22,
-  },
+  bodyText: { ...typography.secondary, color: '#111827' },
 });

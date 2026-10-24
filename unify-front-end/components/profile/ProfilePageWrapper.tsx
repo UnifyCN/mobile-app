@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Profile from '@/components/profile/Profile';
@@ -19,7 +20,9 @@ export default function ProfilePageWrapper({
   if (!normalizedUserId) {
     return (
       <View style={styles.container}>
-        <Text style={styles.messageText}>{t('profile.invalidProfileLink')}</Text>
+        <Text style={styles.messageText}>
+          {t('profile.invalidProfileLink')}
+        </Text>
       </View>
     );
   }
@@ -37,9 +40,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   messageText: {
+    ...typography.body,
     marginTop: 24,
     textAlign: 'center',
-    fontSize: 16,
     color: Theme.textInput,
   },
 });

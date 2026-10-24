@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { memo, useMemo } from 'react';
 import { View, Text, StyleSheet, Linking } from 'react-native';
 import { Theme } from '@/constants/Theme';
@@ -307,18 +308,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   markdownHeader: {
-    fontSize: 17,
-    fontWeight: '700',
+    ...typography.cardTitle,
     letterSpacing: 0.2,
     marginTop: 10,
     marginBottom: 0,
     color: '#1a1a1a',
   },
-  regularText: {
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#444',
-  },
+  regularText: { ...typography.body, color: '#444' },
   boldText: {
     fontWeight: '700',
     color: '#222',
@@ -335,23 +331,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   bulletPoint: {
-    // Match the body text's font + line metrics so the bullet sits on the
-    // first-line baseline. The previous fontSize:8 + marginTop:8 pair made
-    // the glyph render as a barely-visible dot floating above the text.
-    fontSize: 22,
-    lineHeight: 26,
+    ...typography.section,
     marginRight: 10,
     color: '#000',
-    fontWeight: '700',
     textAlign: 'center',
     minWidth: 14,
   },
-  bulletText: {
-    fontSize: 16,
-    lineHeight: 26,
-    flex: 1,
-    color: '#444',
-  },
+  bulletText: { ...typography.body, flex: 1, color: '#444' },
   paragraphBreak: {
     height: 4,
   },
@@ -361,12 +347,10 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   numberedPoint: {
-    fontSize: 16,
-    lineHeight: 26,
+    ...typography.cardTitle,
     marginRight: 12,
     minWidth: 12,
     color: '#000',
-    fontWeight: '600',
   },
   sectionTextItem: {
     marginBottom: 4,
@@ -379,15 +363,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   atAGlanceHeader: {
-    fontSize: 18,
-    fontWeight: '700',
+    ...typography.cardTitle,
     letterSpacing: 0.3,
     marginBottom: 10,
     color: '#000',
   },
-  atAGlanceText: {
-    fontSize: 16,
-    lineHeight: 26,
-    color: '#333',
-  },
+  atAGlanceText: { ...typography.body, color: '#333' },
 });

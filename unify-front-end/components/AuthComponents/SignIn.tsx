@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import isExpoGo from '../../utils/isExpoGo';
@@ -491,28 +492,15 @@ const styles = StyleSheet.create({
     marginTop: 12 * S,
     alignSelf: 'flex-start',
   },
-  header: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 32 * S,
-    color: '#000',
-    marginTop: 48 * S,
-  },
+  header: { ...typography.title, color: '#000', marginTop: 48 * S },
   subHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 6 * S,
     marginBottom: 32 * S,
   },
-  subHeaderText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 15 * S,
-    color: '#666',
-  },
-  subHeaderLink: {
-    fontFamily: 'FunnelSans_600SemiBold',
-    fontSize: 15 * S,
-    color: '#000',
-  },
+  subHeaderText: { ...typography.secondary, color: '#666' },
+  subHeaderLink: { ...typography.secondary, fontWeight: '600', color: '#000' },
   fieldContainer: {
     marginBottom: 14 * S,
   },
@@ -533,15 +521,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   textField: {
+    ...typography.body,
     backgroundColor: '#F5F5F5',
     color: '#000',
     borderColor: '#E8E8E8',
     borderWidth: 1 * S,
     borderRadius: 12 * S,
     padding: 14 * S,
-    height: 52 * S,
-    fontSize: 15 * S,
-    fontFamily: 'FunnelSans_400Regular',
+    minHeight: 52 * S,
   },
   textFieldWithLeftIcon: {
     paddingLeft: 44 * S,
@@ -559,30 +546,20 @@ const styles = StyleSheet.create({
     marginBottom: 24 * S,
   },
   errorMessage: {
+    ...typography.caption,
     color: '#f00',
-    fontSize: 13 * S,
-    fontFamily: 'FunnelSans_400Regular',
     flex: 1,
     marginRight: 8 * S,
   },
-  forgotText: {
-    color: '#5182C7',
-    fontSize: 14 * S,
-    fontFamily: 'FunnelSans_400Regular',
-  },
+  forgotText: { ...typography.secondary, color: '#5182C7' },
   loginButton: {
     backgroundColor: '#000',
     borderRadius: 40 * S,
-    height: 52 * S,
+    minHeight: 52 * S,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loginButtonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 18 * S,
-    fontFamily: 'FunnelSans_600SemiBold',
-  },
+  loginButtonText: { ...typography.button, color: '#fff', textAlign: 'center' },
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -594,9 +571,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0E0E0',
   },
   dividerText: {
-    fontFamily: 'FunnelSans_400Regular',
-    color: '#999',
-    fontSize: 14 * S,
+    ...typography.secondary,
+    color: '#62605B',
     marginHorizontal: 16 * S,
   },
   socialRow: {
@@ -606,7 +582,7 @@ const styles = StyleSheet.create({
   },
   socialIconButton: {
     width: 60 * S,
-    height: 52 * S,
+    minHeight: 52 * S,
     borderRadius: 12 * S,
     borderWidth: 1 * S,
     borderColor: '#E0E0E0',
@@ -619,11 +595,9 @@ const styles = StyleSheet.create({
     minHeight: 40 * S,
   },
   legalText: {
-    fontFamily: 'FunnelSans_400Regular',
-    fontSize: 12.5 * S,
-    color: '#999',
+    ...typography.caption,
+    color: '#62605B',
     textAlign: 'center',
-    lineHeight: 18 * S,
     paddingHorizontal: 16 * S,
   },
   legalLink: {

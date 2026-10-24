@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
@@ -200,8 +201,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
+    ...typography.section,
+
     color: COLORS.white,
   },
   badge: {
@@ -210,12 +211,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   badgeText: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
   },
   subtitle: {
-    fontSize: 14,
-    lineHeight: 18,
+    ...typography.body,
+
     color: COLORS.white,
   },
   ctaButton: {
@@ -232,8 +232,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   ctaText: {
+    ...typography.button,
+
     color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

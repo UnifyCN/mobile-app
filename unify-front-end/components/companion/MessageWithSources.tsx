@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { memo, useState, useCallback } from 'react';
 import {
   View,
@@ -232,7 +233,9 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
           suggestedNextSteps.length > 0 &&
           onSuggestionPress && (
             <View style={styles.suggestionsContainer}>
-              <Text style={styles.suggestionsTitle}>{t('companion.askFollowUp')}</Text>
+              <Text style={styles.suggestionsTitle}>
+                {t('companion.askFollowUp')}
+              </Text>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -367,10 +370,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  messageText: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
+  messageText: { ...typography.body },
   userText: {
     color: '#fff',
   },
@@ -403,10 +403,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   disclaimerText: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.textInput,
     flex: 1,
-    lineHeight: 18,
     fontStyle: 'italic',
   },
   // Sources styles
@@ -417,7 +416,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   lastVerifiedText: {
-    fontSize: 11,
+    ...typography.caption,
     color: Theme.textInput,
     fontStyle: 'italic',
     marginBottom: 4,
@@ -429,9 +428,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   sourcesHeaderText: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textInput,
+    fontWeight: '600',
   },
   sourcesList: {
     marginTop: 8,
@@ -447,25 +446,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sourceDomain: {
-    fontSize: 11,
+    ...typography.caption,
     color: Theme.textInput,
     marginLeft: 6,
     fontWeight: '500',
   },
   sourceSeparator: {
-    fontSize: 11,
+    ...typography.caption,
     color: Theme.textInput,
     marginHorizontal: 6,
   },
   sourceLink: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.surfaceBlue,
     textDecorationLine: 'underline',
     flex: 1,
   },
-  sourceLinkWithDomain: {
-    fontSize: 12,
-  },
+  sourceLinkWithDomain: { ...typography.caption },
   // Suggested Next Steps styles
   suggestionsContainer: {
     marginTop: 16,
@@ -474,10 +471,10 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   suggestionsTitle: {
-    fontSize: 12,
-    fontWeight: '600',
+    ...typography.caption,
     color: Theme.textInput,
     marginBottom: 8,
+    fontWeight: '600',
   },
   suggestionsScroll: {
     flexDirection: 'row',
@@ -493,7 +490,7 @@ const styles = StyleSheet.create({
     maxWidth: 200,
   },
   suggestionText: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.surfaceBlue,
     fontWeight: '500',
   },

@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, {
   useState,
   useRef,
@@ -241,8 +242,7 @@ export default function CompanionScreen() {
   // streamingBotMessage and the saved copy from the React Query cache takes
   // over — no flicker, no duplicate.
   const displayMessages: Message[] = useMemo(
-    () =>
-      streamingBotMessage ? [...messages, streamingBotMessage] : messages,
+    () => (streamingBotMessage ? [...messages, streamingBotMessage] : messages),
     [messages, streamingBotMessage]
   );
   const showLoadingState =
@@ -334,8 +334,7 @@ export default function CompanionScreen() {
       const textToSend = messageText || inputText.trim();
       if (!textToSend || isLoading || !canSend) return;
       const inputSource =
-        source ??
-        resolveTypedInputSource(textToSend, inputOriginRef.current);
+        source ?? resolveTypedInputSource(textToSend, inputOriginRef.current);
       inputOriginRef.current = null;
 
       let optimisticMessageId: string | null = null;
@@ -642,7 +641,9 @@ export default function CompanionScreen() {
               value={inputText}
               onChangeText={setInputText}
               placeholder={
-                canSend ? t('companion.inputPlaceholder') : t('companion.dailyLimitReached')
+                canSend
+                  ? t('companion.inputPlaceholder')
+                  : t('companion.dailyLimitReached')
               }
               placeholderTextColor='#999'
               multiline
@@ -712,21 +713,19 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   welcomeTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...typography.title,
+
     color: Theme.black,
-    lineHeight: 26,
   },
   welcomeCaption: {
-    fontSize: 20,
-    fontWeight: '400',
+    ...typography.body,
+
     color: Theme.textInput,
-    lineHeight: 26,
     marginTop: 6,
   },
   startersLabel: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...typography.secondary,
+
     color: Theme.textInput,
     paddingHorizontal: 20,
     paddingTop: 14,
@@ -761,13 +760,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   textInput: {
+    ...typography.body,
+
     flex: 1,
     borderWidth: 0,
     borderRadius: 24,
     paddingHorizontal: 16,
     paddingVertical: 12,
     maxHeight: 100,
-    fontSize: 14,
     minHeight: 44,
     backgroundColor: Theme.surfaceTextInput,
     color: Theme.black,
@@ -811,7 +811,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   disclaimerText: {
-    fontSize: 12,
+    ...typography.caption,
+
     color: Theme.textInput,
     textAlign: 'center',
   },

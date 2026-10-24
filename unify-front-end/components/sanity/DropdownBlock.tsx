@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import DropdownAccordion from '@/components/learn/DropdownAccordion';
@@ -40,14 +41,8 @@ export default function DropdownBlock({
 
 const styles = StyleSheet.create({
   closedTitle: {
-    fontFamily: 'Inter',
-    fontWeight: '700',
+    ...typography.reading,
     fontStyle: 'normal',
-    fontSize: 18,
-    lineHeight: 27,
-
-    //if needed:
-    //color: '#FFFFFF',
-    //letterSpacing: 0,
+    fontWeight: '700',
   },
 });

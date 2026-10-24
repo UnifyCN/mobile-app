@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -68,13 +69,11 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
   },
   input: {
+    ...typography.body,
     flex: 1,
-    fontWeight: '400',
-    fontSize: 13.5,
     color: RESOURCE_THEME.textHeading,
-    // RN gives Android inputs vertical padding and a baseline offset that
-    // Figma's 11pt field does not have; strip both so the row stays 42pt.
     padding: 0,
     ...(Platform.OS === 'android' ? { textAlignVertical: 'center' } : null),
+    fontWeight: '400',
   },
 });

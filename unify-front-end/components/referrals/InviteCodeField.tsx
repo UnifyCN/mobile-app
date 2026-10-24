@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useRef, useState } from 'react';
 import {
   Keyboard,
@@ -136,14 +137,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heading: {
-    fontSize: 17,
-    fontWeight: '700',
+    ...typography.cardTitle,
     color: Theme.black,
     marginBottom: 4,
     textAlign: 'center',
   },
   hint: {
-    fontSize: 13,
+    ...typography.caption,
     color: Theme.textAlternateGray,
     marginBottom: 18,
     textAlign: 'center',
@@ -154,12 +154,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   realInput: {
+    ...typography.section,
     width: ROW_W,
     height: BOX_H,
     color: 'transparent',
     backgroundColor: 'transparent',
     textAlign: 'center',
-    fontSize: 22,
     padding: 0,
   },
   boxesOverlay: {

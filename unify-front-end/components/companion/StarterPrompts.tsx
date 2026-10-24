@@ -1,5 +1,12 @@
+import { typography } from '@/constants/Typography';
 // components/companion/StarterPrompts.tsx
-import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react';
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import {
   View,
   Text,
@@ -50,37 +57,115 @@ interface StaticCardDef {
 }
 
 const MODE_CARD_DEFS: StaticCardDef[] = [
-  { id: 'fact_check', labelKey: 'companion.starters.factCheck', promptKey: 'companion.starters.factCheckPrompt', mode: 'fact_check',
-    iconName: 'search', iconBackground: '#4F7BCB',
-    descriptionKey: 'companion.starters.factCheckDesc' },
-  { id: 'form_help', labelKey: 'companion.starters.formHelp', promptKey: '', mode: 'form_help',
-    iconName: 'file-text', iconBackground: '#F0A04B',
-    descriptionKey: 'companion.starters.formHelpDesc' },
+  {
+    id: 'fact_check',
+    labelKey: 'companion.starters.factCheck',
+    promptKey: 'companion.starters.factCheckPrompt',
+    mode: 'fact_check',
+    iconName: 'search',
+    iconBackground: '#4F7BCB',
+    descriptionKey: 'companion.starters.factCheckDesc',
+  },
+  {
+    id: 'form_help',
+    labelKey: 'companion.starters.formHelp',
+    promptKey: '',
+    mode: 'form_help',
+    iconName: 'file-text',
+    iconBackground: '#F0A04B',
+    descriptionKey: 'companion.starters.formHelpDesc',
+  },
 ];
 
 const TOPIC_STARTER_DEFS: StaticCardDef[] = [
-  { id: 'ee_eligibility', labelKey: 'companion.starters.eeEligibility', promptKey: 'companion.starters.eeEligibilityPrompt',
-    iconName: 'award', iconBackground: '#5C6BC0', descriptionKey: 'companion.starters.eeEligibilityDesc' },
-  { id: 'ee_crs', labelKey: 'companion.starters.eeCrs', promptKey: 'companion.starters.eeCrsPrompt',
-    iconName: 'bar-chart-2', iconBackground: '#5C6BC0', descriptionKey: 'companion.starters.eeCrsDesc' },
-  { id: 'ee_rounds', labelKey: 'companion.starters.eeRounds', promptKey: 'companion.starters.eeRoundsPrompt',
-    iconName: 'trending-up', iconBackground: '#5C6BC0', descriptionKey: 'companion.starters.eeRoundsDesc' },
-  { id: 'sp_apply', labelKey: 'companion.starters.spApply', promptKey: 'companion.starters.spApplyPrompt',
-    iconName: 'book-open', iconBackground: '#26A69A', descriptionKey: 'companion.starters.spApplyDesc' },
-  { id: 'sp_pgwp', labelKey: 'companion.starters.spPgwp', promptKey: 'companion.starters.spPgwpPrompt',
-    iconName: 'briefcase', iconBackground: '#26A69A', descriptionKey: 'companion.starters.spPgwpDesc' },
-  { id: 'wp_types', labelKey: 'companion.starters.wpTypes', promptKey: 'companion.starters.wpTypesPrompt',
-    iconName: 'tool', iconBackground: '#EF5350', descriptionKey: 'companion.starters.wpTypesDesc' },
-  { id: 'wp_lmia', labelKey: 'companion.starters.wpLmia', promptKey: 'companion.starters.wpLmiaPrompt',
-    iconName: 'clipboard', iconBackground: '#EF5350', descriptionKey: 'companion.starters.wpLmiaDesc' },
-  { id: 'cit_eligibility', labelKey: 'companion.starters.citEligibility', promptKey: 'companion.starters.citEligibilityPrompt',
-    iconName: 'flag', iconBackground: '#E3A0C9', descriptionKey: 'companion.starters.citEligibilityDesc' },
-  { id: 'cit_test', labelKey: 'companion.starters.citTest', promptKey: 'companion.starters.citTestPrompt',
-    iconName: 'edit-3', iconBackground: '#E3A0C9', descriptionKey: 'companion.starters.citTestDesc' },
-  { id: 'settle_health', labelKey: 'companion.starters.settleHealth', promptKey: 'companion.starters.settleHealthPrompt',
-    iconName: 'heart', iconBackground: '#66BB6A', descriptionKey: 'companion.starters.settleHealthDesc' },
-  { id: 'settle_services', labelKey: 'companion.starters.settleServices', promptKey: 'companion.starters.settleServicesPrompt',
-    iconName: 'users', iconBackground: '#66BB6A', descriptionKey: 'companion.starters.settleServicesDesc' },
+  {
+    id: 'ee_eligibility',
+    labelKey: 'companion.starters.eeEligibility',
+    promptKey: 'companion.starters.eeEligibilityPrompt',
+    iconName: 'award',
+    iconBackground: '#5C6BC0',
+    descriptionKey: 'companion.starters.eeEligibilityDesc',
+  },
+  {
+    id: 'ee_crs',
+    labelKey: 'companion.starters.eeCrs',
+    promptKey: 'companion.starters.eeCrsPrompt',
+    iconName: 'bar-chart-2',
+    iconBackground: '#5C6BC0',
+    descriptionKey: 'companion.starters.eeCrsDesc',
+  },
+  {
+    id: 'ee_rounds',
+    labelKey: 'companion.starters.eeRounds',
+    promptKey: 'companion.starters.eeRoundsPrompt',
+    iconName: 'trending-up',
+    iconBackground: '#5C6BC0',
+    descriptionKey: 'companion.starters.eeRoundsDesc',
+  },
+  {
+    id: 'sp_apply',
+    labelKey: 'companion.starters.spApply',
+    promptKey: 'companion.starters.spApplyPrompt',
+    iconName: 'book-open',
+    iconBackground: '#26A69A',
+    descriptionKey: 'companion.starters.spApplyDesc',
+  },
+  {
+    id: 'sp_pgwp',
+    labelKey: 'companion.starters.spPgwp',
+    promptKey: 'companion.starters.spPgwpPrompt',
+    iconName: 'briefcase',
+    iconBackground: '#26A69A',
+    descriptionKey: 'companion.starters.spPgwpDesc',
+  },
+  {
+    id: 'wp_types',
+    labelKey: 'companion.starters.wpTypes',
+    promptKey: 'companion.starters.wpTypesPrompt',
+    iconName: 'tool',
+    iconBackground: '#EF5350',
+    descriptionKey: 'companion.starters.wpTypesDesc',
+  },
+  {
+    id: 'wp_lmia',
+    labelKey: 'companion.starters.wpLmia',
+    promptKey: 'companion.starters.wpLmiaPrompt',
+    iconName: 'clipboard',
+    iconBackground: '#EF5350',
+    descriptionKey: 'companion.starters.wpLmiaDesc',
+  },
+  {
+    id: 'cit_eligibility',
+    labelKey: 'companion.starters.citEligibility',
+    promptKey: 'companion.starters.citEligibilityPrompt',
+    iconName: 'flag',
+    iconBackground: '#E3A0C9',
+    descriptionKey: 'companion.starters.citEligibilityDesc',
+  },
+  {
+    id: 'cit_test',
+    labelKey: 'companion.starters.citTest',
+    promptKey: 'companion.starters.citTestPrompt',
+    iconName: 'edit-3',
+    iconBackground: '#E3A0C9',
+    descriptionKey: 'companion.starters.citTestDesc',
+  },
+  {
+    id: 'settle_health',
+    labelKey: 'companion.starters.settleHealth',
+    promptKey: 'companion.starters.settleHealthPrompt',
+    iconName: 'heart',
+    iconBackground: '#66BB6A',
+    descriptionKey: 'companion.starters.settleHealthDesc',
+  },
+  {
+    id: 'settle_services',
+    labelKey: 'companion.starters.settleServices',
+    promptKey: 'companion.starters.settleServicesPrompt',
+    iconName: 'users',
+    iconBackground: '#66BB6A',
+    descriptionKey: 'companion.starters.settleServicesDesc',
+  },
 ];
 
 const selectRandomTopicStarterDefs = (): StaticCardDef[] => {
@@ -288,13 +373,30 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
                   activeOpacity={0.8}
                 >
                   <View style={styles.cardHeader}>
-                    <View style={[styles.iconBadge, { backgroundColor: starter.iconBackground }]}>
-                      <Feather name={starter.iconName as keyof typeof Feather.glyphMap} size={16} color={Theme.white} />
+                    <View
+                      style={[
+                        styles.iconBadge,
+                        { backgroundColor: starter.iconBackground },
+                      ]}
+                    >
+                      <Feather
+                        name={starter.iconName as keyof typeof Feather.glyphMap}
+                        size={16}
+                        color={Theme.white}
+                      />
                     </View>
-                    <Text style={styles.cardLabel} numberOfLines={1}>{localized.category}</Text>
-                    <Feather name='chevron-right' size={16} color={Theme.textInactiveTab} />
+                    <Text style={styles.cardLabel} numberOfLines={1}>
+                      {localized.category}
+                    </Text>
+                    <Feather
+                      name='chevron-right'
+                      size={16}
+                      color={Theme.textInactiveTab}
+                    />
                   </View>
-                  <Text style={styles.cardDescription} numberOfLines={3}>{localized.prompt}</Text>
+                  <Text style={styles.cardDescription} numberOfLines={3}>
+                    {localized.prompt}
+                  </Text>
                 </TouchableOpacity>
               </Animated.View>
             </View>
@@ -320,13 +422,24 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
               activeOpacity={0.8}
             >
               <View style={styles.cardHeader}>
-                <View style={[styles.iconBadge, { backgroundColor: card.iconBackground }]}>
+                <View
+                  style={[
+                    styles.iconBadge,
+                    { backgroundColor: card.iconBackground },
+                  ]}
+                >
                   <Feather name={card.iconName} size={16} color={Theme.white} />
                 </View>
                 <Text style={styles.cardLabel}>{card.label}</Text>
-                <Feather name='chevron-right' size={16} color={Theme.textInactiveTab} />
+                <Feather
+                  name='chevron-right'
+                  size={16}
+                  color={Theme.textInactiveTab}
+                />
               </View>
-              <Text style={styles.cardDescription} numberOfLines={2}>{card.description}</Text>
+              <Text style={styles.cardDescription} numberOfLines={2}>
+                {card.description}
+              </Text>
             </TouchableOpacity>
           );
         })}
@@ -336,19 +449,40 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 10, paddingBottom: 12, backgroundColor: Theme.white },
+  container: {
+    paddingTop: 10,
+    paddingBottom: 12,
+    backgroundColor: Theme.white,
+  },
   scrollContent: { paddingHorizontal: 20, paddingRight: 32 },
   card: {
-    width: 170, minHeight: 108, backgroundColor: Theme.white,
-    borderRadius: 16, borderWidth: 1, borderColor: '#e0e0e0',
-    padding: 12, marginRight: 12,
+    width: 170,
+    minHeight: 108,
+    backgroundColor: Theme.white,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    padding: 12,
+    marginRight: 12,
   },
   cardPersonalized: { width: 210 },
   cardHeader: { flexDirection: 'row', alignItems: 'center' },
   iconBadge: {
-    width: 26, height: 26, borderRadius: 8,
-    justifyContent: 'center', alignItems: 'center', marginRight: 8,
+    width: 26,
+    height: 26,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
   },
-  cardLabel: { flex: 1, fontSize: 15, fontWeight: '600', color: Theme.black },
-  cardDescription: { marginTop: 10, fontSize: 12, color: Theme.textInput, lineHeight: 16 },
+  cardLabel: {
+    ...typography.label,
+    flex: 1,
+    color: Theme.black,
+  },
+  cardDescription: {
+    ...typography.secondary,
+    marginTop: 10,
+    color: Theme.textInput,
+  },
 });

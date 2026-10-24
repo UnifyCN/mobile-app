@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -169,11 +170,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerTitle: {
-    fontFamily: 'FunnelSans_600SemiBold',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '600',
     color: '#000',
   },
   headerSubtitle: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#000',
   },
   itemsContainer: {
@@ -211,14 +213,15 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   itemTitle: {
-    fontFamily: 'FunnelSans_500Medium',
+    fontFamily: typography.body.fontFamily,
+    fontWeight: '500',
     color: '#000',
   },
   itemTitleCompleted: {
     color: '#9B9797',
   },
   itemSubtitle: {
-    fontFamily: 'FunnelSans_400Regular',
+    fontFamily: typography.body.fontFamily,
     color: '#727272',
     marginTop: 2,
   },

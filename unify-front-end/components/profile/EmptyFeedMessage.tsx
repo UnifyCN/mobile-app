@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { View, Text, StyleSheet } from 'react-native';
 
 interface EmptyFeedMessageProps {
@@ -30,12 +31,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     marginBottom: 10,
   },
-  message: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 10,
-  },
+  message: { ...typography.cardTitle, color: '#333', marginBottom: 10 },
 });
 
 export default EmptyFeedMessage;

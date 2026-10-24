@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet,
@@ -332,10 +333,9 @@ const GroupDetailScreen = () => {
               submessage={
                 <Text
                   style={{
-                    fontSize: 18,
+                    ...typography.body,
                     color: Theme.textInput,
                     textAlign: 'center',
-                    lineHeight: 20,
                   }}
                 >
                   {t('groups.beFirstPost')}
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   loadingSubtext: {
-    fontSize: 14,
+    ...typography.secondary,
     color: '#666',
     textAlign: 'center',
   },
@@ -437,18 +437,10 @@ const styles = StyleSheet.create({
     padding: 20,
     height: '100%',
   },
-  eventTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#343434',
-  },
-  aboutText: {
-    fontSize: 18,
-    color: '#000',
-    lineHeight: 24,
-  },
+  eventTitle: { ...typography.title, color: '#343434' },
+  aboutText: { ...typography.body, color: '#000' },
   loadingText: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     textAlign: 'center',
     marginTop: 40,
@@ -466,23 +458,14 @@ const styles = StyleSheet.create({
   notJoined: {
     backgroundColor: Theme.primaryGatherRed,
   },
-  joinText: {
-    color: '#fff',
-    fontSize: 20,
-    lineHeight: 22,
-    fontWeight: '600',
-    alignSelf: 'center',
-  },
+  joinText: { ...typography.section, color: '#fff', alignSelf: 'center' },
   card: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 20,
     gap: 4,
   },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-  },
+  subtitle: { ...typography.body, color: '#666' },
   emptyState: {
     backgroundColor: '#fff',
     padding: 40,
@@ -494,18 +477,16 @@ const styles = StyleSheet.create({
     maxWidth: 280,
   },
   emptyStateTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    ...typography.section,
     color: '#333',
     textAlign: 'center',
     marginTop: 16,
     marginBottom: 8,
   },
   emptyStateSubtitle: {
-    fontSize: 16,
+    ...typography.body,
     color: '#666',
     textAlign: 'center',
-    lineHeight: 22,
   },
 });
 

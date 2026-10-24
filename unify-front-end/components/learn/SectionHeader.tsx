@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 
@@ -13,5 +14,8 @@ export default function SectionHeader({ title, style }: Props) {
 
 const styles = StyleSheet.create({
   container: { width: '100%' },
-  title: { fontSize: 22, fontWeight: '600', color: '#343232' },
+  title: {
+    ...typography.section,
+    color: '#343232',
+  },
 });

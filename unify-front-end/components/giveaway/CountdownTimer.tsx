@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Text, StyleSheet, TextStyle, StyleProp } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -23,12 +24,14 @@ export function CountdownTimer({
   if (!isActive) return null;
 
   const prefix = showPrefix ? `${t('giveaway.banner.countdownPrefix')} ` : '';
-  return <Text style={[styles.text, style]}>{prefix}{display}</Text>;
+  return (
+    <Text style={[styles.text, style]}>
+      {prefix}
+      {display}
+    </Text>
+  );
 }
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  text: { ...typography.secondary, fontWeight: '600' },
 });

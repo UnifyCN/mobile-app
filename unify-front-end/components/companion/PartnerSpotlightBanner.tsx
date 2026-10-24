@@ -1,3 +1,4 @@
+import { typography, typographyColors } from '@/constants/Typography';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -151,22 +152,24 @@ const styles = StyleSheet.create({
   body: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 },
   text: { flex: 1 },
   title: {
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '600',
+    ...typography.cardTitle,
+
     color: RESOURCE_THEME.textCard,
   },
   facts: {
-    fontSize: 12,
-    lineHeight: 16,
-    color: RESOURCE_THEME.textSecondary,
+    ...typography.secondary,
+
+    color: typographyColors.secondary,
     marginTop: 2,
   },
   book: {
     borderRadius: 10,
     paddingHorizontal: 14,
-    minHeight: 36,
+    minHeight: 44,
     justifyContent: 'center',
   },
-  bookText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
+  bookText: {
+    ...typography.button,
+    color: '#FFFFFF',
+  },
 });

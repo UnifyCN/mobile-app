@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
@@ -142,13 +143,13 @@ function ContactRow({
 function hasAnyContactField(p: LocalizedPartner) {
   return Boolean(
     p.eligibility ||
-      p.howToStart ||
-      p.phone ||
-      p.email ||
-      p.address ||
-      p.hours ||
-      p.languages?.length ||
-      p.cost
+    p.howToStart ||
+    p.phone ||
+    p.email ||
+    p.address ||
+    p.hours ||
+    p.languages?.length ||
+    p.cost
   );
 }
 
@@ -577,7 +578,9 @@ export default function PartnerDetailScreen() {
             <ContactRow
               icon='tag'
               label={t('learn.resources.costLabel')}
-              value={partner.cost ? t(COST_LABEL_KEYS[partner.cost]) : undefined}
+              value={
+                partner.cost ? t(COST_LABEL_KEYS[partner.cost]) : undefined
+              }
             />
             <ContactRow
               icon='map'
@@ -632,7 +635,9 @@ export default function PartnerDetailScreen() {
 
         {partner.website && partner.phone && !partner.ctaOnly && (
           <TouchableOpacity
-            onPress={() => handleExternalOpen(phoneUrl(partner.phone!), 'phone')}
+            onPress={() =>
+              handleExternalOpen(phoneUrl(partner.phone!), 'phone')
+            }
             activeOpacity={0.85}
             style={styles.actionIcon}
             accessibilityRole='button'
@@ -677,21 +682,20 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   backText: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...typography.secondary,
     color: RESOURCE_THEME.textSecondary,
     marginLeft: 4,
+    fontWeight: '600',
   },
 
   identity: { flexDirection: 'row', alignItems: 'center', gap: 13 },
   identityText: { flex: 1, gap: 3 },
   name: {
-    fontSize: 21,
-    fontWeight: '800',
+    ...typography.section,
     color: RESOURCE_THEME.textHeading,
     letterSpacing: -0.3,
   },
-  tagline: { fontSize: 12.5, lineHeight: 17, color: RESOURCE_THEME.textSecondary },
+  tagline: { ...typography.caption, color: RESOURCE_THEME.textSecondary },
 
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 12 },
   tag: {
@@ -704,9 +708,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   tagText: {
-    fontSize: 11.5,
-    fontWeight: '600',
+    ...typography.caption,
     color: RESOURCE_THEME.textSecondary,
+    fontWeight: '600',
   },
   // The "Free" cost chip's pair: green reads as a checked fact, not a promo.
   verifiedTag: { backgroundColor: COST_CHIP.free.background },
@@ -714,18 +718,14 @@ const styles = StyleSheet.create({
 
   block: { marginTop: 20 },
   sectionLabel: {
-    fontSize: 11,
-    fontWeight: '700',
+    ...typography.caption,
     color: RESOURCE_THEME.textCount,
     textTransform: 'uppercase',
     letterSpacing: 0.3,
     marginBottom: 8,
+    fontWeight: '700',
   },
-  about: {
-    fontSize: 13.5,
-    lineHeight: 21,
-    color: RESOURCE_THEME.textDetailWarm,
-  },
+  about: { ...typography.caption, color: RESOURCE_THEME.textDetailWarm },
 
   programCard: {
     gap: 6,
@@ -745,24 +745,16 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   programName: {
+    ...typography.secondary,
     flex: 1,
-    fontSize: 14.5,
-    fontWeight: '700',
     color: RESOURCE_THEME.textCard,
+    fontWeight: '700',
   },
   programMeta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   programCost: { borderRadius: 999, paddingVertical: 3, paddingHorizontal: 8 },
-  programCostText: { fontSize: 10.5, fontWeight: '800' },
-  programDesc: {
-    fontSize: 12.5,
-    lineHeight: 18,
-    color: RESOURCE_THEME.textSecondary,
-  },
-  programElig: {
-    fontSize: 12,
-    lineHeight: 17,
-    color: RESOURCE_THEME.textSecondary,
-  },
+  programCostText: { ...typography.caption, fontWeight: '800' },
+  programDesc: { ...typography.caption, color: RESOURCE_THEME.textSecondary },
+  programElig: { ...typography.caption, color: RESOURCE_THEME.textSecondary },
   programEligLabel: { fontWeight: '700', color: RESOURCE_THEME.textCount },
   disclosure: {
     flexDirection: 'row',
@@ -771,7 +763,7 @@ const styles = StyleSheet.create({
     gap: 5,
     paddingVertical: 6,
   },
-  disclosureText: { fontSize: 12.5, fontWeight: '600' },
+  disclosureText: { ...typography.caption, fontWeight: '600' },
 
   contactRow: {
     flexDirection: 'row',
@@ -783,21 +775,20 @@ const styles = StyleSheet.create({
   contactBody: { flex: 1 },
   contactLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   contactLabel: {
-    fontSize: 10,
-    fontWeight: '700',
+    ...typography.caption,
     color: RESOURCE_THEME.textCount,
     textTransform: 'uppercase',
     letterSpacing: 0.3,
+    fontWeight: '700',
   },
   contactValue: {
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '600',
+    ...typography.caption,
     color: RESOURCE_THEME.textDetailWarm,
     marginTop: 1,
+    fontWeight: '600',
   },
   rowLink: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  rowLinkText: { fontSize: 11.5, fontWeight: '800' },
+  rowLinkText: { ...typography.caption, fontWeight: '800' },
 
   actionBar: {
     flexDirection: 'row',
@@ -819,7 +810,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     minHeight: 44,
   },
-  actionPrimaryText: { color: '#FFFFFF', fontSize: 14, fontWeight: '800' },
+  actionPrimaryText: {
+    ...typography.secondary,
+    color: '#FFFFFF',
+    fontWeight: '800',
+  },
   actionIcon: {
     width: 48,
     alignItems: 'center',
@@ -832,9 +827,9 @@ const styles = StyleSheet.create({
 
   notFound: { flex: 1, paddingHorizontal: 16, paddingTop: 10 },
   notFoundText: {
+    ...typography.secondary,
     marginTop: 72,
     textAlign: 'center',
     color: RESOURCE_THEME.textMuted,
-    fontSize: 14,
   },
 });

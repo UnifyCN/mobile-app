@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/Avatar';
@@ -77,15 +78,11 @@ const styles = StyleSheet.create({
   nameBlock: {
     flexShrink: 1,
   },
-  name: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: Theme.black,
-  },
+  name: { ...typography.body, color: Theme.black },
   relationship: {
-    fontSize: 12,
+    ...typography.caption,
     color: Theme.primaryGatherRed,
-    fontWeight: '500',
     marginTop: 1,
+    fontWeight: '500',
   },
 });

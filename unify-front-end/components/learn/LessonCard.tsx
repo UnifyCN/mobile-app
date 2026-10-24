@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import {
   View,
@@ -68,16 +69,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginBottom: 10,
   },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 5,
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: '#ddd',
-  },
+  cardTitle: { ...typography.cardTitle, color: '#fff', marginBottom: 5 },
+  cardDescription: { ...typography.secondary, color: '#ddd' },
 });
 
 export default LessonCard;

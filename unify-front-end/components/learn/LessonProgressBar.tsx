@@ -1,3 +1,4 @@
+import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient as ExpoLinearGradient } from 'expo-linear-gradient';
@@ -19,7 +20,9 @@ const LessonProgressBar: React.FC<LessonProgressBarProps> = ({
     <View style={styles.container}>
       {/* Progress Text */}
       <Text style={styles.progressText}>
-        {t('learn.lesson.progressLabel', { completed: `${completed}/${total}` })}
+        {t('learn.lesson.progressLabel', {
+          completed: `${completed}/${total}`,
+        })}
       </Text>
 
       {/* Progress Bar Container */}
@@ -40,12 +43,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
   },
-  progressText: {
-    fontSize: 19,
-    color: '#333',
-    marginBottom: 5,
-    fontWeight: '600',
-  },
+  progressText: { ...typography.cardTitle, color: '#333', marginBottom: 5 },
   progressBarContainer: {
     height: 10,
     width: '100%',
