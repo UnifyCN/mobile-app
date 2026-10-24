@@ -339,3 +339,51 @@ describe('partner province eligibility', () => {
     expect(getSpotlightPartner()?.provinces).toBeUndefined();
   });
 });
+
+describe('partner province aliases (selector boundary)', () => {
+  const ids = (list: Partner[]) => list.map(p => p.slug);
+  const canonical = (province: string) => ids(getActivePartners(province));
+
+  it('treats stored BC spellings exactly like British Columbia', () => {
+    const expected = canonical('British Columbia');
+    expect(expected.length).toBeGreaterThan(1);
+    for (const alias of ['BC', 'bc', 'B.C.', ' b.c ']) {
+      expect(ids(getActivePartners(alias))).toEqual(expected);
+    }
+  });
+
+  it('treats stored ON and QC spellings exactly like the full names', () => {
+    expect(ids(getActivePartners('ON'))).toEqual(canonical('Ontario'));
+    expect(ids(getActivePartners('ON'))).toContain('desjardins');
+    expect(ids(getActivePartners('QC'))).toEqual(canonical('Quebec'));
+    expect(ids(getActivePartners('Québec'))).toEqual(canonical('Quebec'));
+  });
+
+  it('feeds the same result to the category and search consumers', () => {
+    expect(getPartnersByCategory('money', 'ON').map(p => p.slug)).toEqual([
+      'desjardins',
+    ]);
+    expect(getCategoriesWithPartners('BC')).toEqual(
+      getCategoriesWithPartners('British Columbia')
+    );
+    expect(getCategoriesWithPartners('ON')).toEqual(
+      getCategoriesWithPartners('Ontario')
+    );
+  });
+
+  it('still gives free text and blanks national partners only', () => {
+    const national = ids(getActivePartners(null));
+    expect(ids(getActivePartners('Somewhere Else'))).toEqual(national);
+    expect(ids(getActivePartners('   '))).toEqual(national);
+  });
+
+  it('keeps content province tags strict: an alias tag never matches', () => {
+    const tagged = {
+      active: true,
+      displayOrder: 0,
+      provinces: ['BC'] as unknown as Partner['provinces'],
+    };
+    expect(selectActivePartners([tagged], 'British Columbia')).toEqual([]);
+    expect(selectActivePartners([tagged], 'BC')).toEqual([]);
+  });
+});

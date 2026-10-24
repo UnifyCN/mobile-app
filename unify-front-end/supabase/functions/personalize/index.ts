@@ -24,7 +24,7 @@ async function buildLearnSurface(
   supabase: SupabaseClient<any, 'public', any>,
   userId: string,
   profile: OnboardingProfile
-): Promise<{ modules: ScoredModule[] }> {
+): Promise<{ modules: ScoredModule[] } | null> {
   // Parallel fetch: module metadata + user progress
   const [modulesResult, progressResult] = await Promise.all([
     supabase
@@ -38,7 +38,9 @@ async function buildLearnSurface(
 
   if (modulesResult.error) {
     console.error('personalize/learn: modules fetch error', modulesResult.error);
-    return { modules: [] };
+    // Unavailable, not empty: the client treats `modules: []` as an
+    // authoritative ranking and would hide eligible fallback content.
+    return null;
   }
 
   // Province filtering and scoring live in rankLearnModules, which drops
