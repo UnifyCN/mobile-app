@@ -1,4 +1,5 @@
 import { typography } from '@/constants/Typography';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -111,6 +112,7 @@ export default function PracticeEntryScreen() {
         <Text style={styles.error}>
           {error?.message || t('learn.practice.practiceNotFound')}
         </Text>
+        <LearnRetry />
       </View>
     );
   }
@@ -127,6 +129,7 @@ export default function PracticeEntryScreen() {
     return (
       <View style={styles.center}>
         <Text style={styles.error}>{t('learn.practice.noContent')}</Text>
+        <LearnRetry />
       </View>
     );
   }

@@ -1,4 +1,6 @@
 import { typography } from '@/constants/Typography';
+import { categorySymbol } from '@/components/learn/CategorySymbol';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
@@ -501,6 +503,7 @@ export default function ActivityPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text>{t('learn.lesson.errorLoadingActivity')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
@@ -510,6 +513,7 @@ export default function ActivityPageScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Progress Bar */}
       <SubmoduleProgressBar
+        lessonLayout
         currentProgress={progress.currentPage}
         totalPages={progress.totalPages}
         submoduleTitle={
@@ -517,7 +521,7 @@ export default function ActivityPageScreen() {
         }
         submoduleOrder={submoduleData?.order || 1}
         onClose={() => setShowExitModal(true)}
-        colorHex={moduleData?.colorTheme?.hex}
+        colorHex={categorySymbol(moduleId).foreground}
       />
 
       <ScrollView
@@ -530,6 +534,7 @@ export default function ActivityPageScreen() {
         {/* Instructions with embedded input fields and questions */}
         <View style={styles.instructionsContainer}>
           <RichTextRenderer
+            compactContainer
             blocks={currentPageData.instructions || []}
             markDefs={currentPageData.instructionsMarkDefs}
             inputValues={inputValues}
@@ -549,6 +554,7 @@ export default function ActivityPageScreen() {
               </Text>
             )}
             <RichTextRenderer
+              compactContainer
               blocks={currentPageData.answer_box.content || []}
               markDefs={currentPageData.answer_box.markDefs}
               styles={{
@@ -646,7 +652,7 @@ export default function ActivityPageScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
   scrollView: { flex: 1 },
-  container: { paddingHorizontal: 23, paddingBottom: 100 },
+  container: { paddingHorizontal: 20, paddingBottom: 24 },
 
   // Page indicator
   pageIndicatorContainer: {
@@ -664,7 +670,7 @@ const styles = StyleSheet.create({
     ...typography.title,
     color: '#000',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     marginTop: 20,
   },
 
@@ -739,10 +745,7 @@ const styles = StyleSheet.create({
 
   // Navigation styles
   navigationContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flexShrink: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 23,

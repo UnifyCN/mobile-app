@@ -1,4 +1,5 @@
 import { typography } from '@/constants/Typography';
+import LearnRetry from '@/components/learn/LearnRetry';
 import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
@@ -169,6 +170,7 @@ export default function TaskPageScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.loading}>
           <Text style={styles.errorText}>{t('learn.tasks.taskNotFound')}</Text>
+          <LearnRetry />
         </View>
       </SafeAreaView>
     );
