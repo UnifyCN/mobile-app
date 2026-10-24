@@ -2,6 +2,18 @@ import { sanityQueryKeys } from '@/hooks/sanity/sanityQueryKeys';
 import { checklistTasksQueryKey } from '@/hooks/checklist/checklistQueryKeys';
 import { buildChecklistCacheStorageKey } from '@/utils/checklistTaskCache';
 
+const ctx = (
+  language: 'en' | 'ar',
+  province: string | null | undefined = null
+) => ({
+  userId: 'user-1',
+  stage: 2,
+  personaSlug: 'worker',
+  stageChanged: false,
+  language,
+  province,
+});
+
 describe('language-aware content cache keys', () => {
   it('separates Sanity lesson data by language', () => {
     expect(sanityQueryKeys.lesson('lesson-1', 'en')).not.toEqual(
@@ -10,30 +22,19 @@ describe('language-aware content cache keys', () => {
   });
 
   it('separates checklist React Query and disk caches by language', () => {
-    expect(
-      checklistTasksQueryKey('user-1', 2, 'worker', false, 'en', null)
-    ).not.toEqual(
-      checklistTasksQueryKey('user-1', 2, 'worker', false, 'ar', null)
+    expect(checklistTasksQueryKey(ctx('en'))).not.toEqual(
+      checklistTasksQueryKey(ctx('ar'))
     );
-    expect(
-      buildChecklistCacheStorageKey('user-1', 2, 'worker', false, 'en', null)
-    ).not.toEqual(
-      buildChecklistCacheStorageKey('user-1', 2, 'worker', false, 'ar', null)
+    expect(buildChecklistCacheStorageKey(ctx('en'))).not.toEqual(
+      buildChecklistCacheStorageKey(ctx('ar'))
     );
   });
 
   describe('checklist province isolation', () => {
     const queryKey = (province: string | null | undefined) =>
-      checklistTasksQueryKey('user-1', 2, 'worker', false, 'en', province);
+      checklistTasksQueryKey(ctx('en', province));
     const storageKey = (province: string | null | undefined) =>
-      buildChecklistCacheStorageKey(
-        'user-1',
-        2,
-        'worker',
-        false,
-        'en',
-        province
-      );
+      buildChecklistCacheStorageKey(ctx('en', province));
 
     it('separates the React Query cache by province', () => {
       expect(queryKey('Ontario')).not.toEqual(queryKey('British Columbia'));

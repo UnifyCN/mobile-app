@@ -62,6 +62,7 @@ export function isVisibleForProvince(
 const PROVINCE_ALIASES: Record<string, string> = {
   ab: 'Alberta',
   bc: 'British Columbia',
+  'b.c': 'British Columbia',
   mb: 'Manitoba',
   nb: 'New Brunswick',
   nl: 'Newfoundland and Labrador',

@@ -282,6 +282,17 @@ describe('translated Sanity service contracts', () => {
       );
     });
 
+    it('selects the province of the module each task links to', async () => {
+      mockFetch.mockResolvedValue([]);
+      await getChecklistByPersonaAndStage('other', 'not_arrived', {
+        skipCache: true,
+        province: 'Ontario',
+      });
+      const query = String(mockFetch.mock.calls[0][0]);
+      expect(query).toMatch(/"module": module->\s*\{[^}]*\bprovince\b/);
+      expect(query).toMatch(/"moduleProvince": module->province/);
+    });
+
     it('does not serve one province cached items to another province', async () => {
       const bcItem = { _id: 'bc-item', title: 'BC item' };
       const onItem = { _id: 'on-item', title: 'Ontario item' };

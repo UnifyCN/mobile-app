@@ -35,8 +35,8 @@ const CHECKLIST_QUERY = `*[
   class_order,
   link_tab,
   ${i18nOverlay('title, description, longer_description')},
-  "module": module-> { _id, title },
-  "submodule": submodule-> { _id, title, "moduleId": module._ref }
+  "module": module-> { _id, title, province },
+  "submodule": submodule-> { _id, title, "moduleId": module._ref, "moduleProvince": module->province }
 }`;
 
 const CACHE_KEY = (

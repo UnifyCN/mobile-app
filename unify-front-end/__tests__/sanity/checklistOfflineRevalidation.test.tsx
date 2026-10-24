@@ -95,14 +95,14 @@ describe('checklist offline revalidation', () => {
   });
 
   it('keeps same-language hydrated tasks when Sanity revalidation fails', async () => {
-    const key = buildChecklistCacheStorageKey(
-      'user-1',
-      1,
-      'skilled_worker',
-      false,
-      'es',
-      null
-    );
+    const key = buildChecklistCacheStorageKey({
+      userId: 'user-1',
+      stage: 1,
+      personaSlug: 'skilled_worker',
+      stageChanged: false,
+      language: 'es',
+      province: null,
+    });
     await saveChecklistToDisk(key, cachedTasks);
     mockFetch.mockRejectedValue(new Error('offline'));
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -189,14 +189,14 @@ describe('checklist offline revalidation', () => {
 
     it('does not show another province cached tasks while offline', async () => {
       await saveChecklistToDisk(
-        buildChecklistCacheStorageKey(
-          'user-1',
-          1,
-          'skilled_worker',
-          false,
-          'es',
-          'British Columbia'
-        ),
+        buildChecklistCacheStorageKey({
+      userId: 'user-1',
+      stage: 1,
+      personaSlug: 'skilled_worker',
+      stageChanged: false,
+      language: 'es',
+      province: 'British Columbia',
+    }),
         cachedTasks
       );
       mockFetch.mockRejectedValue(new Error('offline'));
@@ -216,14 +216,14 @@ describe('checklist offline revalidation', () => {
 
     it('shows the same province cached tasks while offline', async () => {
       await saveChecklistToDisk(
-        buildChecklistCacheStorageKey(
-          'user-1',
-          1,
-          'skilled_worker',
-          false,
-          'es',
-          'Ontario'
-        ),
+        buildChecklistCacheStorageKey({
+      userId: 'user-1',
+      stage: 1,
+      personaSlug: 'skilled_worker',
+      stageChanged: false,
+      language: 'es',
+      province: 'Ontario',
+    }),
         cachedTasks
       );
       mockFetch.mockRejectedValue(new Error('offline'));
