@@ -1,12 +1,12 @@
 import { supabase } from '@/lib/supabase';
-import { stageNumberToEnum } from '@/helpers/dateHelpers';
+import type { StageNumber } from '@/types/checklist';
 
+/** Write the stage cache. Null means unknown (no usable arrival date). */
 export const updateUserStage = async (
   userId: string,
-  stageNumber: number
+  stage: StageNumber | null
 ): Promise<void> => {
   try {
-    const stage = stageNumberToEnum(stageNumber);
     const { error } = await supabase
       .from('user_onboarding_profiles')
       .update({ stage })

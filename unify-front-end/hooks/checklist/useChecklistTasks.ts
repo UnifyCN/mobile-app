@@ -25,10 +25,16 @@ import { useSanityLanguage } from '@/hooks/sanity/useSanityLanguage';
 import type { SanityLanguage } from '@/services/sanity/i18n';
 
 interface UseChecklistTasksParams {
+  /** 0-4, or null for an unknown stage (no usable arrival date). */
   currentStage: number | null;
   stageChanged: boolean;
   persona: string | null;
+  /** True while the stage is still loading. Nothing loads until it is false. */
+  isStageLoading?: boolean;
 }
+
+// Unknown stage shows the first-months checklist (Sanity slug arrived_0_3_months).
+const UNKNOWN_STAGE_FALLBACK = 1;
 
 async function fetchChecklistTasks(
   userId: string,
@@ -57,7 +63,9 @@ export const useChecklistTasks = ({
   currentStage,
   stageChanged,
   persona,
+  isStageLoading = false,
 }: UseChecklistTasksParams) => {
+  const stage = currentStage ?? UNKNOWN_STAGE_FALLBACK;
   const queryClient = useQueryClient();
   const language = useSanityLanguage();
   const [userId, setUserId] = useState<string | null>(null);
@@ -91,17 +99,17 @@ export const useChecklistTasks = ({
   );
 
   const queryKey = useMemo(() => {
-    if (!userId || currentStage === null) {
+    if (!userId || isStageLoading) {
       return null;
     }
     return checklistTasksQueryKey(
       userId,
-      currentStage,
+      stage,
       normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
     );
-  }, [userId, currentStage, normalizedPersona, stageChanged, language]);
+  }, [userId, isStageLoading, stage, normalizedPersona, stageChanged, language]);
 
   const storageKey = useMemo(() => {
     if (!queryKey) {
@@ -109,7 +117,7 @@ export const useChecklistTasks = ({
     }
     return buildChecklistCacheStorageKey(
       userId!,
-      currentStage!,
+      stage,
       normalizedPersona ?? 'unpersonalized',
       stageChanged,
       language
@@ -117,7 +125,7 @@ export const useChecklistTasks = ({
   }, [
     queryKey,
     userId,
-    currentStage,
+    stage,
     normalizedPersona,
     stageChanged,
     language,
@@ -162,12 +170,12 @@ export const useChecklistTasks = ({
     queryFn: () =>
       fetchChecklistTasks(
         userId!,
-        currentStage!,
+        stage,
         normalizedPersona,
         stageChanged,
         language
       ),
-    enabled: cacheChecked && !!queryKey && !!userId && currentStage !== null,
+    enabled: cacheChecked && !!queryKey && !!userId,
     // Hydrated cache renders immediately, then revalidates for newly published
     // Sanity translations. Disk/memory entries separately expire after 10 min.
     staleTime: 0,
@@ -218,15 +226,13 @@ export const useChecklistTasks = ({
 
   const tasks = query.data ?? [];
 
-  const waitingForAuth = Boolean(
-    persona && currentStage !== null && userId === null
-  );
+  const waitingForAuth = Boolean(persona && userId === null);
 
   const isLoading =
+    isStageLoading ||
     waitingForAuth ||
     Boolean(
       queryKey &&
-      currentStage !== null &&
       (!cacheChecked || (query.isPending && query.data === undefined))
     );
 

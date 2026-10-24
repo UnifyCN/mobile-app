@@ -110,3 +110,55 @@ describe('buildPool', () => {
     expect(a).toEqual(b);
   });
 });
+
+describe('stage-based starters', () => {
+  const PLANNING = "I'm still planning my move - what documents do I need to start?";
+  const FIRST_MONTH = 'What should I prioritize in my first month here?';
+  const ids = (stage: OnboardingProfile['stage']) =>
+    buildPool(profile({ stage })).map(s => s.id);
+
+  it.each([0, '0'] as const)('stage %p gets only the planning starter', stage => {
+    const pool = buildPool(profile({ stage }));
+    expect(pool.filter(s => s.prompt === PLANNING)).toHaveLength(1);
+    expect(pool.some(s => s.prompt === FIRST_MONTH)).toBe(false);
+  });
+
+  it.each([1, '1'] as const)('stage %p gets only the first-month starter', stage => {
+    const pool = buildPool(profile({ stage }));
+    expect(pool.filter(s => s.prompt === FIRST_MONTH)).toHaveLength(1);
+    expect(pool.some(s => s.prompt === PLANNING)).toBe(false);
+  });
+
+  it.each([2, 3, 4, '2', '3', '4', null, 'unknown', '', 7])(
+    'stage %p gets neither stage starter',
+    stage => {
+      const pool = buildPool(profile({ stage: stage as OnboardingProfile['stage'] }));
+      expect(pool.some(s => s.prompt === PLANNING)).toBe(false);
+      expect(pool.some(s => s.prompt === FIRST_MONTH)).toBe(false);
+    }
+  );
+
+  it('keeps the recent and future arrival starters beside the stage starters', () => {
+    const future = new Date();
+    future.setMonth(future.getMonth() + 2);
+    const pool = buildPool(
+      profile({ stage: 0, arrival_date: future.toISOString().slice(0, 10) })
+    );
+    expect(pool.map(s => s.id)).toEqual(
+      expect.arrayContaining(['arrival_future', 'stage_planning'])
+    );
+    expect(ids(1)).toEqual(['stage_recently_arrived']);
+  });
+
+  it('keeps the existing priorities of the recent and future starters', () => {
+    const recent = new Date();
+    recent.setMonth(recent.getMonth() - 1);
+    const future = new Date();
+    future.setMonth(future.getMonth() + 2);
+    const iso = (d: Date) => d.toISOString().slice(0, 10);
+    const byId = (p: Partial<OnboardingProfile>, id: string) =>
+      buildPool(profile(p)).find(s => s.id === id);
+    expect(byId({ arrival_date: iso(recent) }, 'arrival_recent')?.priority).toBe(9);
+    expect(byId({ arrival_date: iso(future) }, 'arrival_future')?.priority).toBe(9);
+  });
+});

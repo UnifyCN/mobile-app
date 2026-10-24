@@ -4,6 +4,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { fetchWithRetry } from '../_shared/fetchWithRetry.ts';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
+import { getStageDescription } from '../_shared/arrivalStage.ts';
 
 // ============================================================================
 // CONSTANTS
@@ -20,14 +21,6 @@ const BATCH_SIZE = 5;
 
 const EMBEDDING_MODEL =
   Deno.env.get('OPENAI_EMBEDDING_MODEL') || 'text-embedding-3-small';
-
-const STAGE_DESCRIPTIONS: Record<string, string> = {
-  '0': 'pre-arrival or just arrived (0-1 months)',
-  '1': 'settling in (1-3 months)',
-  '2': 'building foundations (3-6 months)',
-  '3': 'establishing roots (6-12 months)',
-  '4': 'well-established (12+ months)',
-};
 
 const PERSONA_DESCRIPTIONS: Record<string, string> = {
   international_student: 'international student studying in Canada',
@@ -60,8 +53,10 @@ const VALID_CATEGORIES = [
 
 function buildTopicQuery(persona: string, stage: string): string {
   const personaDesc = PERSONA_DESCRIPTIONS[persona] || 'newcomer to Canada';
-  const stageDesc = STAGE_DESCRIPTIONS[stage] || 'newcomer';
-  return `practical tips for ${personaDesc} who is ${stageDesc}`;
+  const stageDesc = getStageDescription(stage);
+  return stageDesc
+    ? `practical tips for ${personaDesc} (stage: ${stageDesc})`
+    : `practical tips for ${personaDesc}`;
 }
 
 function buildGeminiPrompt(
@@ -71,14 +66,16 @@ function buildGeminiPrompt(
   kbContext: string
 ): string {
   const personaDesc = PERSONA_DESCRIPTIONS[persona] || 'newcomer to Canada';
-  const stageDesc = STAGE_DESCRIPTIONS[stage] || 'newcomer';
+  const stageDesc = getStageDescription(stage);
+  const stageLine = stageDesc
+    ? `- Stage (time since arrival): ${stageDesc}\n`
+    : '';
 
   return `You are generating a daily tip for newcomers to Canada.
 
 USER PROFILE:
 - Persona: ${personaDesc}
-- Stage: ${stageDesc}
-- Time context: ${date}
+${stageLine}- Time context: ${date}
 
 KNOWLEDGE BASE CONTEXT:
 ${kbContext || 'No specific knowledge base context available. Use your general knowledge about Canadian newcomer resources.'}
