@@ -54,3 +54,63 @@ export function isVisibleForProvince(
   const user = toKnownProvince(userProvince);
   return user !== null && provinces.includes(user);
 }
+
+// Postal abbreviations and common spellings that other writers of the shared
+// `user_onboarding_profiles` table (the web app, older builds) have stored.
+// Analytics showed both "ON" and "Ontario" in production, which splits every
+// province breakdown and defeats province-based personalization.
+const PROVINCE_ALIASES: Record<string, string> = {
+  ab: 'Alberta',
+  bc: 'British Columbia',
+  mb: 'Manitoba',
+  nb: 'New Brunswick',
+  nl: 'Newfoundland and Labrador',
+  nfld: 'Newfoundland and Labrador',
+  newfoundland: 'Newfoundland and Labrador',
+  nt: 'Northwest Territories',
+  nwt: 'Northwest Territories',
+  ns: 'Nova Scotia',
+  nu: 'Nunavut',
+  on: 'Ontario',
+  ont: 'Ontario',
+  pe: 'Prince Edward Island',
+  pei: 'Prince Edward Island',
+  qc: 'Quebec',
+  pq: 'Quebec',
+  québec: 'Quebec',
+  sk: 'Saskatchewan',
+  sask: 'Saskatchewan',
+  yt: 'Yukon',
+  yukon: 'Yukon',
+  'yukon territory': 'Yukon',
+};
+
+const PROVINCE_BY_LOWER: Record<string, string> = Object.fromEntries(
+  PROVINCES.map(p => [p.toLowerCase(), p])
+);
+
+/**
+ * Map any stored province value to its canonical full name.
+ * Returns the trimmed input unchanged when it is not recognised, so a value
+ * a user typed for "Other" is never silently dropped. Null/empty stays null.
+ */
+export function normalizeProvince(
+  province: string | null | undefined
+): string | null {
+  if (province == null) return null;
+  const trimmed = province.trim();
+  if (trimmed === '') return null;
+  const key = trimmed.toLowerCase().replace(/\s+/g, ' ').replace(/\.$/, '');
+  return PROVINCE_BY_LOWER[key] ?? PROVINCE_ALIASES[key] ?? trimmed;
+}
+
+/**
+ * The province a stored profile value stands for, or null when it is not one of
+ * the 13 (null, blank, or free text typed for "Other"). Use this, not
+ * `normalizeProvince`, wherever the value decides which content shows.
+ */
+export function resolveUserProvince(
+  province: string | null | undefined
+): Province | null {
+  return toKnownProvince(normalizeProvince(province));
+}
