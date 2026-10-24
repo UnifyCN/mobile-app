@@ -21,6 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Group } from '@/types/groups';
 import { NewsCarousel } from '@/components/news/NewsCarousel';
 import { CommunityMatchingEntryCard } from '@/ui/communityMatching/EntryCard';
+import { CIRCLES_ENABLED } from '@/constants/Features';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAnalytics } from '@/utils/analytics';
 import RequestGroupModal from '@/components/groups/RequestGroupModal';
@@ -305,11 +306,13 @@ export default function GatherScreen() {
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
         >
-          <View style={styles.entryWrapper}>
-            <CommunityMatchingEntryCard
-              onPress={() => router.push('/community-matching')}
-            />
-          </View>
+          {CIRCLES_ENABLED ? (
+            <View style={styles.entryWrapper}>
+              <CommunityMatchingEntryCard
+                onPress={() => router.push('/community-matching')}
+              />
+            </View>
+          ) : null}
           <GatherHeader />
           <NewsCarousel />
           <GroupsForYouSection />

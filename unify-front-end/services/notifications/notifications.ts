@@ -1,5 +1,9 @@
 import { supabase } from '@/lib/supabase';
 import type { CommunityNotification } from '@/types/matching';
+import {
+  CIRCLES_ENABLED,
+  CIRCLE_NOTIFICATION_TYPES,
+} from '@/constants/Features';
 
 /**
  * Fetch all community notifications for the current user.
@@ -15,11 +19,18 @@ export const getCommunityNotifications = async (): Promise<
     throw new Error('User not authenticated');
   }
 
-  const { data, error } = await supabase
+  let query = supabase
     .from('community_notifications')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
+
+  if (!CIRCLES_ENABLED) {
+    query = query
+      .not('type', 'in', `(${CIRCLE_NOTIFICATION_TYPES.join(',')})`)
+      .is('data->>circle_id', null);
+  }
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(`Failed to load notifications: ${error.message}`);
@@ -39,11 +50,18 @@ export const getUnreadNotificationCount = async (): Promise<number> => {
     throw new Error('User not authenticated');
   }
 
-  const { count, error } = await supabase
+  let query = supabase
     .from('community_notifications')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', user.id)
     .is('read_at', null);
+
+  if (!CIRCLES_ENABLED) {
+    query = query
+      .not('type', 'in', `(${CIRCLE_NOTIFICATION_TYPES.join(',')})`)
+      .is('data->>circle_id', null);
+  }
+  const { count, error } = await query;
 
   if (error) {
     throw new Error(`Failed to count unread notifications: ${error.message}`);
@@ -87,11 +105,18 @@ export const markAllNotificationsAsRead = async (): Promise<void> => {
     throw new Error('User not authenticated');
   }
 
-  const { error } = await supabase
+  let query = supabase
     .from('community_notifications')
     .update({ read_at: new Date().toISOString() })
     .eq('user_id', user.id)
     .is('read_at', null);
+
+  if (!CIRCLES_ENABLED) {
+    query = query
+      .not('type', 'in', `(${CIRCLE_NOTIFICATION_TYPES.join(',')})`)
+      .is('data->>circle_id', null);
+  }
+  const { error } = await query;
 
   if (error) {
     throw new Error(
