@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    paddingBottom: 15,
+    paddingBottom: 50,
     backgroundColor: '#fff',
     gap: 12,
   },
