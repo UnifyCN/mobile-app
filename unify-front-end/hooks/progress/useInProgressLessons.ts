@@ -107,9 +107,9 @@ export function useInProgressLessons() {
               title,
               description,
               order,
-              "lesson_page_count": count(pages),
-              "activity_page_count": count(activity_pages),
-              "ending_page_count": count(ending_pages),
+              "lesson_page_count": select(count(content_blocks) > 0 => count(content_blocks), count(pages)),
+              "activity_page_count": select(count(content_blocks) > 0 => 0, count(activity_pages)),
+              "ending_page_count": select(count(content_blocks) > 0 => 0, count(ending_pages)),
               ${i18nOverlay('title, description')},
               "quizzes": *[_type == "quiz" && references(^._id) && ${BASE_LANGUAGE_FILTER}] | order(order_number) {
                 _id,

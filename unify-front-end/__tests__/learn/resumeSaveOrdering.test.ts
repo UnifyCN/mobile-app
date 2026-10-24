@@ -5,7 +5,11 @@ const mockUpsert = jest.fn();
 jest.mock('@/services/progress/progressClient', () => ({
   progressClient: {
     auth: { getUser: (...args: unknown[]) => mockGetUser(...args) },
-    from: () => ({ upsert: (...args: unknown[]) => mockUpsert(...args) }),
+    from: () => ({
+      upsert: (row: unknown, options: unknown) => ({
+        abortSignal: (signal: AbortSignal) => mockUpsert(row, options, signal),
+      }),
+    }),
   },
 }));
 jest.mock('@/utils/progressEventEmitter', () => ({ progressEventEmitter: { emit: jest.fn() } }));

@@ -27,6 +27,7 @@ import RichTextRenderer from '@/components/sanity/RichTextRenderer';
 import SubmoduleProgressBar from '@/components/learn/SubmoduleProgressBar';
 import {
   calculateActivityProgress,
+  getLastLessonPageNumber,
   getLessonTotalPages,
 } from '@/utils/submoduleProgress';
 import { useLessonProgress } from '@/hooks/progress/useLessonProgress';
@@ -468,7 +469,7 @@ export default function ActivityPageScreen() {
               moduleId,
               submoduleId,
               lessonId: previousLesson._id,
-              pageNum: '1',
+              pageNum: String(getLastLessonPageNumber(previousLesson)),
               ...originParams,
             },
           });

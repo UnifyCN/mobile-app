@@ -50,6 +50,16 @@ const resolveQuizQuestionCount = (lesson: SanityLessonWithQuizzes): number => {
   );
 };
 
+/**
+ * Last reading page of a lesson. Submodule lesson lists carry only the
+ * projected `lesson_page_count`, not the `pages` array.
+ */
+export function getLastLessonPageNumber(
+  lesson: Pick<SanityLessonWithQuizzes, 'pages' | 'lesson_page_count'>
+): number {
+  return Math.max(1, resolvePageCount(lesson.pages, lesson.lesson_page_count));
+}
+
 const getLessonPageBreakdown = (lesson: SanityLessonWithQuizzes) => {
   const lessonPages = resolvePageCount(lesson.pages, lesson.lesson_page_count);
   const activityPages = resolvePageCount(
