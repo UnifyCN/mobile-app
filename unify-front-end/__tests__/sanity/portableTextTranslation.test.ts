@@ -16,6 +16,189 @@ const textBlock = (spanKey: string, text: string): SanityBlock => ({
 });
 
 describe('translated Portable Text', () => {
+  it.each([
+    { definitions: 'markDefs', content: 'content' },
+    { definitions: 'instructionsMarkDefs', content: 'instructions' },
+    { definitions: 'textMarkDefs', content: 'text' },
+    { definitions: 'explanationMarkDefs', content: 'explanation' },
+    { definitions: 'questionMarkDefs', content: 'question_text' },
+  ])(
+    'retains localized and fallback annotations in $definitions',
+    ({ definitions, content }) => {
+      const baseLink = {
+        _key: 'en-link',
+        _type: 'link',
+        href: 'https://www.canada.ca/en.html',
+      };
+      const localizedLink = {
+        _key: 'es-link',
+        _type: 'link',
+        href: 'https://www.canada.ca/fr.html',
+      };
+      const base = {
+        ...textBlock('en-span', 'Read the source'),
+        children: [
+          {
+            _key: 'en-span',
+            _type: 'span',
+            text: 'Read the source',
+            marks: ['en-link'],
+          },
+        ],
+      };
+      const translated = {
+        ...textBlock('es-span', 'Consulte la fuente'),
+        children: [
+          {
+            _key: 'es-span',
+            _type: 'span',
+            text: 'Consulte la fuente',
+            marks: ['es-link'],
+          },
+        ],
+      };
+      const fallback = { ...base, _key: 'fallback' };
+      const result = mergeI18nOverlay<Record<string, unknown>>({
+        _id: 'lesson',
+        [content]: [base, fallback],
+        [definitions]: [baseLink],
+        i18n: { [content]: [translated], [definitions]: [localizedLink] },
+      });
+      expect(result).toMatchObject({
+        [content]: [translated, fallback],
+        [definitions]: expect.arrayContaining([baseLink, localizedLink]),
+      });
+    }
+  );
+
+  it('retains the entire base paragraph when invalid text supplies different formatting', () => {
+    const base = textBlock('en-span', 'English fallback');
+    const result = mergeI18nOverlay<Record<string, unknown>>({
+      content: [base],
+      i18n: {
+        content: [
+          { ...base, children: [], style: 'h1', listItem: 'number', level: 3 },
+        ],
+      },
+    });
+    expect(result.content).toEqual([base]);
+  });
+
+  it.each([
+    { definitions: [] },
+    {
+      definitions: [
+        {
+          _key: 'unrelated',
+          _type: 'link',
+          href: 'https://www.canada.ca/fr.html',
+        },
+      ],
+    },
+    {
+      definitions: [{ _key: 'es-link', href: 'https://www.canada.ca/fr.html' }],
+    },
+  ])(
+    'keeps working base prose when localized links cannot resolve: %j',
+    ({ definitions }) => {
+      const baseLink = {
+        _key: 'en-link',
+        _type: 'link',
+        href: 'https://www.canada.ca/en.html',
+      };
+      const base = {
+        ...textBlock('en-span', 'Read the source'),
+        children: [
+          {
+            _key: 'en-span',
+            _type: 'span',
+            text: 'Read the source',
+            marks: ['en-link'],
+          },
+        ],
+      };
+      const translated = {
+        ...textBlock('es-span', 'Consulte la fuente'),
+        children: [
+          {
+            _key: 'es-span',
+            _type: 'span',
+            text: 'Consulte la fuente',
+            marks: ['es-link'],
+          },
+        ],
+      };
+      const result = mergeI18nOverlay<Record<string, unknown>>({
+        content: [base],
+        markDefs: [baseLink],
+        i18n: { content: [translated], markDefs: definitions },
+      });
+      expect(result.content).toEqual([base]);
+    }
+  );
+
+  it('keeps page-level localized source links through the actual lesson service', async () => {
+    const baseLink = {
+      _key: 'en-link',
+      _type: 'link',
+      href: 'https://www.canada.ca/en.html',
+    };
+    const localizedLink = {
+      _key: 'es-link',
+      _type: 'link',
+      href: 'https://www.canada.ca/fr.html',
+    };
+    const base = {
+      ...textBlock('en-span', 'Read the source'),
+      children: [
+        {
+          _key: 'en-span',
+          _type: 'span',
+          text: 'Read the source',
+          marks: ['en-link'],
+        },
+      ],
+    };
+    const translated = {
+      ...textBlock('es-span', 'Consulte la fuente'),
+      children: [
+        {
+          _key: 'es-span',
+          _type: 'span',
+          text: 'Consulte la fuente',
+          marks: ['es-link'],
+        },
+      ],
+    };
+    mockFetch.mockResolvedValueOnce({
+      _id: 'lesson',
+      _type: 'lesson',
+      content_blocks: [
+        {
+          _key: 'reading',
+          _type: 'lesson_content',
+          content: [base],
+          markDefs: [baseLink],
+        },
+      ],
+      i18n: {
+        content_blocks: [
+          {
+            _key: 'reading',
+            _type: 'lesson_content',
+            content: [translated],
+            markDefs: [localizedLink],
+          },
+        ],
+      },
+    });
+    const lesson = await getLesson('lesson', 'es');
+    expect(lesson?.pages?.[0].content).toEqual([translated]);
+    expect(lesson?.pages?.[0].markDefs).toEqual(
+      expect.arrayContaining([localizedLink])
+    );
+  });
+
   it('uses a complete translated span tree and its link definitions', () => {
     const base = textBlock('english-span', 'Protect your SIN');
     const translated: SanityBlock = {

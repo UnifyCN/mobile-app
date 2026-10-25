@@ -1101,6 +1101,7 @@ export default function RichTextRenderer({
       block._type === 'multiple_choice_multiple'
     ) {
       const isMultiple = block._type === 'multiple_choice_multiple';
+      const isReflection = block.gradingMode === 'reflection';
       const currentAnswer = questionAnswers[block._key];
       const isArrayAnswer = Array.isArray(currentAnswer);
       const selectedValues = isArrayAnswer
@@ -1147,7 +1148,7 @@ export default function RichTextRenderer({
                 checkboxStyle = styles.questionCheckboxSelected;
               }
 
-              if (showFeedback) {
+              if (showFeedback && !isReflection) {
                 if (isCorrect) {
                   optionStyle = styles.questionOptionCorrect;
                   checkboxStyle = styles.questionCheckboxCorrect;

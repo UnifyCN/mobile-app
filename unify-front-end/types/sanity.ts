@@ -222,6 +222,7 @@ export interface SanityMultipleChoiceSingle {
 export interface SanityMultipleChoiceMultiple {
   _type: 'multiple_choice_multiple';
   _key: string;
+  gradingMode?: 'knowledge' | 'reflection';
   question_text: SanityBlock[];
   options: SanityActivityOption[];
 }
