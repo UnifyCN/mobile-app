@@ -22,6 +22,7 @@ import {
   QWEN,
   qwenVector,
   seedStatedCorpus,
+  withReceipt,
 } from './support/embeddingModels.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
@@ -48,18 +49,20 @@ async function harness(): Promise<Harness> {
   const client = supabaseHttp(db).client;
   const calls: string[][] = [];
   const failNext: Harness['failNext'] = {};
+  const embed = async (texts: string[]) => {
+    calls.push(texts);
+    if (failNext.error) throw failNext.error;
+    const vectors = texts.map(vectorFor);
+    return failNext.short ? vectors.slice(1) : vectors;
+  };
   const deps = {
     store: createStore(client),
     rebuild: createRebuildStore(client),
     now: () => new Date('2026-10-25T00:00:00Z'),
     fetchPage: () =>
       Promise.reject(new Error('the rebuild never fetches a page')),
-    embed: async (texts: string[]) => {
-      calls.push(texts);
-      if (failNext.error) throw failNext.error;
-      const vectors = texts.map(vectorFor);
-      return failNext.short ? vectors.slice(1) : vectors;
-    },
+    embed,
+    embedChecked: withReceipt(embed),
     serviceRoleKey: KEY,
   };
   const admin: Harness['admin'] = async (operation, body = {}) => {

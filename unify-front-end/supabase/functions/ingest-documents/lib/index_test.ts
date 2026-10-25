@@ -11,6 +11,7 @@ import {
   assertEquals,
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import {
+  captureConsole,
   captureServe,
   type FetchCall,
   fetchLog,
@@ -19,10 +20,14 @@ import {
   testEnv,
 } from '../../_shared/testHarness.ts';
 import {
+  ACCEPTED_MODELS,
   embeddingsBody,
   embeddingsResponse,
+  LEAK,
+  MALFORMED_ANSWERS,
   nativeVector,
   QWEN_MODEL,
+  REJECTED_IDENTITIES,
   storedVector,
 } from '../../_shared/testEmbeddingFixtures.ts';
 import { openQwenIngestDb } from '../../../tests/support/ingestDb.ts';
@@ -200,154 +205,137 @@ Deno.test(
 // Falsifier: ignoring the response index (or the dimension cut) stores the
 // wrong vector against a chunk. Each input has a different worked vector, the
 // provider answers in reverse order, and a non-zero value sits past 1535.
-Deno.test(
-  'rows are matched to inputs by index and stored cut to 1536 at length 1',
-  opts,
-  async () => {
-    const f = await setup(call =>
-      embeddingsResponse((call.body as { input: string[] }).input.length, {
-        reverse: true,
-      })
-    );
-    try {
-      const res = await ingest(f.sourceId);
-      assertEquals((await res.json()).results[0].status, 'success');
-
-      const stored = await rows<{
-        chunk_index: number;
-        chunk_text: string;
-        embedding: string;
-      }>(
-        f.db,
-        `select chunk_index, chunk_text, embedding::text as embedding
-           from public.knowledge_chunks order by chunk_index`
-      );
-      assert(stored.length >= 2, 'the page must give several chunks');
-      const sent = f
-        .embeddingCalls()
-        .flatMap(c => (c.body as { input: string[] }).input);
-      assertEquals(
-        stored.map(r => r.chunk_text),
-        sent,
-        'the stored text is the text that was embedded, in order'
-      );
-      stored.forEach((row, i) => {
-        const vector: number[] = JSON.parse(row.embedding);
-        assertEquals(vector.length, 1536);
-        const want = storedVector(i % 20);
-        for (let d = 0; d < 1536; d++) {
-          if (Math.abs(vector[d] - want[d]) > 1e-6) {
-            throw new Error(
-              `chunk ${i} coordinate ${d}: ${vector[d]} is not ${want[d]}`
-            );
-          }
-        }
-      });
-      assertEquals(Math.round(storedVector(0)[0] * 10), 6);
-    } finally {
-      await f.db.close();
-    }
-  }
-);
-
-const SHORT = (n: number) => (body: Record<string, unknown>) => {
-  const data = body.data as Array<{ embedding: number[] }>;
-  data[0].embedding = data[0].embedding.slice(0, n);
-  return body;
-};
-const zeroPrefix = (body: Record<string, unknown>) => {
-  const data = body.data as Array<{ embedding: number[] }>;
-  data[0].embedding = new Array(4096).fill(0);
-  data[0].embedding[4000] = 5; // non-zero, but past the 1536 that are kept
-  return body;
-};
-const BAD_ANSWERS: Array<[string, (b: Record<string, unknown>) => unknown]> = [
-  ['another model', b => ({ ...b, model: 'openai/text-embedding-3-small' })],
-  ['a missing model', b => ({ ...b, model: undefined })],
-  [
-    'a repeated index',
-    b => {
-      const d = b.data as Array<{ index: number }>;
-      d[1].index = d[0].index;
-      return b;
-    },
-  ],
-  [
-    'an index past the input count',
-    b => {
-      (b.data as Array<{ index: number }>)[0].index = 99;
-      return b;
-    },
-  ],
-  [
-    'a missing index',
-    b => {
-      (b.data as Array<{ index?: number }>)[0].index = undefined;
-      return b;
-    },
-  ],
-  [
-    'one row too many',
-    b => {
-      const d = b.data as unknown[];
-      d.push({ ...(d[0] as object), index: d.length });
-      return b;
-    },
-  ],
-  [
-    'one row too few',
-    b => {
-      (b.data as unknown[]).pop();
-      return b;
-    },
-  ],
-  ['1536 values per vector', SHORT(1536)],
-  ['4095 values per vector', SHORT(4095)],
-  [
-    '4097 values per vector',
-    b => {
-      (b.data as Array<{ embedding: number[] }>)[0].embedding.push(1);
-      return b;
-    },
-  ],
-  ['a zero kept prefix', zeroPrefix],
-  [
-    'a value that is not a number',
-    b => {
-      (b.data as Array<{ embedding: unknown[] }>)[0].embedding[10] = null;
-      return b;
-    },
-  ],
-  [
-    'a base64 vector',
-    b => {
-      (b.data as Array<{ embedding: unknown }>)[0].embedding = 'AAAA';
-      return b;
-    },
-  ],
-  ['a body that is not JSON', () => '<html>gateway</html>'],
-];
-
-// Falsifier: a response that breaks the contract must stop before staging, so
-// no vector of unknown meaning reaches the tables.
-for (const [name, mutate] of BAD_ANSWERS) {
+for (const model of ACCEPTED_MODELS) {
   Deno.test(
-    `${name} in the provider answer stops the refresh before staging`,
+    `rows are matched to inputs by index and stored cut to 1536 at length 1 (answer names ${model})`,
     opts,
     async () => {
       const f = await setup(call =>
         embeddingsResponse((call.body as { input: string[] }).input.length, {
-          mutate,
+          reverse: true,
+          model,
         })
       );
       try {
         const res = await ingest(f.sourceId);
-        const result = (await res.json()).results[0];
+        assertEquals((await res.json()).results[0].status, 'success');
+
+        const stored = await rows<{
+          chunk_index: number;
+          chunk_text: string;
+          embedding: string;
+        }>(
+          f.db,
+          `select chunk_index, chunk_text, embedding::text as embedding
+           from public.knowledge_chunks order by chunk_index`
+        );
+        assert(stored.length >= 2, 'the page must give several chunks');
+        const sent = f
+          .embeddingCalls()
+          .flatMap(c => (c.body as { input: string[] }).input);
+        assertEquals(
+          stored.map(r => r.chunk_text),
+          sent,
+          'the stored text is the text that was embedded, in order'
+        );
+        stored.forEach((row, i) => {
+          const vector: number[] = JSON.parse(row.embedding);
+          assertEquals(vector.length, 1536);
+          const want = storedVector(i % 20);
+          for (let d = 0; d < 1536; d++) {
+            if (Math.abs(vector[d] - want[d]) > 1e-6) {
+              throw new Error(
+                `chunk ${i} coordinate ${d}: ${vector[d]} is not ${want[d]}`
+              );
+            }
+          }
+        });
+        assertEquals(Math.round(storedVector(0)[0] * 10), 6);
+        assertEquals(
+          await rows(
+            f.db,
+            `select distinct embedding_model from public.knowledge_chunks`
+          ),
+          [{ embedding_model: QWEN_MODEL }],
+          'the stored label is the canonical model whichever name the answer used'
+        );
+        assertEquals(
+          f
+            .embeddingCalls()
+            .map(c => (c.body as { model: string }).model)
+            .filter(m => m !== QWEN_MODEL),
+          [],
+          'every request names the canonical model'
+        );
+      } finally {
+        await f.db.close();
+      }
+    }
+  );
+}
+
+// Falsifier: a response that breaks the contract must stop before staging, so
+// no vector of unknown meaning reaches the tables.
+for (const model of ACCEPTED_MODELS) {
+  for (const [name, mutate] of MALFORMED_ANSWERS) {
+    Deno.test(
+      `${name} in the provider answer stops the refresh before staging (answer names ${model})`,
+      opts,
+      async () => {
+        const f = await setup(call =>
+          embeddingsResponse((call.body as { input: string[] }).input.length, {
+            mutate,
+            model,
+          })
+        );
+        try {
+          const res = await ingest(f.sourceId);
+          const result = (await res.json()).results[0];
+
+          assertEquals(result.status, 'error');
+          assert(
+            String(result.error).startsWith('Invalid embedding response'),
+            String(result.error)
+          );
+          assertEquals(
+            f.requests.filter(r => r.table === 'stage_knowledge_chunks'),
+            []
+          );
+          assertEquals(
+            await rows(f.db, `select 1 from public.knowledge_chunks`),
+            []
+          );
+        } finally {
+          await f.db.close();
+        }
+      }
+    );
+  }
+}
+
+// Falsifier: an adapter that compares a prefix, a lower-cased value or only
+// the vector length accepts one of these. None may reach a table, and none of
+// the unchecked values may appear in the result, an error or a log line.
+for (const rejected of REJECTED_IDENTITIES) {
+  Deno.test(
+    `${rejected.name} as the answer's model stops the refresh safely`,
+    opts,
+    async () => {
+      const f = await setup(call =>
+        embeddingsResponse((call.body as { input: string[] }).input.length, {
+          model: rejected.value,
+        })
+      );
+      const logs = captureConsole();
+      try {
+        const res = await ingest(f.sourceId);
+        const text = await res.text();
+        const result = JSON.parse(text).results[0];
 
         assertEquals(result.status, 'error');
-        assert(
-          String(result.error).startsWith('Invalid embedding response'),
-          String(result.error)
+        assertEquals(
+          result.error,
+          'Invalid embedding response: the model identity is not accepted'
         );
         assertEquals(
           f.requests.filter(r => r.table === 'stage_knowledge_chunks'),
@@ -357,8 +345,92 @@ for (const [name, mutate] of BAD_ANSWERS) {
           await rows(f.db, `select 1 from public.knowledge_chunks`),
           []
         );
+        const everything = [text, ...logs.lines].join('\n');
+        assert(!everything.includes(LEAK), 'a credential reached the output');
+        if (typeof rejected.value === 'string' && rejected.value !== '') {
+          assert(
+            !everything.includes(rejected.value),
+            'the unchecked model value reached the output'
+          );
+        }
+        const events = logs.lines
+          .filter(l => l.startsWith('{"event":"embedding_'))
+          .map(l => JSON.parse(l));
+        assertEquals(
+          events.map(e => [e.event, e.identity]),
+          [['embedding_identity', rejected.identity]],
+          'one identity class, and no success receipt'
+        );
       } finally {
+        logs.restore();
         await f.db.close();
+      }
+    }
+  );
+}
+
+// Falsifier: a checked receipt must exist only for a complete, valid answer,
+// and the identity class must be reported before the vectors are examined.
+for (const model of ACCEPTED_MODELS) {
+  Deno.test(
+    `diagnostics for a valid and an invalid answer naming ${model}`,
+    opts,
+    async () => {
+      const identity = model === QWEN_MODEL ? 'canonical' : 'catalog_hf';
+      for (const bad of [false, true]) {
+        const f = await setup(call =>
+          embeddingsResponse((call.body as { input: string[] }).input.length, {
+            model,
+            mutate: bad
+              ? MALFORMED_ANSWERS.find(
+                  ([name]) => name === '1536 values per vector'
+                )![1]
+              : undefined,
+          })
+        );
+        const logs = captureConsole();
+        try {
+          const res = await ingest(f.sourceId);
+          const result = (await res.json()).results[0];
+          const events = logs.lines
+            .filter(l => l.startsWith('{"event":"embedding_'))
+            .map(l => JSON.parse(l));
+          assertEquals(result.status, bad ? 'error' : 'success');
+          const identities = events.filter(
+            e => e.event === 'embedding_identity'
+          );
+          const receipts = events.filter(e => e.event === 'embedding_checked');
+          assert(identities.length > 0);
+          for (const e of identities) assertEquals(e.identity, identity);
+          if (bad) {
+            assertEquals(receipts, [], 'no receipt for a rejected batch');
+            assertEquals(identities.length, 1);
+          } else {
+            assertEquals(receipts.length, identities.length);
+            for (const e of receipts) {
+              assertEquals(
+                {
+                  model: e.model,
+                  contract: e.contract,
+                  identity: e.identity,
+                  native_dimensions: e.native_dimensions,
+                  stored_dimensions: e.stored_dimensions,
+                },
+                {
+                  model: QWEN_MODEL,
+                  contract: 'qwen3-8b-prefix1536-l2-v1',
+                  identity,
+                  native_dimensions: 4096,
+                  stored_dimensions: 1536,
+                }
+              );
+              assert(e.checked >= 1 && e.checked <= 20);
+            }
+          }
+        } finally {
+          logs.restore();
+          await f.db.close();
+        }
       }
     }
   );

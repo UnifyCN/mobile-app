@@ -70,6 +70,28 @@ export function qwenVector(weight: number): string {
   return `[${values.join(',')}]`;
 }
 
+/**
+ * A stub's vectors with the receipt the real adapter gives a canonical answer.
+ * Only for tests of the call sequence: the receipt itself is tested through
+ * the served handler with the real adapter (index_rebuild_test.ts).
+ */
+export const withReceipt =
+  (embed: (texts: string[]) => Promise<number[][]>) =>
+  async (texts: string[]) => {
+    const vectors = await embed(texts);
+    return {
+      vectors,
+      receipt: {
+        model: QWEN,
+        contract: CONTRACT,
+        identity: 'canonical' as const,
+        checked: vectors.length,
+        native_dimensions: 4096,
+        stored_dimensions: 1536,
+      },
+    };
+  };
+
 export const sha256Hex = async (text: string) =>
   [
     ...new Uint8Array(

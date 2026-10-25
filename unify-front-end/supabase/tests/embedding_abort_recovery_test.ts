@@ -18,7 +18,7 @@ import {
 } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import { page, prose } from '../functions/ingest-documents/lib/testSupport.ts';
 import { openIngestDb } from './support/ingestDb.ts';
-import { call, seedChunk } from './support/embeddingModels.ts';
+import { call, seedChunk, withReceipt } from './support/embeddingModels.ts';
 import { QWEN, CONTRACT } from './support/embeddingModels.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
@@ -28,6 +28,10 @@ const KEY = 'synthetic-test-key';
 async function deployedQwenIngester(db: Db) {
   const client = supabaseHttp(db).client;
   const counts = { fetch: 0, embed: 0 };
+  const embed = async (texts: string[]) => {
+    counts.embed++;
+    return texts.map(() => [1, ...new Array(1535).fill(0)]);
+  };
   const deps = {
     store: createStore(client),
     rebuild: createRebuildStore(client),
@@ -37,10 +41,8 @@ async function deployedQwenIngester(db: Db) {
       counts.fetch++;
       return page(prose(6000));
     },
-    embed: async (texts: string[]) => {
-      counts.embed++;
-      return texts.map(() => [1, ...new Array(1535).fill(0)]);
-    },
+    embed,
+    embedChecked: withReceipt(embed),
   };
   const request = (body: unknown) =>
     handleIngestRequest(

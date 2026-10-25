@@ -1,3 +1,4 @@
+import type { CheckedEmbeddings } from '../../_shared/embeddings.ts';
 import { ingestSource } from './ingest.ts';
 import { type CrawlSource, pickDueSources } from './pickDueSources.ts';
 import { handleRebuildAction, type RebuildStore } from './rebuild.ts';
@@ -10,6 +11,11 @@ export type HandlerDeps = IngestDeps & {
   serviceRoleKey: string;
   /** The administrative embedding rebuild; absent in tests of the crawl alone. */
   rebuild?: RebuildStore;
+  /**
+   * The rebuild's embedding call: the vectors and the receipt of the response
+   * that produced them. Required with `rebuild`.
+   */
+  embedChecked?: (texts: string[]) => Promise<CheckedEmbeddings>;
 };
 
 function json(body: unknown, status = 200): Response {

@@ -2,6 +2,8 @@ import {
   EMBEDDING_CONTRACT,
   EMBEDDING_MODEL,
   EMBEDDING_MAX_INPUTS,
+  EmbeddingError,
+  type EmbeddingReceipt,
 } from '../../_shared/embeddings.ts';
 import type { HandlerDeps } from './handler.ts';
 
@@ -62,6 +64,21 @@ async function sha256Hex(text: string): Promise<string> {
     .join('');
 }
 
+/**
+ * The body of a refused embedding call. An adapter error adds its category,
+ * its HTTP status and the identity class of the answer, all fixed values;
+ * the adapter's message is fixed text too. Nothing else from the provider.
+ */
+function failure(error: unknown, message: string): Record<string, unknown> {
+  if (!(error instanceof EmbeddingError)) return { error: message };
+  return {
+    error: message,
+    category: error.category,
+    ...(error.status === undefined ? {} : { http_status: error.status }),
+    ...(error.identity === undefined ? {} : { identity: error.identity }),
+  };
+}
+
 function uuid(value: unknown): string | null {
   return typeof value === 'string' && UUID.test(value) ? value : null;
 }
@@ -78,7 +95,10 @@ export async function handleRebuildAction(
   deps: HandlerDeps
 ): Promise<Response> {
   const store = deps.rebuild;
-  if (!store) return json({ error: 'Rebuild is not configured' }, 501);
+  const embedChecked = deps.embedChecked;
+  if (!store || !embedChecked) {
+    return json({ error: 'Rebuild is not configured' }, 501);
+  }
   const operation = body.operation;
   const run = uuid(body.run_id);
   const token = uuid(body.worker_token);
@@ -121,13 +141,16 @@ export async function handleRebuildAction(
           return json({ sent: 0, staged: 0, remaining: 0 });
         }
         let vectors: number[][];
+        let receipt: EmbeddingReceipt;
         try {
-          vectors = await deps.embed(batch.rows.map(row => row.text));
+          ({ vectors, receipt } = await embedChecked(
+            batch.rows.map(row => row.text)
+          ));
         } catch (error) {
           const message =
             error instanceof Error ? error.message : 'Embedding failed';
           console.error(`Rebuild embedding failed: ${message}`);
-          return json({ error: message }, 502);
+          return json(failure(error, message), 502);
         }
         if (vectors.length !== batch.rows.length) {
           return json(
@@ -151,7 +174,9 @@ export async function handleRebuildAction(
           ),
           WORKER_LEASE_SECONDS
         );
-        return json({ sent: batch.rows.length, ...staged });
+        // The receipt goes only to this service-role caller, and only once
+        // the batch is staged.
+        return json({ sent: batch.rows.length, ...staged, receipt });
       }
       case 'activate':
         if (!run || !token) {
