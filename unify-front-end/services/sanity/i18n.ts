@@ -41,12 +41,77 @@ function isKeyedItem(value: unknown): value is Record<string, unknown> & {
   return isRecord(value) && typeof value._key === 'string';
 }
 
+type Annotation = Record<string, unknown> & { _key: string; _type: string };
+
+const TEXT_DECORATORS = new Set([
+  'strong',
+  'em',
+  'code',
+  'underline',
+  'strike-through',
+]);
+
+function isAnnotation(value: unknown): value is Annotation {
+  return (
+    isKeyedItem(value) &&
+    typeof value._type === 'string' &&
+    (value._type !== 'link' ||
+      (typeof value.href === 'string' && value.href.length > 0))
+  );
+}
+
+function mergeAnnotations(base: unknown, translated: unknown): Annotation[] {
+  const definitions = new Map<string, Annotation>();
+  if (Array.isArray(base))
+    for (const definition of base.filter(isAnnotation))
+      definitions.set(definition._key, definition);
+  if (Array.isArray(translated) && translated.every(isAnnotation)) {
+    for (const definition of translated)
+      definitions.set(definition._key, definition);
+  }
+  return [...definitions.values()];
+}
+
+function hasTranslatedSpans(
+  block: Record<string, unknown>,
+  annotations: Annotation[]
+): boolean {
+  const children = block.children;
+  const annotationKeys = new Set(
+    annotations.map(definition => definition._key)
+  );
+  return (
+    Array.isArray(children) &&
+    children.length > 0 &&
+    children.every(
+      span =>
+        isKeyedItem(span) &&
+        span._type === 'span' &&
+        typeof span.text === 'string' &&
+        (span.marks === undefined ||
+          (Array.isArray(span.marks) &&
+            span.marks.every(
+              mark =>
+                typeof mark === 'string' &&
+                (TEXT_DECORATORS.has(mark) || annotationKeys.has(mark))
+            )))
+    ) &&
+    (block.markDefs === undefined ||
+      (Array.isArray(block.markDefs) && block.markDefs.every(isAnnotation)))
+  );
+}
+
 /**
  * Merge translated data into base content without letting a translation alter
- * keyed Sanity structure. Base order and `_key`s remain authoritative because
- * progress, saved answers and resume positions persist those identities.
+ * page, block or response structure. Their base order and keys remain
+ * authoritative for progress, saved answers and resume positions.
+ * Portable Text spans and their annotations belong to the translated paragraph.
  */
-function mergeTranslatedValue(base: unknown, translated: unknown): unknown {
+function mergeTranslatedValue(
+  base: unknown,
+  translated: unknown,
+  inheritedAnnotations: Annotation[] = []
+): unknown {
   if (translated === null || translated === undefined) return base;
 
   if (Array.isArray(base)) {
@@ -58,7 +123,7 @@ function mergeTranslatedValue(base: unknown, translated: unknown): unknown {
       return base.map(item => {
         const translatedItem = translatedByKey.get(item._key);
         return translatedItem
-          ? mergeTranslatedValue(item, translatedItem)
+          ? mergeTranslatedValue(item, translatedItem, inheritedAnnotations)
           : item;
       });
     }
@@ -69,12 +134,46 @@ function mergeTranslatedValue(base: unknown, translated: unknown): unknown {
 
   if (isRecord(base)) {
     if (!isRecord(translated)) return base;
+    const isTextBlock = base._type === 'block';
+    if (isTextBlock && translated._type !== 'block') return base;
+    const annotations = mergeAnnotations(
+      inheritedAnnotations,
+      isTextBlock
+        ? (translated.markDefs ?? base.markDefs)
+        : mergeAnnotations(base.markDefs, translated.markDefs)
+    );
+    // Span keys and annotations belong to the localized paragraph. Keep them
+    // together, while the paragraph and all progress identities keep base keys.
+    if (isTextBlock && !hasTranslatedSpans(translated, annotations))
+      return base;
     const merged: Record<string, unknown> = { ...base };
     for (const [key, value] of Object.entries(translated)) {
       if (IDENTITY_FIELDS.has(key) || value === null || value === undefined) {
         continue;
       }
-      merged[key] = mergeTranslatedValue(base[key], value);
+      if (isTextBlock && (key === 'children' || key === 'markDefs')) continue;
+      if (key === 'markDefs' || key.endsWith('MarkDefs')) {
+        if (Array.isArray(value) && value.every(isAnnotation))
+          merged[key] = mergeAnnotations(base[key], value);
+        continue;
+      }
+      const annotationField =
+        key === 'question_text' ? 'questionMarkDefs' : `${key}MarkDefs`;
+      const fieldAnnotations = [
+        'instructions',
+        'text',
+        'explanation',
+        'question_text',
+      ].includes(key)
+        ? mergeAnnotations(base[annotationField], translated[annotationField])
+        : key === 'answer_box'
+          ? []
+          : annotations;
+      merged[key] = mergeTranslatedValue(base[key], value, fieldAnnotations);
+    }
+    if (isTextBlock) {
+      merged.children = translated.children;
+      merged.markDefs = translated.markDefs ?? base.markDefs;
     }
     return merged;
   }
