@@ -134,13 +134,15 @@ function mergeTranslatedValue(
 
   if (isRecord(base)) {
     if (!isRecord(translated)) return base;
+    const isTextBlock = base._type === 'block' && translated._type === 'block';
     const annotations = mergeAnnotations(
       inheritedAnnotations,
-      mergeAnnotations(base.markDefs, translated.markDefs)
+      isTextBlock
+        ? (translated.markDefs ?? base.markDefs)
+        : mergeAnnotations(base.markDefs, translated.markDefs)
     );
     // Span keys and annotations belong to the localized paragraph. Keep them
     // together, while the paragraph and all progress identities keep base keys.
-    const isTextBlock = base._type === 'block' && translated._type === 'block';
     if (isTextBlock && !hasTranslatedSpans(translated, annotations))
       return base;
     const merged: Record<string, unknown> = { ...base };
