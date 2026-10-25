@@ -113,3 +113,34 @@ export function captureServe(): () => Handler {
     return captured;
   };
 }
+
+/** What a diagnostic line may hold once it is flattened to text. */
+function flatten(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (value instanceof Error) return `${value.name}: ${value.message}`;
+  try {
+    return JSON.stringify(value) ?? String(value);
+  } catch {
+    return '[unserializable]';
+  }
+}
+
+/**
+ * Collect everything written to the console until `restore` is called, so a
+ * test can prove that a diagnostic never carried a given value.
+ */
+export function captureConsole(): { lines: string[]; restore: () => void } {
+  const lines: string[] = [];
+  const methods = ['log', 'info', 'warn', 'error', 'debug'] as const;
+  const originals = methods.map(method => console[method]);
+  for (const method of methods) {
+    console[method] = (...args: unknown[]) => {
+      lines.push(args.map(flatten).join(' '));
+    };
+  }
+  return {
+    lines,
+    restore: () =>
+      methods.forEach((method, i) => (console[method] = originals[i])),
+  };
+}

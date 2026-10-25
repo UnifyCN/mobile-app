@@ -1,7 +1,7 @@
 // @ts-nocheck
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
-import { embedTexts } from '../_shared/embeddings.ts';
+import { embedTexts, embedTextsChecked } from '../_shared/embeddings.ts';
 import { fetchWithRetry } from '../_shared/fetchWithRetry.ts';
 import { handleIngestRequest, isAuthorized } from './lib/handler.ts';
 import { createRebuildStore, createStore } from './lib/supabaseStore.ts';
@@ -53,6 +53,7 @@ Deno.serve(async (req: Request) => {
       now: () => new Date(),
       fetchPage,
       embed: texts => embedTexts(texts, openRouterApiKey),
+      embedChecked: texts => embedTextsChecked(texts, openRouterApiKey),
       serviceRoleKey,
     });
   } catch (error: unknown) {

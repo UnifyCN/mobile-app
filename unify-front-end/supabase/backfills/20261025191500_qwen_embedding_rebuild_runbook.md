@@ -11,6 +11,30 @@ Model: `qwen/qwen3-embedding-8b` through OpenRouter. Vectors are the first 1536 
 `qwen3-8b-prefix1536-l2-v1`. OpenRouter bills it per input token. Retries can
 bill again; see "Billing limits".
 
+## Response identity contract
+
+- Every request, every stored label, the target model and every
+  `query_embedding_model` argument use `qwen/qwen3-embedding-8b`. That does not
+  change.
+- The `model` field of a provider answer must be exactly one of two strings:
+  `qwen/qwen3-embedding-8b` (class `canonical`) or `Qwen/Qwen3-Embedding-8B`
+  (class `catalog_hf`, the Hugging Face id that the OpenRouter catalogue gives
+  for the same model). The comparison is exact. Every other answer is refused:
+  a missing field (`missing`), `null` (`null`), a number, list or object
+  (`non_string`), and any other string (`unrecognized_string`), including a
+  case change, a space, a suffix, a shortened name or another model.
+- This is a compatibility rule taken from the public catalogue. It is not
+  evidence of the name that an earlier refused answer carried.
+- All other checks stay: one row per input, integer indexes `0..n-1` once,
+  4096 finite numbers per row, a usable length of the first 1536, at most 20
+  inputs, a 30 second attempt timeout, at most 2 transport retries. A refused
+  answer is never retried automatically.
+- The adapter reports only the class. The unchecked value, the provider body,
+  headers, input text and keys never go into an error, a log line or a
+  response. Each provider call logs one `embedding_identity` line with its
+  class before the vectors are checked, and one `embedding_checked` line only
+  when every check passed. The two lines of one call share a `call_id`.
+
 ## What changes, and what must not
 
 - Changes: `knowledge_chunks.embedding`, `knowledge_chunks.embedding_model`,
@@ -39,7 +63,8 @@ bill again; see "Billing limits".
   # delete "$HEADERS_FILE" at the end of the session
   ```
 
-- Every admin call below goes through the script `$OP`. It sends the body on
+- Every admin call below goes through the script `$OP`, except the first
+  `embed_batch` of a run (see step 4). It sends the body on
   stdin, never prints the header file, and stops (nonzero exit) on a transport
   error, any non-2xx status, a body that is not a JSON object, an `error` field,
   an invalid UUID, a counter that does not add up, or a status that does not
@@ -58,7 +83,10 @@ bill again; see "Billing limits".
 
 All operations need the service-role key. Anything else is `401`.
 A refusal by the database is `409` with the message. A provider failure is
-`502` with a sanitized message (never a provider body or a key).
+`502` with fixed fields only: `error` (fixed text), `category` (`network`,
+`http` or `response`), `http_status` for an HTTP refusal, and `identity` (one of
+the six classes) when the answer was read far enough to classify its model.
+There is never a provider body, an unchecked model value or a key.
 
 | operation | extra fields | does |
 | --- | --- | --- |
@@ -66,7 +94,7 @@ A refusal by the database is `409` with the message. A provider failure is
 | `begin` | | freezes the corpus (see below); returns `run_id` and the inventory |
 | `acquire_worker` | `run_id` | returns `worker_token`; `409` while another worker is live |
 | `release_worker` | `run_id`, optional `worker_token` | frees the run. An ABSENT token is the operator's forced release. A token that is present but not a valid UUID is refused with `400` and changes nothing. The CLI script also refuses a supplied empty or malformed token, and more than two arguments, before it sends any request |
-| `embed_batch` | `run_id`, `worker_token` | takes at most 20 not-yet-embedded chunks in id order, makes ONE embedding request, stages the vectors; returns `sent`, `staged`, `remaining` |
+| `embed_batch` | `run_id`, `worker_token` | takes at most 20 not-yet-embedded chunks in id order, makes ONE embedding request, stages the vectors; returns `sent`, `staged`, `remaining` and, when `sent` is positive, the `receipt` (see "Receipt gate") |
 | `activate` | `run_id`, `worker_token` | the atomic cutover |
 | `abort` | `run_id` | back to legacy serving; **writers stay paused** (see "Abort") |
 | `enable_writers` | | writers resume (only in phase legacy or qwen) |
@@ -76,6 +104,41 @@ A refusal by the database is `409` with the message. A provider failure is
 `embed_batch` never reads text from the request. It only sends text that is
 already in the frozen snapshot. A request body cannot make the function embed
 arbitrary text.
+
+### Receipt gate
+
+A positive `embed_batch` answer carries the receipt of the one provider
+response whose vectors it staged:
+
+```json
+{"sent": 20, "staged": 20, "remaining": 331,
+ "receipt": {"model": "qwen/qwen3-embedding-8b",
+             "contract": "qwen3-8b-prefix1536-l2-v1",
+             "identity": "canonical",
+             "checked": 20, "native_dimensions": 4096, "stored_dimensions": 1536}}
+```
+
+A batch counts as checked only when all of these hold:
+
+- HTTP 200, a JSON object, no `error` field;
+- `receipt.model` is `qwen/qwen3-embedding-8b`, `receipt.contract` is
+  `qwen3-8b-prefix1536-l2-v1`, `receipt.identity` is `canonical` or
+  `catalog_hf`, `receipt.native_dimensions` is 4096 and
+  `receipt.stored_dimensions` is 1536;
+- `sent` is from 1 to 20, `receipt.checked` equals `sent`, `staged` equals
+  `sent`, and `remaining` equals the missing count before the call minus
+  `sent`;
+- the coverage check in the database (block 5 of the preflight) agrees.
+
+A missing or different receipt, or a receipt without the staged change, means
+stop before the next paid batch. The completion answer (`sent` 0) makes no
+provider request and has no receipt. A `502` has no receipt and staged
+nothing. The receipt proves that the deployed adapter checked the answer. It
+does not prove the price, the provider that served it, freshness or answer
+quality.
+
+The script's `drain` checks the counters, not the receipt. Use it only after
+the first batch of the run passed the receipt gate.
 
 ## Order
 
@@ -153,11 +216,15 @@ bash "$OP" drain "$RUN" "$TOKEN"
   chunk count of step 0 (351). Do not go on to step 5 until all four hold.
 - Expect 18 requests for 351 chunks: 17 of 20 and one of 11, then one empty
   answer (`sent` 0).
-- The FIRST batch is the contract check. A response whose model is not
-  `qwen/qwen3-embedding-8b`, whose vectors are not 4096 coordinates, or whose
-  indexes do not cover the input is refused by the adapter (HTTP 502,
-  "Invalid embedding response"). Nothing is staged and the script exits 1.
-  Run `bash "$OP" abort "$RUN"` and stop. Do not change the adapter to accept it.
+- The FIRST batch is the contract check. Send it alone, as one `embed_batch`
+  request through the parent's reviewed single-request procedure (the script
+  has no single-batch command), and apply the receipt gate before `drain`. A response whose model is not
+  one of the two accepted names (see "Response identity contract"), whose
+  vectors are not 4096 coordinates, or whose indexes do not cover the input is
+  refused by the adapter (HTTP 502, "Invalid embedding response", with the
+  identity class). Nothing is staged. Stop. Do not resend, and do not change the
+  adapter to accept it. Record the refusal (it may have been charged), then
+  choose `abort` or a reviewed contract change on purpose.
 - A retry can charge again. See "Billing limits".
 - Live rows do not change during this step. The legacy index keeps serving.
 
@@ -207,7 +274,8 @@ either, run `bash "$OP" status` before anything else.
 | the loop stopped, the worker is gone | wait 300 s, or `release_worker <run>` with only the run id, then `acquire` and `drain` again; it sends only chunks that still have no vector |
 | `HTTP 409` "worker lease lost" | another worker took the run; use the new token or release it |
 | `release_worker` with a mistyped or empty token (`""`) | refused (exit 1, no request sent by the script; `400` if sent directly). The live worker keeps the lease. Use the exact token, or leave the argument out for the forced release |
-| `HTTP 502` from the provider | run `drain` again; nothing was staged by the failed call |
+| `HTTP 502` with `category` `network` or `http` | nothing was staged by the failed call; run `drain` again |
+| `HTTP 502` with `category` `response` | the answer broke the contract; nothing was staged. Stop and do not resend (see step 4) |
 | transport error or timeout | the call may have staged its batch. `status` shows `run_missing`; then run `drain` again |
 | `HTTP 409` on `activate`: incomplete | run `drain` until it exits 0 |
 | `HTTP 409` on `activate`: corpus changed | `abort`, find the writer, begin a new run |
@@ -295,7 +363,8 @@ test database with stub vectors, the parent must exercise:
   (step 1.3), and the complete model distribution (step 7).
 
 The provider's real response identity and native size are proved only by the
-first live batch (step 4).
+first live batch (step 4) and its receipt. The local tests use a stub provider
+that answers with each accepted name.
 
 ## Retention
 
