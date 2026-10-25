@@ -1,0 +1,6 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn: "Got it"
+- tapOn:
+    point: "95%,93%"
+- waitForAnimationToEnd

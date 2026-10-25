@@ -1,0 +1,9 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    point: "84%,99%"
+- swipe:
+    start: "50%,52%"
+    end: "50%,98%"
+    duration: 400
+- waitForAnimationToEnd

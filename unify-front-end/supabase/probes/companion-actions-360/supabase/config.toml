@@ -1,0 +1,47 @@
+# Disposable local stack for the Companion actions compatibility probe (#360).
+# Not the app's config: separate project id and ports so it cannot touch the
+# default local stack or any hosted project.
+project_id = "unify-companion-probe-360"
+
+[api]
+enabled = true
+port = 55321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 55322
+shadow_port = 55320
+major_version = 17
+
+[db.migrations]
+enabled = true
+[db.seed]
+enabled = false
+
+[realtime]
+enabled = false
+[studio]
+enabled = false
+[local_smtp]
+enabled = false
+[storage]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+jwt_expiry = 3600
+enable_signup = true
+minimum_password_length = 6
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+[edge_runtime]
+enabled = true
+policy = "per_worker"
+
+[functions.companion-actions]
+verify_jwt = true
