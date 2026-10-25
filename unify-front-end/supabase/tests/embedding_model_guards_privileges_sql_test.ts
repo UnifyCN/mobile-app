@@ -21,6 +21,7 @@ const FUNCTIONS = [
   'match_chunks(vector, double precision, integer, text)',
   'match_chunks(vector, double precision, integer)',
   'claim_crawl_source(bigint, integer)',
+  'claim_crawl_source(bigint, integer, text)',
   'stage_knowledge_chunks(bigint, uuid, jsonb, integer)',
   'stage_knowledge_chunks(bigint, uuid, jsonb, integer, text)',
   'promote_knowledge_generation(bigint, uuid, text, jsonb, text, integer, timestamptz)',

@@ -48,8 +48,15 @@ export interface IngestStore {
   /** Only an enabled source may match. */
   findEnabledCrawlSourceByUrl(url: string): Promise<CrawlSource | null>;
   findDocument(url: string): Promise<StoredDocument | null>;
-  /** A token for this refresh, or null while another call holds the source. */
-  claimSource(sourceId: number, leaseSeconds: number): Promise<string | null>;
+  /**
+   * A token for this refresh, or null while another call holds the source,
+   * writers are paused or `embeddingModel` is not the model being served.
+   */
+  claimSource(
+    sourceId: number,
+    leaseSeconds: number,
+    embeddingModel: string
+  ): Promise<string | null>;
   /**
    * Stores one batch of at most 20 chunks and renews the lease. Throws when
    * writers are paused or `embeddingModel` is not the model being served.

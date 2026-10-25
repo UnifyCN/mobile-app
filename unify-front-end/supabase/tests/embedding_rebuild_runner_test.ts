@@ -418,3 +418,72 @@ Deno.test(
     }
   }
 );
+
+// Falsifier: a supplied worker_token that is not a valid UUID must never act as
+// the operator's forced release. Only an absent token releases by force. The
+// live owner keeps the lease after every malformed request.
+Deno.test(
+  'a malformed worker_token is refused with 400 and the live lease stays held',
+  async () => {
+    const h = await harness();
+    try {
+      await seedStatedCorpus(h.db);
+      const run = (await h.admin('begin')).body.run_id as string;
+      const token = (await h.admin('acquire_worker', { run_id: run })).body
+        .worker_token as string;
+      const owner = () =>
+        rows<{ worker_token: string | null; live: boolean | null }>(
+          h.db,
+          `select worker_token::text as worker_token, worker_expires_at > now() as live
+             from public.knowledge_embedding_cutover`
+        );
+      assertEquals(await owner(), [{ worker_token: token, live: true }]);
+
+      for (const bad of [
+        'mistyped-token',
+        '',
+        null,
+        42,
+        {},
+        token.slice(0, -1),
+        `${token} `,
+      ]) {
+        const r = await h.admin('release_worker', {
+          run_id: run,
+          worker_token: bad,
+        });
+        assertEquals(
+          [r.status, r.body.released],
+          [400, undefined],
+          String(bad)
+        );
+        assertEquals(
+          await owner(),
+          [{ worker_token: token, live: true }],
+          `the owner still holds the lease after ${JSON.stringify(bad)}`
+        );
+        assertEquals(
+          (await h.admin('acquire_worker', { run_id: run })).status,
+          409,
+          'a competing worker is still refused'
+        );
+      }
+
+      // A valid token releases; an absent token is the explicit forced release.
+      assertEquals(
+        (await h.admin('release_worker', { run_id: run, worker_token: token }))
+          .status,
+        200
+      );
+      const second = await h.admin('acquire_worker', { run_id: run });
+      assertEquals(second.status, 200);
+      assertEquals(
+        (await h.admin('release_worker', { run_id: run })).status,
+        200
+      );
+      assertEquals(await owner(), [{ worker_token: null, live: null }]);
+    } finally {
+      await h.db.close();
+    }
+  }
+);

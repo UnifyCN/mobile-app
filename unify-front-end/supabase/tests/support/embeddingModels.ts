@@ -120,7 +120,7 @@ export async function runBatch(
   const staged = await call<{ staged: number; remaining: number }>(
     db,
     `public.knowledge_embedding_stage_batch($1::uuid, $2::uuid, $3, $4, $5::jsonb, 300)`,
-    [run, token, 'qwen/qwen3-embedding-8b', CONTRACT, JSON.stringify(rows)]
+    [run, token, QWEN, CONTRACT, JSON.stringify(rows)]
   );
   return { ...staged, sent: rows.length };
 }

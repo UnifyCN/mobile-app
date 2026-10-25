@@ -60,10 +60,11 @@ export function createStore(supabase: SupabaseLike): IngestStore {
           }
         : null;
     },
-    async claimSource(sourceId, leaseSeconds) {
+    async claimSource(sourceId, leaseSeconds, embeddingModel) {
       const { data, error } = await supabase.rpc('claim_crawl_source', {
         p_source_id: sourceId,
         p_lease_seconds: leaseSeconds,
+        p_embedding_model: embeddingModel,
       });
       fail(error, 'Claiming the source');
       return (data as string | null) ?? null;

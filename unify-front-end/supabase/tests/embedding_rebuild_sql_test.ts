@@ -529,8 +529,8 @@ Deno.test(
       );
       const lease = (await call<string>(
         db,
-        `public.claim_crawl_source($1, 300)::text`,
-        [sourceId]
+        `public.claim_crawl_source($1, 300, $2)::text`,
+        [sourceId, QWEN]
       ))!;
       await db.query(
         `select public.stage_knowledge_chunks($1, $2::uuid, $3::jsonb, 300, $4)`,
@@ -639,7 +639,7 @@ Deno.test(
 
 // Falsifier: abort that leaves writers paused, or begin that overwrites a run.
 Deno.test(
-  'abort resumes legacy writers, keeps the staged vectors, and allows a new run',
+  'abort serves legacy, keeps writers paused and the staged vectors, and allows a new run',
   async () => {
     const db = await openIngestDb();
     try {
@@ -655,7 +655,7 @@ Deno.test(
       assertEquals(await control(db), {
         phase: 'legacy',
         serving_model: LEGACY,
-        writers_paused: false,
+        writers_paused: true,
       });
       assertEquals(
         (
@@ -678,6 +678,72 @@ Deno.test(
         Error,
         'not the active run'
       );
+    } finally {
+      await db.close();
+    }
+  }
+);
+
+// Falsifier: the return from rollback must keep writers paused while the read
+// contract is checked, and the Qwen query caller must read nothing until the
+// switch back. The documented order is: rollback, Qwen query deployed, return,
+// read checks with writers paused, then enable writers.
+Deno.test(
+  'return from rollback keeps writers paused until the Qwen read checks pass',
+  async () => {
+    const db = await openIngestDb();
+    try {
+      await smallCorpus(db);
+      const [{ id: sourceId }] = await rows<{ id: number }>(
+        db,
+        `select id::int as id from public.crawl_sources where source_kind = 'html' order by id limit 1`
+      );
+      const run = (await begin(db)).run_id;
+      const token = (await acquire(db, run))!;
+      await drain(db, run, token);
+      await activate(db, run, token);
+      await call(db, `public.knowledge_embedding_enable_writers()`);
+      await call(db, `public.knowledge_embedding_rollback()`);
+
+      const read = (model: string, v: string) =>
+        rows<{ chunk_text: string }>(
+          db,
+          `select chunk_text from public.match_chunks($1::vector, 0.0, 20, 'Ontario', $2) order by id`,
+          [v, model]
+        );
+      const claimAs = (model: string) =>
+        call<string | null>(
+          db,
+          `public.claim_crawl_source($1, 300, $2)::text`,
+          [sourceId, model]
+        );
+
+      // Rollback: the prior legacy caller reads; a Qwen caller deployed early
+      // reads nothing.
+      assertEquals(
+        (await read(LEGACY, embedding(0.9))).map(r => r.chunk_text),
+        ['alpha', 'beta']
+      );
+      assertEquals(await read(QWEN, qwenVector(0.6)), []);
+
+      await call(db, `public.knowledge_embedding_return_to_qwen()`);
+
+      // Writers are still paused: the compatible read contract can be checked
+      // before any ingester runs.
+      assertEquals(await control(db), {
+        phase: 'qwen',
+        serving_model: QWEN,
+        writers_paused: true,
+      });
+      assertEquals(
+        (await read(QWEN, qwenVector(0.6))).map(r => r.chunk_text).sort(),
+        ['alpha', 'beta']
+      );
+      assertEquals(await read(LEGACY, embedding(0.9)), []);
+      assertEquals(await claimAs(QWEN), null, 'no ingester yet');
+
+      await call(db, `public.knowledge_embedding_enable_writers()`);
+      assert((await claimAs(QWEN)) !== null, 'writers resumed');
     } finally {
       await db.close();
     }

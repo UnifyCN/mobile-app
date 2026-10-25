@@ -98,7 +98,12 @@ export async function handleRebuildAction(
       }
       case 'release_worker': {
         if (!run) return json({ error: 'run_id is required' }, 400);
-        // A missing token is the operator's controlled release.
+        // Only an absent token is the operator's controlled release. A token
+        // that is present but not a UUID is a mistake, never a forced release,
+        // or a typo would discard the live worker's paid batch.
+        if (Object.hasOwn(body, 'worker_token') && token === null) {
+          return json({ error: 'worker_token must be a valid UUID' }, 400);
+        }
         await store.releaseWorker(run, token);
         return json({ released: true });
       }

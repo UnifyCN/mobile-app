@@ -2,6 +2,7 @@ import {
   assert,
   assertEquals,
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
+import { EMBEDDING_MODEL } from '../../_shared/embeddings.ts';
 import { ingestSource } from './ingest.ts';
 import type { CrawlSource } from './pickDueSources.ts';
 import { makeHarness, makeSource } from './testSupport.ts';
@@ -504,7 +505,7 @@ Deno.test(
     const h = makeHarness([source], {
       [EE_URL]: fixtureText('ee_rounds_sample.json'),
     });
-    await h.store.claimSource(source.id);
+    await h.store.claimSource(source.id, 300, EMBEDDING_MODEL);
 
     const result = await ingestSource(source, h.deps);
 

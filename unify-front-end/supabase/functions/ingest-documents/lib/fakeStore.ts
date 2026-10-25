@@ -92,8 +92,12 @@ export class FakeStore implements IngestStore {
         : null
     );
   }
-  claimSource(sourceId: number) {
-    if (this.writersPaused || this.leases.has(sourceId)) {
+  claimSource(sourceId: number, _leaseSeconds: number, model: string) {
+    if (
+      this.writersPaused ||
+      model !== this.servingModel ||
+      this.leases.has(sourceId)
+    ) {
       return Promise.resolve(null);
     }
     const token = `token-${this.nextToken++}`;

@@ -3,10 +3,10 @@
 -- (qwen/qwen3-embedding-8b through OpenRouter, kept as the first 1536 of 4096
 -- coordinates and scaled to length 1; contract qwen3-8b-prefix1536-l2-v1).
 --
--- Why: the direct OpenAI balance is exhausted and every ingest-documents run
--- fails. Qwen vectors and OpenAI vectors have the same length but no common
--- meaning, so a search must never compare one with the other, whatever the
--- length says. Every stored vector therefore carries the model that made it,
+-- Why: the ingestion and tips functions move from direct OpenAI embedding calls
+-- to OpenRouter. Qwen vectors and OpenAI vectors have the same length but no
+-- common meaning, so a search must never compare one with the other, whatever
+-- the length says. Every stored vector therefore carries the model that made it,
 -- and every read or write names the model it expects.
 --
 -- What this migration does (additive; nothing is dropped):
@@ -23,7 +23,10 @@
 --           stay callable and always address the legacy model, never the
 --           serving model, so an old caller gets old rows or none.
 --   PART 2  Guarded writers. claim_crawl_source returns null (busy) while
---           writers are paused. stage_knowledge_chunks, promote_knowledge_
+--           writers are paused or when the caller's embedding model is not
+--           the serving model (the old two-argument form names the legacy
+--           model), so a refused caller fetches nothing and stamps nothing.
+--           stage_knowledge_chunks, promote_knowledge_
 --           generation and refresh_knowledge_metadata gain an explicit-model
 --           overload that refuses a paused writer and any model that is not
 --           the serving model; promotion also refuses staged rows of another
@@ -323,11 +326,14 @@ grant execute on function public.match_chunks(vector, double precision, integer,
 -- A normal write holds the shared control lock until it commits, so a freeze
 -- waits for writes in flight and a write that starts later sees the freeze.
 
--- A claim is refused (null: the caller treats the source as busy and does no
--- external work) while writers are paused.
+-- A claim is refused (null: the caller treats the source as busy, stamps
+-- nothing and does no external work) while writers are paused, and when the
+-- caller's embedding model is not the one being served. The caller therefore
+-- never fetches a page or buys vectors that a later write would refuse.
 create or replace function public.claim_crawl_source(
   p_source_id bigint,
-  p_lease_seconds integer
+  p_lease_seconds integer,
+  p_embedding_model text
 )
 returns uuid
 language plpgsql
@@ -336,13 +342,14 @@ as $$
 declare
   v_token uuid;
   v_paused boolean;
+  v_serving text;
 begin
   if p_lease_seconds is null or p_lease_seconds < 1 then
     raise exception 'Lease seconds must be positive';
   end if;
-  select writers_paused into v_paused
+  select writers_paused, serving_model into v_paused, v_serving
     from public.knowledge_embedding_cutover for share;
-  if v_paused then
+  if v_paused or p_embedding_model is distinct from v_serving then
     return null;
   end if;
   insert into public.crawl_source_leases as l
@@ -368,6 +375,21 @@ begin
    where crawl_source_id = p_source_id and token <> v_token;
   return v_token;
 end;
+$$;
+
+-- The old signature always names the legacy model, never the serving one, so
+-- an old ingester gets a claim only while the legacy index serves.
+create or replace function public.claim_crawl_source(
+  p_source_id bigint,
+  p_lease_seconds integer
+)
+returns uuid
+language sql
+set search_path = ''
+as $$
+  select public.claim_crawl_source(
+    p_source_id, p_lease_seconds, 'openai/text-embedding-3-small'::text
+  );
 $$;
 
 create or replace function public.stage_knowledge_chunks(
@@ -709,6 +731,8 @@ as $$
   );
 $$;
 
+revoke execute on function public.claim_crawl_source(bigint, integer, text)
+  from public, anon, authenticated;
 revoke execute on function public.claim_crawl_source(bigint, integer)
   from public, anon, authenticated;
 revoke execute on function public.stage_knowledge_chunks(bigint, uuid, jsonb, integer)
@@ -723,6 +747,7 @@ revoke execute on function public.refresh_knowledge_metadata(bigint, uuid, text,
   from public, anon, authenticated;
 revoke execute on function public.refresh_knowledge_metadata(bigint, uuid, text, jsonb, jsonb, text)
   from public, anon, authenticated;
+grant execute on function public.claim_crawl_source(bigint, integer, text) to service_role;
 grant execute on function public.claim_crawl_source(bigint, integer) to service_role;
 grant execute on function public.stage_knowledge_chunks(bigint, uuid, jsonb, integer) to service_role;
 grant execute on function public.stage_knowledge_chunks(bigint, uuid, jsonb, integer, text) to service_role;
@@ -1123,7 +1148,10 @@ begin
 end;
 $$;
 
--- Back to legacy serving and legacy writers. The run's rows stay for inspection.
+-- Back to legacy serving. Writers stay paused until enable_writers is called
+-- on purpose. A claim also names its embedding model, so a deployed Qwen
+-- ingester cannot do external work while legacy serves, even after that call.
+-- The run's rows stay for inspection.
 create or replace function public.knowledge_embedding_abort(p_run uuid)
 returns void
 language plpgsql
@@ -1138,7 +1166,7 @@ begin
   end if;
   update public.knowledge_embedding_cutover
      set phase = 'legacy',
-         writers_paused = false,
+         writers_paused = true,
          worker_token = null,
          worker_expires_at = null,
          updated_at = now();

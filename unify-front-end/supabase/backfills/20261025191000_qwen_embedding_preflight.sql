@@ -51,3 +51,20 @@ select vector_dims(embedding) as dimensions, count(*)
 -- every chunk and document labelled qwen/qwen3-embedding-8b, no chunk without a
 -- vector.
 select public.knowledge_embedding_status();
+
+-- 5. Rebuild coverage for one run, from the database (not from the loop's own
+-- counters). Replace RUN_ID with the run id. Run it after the drain and before
+-- the Qwen query is deployed. Expect: missing 0, wrong_dimensions 0,
+-- not_frozen 0 (every live chunk is in the frozen set), run_rows equal to the
+-- chunk count of step 0 (351).
+select
+  (select count(*) from public.knowledge_embedding_rebuild_rows
+    where run_id = 'RUN_ID') as run_rows,
+  (select count(*) from public.knowledge_embedding_rebuild_rows
+    where run_id = 'RUN_ID' and qwen_embedding is null) as missing,
+  (select count(*) from public.knowledge_embedding_rebuild_rows
+    where run_id = 'RUN_ID' and qwen_embedding is not null
+      and vector_dims(qwen_embedding) <> 1536) as wrong_dimensions,
+  (select count(*) from public.knowledge_chunks kc
+    where not exists (select 1 from public.knowledge_embedding_rebuild_rows r
+                       where r.run_id = 'RUN_ID' and r.chunk_id = kc.id)) as not_frozen;

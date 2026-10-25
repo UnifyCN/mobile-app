@@ -31,7 +31,9 @@ const claim = async (db: Db, id: number) =>
   (
     await rows<{ token: string | null }>(
       db,
-      `select public.claim_crawl_source($1, 300)::text as token`,
+      `select public.claim_crawl_source(
+        $1, 300, (select serving_model from public.knowledge_embedding_cutover)
+      )::text as token`,
       [id]
     )
   )[0].token;
@@ -406,6 +408,58 @@ Deno.test(
         'lease lost'
       );
       assertEquals(await chunks(db), []);
+    } finally {
+      await db.close();
+    }
+  }
+);
+
+// Falsifier: a claim that ignores the caller's model lets an ingester of the
+// other model fetch a page and buy vectors that its later write must refuse.
+Deno.test(
+  'a claim names the model: the wrong model and the old signature get no lease while Qwen serves',
+  async () => {
+    const db = await openIngestDb();
+    try {
+      const { id } = await htmlSource(db);
+      const claimAs = async (model: string) =>
+        (
+          await rows<{ token: string | null }>(
+            db,
+            `select public.claim_crawl_source($1, 300, $2)::text as token`,
+            [id, model]
+          )
+        )[0].token;
+      const leases = () => rows(db, `select 1 from public.crawl_source_leases`);
+
+      // Legacy serves: the Qwen ingester is refused, the old signature works.
+      assertEquals(await claimAs(QWEN), null);
+      assertEquals(await leases(), []);
+      const legacy = (
+        await rows<{ token: string | null }>(
+          db,
+          `select public.claim_crawl_source($1, 300)::text as token`,
+          [id]
+        )
+      )[0].token;
+      assert(legacy !== null);
+      await release(db, id, legacy);
+
+      // Qwen serves: the old signature and the legacy name are refused.
+      await setControl(db, 'qwen', QWEN);
+      assertEquals(await claimAs(LEGACY), null);
+      assertEquals(
+        (
+          await rows<{ token: string | null }>(
+            db,
+            `select public.claim_crawl_source($1, 300)::text as token`,
+            [id]
+          )
+        )[0].token,
+        null
+      );
+      assertEquals(await leases(), []);
+      assert((await claimAs(QWEN)) !== null);
     } finally {
       await db.close();
     }

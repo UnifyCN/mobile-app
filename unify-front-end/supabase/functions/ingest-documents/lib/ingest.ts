@@ -40,7 +40,11 @@ export async function ingestSource(
 ): Promise<SourceResult> {
   const startedAt = performance.now();
   const attemptedAt = deps.now().toISOString();
-  const token = await deps.store.claimSource(source.id, LEASE_SECONDS);
+  const token = await deps.store.claimSource(
+    source.id,
+    LEASE_SECONDS,
+    EMBEDDING_MODEL
+  );
   if (token === null) {
     // The other call stamps and logs its own attempt.
     const busy: SourceResult = {

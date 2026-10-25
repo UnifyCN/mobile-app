@@ -8,8 +8,8 @@ run on a hosted project.
 
 Model: `qwen/qwen3-embedding-8b` through OpenRouter. Vectors are the first 1536 of
 4096 native coordinates, scaled to length 1. Contract id
-`qwen3-8b-prefix1536-l2-v1`. The existing OpenRouter balance pays for it. Do not
-add credits.
+`qwen3-8b-prefix1536-l2-v1`. OpenRouter bills it per input token. Retries can
+bill again; see "Billing limits".
 
 ## What changes, and what must not
 
@@ -20,27 +20,38 @@ add credits.
   `published_at`, source attempt stamps, cron.
 - A query for one model never sees a row of the other model.
 
-## Credentials
+## Credentials and the operator script
 
 - The edge function reads `OPENROUTER_API_KEY` from its own secrets. The
   operator never needs that key. Do not print it, log it or pass it as an
   argument.
 - The operator needs the service-role key only to call `ingest-documents`.
   Take it from the Vault caller path into an environment variable. Never put
-  it in an argument list. `curl` reads a header from a file (mode 0600):
+  it in an argument list. `curl` reads the header lines from a file (mode 0600)
+  that the shell builtin `printf` writes, so the key is in no process list:
 
   ```bash
   umask 077
-  HEADERS="$(mktemp)"
-  printf 'Authorization: Bearer %s\nContent-Type: application/json\n' "$SERVICE_ROLE_KEY" > "$HEADERS"
-  call() { # usage: call '<json body>'
-    curl -sS -X POST "$FUNCTION_URL" -H @"$HEADERS" --data "$1"
-  }
-  # delete "$HEADERS" at the end of the session
+  export HEADERS_FILE="$(mktemp)"
+  printf 'Authorization: Bearer %s\nContent-Type: application/json\n' "$SERVICE_ROLE_KEY" > "$HEADERS_FILE"
+  export FUNCTION_URL=https://wrbauxutkysljmsqojts.supabase.co/functions/v1/ingest-documents
+  OP=unify-front-end/supabase/backfills/20261025191600_qwen_embedding_rebuild.sh
+  # delete "$HEADERS_FILE" at the end of the session
   ```
 
-  `FUNCTION_URL` is `https://wrbauxutkysljmsqojts.supabase.co/functions/v1/ingest-documents`.
-- Every call below is `call '{"action":"embedding_rebuild","operation":"..."}'`.
+- Every admin call below goes through the script `$OP`. It sends the body on
+  stdin, never prints the header file, and stops (nonzero exit) on a transport
+  error, any non-2xx status, a body that is not a JSON object, an `error` field,
+  an invalid UUID, a counter that does not add up, or a status that does not
+  show the expected phase and zero missing vectors. **Read the exit code.**
+  Only exit 0 means the step passed; anything else means stop and read
+  "Interruption recovery".
+- Dry run first. It runs the real script against a fake `curl` (no network, no
+  key, no database): `bash unify-front-end/supabase/backfills/20261025191700_qwen_embedding_rebuild_dry_run.sh`.
+  Expect `dry run: 30 passed, 0 failed`. Any other result means do not start.
+- Commands: `status`, `begin`, `acquire <run>`, `drain <run> <token>`,
+  `activate <run> <token>`, `abort <run>`, `release_worker <run> [token]`,
+  `enable_writers`, `rollback`, `return_to_qwen`.
 
 ## Admin interface (ingest-documents)
 
@@ -53,10 +64,10 @@ A refusal by the database is `409` with the message. A provider failure is
 | `status` | | phase, serving model, writers paused, run counts, model distribution |
 | `begin` | | freezes the corpus (see below); returns `run_id` and the inventory |
 | `acquire_worker` | `run_id` | returns `worker_token`; `409` while another worker is live |
-| `release_worker` | `run_id`, optional `worker_token` | frees the run; without a token it is the operator's forced release |
+| `release_worker` | `run_id`, optional `worker_token` | frees the run. An ABSENT token is the operator's forced release. A token that is present but not a valid UUID is refused with `400` and changes nothing |
 | `embed_batch` | `run_id`, `worker_token` | takes at most 20 not-yet-embedded chunks in id order, makes ONE embedding request, stages the vectors; returns `sent`, `staged`, `remaining` |
 | `activate` | `run_id`, `worker_token` | the atomic cutover |
-| `abort` | `run_id` | back to legacy serving and legacy writers |
+| `abort` | `run_id` | back to legacy serving; **writers stay paused** (see "Abort") |
 | `enable_writers` | | writers resume (only in phase legacy or qwen) |
 | `rollback` | | serves the saved legacy snapshot; writers stay paused |
 | `return_to_qwen` | | serves the retained Qwen index again |
@@ -127,23 +138,26 @@ until the cutover. That is the designed behaviour, not a fault.
 
 ```bash
 RUN=<run_id>
-TOKEN=$(call "{\"action\":\"embedding_rebuild\",\"operation\":\"acquire_worker\",\"run_id\":\"$RUN\"}" | jq -r .worker_token)
-while :; do
-  OUT=$(call "{\"action\":\"embedding_rebuild\",\"operation\":\"embed_batch\",\"run_id\":\"$RUN\",\"worker_token\":\"$TOKEN\"}")
-  echo "$OUT" | jq -c '{sent,staged,remaining,error}'
-  [ "$(echo "$OUT" | jq -r '.sent // 0')" = "0" ] && break
-done
+TOKEN="$(bash "$OP" acquire "$RUN")"
+bash "$OP" drain "$RUN" "$TOKEN"
 ```
 
+- `drain` stops on the first problem. It ends with exit 0 only after a `sent 0`
+  answer with `remaining 0` AND a `status` showing this run in phase `rebuilding`
+  with `run_missing` 0. Its `complete` line is not enough on its own: run the
+  database coverage check next.
+- Coverage check from the database: block 5 of
+  `20261025191000_qwen_embedding_preflight.sql` with the run id. Expect
+  `missing` 0, `wrong_dimensions` 0, `not_frozen` 0 and `run_rows` equal to the
+  chunk count of step 0 (351). Do not go on to step 5 until all four hold.
 - Expect 18 requests for 351 chunks: 17 of 20 and one of 11, then one empty
   answer (`sent` 0).
 - The FIRST batch is the contract check. A response whose model is not
   `qwen/qwen3-embedding-8b`, whose vectors are not 4096 coordinates, or whose
-  indexes do not cover the input is refused by the adapter (`502`,
-  "Invalid embedding response"). Nothing is staged. Keep legacy serving, call
-  `abort`, and stop. Do not change the adapter to accept it.
+  indexes do not cover the input is refused by the adapter (HTTP 502,
+  "Invalid embedding response"). Nothing is staged and the script exits 1.
+  Run `bash "$OP" abort "$RUN"` and stop. Do not change the adapter to accept it.
 - A retry can charge again. See "Billing limits".
-- Check progress at any time with `status`: `run_missing` falls to 0.
 - Live rows do not change during this step. The legacy index keeps serving.
 
 ### 5. Deploy the Qwen query (web-app)
@@ -154,10 +168,11 @@ Immediately before the cutover, deploy `rag-query` with the Qwen query adapter
 ### 6. Cutover
 
 ```bash
-call "{\"action\":\"embedding_rebuild\",\"operation\":\"activate\",\"run_id\":\"$RUN\",\"worker_token\":\"$TOKEN\"}"
+bash "$OP" activate "$RUN" "$TOKEN"
 ```
 
-One transaction. It refuses (`409`, no change) when any chunk has no vector,
+One transaction. Exit 0 prints the cutover counts (351 chunks, 33 documents).
+It refuses (HTTP 409, exit 1, no change) when any chunk has no vector,
 when the worker lease is lost, or when ANY document or chunk differs from the
 frozen snapshot (an upload, a delete, a metadata edit). A refusal for a changed
 corpus means a writer ran during the freeze. Find that writer. Do not merge
@@ -177,28 +192,55 @@ silently; take a new run only after `abort`.
 
 ### 8. Resume ingestion
 
-`enable_writers`. The hourly schedule is unchanged. Restoring crawl sources
-whose attempt was stamped while credits were exhausted is a separate, reviewed
+`bash "$OP" enable_writers`. The hourly schedule is unchanged. Restoring crawl sources
+whose attempt was stamped during earlier failed runs is a separate, reviewed
 parent step; this runbook does not do it.
 
 ## Interruption recovery
 
+The script exits 130 on Ctrl-C or a signal, and 1 on any other problem. After
+either, run `bash "$OP" status` before anything else.
+
 | situation | do |
 | --- | --- |
-| the loop stopped, the worker is gone | wait 300 s, or `release_worker` with only `run_id`, then `acquire_worker` and run the loop again; it sends only chunks that still have no vector |
-| `409` "worker lease lost" | another worker took the run; use the new token or release it |
-| `502` from the provider | run the same batch again; nothing was staged |
-| `409` on `activate`: incomplete | run the loop until `sent` is 0 |
-| `409` on `activate`: corpus changed | `abort`, find the writer, begin a new run |
-| the first batch fails the contract | `abort`; legacy serving and legacy writers resume |
+| the loop stopped, the worker is gone | wait 300 s, or `release_worker <run>` with only the run id, then `acquire` and `drain` again; it sends only chunks that still have no vector |
+| `HTTP 409` "worker lease lost" | another worker took the run; use the new token or release it |
+| `release_worker` with a mistyped token | refused (`400`, exit 1). The live worker keeps the lease. Use the exact token, or no token for the forced release |
+| `HTTP 502` from the provider | run `drain` again; nothing was staged by the failed call |
+| transport error or timeout | the call may have staged its batch. `status` shows `run_missing`; then run `drain` again |
+| `HTTP 409` on `activate`: incomplete | run `drain` until it exits 0 |
+| `HTTP 409` on `activate`: corpus changed | `abort`, find the writer, begin a new run |
+| the first batch fails the contract | `abort` (see below) |
 
 A stopped run leaves legacy serving and every committed Qwen batch intact.
 `abort` keeps the staged vectors for inspection (`knowledge_embedding_rebuild_rows`).
 A new `begin` creates a new run id and never overwrites an active run.
 
+## Abort
+
+`bash "$OP" abort "$RUN"` returns the control row to phase `legacy`, serving the
+legacy model, and keeps **writers paused**. The deployed ingester is the Qwen
+one. Legacy serving refuses its writes, so it must not fetch or buy vectors.
+
+- A claim now names its embedding model. While legacy serves, the Qwen ingester
+  gets no claim: it fetches nothing, calls no provider and does not stamp
+  `last_crawled_at`, so the source stays due. Its result is `skipped` with
+  "Another call is refreshing this source". This holds whether writers are
+  paused or not.
+- Pick one recovery path on purpose:
+  1. **Retry the Qwen move (normal).** Fix the cause, `begin` a new run, rebuild,
+     activate, then `enable_writers`. No ingestion runs until the cutover.
+  2. **Stay on legacy.** Writers stay paused and nothing is ingested. Resuming
+     legacy ingestion needs the direct OpenAI ingester back, which this runbook
+     does not authorize. Do not call `enable_writers` for this.
+- `enable_writers` after an abort is allowed in phase `legacy`, but with the
+  Qwen ingester deployed it only makes every claim report busy. It is not a
+  recovery step.
+- Check after an abort: `status` shows phase `legacy`, `writers_paused` true.
+
 ## Rollback
 
-`rollback` (or `select public.knowledge_embedding_rollback();`):
+`bash "$OP" rollback` (or `select public.knowledge_embedding_rollback();`):
 
 - serves the immutable legacy snapshot (the old chunks, their ids and their
   original dates) to legacy-model queries; Qwen queries get no rows;
@@ -206,12 +248,27 @@ A new `begin` creates a new run id and never overwrites an active run.
 - pauses writers; ingestion stays paused. It does not claim current freshness.
 
 To keep answering: redeploy the prior web `rag-query`, which embeds with the
-legacy model through OpenRouter. That uses the OpenRouter balance, not the
-exhausted OpenAI balance. Do not restore the direct OpenAI ingester.
+legacy model through OpenRouter. Do not restore the direct OpenAI ingester.
 
-To go back to Qwen after a rollback: `return_to_qwen` (it refuses unless the
-live index is entirely Qwen), then `enable_writers`. It does not re-embed
-anything.
+### Return from rollback to Qwen
+
+Order matters. Do not skip a step. Writers stay paused until step 4.
+
+1. **Deploy the Qwen `rag-query`** (web-app issue #187). Until step 2 it reads
+   no rows, because rollback still serves the legacy index. Keep that window
+   short.
+2. `bash "$OP" return_to_qwen`. It refuses unless the live index is entirely
+   Qwen. It does not re-embed anything and does not resume writers.
+3. **Read checks, writers still paused.** `status`: phase `qwen`, serving model
+   `qwen/qwen3-embedding-8b`, `writers_paused` true. Every chunk and document
+   labelled `qwen/qwen3-embedding-8b`, none without a vector. Ask the Companion
+   the manual answer questions of issue #182: answers carry their sources, an
+   Express Entry question shows its date and source, and an Ontario profile
+   gets no BC PNP content. A legacy-signature `match_chunks` call returns no rows.
+4. Only when step 3 passes: `bash "$OP" enable_writers`.
+
+If step 3 fails, do not enable writers. Run `rollback` again and restore the
+legacy `rag-query`.
 
 ## Billing limits
 

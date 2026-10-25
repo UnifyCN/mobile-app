@@ -367,9 +367,9 @@ Deno.test('the generations migration can run twice', async () => {
         where n.nspname = 'public' and p.proname = any($1)`,
       [FUNCTIONS.map(f => f.slice(0, f.indexOf('(')))]
     );
-    // Six names; the Qwen migration adds an explicit-model overload of stage,
-    // promote and refresh.
-    assertEquals(row.n, 9);
+    // Six names; the Qwen migration adds an explicit-model overload of claim,
+    // stage, promote and refresh.
+    assertEquals(row.n, 10);
   } finally {
     await db.close();
   }
