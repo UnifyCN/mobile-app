@@ -41,10 +41,30 @@ function isKeyedItem(value: unknown): value is Record<string, unknown> & {
   return isRecord(value) && typeof value._key === 'string';
 }
 
+function hasTranslatedSpans(block: Record<string, unknown>): boolean {
+  const children = block.children;
+  return (
+    Array.isArray(children) &&
+    children.length > 0 &&
+    children.every(
+      span =>
+        isKeyedItem(span) &&
+        span._type === 'span' &&
+        typeof span.text === 'string' &&
+        (span.marks === undefined ||
+          (Array.isArray(span.marks) &&
+            span.marks.every(mark => typeof mark === 'string')))
+    ) &&
+    (block.markDefs === undefined ||
+      (Array.isArray(block.markDefs) && block.markDefs.every(isKeyedItem)))
+  );
+}
+
 /**
  * Merge translated data into base content without letting a translation alter
- * keyed Sanity structure. Base order and `_key`s remain authoritative because
- * progress, saved answers and resume positions persist those identities.
+ * page, block or response structure. Their base order and keys remain
+ * authoritative for progress, saved answers and resume positions.
+ * Portable Text spans and their annotations belong to the translated paragraph.
  */
 function mergeTranslatedValue(base: unknown, translated: unknown): unknown {
   if (translated === null || translated === undefined) return base;
@@ -70,11 +90,19 @@ function mergeTranslatedValue(base: unknown, translated: unknown): unknown {
   if (isRecord(base)) {
     if (!isRecord(translated)) return base;
     const merged: Record<string, unknown> = { ...base };
+    // Span keys and annotations belong to the localized paragraph. Keep them
+    // together, while the paragraph and all progress identities keep base keys.
+    const isTextBlock = base._type === 'block' && translated._type === 'block';
     for (const [key, value] of Object.entries(translated)) {
       if (IDENTITY_FIELDS.has(key) || value === null || value === undefined) {
         continue;
       }
+      if (isTextBlock && (key === 'children' || key === 'markDefs')) continue;
       merged[key] = mergeTranslatedValue(base[key], value);
+    }
+    if (isTextBlock && hasTranslatedSpans(translated)) {
+      merged.children = translated.children;
+      merged.markDefs = translated.markDefs ?? base.markDefs;
     }
     return merged;
   }
