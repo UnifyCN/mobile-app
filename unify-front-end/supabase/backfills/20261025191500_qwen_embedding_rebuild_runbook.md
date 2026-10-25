@@ -48,7 +48,8 @@ bill again; see "Billing limits".
   "Interruption recovery".
 - Dry run first. It runs the real script against a fake `curl` (no network, no
   key, no database): `bash unify-front-end/supabase/backfills/20261025191700_qwen_embedding_rebuild_dry_run.sh`.
-  Expect `dry run: 30 passed, 0 failed`. Any other result means do not start.
+  Expect exactly `dry run: 59 passed, 0 failed` and exit 0. Any other result,
+  including a line that says `INVALID`, means do not start.
 - Commands: `status`, `begin`, `acquire <run>`, `drain <run> <token>`,
   `activate <run> <token>`, `abort <run>`, `release_worker <run> [token]`,
   `enable_writers`, `rollback`, `return_to_qwen`.

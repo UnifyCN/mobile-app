@@ -10,15 +10,23 @@
 # Revert: nothing to revert.
 #
 # Usage: bash 20261025191700_qwen_embedding_rebuild_dry_run.sh [script-path]
+# Runs on the macOS system Bash 3.2: no ${var^^}, no Bash 4 features.
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT="${1:-$HERE/20261025191600_qwen_embedding_rebuild.sh}"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
+# A shell error in this file (a bad substitution, a missing command) must never
+# end in a success summary. Stderr of the harness goes to a file, and the
+# summary refuses to pass when that file holds anything. Scenario output has its
+# own file, so an intended failure of the script under test does not land here.
+exec 3>&2 2>"$WORK/harness.err"
+EXPECTED_ASSERTIONS=59
 
 SENTINEL="SENTINEL-SERVICE-KEY-DO-NOT-PRINT"
 RUN="11111111-2222-4333-8444-555555555555"
 TOKEN="aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
+TOKEN_UPPER="AAAAAAAA-BBBB-4CCC-8DDD-EEEEEEEEEEEE"
 HEADERS="$WORK/headers"
 umask 077
 printf 'Authorization: Bearer %s\nContent-Type: application/json\n' "$SENTINEL" > "$HEADERS"
@@ -235,7 +243,7 @@ scenario "release_worker: a valid token is sent" ok "released" 1 release_worker 
 payload_has "release_worker: valid-token release sends the worker_token" \
   --arg run "$RUN" --arg tok "$TOKEN" '. == {action: "embedding_rebuild", operation: "release_worker", run_id: $run, worker_token: $tok}'
 FIXTURE="$REL"
-scenario "release_worker: an uppercase valid token is sent" ok "released" 1 release_worker "$RUN" "${TOKEN^^}"
+scenario "release_worker: an uppercase valid token is sent" ok "released" 1 release_worker "$RUN" "$TOKEN_UPPER"
 for bad in "" " " "   " "$TOKEN " " $TOKEN" "${TOKEN}"$'\n' "null" "undefined" "${TOKEN:0:35}" "${TOKEN}0"; do
   FIXTURE="$REL"
   label="$(printf '%q' "$bad")"
@@ -253,5 +261,15 @@ FIXTURE="$REL"
 scenario "release_worker: no run id is refused before any call" fail "run_id" 0 release_worker
 
 echo
+ran=$((pass + failn))
+if [ -s "$WORK/harness.err" ]; then
+  echo "harness shell errors:" >&3; cat "$WORK/harness.err" >&3
+  echo "dry run: INVALID, the harness hit a shell error ($ran of $EXPECTED_ASSERTIONS assertions ran)"
+  exit 1
+fi
+if [ "$ran" -ne "$EXPECTED_ASSERTIONS" ]; then
+  echo "dry run: INVALID, $ran assertions ran, expected $EXPECTED_ASSERTIONS (a case was skipped or added)"
+  exit 1
+fi
 echo "dry run: $pass passed, $failn failed"
 [ "$failn" -eq 0 ]
