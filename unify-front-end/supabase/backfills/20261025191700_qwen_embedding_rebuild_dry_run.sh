@@ -213,6 +213,45 @@ FIXTURE="200${T}{\"released\":true}
 scenario "release_worker: with a token" ok "released" 1 release_worker "$RUN" "$TOKEN"
 scenario "release_worker: a malformed token is refused before any call" fail "worker_token" 0 release_worker "$RUN" "mistyped-token"
 
+# release_worker: the token argument is either ABSENT (the operator's forced
+# release) or a valid UUID. A supplied empty, blank or malformed token must
+# fail before any request; "no payload" below is the count of admin calls.
+# payload_has <name> <jq args...> <filter>: the first admin payload of the last scenario.
+payload_has() {
+  if jq -e "${@:2}" "$WORK/fake/payload.1" >/dev/null 2>&1; then
+    pass=$((pass + 1)); echo "PASS  $1"
+  else
+    failn=$((failn + 1)); echo "FAIL  $1: payload was $(head -c 300 "$WORK/fake/payload.1" 2>/dev/null)"
+  fi
+}
+REL="200${T}{\"released\":true}
+"
+FIXTURE="$REL"
+scenario "release_worker: an omitted token is the forced release" ok "released" 1 release_worker "$RUN"
+payload_has "release_worker: forced release sends run_id and no worker_token" \
+  --arg run "$RUN" '. == {action: "embedding_rebuild", operation: "release_worker", run_id: $run}'
+FIXTURE="$REL"
+scenario "release_worker: a valid token is sent" ok "released" 1 release_worker "$RUN" "$TOKEN"
+payload_has "release_worker: valid-token release sends the worker_token" \
+  --arg run "$RUN" --arg tok "$TOKEN" '. == {action: "embedding_rebuild", operation: "release_worker", run_id: $run, worker_token: $tok}'
+FIXTURE="$REL"
+scenario "release_worker: an uppercase valid token is sent" ok "released" 1 release_worker "$RUN" "${TOKEN^^}"
+for bad in "" " " "   " "$TOKEN " " $TOKEN" "${TOKEN}"$'\n' "null" "undefined" "${TOKEN:0:35}" "${TOKEN}0"; do
+  FIXTURE="$REL"
+  label="$(printf '%q' "$bad")"
+  scenario "release_worker: supplied token [$label] is refused before any call" fail "worker_token" 0 release_worker "$RUN" "$bad"
+  [ ! -e "$WORK/fake/payload.1" ] && { pass=$((pass + 1)); echo "PASS  release_worker: token [$label] sent no admin payload"; } ||
+    { failn=$((failn + 1)); echo "FAIL  release_worker: token [$label] sent an admin payload"; }
+done
+FIXTURE="$REL"
+scenario "release_worker: an extra argument is refused before any call" fail "arguments" 0 release_worker "$RUN" "$TOKEN" extra
+FIXTURE="$REL"
+scenario "release_worker: an extra argument after an empty token is refused" fail "arguments" 0 release_worker "$RUN" "" extra
+FIXTURE="$REL"
+scenario "release_worker: an extra argument after the run id is refused (forced form)" fail "arguments" 0 release_worker "$RUN" "$TOKEN" "" 
+FIXTURE="$REL"
+scenario "release_worker: no run id is refused before any call" fail "run_id" 0 release_worker
+
 echo
 echo "dry run: $pass passed, $failn failed"
 [ "$failn" -eq 0 ]

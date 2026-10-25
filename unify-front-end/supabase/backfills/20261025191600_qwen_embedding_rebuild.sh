@@ -172,8 +172,11 @@ case "$command" in
     cmd_simple abort '.aborted == true' 'aborted true' "$1"
     echo "Writers stay PAUSED. Follow Abort in the runbook before enable_writers." ;;
   release_worker)
+    [ "$#" -le 2 ] || fail "release_worker takes <run_id> [worker_token]; got $# arguments"
     need_uuid run_id "${1:-}"
-    if [ -n "${2:-}" ]; then need_uuid worker_token "$2"; fi
+    # Presence, not content: an omitted token is the forced release; a token that
+    # is supplied but empty or malformed must stop before any request.
+    if [ "$#" -ge 2 ]; then need_uuid worker_token "$2"; fi
     cmd_simple release_worker '.released == true' 'released true' "$1" "${2:-}" ;;
   enable_writers)
     admin "$(payload enable_writers)"

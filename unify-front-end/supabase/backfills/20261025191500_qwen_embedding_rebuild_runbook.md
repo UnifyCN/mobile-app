@@ -64,7 +64,7 @@ A refusal by the database is `409` with the message. A provider failure is
 | `status` | | phase, serving model, writers paused, run counts, model distribution |
 | `begin` | | freezes the corpus (see below); returns `run_id` and the inventory |
 | `acquire_worker` | `run_id` | returns `worker_token`; `409` while another worker is live |
-| `release_worker` | `run_id`, optional `worker_token` | frees the run. An ABSENT token is the operator's forced release. A token that is present but not a valid UUID is refused with `400` and changes nothing |
+| `release_worker` | `run_id`, optional `worker_token` | frees the run. An ABSENT token is the operator's forced release. A token that is present but not a valid UUID is refused with `400` and changes nothing. The CLI script also refuses a supplied empty or malformed token, and more than two arguments, before it sends any request |
 | `embed_batch` | `run_id`, `worker_token` | takes at most 20 not-yet-embedded chunks in id order, makes ONE embedding request, stages the vectors; returns `sent`, `staged`, `remaining` |
 | `activate` | `run_id`, `worker_token` | the atomic cutover |
 | `abort` | `run_id` | back to legacy serving; **writers stay paused** (see "Abort") |
@@ -205,7 +205,7 @@ either, run `bash "$OP" status` before anything else.
 | --- | --- |
 | the loop stopped, the worker is gone | wait 300 s, or `release_worker <run>` with only the run id, then `acquire` and `drain` again; it sends only chunks that still have no vector |
 | `HTTP 409` "worker lease lost" | another worker took the run; use the new token or release it |
-| `release_worker` with a mistyped token | refused (`400`, exit 1). The live worker keeps the lease. Use the exact token, or no token for the forced release |
+| `release_worker` with a mistyped or empty token (`""`) | refused (exit 1, no request sent by the script; `400` if sent directly). The live worker keeps the lease. Use the exact token, or leave the argument out for the forced release |
 | `HTTP 502` from the provider | run `drain` again; nothing was staged by the failed call |
 | transport error or timeout | the call may have staged its batch. `status` shows `run_missing`; then run `drain` again |
 | `HTTP 409` on `activate`: incomplete | run `drain` until it exits 0 |
