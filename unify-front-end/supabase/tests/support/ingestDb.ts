@@ -9,6 +9,7 @@ export const INGEST_RELEASE_ORDER = [
   'crawl_sources_record_sources',
   'match_chunks_chunk_source_url',
   'ingest_refresh_generations',
+  'qwen_embedding_model_guards',
   'seed_province_crawl_sources',
   'seed_ircc_record_sources',
 ];
@@ -30,5 +31,21 @@ export async function openIngestDb(
     )![0]
   );
   for (const slug of order) await applyMigration(db, slug);
+  return db;
+}
+
+/**
+ * The shared database in the state after the Qwen cutover: Qwen serving and
+ * writers enabled. Tests that write through createStore use this, because the
+ * store always names the Qwen model.
+ */
+export async function openQwenIngestDb(
+  order: string[] = INGEST_RELEASE_ORDER
+): Promise<Db> {
+  const db = await openIngestDb(order);
+  await db.exec(
+    `update public.knowledge_embedding_cutover
+        set phase = 'qwen', serving_model = 'qwen/qwen3-embedding-8b'`
+  );
   return db;
 }

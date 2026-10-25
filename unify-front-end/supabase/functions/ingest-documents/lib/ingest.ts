@@ -1,3 +1,4 @@
+import { EMBEDDING_MODEL } from '../../_shared/embeddings.ts';
 import { chunkText } from './chunker.ts';
 import {
   chunkMetadata,
@@ -39,7 +40,11 @@ export async function ingestSource(
 ): Promise<SourceResult> {
   const startedAt = performance.now();
   const attemptedAt = deps.now().toISOString();
-  const token = await deps.store.claimSource(source.id, LEASE_SECONDS);
+  const token = await deps.store.claimSource(
+    source.id,
+    LEASE_SECONDS,
+    EMBEDDING_MODEL
+  );
   if (token === null) {
     // The other call stamps and logs its own attempt.
     const busy: SourceResult = {
@@ -119,6 +124,7 @@ async function crawlHtml(
   if (
     existing &&
     existing.contentHash === contentHash &&
+    existing.embeddingModel === EMBEDDING_MODEL &&
     (await store.refreshMetadata(source.id, attempt.token, {
       contentHash,
       documentPatch: {
@@ -127,6 +133,7 @@ async function crawlHtml(
         province: stamp.province,
       },
       chunkGroups: [{ metadata: chunkMetadata(stamp), indexes: null }],
+      embeddingModel: EMBEDDING_MODEL,
     }))
   ) {
     return { source_id: source.id, status: 'skipped' };
@@ -198,6 +205,7 @@ async function crawlRecords(
   if (
     existing &&
     existing.contentHash === contentHash &&
+    existing.embeddingModel === EMBEDDING_MODEL &&
     (await store.refreshMetadata(source.id, attempt.token, {
       contentHash,
       documentPatch,
@@ -205,6 +213,7 @@ async function crawlRecords(
         chunks.length === 0
           ? [{ metadata: {}, indexes: [] }]
           : groupByMetadata(chunks.map(chunk => chunk.metadata)),
+      embeddingModel: EMBEDDING_MODEL,
     }))
   ) {
     return { source_id: source.id, status: 'skipped' };
@@ -281,7 +290,8 @@ async function replaceChunks(
         embedding: embeddings[offset],
         metadata: chunk.metadata,
       })),
-      LEASE_SECONDS
+      LEASE_SECONDS,
+      EMBEDDING_MODEL
     );
   }
   await store.promoteGeneration(source.id, attempt.token, {
@@ -290,6 +300,7 @@ async function replaceChunks(
     contentHash,
     chunkCount: chunks.length,
     updatedAt: attempt.now,
+    embeddingModel: EMBEDDING_MODEL,
   });
   return {
     source_id: source.id,
