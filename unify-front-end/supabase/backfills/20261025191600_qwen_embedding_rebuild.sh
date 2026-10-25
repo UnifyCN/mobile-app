@@ -2,8 +2,9 @@
 # Operator script for the Qwen embedding rebuild (see the runbook of the same
 # date). It calls the administrative interface of ingest-documents and stops on
 # the first transport error, non-2xx status, malformed body, error field,
-# invalid token or counter that does not add up. It never proves success from
-# a missing field.
+# invalid token, counter that does not add up or embed_batch receipt that is not
+# exact. It never proves success from a missing field. Every embed_batch answer
+# is checked before the next request is sent.
 #
 # Credentials: the service-role key is NOT read here. HEADERS_FILE names a file
 # (mode 0600) holding the curl header lines; curl reads it with -H @file. The
@@ -16,7 +17,8 @@
 #   CURL          (optional) the curl binary; the dry run points it at a fake
 #
 # Usage: 20261025191600_qwen_embedding_rebuild.sh <command> [run_id] [worker_token]
-#   status | begin | acquire <run> | drain <run> <token> | activate <run> <token>
+#   status | begin | acquire <run> | batch <run> <token> | drain <run> <token>
+#   activate <run> <token>
 #   abort <run> | release_worker <run> [token] | enable_writers | rollback
 #   return_to_qwen
 # Exit 0 means every check of that command passed. Anything else means stop.
@@ -103,44 +105,128 @@ cmd_acquire() {
   printf '%s\n' "$token"
 }
 
+# The receipt contract of a positive embed_batch answer (runbook "Receipt gate").
+MODEL="qwen/qwen3-embedding-8b"
+CONTRACT="qwen3-8b-prefix1536-l2-v1"
+# An exact whole number as written in the body: 20.0, 2E+1 or "20" is not one.
+JQ_INT='def int: type == "number" and (tojson | test("^(0|[1-9][0-9]{0,8})$"));'
+
+# read_status <run>: sets ROWS and MISSING from the database, or exits. Absent
+# counts are refused, never read as zero.
+ROWS=""
+MISSING=""
+read_status() {
+  admin "$(payload status)"
+  local why
+  why="$(jq -r --arg run "$1" "$JQ_INT"'
+    if (.status | type) != "object" then "status body has no status object"
+    elif .status.run_id != $run then "status run_id is not this run"
+    elif .status.phase != "rebuilding" then "status phase is not rebuilding"
+    elif (.status.run_rows | int | not) or .status.run_rows < 1 then "status run_rows is not a positive whole number"
+    elif (.status.run_missing | int | not) then "status run_missing is not a whole number"
+    elif .status.run_missing > .status.run_rows then "status run_missing is more than run_rows"
+    else "ok" end' <<<"$RESP")"
+  [ "$why" = ok ] || fail "$why (check run_id, phase, run_rows, run_missing)"
+  ROWS="$(jq -r .status.run_rows <<<"$RESP")"
+  MISSING="$(jq -r .status.run_missing <<<"$RESP")"
+}
+
+# send_batch <run> <token> <missing before>: ONE embed_batch request. Sets SENT
+# and REMAINING, or exits before any other request. A positive answer must carry
+# the exact receipt; the empty answer must carry none. Used by batch and drain.
+SENT=""
+REMAINING=""
+send_batch() {
+  admin "$(payload embed_batch "$1" "$2")"
+  local why
+  why="$(jq -r --argjson prev "$3" --arg model "$MODEL" --arg contract "$CONTRACT" "$JQ_INT"'
+    if (.sent | int | not) or (.staged | int | not) or (.remaining | int | not) then
+      "response lacks valid counters (sent, staged and remaining must be whole numbers)"
+    elif .sent == 0 then
+      if (keys != ["remaining", "sent", "staged"]) then "the empty answer (sent 0) must hold only sent, staged and remaining, and no receipt"
+      elif .staged != 0 or .remaining != 0 then "sent 0 with staged \(.staged) and remaining \(.remaining) is not completion"
+      elif $prev != 0 then "sent 0 while \($prev) chunks are missing is not completion"
+      else "ok" end
+    elif .sent > 20 then "sent \(.sent) is more than 20 chunks"
+    elif .sent > $prev then "sent \(.sent) is more than the \($prev) missing chunks"
+    elif .staged != .sent then "staged \(.staged) differs from sent \(.sent)"
+    elif .remaining != $prev - .sent then "remaining \(.remaining) is not \($prev) missing minus sent \(.sent)"
+    elif (has("receipt") | not) then "a positive batch has no receipt"
+    elif (keys != ["receipt", "remaining", "sent", "staged"]) then "the answer holds fields other than sent, staged, remaining and receipt"
+    elif (.receipt | type) != "object" then "the receipt is not an object"
+    elif (.receipt | keys) != ["checked", "contract", "identity", "model", "native_dimensions", "stored_dimensions"] then
+      "the receipt fields are not exactly model, contract, identity, checked, native_dimensions and stored_dimensions"
+    elif .receipt.model != $model then "receipt model is not \($model)"
+    elif .receipt.contract != $contract then "receipt contract is not \($contract)"
+    elif .receipt.identity != "canonical" and .receipt.identity != "catalog_hf" then "receipt identity is not canonical or catalog_hf"
+    elif (.receipt.native_dimensions | int | not) or .receipt.native_dimensions != 4096 then "receipt native_dimensions is not 4096"
+    elif (.receipt.stored_dimensions | int | not) or .receipt.stored_dimensions != 1536 then "receipt stored_dimensions is not 1536"
+    elif (.receipt.checked | int | not) or .receipt.checked != .sent then "receipt checked is not equal to sent"
+    else "ok" end' <<<"$RESP" 2>/dev/null || echo "response could not be checked")"
+  [ "$why" = ok ] || fail "$why. Stop: send no other batch. Read Receipt gate and Interruption recovery in the runbook."
+  SENT="$(jq -r .sent <<<"$RESP")"
+  REMAINING="$(jq -r .remaining <<<"$RESP")"
+}
+
+receipt_line() {
+  jq -r '.receipt | "receipt: model \(.model), contract \(.contract), identity \(.identity), checked \(.checked), native_dimensions \(.native_dimensions), stored_dimensions \(.stored_dimensions)"' <<<"$RESP"
+}
+
+# Completion is what the database says, not what the loop saw.
+confirm_complete() { # run rows sent-in-this-call
+  read_status "$1"
+  [ "$ROWS" -eq "$2" ] || fail "status run_rows went from $2 to $ROWS during this call"
+  [ "$MISSING" -eq 0 ] || fail "run_missing is $MISSING of $ROWS; not every chunk has a vector"
+  echo "complete: all chunks have vectors (run_rows $ROWS, run_missing 0, sent in this call $3)"
+  echo "NEXT: run the SQL coverage check of the runbook (step 4) before deploying the query."
+}
+
+# batch <run> <token>: exactly one embed_batch, checked against the receipt and
+# the database, then a stop. The first batch of a run goes through here.
+cmd_batch() {
+  need_uuid run_id "${1:-}"
+  need_uuid worker_token "${2:-}"
+  local run="$1" token="$2" rows before
+  read_status "$run"
+  rows="$ROWS"
+  before="$MISSING"
+  send_batch "$run" "$token" "$before"
+  echo "batch: sent $SENT, staged $SENT, remaining $REMAINING (missing before $before)"
+  if [ "$SENT" -eq 0 ]; then
+    confirm_complete "$run" "$rows" 0
+    return
+  fi
+  receipt_line
+  read_status "$run"
+  [ "$ROWS" -eq "$rows" ] || fail "status run_rows went from $rows to $ROWS during the batch"
+  [ "$MISSING" -eq "$REMAINING" ] || fail "the database shows run_missing $MISSING, expected $REMAINING ($before missing minus sent $SENT)"
+  echo "database: run_rows $ROWS, run_missing $MISSING (down by $SENT)"
+  echo "STOP: one batch was sent and its receipt passed. Send nothing else yet. Run block 5 of the preflight for this run and expect missing $MISSING, wrong_dimensions 0, not_frozen 0, run_rows $ROWS. Run drain only when all four agree."
+}
+
+# drain <run> <token>: the remaining batches, one request at a time, every
+# positive answer checked like a single batch. It refuses to start while no
+# chunk of the run has a vector: the first batch must go through batch.
 cmd_drain() {
   need_uuid run_id "${1:-}"
   need_uuid worker_token "${2:-}"
-  local run="$1" token="$2" i=0 sent staged remaining prev="" total=0
+  local run="$1" token="$2" i=0 rows missing total=0
+  read_status "$run"
+  rows="$ROWS"
+  missing="$MISSING"
+  [ "$missing" -lt "$rows" ] ||
+    fail "no chunk of this run has a vector yet ($missing of $rows missing). Send the first batch with 'batch', pass its receipt gate, then drain."
   while :; do
     i=$((i + 1))
     [ "$i" -le "$MAX_BATCHES" ] || fail "more than $MAX_BATCHES batches; the run is not finishing"
-    admin "$(payload embed_batch "$run" "$token")"
-    jq -e '(.sent | '"$is_count"' and . <= 20) and (.staged | '"$is_count"' and . <= 20) and (.remaining | '"$is_count"')' \
-      <<<"$RESP" >/dev/null || fail "response lacks valid counters (sent 0..20, staged, remaining): $(jq -c . <<<"$RESP" | head -c 200)"
-    sent="$(jq -r .sent <<<"$RESP")"
-    staged="$(jq -r .staged <<<"$RESP")"
-    remaining="$(jq -r .remaining <<<"$RESP")"
-    [ "$staged" -eq "$sent" ] || fail "staged $staged differs from sent $sent"
-    echo "batch $i: sent $sent, staged $staged, remaining $remaining"
-    if [ "$sent" -eq 0 ]; then
-      [ "$remaining" -eq 0 ] || fail "sent 0 but $remaining chunks remaining; this is not completion"
-      break
-    fi
-    if [ -n "$prev" ] && [ "$remaining" -ge "$prev" ]; then
-      fail "no progress: remaining went from $prev to $remaining"
-    fi
-    prev="$remaining"
-    total=$((total + sent))
+    send_batch "$run" "$token" "$missing"
+    echo "batch $i: sent $SENT, staged $SENT, remaining $REMAINING"
+    [ "$SENT" -eq 0 ] && break
+    receipt_line
+    missing="$REMAINING"
+    total=$((total + SENT))
   done
-  # Completion is what the database says, not what the loop saw.
-  admin "$(payload status)"
-  jq -e --arg run "$run" '
-    .status | (.run_id == $run) and (.phase == "rebuilding")
-    and (.run_rows | '"$is_count"' and . > 0)
-    and (.run_missing | '"$is_count"')' <<<"$RESP" >/dev/null ||
-    fail "status does not show this run in phase rebuilding (check run_id, phase, run_rows, run_missing)"
-  local missing rows
-  missing="$(jq -r .status.run_missing <<<"$RESP")"
-  rows="$(jq -r .status.run_rows <<<"$RESP")"
-  [ "$missing" -eq 0 ] || fail "run_missing is $missing of $rows; not every chunk has a vector"
-  echo "complete: all chunks have vectors (run_rows $rows, run_missing 0, sent in this call $total)"
-  echo "NEXT: run the SQL coverage check of the runbook (step 4) before deploying the query."
+  confirm_complete "$run" "$rows" "$total"
 }
 
 cmd_activate() {
@@ -165,6 +251,7 @@ case "$command" in
   status) cmd_status ;;
   begin) cmd_begin ;;
   acquire) cmd_acquire "$@" ;;
+  batch) cmd_batch "$@" ;;
   drain) cmd_drain "$@" ;;
   activate) cmd_activate "$@" ;;
   abort)
