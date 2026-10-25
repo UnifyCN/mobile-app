@@ -71,18 +71,28 @@ describe('translated Portable Text', () => {
     }
   );
 
-  it('retains the entire base paragraph when invalid text supplies different formatting', () => {
-    const base = textBlock('en-span', 'English fallback');
-    const result = mergeI18nOverlay<Record<string, unknown>>({
-      content: [base],
-      i18n: {
-        content: [
-          { ...base, children: [], style: 'h1', listItem: 'number', level: 3 },
-        ],
-      },
-    });
-    expect(result.content).toEqual([base]);
-  });
+  it.each(['block', undefined, 'image'])(
+    'retains the entire base paragraph when invalid text supplies different formatting with type %s',
+    translatedType => {
+      const base = textBlock('en-span', 'English fallback');
+      const result = mergeI18nOverlay<Record<string, unknown>>({
+        content: [base],
+        i18n: {
+          content: [
+            {
+              ...base,
+              _type: translatedType,
+              children: [],
+              style: 'h1',
+              listItem: 'number',
+              level: 3,
+            },
+          ],
+        },
+      });
+      expect(result.content).toEqual([base]);
+    }
+  );
 
   it.each([
     { definitions: [] },

@@ -134,7 +134,8 @@ function mergeTranslatedValue(
 
   if (isRecord(base)) {
     if (!isRecord(translated)) return base;
-    const isTextBlock = base._type === 'block' && translated._type === 'block';
+    const isTextBlock = base._type === 'block';
+    if (isTextBlock && translated._type !== 'block') return base;
     const annotations = mergeAnnotations(
       inheritedAnnotations,
       isTextBlock
