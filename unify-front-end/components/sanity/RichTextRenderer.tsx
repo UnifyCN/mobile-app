@@ -411,8 +411,8 @@ export default function RichTextRenderer({
   ) => {
     if (!children || !Array.isArray(children)) return null;
 
-    // Combine markDefs from props and block-level markDefs
-    const allMarkDefs = [...(markDefs || []), ...(blockMarkDefs || [])];
+    // Paragraph annotations take precedence over inherited annotations.
+    const allMarkDefs = [...(blockMarkDefs || []), ...(markDefs || [])];
 
     return children.map((child, index) => {
       if (typeof child === 'string') return child;
@@ -644,7 +644,7 @@ export default function RichTextRenderer({
                 highlights={getBlockHighlights(block, index)}
                 style={[listTextStyle, styles.listItemBody]}
                 spans={block.children}
-                allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+                allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
                 mergedStyles={mergedStyles}
               />
             </View>
@@ -655,8 +655,8 @@ export default function RichTextRenderer({
       const style = block.style || 'normal';
 
       // Check for text alignment in block children
-      // Combine markDefs from props and block-level markDefs
-      const allMarkDefs = [...(markDefs || []), ...(block.markDefs || [])];
+      // Paragraph annotations take precedence over inherited annotations.
+      const allMarkDefs = [...(block.markDefs || []), ...(markDefs || [])];
 
       let blockTextAlign: 'left' | 'center' | 'right' | undefined = undefined;
       if (block.children && Array.isArray(block.children)) {
@@ -721,7 +721,7 @@ export default function RichTextRenderer({
               highlights={getBlockHighlights(block, index)}
               style={blockStyle}
               spans={block.children}
-              allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+              allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
               mergedStyles={mergedStyles}
             />
           );
@@ -733,7 +733,7 @@ export default function RichTextRenderer({
               highlights={getBlockHighlights(block, index)}
               style={blockStyle}
               spans={block.children}
-              allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+              allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
               mergedStyles={mergedStyles}
             />
           );
@@ -745,7 +745,7 @@ export default function RichTextRenderer({
               highlights={getBlockHighlights(block, index)}
               style={blockStyle}
               spans={block.children}
-              allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+              allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
               mergedStyles={mergedStyles}
             />
           );
@@ -757,7 +757,7 @@ export default function RichTextRenderer({
               highlights={getBlockHighlights(block, index)}
               style={blockStyle}
               spans={block.children}
-              allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+              allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
               mergedStyles={mergedStyles}
             />
           );
@@ -774,7 +774,7 @@ export default function RichTextRenderer({
                     : undefined,
                 ]}
                 spans={block.children}
-                allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+                allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
                 mergedStyles={mergedStyles}
               />
             </View>
@@ -810,7 +810,7 @@ export default function RichTextRenderer({
               highlights={getBlockHighlights(block, index)}
               style={finalBlockStyle}
               spans={block.children}
-              allMarkDefs={[...(markDefs || []), ...(block.markDefs || [])]}
+              allMarkDefs={[...(block.markDefs || []), ...(markDefs || [])]}
               mergedStyles={mergedStyles}
             />
           );

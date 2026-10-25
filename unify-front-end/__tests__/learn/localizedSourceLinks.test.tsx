@@ -42,14 +42,48 @@ const base = {
 afterEach(() => jest.restoreAllMocks());
 
 it.each([
-  { definitions: [], text: 'English', href: baseLink.href },
-  { definitions: undefined, text: 'Texto', href: baseLink.href },
-  { definitions: [localizedLink], text: 'Texto', href: localizedLink.href },
+  {
+    definitions: [],
+    parentDefinitions: [],
+    text: 'English',
+    href: baseLink.href,
+    format: {},
+  },
+  {
+    definitions: undefined,
+    parentDefinitions: [],
+    text: 'Texto',
+    href: baseLink.href,
+    format: {},
+  },
+  {
+    definitions: [localizedLink],
+    parentDefinitions: [],
+    text: 'Texto',
+    href: localizedLink.href,
+    format: {},
+  },
+  ...[
+    {},
+    { style: 'h1' },
+    { style: 'h2' },
+    { style: 'h3' },
+    { style: 'h4' },
+    { style: 'blockquote' },
+    { listItem: 'bullet', level: 1 },
+  ].map(format => ({
+    definitions: [localizedLink],
+    parentDefinitions: [baseLink],
+    text: 'Texto',
+    href: localizedLink.href,
+    format,
+  })),
 ])(
   'returns and opens a coherent source link for %j',
-  async ({ definitions, text, href }) => {
+  async ({ definitions, parentDefinitions, text, href, format }) => {
     const localized = {
       ...base,
+      ...format,
       children: [
         { _key: 'es-span', _type: 'span', text: 'Texto', marks: ['same'] },
       ],
@@ -59,7 +93,12 @@ it.each([
       _id: 'lesson',
       _type: 'lesson',
       content_blocks: [
-        { _key: 'reading', _type: 'lesson_content', content: [base] },
+        {
+          _key: 'reading',
+          _type: 'lesson_content',
+          content: [base],
+          markDefs: parentDefinitions,
+        },
       ],
       i18n: {
         content_blocks: [
@@ -71,6 +110,7 @@ it.each([
     const page = lesson?.pages?.[0];
     expect(page).toBeDefined();
     const openURL = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+    openURL.mockClear();
     render(
       <RichTextRenderer
         blocks={page?.content || []}
@@ -80,6 +120,7 @@ it.each([
     const link = screen.getByText(text);
     expect(link.props.onPress).toEqual(expect.any(Function));
     fireEvent.press(link);
-    expect(openURL).toHaveBeenCalledWith(href);
+    expect(openURL).toHaveBeenCalledTimes(1);
+    expect(openURL).toHaveBeenLastCalledWith(href);
   }
 );
