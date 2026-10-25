@@ -1,11 +1,16 @@
 import { ingestSource } from './ingest.ts';
 import { type CrawlSource, pickDueSources } from './pickDueSources.ts';
+import { handleRebuildAction, type RebuildStore } from './rebuild.ts';
 import type { IngestDeps, SourceResult } from './types.ts';
 
 /** Due sources handled per scheduled run. Lower to 1 if the worker still runs out of memory. */
 export const MAX_SOURCES_PER_RUN = 2;
 
-export type HandlerDeps = IngestDeps & { serviceRoleKey: string };
+export type HandlerDeps = IngestDeps & {
+  serviceRoleKey: string;
+  /** The administrative embedding rebuild; absent in tests of the crawl alone. */
+  rebuild?: RebuildStore;
+};
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -45,6 +50,14 @@ export async function handleIngestRequest(
 
   const parsed = await readBody(req);
   if (parsed === null) return json({ error: 'Invalid JSON body' }, 400);
+
+  // The one administrative action. Anything else with an action is refused,
+  // so a mistyped action can never start a crawl.
+  if (parsed.action !== undefined) {
+    return parsed.action === 'embedding_rebuild'
+      ? await handleRebuildAction(parsed, deps)
+      : json({ error: 'Unknown action' }, 400);
+  }
 
   const { store } = deps;
   let selected: CrawlSource[];

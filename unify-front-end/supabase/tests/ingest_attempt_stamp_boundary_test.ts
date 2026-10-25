@@ -18,7 +18,7 @@ import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
-import { openIngestDb } from './support/ingestDb.ts';
+import { openQwenIngestDb } from './support/ingestDb.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
 
@@ -67,7 +67,7 @@ function depsFor(
 Deno.test(
   'a claimed attempt is stored before the external fetch ends',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     let release: (() => void) | undefined;
     let run: Promise<unknown> | undefined;
     try {
@@ -108,7 +108,7 @@ Deno.test(
 Deno.test(
   'a failed stamp stops the call before any fetch and frees the claim',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const { store, source } = await firstHtmlSource(db);
       let fetches = 0;
@@ -145,7 +145,7 @@ Deno.test(
 Deno.test(
   'a busy skip keeps the stamp of the call that owns the source',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const { store, source } = await firstHtmlSource(db);
       const owner = await store.claimSource(source.id, 300);
@@ -173,7 +173,7 @@ Deno.test(
 // Falsifier: a plain overwrite lets a call with an earlier clock move the
 // stamp back, which puts a recently attempted source back in the due queue.
 Deno.test('an older attempt never moves the stamp backwards', async () => {
-  const db = await openIngestDb();
+  const db = await openQwenIngestDb();
   try {
     const { store, source } = await firstHtmlSource(db);
     await store.recordAttempt(source.id, '2026-10-24T13:00:00.000Z');

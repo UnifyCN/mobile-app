@@ -12,7 +12,7 @@ import {
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
-import { openIngestDb } from './support/ingestDb.ts';
+import { openIngestDb, openQwenIngestDb } from './support/ingestDb.ts';
 import {
   applyMigration,
   embedding,
@@ -201,7 +201,7 @@ Deno.test(
 Deno.test(
   'an unchanged refresh refuses a mixed set and the next crawl replaces it',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const store = createStore(supabaseHttp(db).client);
       const source = (await store.findEnabledCrawlSourceByUrl(EE_PAGE))!;
@@ -367,7 +367,9 @@ Deno.test('the generations migration can run twice', async () => {
         where n.nspname = 'public' and p.proname = any($1)`,
       [FUNCTIONS.map(f => f.slice(0, f.indexOf('(')))]
     );
-    assertEquals(row.n, 6);
+    // Six names; the Qwen migration adds an explicit-model overload of stage,
+    // promote and refresh.
+    assertEquals(row.n, 9);
   } finally {
     await db.close();
   }

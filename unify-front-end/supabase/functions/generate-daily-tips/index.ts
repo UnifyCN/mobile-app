@@ -1,7 +1,7 @@
 // @ts-nocheck
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
-import { fetchWithRetry } from '../_shared/fetchWithRetry.ts';
+import { EMBEDDING_MODEL, embedTexts } from '../_shared/embeddings.ts';
 import { callOpenRouter } from '../_shared/openrouter.ts';
 import { captureAiGeneration } from '../_shared/posthogCapture.ts';
 import { getStageDescription } from '../_shared/arrivalStage.ts';
@@ -18,9 +18,6 @@ const PERSONAS = [
 ] as const;
 const STAGES = ['0', '1', '2', '3', '4'] as const;
 const BATCH_SIZE = 5;
-
-const EMBEDDING_MODEL =
-  Deno.env.get('OPENAI_EMBEDDING_MODEL') || 'text-embedding-3-small';
 
 const PERSONA_DESCRIPTIONS: Record<string, string> = {
   international_student: 'international student studying in Canada',
@@ -141,34 +138,20 @@ function parseGeminiTipResponse(rawText: string): GeneratedTip | null {
 
 async function generateEmbedding(
   text: string,
-  openaiApiKey: string
+  apiKey: string
 ): Promise<number[] | null> {
   try {
-    const response = await fetchWithRetry(
-      'https://api.openai.com/v1/embeddings',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${openaiApiKey}`,
-        },
-        body: JSON.stringify({
-          model: EMBEDDING_MODEL,
-          input: text,
-        }),
-      },
-      { timeoutMs: 15000, retries: 2, retryDelayMs: 400 }
-    );
-
-    if (!response.ok) {
-      console.error('OpenAI embedding error:', response.statusText);
-      return null;
-    }
-
-    const data = await response.json();
-    return data.data[0].embedding;
+    const [embedding] = await embedTexts([text], apiKey, {
+      timeoutMs: 15000,
+      retries: 2,
+      retryDelayMs: 400,
+    });
+    return embedding;
   } catch (error) {
-    console.error('Embedding generation failed:', error);
+    console.error(
+      'Embedding generation failed:',
+      error instanceof Error ? error.message : 'unknown error'
+    );
     return null;
   }
 }
@@ -188,10 +171,13 @@ async function searchKnowledgeBase(
   embedding: number[]
 ): Promise<KBSearchResult> {
   try {
+    // Only chunks embedded with the same model can match this vector.
     const { data: chunks, error } = await supabase.rpc('match_chunks', {
       query_embedding: embedding,
       match_threshold: 0.3,
       match_count: 5,
+      filter_province: null,
+      query_embedding_model: EMBEDDING_MODEL,
     });
 
     if (error || !chunks || chunks.length === 0) {
@@ -268,21 +254,19 @@ async function generateTipForCohort(
   persona: string,
   stage: string,
   date: string,
-  openaiApiKey: string | null
+  openRouterApiKey: string
 ): Promise<{ success: boolean; persona: string; stage: string }> {
   const cohortKey = `${persona}/${stage}`;
 
   // Step 1: Build topic query and get KB context
   let kbContext = '';
   let sourceRefs: SourceRef[] | null = null;
-  if (openaiApiKey) {
-    const topicQuery = buildTopicQuery(persona, stage);
-    const embedding = await generateEmbedding(topicQuery, openaiApiKey);
-    if (embedding) {
-      const kbResult = await searchKnowledgeBase(supabase, embedding);
-      kbContext = kbResult.context;
-      sourceRefs = kbResult.sourceRefs;
-    }
+  const topicQuery = buildTopicQuery(persona, stage);
+  const embedding = await generateEmbedding(topicQuery, openRouterApiKey);
+  if (embedding) {
+    const kbResult = await searchKnowledgeBase(supabase, embedding);
+    kbContext = kbResult.context;
+    sourceRefs = kbResult.sourceRefs;
   }
 
   // Step 2: Generate tip via OpenRouter
@@ -377,20 +361,14 @@ Deno.serve(async (req: Request) => {
 
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-    if (!Deno.env.get('OPENROUTER_API_KEY')) {
+    const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterApiKey) {
       return new Response(
         JSON.stringify({ error: 'OPENROUTER_API_KEY not configured' }),
         {
           status: 500,
           headers: { 'Content-Type': 'application/json' },
         }
-      );
-    }
-
-    const openaiApiKey = Deno.env.get('OPENAI_API_KEY') || null;
-    if (!openaiApiKey) {
-      console.warn(
-        'OPENAI_API_KEY not set — generating tips without RAG grounding'
       );
     }
 
@@ -414,7 +392,13 @@ Deno.serve(async (req: Request) => {
       const batch = cohorts.slice(i, i + BATCH_SIZE);
       const results = await Promise.all(
         batch.map(({ persona, stage }) =>
-          generateTipForCohort(supabase, persona, stage, today, openaiApiKey)
+          generateTipForCohort(
+            supabase,
+            persona,
+            stage,
+            today,
+            openRouterApiKey
+          )
         )
       );
 
