@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import CreatePostIcon from '@/assets/images/create-post.svg';
-import { Theme } from '@/constants/Theme';
 import { Group } from '@/types/groups';
 
 interface CreatePostButtonProps {
@@ -44,9 +43,15 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Theme.primaryGatherRed,
+    // Same near-black as the Learn primary action (learnStyles.action).
+    backgroundColor: '#191919',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
+    shadowColor: '#000',
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
   },
 });

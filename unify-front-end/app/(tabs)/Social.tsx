@@ -20,6 +20,7 @@ import Animated, {
 import { StatusBar } from 'expo-status-bar';
 import TabHeader from '@/components/home/HomeHeader';
 import { Theme } from '@/constants/Theme';
+import { RESOURCE_THEME } from '@/constants/ResourceTheme';
 import FeedWithHook from '@/components/FeedWithHook';
 import EmptyFeedMessage from '@/components/profile/EmptyFeedMessage';
 import { useForYouFeed } from '@/hooks/feeds/useForYouFeed';
@@ -481,42 +482,47 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column',
   },
+  // Matches the Learn/Resources SegmentedControl so both tabs read as one control.
   tabs: {
-    backgroundColor: '#EFEBE6',
+    backgroundColor: RESOURCE_THEME.surfaceSegment,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 16,
+    borderRadius: 999,
     marginHorizontal: 20,
     marginTop: 16,
     marginBottom: 8,
     padding: 4,
     position: 'relative',
-    overflow: 'hidden',
   },
   tab: {
     backgroundColor: 'transparent',
     flex: 1,
     alignItems: 'center',
     paddingVertical: 9,
-    borderRadius: 12,
+    borderRadius: 999,
     zIndex: 1,
   },
   tabText: {
     ...typography.label,
 
-    color: Theme.textAlternateGray,
+    color: RESOURCE_THEME.textSegmentInactive,
   },
   activeTabText: {
-    color: Theme.white,
-    fontWeight: '600',
+    color: RESOURCE_THEME.textSegmentActive,
+    fontWeight: '700',
   },
   tabIndicator: {
     position: 'absolute',
     top: 4,
     bottom: 4,
     left: 0,
-    backgroundColor: Theme.primaryGatherRed,
-    borderRadius: 12,
+    backgroundColor: RESOURCE_THEME.surface,
+    borderRadius: 999,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 1.5,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 1,
   },
   pager: {
     flex: 1,
