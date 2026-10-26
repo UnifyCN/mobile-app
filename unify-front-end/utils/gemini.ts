@@ -31,6 +31,9 @@ export interface StreamMetadata {
   queryType?: QueryType;
   disclaimer?: string;
   lastVerified?: string;
+  /** Companion context (ticket #362), unvalidated; absent from an older
+   *  rag-query. Parse with parseCompanionContext. Never sent to analytics. */
+  context?: unknown;
 }
 
 export interface StreamComplete {

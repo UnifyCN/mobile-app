@@ -21,6 +21,10 @@ import {
   buildCompanionStreamResponseProperties,
 } from '@/helpers/companion/companionAnalytics';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  parseCompanionContext,
+  savableCompanionContext,
+} from '@/helpers/companion/companionContext';
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -163,6 +167,8 @@ export const useSendMessage = ({
                 queryType: meta.queryType,
                 disclaimer: meta.disclaimer,
                 lastVerified: meta.lastVerified,
+                // Shown while the answer streams; saved with it below.
+                companionContext: parseCompanionContext(meta.context),
               });
               if (meta.lastVerified) setLastVerified(meta.lastVerified);
             },
@@ -238,6 +244,9 @@ export const useSendMessage = ({
           role: 'assistant',
           content: completion.cleanAnswer,
           sources: sources.length > 0 ? sources : undefined,
+          // Saved with the answer so a reopened conversation shows the same
+          // sources and context. Never sent to analytics.
+          companionContext: savableCompanionContext(metadata?.context),
         });
       } catch (error) {
         console.error('Failed to save bot message:', error);

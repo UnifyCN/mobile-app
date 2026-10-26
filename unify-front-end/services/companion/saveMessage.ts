@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { QueryType } from '@/types/chatbot';
+import { isMissingContextColumn } from '@/services/companion/getConversationMessages';
 
 export interface SaveMessageParams {
   conversationIdentifier: string;
@@ -8,6 +9,8 @@ export interface SaveMessageParams {
   sources?: any; // JSONB field
   clientId?: string;
   suggestedNextSteps?: string[]; // Optional - not persisted to DB, used for UI only
+  /** The answer's context (ticket #362); saved when the column exists. */
+  companionContext?: Record<string, unknown> | null;
 }
 
 export const saveMessage = async ({
@@ -15,6 +18,7 @@ export const saveMessage = async ({
   role,
   content,
   sources,
+  companionContext,
 }: SaveMessageParams): Promise<void> => {
   try {
     const {
@@ -39,12 +43,25 @@ export const saveMessage = async ({
     }
 
     // Insert the message
-    const { error: messageError } = await supabase.from('messages').insert({
+    const row = {
       conversation_id: conversation.id,
       role,
       content,
       sources: sources || null,
-    });
+    };
+    let { error: messageError } = await supabase
+      .from('messages')
+      .insert(
+        companionContext ? { ...row, companion_context: companionContext } : row
+      );
+    if (
+      messageError &&
+      companionContext &&
+      isMissingContextColumn(messageError)
+    ) {
+      // Column not migrated yet: save the answer without its context.
+      ({ error: messageError } = await supabase.from('messages').insert(row));
+    }
 
     if (messageError) {
       throw messageError;

@@ -1497,6 +1497,53 @@
     }
   },
   "companion": {
+    "context": {
+      "openDetails": "Sources et contexte",
+      "drawerTitle": "Sources et contexte",
+      "closeAria": "Fermer les sources et le contexte",
+      "usedAria": "Contexte utilisé pour cette réponse",
+      "tasksUsed": "Tâches de la Liste utilisées : {{number}}",
+      "checkedAt": "Pages officielles vérifiées le {{time}}",
+      "unavailable": "Les renseignements officiels n'ont pas pu être vérifiés pour cette réponse. Confirmez-les sur le site du gouvernement avant d'agir.",
+      "conflict": "Les pages officielles trouvées concernent une autre province. Companion vous a demandé quelle province s'applique.",
+      "clarifyProvince": "Votre profil indique {{profile}}, mais dans cette conversation, vous avez dit {{conversation}}. Votre profil n'a pas été modifié.",
+      "clarifyArrival": "La date d'arrivée de votre profil est le {{profile}}, mais dans cette conversation, vous avez dit que vous arrivez {{conversation}}. Votre profil n'a pas été modifié.",
+      "missingProvince": "Companion ne connaît pas votre province, il vous l'a donc demandée.",
+      "checklistUnreadable": "Votre Liste n'a pas pu être lue pour cette réponse.",
+      "profileUnreadable": "Votre profil n'a pas pu être lu pour cette réponse.",
+      "sectionPages": "Pages officielles",
+      "sectionAccount": "De votre profil",
+      "sectionConversation": "De cette conversation (non enregistré)",
+      "sectionTasks": "De votre Liste",
+      "noPages": "Aucune page officielle n'a été vérifiée pour cette réponse.",
+      "pageChecked": "Vérifiée le {{time}}",
+      "pageFailed": "Lecture impossible. Non utilisée.",
+      "pageExcluded": "Pour {{province}}. Non utilisée.",
+      "untitledTask": "Tâche sans titre",
+      "readOnlyNote": "Companion a lu ces renseignements pour répondre. Il n'a modifié ni votre Liste, ni votre profil, ni vos renseignements enregistrés.",
+      "field": {
+        "persona": "Situation",
+        "city": "Ville",
+        "province": "Province",
+        "arrival_date": "Date d'arrivée",
+        "arrival": "Arrivée"
+      },
+      "taskState": {
+        "not_started": "Pas commencée",
+        "in_progress": "En cours",
+        "waiting": "En attente",
+        "completed": "Terminée"
+      },
+      "arrival": {
+        "tomorrow": "demain",
+        "this_week": "cette semaine",
+        "next_week": "la semaine prochaine",
+        "next_month": "le mois prochain",
+        "inOneWeek": "dans environ une semaine",
+        "days": "dans {{number}} jours",
+        "weeks": "dans {{number}} semaines"
+      }
+    },
     "goBack": "Retour",
     "title": "Compagnon",
     "welcomeTitle": "Posez-moi n'importe quelle question.",

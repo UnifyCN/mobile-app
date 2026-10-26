@@ -41,6 +41,7 @@ export const useSaveMessage = () => {
         role: variables.role,
         content: variables.content,
         sources: variables.sources ?? null,
+        companion_context: variables.companionContext ?? null,
         created_at: new Date().toISOString(),
       };
 
