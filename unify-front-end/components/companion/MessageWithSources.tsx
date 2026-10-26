@@ -1,6 +1,7 @@
 import { typography } from '@/constants/Typography';
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useRef } from 'react';
 import {
+  AccessibilityInfo,
   View,
   Text,
   TouchableOpacity,
@@ -15,6 +16,8 @@ import { Theme } from '@/constants/Theme';
 import { Message } from '@/helpers/companion/messageHelpers';
 import SourceViewer from './SourceViewer';
 import MarkdownText, { hexToRgba } from './MarkdownText';
+import { ContextSummary } from './ContextSummary';
+import { CompanionContextSheet } from './CompanionContextSheet';
 
 interface MessageWithSourcesProps {
   item: Message;
@@ -103,6 +106,19 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
     url: string;
     title: string;
   } | null>(null);
+  // "Sources and context" sheet (ticket #362). Focus returns to the control
+  // that opened it when it closes.
+  const [showContext, setShowContext] = useState(false);
+  const contextButtonRef = useRef<View>(null);
+  const closeContext = useCallback(() => {
+    setShowContext(false);
+    if (contextButtonRef.current) {
+      AccessibilityInfo.sendAccessibilityEvent(
+        contextButtonRef.current,
+        'focus'
+      );
+    }
+  }, []);
 
   return (
     <View
@@ -129,6 +145,15 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
           <Text style={[styles.messageText, styles.userText]}>{item.text}</Text>
         ) : (
           <MarkdownText text={item.text} isUser={false} />
+        )}
+
+        {/* What the answer used and the official pages it checked */}
+        {!item.isUser && (
+          <ContextSummary
+            ref={contextButtonRef}
+            context={item.companionContext}
+            onOpen={() => setShowContext(true)}
+          />
         )}
 
         {/* Disclaimer section for bot messages */}
@@ -264,6 +289,13 @@ const MessageWithSourcesComponent: React.FC<MessageWithSourcesProps> = ({
           )}
       </View>
 
+      {!item.isUser && item.companionContext && (
+        <CompanionContextSheet
+          context={showContext ? item.companionContext : null}
+          onClose={closeContext}
+        />
+      )}
+
       {/* Source Viewer Modal */}
       {selectedSource && (
         <SourceViewer
@@ -335,6 +367,7 @@ export const MessageWithSources = memo(
     prev.item.disclaimer === next.item.disclaimer &&
     prev.item.isUser === next.item.isUser &&
     prev.item.lastVerified === next.item.lastVerified &&
+    prev.item.companionContext === next.item.companionContext &&
     areSourcesEqual(prev.item.sources, next.item.sources) &&
     areStringArraysEqual(prev.suggestedNextSteps, next.suggestedNextSteps) &&
     prev.onSuggestionPress === next.onSuggestionPress

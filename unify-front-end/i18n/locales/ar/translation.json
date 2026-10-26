@@ -1500,6 +1500,54 @@
     }
   },
   "companion": {
+    "context": {
+      "openDetails": "المصادر والسياق",
+      "drawerTitle": "المصادر والسياق",
+      "closeAria": "إغلاق المصادر والسياق",
+      "usedAria": "السياق المستخدم في هذه الإجابة",
+      "tasksUsed": "مهام القائمة المستخدمة: {{number}}",
+      "checkedAt": "تم التحقق من الصفحات الرسمية في {{time}}",
+      "unavailable": "تعذّر التحقق من الإرشادات الرسمية لهذه الإجابة. تأكّد منها في الموقع الحكومي قبل أن تتصرّف.",
+      "conflict": "الصفحات الرسمية التي وُجدت تخص مقاطعة أخرى. سألك Companion عن المقاطعة التي تنطبق عليك.",
+      "clarifyProvince": "يذكر ملفك الشخصي {{profile}}، لكنك قلت في هذه المحادثة {{conversation}}. لم يتغيّر ملفك الشخصي.",
+      "clarifyArrival": "تاريخ الوصول في ملفك الشخصي هو {{profile}}، لكنك قلت في هذه المحادثة إنك ستصل {{conversation}}. لم يتغيّر ملفك الشخصي.",
+      "missingProvince": "لا يعرف Companion مقاطعتك، لذلك سألك عنها.",
+      "clarifyPlace": "ذكرت أكثر من مكان قد تنتقل إليه: {{places}}. سألك Companion أيّها ينطبق.",
+      "checklistUnreadable": "تعذّرت قراءة قائمة المهام الخاصة بك لهذه الإجابة.",
+      "profileUnreadable": "تعذّرت قراءة ملفك الشخصي لهذه الإجابة.",
+      "sectionPages": "الصفحات الرسمية",
+      "sectionAccount": "من ملفك الشخصي",
+      "sectionConversation": "من هذه المحادثة (غير محفوظ)",
+      "sectionTasks": "من قائمة المهام",
+      "noPages": "لم يتم التحقق من أي صفحة رسمية لهذه الإجابة.",
+      "pageChecked": "تم التحقق في {{time}}",
+      "pageFailed": "تعذّرت القراءة. لم تُستخدم.",
+      "pageExcluded": "خاصة بـ {{province}}. لم تُستخدم.",
+      "untitledTask": "مهمة بلا عنوان",
+      "readOnlyNote": "قرأ Companion هذه المعلومات ليجيبك. لم يغيّر قائمة المهام أو ملفك الشخصي أو التفاصيل المحفوظة.",
+      "field": {
+        "persona": "الوضع",
+        "city": "المدينة",
+        "province": "المقاطعة",
+        "arrival_date": "تاريخ الوصول",
+        "arrival": "الوصول"
+      },
+      "taskState": {
+        "not_started": "لم تبدأ",
+        "in_progress": "قيد التنفيذ",
+        "waiting": "قيد الانتظار",
+        "completed": "مكتملة"
+      },
+      "arrival": {
+        "tomorrow": "غدًا",
+        "this_week": "هذا الأسبوع",
+        "next_week": "الأسبوع القادم",
+        "next_month": "الشهر القادم",
+        "inOneWeek": "خلال أسبوع تقريبًا",
+        "days": "خلال {{number}} أيام",
+        "weeks": "خلال {{number}} أسابيع"
+      }
+    },
     "goBack": "رجوع",
     "title": "المرافق",
     "welcomeTitle": "اسألني أي شيء.",

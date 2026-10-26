@@ -1495,6 +1495,54 @@
     }
   },
   "companion": {
+    "context": {
+      "openDetails": "Nguồn và bối cảnh",
+      "drawerTitle": "Nguồn và bối cảnh",
+      "closeAria": "Đóng nguồn và bối cảnh",
+      "usedAria": "Bối cảnh dùng cho câu trả lời này",
+      "tasksUsed": "Việc trong Danh sách đã dùng: {{number}}",
+      "checkedAt": "Đã kiểm tra trang chính thức lúc {{time}}",
+      "unavailable": "Không thể kiểm tra hướng dẫn chính thức cho câu trả lời này. Hãy xác nhận trên trang web của chính phủ trước khi làm.",
+      "conflict": "Các trang chính thức tìm được thuộc về một tỉnh bang khác. Companion đã hỏi bạn tỉnh bang nào áp dụng.",
+      "clarifyProvince": "Hồ sơ của bạn ghi {{profile}}, nhưng trong cuộc trò chuyện này bạn nói {{conversation}}. Hồ sơ của bạn không bị thay đổi.",
+      "clarifyArrival": "Ngày đến trong hồ sơ của bạn là {{profile}}, nhưng trong cuộc trò chuyện này bạn nói bạn sẽ đến {{conversation}}. Hồ sơ của bạn không bị thay đổi.",
+      "missingProvince": "Companion chưa biết tỉnh bang của bạn nên đã hỏi bạn.",
+      "clarifyPlace": "Bạn đã nêu hơn một nơi bạn có thể chuyển đến: {{places}}. Companion đã hỏi bạn nơi nào là đúng.",
+      "checklistUnreadable": "Không thể đọc Danh sách của bạn cho câu trả lời này.",
+      "profileUnreadable": "Không thể đọc hồ sơ của bạn cho câu trả lời này.",
+      "sectionPages": "Trang chính thức",
+      "sectionAccount": "Từ hồ sơ của bạn",
+      "sectionConversation": "Từ cuộc trò chuyện này (không lưu)",
+      "sectionTasks": "Từ Danh sách của bạn",
+      "noPages": "Không có trang chính thức nào được kiểm tra cho câu trả lời này.",
+      "pageChecked": "Đã kiểm tra lúc {{time}}",
+      "pageFailed": "Không đọc được. Không được dùng.",
+      "pageExcluded": "Dành cho {{province}}. Không được dùng.",
+      "untitledTask": "Việc chưa có tên",
+      "readOnlyNote": "Companion đã đọc thông tin này để trả lời. Companion không thay đổi Danh sách, hồ sơ hay thông tin đã lưu của bạn.",
+      "field": {
+        "persona": "Hoàn cảnh",
+        "city": "Thành phố",
+        "province": "Tỉnh bang",
+        "arrival_date": "Ngày đến",
+        "arrival": "Thời gian đến"
+      },
+      "taskState": {
+        "not_started": "Chưa bắt đầu",
+        "in_progress": "Đang làm",
+        "waiting": "Đang chờ",
+        "completed": "Đã hoàn thành"
+      },
+      "arrival": {
+        "tomorrow": "ngày mai",
+        "this_week": "tuần này",
+        "next_week": "tuần sau",
+        "next_month": "tháng sau",
+        "inOneWeek": "trong khoảng một tuần",
+        "days": "trong {{number}} ngày",
+        "weeks": "trong {{number}} tuần"
+      }
+    },
     "goBack": "Quay lại",
     "title": "Trợ lý",
     "welcomeTitle": "Hỏi tôi bất cứ điều gì.",

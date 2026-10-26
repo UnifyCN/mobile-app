@@ -1497,6 +1497,54 @@
     }
   },
   "companion": {
+    "context": {
+      "openDetails": "Fuentes y contexto",
+      "drawerTitle": "Fuentes y contexto",
+      "closeAria": "Cerrar fuentes y contexto",
+      "usedAria": "Contexto usado para esta respuesta",
+      "tasksUsed": "Tareas de la Lista usadas: {{number}}",
+      "checkedAt": "Páginas oficiales revisadas el {{time}}",
+      "unavailable": "No se pudo revisar la información oficial para esta respuesta. Confírmala en el sitio web del gobierno antes de actuar.",
+      "conflict": "Las páginas oficiales encontradas son de otra provincia. Companion te preguntó qué provincia corresponde.",
+      "clarifyProvince": "Tu perfil dice {{profile}}, pero en esta conversación dijiste {{conversation}}. Tu perfil no se cambió.",
+      "clarifyArrival": "La fecha de llegada de tu perfil es {{profile}}, pero en esta conversación dijiste que llegas {{conversation}}. Tu perfil no se cambió.",
+      "missingProvince": "Companion no conoce tu provincia, así que te la preguntó.",
+      "clarifyPlace": "Mencionaste más de un lugar al que podrías ir: {{places}}. Companion te preguntó cuál aplica.",
+      "checklistUnreadable": "No se pudo leer tu Lista para esta respuesta.",
+      "profileUnreadable": "No se pudo leer tu perfil para esta respuesta.",
+      "sectionPages": "Páginas oficiales",
+      "sectionAccount": "De tu perfil",
+      "sectionConversation": "De esta conversación (no guardado)",
+      "sectionTasks": "De tu Lista",
+      "noPages": "No se revisó ninguna página oficial para esta respuesta.",
+      "pageChecked": "Revisada el {{time}}",
+      "pageFailed": "No se pudo leer. No se usó.",
+      "pageExcluded": "Para {{province}}. No se usó.",
+      "untitledTask": "Tarea sin título",
+      "readOnlyNote": "Companion leyó esta información para responder. No cambió tu Lista, tu perfil ni tus datos guardados.",
+      "field": {
+        "persona": "Situación",
+        "city": "Ciudad",
+        "province": "Provincia",
+        "arrival_date": "Fecha de llegada",
+        "arrival": "Llegada"
+      },
+      "taskState": {
+        "not_started": "Sin empezar",
+        "in_progress": "En curso",
+        "waiting": "En espera",
+        "completed": "Completada"
+      },
+      "arrival": {
+        "tomorrow": "mañana",
+        "this_week": "esta semana",
+        "next_week": "la próxima semana",
+        "next_month": "el próximo mes",
+        "inOneWeek": "en una semana aproximadamente",
+        "days": "en {{number}} días",
+        "weeks": "en {{number}} semanas"
+      }
+    },
     "goBack": "Regresar",
     "title": "Asistente",
     "welcomeTitle": "Pregúntame lo que sea.",
