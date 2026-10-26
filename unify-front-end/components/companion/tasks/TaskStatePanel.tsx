@@ -31,7 +31,10 @@ import {
   type TaskProgressView,
 } from '@/hooks/companion/useTaskActions';
 
-const STATE_ICON: Record<TaskState, React.ComponentProps<typeof MaterialIcons>['name']> = {
+const STATE_ICON: Record<
+  TaskState,
+  React.ComponentProps<typeof MaterialIcons>['name']
+> = {
   not_started: 'radio-button-unchecked',
   in_progress: 'timelapse',
   waiting: 'hourglass-empty',
@@ -69,17 +72,23 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const draft = useTaskActionDraft(store, taskRef);
   const reasonValue = draft ?? progress.waitingReason ?? '';
   const busy = isUnresolved(phase);
-  const canWrite = Boolean(store) && view.canWrite && !progress.removed && !busy;
+  const canWrite =
+    Boolean(store) && view.canWrite && !progress.removed && !busy;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const reasonChanged = reasonValue.trim() !== (progress.waitingReason ?? '');
 
   // Screen readers hear the saved result once; the status text also stays on screen.
   const announced = useRef<string | null>(null);
   useEffect(() => {
-    if (phase.phase === 'saved' && announced.current !== phase.receipt.operationId) {
+    if (
+      phase.phase === 'saved' &&
+      announced.current !== phase.receipt.operationId
+    ) {
       announced.current = phase.receipt.operationId;
       AccessibilityInfo.announceForAccessibility(
-        t('taskActions.savedAnnouncement', { state: stateLabel(phase.receipt.afterState) })
+        t('taskActions.savedAnnouncement', {
+          state: stateLabel(phase.receipt.afterState),
+        })
       );
     }
   });
@@ -87,16 +96,22 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   function choose(next: TaskState) {
     if (!canWrite || !store || next === progress.state) return;
     void store.setState(
-      setStateOperation(progress, next, next === 'waiting' ? reasonValue : undefined)
+      setStateOperation(
+        progress,
+        next,
+        next === 'waiting' ? reasonValue : undefined
+      )
     );
   }
 
   function saveReason() {
-    if (!canWrite || !store || progress.state !== 'waiting' || !reasonChanged) return;
+    if (!canWrite || !store || progress.state !== 'waiting' || !reasonChanged)
+      return;
     void store
       .setState(setStateOperation(progress, 'waiting', reasonValue))
       .then(() => {
-        if (store.get(taskRef).phase === 'saved') store.setDraft(taskRef, undefined);
+        if (store.get(taskRef).phase === 'saved')
+          store.setDraft(taskRef, undefined);
       });
   }
 
@@ -139,7 +154,11 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
               key={s}
               accessibilityRole='radio'
               accessibilityLabel={stateLabel(s)}
-              accessibilityState={{ selected, checked: selected, disabled: !canWrite }}
+              accessibilityState={{
+                selected,
+                checked: selected,
+                disabled: !canWrite,
+              }}
               onPress={() => choose(s)}
               style={({ pressed }) => [
                 styles.stateOption,
@@ -153,7 +172,9 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
                 size={18}
                 color={selected ? ACCENT : INK_MUTED}
               />
-              <Text style={[styles.stateText, selected && styles.stateTextSelected]}>
+              <Text
+                style={[styles.stateText, selected && styles.stateTextSelected]}
+              >
                 {stateLabel(s)}
               </Text>
             </Pressable>
@@ -198,22 +219,28 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
                 pressed && styles.stateOptionPressed,
               ]}
             >
-              <Text style={styles.secondaryButtonText}>{t('taskActions.saveReason')}</Text>
+              <Text style={styles.secondaryButtonText}>
+                {t('taskActions.saveReason')}
+              </Text>
             </Pressable>
           </View>
         </View>
       )}
 
-      <View
-        accessibilityLiveRegion='polite'
-        style={styles.statusBlock}
-      >
-        <PhaseMessage phase={phase} stateLabel={stateLabel} store={store} taskRef={taskRef} />
+      <View accessibilityLiveRegion='polite' style={styles.statusBlock}>
+        <PhaseMessage
+          phase={phase}
+          stateLabel={stateLabel}
+          store={store}
+          taskRef={taskRef}
+        />
         {receipt && phase.phase !== 'undo_review' && (
           <View style={styles.receipt}>
             <Text style={styles.receiptText}>
               {receipt.kind === 'undo'
-                ? t('taskActions.receiptUndo', { state: stateLabel(receipt.afterState) })
+                ? t('taskActions.receiptUndo', {
+                    state: stateLabel(receipt.afterState),
+                  })
                 : t('taskActions.receiptChange', {
                     from: stateLabel(receipt.beforeState),
                     to: stateLabel(receipt.afterState),
@@ -221,7 +248,9 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
             </Text>
             <Text style={styles.receiptMeta}>
               {formatTime(receipt.createdAt)}
-              {!receipt.current ? ` · ${t('taskActions.receiptHistorical')}` : ''}
+              {!receipt.current
+                ? ` · ${t('taskActions.receiptHistorical')}`
+                : ''}
             </Text>
             {receipt.undoable && (
               <Pressable
@@ -229,7 +258,11 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
                 accessibilityLabel={t('taskActions.undo')}
                 disabled={!canWrite}
                 accessibilityState={{ disabled: !canWrite }}
-                onPress={() => canWrite && store && void store.undo(taskRef, receipt.operationId)}
+                onPress={() =>
+                  canWrite &&
+                  store &&
+                  void store.undo(taskRef, receipt.operationId)
+                }
                 style={({ pressed }) => [
                   styles.undoButton,
                   !canWrite && styles.buttonDisabled,
@@ -260,14 +293,19 @@ function PhaseMessage({
 }) {
   const { t } = useTranslation();
   const line = (text: string, tone: 'neutral' | 'error' = 'neutral') => (
-    <Text style={[styles.statusText, tone === 'error' && styles.statusError]}>{text}</Text>
+    <Text style={[styles.statusText, tone === 'error' && styles.statusError]}>
+      {text}
+    </Text>
   );
   const action = (label: string, onPress: () => void) => (
     <Pressable
       accessibilityRole='button'
       accessibilityLabel={label}
       onPress={onPress}
-      style={({ pressed }) => [styles.secondaryButton, pressed && styles.stateOptionPressed]}
+      style={({ pressed }) => [
+        styles.secondaryButton,
+        pressed && styles.stateOptionPressed,
+      ]}
     >
       <Text style={styles.secondaryButtonText}>{label}</Text>
     </Pressable>
@@ -282,7 +320,9 @@ function PhaseMessage({
       return line(t('taskActions.saved'));
     case 'refused':
       return line(
-        phase.reason === 'task_removed' ? t('taskActions.removed') : t('taskActions.refused'),
+        phase.reason === 'task_removed'
+          ? t('taskActions.removed')
+          : t('taskActions.refused'),
         'error'
       );
     case 'conflict':
@@ -298,10 +338,17 @@ function PhaseMessage({
       return (
         <View style={styles.statusRow}>
           {line(
-            t(phase.phase === 'pending' ? 'taskActions.pending' : 'taskActions.lookupFailed'),
+            t(
+              phase.phase === 'pending'
+                ? 'taskActions.pending'
+                : 'taskActions.lookupFailed'
+            ),
             'error'
           )}
-          {action(t('taskActions.checkAgain'), () => void store?.checkAgain(taskRef))}
+          {action(
+            t('taskActions.checkAgain'),
+            () => void store?.checkAgain(taskRef)
+          )}
         </View>
       );
     case 'not_applied':
@@ -315,7 +362,9 @@ function PhaseMessage({
       const proposed = phase.proposal.operations[0];
       return (
         <View style={styles.review}>
-          <Text style={styles.reviewTitle}>{t('taskActions.undoConflictTitle')}</Text>
+          <Text style={styles.reviewTitle}>
+            {t('taskActions.undoConflictTitle')}
+          </Text>
           <Text style={styles.statusText}>
             {t('taskActions.undoConflictBody', {
               current: phase.current ? stateLabel(phase.current.state) : '-',
@@ -332,11 +381,18 @@ function PhaseMessage({
               accessibilityRole='button'
               accessibilityLabel={t('taskActions.applyCompensating')}
               onPress={() => void store?.approveCompensation(taskRef)}
-              style={({ pressed }) => [styles.primaryButton, pressed && styles.stateOptionPressed]}
+              style={({ pressed }) => [
+                styles.primaryButton,
+                pressed && styles.stateOptionPressed,
+              ]}
             >
-              <Text style={styles.primaryButtonText}>{t('taskActions.applyCompensating')}</Text>
+              <Text style={styles.primaryButtonText}>
+                {t('taskActions.applyCompensating')}
+              </Text>
             </Pressable>
-            {action(t('taskActions.keepCurrent'), () => store?.dismiss(taskRef))}
+            {action(t('taskActions.keepCurrent'), () =>
+              store?.dismiss(taskRef)
+            )}
           </View>
         </View>
       );
@@ -421,7 +477,11 @@ const styles = StyleSheet.create({
     minHeight: 44,
     marginTop: 4,
   },
-  undoText: { ...typography.secondary, fontWeight: '600', color: ACCENT_STRONG },
+  undoText: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: ACCENT_STRONG,
+  },
   secondaryButton: {
     minHeight: 44,
     paddingHorizontal: 14,
@@ -432,7 +492,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
-  secondaryButtonText: { ...typography.secondary, fontWeight: '600', color: INK },
+  secondaryButtonText: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: INK,
+  },
   primaryButton: {
     minHeight: 44,
     paddingHorizontal: 14,
@@ -441,7 +505,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: ACCENT_STRONG,
   },
-  primaryButtonText: { ...typography.secondary, fontWeight: '600', color: '#fff' },
+  primaryButtonText: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: '#fff',
+  },
   buttonDisabled: { opacity: 0.5 },
   review: {
     gap: 8,

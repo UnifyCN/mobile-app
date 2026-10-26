@@ -75,6 +75,13 @@ jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
       getUser: jest.fn(async () => ({ data: { user: { id: 'screen-user' } } })),
+      // Task progress (mobile-app#361) reads the session and follows auth changes.
+      getSession: jest.fn(async () => ({
+        data: { session: { user: { id: 'screen-user' } } },
+      })),
+      onAuthStateChange: () => ({
+        data: { subscription: { unsubscribe: jest.fn() } },
+      }),
     },
   },
 }));

@@ -60,6 +60,8 @@ import {
 import { usePersonalizedStarters } from '@/hooks/companion/usePersonalizedStarters';
 import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
+import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
+import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
 // the rag-query edge function (source of truth: UnifyCN/web-app,
@@ -139,6 +141,9 @@ export default function CompanionScreen() {
   >(null);
 
   const [inputText, setInputText] = useState('');
+  // Direction B (mobile-app#361): task progress opens in a bottom sheet over the
+  // conversation, so the conversation and the typed message stay mounted.
+  const [tasksOpen, setTasksOpen] = useState(false);
   // Local greeting message shown when user clicks "Ask Anything"
   const [greetingMessage, setGreetingMessage] = useState<Message | null>(null);
   const [optimisticMessages, setOptimisticMessages] = useState<Message[]>([]);
@@ -553,6 +558,13 @@ export default function CompanionScreen() {
           }
         />
 
+        <CompanionTasksEntry
+          onOpen={() => {
+            Keyboard.dismiss();
+            setTasksOpen(true);
+          }}
+        />
+
         {/* Messages - takes up available space. The FlatList is intentionally
             NOT wrapped in a Pressable: wrapping a scrollable in a Pressable
             creates a gesture-responder race with the list's scroll responder
@@ -678,6 +690,11 @@ export default function CompanionScreen() {
           </View>
         </View>
       </Animated.View>
+
+      <TaskActionsSheet
+        visible={tasksOpen}
+        onClose={() => setTasksOpen(false)}
+      />
     </View>
   );
 }

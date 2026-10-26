@@ -1,6 +1,16 @@
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import { AppState } from 'react-native';
-import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
+import {
+  useQuery,
+  useQueryClient,
+  type QueryClient,
+} from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys';
 import { useAnalytics } from '@/utils/analytics';
@@ -8,7 +18,10 @@ import {
   buildTaskActionResultProperties,
   type TaskActionSurface,
 } from '@/services/companionActions/analytics';
-import type { ReadResult, TaskActionClient } from '@/services/companionActions/client';
+import type {
+  ReadResult,
+  TaskActionClient,
+} from '@/services/companionActions/client';
 import type { TaskProgress } from '@/services/companionActions/contract';
 import {
   clearTaskActionStores,
@@ -111,7 +124,8 @@ export function useTaskProgress(): TaskProgressView {
   const result = query.data;
   const byRef = useMemo(() => {
     const map = new Map<string, TaskProgress>();
-    if (result?.kind === 'ok') for (const t of result.tasks) map.set(t.taskRef, t);
+    if (result?.kind === 'ok')
+      for (const t of result.tasks) map.set(t.taskRef, t);
     return map;
   }, [result]);
 
@@ -162,9 +176,13 @@ export function useTaskActionStore(
       client: activeClient(),
       newOperationId,
       onChanged: () => {
-        void queryClient.invalidateQueries({ queryKey: taskProgressKey(userId) });
+        void queryClient.invalidateQueries({
+          queryKey: taskProgressKey(userId),
+        });
         // Completed is also the legacy Checklist flag: refresh the Checklist too.
-        void queryClient.invalidateQueries({ queryKey: [CHECKLIST_TASKS_QUERY_ROOT] });
+        void queryClient.invalidateQueries({
+          queryKey: [CHECKLIST_TASKS_QUERY_ROOT],
+        });
       },
       onResult: event => {
         const props = buildTaskActionResultProperties(event, surface);
@@ -200,7 +218,10 @@ export function useTaskActionDraft(
 }
 
 /** Saved progress, or for a content-backed task never written: Not started at revision 0. */
-export function progressFor(taskRef: string, view: TaskProgressView): TaskProgress {
+export function progressFor(
+  taskRef: string,
+  view: TaskProgressView
+): TaskProgress {
   return (
     view.byRef.get(taskRef) ?? {
       taskRef,
