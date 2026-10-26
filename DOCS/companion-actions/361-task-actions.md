@@ -25,7 +25,12 @@ A user opens an existing Checklist task in the mobile bottom sheet or the web ov
 - A receipt shown from this screen's save turns historical ("This task changed after this") as soon as the saved revision moves on, here or on another platform.
 - Writes are allowed only right after a successful read. Web uses the browser online state and re-reads on reconnect and focus. Mobile has no OS network signal in this app (adding one needs a native module, which is not OTA-safe), so a failed read is the offline signal: progress is marked stale, controls turn off, and the read repeats every 5 s and on return to the foreground.
 - Task progress is held in memory only, keyed by account. Sign-out and account change drop every other account's drafts, results and cached progress.
-- Composer drafts stay: the sheet and drawer sit over a mounted conversation.
+- Every write needs a fresh successful read: state changes, reason saves, Undo, `not applied` retry and an approved compensating change. Offline or after a failed read these controls are off and send nothing.
+- A waiting-reason draft is cleared only after its save is confirmed applied. A refused or unknown result keeps the typed text.
+- Web Checklist rows are cached under `["tasks", language, accountId]`. One account scope (`hooks/useAccountScope.ts`) removes other accounts' Checklist rows, task progress, action stores and composer drafts. Legacy Checklist writes and every drawer opening re-read task progress.
+- Composer drafts stay. Mobile: the sheet sits over the mounted conversation tab. Web: the draft is held per account and conversation outside the page (`lib/companion/composerDrafts.ts`), so the drawer, Open in Checklist and return keep it.
+- Web drawer focus: when an update removes the focused control (a task opened from the list, a finished recovery step), focus moves to the task heading; Back returns focus to the row of the task that was open.
+- Touch targets: 48dp on Android, 44pt on iOS (`utils/touchTarget.ts`).
 
 ## How to run
 
@@ -85,8 +90,9 @@ Existing mobile tests changed (mocks only, no assertion changed): `checklistScre
 
 1. **Hosted:** no hosted write, deploy or migration. Hosted gateway acceptance of the function, hosted PostgREST schema reload and hosted isolation are deployment qualification (same as #360 unmet item 1).
 2. **Native:** no simulator or device run of the new UI. Real VoiceOver/TalkBack, keyboard avoidance with a real keyboard, Dynamic Type, safe areas on notched devices and RTL rendering are not exercised. The mobile tests use accessibility roles and labels; the export proves bundling only.
-3. **Browser:** jsdom only. No real browser focus, zoom to 200 %, narrow-viewport layout or screen reader. Focus return was tested through keyboard activation; Safari does not focus a clicked button, so focus return after a mouse click there is not proven.
+3. **Browser:** the first run was jsdom only. The review corrections add focused Chromium checks of contrast, panel motion, loading delay, press feedback, focus after updates and draft retention (see "Review corrections" in the evidence). No real screen reader, browser zoom to 200 % or Safari run. Focus return was tested through keyboard activation; Safari does not focus a clicked button, so focus return after a mouse click there is not proven.
 4. **Older clients:** unchanged from #360 (released-source and dev-shell proof of the same schema). This slice adds no legacy behaviour change.
 5. **Mixed versions of this client:** the contract version gate is tested at the boundary; no older build of this new client exists yet.
 6. The scripted stand-in is not the server. Server rules are proven only by the local-stack suites.
-7. Skills `/design`, `frontend-design`, `ui-ux-pro-max`, `vercel-react-native-skills` and the Supabase skill were not available in this session. The UI reuses the existing sheet, drawer, typography and colour tokens; the brand orange marks selection, and text or filled buttons use `#9A4A00` for at least 4.5:1 contrast.
+7. Colour and contrast are per platform. **Mobile:** the brand orange marks selection; orange text and the filled button use `#9A4A00` (white on `#9A4A00` is 6.26:1). **Web:** `#9A4A00` is not a web token and the web code never used it. The first web candidate set orange `primary` text and white-on-`primary` fills, which measured 2.31:1 to 2.70:1 in Chromium. The corrected web UI uses only web tokens: text controls use `ink-secondary` (17.15:1 on `surface-card`, 18.06:1 on `surface`), the compensating button uses the reviewed prototype's dark fill `ink-secondary` with white text (18.06:1), and the character count uses `ink-muted` (5.84:1). The lowest enabled text in the drawer measured 5.55:1. Measurements: `evidence/361-run-2026-10-25.md`, "Review corrections".
+8. The skills `/design`, `vercel-react-native-skills` and the Supabase skill are installed as files. The correction session read them and used `/design` on its `direct` route (accepted direction B, no new visual choice).
