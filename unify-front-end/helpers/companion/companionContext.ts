@@ -55,7 +55,9 @@ export type Clarification =
       profileValue: string;
       conversationValue: string;
     }
-  | { kind: 'missing'; field: 'province' };
+  | { kind: 'missing'; field: 'province' }
+  /** The user named two or more places they may be going to; Companion asked which. */
+  | { kind: 'place_unclear'; field: 'province'; options: string[] };
 
 export interface CompanionContext {
   version: 1;
@@ -181,6 +183,19 @@ function clarification(raw: unknown): Clarification | null {
   if (!rec) return null;
   if (rec.kind === 'missing' && rec.field === 'province') {
     return { kind: 'missing', field: 'province' };
+  }
+  if (
+    rec.kind === 'place_unclear' &&
+    rec.field === 'province' &&
+    Array.isArray(rec.options)
+  ) {
+    const options = rec.options
+      .map(o => text(o, 60))
+      .filter((o): o is string => Boolean(o))
+      .slice(0, 4);
+    return options.length >= 2
+      ? { kind: 'place_unclear', field: 'province', options }
+      : null;
   }
   if (
     rec.kind === 'profile_conflict' &&

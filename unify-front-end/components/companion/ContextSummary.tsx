@@ -41,6 +41,12 @@ export function ContextNotice({ context }: { context: CompanionContext }) {
         conversation: labels.arrival(c.conversationValue),
       })
     );
+  } else if (c?.kind === 'place_unclear') {
+    notes.push(
+      t('companion.context.clarifyPlace', {
+        places: c.options.join(I18nManager.isRTL ? '، ' : ', '),
+      })
+    );
   } else if (c?.kind === 'missing') {
     notes.push(t('companion.context.missingProvince'));
   }

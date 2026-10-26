@@ -7,6 +7,7 @@ import en from '@/i18n/locales/en/translation.json';
 import ar from '@/i18n/locales/ar/translation.json';
 import vancouver from './fixtures/rag-query-context-vancouver.json';
 import provinceConflict from './fixtures/rag-query-context-province-conflict.json';
+import placeUnclear from './fixtures/rag-query-context-place-unclear.json';
 import { parseCompanionContext } from '@/helpers/companion/companionContext';
 import { Message } from '@/helpers/companion/messageHelpers';
 
@@ -200,6 +201,19 @@ describe('Companion context sheet', () => {
     const links = sheet.getAllByRole('link');
     expect(links).toHaveLength(2);
     for (const link of links) expect(target(link).height).toBeGreaterThanOrEqual(48);
+  });
+
+  it('two possible destinations: the line and the sheet name both places and say Companion asked', () => {
+    expect(parseCompanionContext(placeUnclear.context)?.clarification).toEqual({
+      kind: 'place_unclear',
+      field: 'province',
+      options: ['Ontario', 'Alberta'],
+    });
+    const sheet = openSheet(placeUnclear.context);
+    const note =
+      'You named more than one place you may be going to: Ontario, Alberta. Companion asked which one applies.';
+    expect(sheet.getByText(note)).toBeTruthy();
+    expect(screen.getAllByText(note).length).toBeGreaterThanOrEqual(2);
   });
 
   it('an answer without context shows no context line or control', () => {
