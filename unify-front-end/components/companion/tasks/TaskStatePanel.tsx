@@ -118,6 +118,18 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   // The result of this panel's last save stays on screen, but it stops reading as
   // current once the saved task moves past the revision it produced (a newer
   // change here or on another platform). Its Undo still names this receipt only.
+  // A reason-only save keeps the state: name what changed instead of
+  // "Waiting to Waiting".
+  const receiptText = (r: TaskReceipt) =>
+    r.kind === 'undo'
+      ? t('taskActions.receiptUndo', { state: stateLabel(r.afterState) })
+      : r.beforeState === 'waiting' && r.afterState === 'waiting'
+        ? t('taskActions.receiptReason')
+        : t('taskActions.receiptChange', {
+            from: stateLabel(r.beforeState),
+            to: stateLabel(r.afterState),
+          });
+
   const receipt: TaskReceipt | null =
     phase.phase === 'saved'
       ? {
@@ -246,16 +258,7 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
         />
         {receipt && phase.phase !== 'undo_review' && (
           <View style={styles.receipt}>
-            <Text style={styles.receiptText}>
-              {receipt.kind === 'undo'
-                ? t('taskActions.receiptUndo', {
-                    state: stateLabel(receipt.afterState),
-                  })
-                : t('taskActions.receiptChange', {
-                    from: stateLabel(receipt.beforeState),
-                    to: stateLabel(receipt.afterState),
-                  })}
-            </Text>
+            <Text style={styles.receiptText}>{receiptText(receipt)}</Text>
             <Text style={styles.receiptMeta}>
               {formatTime(receipt.createdAt)}
               {!receipt.current

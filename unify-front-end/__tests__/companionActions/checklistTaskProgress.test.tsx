@@ -332,6 +332,9 @@ describe('Checklist task progress (mobile)', () => {
       waiting_reason: 'A letter from Service Canada',
     });
     expect(server.writes()[1].operation_id).not.toBe(first.operation_id);
+    // A reason-only save names what changed, not "Waiting to Waiting".
+    expect(await screen.findByText('Updated the waiting reason')).toBeTruthy();
+    expect(screen.queryByText('Changed from Waiting to Waiting')).toBeNull();
 
     fireEvent.press(screen.getByRole('button', { name: 'Close' }));
     const row = await screen.findByTestId('checklist-row-sanity:sin');
