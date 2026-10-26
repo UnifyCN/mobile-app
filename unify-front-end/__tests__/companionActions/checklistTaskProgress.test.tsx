@@ -15,6 +15,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { AppState } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 
@@ -248,6 +249,7 @@ beforeEach(() => {
   global.fetch = server.fetch as unknown as typeof fetch;
 });
 afterEach(() => {
+  jest.restoreAllMocks();
   global.fetch = realFetch;
   clients.splice(0).forEach(client => client.clear());
 });
@@ -267,6 +269,22 @@ async function switchAccount(nextUserId: string) {
 
 const companionActionUrls = () =>
   server.fetch.mock.calls.map(call => String(call[0]));
+
+/** The app returns to the foreground: every AppState listener hears 'active'. */
+function captureForeground() {
+  const listeners: ((state: string) => void)[] = [];
+  jest.spyOn(AppState, 'addEventListener').mockImplementation(((
+    _name: string,
+    cb: (state: string) => void
+  ) => {
+    listeners.push(cb);
+    return { remove: () => {} };
+  }) as never);
+  return () =>
+    act(async () => {
+      listeners.forEach(cb => cb('active'));
+    });
+}
 
 async function openTaskProgress() {
   fireEvent.press(await screen.findByText('Get a SIN'));
@@ -558,5 +576,56 @@ describe('Checklist task progress (mobile)', () => {
       entry_surface: 'checklist',
       to_state: 'waiting',
     });
+  });
+
+  it('a shown receipt becomes historical after a newer change elsewhere, and its Undo stays tied to it', async () => {
+    const foreground = captureForeground();
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'In progress' }));
+    expect(await screen.findByText('Changed from Not started to In progress')).toBeTruthy();
+    const mine = server.writes()[0];
+
+    // The web app saves a newer change with its own receipt.
+    server.handle({
+      action: 'apply',
+      operation_id: 'web-operation-1',
+      authorization: { kind: 'ui_control' },
+      operations: [
+        { type: 'task.set_state', task_ref: 'sanity:sin', state: 'completed', expected_revision: 1 },
+      ],
+    });
+    await foreground();
+    const completed = await screen.findByRole('radio', { name: 'Completed' });
+    await waitFor(() => expect(completed).toBeSelected());
+    expect(
+      await screen.findByText(/This task changed after this/)
+    ).toBeTruthy();
+
+    fireEvent.press(screen.getByRole('button', { name: 'Undo this change' }));
+    expect(await screen.findByText('This task changed after that action')).toBeTruthy();
+    const undo = server.writes().find(b => b.action === 'undo');
+    expect(undo?.receipt_operation_id).toBe(mine.operation_id);
+    expect(server.row('sanity:sin')?.state).toBe('completed');
+  });
+
+  it('sign-out clears unsaved drafts and results; signing in again does not bring them back', async () => {
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'Waiting' }));
+    expect(await screen.findByText('Changed from Not started to Waiting')).toBeTruthy();
+    fireEvent.changeText(
+      await screen.findByLabelText('What are you waiting for?'),
+      'Unsaved private note'
+    );
+    const me = mockUserId;
+
+    await act(async () => {
+      for (const listener of [...mockAuthListeners]) listener('SIGNED_OUT', null);
+    });
+    await switchAccount(me);
+    const reason = await screen.findByLabelText('What are you waiting for?');
+    await waitFor(() => expect(reason.props.value).toBe(''));
+    expect(screen.queryByText('Saved.')).toBeNull();
   });
 });

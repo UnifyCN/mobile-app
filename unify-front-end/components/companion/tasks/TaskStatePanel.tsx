@@ -115,8 +115,18 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
       });
   }
 
+  // The result of this panel's last save stays on screen, but it stops reading as
+  // current once the saved task moves past the revision it produced (a newer
+  // change here or on another platform). Its Undo still names this receipt only.
   const receipt: TaskReceipt | null =
-    phase.phase === 'saved' ? phase.receipt : progress.lastReceipt;
+    phase.phase === 'saved'
+      ? {
+          ...phase.receipt,
+          current:
+            phase.receipt.current &&
+            progress.revision === phase.receipt.afterRevision,
+        }
+      : progress.lastReceipt;
   const formatTime = (iso: string) =>
     new Intl.DateTimeFormat(i18n.language, {
       month: 'short',
