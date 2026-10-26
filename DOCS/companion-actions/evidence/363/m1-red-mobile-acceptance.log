@@ -1,0 +1,18 @@
+    ✕ shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task (1472 ms)
+    ✕ a clear command adds exactly its task without an AI answer; an unclear one asks and writes nothing (1016 ms)
+    ✕ a lost reply is looked up first; pending and failed lookups never write; not applied retries the same operation (1019 ms)
+    ✕ an edited title and a changed profile each need a new approval of the shown revision (1033 ms)
+    ✕ Undo of an added task asks first; Keep changes nothing; after a newer edit it offers a reviewed removal (1029 ms)
+    ✕ at the AI limit a draft can still be added and no model request is made (1027 ms)
+    ✕ an account change hides the previous account's cards, and a late draft reply reaches nobody (1020 ms)
+    ✕ reports only allowlisted action results, never the task title or message (1026 ms)
+    Unable to find an element with testID: task-draft-card
+    Unable to find an element with text: Added to Checklist: Buy a transit pass
+    Unable to find an element with testID: task-draft-card
+    Unable to find an element with testID: task-draft-card
+    Unable to find an element with testID: task-command-card
+    Unable to find an element with testID: task-draft-card
+    expect(received).not.toBeNull()
+    Received: null
+    Unable to find an element with text: Added to Checklist: Buy a transit pass
+Tests:       8 failed, 8 total

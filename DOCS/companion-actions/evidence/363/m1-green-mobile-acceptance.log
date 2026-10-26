@@ -1,0 +1,9 @@
+    ✓ shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task (491 ms)
+    ✓ a clear command adds exactly its task without an AI answer; an unclear one asks and writes nothing (122 ms)
+    ✓ a lost reply is looked up first; pending and failed lookups never write; not applied retries the same operation (296 ms)
+    ✓ an edited title and a changed profile each need a new approval of the shown revision (250 ms)
+    ✓ Undo of an added task asks first; Keep changes nothing; after a newer edit it offers a reviewed removal (236 ms)
+    ✓ at the AI limit a draft can still be added and no model request is made (133 ms)
+    ✓ an account change hides the previous account's cards, and a late draft reply reaches nobody (69 ms)
+    ✓ reports only allowlisted action results, never the task title or message (79 ms)
+Tests:       8 passed, 8 total
