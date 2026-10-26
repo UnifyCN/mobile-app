@@ -1,34 +1,20 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { useSyncExternalStore } from 'react';
+import {
+  accountSnapshot,
+  subscribeAccount,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 
 /**
- * The signed-in account id, from the stored session and every later auth change
- * (sign-in, sign-out, another account). Undefined until the session is read.
- * Screens that hold private work key it by this id, so a new account never
- * renders the previous account's data (mobile-app#361).
+ * The signed-in account and its epoch, from the shared account session
+ * (`services/account/accountSession.ts`). Every screen reads the same value, so
+ * they change account together (mobile-app#361).
  */
+export function useAccountSnapshot(): AccountSnapshot {
+  return useSyncExternalStore(subscribeAccount, accountSnapshot, accountSnapshot);
+}
+
+/** The signed-in account id. Undefined until the session is read. */
 export function useSessionAccountId(): string | null | undefined {
-  const [userId, setUserId] = useState<string | null | undefined>(undefined);
-  useEffect(() => {
-    let cancelled = false;
-    supabase.auth
-      .getSession()
-      .then(({ data }) => {
-        if (!cancelled) setUserId(data.session?.user.id ?? null);
-      })
-      .catch(error => {
-        console.warn('[useSessionAccountId] Failed to read the session:', error);
-        if (!cancelled) setUserId(null);
-      });
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserId(session?.user.id ?? null);
-    });
-    return () => {
-      cancelled = true;
-      subscription.unsubscribe();
-    };
-  }, []);
-  return userId;
+  return useAccountSnapshot().accountId;
 }

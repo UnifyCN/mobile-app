@@ -4,9 +4,16 @@ import {
   SaveMessageParams,
 } from '@/services/companion/saveMessage';
 import { ConversationMessage } from '@/services/companion/getConversationMessages';
+import { accountSnapshot } from '@/services/account/accountSession';
+import {
+  CONVERSATIONS_ROOT,
+  conversationMessagesKey,
+} from '@/hooks/companion/conversationKeys';
 
 interface SaveMessageContext {
   previousMessages: ConversationMessage[] | undefined;
+  /** The thread entry of the account that saved the message. */
+  queryKey: ReturnType<typeof conversationMessagesKey>;
 }
 
 // Optimistic rows get negative ids so they never collide with database ids.
@@ -25,10 +32,12 @@ export const useSaveMessage = () => {
   return useMutation<void, Error, SaveMessageParams, SaveMessageContext>({
     mutationFn: (params: SaveMessageParams) => saveMessage(params),
     onMutate: async variables => {
-      const queryKey = [
-        'conversation-messages',
-        variables.conversationIdentifier,
-      ] as const;
+      // The account that sends the message owns its optimistic row and every
+      // later cache write of this save, even if another account signs in.
+      const queryKey = conversationMessagesKey(
+        accountSnapshot().accountId,
+        variables.conversationIdentifier
+      );
 
       await queryClient.cancelQueries({ queryKey });
 
@@ -49,28 +58,22 @@ export const useSaveMessage = () => {
         optimisticMessage,
       ]);
 
-      return { previousMessages };
+      return { previousMessages, queryKey };
     },
-    onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ['conversation-messages', variables.conversationIdentifier],
-      });
+    onSuccess: (_data, _variables, context) => {
+      if (context) queryClient.invalidateQueries({ queryKey: context.queryKey });
 
       // Keep conversation list fresh (updated_at/title changes)
       queryClient.invalidateQueries({
-        queryKey: ['conversations'],
+        queryKey: [CONVERSATIONS_ROOT],
       });
     },
-    onError: (error, variables, context) => {
-      const queryKey = [
-        'conversation-messages',
-        variables.conversationIdentifier,
-      ] as const;
-
-      queryClient.setQueryData(queryKey, context?.previousMessages);
+    onError: (error, _variables, context) => {
+      if (context)
+        queryClient.setQueryData(context.queryKey, context.previousMessages);
 
       queryClient.invalidateQueries({
-        queryKey: ['conversations'],
+        queryKey: [CONVERSATIONS_ROOT],
       });
 
       console.error('Failed to save message:', error);

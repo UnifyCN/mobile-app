@@ -66,7 +66,7 @@ import {
   useTaskProgress,
 } from '@/hooks/companion/useTaskActions';
 import LoadingScreen from '@/components/LoadingScreen';
-import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 
 /**
  * Map checklist tab slug to (tabs) route for "Learn how" navigation.
@@ -219,14 +219,12 @@ export default function ChecklistScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   // The open task belongs to one account: close it before another account (or
   // a signed-out screen) renders. A token refresh of the same account keeps it.
-  const account = useSessionAccountId();
-  const [sheetAccount, setSheetAccount] = useState(account);
-  if (account !== sheetAccount) {
-    setSheetAccount(account);
-    if (sheetAccount !== undefined) {
-      setModalVisible(false);
-      setSelectedTask(null);
-    }
+  const { epoch: accountEpoch } = useAccountSnapshot();
+  const [sheetEpoch, setSheetEpoch] = useState(accountEpoch);
+  if (accountEpoch !== sheetEpoch) {
+    setSheetEpoch(accountEpoch);
+    setModalVisible(false);
+    setSelectedTask(null);
   }
   // Saved task progress (mobile-app#361). Off when the feature is off or the
   // contract version is unsupported: the Checklist then works as before.

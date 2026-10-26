@@ -62,7 +62,11 @@ import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
-import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+import {
+  ownAccountWork,
+  stillOwned,
+} from '@/services/account/accountSession';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
 // the rag-query edge function (source of truth: UnifyCN/web-app,
@@ -152,16 +156,15 @@ export default function CompanionScreen() {
   // The unsent message and the open conversation belong to one account. When
   // another account signs in (or this one signs out), drop them before the next
   // render, so the new account never sees them. A token refresh keeps them.
-  const account = useSessionAccountId();
-  const [composerAccount, setComposerAccount] = useState(account);
-  if (account !== composerAccount) {
-    setComposerAccount(account);
-    if (composerAccount !== undefined) {
-      setInputText('');
-      setCurrentConversationId(null);
-      setGreetingMessage(null);
-      setOptimisticMessages([]);
-    }
+  // Pending sends check the same account epoch before they write a result.
+  const { epoch: accountEpoch } = useAccountSnapshot();
+  const [composerEpoch, setComposerEpoch] = useState(accountEpoch);
+  if (accountEpoch !== composerEpoch) {
+    setComposerEpoch(accountEpoch);
+    setInputText('');
+    setCurrentConversationId(null);
+    setGreetingMessage(null);
+    setOptimisticMessages([]);
   }
 
   // Fetch messages for the current conversation
@@ -358,6 +361,8 @@ export default function CompanionScreen() {
         source ?? resolveTypedInputSource(textToSend, inputOriginRef.current);
       inputOriginRef.current = null;
 
+      // Results of this send are written only while its account is signed in.
+      const owner = ownAccountWork();
       let optimisticMessageId: string | null = null;
       if (!currentConversationId) {
         optimisticMessageId = `optimistic-user-${Date.now()}`;
@@ -380,6 +385,9 @@ export default function CompanionScreen() {
           inputSource
         );
       } catch (error) {
+        // Another account signed in meanwhile: its screen gets nothing back,
+        // not even the question to retry.
+        if (!stillOwned(owner)) return;
         if (optimisticMessageId) {
           setOptimisticMessages(current =>
             current.filter(message => message.id !== optimisticMessageId)

@@ -13,6 +13,10 @@ import {
 import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys';
 import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
 import { clearOtherAccountsChecklistCache } from '@/utils/checklistTaskCache';
+import {
+  CONVERSATIONS_ROOT,
+  CONVERSATION_MESSAGES_ROOT,
+} from '@/hooks/companion/conversationKeys';
 import { useAnalytics } from '@/utils/analytics';
 import {
   buildTaskActionResultProperties,
@@ -128,16 +132,12 @@ export function useTaskProgress(): TaskProgressView {
   };
 }
 
-/** Conversation caches are not keyed by account: drop them on an account change. */
-const UNKEYED_PRIVATE_ROOTS = ['conversations', 'conversation-messages'];
-/** The account the caches were last scoped to, shared by every mounted screen. */
-let scopedAccount: string | null | undefined;
-
 /**
  * Removes every other account's private work: unresolved task actions, task
- * progress and Checklist rows (memory, disk and query cache) and, when the
- * account actually changes, the conversation caches. Reads still in flight for
- * the previous account are cancelled, so they cannot fill the new account's view.
+ * progress, Checklist rows (memory, disk and query cache) and conversation
+ * lists and threads. All of these are keyed by account, so a mounted view
+ * already reads only the signed-in account's entry; this drops the rest and
+ * cancels reads still in flight for another account.
  */
 function useTaskActionAccountScope(
   userId: string | null | undefined,
@@ -151,6 +151,8 @@ function useTaskActionAccountScope(
     for (const [root, index] of [
       [TASK_PROGRESS_ROOT, 1],
       [CHECKLIST_TASKS_QUERY_ROOT, 1],
+      [CONVERSATIONS_ROOT, 1],
+      [CONVERSATION_MESSAGES_ROOT, 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],
@@ -162,13 +164,6 @@ function useTaskActionAccountScope(
       });
     }
     void clearOtherAccountsChecklistCache(userId);
-    if (scopedAccount !== undefined && scopedAccount !== userId) {
-      for (const root of UNKEYED_PRIVATE_ROOTS) {
-        void queryClient.cancelQueries({ queryKey: [root] });
-        queryClient.removeQueries({ queryKey: [root] });
-      }
-    }
-    scopedAccount = userId;
   }, [userId, queryClient]);
 }
 

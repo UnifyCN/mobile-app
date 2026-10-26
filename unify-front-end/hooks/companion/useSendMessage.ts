@@ -21,6 +21,12 @@ import {
   buildCompanionStreamResponseProperties,
 } from '@/helpers/companion/companionAnalytics';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  AccountChangedError,
+  ownAccountWork,
+  stillOwned,
+} from '@/services/account/accountSession';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -55,6 +61,19 @@ export const useSendMessage = ({
   // useSaveMessage (which inserts an optimistic copy on mutate).
   const [streamingBotMessage, setStreamingBotMessage] =
     useState<Message | null>(null);
+  // A send belongs to the account that started it (mobile-app#361). When
+  // another account signs in, this hook drops that send's on-screen state, and
+  // the send itself stops before its next request or result.
+  const { epoch } = useAccountSnapshot();
+  const [stateEpoch, setStateEpoch] = useState(epoch);
+  if (epoch !== stateEpoch) {
+    setStateEpoch(epoch);
+    setIsLoading(false);
+    setIsWaitingForBot(false);
+    setLastSuggestedNextSteps(undefined);
+    setLastVerified(undefined);
+    setStreamingBotMessage(null);
+  }
   const queryClient = useQueryClient();
   const { data: usage } = useChatbotUsage();
   const createConversation = useCreateConversation();
@@ -73,6 +92,11 @@ export const useSendMessage = ({
     setLastVerified(undefined);
     setStreamingBotMessage(null);
     let userMessagePersisted = false;
+    const owner = ownAccountWork();
+    const owned = () => stillOwned(owner);
+    const ensureOwned = () => {
+      if (!owned()) throw new AccountChangedError();
+    };
 
     try {
       let conversationIdToUse = currentConversationId;
@@ -84,9 +108,11 @@ export const useSendMessage = ({
           const newConversation = await createConversation.mutateAsync({
             firstMessage: messageText,
           });
+          ensureOwned();
           conversationIdToUse = newConversation.conversation_identifier;
           setCurrentConversationId(conversationIdToUse);
         } catch (error) {
+          ensureOwned();
           console.error('Failed to create conversation:', error);
           setIsLoading(false);
           throw error;
@@ -109,6 +135,7 @@ export const useSendMessage = ({
       );
 
       // Save user message to database
+      ensureOwned();
       try {
         await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
@@ -122,6 +149,7 @@ export const useSendMessage = ({
         // Continue anyway - message will be saved but might not show immediately
       }
 
+      ensureOwned();
       // Format messages for RAG API (last 10 messages for context)
       const conversationMessages = formatMessagesForAPI(messages, messageText);
 
@@ -151,6 +179,7 @@ export const useSendMessage = ({
           {
             onMetadata: meta => {
               metadata = meta;
+              if (!owned()) return;
               // Hide the typing indicator — we now show the (empty) bot
               // bubble that will fill with tokens.
               setIsWaitingForBot(false);
@@ -167,6 +196,7 @@ export const useSendMessage = ({
               if (meta.lastVerified) setLastVerified(meta.lastVerified);
             },
             onToken: delta => {
+              if (!owned()) return;
               setStreamingBotMessage(current => {
                 if (!current) {
                   // Metadata never arrived (shouldn't happen) — synthesize.
@@ -196,6 +226,7 @@ export const useSendMessage = ({
         });
       });
 
+      ensureOwned();
       const responseTimeMs = Date.now() - apiStartTime;
 
       if (streamFailure) throw streamFailure;
@@ -232,6 +263,7 @@ export const useSendMessage = ({
       // Save bot message to database
       // Note: queryType, disclaimer, and suggestedNextSteps are not persisted to DB
       // They're only used for immediate UI display
+      ensureOwned();
       try {
         await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
@@ -246,8 +278,11 @@ export const useSendMessage = ({
 
       // The persisted (or RQ-optimistic) bot message now owns this bubble —
       // drop our local copy to avoid a duplicate.
+      ensureOwned();
       setStreamingBotMessage(null);
     } catch (error) {
+      // Another account signed in: nothing of this send may reach its screen.
+      if (!owned()) throw new AccountChangedError();
       console.error('Gemini API error:', error);
       console.error(
         'Error details:',
@@ -270,8 +305,10 @@ export const useSendMessage = ({
       }
       throw sendError;
     } finally {
-      setIsLoading(false);
-      setIsWaitingForBot(false);
+      if (owned()) {
+        setIsLoading(false);
+        setIsWaitingForBot(false);
+      }
     }
   };
 

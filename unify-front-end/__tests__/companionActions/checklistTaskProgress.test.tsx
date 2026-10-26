@@ -291,6 +291,10 @@ async function openTaskProgress() {
   fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
   const notStarted = await screen.findByRole('radio', { name: 'Not started' });
   await waitFor(() => expect(notStarted).toBeSelected());
+  // Opening is an editing entry: controls turn on once its read has finished.
+  await waitFor(() =>
+    expect(screen.getByRole('radio', { name: 'Waiting' })).toBeEnabled()
+  );
 }
 
 describe('Checklist task progress (mobile)', () => {
