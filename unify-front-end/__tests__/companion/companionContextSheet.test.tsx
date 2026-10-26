@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { AccessibilityInfo, StyleSheet } from 'react-native';
 import { fireEvent, render, screen, within } from '@testing-library/react-native';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -175,6 +175,31 @@ describe('Companion context sheet', () => {
     fireEvent.press(sheet.getByRole('button', { name: 'Close sources and context' }));
     expect(screen.queryByTestId('sheet')).toBeNull();
     expect(focus).toHaveBeenCalledWith(expect.anything(), 'focus');
+  });
+
+  // Declared touch area (style size plus hitSlop) of the host view each control
+  // renders. Not a measured native layout: proves the components ask for at
+  // least the Android 48dp minimum (iOS needs 44pt).
+  it('every control the context line and sheet add is at least 48dp tall, and Close is 48dp wide', () => {
+    type Slop = number | { top?: number; bottom?: number; left?: number; right?: number } | undefined;
+    const target = (el: { props: { style?: unknown; hitSlop?: Slop } }) => {
+      const style = (StyleSheet.flatten(el.props.style as never) ?? {}) as Record<string, number | undefined>;
+      const raw = el.props.hitSlop;
+      const slop = typeof raw === 'number' ? { top: raw, bottom: raw, left: raw, right: raw } : raw ?? {};
+      return {
+        height: Math.max(style.height ?? 0, style.minHeight ?? 0) + (slop.top ?? 0) + (slop.bottom ?? 0),
+        width: Math.max(style.width ?? 0, style.minWidth ?? 0) + (slop.left ?? 0) + (slop.right ?? 0),
+      };
+    };
+    const sheet = openSheet(vancouver.context);
+    const opener = screen.getAllByRole('button', { name: 'Sources and context' })[0];
+    expect(target(opener).height).toBeGreaterThanOrEqual(48);
+    const close = target(sheet.getByRole('button', { name: 'Close sources and context' }));
+    expect(close.height).toBeGreaterThanOrEqual(48);
+    expect(close.width).toBeGreaterThanOrEqual(48);
+    const links = sheet.getAllByRole('link');
+    expect(links).toHaveLength(2);
+    for (const link of links) expect(target(link).height).toBeGreaterThanOrEqual(48);
   });
 
   it('an answer without context shows no context line or control', () => {

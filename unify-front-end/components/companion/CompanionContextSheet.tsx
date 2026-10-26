@@ -267,12 +267,13 @@ const styles = StyleSheet.create({
     color: Theme.black,
     flex: 1,
   },
+  // 48dp: the Android minimum touch target (also above iOS's 44pt).
   closeButton: {
-    width: 44,
-    height: 44,
+    width: 48,
+    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    marginEnd: -10,
+    marginEnd: -12,
   },
   content: {
     gap: 20,
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 6,
-    minHeight: 44,
+    minHeight: 48,
     paddingTop: 2,
   },
   pressed: {
