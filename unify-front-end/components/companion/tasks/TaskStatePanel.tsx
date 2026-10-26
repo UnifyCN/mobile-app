@@ -30,6 +30,7 @@ import {
   useTaskActionPhase,
   type TaskProgressView,
 } from '@/hooks/companion/useTaskActions';
+import { minTarget } from '@/utils/touchTarget';
 
 const STATE_ICON: Record<
   TaskState,
@@ -72,8 +73,10 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const draft = useTaskActionDraft(store, taskRef);
   const reasonValue = draft ?? progress.waitingReason ?? '';
   const busy = isUnresolved(phase);
-  const canWrite =
-    Boolean(store) && view.canWrite && !progress.removed && !busy;
+  // Every write, including a retry or an approved compensating change, needs a
+  // fresh successful read; after a failed read nothing is sent or queued.
+  const writable = Boolean(store) && view.canWrite && !progress.removed;
+  const canWrite = writable && !busy;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const reasonChanged = reasonValue.trim() !== (progress.waitingReason ?? '');
 
@@ -237,6 +240,7 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
               onPress={saveReason}
               style={({ pressed }) => [
                 styles.secondaryButton,
+                { minHeight: minTarget() },
                 (!canWrite || !reasonChanged) && styles.buttonDisabled,
                 pressed && styles.stateOptionPressed,
               ]}
@@ -251,6 +255,7 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
 
       <View accessibilityLiveRegion='polite' style={styles.statusBlock}>
         <PhaseMessage
+          writable={writable}
           phase={phase}
           stateLabel={stateLabel}
           store={store}
@@ -278,6 +283,7 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
                 }
                 style={({ pressed }) => [
                   styles.undoButton,
+                  { minHeight: minTarget() },
                   !canWrite && styles.buttonDisabled,
                   pressed && styles.stateOptionPressed,
                 ]}
@@ -294,11 +300,13 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
 }
 
 function PhaseMessage({
+  writable,
   phase,
   stateLabel,
   store,
   taskRef,
 }: {
+  writable: boolean;
   phase: TaskActionPhase;
   stateLabel: (s: TaskState) => string;
   store: TaskActionStore | null;
@@ -310,14 +318,18 @@ function PhaseMessage({
       {text}
     </Text>
   );
-  const action = (label: string, onPress: () => void) => (
+  const action = (label: string, onPress: () => void, disabled = false) => (
     <Pressable
       accessibilityRole='button'
       accessibilityLabel={label}
+      disabled={disabled}
+      accessibilityState={{ disabled }}
       onPress={onPress}
       style={({ pressed }) => [
         styles.secondaryButton,
-        pressed && styles.stateOptionPressed,
+        { minHeight: minTarget() },
+        disabled && styles.buttonDisabled,
+        pressed && !disabled && styles.stateOptionPressed,
       ]}
     >
       <Text style={styles.secondaryButtonText}>{label}</Text>
@@ -368,7 +380,11 @@ function PhaseMessage({
       return (
         <View style={styles.statusRow}>
           {line(t('taskActions.notApplied'), 'error')}
-          {action(t('taskActions.retry'), () => void store?.retry(taskRef))}
+          {action(
+            t('taskActions.retry'),
+            () => writable && void store?.retry(taskRef),
+            !writable
+          )}
         </View>
       );
     case 'undo_review': {
@@ -393,10 +409,16 @@ function PhaseMessage({
             <Pressable
               accessibilityRole='button'
               accessibilityLabel={t('taskActions.applyCompensating')}
-              onPress={() => void store?.approveCompensation(taskRef)}
+              disabled={!writable}
+              accessibilityState={{ disabled: !writable }}
+              onPress={() =>
+                writable && void store?.approveCompensation(taskRef)
+              }
               style={({ pressed }) => [
                 styles.primaryButton,
-                pressed && styles.stateOptionPressed,
+                { minHeight: minTarget() },
+                !writable && styles.buttonDisabled,
+                pressed && writable && styles.stateOptionPressed,
               ]}
             >
               <Text style={styles.primaryButtonText}>
@@ -487,7 +509,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-start',
     gap: 6,
-    minHeight: 44,
     marginTop: 4,
   },
   undoText: {
@@ -496,7 +517,6 @@ const styles = StyleSheet.create({
     color: ACCENT_STRONG,
   },
   secondaryButton: {
-    minHeight: 44,
     paddingHorizontal: 14,
     borderRadius: 12,
     borderWidth: 1,
@@ -511,7 +531,6 @@ const styles = StyleSheet.create({
     color: INK,
   },
   primaryButton: {
-    minHeight: 44,
     paddingHorizontal: 14,
     borderRadius: 12,
     alignItems: 'center',

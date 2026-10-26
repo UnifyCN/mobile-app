@@ -35,6 +35,7 @@ import {
   type PriorityConfig,
 } from '@/constants/ChecklistPriority';
 import { normalizeChecklistPriority } from '@/utils/checklistOrder';
+import { squareTarget } from '@/utils/touchTarget';
 import { formatRelativeTime } from '@/helpers/dateHelpers';
 import { LinkedDescription } from './LinkedDescription';
 import KeyboardAvoidingView from '@/components/common/KeyboardAvoidingView';
@@ -313,7 +314,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
       <View style={styles.progressHeader}>
         <TouchableOpacity
           onPress={() => setMode('detail')}
-          style={styles.iconButton}
+          style={[styles.iconButton, squareTarget()]}
           accessibilityRole='button'
           accessibilityLabel={t('taskActions.backToDetails')}
         >
@@ -333,7 +334,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
         </Text>
         <TouchableOpacity
           onPress={onClose}
-          style={styles.iconButton}
+          style={[styles.iconButton, squareTarget()]}
           accessibilityRole='button'
           accessibilityLabel={t('taskActions.close')}
         >
@@ -546,11 +547,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E2E8F0',
   },
   iconButton: {
-    width: 44,
-    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 22,
   },
   progressHeading: {
     ...typography.cardTitle,

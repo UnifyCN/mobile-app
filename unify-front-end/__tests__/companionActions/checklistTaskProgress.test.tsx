@@ -15,7 +15,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { AppState } from 'react-native';
+import { AppState, Platform, StyleSheet } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 
@@ -630,5 +630,133 @@ describe('Checklist task progress (mobile)', () => {
     const reason = await screen.findByLabelText('What are you waiting for?');
     await waitFor(() => expect(reason.props.value).toBe(''));
     expect(screen.queryByText('Saved.')).toBeNull();
+  });
+});
+
+// Corrections from the #361 Spec review (F2, F8). Each test names the failing
+// condition it was written against.
+describe('review corrections (mobile)', () => {
+  const OFFLINE =
+    'You are offline. The progress shown may be out of date, and changes are turned off.';
+  const minHeightOf = (name: string) =>
+    StyleSheet.flatten(screen.getByRole('button', { name }).props.style)
+      .minHeight as number;
+
+  it('F2: after a failed current-state read, Try again sends nothing', async () => {
+    const foreground = captureForeground();
+    let offline = false;
+    server = scriptedServer(
+      {},
+      {
+        override: body => {
+          if (body.action === 'apply') return 'network-error';
+          if (body.action === 'read' && offline) return 'network-error';
+          return undefined;
+        },
+      }
+    );
+    global.fetch = server.fetch as unknown as typeof fetch;
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'In progress' }));
+    await screen.findByRole('button', { name: 'Try again' });
+    offline = true;
+    await foreground();
+    await screen.findByText(OFFLINE);
+    const writes = server.writes().length;
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeDisabled();
+    fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    await act(async () => {});
+    expect(server.writes()).toHaveLength(writes);
+  });
+
+  it('F2: after a failed current-state read, Apply this change sends nothing', async () => {
+    const foreground = captureForeground();
+    let offline = false;
+    server = scriptedServer(
+      {},
+      {
+        override: body =>
+          body.action === 'read' && offline ? 'network-error' : undefined,
+      }
+    );
+    global.fetch = server.fetch as unknown as typeof fetch;
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'In progress' }));
+    await screen.findByText('Changed from Not started to In progress');
+    server.editElsewhere('sanity:sin', 'completed');
+    fireEvent.press(screen.getByRole('button', { name: 'Undo this change' }));
+    await screen.findByRole('button', { name: 'Apply this change' });
+    offline = true;
+    await foreground();
+    await screen.findByText(OFFLINE);
+    const writes = server.writes().length;
+    expect(screen.getByRole('button', { name: 'Apply this change' })).toBeDisabled();
+    fireEvent.press(screen.getByRole('button', { name: 'Apply this change' }));
+    await act(async () => {});
+    expect(server.writes()).toHaveLength(writes);
+    expect(server.row('sanity:sin')?.state).toBe('completed');
+  });
+
+  it('F8: on Android, save, Undo and recovery controls are at least 48dp; iOS keeps 44pt', async () => {
+    jest.replaceProperty(Platform, 'OS', 'android');
+    let lose = false;
+    server = scriptedServer(
+      {},
+      {
+        override: body => {
+          if (body.action === 'apply' && lose) return 'network-error';
+          if (body.action === 'status' && lose)
+            return { status: 200, body: { status: 'not_applied' } };
+          return undefined;
+        },
+      }
+    );
+    global.fetch = server.fetch as unknown as typeof fetch;
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'Waiting' }));
+    await screen.findByLabelText('What are you waiting for?');
+    await screen.findByRole('button', { name: 'Undo this change' });
+    expect(minHeightOf('Save waiting reason')).toBeGreaterThanOrEqual(48);
+    expect(minHeightOf('Undo this change')).toBeGreaterThanOrEqual(48);
+
+    server.editElsewhere('sanity:sin', 'completed');
+    fireEvent.press(screen.getByRole('button', { name: 'Undo this change' }));
+    await screen.findByRole('button', { name: 'Apply this change' });
+    expect(minHeightOf('Apply this change')).toBeGreaterThanOrEqual(48);
+    expect(minHeightOf('Keep current')).toBeGreaterThanOrEqual(48);
+
+    fireEvent.press(screen.getByRole('button', { name: 'Keep current' }));
+    lose = true;
+    const inProgress = screen.getByRole('radio', { name: 'In progress' });
+    await waitFor(() => expect(inProgress).toBeEnabled());
+    fireEvent.press(inProgress);
+    await screen.findByRole('button', { name: 'Try again' });
+    expect(minHeightOf('Try again')).toBeGreaterThanOrEqual(48);
+  });
+
+  it('F8: on Android, the Checklist progress header controls are at least 48dp', async () => {
+    jest.replaceProperty(Platform, 'OS', 'android');
+    renderScreen();
+    await openTaskProgress();
+    for (const name of [en.taskActions.backToDetails, 'Close']) {
+      const style = StyleSheet.flatten(
+        screen.getByRole('button', { name }).props.style
+      );
+      expect(style.width).toBeGreaterThanOrEqual(48);
+      expect(style.height).toBeGreaterThanOrEqual(48);
+    }
+  });
+
+  it('F8: iOS keeps its 44pt minimum', async () => {
+    jest.replaceProperty(Platform, 'OS', 'ios');
+    renderScreen();
+    await openTaskProgress();
+    fireEvent.press(screen.getByRole('radio', { name: 'Waiting' }));
+    await screen.findByRole('button', { name: 'Undo this change' });
+    expect(minHeightOf('Save waiting reason')).toBeGreaterThanOrEqual(44);
+    expect(minHeightOf('Undo this change')).toBeGreaterThanOrEqual(44);
   });
 });

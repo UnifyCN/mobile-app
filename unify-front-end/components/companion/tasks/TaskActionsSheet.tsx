@@ -31,6 +31,7 @@ import {
 import type { TaskState } from '@/services/companionActions/contract';
 import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
+import { minTarget, squareTarget } from '@/utils/touchTarget';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -112,7 +113,7 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
               {selectedRef ? (
                 <Pressable
                   onPress={back}
-                  style={styles.iconButton}
+                  style={[styles.iconButton, squareTarget()]}
                   accessibilityRole='button'
                   accessibilityLabel={t('taskActions.backToTasks')}
                 >
@@ -124,7 +125,7 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
                   />
                 </Pressable>
               ) : (
-                <View style={styles.iconButton} />
+                <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
                 {selectedRef
@@ -133,7 +134,7 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
               </Text>
               <Pressable
                 onPress={onClose}
-                style={styles.iconButton}
+                style={[styles.iconButton, squareTarget()]}
                 accessibilityRole='button'
                 accessibilityLabel={t('taskActions.close')}
               >
@@ -238,7 +239,11 @@ function SheetBody({
             onOpenChecklist();
             router.push('/(tabs)/Checklist');
           }}
-          style={({ pressed }) => [styles.link, pressed && styles.pressed]}
+          style={({ pressed }) => [
+            styles.link,
+            { minHeight: minTarget() },
+            pressed && styles.pressed,
+          ]}
         >
           <Text style={styles.linkText}>{t('taskActions.openChecklist')}</Text>
           <MaterialIcons
@@ -353,11 +358,8 @@ const styles = StyleSheet.create({
     borderBottomColor: BORDER,
   },
   iconButton: {
-    width: 44,
-    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 22,
   },
   heading: {
     ...typography.cardTitle,
@@ -401,7 +403,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-start',
     gap: 4,
-    minHeight: 44,
   },
   linkText: { ...typography.secondary, fontWeight: '600', color: LINK },
 });

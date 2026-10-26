@@ -13,6 +13,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { Platform, StyleSheet } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 
@@ -385,5 +386,26 @@ describe('Companion task entry and sheet (mobile)', () => {
     fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
     fireEvent.press(await within(sheet).findByRole('button', { name: 'Open in Checklist' }));
     expect(mockPush).toHaveBeenCalledWith('/(tabs)/Checklist');
+  });
+});
+
+// Correction from the #361 Spec review (F8).
+describe('review corrections (mobile sheet)', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  it('F8: on Android, the sheet header and Checklist link are at least 48dp', async () => {
+    jest.replaceProperty(Platform, 'OS', 'android');
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
+    await within(sheet).findByRole('radio', { name: 'In progress' });
+    const size = (name: string) =>
+      StyleSheet.flatten(within(sheet).getByRole('button', { name }).props.style);
+    for (const name of ['Back to tasks', 'Close']) {
+      expect(size(name).width).toBeGreaterThanOrEqual(48);
+      expect(size(name).height).toBeGreaterThanOrEqual(48);
+    }
+    expect(size('Open in Checklist').minHeight).toBeGreaterThanOrEqual(48);
   });
 });
