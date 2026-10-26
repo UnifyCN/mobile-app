@@ -21,9 +21,9 @@ alter table public.companion_proposals
   -- Where the draft came from: { conversation_id, message_id } of the caller's own
   -- conversation. Display and lookup only; never authorization.
   add column source jsonb,
-  -- Why the current revision needs review: 'edited' or 'context_changed'. Null for
-  -- a first draft.
-  add column review_reason text check (review_reason is null or review_reason in ('edited', 'context_changed')),
+  -- Why the current revision needs review: 'edited', 'context_changed', or 'restored'
+  -- (brought back by a re-application after a rollback). Null for a first draft.
+  add column review_reason text check (review_reason is null or review_reason in ('edited', 'context_changed', 'restored')),
   -- With review_reason 'context_changed': the context the earlier revision was reviewed
   -- against, so review can show the old and the current values.
   add column previous_context jsonb,
@@ -44,6 +44,46 @@ create table public.companion_command_uses (
 );
 alter table public.companion_command_uses enable row level security;
 revoke all on public.companion_command_uses from anon, authenticated;
+
+-- ------------------------------------------ recovery after a rollback (down script)
+-- The rollback script archives what only this migration understands into
+-- companion_rollback_archive_363. Re-applying puts it back: proposal columns, the single
+-- use of each command message, and the Undo of each added task. Every restored draft
+-- moves to a new revision that needs review, so no approval captured before the
+-- rollback is used (the #361 rule). Rows of deleted accounts are not restored.
+do $recover363$
+begin
+  if to_regclass('public.companion_rollback_archive_363') is null then
+    return;
+  end if;
+  update public.companion_proposals p set
+      kind = a.row_data->>'kind',
+      context = nullif(a.row_data->'context', 'null'::jsonb),
+      source = nullif(a.row_data->'source', 'null'::jsonb),
+      review_reason = case when p.status = 'draft' and a.row_data->>'kind' = 'task_create' then 'restored'
+                           else a.row_data->>'review_reason' end,
+      previous_context = case when p.status = 'draft' and a.row_data->>'kind' = 'task_create' then null
+                              else nullif(a.row_data->'previous_context', 'null'::jsonb) end,
+      revision = case when p.status = 'draft' and a.row_data->>'kind' = 'task_create' then p.revision + 1
+                      else p.revision end,
+      receipt_operation_id = (a.row_data->>'receipt_operation_id')::uuid,
+      updated_at = now()
+    from public.companion_rollback_archive_363 a
+   where a.source = 'companion_proposals' and a.restored_at is null
+     and p.id = (a.row_data->>'id')::uuid and p.user_id = (a.row_data->>'user_id')::uuid;
+  insert into public.companion_command_uses
+    select (jsonb_populate_record(null::public.companion_command_uses, a.row_data)).*
+      from public.companion_rollback_archive_363 a
+     where a.source = 'companion_command_uses' and a.restored_at is null
+       and exists (select 1 from auth.users u where u.id = (a.row_data->>'user_id')::uuid)
+    on conflict do nothing;
+  update public.companion_action_receipts r set inverse = a.row_data->'inverse'
+    from public.companion_rollback_archive_363 a
+   where a.source = 'companion_action_receipts.inverse' and a.restored_at is null
+     and r.user_id = (a.row_data->>'user_id')::uuid and r.operation_id = (a.row_data->>'operation_id')::uuid
+     and r.inverse is null;
+  update public.companion_rollback_archive_363 set restored_at = now() where restored_at is null;
+end $recover363$;
 
 -- ------------------------------------------------------------ shared helpers
 -- The title as it is compared for "a task with this title already exists".
@@ -101,7 +141,7 @@ begin
       perform public.companion_fail('CA422', 'invalid_operations');
     end if;
     v_type := case when jsonb_typeof(v_op->'type') = 'string' then v_op->>'type' end;
-    if v_type is null or v_type not in ('task.set_state', 'task.create_custom') then
+    if v_type is null or v_type not in ('task.set_state', 'task.create_custom', 'task.remove_created') then
       perform public.companion_fail('CA422', 'unsupported_operation', jsonb_build_object('type', v_type));
     end if;
     if v_type = 'task.create_custom' then
@@ -119,6 +159,22 @@ begin
       if jsonb_typeof(v_op->'priority') is distinct from 'string'
          or (v_op->>'priority') not in ('Do now', 'Do soon', 'Explore and connect', 'Optional / later') then
         perform public.companion_fail('CA422', 'invalid_priority');
+      end if;
+      continue;
+    end if;
+    if v_type = 'task.remove_created' then
+      -- The inverse of a create: only a custom task, at the revision the caller saw.
+      for v_key in select jsonb_object_keys(v_op) loop
+        if v_key not in ('type', 'task_ref', 'expected_revision') then
+          perform public.companion_fail('CA422', 'unknown_field', jsonb_build_object('field', v_key));
+        end if;
+      end loop;
+      v_ref := case when jsonb_typeof(v_op->'task_ref') = 'string' then v_op->>'task_ref' end;
+      if v_ref is null or not public.companion_task_ref_valid(v_ref) or v_ref not like 'custom:%' then
+        perform public.companion_fail('CA422', 'invalid_task_ref');
+      end if;
+      if public.companion_nonneg_int(v_op->'expected_revision', 15) is null then
+        perform public.companion_fail('CA422', 'expected_revision_required');
       end if;
       continue;
     end if;
@@ -160,11 +216,19 @@ language plpgsql security definer set search_path = public, pg_temp as $$
 declare
   v_kind text := case when jsonb_typeof(p_auth) = 'object' and jsonb_typeof(p_auth->'kind') = 'string' then p_auth->>'kind' end;
   v_creates boolean := exists (select 1 from jsonb_array_elements(p_ops) o where o->>'type' = 'task.create_custom');
+  v_removes boolean := exists (select 1 from jsonb_array_elements(p_ops) o where o->>'type' = 'task.remove_created');
   v_rev bigint;
   v_msg bigint;
   v_prop uuid;
   v_undo_of uuid;
 begin
+  -- Every removal needs the user's explicit confirmation, and is only the reviewed
+  -- compensating change of an Undo (below). A command never removes.
+  if v_removes and (v_kind is distinct from 'approved_proposal'
+                    or jsonb_typeof(p_auth->'removal_confirmed') is distinct from 'boolean'
+                    or (p_auth->>'removal_confirmed')::boolean is not true) then
+    perform public.companion_fail('CA403', 'removal_requires_confirmation');
+  end if;
   if v_kind = 'ui_control' then
     if v_creates then
       perform public.companion_fail('CA403', 'invalid_authorization');
@@ -203,6 +267,15 @@ begin
     if v_prop is null then
       perform public.companion_fail('CA403', 'invalid_authorization');
     end if;
+    -- A removal is allowed only as the compensating change of an Undo of the receipt
+    -- that added exactly this task.
+    if v_removes and not exists (
+      select 1 from public.companion_action_receipts r
+       where r.user_id = p_user and r.operation_id = v_undo_of
+         and r.outcome->'results'->0->>'type' = 'task.create_custom'
+         and r.task_ref = p_ops->0->>'task_ref') then
+      perform public.companion_fail('CA403', 'invalid_authorization');
+    end if;
     return v_undo_of;
   end if;
   perform public.companion_fail('CA403', 'invalid_authorization');
@@ -229,6 +302,28 @@ declare
   v_before_reason text;
   v_id bigint;
 begin
+  if p_op->>'type' = 'task.remove_created' then
+    -- Soft removal (removed_at): hidden from every Checklist read, pending reminders
+    -- stopped by the trigger in the same transaction, history kept.
+    select * into v_ct from public.custom_checklist_tasks where id = v_key::bigint and user_id = p_user for update;
+    if not found then
+      perform public.companion_fail('CA404', 'task_not_found', jsonb_build_object('task_ref', v_ref));
+    end if;
+    if v_ct.removed_at is not null then
+      perform public.companion_fail('CA422', 'task_removed', jsonb_build_object('task_ref', v_ref));
+    end if;
+    if v_ct.revision <> v_expected then
+      perform public.companion_fail('CA409', 'revision_conflict',
+        jsonb_build_object('task_ref', v_ref, 'expected', v_expected, 'actual', v_ct.revision));
+    end if;
+    update public.custom_checklist_tasks set removed_at = now() where id = v_ct.id returning revision into v_after;
+    v_before_state := public.companion_task_state(v_ct.completed, v_ct.progress_state);
+    return jsonb_build_object(
+      'type', 'task.remove_created', 'task_ref', v_ref,
+      'before_state', v_before_state, 'state', v_before_state,
+      'before_revision', v_ct.revision, 'after_revision', v_after);
+  end if;
+
   if p_op->>'type' = 'task.create_custom' then
     insert into public.custom_checklist_tasks (user_id, priority, title, description)
     values (p_user, p_op->>'priority', p_op->>'title', '')
@@ -438,6 +533,52 @@ begin
   return jsonb_build_object('proposal', public.companion_proposal_view(v_prop));
 end $$;
 
+-- What a conversation produced: its task drafts (any status) and the results of its
+-- clear commands, each with current state, so a reopened conversation shows them.
+create function public.companion_conversation_actions(p_user_id uuid, p_conversation_id uuid) returns jsonb
+language plpgsql stable security definer set search_path = public, pg_temp as $$
+declare
+  v_conv integer;
+begin
+  select c.id into v_conv from public.conversations c
+   where c.conversation_identifier = p_conversation_id and c.user_id = p_user_id;
+  if not found then
+    perform public.companion_fail('CA404', 'conversation_not_found');
+  end if;
+  return jsonb_build_object(
+    'proposals', (select coalesce(jsonb_agg(public.companion_proposal_view(p) order by p.created_at), '[]'::jsonb)
+                    from public.companion_proposals p
+                   where p.user_id = p_user_id and p.kind = 'task_create'
+                     and p.source->>'conversation_id' = p_conversation_id::text),
+    'commands', (select coalesce(jsonb_agg(jsonb_build_object(
+                          'message_id', u.message_id, 'operation_id', u.operation_id,
+                          'receipt', public.companion_receipt_summary(r)) order by u.created_at), '[]'::jsonb)
+                   from public.companion_command_uses u
+                   join public.messages m on m.id = u.message_id and m.conversation_id = v_conv
+                   join public.companion_action_receipts r on r.user_id = u.user_id and r.operation_id = u.operation_id
+                  where u.user_id = p_user_id));
+end $$;
+
+-- Not now: the user closes a draft without adding it. Only the displayed revision of a
+-- draft; anything else changes nothing and returns the current proposal.
+create function public.companion_cancel_proposal(p_user_id uuid, p_proposal_id uuid, p_proposal_revision integer) returns jsonb
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_prop public.companion_proposals%rowtype;
+begin
+  select * into v_prop from public.companion_proposals
+   where id = p_proposal_id and user_id = p_user_id and kind = 'task_create' for update;
+  if not found then
+    perform public.companion_fail('CA404', 'proposal_not_found');
+  end if;
+  if v_prop.status <> 'draft' or v_prop.revision <> p_proposal_revision then
+    return jsonb_build_object('changed', true, 'proposal', public.companion_proposal_view(v_prop));
+  end if;
+  update public.companion_proposals set status = 'cancelled', updated_at = now()
+   where id = v_prop.id returning * into v_prop;
+  return jsonb_build_object('proposal', public.companion_proposal_view(v_prop));
+end $$;
+
 -- Before an approved task-creation proposal is used, read its relevant context again.
 -- When it changed, the approval is not used: the proposal moves to a new revision with
 -- the current context for a new review. Returns that proposal, or null to go on.
@@ -511,6 +652,125 @@ begin
   return v_reply;
 end $$;
 
+-- ------------------------------------------------------------------- undo
+-- Undo of one named receipt. Applies the receipt's recorded inverse when every affected
+-- task is still at the revision the receipt produced. Otherwise nothing changes: the
+-- newer edit is kept and a draft compensating proposal at the current revisions is
+-- returned for review ({ conflict: true, ... }). The inverse of a create is a removal:
+-- it needs removal_confirmed in the Undo request, and its compensating proposal too.
+create or replace function public.companion_undo_action(
+  p_user_id uuid, p_operation_id uuid, p_contract_version integer, p_authorization jsonb, p_receipt_operation_id uuid
+) returns jsonb
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_hash text := public.companion_ops_hash(jsonb_build_object('undo', p_receipt_operation_id));
+  v_replay jsonb;
+  v_target public.companion_action_receipts%rowtype;
+  v_inv jsonb;
+  v_ops jsonb := '[]'::jsonb;
+  v_current jsonb := '[]'::jsonb;
+  v_conflict boolean := false;
+  v_rev bigint;
+  v_results jsonb := '[]'::jsonb;
+  v_prop public.companion_proposals%rowtype;
+  v_us public.user_tasks%rowtype;
+  v_ct public.custom_checklist_tasks%rowtype;
+  v_ref text;
+  v_removes boolean;
+begin
+  v_replay := public.companion_replay(p_user_id, p_operation_id, v_hash);
+  if v_replay is not null then return v_replay; end if;
+  if jsonb_typeof(p_authorization) is distinct from 'object' or p_authorization->>'kind' is distinct from 'ui_control' then
+    perform public.companion_fail('CA403', 'invalid_authorization');
+  end if;
+  select * into v_target from public.companion_action_receipts
+   where user_id = p_user_id and operation_id = p_receipt_operation_id;
+  if not found then
+    perform public.companion_fail('CA404', 'receipt_not_found');
+  end if;
+  if v_target.inverse is null then
+    perform public.companion_fail('CA422', 'not_undoable');
+  end if;
+  v_removes := exists (select 1 from jsonb_array_elements(v_target.inverse) i where i->>'type' = 'task.remove_created');
+  if v_removes and (jsonb_typeof(p_authorization->'removal_confirmed') is distinct from 'boolean'
+                    or (p_authorization->>'removal_confirmed')::boolean is not true) then
+    perform public.companion_fail('CA403', 'removal_requires_confirmation');
+  end if;
+  if exists (select 1 from public.companion_action_receipts
+              where user_id = p_user_id and undo_of = p_receipt_operation_id) then
+    perform public.companion_fail('CA411', 'already_undone', jsonb_build_object('receipt_operation_id', p_receipt_operation_id));
+  end if;
+
+  -- Lock every affected task, then compare revisions.
+  for v_inv in select * from jsonb_array_elements(v_target.inverse) loop
+    v_ref := v_inv->>'task_ref';
+    if split_part(v_ref, ':', 1) = 'sanity' then
+      select * into v_us from public.user_tasks
+       where user_id = p_user_id and sanity_checklist_id = substr(v_ref, 8) for update;
+      v_rev := case when found then v_us.revision else 0 end;
+      v_current := v_current || jsonb_build_array(jsonb_build_object('task_ref', v_ref, 'revision', v_rev,
+        'state', case when found then public.companion_task_state(v_us.completed, v_us.progress_state) else 'not_started' end,
+        'waiting_reason', case when found then v_us.waiting_reason end,
+        'removed', found and v_us.dismissed_at is not null));
+    else
+      select * into v_ct from public.custom_checklist_tasks
+       where user_id = p_user_id and id = substr(v_ref, 8)::bigint for update;
+      if not found then
+        perform public.companion_fail('CA404', 'task_not_found', jsonb_build_object('task_ref', v_ref));
+      end if;
+      if v_inv->>'type' = 'task.remove_created' and v_ct.removed_at is not null then
+        perform public.companion_fail('CA422', 'task_removed', jsonb_build_object('task_ref', v_ref));
+      end if;
+      v_rev := v_ct.revision;
+      v_current := v_current || jsonb_build_array(jsonb_build_object('task_ref', v_ref, 'revision', v_rev,
+        'state', public.companion_task_state(v_ct.completed, v_ct.progress_state),
+        'waiting_reason', v_ct.waiting_reason, 'removed', v_ct.removed_at is not null));
+    end if;
+    if v_rev <> (v_inv->>'expected_revision')::bigint then
+      v_conflict := true;
+    end if;
+    if v_inv->>'type' = 'task.remove_created' then
+      v_ops := v_ops || jsonb_build_array(jsonb_build_object(
+        'type', 'task.remove_created', 'task_ref', v_ref, 'expected_revision', v_rev));
+    else
+      v_ops := v_ops || jsonb_build_array(public.companion_set_state_op(
+        v_ref, v_inv->>'state', v_inv->>'waiting_reason', v_rev));
+    end if;
+  end loop;
+
+  -- A concurrent Undo of the same receipt may have committed while this one waited for the
+  -- row locks. Re-check under the locks so it reads as already undone, not as a conflict.
+  if exists (select 1 from public.companion_action_receipts
+              where user_id = p_user_id and undo_of = p_receipt_operation_id) then
+    perform public.companion_fail('CA411', 'already_undone', jsonb_build_object('receipt_operation_id', p_receipt_operation_id));
+  end if;
+
+  if v_conflict then
+    -- Reuse an unconsumed compensating draft for the same operations, else create one.
+    select * into v_prop from public.companion_proposals
+     where user_id = p_user_id and undo_of = p_receipt_operation_id and status = 'draft'
+       and operations_hash = public.companion_ops_hash(v_ops)
+     order by created_at desc limit 1;
+    if not found then
+      insert into public.companion_proposals (user_id, operations, operations_hash, undo_of, kind, updated_at)
+      values (p_user_id, v_ops, public.companion_ops_hash(v_ops), p_receipt_operation_id, 'compensation', now())
+      returning * into v_prop;
+    end if;
+    return jsonb_build_object('conflict', true, 'receipt_operation_id', p_receipt_operation_id,
+      'current', v_current,
+      'proposal', jsonb_build_object('proposal_id', v_prop.id, 'proposal_revision', v_prop.revision,
+                                     'operations', v_prop.operations));
+  end if;
+
+  for v_inv in select * from jsonb_array_elements(v_ops) loop
+    v_results := v_results || jsonb_build_array(public.companion_apply_one(p_user_id, v_inv));
+  end loop;
+  return public.companion_record(p_user_id, p_operation_id, v_hash, p_contract_version,
+    jsonb_build_object('kind', 'ui_control', 'undo_of', p_receipt_operation_id)
+      || case when v_removes then jsonb_build_object('removal_confirmed', true) else '{}'::jsonb end,
+    v_results, p_receipt_operation_id);
+end $$;
+
 -- ------------------------------------------------------------------ grants
 revoke all on function
   public.companion_title_key(text), public.companion_profile_context(uuid),
@@ -518,9 +778,11 @@ revoke all on function
   public.companion_create_op(text, text), public.companion_proposal_view(public.companion_proposals),
   public.companion_check_source(uuid, jsonb), public.companion_prepare_proposal(uuid, jsonb, jsonb),
   public.companion_get_proposal(uuid, uuid), public.companion_revise_proposal(uuid, uuid, integer, jsonb),
-  public.companion_recheck_proposal(uuid, jsonb, jsonb)
+  public.companion_recheck_proposal(uuid, jsonb, jsonb), public.companion_cancel_proposal(uuid, uuid, integer),
+  public.companion_conversation_actions(uuid, uuid)
   from public, anon, authenticated;
 grant execute on function
   public.companion_prepare_proposal(uuid, jsonb, jsonb), public.companion_get_proposal(uuid, uuid),
-  public.companion_revise_proposal(uuid, uuid, integer, jsonb)
+  public.companion_revise_proposal(uuid, uuid, integer, jsonb), public.companion_cancel_proposal(uuid, uuid, integer),
+  public.companion_conversation_actions(uuid, uuid)
   to service_role;
