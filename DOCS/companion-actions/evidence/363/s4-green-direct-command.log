@@ -1,0 +1,10 @@
+running 6 tests from ./command_test.ts
+a clear command adds exactly the task it names, once, however often it is sent ... ok (363ms)
+two operations racing on one command message, released together from a held use, add one task ... ok (214ms)
+unclear requests are answered with a question and authorize nothing ... ok (418ms)
+a command naming a task that already exists asks which is meant and writes nothing ... ok (186ms)
+only the caller's own user message is command evidence ... ok (475ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (1s)
+
