@@ -69,6 +69,9 @@ export const getConversationMessages = async (
       `${MESSAGE_COLUMNS}, companion_context`
     );
     if (messagesError && isMissingContextColumn(messagesError)) {
+      // The first reply may answer after another account signed in: the
+      // retry is a new request, made only while the reader is still signed in.
+      assertOwned(owner);
       ({ data: messages, error: messagesError } = await query(MESSAGE_COLUMNS));
     }
 
