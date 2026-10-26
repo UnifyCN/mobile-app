@@ -86,3 +86,21 @@ conversation id it created, so the stricter server rule keeps its history.
 The pinned rag-query fixtures did not change (the web handler test still
 matches them). The mobile sheet's background behaviour for screen readers
 (`accessibilityViewIsModal`) was not measured on a device.
+
+## Review corrections, round 3 (2026-10-25)
+
+rag-query now chooses the stated destination over an origin, a residence or
+a family/visit place, and returns a new `place_unclear` clarification when a
+message names destinations in two or more provinces (details in the web
+branch, `docs/companion-context-362.md`, "Review corrections, round 3").
+
+Mobile change: `helpers/companion/companionContext.ts` accepts
+`place_unclear` (2-4 places) and `ContextSummary` shows "You named more than
+one place you may be going to: ... Companion asked which one applies." in the
+context line and the sheet; new key `companion.context.clarifyPlace` in all
+seven locales. Test-first: the new case in
+`__tests__/companion/companionContextSheet.test.tsx`, fed the pinned handler
+fixture `rag-query-context-place-unclear.json` (copied from the web repo),
+failed on `9c0240a3` (clarification dropped) and passes now (sheet suite 9,
+acceptance 9). Full Jest, `tsc --noEmit` and `check-i18n` pass. Jest uses the
+mocked Supabase client and native modules; no device run.
