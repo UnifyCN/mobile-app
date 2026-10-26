@@ -62,6 +62,7 @@ import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
+import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
 // the rag-query edge function (source of truth: UnifyCN/web-app,
@@ -147,6 +148,21 @@ export default function CompanionScreen() {
   // Local greeting message shown when user clicks "Ask Anything"
   const [greetingMessage, setGreetingMessage] = useState<Message | null>(null);
   const [optimisticMessages, setOptimisticMessages] = useState<Message[]>([]);
+
+  // The unsent message and the open conversation belong to one account. When
+  // another account signs in (or this one signs out), drop them before the next
+  // render, so the new account never sees them. A token refresh keeps them.
+  const account = useSessionAccountId();
+  const [composerAccount, setComposerAccount] = useState(account);
+  if (account !== composerAccount) {
+    setComposerAccount(account);
+    if (composerAccount !== undefined) {
+      setInputText('');
+      setCurrentConversationId(null);
+      setGreetingMessage(null);
+      setOptimisticMessages([]);
+    }
+  }
 
   // Fetch messages for the current conversation
   const { data: dbMessages, isLoading: isLoadingMessages } =

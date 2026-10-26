@@ -19,6 +19,10 @@ jest.mock('@/lib/supabase', () => ({
         data: { user: null },
         error: new Error('Network request failed'),
       }),
+      // The checklist hook follows auth changes (#361); none happen here.
+      onAuthStateChange: jest.fn(() => ({
+        data: { subscription: { unsubscribe: jest.fn() } },
+      })),
     },
     from: jest.fn(() => ({
       select: jest.fn(() => ({

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   Platform,
@@ -73,9 +73,19 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const draft = useTaskActionDraft(store, taskRef);
   const reasonValue = draft ?? progress.waitingReason ?? '';
   const busy = isUnresolved(phase);
+  // Opening these controls is an editing entry: progress may have changed on
+  // another platform since the last read. Read it again, and keep every control
+  // off until a read that finished after this entry is on screen.
+  const [enteredAt] = useState(() => Date.now());
+  const { refetch } = view;
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+  const reconciled = view.readAt >= enteredAt;
   // Every write, including a retry or an approved compensating change, needs a
   // fresh successful read; after a failed read nothing is sent or queued.
-  const writable = Boolean(store) && view.canWrite && !progress.removed;
+  const writable =
+    Boolean(store) && view.canWrite && reconciled && !progress.removed;
   const canWrite = writable && !busy;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const reasonChanged = reasonValue.trim() !== (progress.waitingReason ?? '');
@@ -110,10 +120,16 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   function saveReason() {
     if (!canWrite || !store || progress.state !== 'waiting' || !reasonChanged)
       return;
+    // Clear the draft only when this exact text was saved and nothing newer was
+    // typed while the save was in flight.
+    const submitted = reasonValue;
     void store
-      .setState(setStateOperation(progress, 'waiting', reasonValue))
+      .setState(setStateOperation(progress, 'waiting', submitted))
       .then(() => {
-        if (store.get(taskRef).phase === 'saved')
+        if (
+          store.get(taskRef).phase === 'saved' &&
+          (store.draft(taskRef) ?? submitted) === submitted
+        )
           store.setDraft(taskRef, undefined);
       });
   }

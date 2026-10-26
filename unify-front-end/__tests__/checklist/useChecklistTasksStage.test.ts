@@ -19,6 +19,10 @@ jest.mock('@/lib/supabase', () => ({
         data: { session: { user: { id: 'user-1' } } },
         error: null,
       }),
+      // The checklist hook follows auth changes (#361); none happen here.
+      onAuthStateChange: jest.fn(() => ({
+        data: { subscription: { unsubscribe: jest.fn() } },
+      })),
     },
   },
 }));

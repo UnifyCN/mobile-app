@@ -1,7 +1,7 @@
 import type { SetStateAction } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
 import type {
   ChecklistCacheContext,
   UserTaskWithDetails,
@@ -75,30 +75,12 @@ export const useChecklistTasks = ({
   const stage = currentStage ?? UNKNOWN_STAGE_FALLBACK;
   const queryClient = useQueryClient();
   const language = useSanityLanguage();
-  const [userId, setUserId] = useState<string | null>(null);
+  // The account from the stored session, not getUser(): getUser() always makes
+  // a network request and resolves with a null user when it fails. The hook
+  // follows every auth change, so another account signing in re-keys the list
+  // and the previous account's rows are never rendered for it (#361).
+  const userId = useSessionAccountId() ?? null;
   const [cacheChecked, setCacheChecked] = useState(false);
-
-  // Read the user ID from the stored session, not getUser(). getUser() always
-  // makes a network request and resolves with a null user when it fails, which
-  // left this hook loading if it failed after stage and persona had loaded.
-  // getSession() reads storage; it only uses the network to refresh an
-  // expiring token, and then returns a null session if the refresh fails.
-  useEffect(() => {
-    let cancelled = false;
-    supabase.auth
-      .getSession()
-      .then(({ data }) => {
-        if (!cancelled) {
-          setUserId(data.session?.user.id ?? null);
-        }
-      })
-      .catch(error => {
-        console.warn('[useChecklistTasks] Failed to read auth user:', error);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const normalizedPersona = useMemo(
     () => normalizePersonaSlug(persona),

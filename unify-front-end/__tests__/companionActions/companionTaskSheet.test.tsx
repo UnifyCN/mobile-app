@@ -409,3 +409,95 @@ describe('review corrections (mobile sheet)', () => {
     expect(size('Open in Checklist').minHeight).toBeGreaterThanOrEqual(48);
   });
 });
+
+// Corrections from the #361 Spec review round 2 (F1 on mobile).
+describe('review r2 corrections (mobile sheet)', () => {
+  const customTasks = () =>
+    require('@/services/checklist/customChecklistTasks')
+      .getCustomChecklistTasks as jest.Mock;
+  const privateRow = (userId: string) => ({
+    id: 98765,
+    user_id: userId,
+    priority: 'Do now',
+    title: 'Private health appointment for A',
+    description: 'Private description A',
+    completed: false,
+    completed_at: null,
+    created_at: '2026-10-25T00:00:00Z',
+  });
+  /** supabase-js reports a session change to every listener. */
+  async function signIn(userId: string, event = 'SIGNED_IN') {
+    mockUserId = userId;
+    await act(async () => {
+      for (const listener of [...mockAuthListeners])
+        listener(event, { user: { id: userId }, access_token: `jwt-${userId}` });
+    });
+  }
+  const readAs = (userId: string) =>
+    server.fetch.mock.calls.some(
+      call =>
+        (call[1] as unknown as { headers: Record<string, string> }).headers
+          .authorization === `Bearer jwt-${userId}`
+    );
+  afterEach(() => customTasks().mockReset().mockResolvedValue([]));
+
+  it('F1: another account signing in clears the unsent message; the same account keeps it', async () => {
+    renderScreen();
+    const composer = await screen.findByPlaceholderText('Ask anything...');
+    fireEvent.changeText(composer, 'Private unsent question of A');
+    await screen.findByRole('button', { name: /Your tasks/ });
+
+    // A token refresh of the same account keeps the draft.
+    await signIn(mockUserId, 'TOKEN_REFRESHED');
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe(
+      'Private unsent question of A'
+    );
+
+    await signIn('account-b');
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await waitFor(() =>
+      expect(
+        within(screen.getByRole('button', { name: /Your tasks/ })).getByText(
+          'In progress: 1 · Waiting: 0'
+        )
+      ).toBeTruthy()
+    );
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+  });
+
+  it("F1: the open task sheet drops A's private task once B signs in", async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) =>
+      userId === a ? [privateRow(a)] : []
+    );
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    await within(sheet).findByText('Private health appointment for A');
+
+    await signIn('account-b');
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await within(sheet).findByText('Get a SIN');
+    expect(screen.queryByText('Private health appointment for A')).toBeNull();
+  });
+
+  it("F1: A's Checklist read that ends after B signed in never shows A's task", async () => {
+    const a = mockUserId;
+    let releaseA: () => void = () => {};
+    customTasks().mockImplementation(async (userId: string) => {
+      if (userId !== a) return [];
+      await new Promise<void>(resolve => (releaseA = resolve));
+      return [privateRow(a)];
+    });
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    await waitFor(() => expect(customTasks()).toHaveBeenCalledWith(a));
+
+    await signIn('account-b');
+    await within(sheet).findByText('Get a SIN');
+    await act(async () => releaseA());
+    await act(async () => {});
+    expect(screen.queryByText('Private health appointment for A')).toBeNull();
+  });
+});

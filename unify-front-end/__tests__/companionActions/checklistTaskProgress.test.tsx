@@ -626,7 +626,13 @@ describe('Checklist task progress (mobile)', () => {
     await act(async () => {
       for (const listener of [...mockAuthListeners]) listener('SIGNED_OUT', null);
     });
+    // Signing out closes the open task sheet (the Checklist is keyed by
+    // account). Sign in again and reopen the same task.
+    expect(screen.queryByLabelText('What are you waiting for?')).toBeNull();
     await switchAccount(me);
+    await waitFor(() => expect(screen.getAllByText('Get a SIN')).toHaveLength(1));
+    fireEvent.press(screen.getByText('Get a SIN'));
+    fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
     const reason = await screen.findByLabelText('What are you waiting for?');
     await waitFor(() => expect(reason.props.value).toBe(''));
     expect(screen.queryByText('Saved.')).toBeNull();
@@ -758,5 +764,111 @@ describe('review corrections (mobile)', () => {
     await screen.findByRole('button', { name: 'Undo this change' });
     expect(minHeightOf('Save waiting reason')).toBeGreaterThanOrEqual(44);
     expect(minHeightOf('Undo this change')).toBeGreaterThanOrEqual(44);
+  });
+});
+
+// Corrections from the #361 Spec review round 2 (F1, F4, F6 on mobile).
+describe('review r2 corrections (mobile)', () => {
+  const customTasks = () =>
+    require('@/services/checklist/customChecklistTasks')
+      .getCustomChecklistTasks as jest.Mock;
+  afterEach(() => customTasks().mockReset().mockResolvedValue([]));
+
+  it("F1: after another account signs in, Checklist no longer shows A's private task", async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) =>
+      userId === a
+        ? [
+            {
+              id: 4321,
+              user_id: a,
+              priority: 'Do now',
+              title: 'Private clinic visit of A',
+              description: 'Private note of A',
+              completed: false,
+              completed_at: null,
+              created_at: '2026-10-25T00:00:00Z',
+            },
+          ]
+        : []
+    );
+    renderScreen();
+    // A has the private task open in the detail sheet when B signs in.
+    fireEvent.press(await screen.findByText('Private clinic visit of A'));
+    await screen.findByText('Private note of A');
+    await switchAccount('checklist-account-b');
+    await waitFor(() =>
+      expect(
+        server.sent.filter(b => b.action === 'read').length
+      ).toBeGreaterThan(1)
+    );
+    await screen.findByText('Get a SIN');
+    expect(screen.queryByText('Private clinic visit of A')).toBeNull();
+    expect(screen.queryByText('Private note of A')).toBeNull();
+  });
+
+  it('F4: a save reply that arrives after newer typing keeps the newer waiting draft', async () => {
+    server = scriptedServer({ 'sanity:sin': { state: 'waiting', reason: 'Old reason' } });
+    const base = server.fetch as unknown as typeof fetch;
+    let release: () => void = () => {};
+    let held = false;
+    global.fetch = (async (...args: Parameters<typeof fetch>) => {
+      const body = JSON.parse(String(args[1]?.body));
+      const reply = await base(...args);
+      if (body.action === 'apply') {
+        held = true;
+        await new Promise<void>(resolve => (release = resolve));
+      }
+      return reply;
+    }) as typeof fetch;
+    renderScreen();
+    fireEvent.press(await screen.findByText('Get a SIN'));
+    fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
+    const reason = await screen.findByLabelText('What are you waiting for?');
+    await waitFor(() => expect(reason.props.value).toBe('Old reason'));
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: 'In progress' })).toBeEnabled()
+    );
+    fireEvent.changeText(reason, 'First saved reason');
+    fireEvent.press(screen.getByRole('button', { name: 'Save waiting reason' }));
+    await waitFor(() => expect(held).toBe(true));
+    fireEvent.changeText(
+      screen.getByLabelText('What are you waiting for?'),
+      'New unsaved reason typed during save'
+    );
+    await act(async () => release());
+    await screen.findByText('Updated the waiting reason');
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: 'In progress' })).toBeEnabled()
+    );
+    expect(server.row('sanity:sin')?.reason).toBe('First saved reason');
+    expect(screen.getByLabelText('What are you waiting for?').props.value).toBe(
+      'New unsaved reason typed during save'
+    );
+  });
+
+  it('F6: reopening Track progress reads current progress before any control is enabled', async () => {
+    renderScreen();
+    await openTaskProgress();
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: 'Waiting' })).toBeEnabled()
+    );
+    fireEvent.press(screen.getByRole('button', { name: 'Close' }));
+    server.editElsewhere('sanity:sin', 'completed');
+    const reads = server.sent.filter(b => b.action === 'read').length;
+
+    fireEvent.press(await screen.findByText('Get a SIN'));
+    fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
+    // Until the new read arrives, nothing can be changed.
+    expect(screen.getByRole('radio', { name: 'Waiting' })).toBeDisabled();
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected()
+    );
+    expect(server.sent.filter(b => b.action === 'read').length).toBeGreaterThan(
+      reads
+    );
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: 'Waiting' })).toBeEnabled()
+    );
   });
 });

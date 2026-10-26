@@ -2,7 +2,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useState,
   useSyncExternalStore,
 } from 'react';
 import { AppState } from 'react-native';
@@ -11,8 +10,9 @@ import {
   useQueryClient,
   type QueryClient,
 } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
 import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys';
+import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
+import { clearOtherAccountsChecklistCache } from '@/utils/checklistTaskCache';
 import { useAnalytics } from '@/utils/analytics';
 import {
   buildTaskActionResultProperties,
@@ -41,33 +41,10 @@ let defaultClient: TaskActionClient | null = null;
 const activeClient = () => (defaultClient ??= createMobileTaskActionClient());
 
 /**
- * The signed-in account, from the stored session and auth changes. Undefined
- * until the session is read. Task progress is held in memory only, per account.
+ * The signed-in account. Undefined until the session is read. Task progress is
+ * held in memory only, per account.
  */
-export function useTaskActionAccount(): string | null | undefined {
-  const [userId, setUserId] = useState<string | null | undefined>(undefined);
-  useEffect(() => {
-    let cancelled = false;
-    supabase.auth
-      .getSession()
-      .then(({ data }) => {
-        if (!cancelled) setUserId(data.session?.user.id ?? null);
-      })
-      .catch(() => {
-        if (!cancelled) setUserId(null);
-      });
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserId(session?.user.id ?? null);
-    });
-    return () => {
-      cancelled = true;
-      subscription.unsubscribe();
-    };
-  }, []);
-  return userId;
-}
+export const useTaskActionAccount = useSessionAccountId;
 
 export type TaskProgressStatus =
   | 'loading'
@@ -84,6 +61,8 @@ export interface TaskProgressView {
   stale: boolean;
   /** Writes are allowed only right after a successful read. */
   canWrite: boolean;
+  /** When the last successful read finished (ms since epoch), 0 before any. */
+  readAt: number;
   refetch: () => void;
 }
 
@@ -144,11 +123,22 @@ export function useTaskProgress(): TaskProgressView {
     stale,
     // A refetch after a save may still carry the old revision: wait for it.
     canWrite: status === 'ready' && !stale && !query.isFetching,
+    readAt: query.dataUpdatedAt,
     refetch: useCallback(() => void refetch(), [refetch]),
   };
 }
 
-/** Removes another account's private task work from memory and the query cache. */
+/** Conversation caches are not keyed by account: drop them on an account change. */
+const UNKEYED_PRIVATE_ROOTS = ['conversations', 'conversation-messages'];
+/** The account the caches were last scoped to, shared by every mounted screen. */
+let scopedAccount: string | null | undefined;
+
+/**
+ * Removes every other account's private work: unresolved task actions, task
+ * progress and Checklist rows (memory, disk and query cache) and, when the
+ * account actually changes, the conversation caches. Reads still in flight for
+ * the previous account are cancelled, so they cannot fill the new account's view.
+ */
 function useTaskActionAccountScope(
   userId: string | null | undefined,
   queryClient: QueryClient
@@ -156,10 +146,29 @@ function useTaskActionAccountScope(
   useEffect(() => {
     if (userId === undefined) return;
     clearTaskActionStores(userId);
-    queryClient.removeQueries({
-      queryKey: [TASK_PROGRESS_ROOT],
-      predicate: q => q.queryKey[1] !== userId,
-    });
+    const otherAccount = (index: number) => (q: { queryKey: readonly unknown[] }) =>
+      q.queryKey[index] !== userId;
+    for (const [root, index] of [
+      [TASK_PROGRESS_ROOT, 1],
+      [CHECKLIST_TASKS_QUERY_ROOT, 1],
+    ] as const) {
+      void queryClient.cancelQueries({
+        queryKey: [root],
+        predicate: otherAccount(index),
+      });
+      queryClient.removeQueries({
+        queryKey: [root],
+        predicate: otherAccount(index),
+      });
+    }
+    void clearOtherAccountsChecklistCache(userId);
+    if (scopedAccount !== undefined && scopedAccount !== userId) {
+      for (const root of UNKEYED_PRIVATE_ROOTS) {
+        void queryClient.cancelQueries({ queryKey: [root] });
+        queryClient.removeQueries({ queryKey: [root] });
+      }
+    }
+    scopedAccount = userId;
   }, [userId, queryClient]);
 }
 
