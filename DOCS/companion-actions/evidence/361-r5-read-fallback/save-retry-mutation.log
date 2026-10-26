@@ -1,0 +1,78 @@
+FAIL __tests__/companionActions/accountOwnershipReadFallback.test.ts
+  the thread read retries without companion_context only for its account
+    ✓ when another account signs in during the first read, no retry is requested (2 ms)
+    ✓ when the account signs out during the first read, no retry is requested (1 ms)
+    ✓ when the session becomes unknown during the first read, no retry is requested
+    ✓ positive control: a token refresh of the same account keeps the retry
+  the answer save retries without companion_context only for its account
+    ✕ when another account signs in during the first insert, no retry is requested
+    ✕ when the account signs out during the first insert, no retry is requested (1 ms)
+    ✕ when the session becomes unknown during the first insert, no retry is requested
+    ✓ positive control: a token refresh of the same account keeps the retry (2 ms)
+
+  ● the answer save retries without companion_context only for its account › when another account signs in during the first insert, no retry is requested
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"as": "fallback-a", "kind": "insert", "table": "messages", "withContext": true}, {"as": "fallback-b", "kind": "insert", "table": "messages", "withContext": false}]
+
+      213 |       const result = await saving;
+      214 |
+    > 215 |       expect(mockCalls.filter(c => c.kind === 'insert')).toHaveLength(1);
+          |                                                          ^
+      216 |       expect(result.error).toMatchObject({ name: 'AccountChangedError' });
+      217 |     }
+      218 |   );
+
+      at toHaveLength (__tests__/companionActions/accountOwnershipReadFallback.test.ts:215:58)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the answer save retries without companion_context only for its account › when the account signs out during the first insert, no retry is requested
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"as": "fallback-a", "kind": "insert", "table": "messages", "withContext": true}, {"as": null, "kind": "insert", "table": "messages", "withContext": false}]
+
+      213 |       const result = await saving;
+      214 |
+    > 215 |       expect(mockCalls.filter(c => c.kind === 'insert')).toHaveLength(1);
+          |                                                          ^
+      216 |       expect(result.error).toMatchObject({ name: 'AccountChangedError' });
+      217 |     }
+      218 |   );
+
+      at toHaveLength (__tests__/companionActions/accountOwnershipReadFallback.test.ts:215:58)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the answer save retries without companion_context only for its account › when the session becomes unknown during the first insert, no retry is requested
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"as": "fallback-a", "kind": "insert", "table": "messages", "withContext": true}, {"as": "fallback-a", "kind": "insert", "table": "messages", "withContext": false}]
+
+      213 |       const result = await saving;
+      214 |
+    > 215 |       expect(mockCalls.filter(c => c.kind === 'insert')).toHaveLength(1);
+          |                                                          ^
+      216 |       expect(result.error).toMatchObject({ name: 'AccountChangedError' });
+      217 |     }
+      218 |   );
+
+      at toHaveLength (__tests__/companionActions/accountOwnershipReadFallback.test.ts:215:58)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 5 passed, 8 total
+Snapshots:   0 total
+Time:        0.384 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/accountOwnershipReadFallback.test.ts/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
