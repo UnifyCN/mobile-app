@@ -229,6 +229,15 @@ export class TaskActionStore {
     return this.run(taskRef, p.write);
   }
 
+  /**
+   * Drops a confirmed-not-applied write after the user saved a changed draft (#363):
+   * the saved edit is a new revision, so the earlier approval can no longer apply and
+   * the new title needs its own approval. An unknown outcome is never dropped.
+   */
+  supersedeNotApplied(taskRef: string) {
+    if (this.get(taskRef).phase === 'not_applied') this.set(taskRef, IDLE);
+  }
+
   checkAgain(taskRef: string) {
     const p = this.get(taskRef);
     if (p.phase !== 'pending' && p.phase !== 'lookup_failed')

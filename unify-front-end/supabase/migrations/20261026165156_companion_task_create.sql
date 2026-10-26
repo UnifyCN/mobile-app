@@ -318,8 +318,9 @@ begin
     end if;
     update public.custom_checklist_tasks set removed_at = now() where id = v_ct.id returning revision into v_after;
     v_before_state := public.companion_task_state(v_ct.completed, v_ct.progress_state);
+    -- The title the task had when it was removed: the receipt keeps it (history).
     return jsonb_build_object(
-      'type', 'task.remove_created', 'task_ref', v_ref,
+      'type', 'task.remove_created', 'task_ref', v_ref, 'title', v_ct.title,
       'before_state', v_before_state, 'state', v_before_state,
       'before_revision', v_ct.revision, 'after_revision', v_after);
   end if;
@@ -328,9 +329,10 @@ begin
     insert into public.custom_checklist_tasks (user_id, priority, title, description)
     values (p_user, p_op->>'priority', p_op->>'title', '')
     returning id, revision into v_id, v_after;
-    -- No title in the result: a receipt holds identifiers, states and revisions only.
+    -- The authorized title is recorded with the result, so the receipt keeps naming the
+    -- change it saved after the task is renamed (history, not the current task).
     return jsonb_build_object(
-      'type', 'task.create_custom', 'task_ref', 'custom:' || v_id,
+      'type', 'task.create_custom', 'task_ref', 'custom:' || v_id, 'title', p_op->>'title',
       'before_state', 'not_started', 'state', 'not_started',
       'before_revision', 0, 'after_revision', v_after,
       'inverse', jsonb_build_object('type', 'task.remove_created', 'task_ref', 'custom:' || v_id,
@@ -402,8 +404,9 @@ begin
 end $$;
 
 -- ------------------------------------------------------------------ receipts
--- Public summary of a receipt. Adds the operation type and, for a created task, its
--- current title (read from the task, never stored on the receipt).
+-- Public summary of a receipt. Adds the operation type and, for an added or removed
+-- task, the title recorded with the result when it was saved. A later rename changes
+-- the task, not this historical text; `current` says whether it still describes it.
 create or replace function public.companion_receipt_summary(p_receipt public.companion_action_receipts) returns jsonb
 language sql stable security definer set search_path = public, pg_temp as $$
   select jsonb_build_object(
@@ -422,9 +425,7 @@ language sql stable security definer set search_path = public, pg_temp as $$
                and public.companion_task_revision(p_receipt.user_id, p_receipt.task_ref) = (r->>'after_revision')::bigint,
     'undoable', p_receipt.inverse is not null and u.operation_id is null)
     || case when r->>'type' in ('task.create_custom', 'task.remove_created') then
-         jsonb_build_object('title', (select c.title from public.custom_checklist_tasks c
-                                       where c.user_id = p_receipt.user_id
-                                         and 'custom:' || c.id = p_receipt.task_ref))
+         jsonb_build_object('title', r->>'title')
        else '{}'::jsonb end
   from (select p_receipt.outcome->'results'->0 as r) x
   left join public.companion_action_receipts u

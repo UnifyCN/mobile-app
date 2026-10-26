@@ -10,14 +10,20 @@ import {
   type ProposalContext,
   type TaskProposal,
 } from '@/services/companionActions/contract';
-import type { ProposalResult } from '@/services/companionActions/client';
+import type {
+  ProposalResult,
+  TaskActionClient,
+} from '@/services/companionActions/client';
+import {
+  stillOwned,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 import {
   isUnresolved,
   type TaskActionStore,
 } from '@/services/companionActions/taskActionStore';
 import {
   taskProposalKey,
-  useTaskActionAccount,
   useTaskActionClient,
   useTaskActionDraft,
   useTaskActionPhase,
@@ -65,13 +71,26 @@ export function TaskProposalPanel({
   const { t, i18n } = useTranslation();
   const key = `proposal:${proposalId}`;
   const queryClient = useQueryClient();
-  const userId = useTaskActionAccount() ?? null;
-  const client = useTaskActionClient();
+  const bound = useTaskActionClient();
+  const client = bound?.client ?? null;
   const query = useTaskProposal(proposalId);
   const phase = useTaskActionPhase(store, key);
   const titleDraft = useTaskActionDraft(store, key);
-  const [requestBusy, setRequestBusy] = useState(false);
-  const [requestFailed, setRequestFailed] = useState(false);
+  // A Save title or Not now request in flight, or its refusal. It belongs to the
+  // account and session it was made in, so it never shows for another one.
+  const [request, setRequest] = useState<{
+    owner: AccountSnapshot;
+    state: 'busy' | 'failed';
+  } | null>(null);
+  const ownRequest =
+    request &&
+    bound &&
+    request.owner.accountId === bound.owner.accountId &&
+    request.owner.epoch === bound.owner.epoch
+      ? request.state
+      : null;
+  const requestBusy = ownRequest === 'busy';
+  const requestFailed = ownRequest === 'failed';
 
   // A refreshed revision from a needs-review reply is newer than the last read.
   const proposal: TaskProposal | undefined =
@@ -104,36 +123,56 @@ export function TaskProposalPanel({
   const shownTitle = edited ? title.trim() : savedTitle;
   const receipt = phase.phase === 'saved' ? phase.receipt : proposal.receipt;
   const canApprove = canWrite && !edited;
-  const canSaveTitle = canWrite && edited && titleValid;
+  // After a confirmed "not applied" nothing was written, so a changed title can still
+  // be saved as a new revision. While the outcome is unknown only a lookup is allowed.
+  const unknownOutcome = isUnresolved(phase) && phase.phase !== 'not_applied';
+  const canSaveTitle =
+    writable && !requestBusy && !unknownOutcome && edited && titleValid;
+  // Retry repeats the reviewed operation: only while the draft shows that title.
+  const canRetry = writable && !requestBusy && !edited;
 
-  const keep = (next: TaskProposal) =>
-    queryClient.setQueryData(taskProposalKey(userId, proposalId), next);
-
-  async function proposalRequest(run: () => Promise<ProposalResult>) {
-    setRequestBusy(true);
-    setRequestFailed(false);
-    const result = await run();
-    setRequestBusy(false);
+  /**
+   * One Save title or Not now intent, made as the account and session the panel
+   * shows. Its result, the cached draft and the panel state are written only while
+   * that session is still the signed-in one: after another account or a sign-out
+   * (even if the same account signs in again) the late reply is dropped.
+   */
+  async function proposalRequest(
+    run: (c: TaskActionClient) => Promise<ProposalResult>
+  ) {
+    if (!bound || !stillOwned(bound.owner)) return null;
+    const { client: own, owner } = bound;
+    setRequest({ owner, state: 'busy' });
+    const result = await run(own);
+    if (!stillOwned(owner)) return null;
     if (result.kind === 'ok' || result.kind === 'changed') {
-      keep(result.proposal);
+      setRequest(null);
+      queryClient.setQueryData(
+        taskProposalKey(owner.accountId as string, proposalId),
+        result.proposal
+      );
       return result;
     }
-    setRequestFailed(true);
+    setRequest({ owner, state: 'failed' });
     return null;
   }
 
   async function saveTitle() {
-    if (!canSaveTitle || !client) return;
+    if (!canSaveTitle) return;
     const submitted = title;
-    const result = await proposalRequest(() =>
-      client.revise(
+    const result = await proposalRequest(c =>
+      c.revise(
         proposal!.proposalId,
         proposal!.proposalRevision,
         createTaskOperation(submitted)
       )
     );
+    if (result?.kind !== 'ok') return;
+    // The saved title is a new revision: an approval that was confirmed not applied
+    // can no longer be retried; the new title needs its own approval.
+    store?.supersedeNotApplied(key);
     // Clear the typed title only when this edit is the saved one.
-    if (result?.kind === 'ok' && (store?.draft(key) ?? submitted) === submitted)
+    if ((store?.draft(key) ?? submitted) === submitted)
       store?.setDraft(key, undefined);
   }
 
@@ -148,9 +187,9 @@ export function TaskProposalPanel({
   }
 
   function notNow() {
-    if (!canWrite || !client) return;
-    void proposalRequest(() =>
-      client.cancel(proposal!.proposalId, proposal!.proposalRevision)
+    if (!canWrite) return;
+    void proposalRequest(c =>
+      c.cancel(proposal!.proposalId, proposal!.proposalRevision)
     );
   }
 
@@ -287,7 +326,7 @@ export function TaskProposalPanel({
         )}
         {phase.phase !== 'saved' && phase.phase !== 'needs_review' && (
           <PhaseMessage
-            writable={writable}
+            writable={canRetry}
             phase={phase}
             stateLabel={s => t(`taskActions.state.${s}`)}
             store={store}

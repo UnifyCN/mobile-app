@@ -21,6 +21,10 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 import { clearTaskActionStores } from '@/services/companionActions/taskActionStore';
+import {
+  TASK_PROPOSAL_ROOT,
+  taskProposalKey,
+} from '@/hooks/companion/useTaskActions';
 
 // The scripted fetch answers every request; nothing leaves the process.
 process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:59371';
@@ -661,5 +665,249 @@ describe('Add one task through Companion (mobile)', () => {
       action: 'command_create',
       outcome: 'applied',
     });
+  });
+});
+
+// Save title and Not now replies that arrive after the account changed (#363 review
+// S363-1). Each intent belongs to the account and epoch it started in. The reply is
+// held at the transport after the stand-in answered, so it carries that account's
+// private draft. A late reply must not put it back after the account scope removed
+// it, nor write it under a later epoch of the same account; a token refresh of the
+// same account keeps it.
+describe('late Save title and Not now replies stay with their account', () => {
+  const REVISED = 'Private revised task A';
+  type Intent = 'revise' | 'cancel';
+  const proposalEntries = (client: QueryClient, account: string) =>
+    client.getQueryCache().findAll({ queryKey: [TASK_PROPOSAL_ROOT, account] });
+
+  function authEvent(event: string, accountId: string | null) {
+    return act(async () => {
+      for (const listener of [...mockAuthListeners])
+        listener(
+          event,
+          accountId ? { user: { id: accountId }, access_token: `jwt-${accountId}` } : null
+        );
+    });
+  }
+
+  /** Opens the draft, starts `intent` and holds its reply after the stand-in answered. */
+  async function startHeld(intent: Intent, reply?: () => { status: number; body: unknown }) {
+    answers('Answer.', PHONE);
+    renderScreen();
+    const client = clients[clients.length - 1];
+    const owner = mockUserId;
+    await send('Phone?');
+    const { sheet } = await openDraft();
+    await approveIn(sheet, PHONE);
+    const proposalId = server.drafts()[0].proposal_id;
+    expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeTruthy();
+    const transport = global.fetch;
+    let release: (() => void) | null = null;
+    global.fetch = (async (url: string, init: { body: string }) => {
+      const answered = await transport(url, init);
+      if (JSON.parse(init.body).action !== intent) return answered;
+      await new Promise<void>(r => (release = r));
+      if (!reply) return answered;
+      const r = reply();
+      return { status: r.status, ok: false, json: async () => r.body };
+    }) as unknown as typeof fetch;
+    if (intent === 'revise') {
+      fireEvent.changeText(within(sheet).getByLabelText('Task title'), REVISED);
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Save title' }));
+    } else {
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Not now' }));
+    }
+    await waitFor(() => expect(release).not.toBeNull());
+    return { client, owner, proposalId, release: () => act(async () => release!()) };
+  }
+
+  for (const intent of ['revise', 'cancel'] as const) {
+    it(`${intent}: a reply after another account signed in does not restore the draft`, async () => {
+      const { client, owner, proposalId, release } = await startHeld(intent);
+      mockUserId = 'create-user-B';
+      await authEvent('SIGNED_IN', mockUserId);
+      await waitFor(() => expect(proposalEntries(client, owner)).toHaveLength(0));
+      await release();
+      for (let i = 0; i < 4; i += 1) await act(async () => {});
+      expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+      expect(proposalEntries(client, owner)).toHaveLength(0);
+      expect(proposalEntries(client, 'create-user-B')).toHaveLength(0);
+      expect(screen.queryByText(REVISED)).toBeNull();
+      expect(screen.queryByText(PHONE)).toBeNull();
+    });
+
+    it(`${intent}: a reply after sign-out does not restore the draft`, async () => {
+      const { client, owner, proposalId, release } = await startHeld(intent);
+      await authEvent('SIGNED_OUT', null);
+      await waitFor(() => expect(proposalEntries(client, owner)).toHaveLength(0));
+      await release();
+      for (let i = 0; i < 4; i += 1) await act(async () => {});
+      expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+      expect(proposalEntries(client, owner)).toHaveLength(0);
+      expect(screen.queryByText(REVISED)).toBeNull();
+    });
+
+    it(`${intent}: a reply after sign-out and the same account signing back in is not written under the new session`, async () => {
+      const { client, owner, proposalId, release } = await startHeld(intent);
+      await authEvent('SIGNED_OUT', null);
+      await waitFor(() => expect(proposalEntries(client, owner)).toHaveLength(0));
+      await authEvent('SIGNED_IN', owner);
+      await release();
+      for (let i = 0; i < 4; i += 1) await act(async () => {});
+      expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+      expect(proposalEntries(client, owner)).toHaveLength(0);
+    });
+
+    it(`${intent}: a token refresh of the same account keeps the reply and shows it`, async () => {
+      const { client, owner, proposalId, release } = await startHeld(intent);
+      await authEvent('TOKEN_REFRESHED', owner);
+      await release();
+      const sheet = screen.getByTestId('companion-task-sheet');
+      if (intent === 'revise') {
+        expect(await within(sheet).findByText(REVISED)).toBeTruthy();
+        await approveIn(sheet, REVISED);
+      } else {
+        expect(
+          await within(sheet).findByText('You closed this draft. Nothing was added.')
+        ).toBeTruthy();
+      }
+      const kept = client.getQueryData<{ status: string; operation: { title: string } }>(
+        taskProposalKey(owner, proposalId)
+      );
+      expect(kept).toMatchObject(
+        intent === 'revise'
+          ? { status: 'draft', operation: { title: REVISED } }
+          : { status: 'cancelled' }
+      );
+    });
+  }
+
+  it('a late refusal after a token refresh of the same account is still shown', async () => {
+    const { release } = await startHeld('cancel', () => ({
+      status: 403,
+      body: { error: 'forbidden' },
+    }));
+    await authEvent('TOKEN_REFRESHED', mockUserId);
+    await release();
+    const sheet = screen.getByTestId('companion-task-sheet');
+    expect(
+      await within(sheet).findByText(en.taskActions.refused)
+    ).toBeTruthy();
+  });
+});
+
+// Retry of a draft's approval after the first apply never reached the server (#363
+// review F1). Retry repeats the reviewed operation with its own operation identity,
+// so it is allowed only while the draft still shows that reviewed title. A changed
+// title, saved or not, needs its own review: saving it makes a new revision whose
+// approval is a new change. An unknown outcome stays a lookup only.
+describe('Retry of an approved draft follows the shown title', () => {
+  const SIM = 'Get a Canadian SIM card';
+  /** The first apply is lost before the server; then status answers `lookups` in order. */
+  function lostFirstApply(lookups: Array<'not_applied' | 'network-error'> = []) {
+    let dropped = false;
+    useServer(
+      scriptedServer(
+        {},
+        {
+          override: body => {
+            if (body.action === 'apply' && !dropped) {
+              dropped = true;
+              return 'network-error';
+            }
+            if (body.action === 'status' && lookups.length) {
+              const next = lookups.shift()!;
+              return next === 'network-error'
+                ? 'network-error'
+                : { status: 200, body: { status: next } };
+            }
+            return undefined;
+          },
+        }
+      )
+    );
+  }
+  async function approvedThenLost() {
+    answers('Answer.', PHONE);
+    renderScreen();
+    await send('Phone?');
+    const { sheet } = await openDraft();
+    fireEvent.press(await approveIn(sheet, PHONE));
+    return sheet;
+  }
+  const button = (sheet: ReturnType<typeof screen.getByTestId>, name: string | RegExp) =>
+    within(sheet).getByRole('button', { name });
+  const settle = async () => {
+    for (let i = 0; i < 8; i += 1) await act(async () => {});
+  };
+
+  it('an unsaved title edit after confirmed-not-applied cannot retry the old reviewed title', async () => {
+    lostFirstApply();
+    const sheet = await approvedThenLost();
+    const retry = await within(sheet).findByRole('button', { name: 'Try again' });
+    await waitFor(() => expect(enabled(retry)).toBe(true));
+    fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+    expect(enabled(button(sheet, /^Add 1 task/))).toBe(false);
+    expect(enabled(button(sheet, 'Try again'))).toBe(false);
+    fireEvent.press(button(sheet, 'Try again'));
+    await settle();
+    expect(server.customTasks()).toEqual([]);
+    expect(creates()).toHaveLength(1);
+  });
+
+  it('putting the reviewed title back allows Retry of the same operation', async () => {
+    lostFirstApply();
+    const sheet = await approvedThenLost();
+    await within(sheet).findByRole('button', { name: 'Try again' });
+    fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+    fireEvent.changeText(within(sheet).getByLabelText('Task title'), PHONE);
+    await waitFor(() => expect(enabled(button(sheet, 'Try again'))).toBe(true));
+    fireEvent.press(button(sheet, 'Try again'));
+    await within(sheet).findByText(`Added to Checklist: ${PHONE}`);
+    expect(creates()).toHaveLength(2);
+    expect(new Set(creates().map(b => b.operation_id)).size).toBe(1);
+    expect(creates()[1].operations).toEqual(creates()[0].operations);
+    expect(server.customTasks().map(t => t.title)).toEqual([PHONE]);
+  });
+
+  it('a saved title edit after confirmed-not-applied replaces the old approval with a review of the new title', async () => {
+    lostFirstApply();
+    const sheet = await approvedThenLost();
+    await within(sheet).findByRole('button', { name: 'Try again' });
+    fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+    await waitFor(() => expect(enabled(button(sheet, 'Save title'))).toBe(true));
+    fireEvent.press(button(sheet, 'Save title'));
+    // The old approval is gone; the saved title is a new revision to review.
+    const approve = await approveIn(sheet, SIM);
+    expect(within(sheet).queryByRole('button', { name: 'Try again' })).toBeNull();
+    expect(server.customTasks()).toEqual([]);
+    fireEvent.press(approve);
+    await within(sheet).findByText(`Added to Checklist: ${SIM}`);
+    expect(creates()).toHaveLength(2);
+    expect(creates()[1].operation_id).not.toBe(creates()[0].operation_id);
+    expect(creates()[1].operations[0].title).toBe(SIM);
+    expect(creates()[1].authorization).toMatchObject({
+      kind: 'approved_proposal',
+      proposal_revision: 2,
+    });
+    expect(server.customTasks().map(t => t.title)).toEqual([SIM]);
+  });
+
+  it('while the outcome is unknown an edit allows only Check again, never a write or a title save', async () => {
+    lostFirstApply(['network-error', 'not_applied']);
+    const sheet = await approvedThenLost();
+    await within(sheet).findByText(/could not check/i);
+    fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+    expect(within(sheet).queryByRole('button', { name: 'Try again' })).toBeNull();
+    expect(enabled(button(sheet, 'Save title'))).toBe(false);
+    expect(enabled(button(sheet, /^Add 1 task/))).toBe(false);
+    expect(enabled(button(sheet, 'Check again'))).toBe(true);
+    fireEvent.press(button(sheet, 'Check again'));
+    await within(sheet).findByRole('button', { name: 'Try again' });
+    expect(enabled(button(sheet, 'Try again'))).toBe(false);
+    await settle();
+    expect(creates()).toHaveLength(1);
+    expect(server.sent.filter(b => b.action === 'revise')).toHaveLength(0);
+    expect(server.customTasks()).toEqual([]);
   });
 });

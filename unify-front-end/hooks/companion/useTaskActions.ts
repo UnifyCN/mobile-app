@@ -15,7 +15,10 @@ import {
   useAccountSnapshot,
   useSessionAccountId,
 } from '@/hooks/auth/useSessionAccountId';
-import { ownAccountWork } from '@/services/account/accountSession';
+import {
+  ownAccountWork,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 import { clearOtherAccountsChecklistCache } from '@/utils/checklistTaskCache';
 import {
   CONVERSATIONS_ROOT,
@@ -228,14 +231,21 @@ export function useTaskActionStore(
   }, [userId, epoch, queryClient, surface, trackCompanionActionResult]);
 }
 
-/** The action client of the signed-in account (#363 proposal and command requests). */
-export function useTaskActionClient(): TaskActionClient | null {
+/**
+ * The action client of the signed-in account (#363 proposal requests) and the owner
+ * it is bound to: its requests are made only as that account and session, and a
+ * caller checks the same owner before it uses a result.
+ */
+export function useTaskActionClient(): {
+  client: TaskActionClient;
+  owner: AccountSnapshot;
+} | null {
   const { accountId: userId, epoch } = useAccountSnapshot();
-  return useMemo(
-    () =>
-      userId ? createMobileTaskActionClient({ accountId: userId, epoch }) : null,
-    [userId, epoch]
-  );
+  return useMemo(() => {
+    if (!userId) return null;
+    const owner = { accountId: userId, epoch };
+    return { client: createMobileTaskActionClient(owner), owner };
+  }, [userId, epoch]);
 }
 
 /** One task draft, read from the action service as the signed-in account. */
