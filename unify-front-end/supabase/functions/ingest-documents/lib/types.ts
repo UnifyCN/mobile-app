@@ -257,12 +257,13 @@ export interface IngestStore {
   /**
    * For an unchanged document, in one transaction under the live lease:
    * refuses (throws) when the source's configuration is no longer
-   * `sourceConfig` or the source is disabled; supersedes the source's open
-   * job, which holds other text; then merges `documentPatch` into the
-   * document's metadata and sets each group's chunk metadata. Returns false,
-   * changing no live row, when the stored chunks are not exactly one
-   * generation with `contentHash`, or the document or any chunk has another
-   * model or no vector; the caller then replaces them.
+   * `sourceConfig` or the source is disabled; merges `documentPatch` into the
+   * document's metadata and sets each group's chunk metadata; then
+   * supersedes the source's open job, which holds other text. Returns false,
+   * changing no live row and no job, when the stored chunks are not exactly
+   * one generation with `contentHash`, or the document or any chunk has
+   * another model or no vector; the caller then opens the generation, and an
+   * equal open job keeps its checked rows.
    */
   refreshUnchanged(
     input: JobWrite & {

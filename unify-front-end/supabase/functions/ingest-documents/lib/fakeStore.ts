@@ -269,11 +269,6 @@ export class FakeStore implements IngestStore {
     } catch (error) {
       return Promise.reject(error);
     }
-    const open = this.jobs.find(j => j.sourceId === sourceId && j.status === 'open');
-    if (open) {
-      this.close(open, 'superseded', 'superseded', null);
-      open.rows.clear();
-    }
     const url = this.sources.find(s => s.id === sourceId)!.url;
     const d = this.documents.find(x => x.url === url);
     if (!d || d.contentHash !== input.contentHash)
@@ -286,6 +281,13 @@ export class FakeStore implements IngestStore {
       )
     ) {
       return Promise.resolve(false);
+    }
+    // Only a refresh that writes live data supersedes the open job; a false
+    // result leaves it for the equal open to resume.
+    const open = this.jobs.find(j => j.sourceId === sourceId && j.status === 'open');
+    if (open) {
+      this.close(open, 'superseded', 'superseded', null);
+      open.rows.clear();
     }
     d.metadata = { ...d.metadata, ...input.documentPatch };
     for (const { metadata, indexes } of input.chunkGroups) {

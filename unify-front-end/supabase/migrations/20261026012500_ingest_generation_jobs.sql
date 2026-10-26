@@ -1044,12 +1044,14 @@ $$;
 
 -- A fresh fetch found the live document unchanged: in one transaction, compare
 -- the configuration the caller fetched with against the locked current row,
--- supersede the source's open job, and refresh the live dates and province
--- (refresh_knowledge_metadata, unchanged). The source row stays share-locked
--- until the transaction ends, so a configuration change either waits for this
--- write or is seen by it. A changed or disabled source raises and changes
--- nothing. Returns false, changing no live row, when the live chunks are not
--- one generation of this content and model: the caller then publishes anew.
+-- refresh the live dates and province (refresh_knowledge_metadata, unchanged),
+-- and then supersede the source's open job, which must never promote over the
+-- verified live content. The source row stays share-locked until the
+-- transaction ends, so a configuration change either waits for this write or
+-- is seen by it. A changed or disabled source raises and changes nothing.
+-- Returns false, changing no live row and no job, when the live chunks are not
+-- one generation of this content and model: the caller then opens the
+-- generation, and an equal open job keeps its checked vectors and debit.
 create or replace function public.ingest_generation_refresh(
   p_source_id bigint,
   p_token uuid,
@@ -1069,6 +1071,7 @@ as $$
 declare
   v_current jsonb;
   v_job uuid;
+  v_refreshed boolean;
 begin
   perform public.ingest_generation_lock_writer(
     p_source_id, p_token, p_embedding_model, p_contract, p_lease_seconds
@@ -1080,16 +1083,18 @@ begin
   if not (v_current ->> 'enabled')::boolean then
     raise exception 'Source is disabled';
   end if;
+  -- The job lock comes before the document lock that the refresh takes.
   select id into v_job from public.knowledge_generation_jobs
    where crawl_source_id = p_source_id and status = 'open'
    for update;
-  if v_job is not null then
-    perform public.ingest_generation_close(v_job, 'superseded', 'superseded', null, null);
-  end if;
-  return public.refresh_knowledge_metadata(
+  v_refreshed := public.refresh_knowledge_metadata(
     p_source_id, p_token, p_content_hash, p_document_patch, p_chunk_groups,
     p_embedding_model
   );
+  if v_refreshed and v_job is not null then
+    perform public.ingest_generation_close(v_job, 'superseded', 'superseded', null, null);
+  end if;
+  return v_refreshed;
 end;
 $$;
 

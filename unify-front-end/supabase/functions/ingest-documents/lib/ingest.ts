@@ -362,8 +362,9 @@ async function fetchWithin<T>(
 
 /**
  * Unchanged content: one database transaction checks the fetched
- * configuration, supersedes the source's open job (it holds other text and
- * must never promote over this verified version) and refreshes the dates.
+ * configuration, refreshes the dates and, only when that refresh ran,
+ * supersedes the source's open job (it holds other text and must never
+ * promote over this verified version).
  */
 async function refreshUnchanged(
   run: SourceRun,
