@@ -23,6 +23,11 @@ export interface SaveMessageParams {
   owner: AccountSnapshot;
 }
 
+/** The saved row's id: the action service reads a user's own message by it (#363). */
+export interface SavedMessage {
+  id: number;
+}
+
 export const saveMessage = async ({
   conversationIdentifier,
   role,
@@ -30,7 +35,7 @@ export const saveMessage = async ({
   sources,
   companionContext,
   owner,
-}: SaveMessageParams): Promise<void> => {
+}: SaveMessageParams): Promise<SavedMessage> => {
   try {
     const {
       data: { user },
@@ -62,11 +67,11 @@ export const saveMessage = async ({
       content,
       sources: sources || null,
     };
-    let { error: messageError } = await supabase
-      .from('messages')
-      .insert(
-        companionContext ? { ...row, companion_context: companionContext } : row
-      );
+    const insert = (values: Record<string, unknown>) =>
+      supabase.from('messages').insert(values).select('id').single();
+    let { data: saved, error: messageError } = await insert(
+      companionContext ? { ...row, companion_context: companionContext } : row
+    );
     if (
       messageError &&
       companionContext &&
@@ -74,12 +79,13 @@ export const saveMessage = async ({
     ) {
       // Column not migrated yet: save the answer without its context.
       assertOwned(owner);
-      ({ error: messageError } = await supabase.from('messages').insert(row));
+      ({ data: saved, error: messageError } = await insert(row));
     }
 
     if (messageError) {
       throw messageError;
     }
+    return { id: (saved as { id: number }).id };
   } catch (error) {
     if (!isAccountChange(error)) console.error('Error in saveMessage:', error);
     throw error;

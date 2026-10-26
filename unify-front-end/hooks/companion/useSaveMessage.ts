@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   saveMessage,
   SaveMessageParams,
+  type SavedMessage,
 } from '@/services/companion/saveMessage';
 import { ConversationMessage } from '@/services/companion/getConversationMessages';
 import {
@@ -33,7 +34,12 @@ const getNextOptimisticMessageId = () => {
 export const useSaveMessage = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, SaveMessageParams, SaveMessageContext>({
+  return useMutation<
+    SavedMessage,
+    Error,
+    SaveMessageParams,
+    SaveMessageContext
+  >({
     mutationFn: (params: SaveMessageParams) => saveMessage(params),
     onMutate: async variables => {
       // The account that sends the message owns its optimistic row and every

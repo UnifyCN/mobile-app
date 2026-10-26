@@ -1,5 +1,5 @@
 /**
- * Versioned client for the Companion task actions endpoint (mobile-app#361).
+ * Versioned client for the Companion task actions endpoint (mobile-app#361, #363).
  * Mirror of the web app's lib/companionActions/client.ts.
  * Each call names an outcome the interface can show truthfully:
  *   - a recorded result, or a definite refusal (nothing was written);
@@ -9,16 +9,21 @@
  */
 import {
   type Authorization,
+  type CommandResult,
   type CompensatingProposal,
+  type CreateTaskOperation,
   type CurrentTaskValue,
-  type SetStateOperation,
+  type Operation,
   type TaskProgress,
+  type TaskProposal,
   type TaskReceipt,
   TASK_ACTIONS_CONTRACT_VERSION,
+  parseCommand,
   parseCurrent,
   parseProposal,
   parseReceipt,
   parseTask,
+  parseTaskProposal,
 } from './contract';
 
 export interface TransportReply {
@@ -64,6 +69,44 @@ export type ApplyResult =
       actual?: number | null;
     }
   | { kind: 'in_flight' }
+  /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
+  | { kind: 'needs_review'; proposal: TaskProposal }
+  /** #363: this command message already authorized a write. */
+  | { kind: 'command_used' }
+  /** #363: a live task already has this title; nothing was written. */
+  | { kind: 'needs_clarification' }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
+/** A proposal request: the current proposal, or a definite answer that nothing changed. */
+export type ProposalResult =
+  | { kind: 'ok'; proposal: TaskProposal }
+  /** The draft moved on (edited, applied, cancelled): this is its current state. */
+  | { kind: 'changed'; proposal: TaskProposal }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
+export type InterpretResult =
+  | { kind: 'ok'; command: CommandResult }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
+export type ConversationActionsResult =
+  | {
+      kind: 'ok';
+      proposals: TaskProposal[];
+      commands: {
+        messageId: number;
+        operationId: string;
+        receipt: TaskReceipt;
+      }[];
+    }
   | Unavailable
   | Refused
   | Unknown
@@ -95,11 +138,32 @@ export interface TaskActionClient {
   read(): Promise<ReadResult>;
   apply(
     operationId: string,
-    operation: SetStateOperation,
+    operation: Operation,
     authorization?: Authorization
   ): Promise<ApplyResult>;
-  undo(operationId: string, receiptOperationId: string): Promise<UndoResult>;
+  undo(
+    operationId: string,
+    receiptOperationId: string,
+    options?: { removalConfirmed?: boolean }
+  ): Promise<UndoResult>;
   status(operationId: string): Promise<StatusResult>;
+  /** Reads only: what the user's own saved message asks for (#363). */
+  interpret(messageId: number): Promise<InterpretResult>;
+  /** A server-owned draft of one new task. Writes no task. */
+  prepare(
+    operation: CreateTaskOperation,
+    source: { conversationId: string; messageId?: number } | null
+  ): Promise<ProposalResult>;
+  proposal(proposalId: string): Promise<ProposalResult>;
+  revise(
+    proposalId: string,
+    proposalRevision: number,
+    operation: CreateTaskOperation
+  ): Promise<ProposalResult>;
+  cancel(proposalId: string, proposalRevision: number): Promise<ProposalResult>;
+  conversationActions(
+    conversationId: string
+  ): Promise<ConversationActionsResult>;
 }
 
 type Json = Record<string, unknown>;
@@ -151,6 +215,20 @@ export function createTaskActionClient(opts: {
     } catch {
       return null;
     }
+  }
+
+  async function proposalCall(body: Json): Promise<ProposalResult> {
+    const reply = await send(body);
+    if (!reply) return { kind: 'unknown' };
+    if (reply.status === 401) return { kind: 'unauthorized' };
+    const off = unavailable(reply);
+    if (off) return off;
+    const parsed = asObject(reply.body);
+    if (reply.status === 200)
+      return { kind: 'ok', proposal: parseTaskProposal(parsed.proposal) };
+    if (reply.status === 409 && parsed.error === 'proposal_changed')
+      return { kind: 'changed', proposal: parseTaskProposal(parsed.proposal) };
+    return isUnknownStatus(reply.status) ? { kind: 'unknown' } : refused(reply);
   }
 
   const client: TaskActionClient = {
@@ -205,16 +283,27 @@ export function createTaskActionClient(opts: {
           actual: typeof detail.actual === 'number' ? detail.actual : null,
         };
       }
+      if (reply.status === 409 && body.error === 'needs_review')
+        return {
+          kind: 'needs_review',
+          proposal: parseTaskProposal(body.proposal),
+        };
+      if (reply.status === 409 && body.error === 'command_already_used')
+        return { kind: 'command_used' };
+      if (reply.status === 409 && body.error === 'needs_clarification')
+        return { kind: 'needs_clarification' };
       if (isUnknownStatus(reply.status)) return { kind: 'unknown' };
       return refused(reply);
     },
 
-    async undo(operationId, receiptOperationId) {
+    async undo(operationId, receiptOperationId, options = {}) {
       const reply = await send({
         action: 'undo',
         operation_id: operationId,
         receipt_operation_id: receiptOperationId,
-        authorization: { kind: 'ui_control' },
+        authorization: options.removalConfirmed
+          ? { kind: 'ui_control', removal_confirmed: true }
+          : { kind: 'ui_control' },
       });
       if (!reply) return { kind: 'unknown' };
       if (reply.status === 401) return { kind: 'unauthorized' };
@@ -246,6 +335,95 @@ export function createTaskActionClient(opts: {
       return refused(reply);
     },
 
+    async interpret(messageId) {
+      const reply = await send({ action: 'interpret', message_id: messageId });
+      if (!reply) return { kind: 'unknown' };
+      if (reply.status === 401) return { kind: 'unauthorized' };
+      const off = unavailable(reply);
+      if (off) return off;
+      if (reply.status === 200)
+        return {
+          kind: 'ok',
+          command: parseCommand(asObject(reply.body).command),
+        };
+      return isUnknownStatus(reply.status)
+        ? { kind: 'unknown' }
+        : refused(reply);
+    },
+
+    prepare(operation, source) {
+      return proposalCall({
+        action: 'prepare',
+        operation,
+        ...(source
+          ? {
+              source: {
+                conversation_id: source.conversationId,
+                ...(source.messageId !== undefined
+                  ? { message_id: source.messageId }
+                  : {}),
+              },
+            }
+          : {}),
+      });
+    },
+
+    proposal(proposalId) {
+      return proposalCall({ action: 'proposal', proposal_id: proposalId });
+    },
+
+    revise(proposalId, proposalRevision, operation) {
+      return proposalCall({
+        action: 'revise',
+        proposal_id: proposalId,
+        proposal_revision: proposalRevision,
+        operation,
+      });
+    },
+
+    cancel(proposalId, proposalRevision) {
+      return proposalCall({
+        action: 'cancel',
+        proposal_id: proposalId,
+        proposal_revision: proposalRevision,
+      });
+    },
+
+    async conversationActions(conversationId) {
+      const reply = await send({
+        action: 'conversation_actions',
+        conversation_id: conversationId,
+      });
+      if (!reply) return { kind: 'unknown' };
+      if (reply.status === 401) return { kind: 'unauthorized' };
+      const off = unavailable(reply);
+      if (off) return off;
+      if (reply.status !== 200)
+        return isUnknownStatus(reply.status)
+          ? { kind: 'unknown' }
+          : refused(reply);
+      const body = asObject(reply.body);
+      if (!Array.isArray(body.proposals) || !Array.isArray(body.commands))
+        return { kind: 'unknown' };
+      return {
+        kind: 'ok',
+        proposals: body.proposals.map(parseTaskProposal),
+        commands: body.commands.map(c => {
+          const o = asObject(c);
+          if (
+            typeof o.message_id !== 'number' ||
+            typeof o.operation_id !== 'string'
+          )
+            throw new Error('command entry');
+          return {
+            messageId: o.message_id,
+            operationId: o.operation_id,
+            receipt: parseReceipt(o.receipt),
+          };
+        }),
+      };
+    },
+
     async status(operationId) {
       const reply = await send({ action: 'status', operation_id: operationId });
       if (!reply) return { kind: 'lookup_failed' };
@@ -270,6 +448,20 @@ export function createTaskActionClient(opts: {
       client.apply(...args).catch(() => ({ kind: 'unknown' }) as const),
     undo: (...args) =>
       client.undo(...args).catch(() => ({ kind: 'unknown' }) as const),
+    interpret: (...args) =>
+      client.interpret(...args).catch(() => ({ kind: 'unknown' }) as const),
+    prepare: (...args) =>
+      client.prepare(...args).catch(() => ({ kind: 'unknown' }) as const),
+    proposal: (...args) =>
+      client.proposal(...args).catch(() => ({ kind: 'unknown' }) as const),
+    revise: (...args) =>
+      client.revise(...args).catch(() => ({ kind: 'unknown' }) as const),
+    cancel: (...args) =>
+      client.cancel(...args).catch(() => ({ kind: 'unknown' }) as const),
+    conversationActions: (...args) =>
+      client
+        .conversationActions(...args)
+        .catch(() => ({ kind: 'unknown' }) as const),
     status: (...args) =>
       client.status(...args).catch(() => ({ kind: 'lookup_failed' }) as const),
   };

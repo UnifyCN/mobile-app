@@ -47,7 +47,7 @@ const mockSdk = (() => {
     },
     'conversations.update': async () => ({ error: null }),
     'conversations.selectId': async () => ({ data: { id: 7 }, error: null }),
-    'messages.insert': async () => ({ error: null }),
+    'messages.insert': async () => ({ data: { id: 1 }, error: null }),
     'invoke:generate-title': async () => ({
       data: { title: 'Generated title' },
       error: null,
@@ -62,10 +62,10 @@ const mockSdk = (() => {
     calls,
     call,
     from: (table: string) => ({
-      insert: (row: unknown) =>
-        table === 'messages'
-          ? call('messages.insert', row)
-          : { select: () => ({ single: () => call(`${table}.insert`, row) }) },
+      // Both inserts read the saved row back: .select(...).single() (#363 for messages).
+      insert: (row: unknown) => ({
+        select: () => ({ single: () => call(`${table}.insert`, row) }),
+      }),
       update: (values: unknown) => ({
         eq: () => ({ eq: () => call(`${table}.update`, values) }),
       }),

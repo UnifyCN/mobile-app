@@ -32,6 +32,7 @@ import type { TaskState } from '@/services/companionActions/contract';
 import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
+import { TaskProposalPanel } from './TaskProposalPanel';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -47,6 +48,10 @@ const BORDER = '#E2E8F0';
 interface TaskActionsSheetProps {
   visible: boolean;
   onClose: () => void;
+  /** Open on the review of one task draft (#363) instead of the task list. */
+  proposalId?: string | null;
+  /** Open straight on one task, e.g. one a command added (#363). */
+  initialTask?: { taskRef: string; title: string } | null;
 }
 
 /**
@@ -55,15 +60,21 @@ interface TaskActionsSheetProps {
  * conversation and its typed message stay mounted behind it. Closing never
  * cancels a save; the action store keeps an unresolved write for the next visit.
  */
-export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
+export function TaskActionsSheet({
+  visible,
+  onClose,
+  proposalId = null,
+  initialTask = null,
+}: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
 
+  const initialRef = initialTask?.taskRef ?? null;
   useEffect(() => {
-    if (visible) setSelectedRef(null);
-  }, [visible]);
+    if (visible) setSelectedRef(initialRef);
+  }, [visible, initialRef]);
   useEffect(() => {
     let cancelled = false;
     AccessibilityInfo.isReduceMotionEnabled()
@@ -77,6 +88,8 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
   }, []);
 
   const back = () => setSelectedRef(null);
+  // Opened on a draft or one task: there is no list to go back to.
+  const canGoBack = Boolean(selectedRef) && !proposalId && !initialRef;
 
   return (
     <Modal
@@ -84,7 +97,7 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
       transparent
       animationType={reduceMotion ? 'fade' : 'slide'}
       statusBarTranslucent
-      onRequestClose={selectedRef ? back : onClose}
+      onRequestClose={canGoBack ? back : onClose}
       presentationStyle={Platform.OS === 'ios' ? 'overFullScreen' : undefined}
     >
       <View style={styles.root}>
@@ -110,7 +123,7 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
           >
             <View style={styles.grabHandle} />
             <View style={styles.header}>
-              {selectedRef ? (
+              {canGoBack ? (
                 <Pressable
                   onPress={back}
                   style={[styles.iconButton, squareTarget()]}
@@ -128,9 +141,11 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {selectedRef
-                  ? t('taskActions.drawerTitle')
-                  : t('taskActions.listTitle')}
+                {proposalId
+                  ? t('taskCreate.drawerTitle')
+                  : selectedRef
+                    ? t('taskActions.drawerTitle')
+                    : t('taskActions.listTitle')}
               </Text>
               <Pressable
                 onPress={onClose}
@@ -141,9 +156,16 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible ? (
+            {visible && proposalId ? (
+              <ProposalBody proposalId={proposalId} />
+            ) : visible ? (
               <SheetBody
                 selectedRef={selectedRef}
+                fallbackTitle={
+                  initialTask && initialTask.taskRef === selectedRef
+                    ? initialTask.title
+                    : null
+                }
                 onSelect={setSelectedRef}
                 onOpenChecklist={onClose}
               />
@@ -155,12 +177,29 @@ export function TaskActionsSheet({ visible, onClose }: TaskActionsSheetProps) {
   );
 }
 
+function ProposalBody({ proposalId }: { proposalId: string }) {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  return (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps='handled'
+    >
+      <TaskProposalPanel proposalId={proposalId} view={view} store={store} />
+    </ScrollView>
+  );
+}
+
 function SheetBody({
   selectedRef,
+  fallbackTitle,
   onSelect,
   onOpenChecklist,
 }: {
   selectedRef: string | null;
+  /** The title to show when the Checklist read does not have the task yet. */
+  fallbackTitle: string | null;
   onSelect: (taskRef: string) => void;
   onOpenChecklist: () => void;
 }) {
@@ -196,6 +235,7 @@ function SheetBody({
     task => getChecklistTaskOrderKey(task) === selectedRef
   );
   const phase = useTaskActionPhase(store, selectedRef);
+  const selectedTitle = selected?.task.task_name ?? fallbackTitle;
 
   if (
     view.status === 'loading' ||
@@ -216,7 +256,7 @@ function SheetBody({
     return <Text style={styles.message}>{t('taskActions.unavailable')}</Text>;
   }
 
-  if (selected && selectedRef) {
+  if (selectedRef && selectedTitle !== null) {
     return (
       <ScrollView
         style={styles.scroll}
@@ -225,7 +265,7 @@ function SheetBody({
       >
         <Text style={styles.eyebrow}>{t('taskActions.existingTask')}</Text>
         <Text style={styles.taskTitle} accessibilityRole='header'>
-          {selected.task.task_name}
+          {selectedTitle}
         </Text>
         <TaskStatePanel taskRef={selectedRef} view={view} store={store} />
         <Pressable

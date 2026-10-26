@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   AICompanionBusyError,
   AICompanionLimitError,
@@ -31,6 +32,16 @@ import {
   parseCompanionContext,
   savableCompanionContext,
 } from '@/helpers/companion/companionContext';
+import {
+  conversationActionsKey,
+  useTaskActionStore,
+} from '@/hooks/companion/useTaskActions';
+import { createMobileTaskActionClient } from '@/services/companionActions/transport';
+import {
+  TITLE_MAX,
+  createTaskOperation,
+  parseSuggestedTask,
+} from '@/services/companionActions/contract';
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -84,6 +95,9 @@ export const useSendMessage = ({
   const saveMessage = useSaveMessage();
   const { trackCompanionMessageSent, trackCompanionResponseReceived } =
     useAnalytics();
+  const { t } = useTranslation();
+  // The signed-in account's action store: a clear command's write is tracked there.
+  const actionStore = useTaskActionStore('companion');
 
   const sendMessage = async (
     messageText: string,
@@ -144,8 +158,9 @@ export const useSendMessage = ({
 
       // Save user message to database
       ensureOwned();
+      let savedUserId: number | null = null;
       try {
-        await saveMessage.mutateAsync({
+        const savedUser = await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
           role: 'user',
           content: messageText,
@@ -153,12 +168,66 @@ export const useSendMessage = ({
           owner,
         });
         userMessagePersisted = true;
+        savedUserId = savedUser.id;
       } catch (error) {
         console.error('Failed to save user message:', error);
         // Continue anyway - message will be saved but might not show immediately
       }
 
       ensureOwned();
+      // #363: the action service reads the user's own saved message. A clear create
+      // command adds exactly its task (no AI answer, no allowance used); an unclear
+      // one gets a question and writes nothing. Otherwise the AI answers as before.
+      // An unavailable action service never blocks the answer.
+      const actions = createMobileTaskActionClient(owner);
+      if (savedUserId !== null) {
+        const interpreted = await actions.interpret(savedUserId);
+        ensureOwned();
+        if (interpreted.kind === 'ok' && interpreted.command.kind !== 'none') {
+          const command = interpreted.command;
+          if (
+            command.kind === 'create' &&
+            command.sameTitleTasks.length === 0
+          ) {
+            setIsWaitingForBot(false);
+            await actionStore?.applyOperation(
+              `command:${savedUserId}`,
+              command.operation,
+              { kind: 'direct_command', message_id: savedUserId }
+            );
+            ensureOwned();
+          } else {
+            const question =
+              command.kind === 'create'
+                ? t('taskCreate.clarifyDuplicate', {
+                    title: command.sameTitleTasks[0].title,
+                  })
+                : t(
+                    command.reason === 'missing_title'
+                      ? 'taskCreate.clarifyMissingTitle'
+                      : command.reason === 'multiple'
+                        ? 'taskCreate.clarifyMultiple'
+                        : 'taskCreate.clarifyTooLong',
+                    { max: TITLE_MAX }
+                  );
+            await saveMessage.mutateAsync({
+              conversationIdentifier: conversationIdToUse,
+              role: 'assistant',
+              content: question,
+              owner,
+            });
+            ensureOwned();
+          }
+          queryClient.invalidateQueries({
+            queryKey: conversationActionsKey(
+              owner.accountId,
+              conversationIdToUse
+            ),
+          });
+          return;
+        }
+      }
+
       // Format messages for RAG API (last 10 messages for context)
       const conversationMessages = formatMessagesForAPI(messages, messageText);
 
@@ -276,8 +345,9 @@ export const useSendMessage = ({
       // Note: queryType, disclaimer, and suggestedNextSteps are not persisted to DB
       // They're only used for immediate UI display
       ensureOwned();
+      let savedAnswerId: number | null = null;
       try {
-        await saveMessage.mutateAsync({
+        const savedAnswer = await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
           role: 'assistant',
           content: completion.cleanAnswer,
@@ -287,9 +357,25 @@ export const useSendMessage = ({
           companionContext: savableCompanionContext(metadata?.context),
           owner,
         });
+        savedAnswerId = savedAnswer.id;
       } catch (error) {
         console.error('Failed to save bot message:', error);
         // Continue anyway - message will be saved but might not show immediately
+      }
+
+      // #363: a suggested task becomes a server-owned draft for review, tied to this
+      // answer. Preparing writes no task; a failure only means no draft card.
+      const suggested = parseSuggestedTask(completion.actionProposal);
+      ensureOwned();
+      if (suggested && savedAnswerId !== null) {
+        await actions.prepare(createTaskOperation(suggested.title), {
+          conversationId: conversationIdToUse,
+          messageId: savedAnswerId,
+        });
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+        });
       }
 
       // The persisted (or RQ-optimistic) bot message now owns this bubble —

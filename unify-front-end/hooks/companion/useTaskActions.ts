@@ -26,8 +26,14 @@ import {
   buildTaskActionResultProperties,
   type TaskActionSurface,
 } from '@/services/companionActions/analytics';
-import type { ReadResult } from '@/services/companionActions/client';
-import type { TaskProgress } from '@/services/companionActions/contract';
+import type {
+  ReadResult,
+  TaskActionClient,
+} from '@/services/companionActions/client';
+import type {
+  TaskProgress,
+  TaskProposal,
+} from '@/services/companionActions/contract';
 import {
   clearTaskActionStores,
   taskActionStoreFor,
@@ -41,6 +47,21 @@ import { createMobileTaskActionClient } from '@/services/companionActions/transp
 export const TASK_PROGRESS_ROOT = 'companion-task-actions' as const;
 export const taskProgressKey = (userId: string | null) =>
   [TASK_PROGRESS_ROOT, userId] as const;
+
+/** A task draft (#363), per account. */
+export const TASK_PROPOSAL_ROOT = 'companion-task-proposal' as const;
+export const taskProposalKey = (
+  userId: string | null,
+  proposalId: string | null
+) => [TASK_PROPOSAL_ROOT, userId, proposalId] as const;
+
+/** The drafts and command results of one conversation (#363), per account. */
+export const CONVERSATION_ACTIONS_ROOT =
+  'companion-conversation-actions' as const;
+export const conversationActionsKey = (
+  userId: string | null | undefined,
+  conversationId: string | null
+) => [CONVERSATION_ACTIONS_ROOT, userId ?? null, conversationId] as const;
 
 /**
  * The signed-in account. Undefined until the session is read. Task progress is
@@ -135,8 +156,8 @@ export function useTaskProgress(): TaskProgressView {
 
 /**
  * Removes every other account's private work: unresolved task actions, task
- * progress, Checklist rows (memory, disk and query cache) and conversation
- * lists and threads. All of these are keyed by account, so a mounted view
+ * progress, Checklist rows (memory, disk and query cache), conversation
+ * lists and threads, and task drafts and command results (#363). All of these are keyed by account, so a mounted view
  * already reads only the signed-in account's entry; this drops the rest and
  * cancels reads still in flight for another account.
  */
@@ -154,6 +175,8 @@ function useTaskActionAccountScope(
       [CHECKLIST_TASKS_QUERY_ROOT, 1],
       [CONVERSATIONS_ROOT, 1],
       [CONVERSATION_MESSAGES_ROOT, 1],
+      [TASK_PROPOSAL_ROOT, 1],
+      [CONVERSATION_ACTIONS_ROOT, 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],
@@ -189,6 +212,13 @@ export function useTaskActionStore(
         void queryClient.invalidateQueries({
           queryKey: [CHECKLIST_TASKS_QUERY_ROOT],
         });
+        // #363: drafts and command results shown in conversations.
+        void queryClient.invalidateQueries({
+          queryKey: [TASK_PROPOSAL_ROOT, userId],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: [CONVERSATION_ACTIONS_ROOT, userId],
+        });
       },
       onResult: event => {
         const props = buildTaskActionResultProperties(event, surface);
@@ -196,6 +226,56 @@ export function useTaskActionStore(
       },
     });
   }, [userId, epoch, queryClient, surface, trackCompanionActionResult]);
+}
+
+/** The action client of the signed-in account (#363 proposal and command requests). */
+export function useTaskActionClient(): TaskActionClient | null {
+  const { accountId: userId, epoch } = useAccountSnapshot();
+  return useMemo(
+    () =>
+      userId ? createMobileTaskActionClient({ accountId: userId, epoch }) : null,
+    [userId, epoch]
+  );
+}
+
+/** One task draft, read from the action service as the signed-in account. */
+export function useTaskProposal(proposalId: string | null) {
+  const userId = useTaskActionAccount() ?? null;
+  return useQuery({
+    queryKey: taskProposalKey(userId, proposalId),
+    enabled: Boolean(userId && proposalId),
+    queryFn: async (): Promise<TaskProposal> => {
+      const owner = ownAccountWork();
+      if (owner.accountId !== userId) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(owner).proposal(
+        proposalId as string
+      );
+      if (result.kind === 'ok' || result.kind === 'changed')
+        return result.proposal;
+      throw new ReadFailed(result.kind);
+    },
+    staleTime: 0,
+    retry: 1,
+  });
+}
+
+/** The drafts and command results of one conversation, for its cards. */
+export function useConversationActions(conversationId: string | null) {
+  const userId = useTaskActionAccount() ?? null;
+  return useQuery({
+    queryKey: conversationActionsKey(userId, conversationId),
+    enabled: Boolean(userId && conversationId),
+    queryFn: async () => {
+      const owner = ownAccountWork();
+      if (owner.accountId !== userId) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(
+        owner
+      ).conversationActions(conversationId as string);
+      if (result.kind !== 'ok') throw new ReadFailed(result.kind);
+      return result;
+    },
+    staleTime: 0,
+  });
 }
 
 const IDLE: TaskActionPhase = { phase: 'idle' };

@@ -62,6 +62,12 @@ import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
+import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
+import {
+  useConversationActions,
+  useTaskActionStore,
+  useTaskProgress,
+} from '@/hooks/companion/useTaskActions';
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 import {
   ownAccountWork,
@@ -146,9 +152,15 @@ export default function CompanionScreen() {
   >(null);
 
   const [inputText, setInputText] = useState('');
-  // Direction B (mobile-app#361): task progress opens in a bottom sheet over the
-  // conversation, so the conversation and the typed message stay mounted.
-  const [tasksOpen, setTasksOpen] = useState(false);
+  // Direction B (mobile-app#361, #363): task progress, a task draft or one task
+  // opens in a bottom sheet over the conversation, so the conversation and the
+  // typed message stay mounted.
+  const [sheet, setSheet] = useState<
+    | { kind: 'tasks' }
+    | { kind: 'proposal'; proposalId: string }
+    | { kind: 'task'; taskRef: string; title: string }
+    | null
+  >(null);
   // Local greeting message shown when user clicks "Ask Anything"
   const [greetingMessage, setGreetingMessage] = useState<Message | null>(null);
   const [optimisticMessages, setOptimisticMessages] = useState<Message[]>([]);
@@ -168,6 +180,9 @@ export default function CompanionScreen() {
     setCurrentConversationId(null);
     setGreetingMessage(null);
     setOptimisticMessages([]);
+    // A draft or task view names the previous account's record: close it. The task
+    // list stays open and reads only the new account's tasks.
+    setSheet(current => (current?.kind === 'tasks' ? current : null));
   }
 
   // Fetch messages for the current conversation
@@ -485,6 +500,21 @@ export default function CompanionScreen() {
     [trackCompanionSuggestionClicked, handleSendMessage]
   );
 
+  // #363: drafts and command results of the open conversation, for its cards.
+  const { data: conversationActions } = useConversationActions(
+    currentConversationId
+  );
+  const actionStore = useTaskActionStore('companion');
+  const { canWrite: actionsWritable } = useTaskProgress();
+  const openDraft = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'proposal', proposalId });
+  }, []);
+  const openTask = useCallback((taskRef: string, title: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'task', taskRef, title });
+  }, []);
+
   const renderMessage = useCallback(
     ({ item, index }: { item: Message; index: number }) => {
       // Only show suggestions and lastVerified on the last bot message
@@ -499,17 +529,38 @@ export default function CompanionScreen() {
       const displayItem =
         isLastBotMessage && lastVerified ? { ...item, lastVerified } : item;
 
+      // Saved messages have positive integer ids; optimistic and streaming ones do not.
+      const savedId = Number(item.id);
       return (
-        <MessageWithSources
-          item={displayItem}
-          suggestedNextSteps={
-            showSuggestions ? lastSuggestedNextSteps : undefined
-          }
-          onSuggestionPress={handleSuggestionClick}
-        />
+        <>
+          <MessageWithSources
+            item={displayItem}
+            suggestedNextSteps={
+              showSuggestions ? lastSuggestedNextSteps : undefined
+            }
+            onSuggestionPress={handleSuggestionClick}
+          />
+          <TaskActionCards
+            messageId={
+              Number.isInteger(savedId) && savedId > 0 ? savedId : null
+            }
+            isUser={item.isUser}
+            proposals={conversationActions?.proposals ?? []}
+            commands={conversationActions?.commands ?? []}
+            store={actionStore}
+            canWrite={actionsWritable}
+            onReview={openDraft}
+            onViewTask={openTask}
+          />
+        </>
       );
     },
     [
+      conversationActions,
+      actionStore,
+      actionsWritable,
+      openDraft,
+      openTask,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -586,7 +637,7 @@ export default function CompanionScreen() {
         <CompanionTasksEntry
           onOpen={() => {
             Keyboard.dismiss();
-            setTasksOpen(true);
+            setSheet({ kind: 'tasks' });
           }}
         />
 
@@ -717,8 +768,14 @@ export default function CompanionScreen() {
       </Animated.View>
 
       <TaskActionsSheet
-        visible={tasksOpen}
-        onClose={() => setTasksOpen(false)}
+        visible={sheet !== null}
+        onClose={() => setSheet(null)}
+        proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
+        initialTask={
+          sheet?.kind === 'task'
+            ? { taskRef: sheet.taskRef, title: sheet.title }
+            : null
+        }
       />
     </View>
   );

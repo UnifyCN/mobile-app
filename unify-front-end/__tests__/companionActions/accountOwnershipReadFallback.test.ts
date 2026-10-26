@@ -82,18 +82,28 @@ jest.mock('@/lib/supabase', () => ({
         },
         eq: () => chain,
         single: async () => ({ data: { id: 7 }, error: null }),
-        insert: (row: Record<string, unknown>) => {
-          const call: Call = {
-            as: mockAccount,
-            table,
-            kind: 'insert',
-            withContext: 'companion_context' in row,
-          };
-          mockCalls.push(call);
-          return call.withContext
-            ? mockContextReply()
-            : Promise.resolve({ error: null });
-        },
+        // insert(...).select('id').single(), as the save reads the saved id (#363).
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: () => {
+              const call: Call = {
+                as: mockAccount,
+                table,
+                kind: 'insert',
+                withContext: 'companion_context' in row,
+              };
+              mockCalls.push(call);
+              return (
+                call.withContext
+                  ? mockContextReply()
+                  : Promise.resolve({ error: null })
+              ).then((reply: Record<string, unknown>) => ({
+                data: { id: 1 },
+                ...reply,
+              }));
+            },
+          }),
+        }),
       };
       return chain;
     },

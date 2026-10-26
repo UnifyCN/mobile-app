@@ -31,6 +31,7 @@ import {
   type TaskProgressView,
 } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
+import { ReceiptBlock } from './ReceiptBlock';
 
 const STATE_ICON: Record<
   TaskState,
@@ -67,7 +68,7 @@ interface TaskStatePanelProps {
  * the Companion task sheet; both read the same saved record.
  */
 export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const phase = useTaskActionPhase(store, taskRef);
   const progress = progressFor(taskRef, view);
   const draft = useTaskActionDraft(store, taskRef);
@@ -137,18 +138,6 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   // The result of this panel's last save stays on screen, but it stops reading as
   // current once the saved task moves past the revision it produced (a newer
   // change here or on another platform). Its Undo still names this receipt only.
-  // A reason-only save keeps the state: name what changed instead of
-  // "Waiting to Waiting".
-  const receiptText = (r: TaskReceipt) =>
-    r.kind === 'undo'
-      ? t('taskActions.receiptUndo', { state: stateLabel(r.afterState) })
-      : r.beforeState === 'waiting' && r.afterState === 'waiting'
-        ? t('taskActions.receiptReason')
-        : t('taskActions.receiptChange', {
-            from: stateLabel(r.beforeState),
-            to: stateLabel(r.afterState),
-          });
-
   const receipt: TaskReceipt | null =
     phase.phase === 'saved'
       ? {
@@ -158,13 +147,6 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
             progress.revision === phase.receipt.afterRevision,
         }
       : progress.lastReceipt;
-  const formatTime = (iso: string) =>
-    new Intl.DateTimeFormat(i18n.language, {
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-    }).format(new Date(iso));
 
   return (
     <View style={styles.root}>
@@ -278,44 +260,20 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
           taskRef={taskRef}
         />
         {receipt && phase.phase !== 'undo_review' && (
-          <View style={styles.receipt}>
-            <Text style={styles.receiptText}>{receiptText(receipt)}</Text>
-            <Text style={styles.receiptMeta}>
-              {formatTime(receipt.createdAt)}
-              {!receipt.current
-                ? ` · ${t('taskActions.receiptHistorical')}`
-                : ''}
-            </Text>
-            {receipt.undoable && (
-              <Pressable
-                accessibilityRole='button'
-                accessibilityLabel={t('taskActions.undo')}
-                disabled={!canWrite}
-                accessibilityState={{ disabled: !canWrite }}
-                onPress={() =>
-                  canWrite &&
-                  store &&
-                  void store.undo(taskRef, receipt.operationId)
-                }
-                style={({ pressed }) => [
-                  styles.undoButton,
-                  { minHeight: minTarget() },
-                  !canWrite && styles.buttonDisabled,
-                  pressed && styles.stateOptionPressed,
-                ]}
-              >
-                <MaterialIcons name='undo' size={18} color={ACCENT_STRONG} />
-                <Text style={styles.undoText}>{t('taskActions.undo')}</Text>
-              </Pressable>
-            )}
-          </View>
+          <ReceiptBlock
+            receipt={receipt}
+            storeKey={taskRef}
+            store={store}
+            canWrite={canWrite}
+          />
         )}
       </View>
     </View>
   );
 }
 
-function PhaseMessage({
+/** The visible outcome of the last write of one store key (task, draft or command). */
+export function PhaseMessage({
   writable,
   phase,
   stateLabel,
@@ -370,6 +328,10 @@ function PhaseMessage({
       return errorLine(t('taskActions.conflict'));
     case 'already_undone':
       return line(t('taskActions.alreadyUndone'));
+    case 'command_used':
+      return line(t('taskCreate.commandUsed'));
+    case 'needs_clarification':
+      return errorLine(t('taskCreate.needsClarification'));
     case 'signed_out':
       return errorLine(t('taskActions.signedOut'));
     case 'unavailable':
@@ -404,6 +366,42 @@ function PhaseMessage({
       );
     case 'undo_review': {
       const proposed = phase.proposal.operations[0];
+      if (proposed.type === 'task.remove_created') {
+        // Undo of an added task met a newer edit: nothing was removed. Removing it
+        // now is a reviewed change; this button is the user's confirmation.
+        return (
+          <View style={styles.review}>
+            <Text style={styles.statusText}>
+              {t('taskCreate.undoConflict')}
+            </Text>
+            <View style={styles.reviewActions}>
+              <Pressable
+                accessibilityRole='button'
+                accessibilityLabel={t('taskCreate.removeAnyway')}
+                disabled={!writable}
+                accessibilityState={{ disabled: !writable }}
+                onPress={() =>
+                  writable &&
+                  void store?.approveCompensation(taskRef, {
+                    removalConfirmed: true,
+                  })
+                }
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  { minHeight: minTarget() },
+                  !writable && styles.buttonDisabled,
+                  pressed && writable && styles.stateOptionPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {t('taskCreate.removeAnyway')}
+                </Text>
+              </Pressable>
+              {action(t('taskCreate.keep'), () => store?.dismiss(taskRef))}
+            </View>
+          </View>
+        );
+      }
       return (
         <View style={styles.review}>
           <Text style={styles.reviewTitle}>
@@ -509,28 +507,6 @@ const styles = StyleSheet.create({
   statusRow: { gap: 8, alignItems: 'flex-start' },
   statusText: { ...typography.secondary, color: INK_SECONDARY },
   statusError: { color: ERROR },
-  receipt: {
-    gap: 2,
-    padding: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: BORDER,
-    backgroundColor: SURFACE_MUTED,
-  },
-  receiptText: { ...typography.secondary, color: INK },
-  receiptMeta: { ...typography.caption, color: INK_MUTED },
-  undoButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    gap: 6,
-    marginTop: 4,
-  },
-  undoText: {
-    ...typography.secondary,
-    fontWeight: '600',
-    color: ACCENT_STRONG,
-  },
   secondaryButton: {
     paddingHorizontal: 14,
     borderRadius: 12,

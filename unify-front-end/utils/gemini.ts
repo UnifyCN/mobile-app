@@ -50,6 +50,11 @@ export interface StreamComplete {
    * companionAnalytics.
    */
   topic?: string;
+  /**
+   * One task the answer suggests for review (ticket #363), unvalidated; parsed with
+   * parseSuggestedTask. A suggestion only: nothing is saved by it.
+   */
+  actionProposal?: unknown;
   tokenUsage?: TokenUsage;
   estimatedCostUsd?: number;
   model?: string;

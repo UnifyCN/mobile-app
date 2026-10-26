@@ -120,17 +120,23 @@ jest.mock('@/lib/supabase', () => {
       return chain;
     }
     return {
-      insert: async (values: Record<string, unknown>) => {
-        if (mockDb.columnMissing && 'companion_context' in values) {
-          return mockMissingColumn();
-        }
-        mockDb.messages.push({
-          ...values,
-          id: mockDb.messages.length + 1,
-          created_at: `2026-10-25T17:3${mockDb.messages.length}:00Z`,
-        });
-        return { data: null, error: null };
-      },
+      // insert(...).select('id').single(), as the save reads the saved id (#363).
+      insert: (values: Record<string, unknown>) => ({
+        select: () => ({
+          single: async () => {
+            if (mockDb.columnMissing && 'companion_context' in values) {
+              return mockMissingColumn();
+            }
+            const id = mockDb.messages.length + 1;
+            mockDb.messages.push({
+              ...values,
+              id,
+              created_at: `2026-10-25T17:3${mockDb.messages.length}:00Z`,
+            });
+            return { data: { id }, error: null };
+          },
+        }),
+      }),
       select: (columns: string) => {
         const chain: any = {
           eq: () => chain,
