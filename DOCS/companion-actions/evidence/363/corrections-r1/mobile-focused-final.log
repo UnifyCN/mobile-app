@@ -1,0 +1,421 @@
+PASS __tests__/companionActions/checklistTaskProgress.test.tsx (10.038 s)
+PASS __tests__/companionActions/accountOwnershipStages.test.tsx
+  ● Console
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      Error in saveMessage: { message: 'A user save rejected' }
+
+      88 |     return { id: (saved as { id: number }).id };
+      89 |   } catch (error) {
+    > 90 |     if (!isAccountChange(error)) console.error('Error in saveMessage:', error);
+         |                                          ^
+      91 |     throw error;
+      92 |   }
+      93 | };
+
+      at error (services/companion/saveMessage.ts:90:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      Failed to save user message: { message: 'A user save rejected' }
+
+      171 |         savedUserId = savedUser.id;
+      172 |       } catch (error) {
+    > 173 |         console.error('Failed to save user message:', error);
+          |                 ^
+      174 |         // Continue anyway - message will be saved but might not show immediately
+      175 |       }
+      176 |
+
+      at error (hooks/companion/useSendMessage.ts:173:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      Failed to save user message: AccountChangedError: The signed-in account changed
+          at assertOwned (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/services/account/accountSession.ts:109:33)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/services/companion/saveMessage.ts:63:16
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      171 |         savedUserId = savedUser.id;
+      172 |       } catch (error) {
+    > 173 |         console.error('Failed to save user message:', error);
+          |                 ^
+      174 |         // Continue anyway - message will be saved but might not show immediately
+      175 |       }
+      176 |
+
+      at error (hooks/companion/useSendMessage.ts:173:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Error in saveMessage: { message: 'rejected' }
+
+      88 |     return { id: (saved as { id: number }).id };
+      89 |   } catch (error) {
+    > 90 |     if (!isAccountChange(error)) console.error('Error in saveMessage:', error);
+         |                                          ^
+      91 |     throw error;
+      92 |   }
+      93 | };
+
+      at error (services/companion/saveMessage.ts:90:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      Failed to save message: { message: 'rejected' }
+
+      94 |       });
+      95 |
+    > 96 |       console.error('Failed to save message:', error);
+         |               ^
+      97 |     },
+      98 |   });
+      99 | };
+
+      at Object.error [as onError] (hooks/companion/useSaveMessage.ts:96:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to save user message: { message: 'rejected' }
+
+      171 |         savedUserId = savedUser.id;
+      172 |       } catch (error) {
+    > 173 |         console.error('Failed to save user message:', error);
+          |                 ^
+      174 |         // Continue anyway - message will be saved but might not show immediately
+      175 |       }
+      176 |
+
+      at error (hooks/companion/useSendMessage.ts:173:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+PASS __tests__/companionActions/accountOwnership.test.tsx
+  ● Console
+
+    console.error
+      Failed to create conversation: Error: A request refused
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:426:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:426:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      Failed to create conversation: Error: refused after sign-out
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:462:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:462:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to create conversation: Error: refused
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to create conversation: Error: refused
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      136 |         } catch (error) {
+      137 |           ensureOwned();
+    > 138 |           console.error('Failed to create conversation:', error);
+          |                   ^
+      139 |           setIsLoading(false);
+      140 |           throw error;
+      141 |         }
+
+      at error (hooks/companion/useSendMessage.ts:138:19)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Gemini API error: Error: refused
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:477:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Users/savargupta/.t3/worktrees/Unify/t3-3b1a69b4/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      386 |       // Another account signed in: nothing of this send may reach its screen.
+      387 |       if (!owned()) throw new AccountChangedError();
+    > 388 |       console.error('Gemini API error:', error);
+          |               ^
+      389 |       console.error(
+      390 |         'Error details:',
+      391 |         error instanceof Error ? error.message : String(error)
+
+      at error (hooks/companion/useSendMessage.ts:388:15)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Error details: refused
+
+      387 |       if (!owned()) throw new AccountChangedError();
+      388 |       console.error('Gemini API error:', error);
+    > 389 |       console.error(
+          |               ^
+      390 |         'Error details:',
+      391 |         error instanceof Error ? error.message : String(error)
+      392 |       );
+
+      at error (hooks/companion/useSendMessage.ts:389:15)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+PASS __tests__/companionActions/companionTaskSheet.test.tsx
+PASS __tests__/companionActions/companionActionsLocalStack.test.tsx
+PASS __tests__/companion/companionContext.acceptance.test.tsx
+PASS __tests__/companion/companionAnalytics.test.ts
+PASS __tests__/companionActions/accountOwnershipRequests.test.ts
+PASS __tests__/companion/companionContextSheet.test.tsx
+PASS __tests__/companionActions/accountOwnershipReadFallback.test.ts
+PASS __tests__/companion/companionTemplates.test.ts
+PASS __tests__/companion/personalizedStartersAccount.test.ts
+PASS __tests__/companion/stageContext.test.ts
+PASS __tests__/companion/ragQueryErrors.test.ts
+PASS __tests__/companion/requestToday.test.ts
+PASS __tests__/companion/companionStarterHistory.test.ts
+PASS __tests__/companionActions/taskCreate.test.tsx
+  ● Console
+
+    console.error
+      An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+
+Test Suites: 17 passed, 17 total
+Tests:       1 skipped, 213 passed, 214 total
+Snapshots:   0 total
+Time:        20.021 s
+Ran all test suites matching /__tests__\/companionActions|__tests__\/companion/i.
+Test results written to: ../DOCS/companion-actions/evidence/363/corrections-r1/mobile-focused-final.json
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.
+exit=143 (stopped by SIGTERM after the summary: Jest keeps open handles)

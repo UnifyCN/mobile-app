@@ -103,3 +103,13 @@ Full local suite on the final web tree (`w-backend-all-final.log`): 7 files, 56 
 - The web browser check is one Chromium session; no Safari, real screen reader or 200% zoom.
 - The mobile suite still holds open handles after its summary (pre-existing).
 - Web `services/companion.ts` and `ChatPanel.tsx` carry formatter-only line changes next to the #363 edits.
+
+## Corrections after the first review
+
+Four confirmed findings were corrected: late Save title / Not now replies no longer
+restore a removed private draft cache (both clients; the web panel is also bound to
+the session it was opened in); the web command and draft cards wait the shared 300ms
+before showing saving/checking; Retry runs only while the draft shows the reviewed
+title, and a saved edit after a confirmed "not applied" needs a new approval; a
+creation or removal receipt keeps the title recorded when it was saved. Tests,
+red/green runs, the call-path map and limits: `evidence/363/corrections-r1/README.md`.

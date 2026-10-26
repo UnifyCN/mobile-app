@@ -1,0 +1,18 @@
+PASS  control: a shared loading-delayed line is hidden at first (the CSS is live)
+FAIL  command card: "adding" waits for the shared delay  {"text":"Adding “Set up phone service” to Checklist…","present":true,"opacity":1,"animated":null,"status":true}
+PASS  command card: "adding" is in a status region from the start
+FAIL  draft card: its "checking" status waits for the shared delay  {"text":"Checking whether the change saved…","present":true,"opacity":1,"animated":null,"status":false}
+PASS  draft card: the draft's own title shows at once
+PASS  after the delay: the control and both loading lines show
+PASS  result: the saved receipt shows at once, not delayed
+PASS  error: a refusal shows at once, not delayed
+PASS  control (reduced motion): a shared loading-delayed line is hidden at first (the CSS is live)
+FAIL  command card (reduced motion): "adding" waits for the shared delay  {"text":"Adding “Set up phone service” to Checklist…","present":true,"opacity":1,"animated":null,"status":true}
+PASS  command card (reduced motion): "adding" is in a status region from the start
+FAIL  draft card (reduced motion): its "checking" status waits for the shared delay  {"text":"Checking whether the change saved…","present":true,"opacity":1,"animated":null,"status":false}
+PASS  draft card (reduced motion): the draft's own title shows at once
+PASS  after the delay (reduced motion): the control and both loading lines show
+PASS  result (reduced motion): the saved receipt shows at once, not delayed
+PASS  error (reduced motion): a refusal shows at once, not delayed
+
+12 passed, 4 failed, 0 errors

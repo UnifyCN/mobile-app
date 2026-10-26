@@ -1,0 +1,92 @@
+FAIL __tests__/companionActions/taskCreate.test.tsx
+  Add one task through Companion (mobile)
+    ○ skipped shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task
+    ○ skipped a clear command adds exactly its task without an AI answer; an unclear one asks and writes nothing
+    ○ skipped a lost reply is looked up first; pending and failed lookups never write; not applied retries the same operation
+    ○ skipped an edited title and a changed profile each need a new approval of the shown revision
+    ○ skipped Undo of an added task asks first; Keep changes nothing; after a newer edit it offers a reviewed removal
+    ○ skipped at the AI limit a draft can still be added and no model request is made
+    ○ skipped an account change hides the previous account's cards, and a late draft reply reaches nobody
+    ○ skipped reports only allowlisted action results, never the task title or message
+  late Save title and Not now replies stay with their account
+    ○ skipped revise: a reply after another account signed in does not restore the draft
+    ○ skipped revise: a reply after sign-out does not restore the draft
+    ○ skipped revise: a reply after sign-out and the same account signing back in is not written under the new session
+    ○ skipped revise: a token refresh of the same account keeps the reply and shows it
+    ○ skipped cancel: a reply after another account signed in does not restore the draft
+    ○ skipped cancel: a reply after sign-out does not restore the draft
+    ○ skipped cancel: a reply after sign-out and the same account signing back in is not written under the new session
+    ○ skipped cancel: a token refresh of the same account keeps the reply and shows it
+    ○ skipped a late refusal after a token refresh of the same account is still shown
+  Retry of an approved draft follows the shown title
+    ✕ an unsaved title edit after confirmed-not-applied cannot retry the old reviewed title (337 ms)
+    ✓ putting the reviewed title back allows Retry of the same operation (199 ms)
+    ✕ a saved title edit after confirmed-not-applied replaces the old approval with a review of the new title (1146 ms)
+    ✕ while the outcome is unknown an edit allows only Check again, never a write or a title save (211 ms)
+
+  ● Retry of an approved draft follows the shown title › an unsaved title edit after confirmed-not-applied cannot retry the old reviewed title
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      849 |     fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+      850 |     expect(enabled(button(sheet, /^Add 1 task/))).toBe(false);
+    > 851 |     expect(enabled(button(sheet, 'Try again'))).toBe(false);
+          |                                                 ^
+      852 |     fireEvent.press(button(sheet, 'Try again'));
+      853 |     await settle();
+      854 |     expect(server.customTasks()).toEqual([]);
+
+      at Object.toBe (__tests__/companionActions/taskCreate.test.tsx:851:49)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Retry of an approved draft follows the shown title › a saved title edit after confirmed-not-applied replaces the old approval with a review of the new title
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      876 |     await within(sheet).findByRole('button', { name: 'Try again' });
+      877 |     fireEvent.changeText(within(sheet).getByLabelText('Task title'), SIM);
+    > 878 |     await waitFor(() => expect(enabled(button(sheet, 'Save title'))).toBe(true));
+          |                  ^
+      879 |     fireEvent.press(button(sheet, 'Save title'));
+      880 |     // The old approval is gone; the saved title is a new revision to review.
+      881 |     const approve = await approveIn(sheet, SIM);
+
+      at Object.<anonymous> (__tests__/companionActions/taskCreate.test.tsx:878:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Retry of an approved draft follows the shown title › while the outcome is unknown an edit allows only Check again, never a write or a title save
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      905 |     fireEvent.press(button(sheet, 'Check again'));
+      906 |     await within(sheet).findByRole('button', { name: 'Try again' });
+    > 907 |     expect(enabled(button(sheet, 'Try again'))).toBe(false);
+          |                                                 ^
+      908 |     await settle();
+      909 |     expect(creates()).toHaveLength(1);
+      910 |     expect(server.sent.filter(b => b.action === 'revise')).toHaveLength(0);
+
+      at Object.toBe (__tests__/companionActions/taskCreate.test.tsx:907:49)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 17 skipped, 1 passed, 21 total
+Snapshots:   0 total
+Time:        2.701 s, estimated 6 s
+Ran all test suites matching /__tests__\/companionActions\/taskCreate.test.tsx/i with tests matching "Retry of an approved draft".
+Test results written to: ../DOCS/companion-actions/evidence/363/corrections-r1/mobile-f1-red.json
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

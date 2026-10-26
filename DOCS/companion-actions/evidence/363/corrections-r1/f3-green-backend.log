@@ -1,0 +1,19 @@
+running 2 tests from ./review363_history_test.ts
+historical create receipt preserves the reviewed title after a later rename ...
+------- output -------
+{"createdTitle":"Set up phone service","currentTitle":"Find a family doctor","historicalReceiptTitle":"Set up phone service","current":false}
+----- output end -----
+historical create receipt preserves the reviewed title after a later rename ... ok (328ms)
+cleanup ... ok (2ms)
+
+ok | 2 passed | 0 failed (334ms)
+
+running 4 tests from ./receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... ok (264ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... ok (233ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... ok (264ms)
+cleanup ... ok (3ms)
+
+ok | 4 passed | 0 failed (770ms)
+
+exit=0 (deno summary above; PIPESTATUS not captured)

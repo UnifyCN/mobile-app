@@ -1,0 +1,255 @@
+{
+  "results": [
+    {
+      "name": "control: a shared loading-delayed line is hidden at first (the CSS is live)",
+      "ok": true,
+      "detail": {
+        "text": "Loading control",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": false
+      }
+    },
+    {
+      "name": "command card: \"adding\" waits for the shared delay",
+      "ok": true,
+      "detail": {
+        "text": "Adding “Set up phone service” to Checklist…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": true
+      }
+    },
+    {
+      "name": "command card: \"adding\" is in a status region from the start",
+      "ok": true,
+      "detail": {
+        "text": "Adding “Set up phone service” to Checklist…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": true
+      }
+    },
+    {
+      "name": "draft card: its \"checking\" status waits for the shared delay",
+      "ok": true,
+      "detail": {
+        "text": "Checking whether the change saved…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": false
+      }
+    },
+    {
+      "name": "draft card: the draft's own title shows at once",
+      "ok": true,
+      "detail": {
+        "text": "Set up phone service",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": false
+      }
+    },
+    {
+      "name": "after the delay: the control and both loading lines show",
+      "ok": true,
+      "detail": [
+        {
+          "text": "Loading control",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": false
+        },
+        {
+          "text": "Adding “Set up phone service” to Checklist…",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": true
+        },
+        {
+          "text": "Checking whether the change saved…",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": false
+        }
+      ]
+    },
+    {
+      "name": "result: the saved receipt shows at once, not delayed",
+      "ok": true,
+      "detail": {
+        "text": "Added to Checklist: Set up phone service",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": true
+      }
+    },
+    {
+      "name": "error: a refusal shows at once, not delayed",
+      "ok": true,
+      "detail": {
+        "text": "Could not save. Nothing changed.",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": true
+      }
+    },
+    {
+      "name": "control (reduced motion): a shared loading-delayed line is hidden at first (the CSS is live)",
+      "ok": true,
+      "detail": {
+        "text": "Loading control",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": false
+      }
+    },
+    {
+      "name": "command card (reduced motion): \"adding\" waits for the shared delay",
+      "ok": true,
+      "detail": {
+        "text": "Adding “Set up phone service” to Checklist…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": true
+      }
+    },
+    {
+      "name": "command card (reduced motion): \"adding\" is in a status region from the start",
+      "ok": true,
+      "detail": {
+        "text": "Adding “Set up phone service” to Checklist…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": true
+      }
+    },
+    {
+      "name": "draft card (reduced motion): its \"checking\" status waits for the shared delay",
+      "ok": true,
+      "detail": {
+        "text": "Checking whether the change saved…",
+        "present": true,
+        "opacity": 0,
+        "animated": {
+          "name": "loading-appear",
+          "delay": "0.3s"
+        },
+        "status": false
+      }
+    },
+    {
+      "name": "draft card (reduced motion): the draft's own title shows at once",
+      "ok": true,
+      "detail": {
+        "text": "Set up phone service",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": false
+      }
+    },
+    {
+      "name": "after the delay (reduced motion): the control and both loading lines show",
+      "ok": true,
+      "detail": [
+        {
+          "text": "Loading control",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": false
+        },
+        {
+          "text": "Adding “Set up phone service” to Checklist…",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": true
+        },
+        {
+          "text": "Checking whether the change saved…",
+          "present": true,
+          "opacity": 1,
+          "animated": {
+            "name": "loading-appear",
+            "delay": "0.3s"
+          },
+          "status": false
+        }
+      ]
+    },
+    {
+      "name": "result (reduced motion): the saved receipt shows at once, not delayed",
+      "ok": true,
+      "detail": {
+        "text": "Added to Checklist: Set up phone service",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": true
+      }
+    },
+    {
+      "name": "error (reduced motion): a refusal shows at once, not delayed",
+      "ok": true,
+      "detail": {
+        "text": "Could not save. Nothing changed.",
+        "present": true,
+        "opacity": 1,
+        "animated": null,
+        "status": true
+      }
+    }
+  ],
+  "errors": []
+}
