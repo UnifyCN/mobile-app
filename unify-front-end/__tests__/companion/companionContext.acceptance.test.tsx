@@ -23,6 +23,7 @@ import provinceConflict from './fixtures/rag-query-context-province-conflict.jso
 import unavailable from './fixtures/rag-query-context-unavailable.json';
 
 import { useSendMessage } from '@/hooks/companion/useSendMessage';
+import { accountSnapshot } from '@/services/account/accountSession';
 import { useConversationMessages } from '@/hooks/companion/useConversationMessages';
 import { formatMessagesForUI } from '@/helpers/companion/messageHelpers';
 import { MessageWithSources } from '@/components/companion/MessageWithSources';
@@ -269,6 +270,8 @@ async function ask(events: StreamEvent[]) {
   const gate = new Promise<void>(resolve => (release = resolve));
   mockFetch.mockResolvedValueOnce(sseResponse(events, gate));
   renderConversation();
+  // The Companion screen sends only once the session names the account (#361).
+  await waitFor(() => expect(accountSnapshot().accountId).toBe('user-vancouver'));
   let sending!: Promise<void>;
   act(() => {
     sending = send.sendMessage(QUESTION);

@@ -5,6 +5,7 @@ import {
   CreateConversationParams,
 } from '@/services/companion/createConversation';
 import { CONVERSATIONS_ROOT } from '@/hooks/companion/conversationKeys';
+import { isAccountChange } from '@/services/account/accountSession';
 
 export const useCreateConversation = () => {
   const queryClient = useQueryClient();
@@ -12,7 +13,7 @@ export const useCreateConversation = () => {
   return useMutation<
     CreateConversationResponse,
     Error,
-    CreateConversationParams | undefined
+    CreateConversationParams
   >({
     mutationFn: params => createConversation(params),
     onSuccess: () => {
@@ -22,6 +23,7 @@ export const useCreateConversation = () => {
       });
     },
     onError: error => {
+      if (isAccountChange(error)) return;
       console.error('Failed to create conversation:', error);
     },
   });

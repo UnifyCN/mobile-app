@@ -4,13 +4,17 @@ import {
   SaveMessageParams,
 } from '@/services/companion/saveMessage';
 import { ConversationMessage } from '@/services/companion/getConversationMessages';
-import { accountSnapshot } from '@/services/account/accountSession';
+import {
+  stillOwned,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 import {
   CONVERSATIONS_ROOT,
   conversationMessagesKey,
 } from '@/hooks/companion/conversationKeys';
 
 interface SaveMessageContext {
+  owner: AccountSnapshot;
   previousMessages: ConversationMessage[] | undefined;
   /** The thread entry of the account that saved the message. */
   queryKey: ReturnType<typeof conversationMessagesKey>;
@@ -33,13 +37,18 @@ export const useSaveMessage = () => {
     mutationFn: (params: SaveMessageParams) => saveMessage(params),
     onMutate: async variables => {
       // The account that sends the message owns its optimistic row and every
-      // later cache write of this save, even if another account signs in.
+      // later cache write of this save. Once another account signs in (or the
+      // session is unknown), this save writes nothing more to the cache: its
+      // entries were cleared with that account and must not come back.
+      const { owner } = variables;
       const queryKey = conversationMessagesKey(
-        accountSnapshot().accountId,
+        owner.accountId,
         variables.conversationIdentifier
       );
 
       await queryClient.cancelQueries({ queryKey });
+      if (!stillOwned(owner))
+        return { owner, previousMessages: undefined, queryKey };
 
       const previousMessages =
         queryClient.getQueryData<ConversationMessage[]>(queryKey);
@@ -59,10 +68,11 @@ export const useSaveMessage = () => {
         optimisticMessage,
       ]);
 
-      return { previousMessages, queryKey };
+      return { owner, previousMessages, queryKey };
     },
     onSuccess: (_data, _variables, context) => {
-      if (context) queryClient.invalidateQueries({ queryKey: context.queryKey });
+      if (!context || !stillOwned(context.owner)) return;
+      queryClient.invalidateQueries({ queryKey: context.queryKey });
 
       // Keep conversation list fresh (updated_at/title changes)
       queryClient.invalidateQueries({
@@ -70,8 +80,8 @@ export const useSaveMessage = () => {
       });
     },
     onError: (error, _variables, context) => {
-      if (context)
-        queryClient.setQueryData(context.queryKey, context.previousMessages);
+      if (!context || !stillOwned(context.owner)) return;
+      queryClient.setQueryData(context.queryKey, context.previousMessages);
 
       queryClient.invalidateQueries({
         queryKey: [CONVERSATIONS_ROOT],

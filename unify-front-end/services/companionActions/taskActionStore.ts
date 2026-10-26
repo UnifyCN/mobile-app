@@ -194,13 +194,13 @@ export class TaskActionStore {
   private async run(taskRef: string, write: PendingWrite) {
     this.set(taskRef, { phase: 'saving', write });
     const action = this.actionOf(write);
+    // Every request of one operation, its lookup included, goes through the
+    // client it started with, so it stays bound to that client's account.
+    const { client } = this.deps;
     const result: ApplyResult | UndoResult =
       write.kind === 'undo'
-        ? await this.deps.client.undo(
-            write.operationId,
-            write.receiptOperationId!
-          )
-        : await this.deps.client.apply(
+        ? await client.undo(write.operationId, write.receiptOperationId!)
+        : await client.apply(
             write.operationId,
             write.operation!,
             write.authorization
@@ -244,7 +244,7 @@ export class TaskActionStore {
       case 'unknown':
       case 'in_flight':
         report('unknown');
-        await this.lookup(taskRef, write);
+        await this.lookup(taskRef, write, client);
         return;
       case 'unavailable':
         this.set(taskRef, { phase: 'unavailable' });
@@ -265,11 +265,13 @@ export class TaskActionStore {
     }
   }
 
-  private async lookup(taskRef: string, write: PendingWrite) {
+  private async lookup(
+    taskRef: string,
+    write: PendingWrite,
+    client = this.deps.client
+  ) {
     this.set(taskRef, { phase: 'checking', write });
-    const result: StatusResult = await this.deps.client.status(
-      write.operationId
-    );
+    const result: StatusResult = await client.status(write.operationId);
     const report = (outcome: TaskActionResultEvent['outcome']) =>
       this.deps.onResult?.({ action: 'lookup', outcome });
     switch (result.kind) {

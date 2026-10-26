@@ -103,6 +103,9 @@ export const useSendMessage = ({
     };
 
     try {
+      // Unknown ownership is not permission: nothing is sent until the
+      // session names the account (the screen keeps the text until then).
+      ensureOwned();
       let conversationIdToUse = currentConversationId;
       const isNewConversation = !currentConversationId;
 
@@ -111,6 +114,7 @@ export const useSendMessage = ({
         try {
           const newConversation = await createConversation.mutateAsync({
             firstMessage: messageText,
+            owner,
           });
           ensureOwned();
           conversationIdToUse = newConversation.conversation_identifier;
@@ -146,6 +150,7 @@ export const useSendMessage = ({
           role: 'user',
           content: messageText,
           clientId: optimisticClientId,
+          owner,
         });
         userMessagePersisted = true;
       } catch (error) {
@@ -224,7 +229,8 @@ export const useSendMessage = ({
               streamFailure = err;
               finishOnce();
             },
-          }
+          },
+          owner
         ).catch(err => {
           streamFailure =
             err instanceof Error ? err : new Error(String(err));
@@ -279,6 +285,7 @@ export const useSendMessage = ({
           // Saved with the answer so a reopened conversation shows the same
           // sources and context. Never sent to analytics.
           companionContext: savableCompanionContext(metadata?.context),
+          owner,
         });
       } catch (error) {
         console.error('Failed to save bot message:', error);

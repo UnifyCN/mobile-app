@@ -12,6 +12,11 @@ import { classifyRagQueryError } from '@/helpers/companion/ragQueryErrors';
 import i18n from '@/i18n';
 import { resolveAiResponseLanguage } from '@/utils/aiLanguage';
 import { withAppPlatform } from '@/utils/appPlatform';
+import {
+  AccountChangedError,
+  stillOwned,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 
 // Re-export the typed errors so existing `from '@/utils/gemini'` imports keep
 // working. The definitions live in a dependency-free module so the classifier
@@ -88,7 +93,9 @@ export const streamGeminiAPI = async (
   prompt: string,
   conversationIdentifier: string | undefined,
   messages: ConversationMessage[] | undefined,
-  callbacks: StreamCallbacks
+  callbacks: StreamCallbacks,
+  /** The account that asks (mobile-app#361): no request is made for another. */
+  owner: AccountSnapshot
 ): Promise<void> => {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     callbacks.onError(
@@ -108,6 +115,10 @@ export const streamGeminiAPI = async (
     const {
       data: { session },
     } = await supabase.auth.getSession();
+    if (!stillOwned(owner) || session?.user.id !== owner.accountId) {
+      callbacks.onError(new AccountChangedError());
+      return;
+    }
     const accessToken = session?.access_token;
     if (!accessToken) {
       callbacks.onError(new Error('Not authenticated — no Supabase session'));

@@ -157,7 +157,10 @@ export default function CompanionScreen() {
   // another account signs in (or this one signs out), drop them before the next
   // render, so the new account never sees them. A token refresh keeps them.
   // Pending sends check the same account epoch before they write a result.
-  const { epoch: accountEpoch } = useAccountSnapshot();
+  const { accountId, epoch: accountEpoch } = useAccountSnapshot();
+  // Until the session names the account, a send has no owner: keep the text
+  // and send nothing (unknown ownership is not permission).
+  const accountKnown = typeof accountId === 'string';
   const [composerEpoch, setComposerEpoch] = useState(accountEpoch);
   if (accountEpoch !== composerEpoch) {
     setComposerEpoch(accountEpoch);
@@ -256,11 +259,8 @@ export default function CompanionScreen() {
   useCompanionReviewPrompt(usage?.message_count);
   const messagesLeft = getMessagesLeft(messageCount, MESSAGE_LIMIT);
   const canSend = canSendMessage(isPremium, messagesLeft);
-  const sendButtonDisabled = isSendButtonDisabled(
-    inputText,
-    isLoading,
-    canSend
-  );
+  const sendButtonDisabled =
+    isSendButtonDisabled(inputText, isLoading, canSend) || !accountKnown;
   // Render the in-flight streaming bot bubble at the bottom of the list while
   // tokens are arriving. Once the message is persisted, useSendMessage clears
   // streamingBotMessage and the saved copy from the React Query cache takes
@@ -356,7 +356,7 @@ export default function CompanionScreen() {
   const handleSendMessage = useCallback(
     async (messageText?: string, source?: CompanionInputSource) => {
       const textToSend = messageText || inputText.trim();
-      if (!textToSend || isLoading || !canSend) return;
+      if (!textToSend || isLoading || !canSend || !accountKnown) return;
       const inputSource =
         source ?? resolveTypedInputSource(textToSend, inputOriginRef.current);
       inputOriginRef.current = null;
@@ -412,6 +412,7 @@ export default function CompanionScreen() {
       inputText,
       isLoading,
       canSend,
+      accountKnown,
       sendMessage,
       currentConversationId,
       setOptimisticMessages,

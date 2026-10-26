@@ -1,4 +1,9 @@
 import { supabase } from '@/lib/supabase';
+import {
+  assertOwned,
+  isAccountChange,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 import { QueryType } from '@/types/chatbot';
 
 export interface ConversationMessage {
@@ -40,13 +45,16 @@ const MESSAGE_COLUMNS = `
       `;
 
 export const getConversationMessages = async (
-  conversationIdentifier: string
+  conversationIdentifier: string,
+  /** The account whose thread this is (mobile-app#361). */
+  owner: AccountSnapshot
 ): Promise<ConversationMessage[]> => {
   try {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) throw new Error('No authenticated user');
+    assertOwned(owner, user.id);
 
     // Use a join to fetch messages directly by conversation_identifier
     // Note: query_type and disclaimer columns are optional - only include if they exist in your DB
@@ -71,6 +79,8 @@ export const getConversationMessages = async (
 
     return (messages as unknown as ConversationMessage[] | null) || [];
   } catch (error) {
+    // Another account signed in: fail the read, never cache another thread here.
+    if (isAccountChange(error)) throw error;
     console.error('Error in getConversationMessages:', error);
     return [];
   }

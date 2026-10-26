@@ -11,7 +11,11 @@ import {
   type QueryClient,
 } from '@tanstack/react-query';
 import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys';
-import { useSessionAccountId } from '@/hooks/auth/useSessionAccountId';
+import {
+  useAccountSnapshot,
+  useSessionAccountId,
+} from '@/hooks/auth/useSessionAccountId';
+import { ownAccountWork } from '@/services/account/accountSession';
 import { clearOtherAccountsChecklistCache } from '@/utils/checklistTaskCache';
 import {
   CONVERSATIONS_ROOT,
@@ -22,10 +26,7 @@ import {
   buildTaskActionResultProperties,
   type TaskActionSurface,
 } from '@/services/companionActions/analytics';
-import type {
-  ReadResult,
-  TaskActionClient,
-} from '@/services/companionActions/client';
+import type { ReadResult } from '@/services/companionActions/client';
 import type { TaskProgress } from '@/services/companionActions/contract';
 import {
   clearTaskActionStores,
@@ -40,9 +41,6 @@ import { createMobileTaskActionClient } from '@/services/companionActions/transp
 export const TASK_PROGRESS_ROOT = 'companion-task-actions' as const;
 export const taskProgressKey = (userId: string | null) =>
   [TASK_PROGRESS_ROOT, userId] as const;
-
-let defaultClient: TaskActionClient | null = null;
-const activeClient = () => (defaultClient ??= createMobileTaskActionClient());
 
 /**
  * The signed-in account. Undefined until the session is read. Task progress is
@@ -87,7 +85,10 @@ export function useTaskProgress(): TaskProgressView {
     queryKey: taskProgressKey(userId ?? null),
     enabled: Boolean(userId),
     queryFn: async (): Promise<Exclude<ReadResult, { kind: 'unknown' }>> => {
-      const result = await activeClient().read();
+      // The read is made only as the account its entry belongs to.
+      const owner = ownAccountWork();
+      if (owner.accountId !== userId) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(owner).read();
       if (result.kind === 'unknown') throw new ReadFailed('unreachable');
       return result;
     },
@@ -171,13 +172,14 @@ function useTaskActionAccountScope(
 export function useTaskActionStore(
   surface: TaskActionSurface
 ): TaskActionStore | null {
-  const userId = useTaskActionAccount();
+  const { accountId: userId, epoch } = useAccountSnapshot();
   const queryClient = useQueryClient();
   const { trackCompanionActionResult } = useAnalytics();
   return useMemo(() => {
     if (!userId) return null;
     return taskActionStoreFor(userId, {
-      client: activeClient(),
+      // Its requests are made only while this account is signed in.
+      client: createMobileTaskActionClient({ accountId: userId, epoch }),
       newOperationId,
       onChanged: () => {
         void queryClient.invalidateQueries({
@@ -193,7 +195,7 @@ export function useTaskActionStore(
         if (props) trackCompanionActionResult(props);
       },
     });
-  }, [userId, queryClient, surface, trackCompanionActionResult]);
+  }, [userId, epoch, queryClient, surface, trackCompanionActionResult]);
 }
 
 const IDLE: TaskActionPhase = { phase: 'idle' };

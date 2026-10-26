@@ -78,8 +78,15 @@ export const accountSnapshot = (): AccountSnapshot => snapshot;
 /** Marks work as started for the current account. */
 export const ownAccountWork = (): AccountSnapshot => snapshot;
 
-/** True while the account that started `owner`'s work is still signed in. */
+/**
+ * True while the account that started `owner`'s work is the established
+ * signed-in account. Unknown ownership is not permission: work started before
+ * the session was read, or checked while a restarted session is still being
+ * read, is not owned, even when the same account comes back later.
+ */
 export const stillOwned = (owner: AccountSnapshot): boolean =>
+  typeof owner.accountId === 'string' &&
+  owner.accountId === snapshot.accountId &&
   owner.epoch === snapshot.epoch;
 
 /** Thrown to stop work whose account is no longer signed in. Never shown. */
@@ -89,3 +96,20 @@ export class AccountChangedError extends Error {
     this.name = 'AccountChangedError';
   }
 }
+
+/**
+ * Stops `owner`'s work before its next request or result unless its account is
+ * still the established signed-in one, and, when given, the authenticated user
+ * the request would be made as (`userId`) is that account.
+ */
+export function assertOwned(
+  owner: AccountSnapshot,
+  userId?: string | null
+): void {
+  if (!stillOwned(owner)) throw new AccountChangedError();
+  if (userId !== undefined && userId !== owner.accountId)
+    throw new AccountChangedError();
+}
+
+export const isAccountChange = (error: unknown): boolean =>
+  error instanceof AccountChangedError;
