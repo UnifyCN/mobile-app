@@ -1048,7 +1048,8 @@ $$;
 -- and then supersede the source's open job, which must never promote over the
 -- verified live content. The source row stays share-locked until the
 -- transaction ends, so a configuration change either waits for this write or
--- is seen by it. A changed or disabled source raises and changes nothing.
+-- is seen by it. A changed or disabled source, or metadata over the 16 KiB
+-- limit, raises and changes nothing.
 -- Returns false, changing no live row and no job, when the live chunks are not
 -- one generation of this content and model: the caller then opens the
 -- generation, and an equal open job keeps its checked vectors and debit.
@@ -1073,6 +1074,18 @@ declare
   v_job uuid;
   v_refreshed boolean;
 begin
+  -- The same metadata limit as a new generation, before any lock or write:
+  -- the document patch and each chunk group's metadata at most 16 KiB.
+  if octet_length(p_document_patch::text) > 16384
+     or exists (
+       select 1 from jsonb_array_elements(
+         case when jsonb_typeof(p_chunk_groups) = 'array'
+              then p_chunk_groups else '[]'::jsonb end
+       ) g
+        where octet_length(coalesce(g -> 'metadata', '{}'::jsonb)::text) > 16384
+     ) then
+    raise exception 'Generation input exceeds a limit';
+  end if;
   perform public.ingest_generation_lock_writer(
     p_source_id, p_token, p_embedding_model, p_contract, p_lease_seconds
   );

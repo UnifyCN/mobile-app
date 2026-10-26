@@ -364,7 +364,8 @@ async function fetchWithin<T>(
  * Unchanged content: one database transaction checks the fetched
  * configuration, refreshes the dates and, only when that refresh ran,
  * supersedes the source's open job (it holds other text and must never
- * promote over this verified version).
+ * promote over this verified version). Its metadata obeys the same limit as a
+ * new generation's, checked before the call.
  */
 async function refreshUnchanged(
   run: SourceRun,
@@ -373,6 +374,10 @@ async function refreshUnchanged(
   attempt: Attempt,
   input: { contentHash: string; documentPatch: Metadata; chunkGroups: ChunkMetadataGroup[] }
 ): Promise<boolean> {
+  assertMetadataLimits([
+    input.documentPatch,
+    ...input.chunkGroups.map(group => group.metadata),
+  ]);
   return await call(run, c =>
     deps.store.refreshUnchanged(
       {
@@ -626,16 +631,16 @@ function assertPayloadLimits(
   if (utf8Bytes(document.title) > MAX_CHUNK_TEXT_BYTES) {
     throw new ResourceLimitError('title size');
   }
-  if (
-    utf8Bytes(JSON.stringify(document.metadata)) > MAX_CHUNK_METADATA_BYTES ||
-    rows.some(
-      row => utf8Bytes(JSON.stringify(row.metadata)) > MAX_CHUNK_METADATA_BYTES
-    )
-  ) {
-    throw new ResourceLimitError('metadata size');
-  }
+  assertMetadataLimits([document.metadata, ...rows.map(row => row.metadata)]);
   if (utf8Bytes(JSON.stringify(rows)) > MAX_JOB_PAYLOAD_BYTES) {
     throw new ResourceLimitError('payload size');
+  }
+}
+
+/** Refuses, never truncates, a metadata value over its serialized size limit. */
+function assertMetadataLimits(values: Metadata[]): void {
+  if (values.some(value => utf8Bytes(JSON.stringify(value)) > MAX_CHUNK_METADATA_BYTES)) {
+    throw new ResourceLimitError('metadata size');
   }
 }
 

@@ -14,7 +14,19 @@ import { receipt } from '../functions/ingest-documents/lib/testSupport.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
 import { openQwenIngestDb } from './support/ingestDb.ts';
 import { QWEN, seedChunk } from './support/embeddingModels.ts';
-import { crawlLogs, live, unitVector } from './support/generationJobs.ts';
+import {
+  chunkRows,
+  claim,
+  configOf,
+  crawlLogs,
+  live,
+  open,
+  privateState,
+  reserve,
+  stage,
+  stageRows,
+  unitVector,
+} from './support/generationJobs.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
 
@@ -148,6 +160,104 @@ Deno.test('record metadata over 16 KiB fails before any request', async () => {
     const link = `https://www.canada.ca/en/news/${'a'.repeat(17_000)}.html`;
     const items = [item(1), item(2, { link })];
     await expectLimit(db, 'ircc_newsroom', () => newsroom(items), 'metadata size');
+  } finally {
+    await db.close();
+  }
+});
+
+/**
+ * A newsroom item published once, then an open 25-row job of other content
+ * with 20 checked rows and one reserved batch, under an ended lease.
+ */
+async function publishedWithCheckedJob(db: Db, published: Record<string, string>) {
+  const source = await sourceOf(db, 'ircc_newsroom');
+  const first = deps(db, () => newsroom([published]));
+  assertEquals((await ingestSource(source, first.deps)).status, 'success');
+  const token = await claim(db, source.id);
+  const config = await configOf(db, source.id);
+  const job = (await open(db, { source: source.id, token, config, rows: chunkRows(25) })).job_id;
+  const checked = await reserve(db, { job, token });
+  await stage(db, { request: checked.request_id, job, token, rows: stageRows(checked.rows) });
+  await reserve(db, { job, token });
+  await db.query(
+    `update public.crawl_source_leases set expires_at = now() - interval '1 second'
+      where crawl_source_id = $1`,
+    [source.id]
+  );
+  return { source, job };
+}
+
+async function chunkMetadataBytes(db: Db, url: string) {
+  return (
+    await rows<{ bytes: number }>(
+      db,
+      `select octet_length(kc.metadata::text)::int as bytes
+         from public.knowledge_chunks kc
+         join public.knowledge_documents kd on kd.id = kc.document_id
+        where kd.source_url = $1 order by kc.chunk_index`,
+      [url]
+    )
+  ).map(r => r.bytes);
+}
+
+// Falsifier: an equal-text refetch whose item address grows past 16 KiB skips
+// the limit on the unchanged path: it is reported skipped, its metadata is
+// written to the live chunk, or the checked private job is superseded.
+Deno.test('unchanged record metadata over 16 KiB fails and keeps live data and checked work', async () => {
+  const db = await openQwenIngestDb();
+  try {
+    const { source, job } = await publishedWithCheckedJob(db, item(1));
+    const liveBefore = await live(db, source.url);
+    const privateBefore = await privateState(db, job);
+    assertEquals(privateBefore.rows.filter(r => r.embedding !== null).length, 20);
+    const link = `https://www.canada.ca/en/news/${'a'.repeat(17_000)}.html`;
+    const run = deps(db, () => newsroom([item(1, { link })]));
+
+    const result = await ingestSource(source, run.deps);
+
+    assertEquals(result, {
+      source_id: source.id,
+      status: 'error',
+      error: 'Source input exceeds the metadata size limit',
+    });
+    assertEquals(run.sent, [], 'a provider request was sent');
+    assertEquals(
+      run.requests.filter(r => r.table === 'ingest_generation_refresh'),
+      [],
+      'the caller sent the oversized metadata to the database'
+    );
+    assertEquals(await live(db, source.url), liveBefore, 'live data changed');
+    assertEquals(await privateState(db, job), privateBefore, 'the private job changed');
+    assertEquals((await crawlLogs(db, source.id)).map(l => l.error_message), [
+      null,
+      'Source input exceeds the metadata size limit',
+    ]);
+  } finally {
+    await db.close();
+  }
+});
+
+// Control: unchanged metadata under the limit still refreshes the live chunk
+// in full and supersedes the obsolete private job, with no provider request.
+Deno.test('unchanged record metadata under 16 KiB still refreshes and supersedes', async () => {
+  const db = await openQwenIngestDb();
+  try {
+    const { source, job } = await publishedWithCheckedJob(db, item(1));
+    const link = `https://www.canada.ca/en/news/${'a'.repeat(16_000)}.html`;
+    const run = deps(db, () => newsroom([item(1, { link })]));
+
+    assertEquals(await ingestSource(source, run.deps), { source_id: source.id, status: 'skipped' });
+
+    assertEquals(run.sent, []);
+    const [bytes] = await chunkMetadataBytes(db, source.url);
+    assertEquals(bytes > 16_000 && bytes <= 16_384, true, `stored ${bytes} bytes`);
+    assertEquals((await live(db, source.url)).chunks[0].metadata, {
+      source: 'crawler',
+      fetched_at: NOW,
+      published_at: '2026-10-20',
+      source_url: link,
+    });
+    assertEquals((await privateState(db, job)).job[0].status, 'superseded');
   } finally {
     await db.close();
   }

@@ -266,6 +266,34 @@ export async function live(db: Db, url: string) {
   return { documents, chunks };
 }
 
+/** The job row, its checked rows and its reservations, for byte-equal comparisons. */
+export async function privateState(db: Db, job: unknown) {
+  return {
+    job: await rows(
+      db,
+      `select status, terminal_reason, closed_at is null as open, requests_reserved,
+              request_cap, operation_ids::text as operation_ids, generation_fingerprint
+         from public.knowledge_generation_jobs where id = $1`,
+      [job]
+    ),
+    rows: await rows(
+      db,
+      `select chunk_index, text_sha256, embedding::text as embedding, receipt_identity,
+              staged_by::text as staged_by
+         from public.knowledge_generation_rows where job_id = $1 order by chunk_index`,
+      [job]
+    ),
+    reservations: await rows(
+      db,
+      `select request_id::text as request_id, issuer_token::text as issuer_token,
+              chunk_indexes::text as chunk_indexes, outcome
+         from public.knowledge_generation_reservations where job_id = $1
+        order by created_at, request_id`,
+      [job]
+    ),
+  };
+}
+
 /** Every bound configuration field, changed one at a time on a record source. */
 export const CONFIG_CHANGES: Array<[string, string]> = [
   ['url', `url = url || '?moved'`],

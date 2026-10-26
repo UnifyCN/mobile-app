@@ -19,6 +19,7 @@ import {
   configOf,
   live,
   open,
+  privateState,
   reserve,
   type SourceConfig,
   sourceId,
@@ -31,7 +32,15 @@ const HASH = 'live-content-hash';
 const PATCH = { fetched_at: '2026-10-26T00:00:00.000Z', province: null };
 const GROUPS = [{ metadata: { fetched_at: '2026-10-26T00:00:00.000Z' }, indexes: null }];
 
-function refresh(db: Db, o: { source: number; token: string; config: SourceConfig }) {
+interface RefreshInput {
+  patch?: Record<string, unknown>;
+  groups?: Array<{ metadata: Record<string, unknown>; indexes: number[] | null }>;
+}
+
+function refresh(
+  db: Db,
+  o: { source: number; token: string; config: SourceConfig } & RefreshInput
+) {
   return call<boolean>(
     db,
     `public.ingest_generation_refresh(
@@ -46,8 +55,8 @@ function refresh(db: Db, o: { source: number; token: string; config: SourceConfi
       QWEN,
       CONTRACT,
       HASH,
-      JSON.stringify(PATCH),
-      JSON.stringify(GROUPS),
+      JSON.stringify(o.patch ?? PATCH),
+      JSON.stringify(o.groups ?? GROUPS),
     ]
   );
 }
@@ -162,34 +171,6 @@ Deno.test('the refresh needs the live lease and the serving contract', async () 
   }
 });
 
-/** The job row, its checked rows and its reservations, for byte-equal comparisons. */
-async function privateState(db: Db, job: unknown) {
-  return {
-    job: await rows(
-      db,
-      `select status, terminal_reason, closed_at is null as open, requests_reserved,
-              request_cap, operation_ids::text as operation_ids, generation_fingerprint
-         from public.knowledge_generation_jobs where id = $1`,
-      [job]
-    ),
-    rows: await rows(
-      db,
-      `select chunk_index, text_sha256, embedding::text as embedding, receipt_identity,
-              staged_by::text as staged_by
-         from public.knowledge_generation_rows where job_id = $1 order by chunk_index`,
-      [job]
-    ),
-    reservations: await rows(
-      db,
-      `select request_id::text as request_id, issuer_token::text as issuer_token,
-              chunk_indexes::text as chunk_indexes, outcome
-         from public.knowledge_generation_reservations where job_id = $1
-        order by created_at, request_id`,
-      [job]
-    ),
-  };
-}
-
 /** A 25-row job with 20 checked rows and one reserved, unstaged batch of 5. */
 async function partialJob(db: Db, o: { id: number; token: string; config: SourceConfig }) {
   const job = (await open(db, { source: o.id, token: o.token, config: o.config, rows: chunkRows(25) }))
@@ -284,6 +265,87 @@ Deno.test('a refresh that raises after the job lock changes no job and no live r
     );
     assertEquals(await privateState(db, job), before);
     assertEquals(await live(db, config.url), liveBefore);
+  } finally {
+    await db.close();
+  }
+});
+
+/** Metadata whose jsonb text is exactly `bytes` UTF-8 bytes: {"source_url": "..."}. */
+function metadataOf(bytes: number, unit = 'a') {
+  const pad = bytes - '{"source_url": ""}'.length;
+  return { source_url: unit.repeat(pad / new TextEncoder().encode(unit).byteLength) };
+}
+
+async function storedChunkBytes(db: Db, url: string) {
+  const [row] = await rows<{ bytes: number }>(
+    db,
+    `select octet_length(kc.metadata::text)::int as bytes from public.knowledge_chunks kc
+       join public.knowledge_documents kd on kd.id = kc.document_id where kd.source_url = $1`,
+    [url]
+  );
+  return row.bytes;
+}
+
+// Falsifier: SQL forwards a metadata value over 16 KiB (counted in UTF-8 bytes,
+// not characters) to the live refresh, or the refusal leaves a partial write,
+// supersedes the checked job or changes its rows, reservations or debit.
+const OVERSIZED: Array<[string, RefreshInput]> = [
+  ['a chunk group (2-byte characters)', { groups: [{ metadata: metadataOf(16_386, 'é'), indexes: null }] }],
+  [
+    'a later chunk group',
+    {
+      groups: [
+        { metadata: { fetched_at: '2026-10-26T00:00:00.000Z' }, indexes: [0] },
+        { metadata: metadataOf(16_385), indexes: [] },
+      ],
+    },
+  ],
+  ['the document patch', { patch: metadataOf(16_385) }],
+];
+for (const [name, input] of OVERSIZED) {
+  Deno.test(`SQL refuses ${name} over 16 KiB and changes nothing`, async () => {
+    const db = await openQwenIngestDb();
+    try {
+      // setup's 3-row job is superseded by the different 25-row open.
+      const { id, config, token } = await setup(db);
+      const { job } = await partialJob(db, { id, config, token });
+      const liveBefore = await live(db, config.url);
+      const before = await privateState(db, job);
+      assertEquals(before.rows.filter(r => r.embedding !== null).length, 20);
+
+      await assertRejects(
+        () => refresh(db, { source: id, token, config, ...input }),
+        Error,
+        'Generation input exceeds a limit'
+      );
+      assertEquals(await privateState(db, job), before, 'the private job changed');
+      assertEquals(await live(db, config.url), liveBefore, 'live data changed');
+    } finally {
+      await db.close();
+    }
+  });
+}
+
+// Control: a value of exactly 16 KiB is within the limit and is written whole.
+Deno.test('SQL accepts chunk metadata and a document patch of exactly 16 KiB', async () => {
+  const db = await openQwenIngestDb();
+  try {
+    const { id, config, token, job } = await setup(db);
+    const metadata = metadataOf(16_384);
+
+    assertEquals(
+      await refresh(db, {
+        source: id,
+        token,
+        config,
+        patch: metadataOf(16_384),
+        groups: [{ metadata, indexes: null }],
+      }),
+      true
+    );
+    assertEquals(await storedChunkBytes(db, config.url), 16_384);
+    assertEquals((await live(db, config.url)).chunks[0].metadata, metadata);
+    assertEquals(await jobStatus(db, job), 'superseded');
   } finally {
     await db.close();
   }
