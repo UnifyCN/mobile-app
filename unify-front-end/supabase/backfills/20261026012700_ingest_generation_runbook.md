@@ -64,9 +64,17 @@ the private work.
 - `pending`: an open job; it writes no crawl_logs row. `stop_reason` is one of
   `work_deadline`, `source_budget`, `send_limit`, `provider_error`,
   `unknown_outcome`, `store_error`, `response_backstop`. Any count the call
-  cannot know is `null`.
+  cannot know is `null`. An open whose answer was lost and that the status
+  read did not find yet is pending with `job_id: null`, its `operation_id`
+  and `unknown_outcome: true`: it may still commit, so read it back by that
+  operation id.
 - `unstarted_source_ids`: selected but not started; they were not claimed or
   stamped and stay due.
+- HTTP 503 with `setup_complete: false`, `unstarted_source_ids: null` and no
+  results: the 110-second backstop passed while the request body was still
+  being read or the sources were being chosen. No source was started. A
+  cleanup of an incompatible job may have been in flight; it touches only
+  private rows.
 
 ## Unknown outcomes
 
@@ -94,8 +102,9 @@ block 2 of `20261026012600_ingest_generation_status.sql` with the `job_id`,
    executable by `service_role` only.
 3. Deploy the ingest-documents version that calls these functions. The earlier
    deployed version never calls them and keeps working until then.
-4. After each scheduled call, check the platform log (HTTP 200 under 110 s)
-   and blocks 1 and 4 of the status file.
+4. After each scheduled call, check the platform log (HTTP 200 under 110 s;
+   a 503 with `setup_complete: false` means the request setup stalled) and
+   blocks 1 and 4 of the status file.
 
 Revert: redeploy the earlier ingest-documents version. Open jobs stay inert;
 the earlier code's claim deletes only legacy staging, never job rows. Remove
