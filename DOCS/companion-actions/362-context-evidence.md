@@ -50,3 +50,27 @@ migration all live there with `rag-query`).
 - Server authorization, RLS and isolation are proven only in the web repo
   (controlled handler tests plus a local Supabase probe). The mobile tests stub
   the Supabase client.
+
+## Review corrections (2026-10-25)
+
+Branch `t3/companion-362-review-corrections`, from candidate `838d7da2`.
+Web branch `fix/companion-context-362-corrections` holds the server and web
+corrections and their evidence (`docs/companion-context-362.md`, "Review
+corrections").
+
+- Spec review r1 finding 6: the sheet's Close control was 44 x 44 with no
+  hitSlop, below the Android 48dp minimum. Close is now 48 x 48 and each
+  source link is at least 48 tall. The new test in
+  `__tests__/companion/companionContextSheet.test.tsx` checks the declared
+  size plus hitSlop of the context-line control, Close and both links. It was
+  written first and failed on `838d7da2` (Close height 44). Now 8/8 pass, and
+  the acceptance suite 9/9. This is the declared layout in Jest, not a
+  measured target on a device.
+- The server corrections (denied-conversation details, Checklist province
+  rule, planning questions in every supported language) change what
+  rag-query returns, not the mobile client. The pinned fixtures did not
+  change: the web handler test still matches them.
+- The web drawer findings (account change, access loss, focus after an
+  update) do not apply to the mobile sheet in the same way: each sheet
+  belongs to one answer and unmounts with it. No mobile account-change or
+  native focus test was run; this stays unproven on a device.
