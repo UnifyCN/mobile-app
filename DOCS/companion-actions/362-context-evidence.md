@@ -74,3 +74,15 @@ corrections").
   update) do not apply to the mobile sheet in the same way: each sheet
   belongs to one answer and unmounts with it. No mobile account-change or
   native focus test was run; this stays unproven on a device.
+
+## Review corrections, round 2 (2026-10-25)
+
+Spec review r2 findings are in the web branch (`docs/companion-context-362.md`,
+"Review corrections, round 2"): rag-query uses earlier turns only when the
+conversation read succeeds, reads stated places and arrival times in every
+supported language and script, and the web drawer makes the page behind it
+inert. No mobile source changed in round 2. The mobile client sends the
+conversation id it created, so the stricter server rule keeps its history.
+The pinned rag-query fixtures did not change (the web handler test still
+matches them). The mobile sheet's background behaviour for screen readers
+(`accessibilityViewIsModal`) was not measured on a device.
