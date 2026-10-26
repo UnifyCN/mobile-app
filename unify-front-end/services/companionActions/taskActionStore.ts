@@ -1,0 +1,329 @@
+/**
+ * Save, lookup and Undo flow for one task's explicit controls (mobile-app#361).
+ * Framework-free so mobile and web share the same rules (mirror of the web app's
+ * lib/companionActions/taskActionStore.ts):
+ *   - one operation identity per user intent, reused for every retry and lookup;
+ *   - an outcome that may hide a committed write is looked up, never retried blind;
+ *   - "pending" and "lookup failed" stay visibly unresolved and allow only another lookup;
+ *   - "not applied" allows a retry with the same identity; the server re-checks it;
+ *   - Undo names one receipt; a conflict keeps the newer edit and offers a reviewed change.
+ * State lives per account and per task, outside any panel, so closing a panel does not
+ * cancel or forget a write. Sign-out or an account change drops it (clearTaskActionStores).
+ */
+import type {
+  ApplyResult,
+  StatusResult,
+  TaskActionClient,
+  UndoResult,
+} from './client';
+import type {
+  Authorization,
+  CompensatingProposal,
+  CurrentTaskValue,
+  SetStateOperation,
+  TaskReceipt,
+  TaskState,
+} from './contract';
+
+export interface PendingWrite {
+  operationId: string;
+  kind: 'apply' | 'undo';
+  operation?: SetStateOperation;
+  authorization?: Authorization;
+  receiptOperationId?: string;
+}
+
+export type TaskActionPhase =
+  | { phase: 'idle' }
+  | { phase: 'saving'; write: PendingWrite }
+  | { phase: 'saved'; receipt: TaskReceipt }
+  | { phase: 'refused'; reason: string }
+  | { phase: 'conflict' }
+  | { phase: 'checking'; write: PendingWrite }
+  | { phase: 'pending'; write: PendingWrite }
+  | { phase: 'lookup_failed'; write: PendingWrite }
+  | { phase: 'not_applied'; write: PendingWrite }
+  | {
+      phase: 'undo_review';
+      receiptOperationId: string;
+      current: CurrentTaskValue | null;
+      proposal: CompensatingProposal;
+    }
+  | { phase: 'already_undone' }
+  | { phase: 'unavailable' }
+  | { phase: 'signed_out' };
+
+/** Allowlisted, content-free result for analytics. */
+export interface TaskActionResultEvent {
+  action: 'set_state' | 'undo' | 'approve_compensation' | 'lookup';
+  outcome:
+    | 'applied'
+    | 'replayed'
+    | 'conflict'
+    | 'undo_conflict'
+    | 'already_undone'
+    | 'refused'
+    | 'unknown'
+    | 'pending'
+    | 'not_applied'
+    | 'lookup_failed'
+    | 'unavailable';
+  toState?: TaskState;
+}
+
+export interface TaskActionStoreDeps {
+  client: TaskActionClient;
+  newOperationId: () => string;
+  /** Called after anything that may have changed saved progress: re-read it. */
+  onChanged: () => void;
+  onResult?: (event: TaskActionResultEvent) => void;
+}
+
+type Listener = () => void;
+const IDLE: TaskActionPhase = { phase: 'idle' };
+const UNRESOLVED = new Set([
+  'saving',
+  'checking',
+  'pending',
+  'lookup_failed',
+  'not_applied',
+]);
+
+export function isUnresolved(p: TaskActionPhase): boolean {
+  return UNRESOLVED.has(p.phase);
+}
+
+export class TaskActionStore {
+  private phases = new Map<string, TaskActionPhase>();
+  private drafts = new Map<string, string>();
+  private listeners = new Set<Listener>();
+
+  constructor(private deps: TaskActionStoreDeps) {}
+
+  /** Swap the transport-level dependencies without losing unresolved writes. */
+  setDeps(deps: TaskActionStoreDeps) {
+    this.deps = deps;
+  }
+
+  subscribe = (listener: Listener) => {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  };
+
+  get(taskRef: string): TaskActionPhase {
+    return this.phases.get(taskRef) ?? IDLE;
+  }
+
+  /** Unsaved waiting-reason text. Kept outside the panel so close, reopen and resize keep it. */
+  draft(taskRef: string): string | undefined {
+    return this.drafts.get(taskRef);
+  }
+
+  setDraft(taskRef: string, text: string | undefined) {
+    if (text === undefined) this.drafts.delete(taskRef);
+    else this.drafts.set(taskRef, text);
+    for (const l of this.listeners) l();
+  }
+
+  private set(taskRef: string, phase: TaskActionPhase) {
+    this.phases.set(taskRef, phase);
+    for (const l of this.listeners) l();
+  }
+
+  /** Clear a finished message (saved, refused, conflict). Never clears an unresolved write. */
+  dismiss(taskRef: string) {
+    if (!isUnresolved(this.get(taskRef))) this.set(taskRef, IDLE);
+  }
+
+  setState(operation: SetStateOperation) {
+    if (isUnresolved(this.get(operation.task_ref))) return Promise.resolve();
+    return this.run(operation.task_ref, {
+      operationId: this.deps.newOperationId(),
+      kind: 'apply',
+      operation,
+    });
+  }
+
+  undo(taskRef: string, receiptOperationId: string) {
+    if (isUnresolved(this.get(taskRef))) return Promise.resolve();
+    return this.run(taskRef, {
+      operationId: this.deps.newOperationId(),
+      kind: 'undo',
+      receiptOperationId,
+    });
+  }
+
+  /** Approve the reviewed compensating change of a conflicting Undo. */
+  approveCompensation(taskRef: string) {
+    const p = this.get(taskRef);
+    if (p.phase !== 'undo_review') return Promise.resolve();
+    const op = p.proposal.operations[0];
+    return this.run(taskRef, {
+      operationId: this.deps.newOperationId(),
+      kind: 'apply',
+      operation: op,
+      authorization: {
+        kind: 'approved_proposal',
+        proposal_id: p.proposal.proposalId,
+        proposal_revision: p.proposal.proposalRevision,
+      },
+    });
+  }
+
+  /** Same identity, same payload. Allowed only after a confirmed "not applied". */
+  retry(taskRef: string) {
+    const p = this.get(taskRef);
+    if (p.phase !== 'not_applied') return Promise.resolve();
+    return this.run(taskRef, p.write);
+  }
+
+  checkAgain(taskRef: string) {
+    const p = this.get(taskRef);
+    if (p.phase !== 'pending' && p.phase !== 'lookup_failed')
+      return Promise.resolve();
+    return this.lookup(taskRef, p.write);
+  }
+
+  private actionOf(write: PendingWrite): TaskActionResultEvent['action'] {
+    if (write.kind === 'undo') return 'undo';
+    return write.authorization?.kind === 'approved_proposal'
+      ? 'approve_compensation'
+      : 'set_state';
+  }
+
+  private async run(taskRef: string, write: PendingWrite) {
+    this.set(taskRef, { phase: 'saving', write });
+    const action = this.actionOf(write);
+    const result: ApplyResult | UndoResult =
+      write.kind === 'undo'
+        ? await this.deps.client.undo(
+            write.operationId,
+            write.receiptOperationId!
+          )
+        : await this.deps.client.apply(
+            write.operationId,
+            write.operation!,
+            write.authorization
+          );
+    const report = (outcome: TaskActionResultEvent['outcome']) =>
+      this.deps.onResult?.({
+        action,
+        outcome,
+        toState: write.operation?.state,
+      });
+
+    switch (result.kind) {
+      case 'applied':
+        this.set(taskRef, { phase: 'saved', receipt: result.receipt });
+        report(result.replayed ? 'replayed' : 'applied');
+        this.deps.onChanged();
+        return;
+      case 'conflict':
+        this.set(taskRef, { phase: 'conflict' });
+        report('conflict');
+        this.deps.onChanged();
+        return;
+      case 'undo_conflict':
+        this.set(taskRef, {
+          phase: 'undo_review',
+          receiptOperationId: write.receiptOperationId!,
+          current:
+            result.current.find(c => c.taskRef === taskRef) ??
+            result.current[0] ??
+            null,
+          proposal: result.proposal,
+        });
+        report('undo_conflict');
+        this.deps.onChanged();
+        return;
+      case 'already_undone':
+        this.set(taskRef, { phase: 'already_undone' });
+        report('already_undone');
+        this.deps.onChanged();
+        return;
+      case 'unknown':
+      case 'in_flight':
+        report('unknown');
+        await this.lookup(taskRef, write);
+        return;
+      case 'unavailable':
+        this.set(taskRef, { phase: 'unavailable' });
+        report('unavailable');
+        return;
+      case 'unauthorized':
+        this.set(taskRef, { phase: 'signed_out' });
+        report('refused');
+        return;
+      case 'refused':
+        this.set(taskRef, {
+          phase: 'refused',
+          reason: result.reason ?? result.error,
+        });
+        report('refused');
+        this.deps.onChanged();
+        return;
+    }
+  }
+
+  private async lookup(taskRef: string, write: PendingWrite) {
+    this.set(taskRef, { phase: 'checking', write });
+    const result: StatusResult = await this.deps.client.status(
+      write.operationId
+    );
+    const report = (outcome: TaskActionResultEvent['outcome']) =>
+      this.deps.onResult?.({ action: 'lookup', outcome });
+    switch (result.kind) {
+      case 'applied':
+        this.set(taskRef, { phase: 'saved', receipt: result.receipt });
+        report('applied');
+        this.deps.onChanged();
+        return;
+      case 'pending':
+        this.set(taskRef, { phase: 'pending', write });
+        report('pending');
+        return;
+      case 'not_applied':
+        this.set(taskRef, { phase: 'not_applied', write });
+        report('not_applied');
+        this.deps.onChanged();
+        return;
+      case 'lookup_failed':
+        this.set(taskRef, { phase: 'lookup_failed', write });
+        report('lookup_failed');
+        return;
+      case 'unavailable':
+        // The gate closed after the write was sent: the outcome is still unknown.
+        this.set(taskRef, { phase: 'lookup_failed', write });
+        report('unavailable');
+        return;
+      case 'unauthorized':
+        this.set(taskRef, { phase: 'signed_out' });
+        report('lookup_failed');
+        return;
+    }
+  }
+}
+
+const stores = new Map<string, TaskActionStore>();
+
+/** The store of one signed-in account. Another account never sees it. */
+export function taskActionStoreFor(
+  accountId: string,
+  deps: TaskActionStoreDeps
+): TaskActionStore {
+  let store = stores.get(accountId);
+  if (!store) {
+    store = new TaskActionStore(deps);
+    stores.set(accountId, store);
+  } else {
+    store.setDeps(deps);
+  }
+  return store;
+}
+
+/** Drop every account's unresolved writes and messages except `keepAccountId`. */
+export function clearTaskActionStores(keepAccountId?: string | null) {
+  for (const id of [...stores.keys()]) {
+    if (id !== keepAccountId) stores.delete(id);
+  }
+}

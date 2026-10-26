@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  ScrollView,
+  I18nManager,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Animated, {
@@ -35,6 +37,7 @@ import {
 import { normalizeChecklistPriority } from '@/utils/checklistOrder';
 import { formatRelativeTime } from '@/helpers/dateHelpers';
 import { LinkedDescription } from './LinkedDescription';
+import KeyboardAvoidingView from '@/components/common/KeyboardAvoidingView';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const ANIM_IN_MS = 280;
@@ -51,6 +54,13 @@ interface TaskDetailModalProps {
   isCustomTask?: boolean;
   onDeleteCustomTask?: () => void;
   onRemoveSuggestedTask?: () => void;
+  /**
+   * Task progress controls (mobile-app#361). When set, the sheet offers "Track
+   * progress", which shows them in this same sheet instead of a second modal.
+   */
+  progressPanel?: React.ReactNode;
+  /** Saved state label shown next to "Track progress", e.g. "Waiting". */
+  progressSummary?: string | null;
 }
 
 export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
@@ -62,8 +72,11 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   isCustomTask = false,
   onDeleteCustomTask,
   onRemoveSuggestedTask,
+  progressPanel,
+  progressSummary,
 }) => {
   const [rendered, setRendered] = useState(visible);
+  const [mode, setMode] = useState<'detail' | 'progress'>('detail');
   const translateY = useSharedValue(SCREEN_HEIGHT);
   const backdropProgress = useSharedValue(0);
   const insets = useSafeAreaInsets();
@@ -98,6 +111,11 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
       );
     }
   }, [visible, translateY, backdropProgress]);
+
+  // Each opening starts on the task details.
+  useEffect(() => {
+    if (visible) setMode('detail');
+  }, [visible]);
 
   const panGesture = Gesture.Pan()
     .onUpdate(event => {
@@ -146,13 +164,213 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
       : null;
   const canShowLearnHow = !isCustomTask;
 
+  const detailContent = (
+    <View
+      style={[
+        styles.content,
+        { paddingBottom: 24 + Math.max(insets.bottom, 8) },
+      ]}
+    >
+      {/* Header row: priority pill + trash (custom only) */}
+      <View style={styles.headerRow}>
+        <View
+          style={[
+            styles.priorityPill,
+            { backgroundColor: priority.backgroundColor },
+          ]}
+        >
+          <MaterialIcons
+            name={priority.icon}
+            size={16}
+            color={priority.color}
+          />
+          <Text style={[styles.priorityLabel, { color: priority.color }]}>
+            {t(priority.labelKey)}
+          </Text>
+        </View>
+
+        {((isCustomTask && onDeleteCustomTask) ||
+          (!isCustomTask && onRemoveSuggestedTask)) && (
+          <TouchableOpacity
+            onPress={isCustomTask ? onDeleteCustomTask : onRemoveSuggestedTask}
+            style={styles.trashButton}
+            accessibilityRole='button'
+            accessibilityLabel={t(
+              isCustomTask
+                ? 'checklist.deleteTask'
+                : 'checklist.removeSuggestedTask'
+            )}
+            hitSlop={10}
+          >
+            <MaterialIcons
+              name={isCustomTask ? 'delete-outline' : 'visibility-off'}
+              size={22}
+              color='#64748B'
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      {/* Title */}
+      <Text style={styles.taskName}>{task.task.task_name}</Text>
+
+      {/* Description */}
+      <LinkedDescription
+        style={styles.taskDescription}
+        text={
+          task.task.longer_description?.trim() || task.task.task_description
+        }
+      />
+
+      {/* Completion timestamp */}
+      {completedLabel && (
+        <View style={styles.completedBanner}>
+          <MaterialIcons name='check-circle' size={16} color='#059669' />
+          <Text style={styles.completedBannerText}>
+            {t('common.completedAgo', { time: completedLabel })}
+          </Text>
+        </View>
+      )}
+
+      {progressPanel ? (
+        <TouchableOpacity
+          style={styles.progressEntry}
+          onPress={() => setMode('progress')}
+          activeOpacity={0.8}
+          accessibilityRole='button'
+          accessibilityLabel={t('taskActions.progressButton')}
+          accessibilityHint={progressSummary ?? undefined}
+        >
+          <MaterialIcons name='timeline' size={20} color='#0F172A' />
+          <View style={styles.progressEntryText}>
+            <Text style={styles.progressEntryTitle}>
+              {t('taskActions.progressButton')}
+            </Text>
+            {progressSummary ? (
+              <Text style={styles.progressEntrySummary}>{progressSummary}</Text>
+            ) : null}
+          </View>
+          <MaterialIcons
+            name='chevron-right'
+            size={22}
+            color='#64748B'
+            style={I18nManager.isRTL ? styles.flipped : undefined}
+          />
+        </TouchableOpacity>
+      ) : null}
+
+      {/* Primary CTA */}
+      <TouchableOpacity
+        style={[
+          styles.primaryButton,
+          isCompleted && styles.primaryButtonCompleted,
+        ]}
+        onPress={onMarkComplete}
+        activeOpacity={0.85}
+        accessibilityRole='button'
+      >
+        <MaterialIcons
+          name={isCompleted ? 'replay' : 'check'}
+          size={20}
+          color={isCompleted ? '#059669' : '#fff'}
+        />
+        <Text
+          style={[
+            styles.primaryButtonText,
+            isCompleted && styles.primaryButtonTextCompleted,
+          ]}
+        >
+          {isCompleted
+            ? t('checklist.undoCompletion')
+            : t('checklist.markAsComplete')}
+        </Text>
+      </TouchableOpacity>
+
+      {/* Secondary: Learn how (sanity tasks only) */}
+      {canShowLearnHow && (
+        <TouchableOpacity
+          style={styles.secondaryButton}
+          onPress={onLearnHow}
+          activeOpacity={0.8}
+          accessibilityRole='button'
+        >
+          <Text style={styles.secondaryButtonText}>
+            {t('checklist.learnHow')}
+          </Text>
+          <MaterialIcons name='arrow-forward' size={18} color='#E03B3B' />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+
+  const progressContent = (
+    <View
+      style={[
+        styles.progressContent,
+        { paddingBottom: 16 + Math.max(insets.bottom, 8) },
+      ]}
+    >
+      <View style={styles.progressHeader}>
+        <TouchableOpacity
+          onPress={() => setMode('detail')}
+          style={styles.iconButton}
+          accessibilityRole='button'
+          accessibilityLabel={t('taskActions.backToDetails')}
+        >
+          <MaterialIcons
+            name='chevron-left'
+            size={26}
+            color='#0F172A'
+            style={I18nManager.isRTL ? styles.flipped : undefined}
+          />
+        </TouchableOpacity>
+        <Text
+          style={styles.progressHeading}
+          accessibilityRole='header'
+          numberOfLines={2}
+        >
+          {task.task.task_name}
+        </Text>
+        <TouchableOpacity
+          onPress={onClose}
+          style={styles.iconButton}
+          accessibilityRole='button'
+          accessibilityLabel={t('taskActions.close')}
+        >
+          <MaterialIcons name='close' size={22} color='#0F172A' />
+        </TouchableOpacity>
+      </View>
+      <ScrollView
+        style={styles.progressScroll}
+        contentContainerStyle={styles.progressScrollContent}
+        keyboardShouldPersistTaps='handled'
+      >
+        {progressPanel}
+      </ScrollView>
+    </View>
+  );
+
+  // The progress view scrolls, so only the detail view closes on a drag.
+  const sheet = (
+    <Animated.View
+      style={[
+        styles.sheet,
+        mode === 'progress' && styles.sheetProgress,
+        sheetStyle,
+      ]}
+    >
+      <View style={styles.grabHandle} />
+      {mode === 'detail' ? detailContent : progressContent}
+    </Animated.View>
+  );
+
   return (
     <Modal
       visible={rendered}
       transparent
       animationType='none'
       statusBarTranslucent
-      onRequestClose={onClose}
+      onRequestClose={mode === 'progress' ? () => setMode('detail') : onClose}
       presentationStyle={Platform.OS === 'ios' ? 'overFullScreen' : undefined}
     >
       <GestureHandlerRootView style={styles.root}>
@@ -161,137 +379,21 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
             style={StyleSheet.absoluteFill}
             activeOpacity={1}
             onPress={onClose}
+            accessible={false}
           />
         </Animated.View>
 
-        <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.sheet, sheetStyle]}>
-            <View style={styles.grabHandle} />
-
-            <View
-              style={[
-                styles.content,
-                { paddingBottom: 24 + Math.max(insets.bottom, 8) },
-              ]}
-            >
-              {/* Header row: priority pill + trash (custom only) */}
-              <View style={styles.headerRow}>
-                <View
-                  style={[
-                    styles.priorityPill,
-                    { backgroundColor: priority.backgroundColor },
-                  ]}
-                >
-                  <MaterialIcons
-                    name={priority.icon}
-                    size={16}
-                    color={priority.color}
-                  />
-                  <Text
-                    style={[styles.priorityLabel, { color: priority.color }]}
-                  >
-                    {t(priority.labelKey)}
-                  </Text>
-                </View>
-
-                {((isCustomTask && onDeleteCustomTask) ||
-                  (!isCustomTask && onRemoveSuggestedTask)) && (
-                  <TouchableOpacity
-                    onPress={
-                      isCustomTask ? onDeleteCustomTask : onRemoveSuggestedTask
-                    }
-                    style={styles.trashButton}
-                    accessibilityRole='button'
-                    accessibilityLabel={t(
-                      isCustomTask
-                        ? 'checklist.deleteTask'
-                        : 'checklist.removeSuggestedTask'
-                    )}
-                    hitSlop={10}
-                  >
-                    <MaterialIcons
-                      name={isCustomTask ? 'delete-outline' : 'visibility-off'}
-                      size={22}
-                      color='#64748B'
-                    />
-                  </TouchableOpacity>
-                )}
-              </View>
-
-              {/* Title */}
-              <Text style={styles.taskName}>{task.task.task_name}</Text>
-
-              {/* Description */}
-              <LinkedDescription
-                style={styles.taskDescription}
-                text={
-                  task.task.longer_description?.trim() ||
-                  task.task.task_description
-                }
-              />
-
-              {/* Completion timestamp */}
-              {completedLabel && (
-                <View style={styles.completedBanner}>
-                  <MaterialIcons
-                    name='check-circle'
-                    size={16}
-                    color='#059669'
-                  />
-                  <Text style={styles.completedBannerText}>
-                    {t('common.completedAgo', { time: completedLabel })}
-                  </Text>
-                </View>
-              )}
-
-              {/* Primary CTA */}
-              <TouchableOpacity
-                style={[
-                  styles.primaryButton,
-                  isCompleted && styles.primaryButtonCompleted,
-                ]}
-                onPress={onMarkComplete}
-                activeOpacity={0.85}
-                accessibilityRole='button'
-              >
-                <MaterialIcons
-                  name={isCompleted ? 'replay' : 'check'}
-                  size={20}
-                  color={isCompleted ? '#059669' : '#fff'}
-                />
-                <Text
-                  style={[
-                    styles.primaryButtonText,
-                    isCompleted && styles.primaryButtonTextCompleted,
-                  ]}
-                >
-                  {isCompleted
-                    ? t('checklist.undoCompletion')
-                    : t('checklist.markAsComplete')}
-                </Text>
-              </TouchableOpacity>
-
-              {/* Secondary: Learn how (sanity tasks only) */}
-              {canShowLearnHow && (
-                <TouchableOpacity
-                  style={styles.secondaryButton}
-                  onPress={onLearnHow}
-                  activeOpacity={0.8}
-                  accessibilityRole='button'
-                >
-                  <Text style={styles.secondaryButtonText}>
-                    {t('checklist.learnHow')}
-                  </Text>
-                  <MaterialIcons
-                    name='arrow-forward'
-                    size={18}
-                    color='#E03B3B'
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          </Animated.View>
-        </GestureDetector>
+        <KeyboardAvoidingView
+          behavior='padding'
+          style={styles.keyboardArea}
+          pointerEvents='box-none'
+        >
+          {mode === 'detail' ? (
+            <GestureDetector gesture={panGesture}>{sheet}</GestureDetector>
+          ) : (
+            sheet
+          )}
+        </KeyboardAvoidingView>
       </GestureHandlerRootView>
     </Modal>
   );
@@ -305,11 +407,11 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(15, 23, 42, 0.55)',
   },
+  keyboardArea: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   sheet: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
     backgroundColor: '#fff',
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
@@ -411,4 +513,55 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   secondaryButtonText: { ...typography.button, color: '#E03B3B' },
+  progressEntry: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    minHeight: 56,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    backgroundColor: '#F8FAFC',
+    marginBottom: 12,
+  },
+  progressEntryText: { flex: 1 },
+  progressEntryTitle: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: '#0F172A',
+  },
+  progressEntrySummary: { ...typography.caption, color: '#475569' },
+  flipped: { transform: [{ scaleX: -1 }] },
+  sheetProgress: { maxHeight: '92%' },
+  progressContent: { flexShrink: 1, paddingTop: 4 },
+  progressHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E2E8F0',
+  },
+  iconButton: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 22,
+  },
+  progressHeading: {
+    ...typography.cardTitle,
+    color: '#0F172A',
+    flex: 1,
+    textAlign: 'center',
+  },
+  progressScroll: { flexShrink: 1 },
+  progressScrollContent: {
+    paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
 });

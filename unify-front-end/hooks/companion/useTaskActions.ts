@@ -1,0 +1,215 @@
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { AppState } from 'react-native';
+import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
+import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys';
+import { useAnalytics } from '@/utils/analytics';
+import {
+  buildTaskActionResultProperties,
+  type TaskActionSurface,
+} from '@/services/companionActions/analytics';
+import type { ReadResult, TaskActionClient } from '@/services/companionActions/client';
+import type { TaskProgress } from '@/services/companionActions/contract';
+import {
+  clearTaskActionStores,
+  taskActionStoreFor,
+  type TaskActionPhase,
+  type TaskActionStore,
+} from '@/services/companionActions/taskActionStore';
+import { newOperationId } from '@/services/companionActions/operationId';
+import { createMobileTaskActionClient } from '@/services/companionActions/transport';
+
+/** Root of every task-progress query. Each key carries the account id. */
+export const TASK_PROGRESS_ROOT = 'companion-task-actions' as const;
+export const taskProgressKey = (userId: string | null) =>
+  [TASK_PROGRESS_ROOT, userId] as const;
+
+let defaultClient: TaskActionClient | null = null;
+const activeClient = () => (defaultClient ??= createMobileTaskActionClient());
+
+/**
+ * The signed-in account, from the stored session and auth changes. Undefined
+ * until the session is read. Task progress is held in memory only, per account.
+ */
+export function useTaskActionAccount(): string | null | undefined {
+  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+  useEffect(() => {
+    let cancelled = false;
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!cancelled) setUserId(data.session?.user.id ?? null);
+      })
+      .catch(() => {
+        if (!cancelled) setUserId(null);
+      });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user.id ?? null);
+    });
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, []);
+  return userId;
+}
+
+export type TaskProgressStatus =
+  | 'loading'
+  | 'ready'
+  | 'unavailable'
+  | 'offline'
+  | 'signed_out';
+
+export interface TaskProgressView {
+  status: TaskProgressStatus;
+  /** Saved progress by task_ref. A content-backed task never written has no entry. */
+  byRef: ReadonlyMap<string, TaskProgress>;
+  /** True when the shown progress may be out of date (the last read failed). */
+  stale: boolean;
+  /** Writes are allowed only right after a successful read. */
+  canWrite: boolean;
+  refetch: () => void;
+}
+
+class ReadFailed extends Error {}
+
+/**
+ * Saved task progress of the signed-in account, read from the shared action
+ * service. There is no OS network-state signal in this app, so a failed read is
+ * the offline signal: progress is marked stale, writes are turned off, and the
+ * read is retried every 5 s and when the app returns to the foreground.
+ */
+export function useTaskProgress(): TaskProgressView {
+  const userId = useTaskActionAccount();
+  const queryClient = useQueryClient();
+  useTaskActionAccountScope(userId, queryClient);
+
+  const query = useQuery({
+    queryKey: taskProgressKey(userId ?? null),
+    enabled: Boolean(userId),
+    queryFn: async (): Promise<Exclude<ReadResult, { kind: 'unknown' }>> => {
+      const result = await activeClient().read();
+      if (result.kind === 'unknown') throw new ReadFailed('unreachable');
+      return result;
+    },
+    staleTime: 0,
+    retry: false,
+    refetchInterval: q => (q.state.status === 'error' ? 5_000 : false),
+  });
+
+  const refetch = query.refetch;
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', next => {
+      if (next === 'active' && userId) void refetch();
+    });
+    return () => sub.remove();
+  }, [refetch, userId]);
+
+  const result = query.data;
+  const byRef = useMemo(() => {
+    const map = new Map<string, TaskProgress>();
+    if (result?.kind === 'ok') for (const t of result.tasks) map.set(t.taskRef, t);
+    return map;
+  }, [result]);
+
+  let status: TaskProgressStatus;
+  if (userId === null || result?.kind === 'unauthorized') status = 'signed_out';
+  else if (result?.kind === 'unavailable' || result?.kind === 'refused')
+    status = 'unavailable';
+  else if (query.isError) status = result?.kind === 'ok' ? 'ready' : 'offline';
+  else if (result?.kind === 'ok') status = 'ready';
+  else status = 'loading';
+
+  const stale = query.isError;
+  return {
+    status,
+    byRef,
+    stale,
+    // A refetch after a save may still carry the old revision: wait for it.
+    canWrite: status === 'ready' && !stale && !query.isFetching,
+    refetch: useCallback(() => void refetch(), [refetch]),
+  };
+}
+
+/** Removes another account's private task work from memory and the query cache. */
+function useTaskActionAccountScope(
+  userId: string | null | undefined,
+  queryClient: QueryClient
+) {
+  useEffect(() => {
+    if (userId === undefined) return;
+    clearTaskActionStores(userId);
+    queryClient.removeQueries({
+      queryKey: [TASK_PROGRESS_ROOT],
+      predicate: q => q.queryKey[1] !== userId,
+    });
+  }, [userId, queryClient]);
+}
+
+/** The account's action store, wired to this screen's surface for analytics. */
+export function useTaskActionStore(
+  surface: TaskActionSurface
+): TaskActionStore | null {
+  const userId = useTaskActionAccount();
+  const queryClient = useQueryClient();
+  const { trackCompanionActionResult } = useAnalytics();
+  return useMemo(() => {
+    if (!userId) return null;
+    return taskActionStoreFor(userId, {
+      client: activeClient(),
+      newOperationId,
+      onChanged: () => {
+        void queryClient.invalidateQueries({ queryKey: taskProgressKey(userId) });
+        // Completed is also the legacy Checklist flag: refresh the Checklist too.
+        void queryClient.invalidateQueries({ queryKey: [CHECKLIST_TASKS_QUERY_ROOT] });
+      },
+      onResult: event => {
+        const props = buildTaskActionResultProperties(event, surface);
+        if (props) trackCompanionActionResult(props);
+      },
+    });
+  }, [userId, queryClient, surface, trackCompanionActionResult]);
+}
+
+const IDLE: TaskActionPhase = { phase: 'idle' };
+const noopSubscribe = () => () => {};
+
+export function useTaskActionPhase(
+  store: TaskActionStore | null,
+  taskRef: string | null
+): TaskActionPhase {
+  return useSyncExternalStore(
+    store?.subscribe ?? noopSubscribe,
+    () => (store && taskRef ? store.get(taskRef) : IDLE),
+    () => IDLE
+  );
+}
+
+export function useTaskActionDraft(
+  store: TaskActionStore | null,
+  taskRef: string
+): string | undefined {
+  return useSyncExternalStore(
+    store?.subscribe ?? noopSubscribe,
+    () => store?.draft(taskRef),
+    () => undefined
+  );
+}
+
+/** Saved progress, or for a content-backed task never written: Not started at revision 0. */
+export function progressFor(taskRef: string, view: TaskProgressView): TaskProgress {
+  return (
+    view.byRef.get(taskRef) ?? {
+      taskRef,
+      state: 'not_started',
+      waitingReason: null,
+      revision: 0,
+      // A custom task always has a saved row; missing means it was deleted elsewhere.
+      removed: taskRef.startsWith('custom:') && view.status === 'ready',
+      lastReceipt: null,
+    }
+  );
+}
