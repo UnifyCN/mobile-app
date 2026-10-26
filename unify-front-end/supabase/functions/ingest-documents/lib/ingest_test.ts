@@ -199,17 +199,20 @@ Deno.test(
     const docBefore = JSON.stringify(doc);
 
     pages[source.url] = page(prose(90_000, 'new'));
+    const logsBefore = h.store.logs.length;
     const result = await ingestSource(source, h.deps);
 
-    assertEquals(result.status, 'error');
+    // The checked first batch stays in the open job for the next call; a
+    // pending job writes no crawl log.
+    assertEquals(result.status, 'pending');
+    assertEquals(result.stop_reason, 'provider_error');
+    assertEquals(result.error, 'embedding service unavailable');
+    assertEquals(result.staged, 20);
     assertEquals(
       h.store.chunksOf(doc.id).map(c => c.chunk_text),
       before
     );
-    assertEquals(
-      h.store.logs.at(-1)?.error_message,
-      'embedding service unavailable'
-    );
+    assertEquals(h.store.logs.length, logsBefore);
     assertEquals(
       JSON.stringify(doc),
       docBefore,

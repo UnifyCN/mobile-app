@@ -5,12 +5,14 @@
 // of supabase-js is replaced (see support/postgrestShim.ts). The fake-store
 // tests next to the ingestion code cannot show a database filter, a per-record
 // update or a stale chunk delete working. These tests can.
+import { withReceipt } from './support/embeddingModels.ts';
 import {
   assert,
   assertEquals,
   assertRejects,
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
+import { ingestUntilSettled } from '../functions/ingest-documents/lib/testSupport.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
@@ -69,13 +71,13 @@ function depsFor(
       if (page instanceof Error) throw page;
       return await Promise.resolve(page);
     },
-    embed: async texts => {
+    embedChecked: withReceipt(async texts => {
       embedCalls += 1;
       if (options.failEmbedOnCall === embedCalls) {
         throw new Error('embedding service unavailable');
       }
       return await Promise.resolve(texts.map(() => VECTOR));
-    },
+    }),
   };
   return { deps, requests: shim.requests, store: deps.store };
 }
@@ -312,7 +314,7 @@ Deno.test(
     const clock = { now: new Date('2026-10-23T12:00:00.000Z') };
     const run = depsFor(db, pages, clock);
     assertEquals(
-      (await ingestSource(processing, run.deps)).chunks_created,
+      (await ingestUntilSettled(processing, run.deps)).chunks_created,
       1950
     );
     assertEquals((await chunkRows(db)).length, 1950);
@@ -349,9 +351,11 @@ Deno.test(
       `select distinct metadata->>'published_at' as d from public.knowledge_chunks where chunk_text like '%Work permit (from outside Canada)%'`
     );
     assertEquals(workDates, [{ d: '2026-10-28' }]);
-    // The attempt is stored right after the claim, before any other work. One
-    // fenced refresh call carries the four date groups. No chunk row is
-    // written through the table API, and nothing is embedded again.
+    // The attempt is stored right after the claim, before any other work.
+    // Any open job of other text is superseded, so it can never promote over
+    // this verified version. One fenced refresh call carries the four date
+    // groups. No chunk row is written through the table API, and nothing is
+    // embedded again.
     assertEquals(
       run.requests
         .filter(r => r.action === 'rpc' || r.table === 'knowledge_chunks')
@@ -359,6 +363,7 @@ Deno.test(
       [
         'claim_crawl_source',
         'record_crawl_attempt',
+        'ingest_generation_supersede',
         'refresh_knowledge_metadata',
         'release_crawl_source',
       ]
@@ -398,7 +403,9 @@ Deno.test(
 
     const result = await ingestSource(ee, failing.deps);
 
-    assertEquals(result.status, 'error');
+    // The provider failed: the job stays open for a later call.
+    assertEquals(result.status, 'pending');
+    assertEquals(result.stop_reason, 'provider_error');
     assertEquals(await chunkRows(db), before);
     assertEquals(
       await rows(db, `select content_hash from public.knowledge_documents`),
@@ -412,12 +419,13 @@ Deno.test(
       ),
       [{ at: '2026-10-24T12:00:00Z' }]
     );
+    // A pending job writes no crawl log: the latest is the first success.
     assertEquals(
       await rows(
         db,
         `select status from public.crawl_logs order by id desc limit 1`
       ),
-      [{ status: 'error' }]
+      [{ status: 'success' }]
     );
     await db.close();
   }
@@ -438,7 +446,7 @@ Deno.test(
       [JSON_BASE + 'flpt-by-week-en.json']: fixture('flpt_by_week.json'),
     };
     const clock = { now: new Date('2026-10-23T12:00:00.000Z') };
-    await ingestSource(processing, depsFor(db, pages, clock).deps);
+    await ingestUntilSettled(processing, depsFor(db, pages, clock).deps);
     const before = await chunkRows(db);
     const country = JSON.parse(pages[JSON_BASE + 'data-ptime-en.json']);
     country.study.AF = '9 weeks';
@@ -451,7 +459,10 @@ Deno.test(
       depsFor(db, pages, clock, { failEmbedOnCall: 3 }).deps
     );
 
-    assertEquals(result.status, 'error');
+    // The two checked batches wait in the open job; nothing is live.
+    assertEquals(result.status, 'pending');
+    assertEquals(result.stop_reason, 'provider_error');
+    assertEquals(result.staged, 40);
     assertEquals(await chunkRows(db), before);
     assertEquals(
       await rows(
@@ -482,14 +493,16 @@ Deno.test(
       now: new Date('2026-10-23T12:00:00.000Z'),
     });
 
-    await ingestSource(processing, run.deps);
+    // At most 25 requests per call: four calls publish it.
+    assertEquals((await ingestUntilSettled(processing, run.deps)).status, 'success');
 
-    // 1,950 records: 97 batches of 20 and one of 10. Each batch is one call;
-    // the database refuses a call with more than 20 rows.
-    const staged = run.requests.filter(
-      r => r.table === 'stage_knowledge_chunks'
-    );
-    assertEquals(staged.length, 98);
+    // 1,950 records: 97 batches of 20 and one of 10. Each batch is one
+    // reserved call and one stage; the database refuses more than 20 rows.
+    const rpcs = (name: string) =>
+      run.requests.filter(r => r.table === name).length;
+    assertEquals(rpcs('ingest_generation_reserve'), 98);
+    assertEquals(rpcs('ingest_generation_stage'), 98);
+    assertEquals(rpcs('stage_knowledge_chunks'), 0);
     assertEquals(
       run.requests.filter(r => r.table === 'knowledge_chunks'),
       []
@@ -521,7 +534,7 @@ Deno.test('a refresh touches only its own document', async () => {
   const clock = { now: new Date('2026-10-23T12:00:00.000Z') };
   const { deps } = depsFor(db, pages, clock);
   await ingestSource(ee, deps);
-  await ingestSource(processing, deps);
+  await ingestUntilSettled(processing, deps);
   const drawsBefore = await rows(
     db,
     `select kc.chunk_text, kc.metadata from public.knowledge_chunks kc

@@ -1,7 +1,12 @@
 // Shared builders for ingestion tests. Not imported by production code.
+import {
+  EMBEDDING_CONTRACT,
+  EMBEDDING_MODEL,
+} from '../../_shared/embeddings.ts';
 import { FakeStore } from './fakeStore.ts';
+import { ingestSource } from './ingest.ts';
 import type { CrawlSource } from './pickDueSources.ts';
-import type { IngestDeps } from './types.ts';
+import type { IngestDeps, SourceResult } from './types.ts';
 
 export const NOW = new Date('2026-10-23T12:00:00.000Z');
 
@@ -36,6 +41,18 @@ export function page(body: string, dateModified?: string): string {
   return `<html><head>${meta}</head><body><main><p>${body}</p></main></body></html>`;
 }
 
+/** The receipt the real adapter gives a canonical answer of `checked` vectors. */
+export function receipt(checked: number) {
+  return {
+    model: EMBEDDING_MODEL,
+    contract: EMBEDDING_CONTRACT,
+    identity: 'canonical' as const,
+    checked,
+    native_dimensions: 4096,
+    stored_dimensions: 1536,
+  };
+}
+
 export interface Harness {
   store: FakeStore;
   deps: IngestDeps;
@@ -67,15 +84,35 @@ export function makeHarness(
       if (result instanceof Error) throw result;
       return result;
     },
-    embed: async texts => {
+    embedChecked: async texts => {
       embedBatches.push(texts.length);
       store.events.push(`embed:${texts.length}`);
       await Promise.resolve();
       if (options.failEmbedOnCall === embedBatches.length) {
         throw new Error('embedding service unavailable');
       }
-      return texts.map(() => [0.1, 0.2]);
+      return { vectors: texts.map(() => [0.1, 0.2]), receipt: receipt(texts.length) };
     },
   };
   return { store, deps, embedBatches, fetched, clock };
+}
+
+/**
+ * Calls ingestSource again while its generation is pending at the
+ * invocation's send limit: one call sends at most 25 provider requests, so a
+ * 1950-record source takes four calls. Any other outcome is returned as is.
+ */
+export async function ingestUntilSettled(
+  source: CrawlSource,
+  deps: IngestDeps,
+  maxCalls = 10
+): Promise<SourceResult> {
+  let result = await ingestSource(source, deps);
+  for (let call = 1; call < maxCalls; call++) {
+    if (result.status !== 'pending' || result.stop_reason !== 'send_limit') {
+      return result;
+    }
+    result = await ingestSource(source, deps);
+  }
+  return result;
 }

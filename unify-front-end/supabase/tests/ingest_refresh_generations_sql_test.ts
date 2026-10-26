@@ -5,6 +5,7 @@
 // and grants. PGlite runs one statement at a time, so they do not show two
 // transactions waiting on a row lock; nor do they prove hosted roles or
 // PostgREST dispatch.
+import { withReceipt } from './support/embeddingModels.ts';
 import {
   assert,
   assertEquals,
@@ -217,8 +218,9 @@ Deno.test(
         store,
         now: () => new Date(at),
         fetchPage: () => Promise.resolve(body),
-        embed: (texts: string[]) =>
-          Promise.resolve(texts.map(() => new Array(1536).fill(0.01))),
+        embedChecked: withReceipt((texts: string[]) =>
+          Promise.resolve(texts.map(() => new Array(1536).fill(0.01)))
+        ),
       });
       await ingestSource(source, deps('2026-10-23T00:00:00Z'));
       // The state the reviewed code could leave: an old chunk with the same index.

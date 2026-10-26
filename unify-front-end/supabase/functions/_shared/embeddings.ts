@@ -74,6 +74,13 @@ export interface EmbeddingRequestOptions {
   timeoutMs?: number;
   retries?: number;
   retryDelayMs?: number;
+  /**
+   * Stops the request and the body read when it aborts; `timeoutMs` covers
+   * only the time to the headers. Without it the body is read as before.
+   */
+  signal?: AbortSignal;
+  /** The largest decoded answer accepted, checked while it is read. */
+  maxResponseBytes?: number;
 }
 
 /**
@@ -119,6 +126,7 @@ export async function embedTextsChecked(
           input: texts,
           encoding_format: 'float',
         }),
+        ...(options.signal ? { signal: options.signal } : {}),
       },
       {
         timeoutMs: options.timeoutMs ?? 30000,
@@ -139,12 +147,75 @@ export async function embedTextsChecked(
     );
   }
   let body: unknown;
-  try {
-    body = await response.json();
-  } catch {
-    throw invalid('the body is not JSON');
+  if (options.signal === undefined && options.maxResponseBytes === undefined) {
+    try {
+      body = await response.json();
+    } catch {
+      throw invalid('the body is not JSON');
+    }
+  } else {
+    const text = await readText(
+      response,
+      options.signal,
+      options.maxResponseBytes
+    );
+    try {
+      body = JSON.parse(text);
+    } catch {
+      throw invalid('the body is not JSON');
+    }
   }
   return readEmbeddings(body, texts.length, crypto.randomUUID());
+}
+
+/**
+ * Reads the body while `signal` can still stop it, and stops at `limit`
+ * bytes: a body that stalls after the headers is cancelled when the signal
+ * aborts, and an oversized body is cancelled before it is all in memory.
+ */
+async function readText(
+  response: Response,
+  signal: AbortSignal | undefined,
+  limit: number | undefined
+): Promise<string> {
+  const reader = response.body?.getReader();
+  if (!reader) return '';
+  let onAbort = () => {};
+  const aborted = new Promise<never>((_, reject) => {
+    onAbort = () =>
+      reject(new EmbeddingError('network', 'Embedding request did not complete'));
+  });
+  if (signal?.aborted) onAbort();
+  else signal?.addEventListener('abort', onAbort, { once: true });
+  const parts: Uint8Array[] = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const { done, value } = await (signal
+        ? Promise.race([reader.read(), aborted])
+        : reader.read());
+      if (done) break;
+      size += value.byteLength;
+      if (limit !== undefined && size > limit) {
+        throw invalid('the body is too large');
+      }
+      parts.push(value);
+    }
+  } catch (error) {
+    await reader.cancel().catch(() => {});
+    if (error instanceof EmbeddingError) throw error;
+    throw new EmbeddingError('network', 'Embedding request did not complete');
+  } finally {
+    signal?.removeEventListener('abort', onAbort);
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const part of parts) {
+    bytes.set(part, offset);
+    offset += part.byteLength;
+  }
+  // Like response.json(): UTF-8, and a leading byte order mark is dropped.
+  return new TextDecoder().decode(bytes);
 }
 
 function invalid(reason: string, identity?: EmbeddingIdentity): EmbeddingError {

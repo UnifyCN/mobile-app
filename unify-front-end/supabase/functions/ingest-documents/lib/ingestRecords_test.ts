@@ -3,9 +3,8 @@ import {
   assertEquals,
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import { EMBEDDING_MODEL } from '../../_shared/embeddings.ts';
-import { ingestSource } from './ingest.ts';
 import type { CrawlSource } from './pickDueSources.ts';
-import { makeHarness, makeSource } from './testSupport.ts';
+import { ingestUntilSettled, makeHarness, makeSource } from './testSupport.ts';
 
 function fixtureText(name: string): string {
   return Deno.readTextFileSync(
@@ -37,7 +36,7 @@ Deno.test(
       [EE_URL]: fixtureText('ee_rounds_sample.json'),
     });
 
-    const result = await ingestSource(source, h.deps);
+    const result = await ingestUntilSettled(source, h.deps);
 
     assertEquals(result, {
       source_id: 7,
@@ -112,7 +111,7 @@ Deno.test(
     const source = processingSource();
     const h = makeHarness([source], processingPages());
 
-    const result = await ingestSource(source, h.deps);
+    const result = await ingestUntilSettled(source, h.deps);
 
     assertEquals(result, {
       source_id: 3,
@@ -147,14 +146,14 @@ Deno.test(
     const source = eeSource();
     const pages = { [EE_URL]: fixtureText('ee_rounds_sample.json') };
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     const doc = h.store.documents[0];
     const datesBefore = h.store
       .chunksOf(doc.id)
       .map(c => c.metadata.published_at);
     const batchesBefore = h.embedBatches.length;
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second.status, 'skipped');
     assertEquals(h.embedBatches.length, batchesBefore);
@@ -179,14 +178,14 @@ Deno.test(
     const source = processingSource();
     const pages = processingPages();
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     const doc = h.store.documents[0];
     const batchesBefore = h.embedBatches.length;
     const country = JSON.parse(pages[JSON_BASE + 'data-ptime-en.json']);
     country.work.lastupdated = 'October 28, 2026';
     pages[JSON_BASE + 'data-ptime-en.json'] = JSON.stringify(country);
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second.status, 'skipped');
     assertEquals(h.embedBatches.length, batchesBefore);
@@ -220,7 +219,7 @@ Deno.test(
     const first = JSON.parse(fixtureText('ee_rounds_sample.json'));
     const pages = { [EE_URL]: JSON.stringify(first) };
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     assert(texts(h).some(t => t.includes('draw #441 ')));
     const next = {
       rounds: [
@@ -238,7 +237,7 @@ Deno.test(
     };
     pages[EE_URL] = JSON.stringify(next);
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second, {
       source_id: 7,
@@ -270,20 +269,22 @@ Deno.test(
     const source = processingSource();
     const pages: Record<string, string | Error> = processingPages();
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     const before = texts(h);
     pages[JSON_BASE + 'flpt-by-week-en.json'] = new Error(
       'HTTP 503: unavailable'
     );
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second.status, 'error');
     assertEquals(second.error, 'HTTP 503: unavailable');
     assertEquals(texts(h), before);
+    // The first publish took four calls (12:00 to 12:03, 25 requests each at
+    // most); the failed call is the fifth.
     assertEquals(
       h.store.sources[0].last_crawled_at,
-      '2026-10-23T12:01:00.000Z'
+      '2026-10-23T12:04:00.000Z'
     );
     assertEquals(h.store.logs.at(-1)?.status, 'error');
   }
@@ -297,7 +298,7 @@ Deno.test(
       [EE_URL]: fixtureText('ee_rounds_sample.json'),
     };
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     const before = texts(h);
 
     for (const [body, message] of [
@@ -314,7 +315,7 @@ Deno.test(
       ],
     ]) {
       pages[EE_URL] = body;
-      const result = await ingestSource(source, h.deps);
+      const result = await ingestUntilSettled(source, h.deps);
       assertEquals(result.error, message);
       assertEquals(texts(h), before);
     }
@@ -339,7 +340,7 @@ Deno.test(
     ];
     for (const [source, message] of cases) {
       const h = makeHarness([source], {});
-      const result = await ingestSource(source, h.deps);
+      const result = await ingestUntilSettled(source, h.deps);
       assertEquals(result.error, message);
       assertEquals(h.store.documents.length, 0);
       assertEquals(
@@ -356,7 +357,7 @@ Deno.test(
     const source = processingSource();
     const pages = processingPages();
     const h = makeHarness([source], pages);
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     const reverse = (v: unknown): unknown =>
       v !== null && typeof v === 'object' && !Array.isArray(v)
         ? Object.fromEntries(
@@ -371,7 +372,7 @@ Deno.test(
       );
     }
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second.status, 'skipped');
   }
@@ -389,7 +390,7 @@ Deno.test(
       const h = makeHarness([source], {
         [EE_URL]: fixtureText('ee_rounds_sample.json'),
       });
-      await ingestSource(source, h.deps);
+      await ingestUntilSettled(source, h.deps);
       const chunks = h.store.chunksOf(h.store.documents[0].id);
       assert(chunks.every(c => c.metadata.province === expected));
       assertEquals('province' in chunks[0].metadata, expected !== undefined);
@@ -420,7 +421,7 @@ Deno.test(
     });
     // The harness clock starts at 2026-10-23T12:00Z, so the window opens 2026-09-23.
 
-    const result = await ingestSource(source, h.deps);
+    const result = await ingestUntilSettled(source, h.deps);
 
     assertEquals(result.chunks_created, 8);
     const chunks = h.store.chunksOf(h.store.documents[0].id);
@@ -458,11 +459,11 @@ Deno.test(
       [NEWS_URL]: fixtureText('newsroom_shape.json'),
     });
     h.deps.now = () => clock.now;
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     assert(texts(h).some(t => t.startsWith('September 25, 2026')));
     clock.now = new Date('2026-10-27T12:00:00.000Z'); // window opens 2026-09-27
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second.status, 'success');
     const after = texts(h);
@@ -481,10 +482,10 @@ Deno.test(
       [NEWS_URL]: fixtureText('newsroom_shape.json'),
     });
     h.deps.now = () => clock.now;
-    await ingestSource(source, h.deps);
+    await ingestUntilSettled(source, h.deps);
     clock.now = new Date('2026-12-01T12:00:00.000Z');
 
-    const second = await ingestSource(source, h.deps);
+    const second = await ingestUntilSettled(source, h.deps);
 
     assertEquals(second, {
       source_id: 30,
@@ -507,7 +508,7 @@ Deno.test(
     });
     await h.store.claimSource(source.id, 300, EMBEDDING_MODEL);
 
-    const result = await ingestSource(source, h.deps);
+    const result = await ingestUntilSettled(source, h.deps);
 
     assertEquals(result, {
       source_id: 7,

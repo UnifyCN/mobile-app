@@ -1,21 +1,33 @@
-import type { CheckedEmbeddings } from '../../_shared/embeddings.ts';
-import { ingestSource } from './ingest.ts';
-import { type CrawlSource, pickDueSources } from './pickDueSources.ts';
+import {
+  BackstopError,
+  Budget,
+  CONTINUATION_START_MS,
+  FRESH_START_MS,
+  MAX_SENDS_PER_INVOCATION,
+  realTimers,
+} from './budget.ts';
+import {
+  continueJob,
+  ingestSource,
+  newProgress,
+  pendingResult,
+  type Progress,
+  type SourceRun,
+} from './ingest.ts';
+import type { CrawlSource } from './pickDueSources.ts';
 import { handleRebuildAction, type RebuildStore } from './rebuild.ts';
+import { isContinuable, selectWork, type WorkItem } from './schedule.ts';
 import type { IngestDeps, SourceResult } from './types.ts';
 
-/** Due sources handled per scheduled run. Lower to 1 if the worker still runs out of memory. */
+/** Sources handled per scheduled run. Lower to 1 if the worker still runs out of memory. */
 export const MAX_SOURCES_PER_RUN = 2;
+/** The ingestion response format: per-source results, pending work, unstarted sources. */
+export const RESPONSE_VERSION = 2;
 
 export type HandlerDeps = IngestDeps & {
   serviceRoleKey: string;
   /** The administrative embedding rebuild; absent in tests of the crawl alone. */
   rebuild?: RebuildStore;
-  /**
-   * The rebuild's embedding call: the vectors and the receipt of the response
-   * that produced them. Required with `rebuild`.
-   */
-  embedChecked?: (texts: string[]) => Promise<CheckedEmbeddings>;
 };
 
 function json(body: unknown, status = 200): Response {
@@ -46,73 +58,203 @@ export function isAuthorized(req: Request, serviceRoleKey: string): boolean {
   return match !== null && safeEqual(match[1], serviceRoleKey);
 }
 
+/** What the invocation has done so far, answerable at any moment. */
+class Report {
+  private selected: number[] = [];
+  private results: SourceResult[] = [];
+  private progress = new Map<number, Progress>();
+  private skippedStart = new Set<number>();
+
+  constructor(private readonly budget: Budget) {}
+
+  select(items: WorkItem[]): void {
+    this.selected = items.map(i => i.source.id);
+  }
+  start(sourceId: number): Progress {
+    const progress = newProgress(sourceId);
+    this.progress.set(sourceId, progress);
+    return progress;
+  }
+  notStarted(sourceId: number): void {
+    this.skippedStart.add(sourceId);
+  }
+  finish(result: SourceResult): void {
+    this.results.push(result);
+  }
+  /** Started but unfinished sources are pending at the backstop. */
+  body(atBackstop: boolean) {
+    const finished = new Set(this.results.map(r => r.source_id));
+    const results = [...this.results];
+    if (atBackstop) {
+      for (const p of this.progress.values()) {
+        if (p.started && !finished.has(p.source_id)) {
+          results.push(pendingResult(p, 'response_backstop'));
+        }
+      }
+    }
+    return {
+      version: RESPONSE_VERSION,
+      results,
+      unstarted_source_ids: this.selected.filter(
+        id =>
+          this.skippedStart.has(id) ||
+          !(this.progress.get(id)?.started ?? false)
+      ),
+      provider_sends: this.budget.sends,
+    };
+  }
+}
+
 export async function handleIngestRequest(
   req: Request,
   deps: HandlerDeps
 ): Promise<Response> {
-  if (!isAuthorized(req, deps.serviceRoleKey)) {
-    return json({ error: 'Unauthorized' }, 401);
+  // The invocation's budget starts at handler entry.
+  const budget = new Budget(deps.timers ?? realTimers);
+  try {
+    if (!isAuthorized(req, deps.serviceRoleKey)) {
+      return json({ error: 'Unauthorized' }, 401);
+    }
+
+    const parsed = await readBody(req);
+    if (parsed === null) return json({ error: 'Invalid JSON body' }, 400);
+
+    // The one administrative action. Anything else with an action is refused,
+    // so a mistyped action can never start a crawl.
+    if (parsed.action !== undefined) {
+      return parsed.action === 'embedding_rebuild'
+        ? await handleRebuildAction(parsed, deps)
+        : json({ error: 'Unknown action' }, 400);
+    }
+
+    const selection = await select(parsed, deps, budget);
+    if (selection instanceof Response) return selection;
+
+    const report = new Report(budget);
+    report.select(selection);
+    const work = serve(selection, deps, budget, report);
+    const first = await Promise.race([
+      work.then(() => 'done' as const),
+      budget.backstop.then(() => 'backstop' as const),
+    ]);
+    if (first === 'backstop') {
+      // Nothing may start now; the work in flight stops at its next check.
+      budget.close();
+      work.catch(() => {});
+    }
+    return json(report.body(first === 'backstop'));
+  } finally {
+    budget.dispose();
   }
+}
 
-  const parsed = await readBody(req);
-  if (parsed === null) return json({ error: 'Invalid JSON body' }, 400);
-
-  // The one administrative action. Anything else with an action is refused,
-  // so a mistyped action can never start a crawl.
-  if (parsed.action !== undefined) {
-    return parsed.action === 'embedding_rebuild'
-      ? await handleRebuildAction(parsed, deps)
-      : json({ error: 'Unknown action' }, 400);
-  }
-
+/** The sources this call serves, or a refusal for a bad manual call. */
+async function select(
+  parsed: Record<string, unknown>,
+  deps: HandlerDeps,
+  budget: Budget
+): Promise<WorkItem[] | Response> {
   const { store } = deps;
-  let selected: CrawlSource[];
-
+  const rpc = <T>(f: (call: { signal: AbortSignal }) => Promise<T>) => {
+    budget.assertOpen();
+    const scoped = budget.rpcSignal();
+    return f({ signal: scoped.signal }).finally(scoped.dispose);
+  };
+  let manual: CrawlSource | null = null;
   if (parsed.crawl_source_id !== undefined && parsed.crawl_source_id !== null) {
     // Manual call for one stored source.
     const id = parsed.crawl_source_id;
     const source =
       typeof id === 'number' || typeof id === 'string'
-        ? await store.getCrawlSource(id)
+        ? await rpc(c => store.getCrawlSource(id, c))
         : null;
     if (!source) {
       return json({ error: `crawl_source_id ${String(id)} not found` }, 400);
     }
-    selected = [source];
+    manual = source;
   } else if (parsed.url !== undefined && parsed.url !== null) {
     // Manual call by URL. The URL only names a stored, enabled source; the
     // fetch always uses the stored row, never the request value.
     const source =
       typeof parsed.url === 'string'
-        ? await store.findEnabledCrawlSourceByUrl(parsed.url)
+        ? await rpc(c => store.findEnabledCrawlSourceByUrl(parsed.url as string, c))
         : null;
     if (!source) {
       return json({ error: 'URL not in crawl_sources allowlist' }, 403);
     }
-    selected = [source];
-  } else {
-    // Scheduled call: pick the due sources.
-    selected = pickDueSources(
-      await store.listCrawlSources(),
-      deps.now(),
-      MAX_SOURCES_PER_RUN
-    );
+    manual = source;
   }
 
-  // One source at a time: the next fetch starts after the previous source has
-  // been written, so only one page is in memory.
-  const results: SourceResult[] = [];
-  for (const source of selected) {
+  if (manual) {
+    const jobs = await rpc(c => store.listOpenJobs(c));
+    const job = jobs.find(j => j.crawl_source_id === manual!.id);
+    if (job && isContinuable(job, deps.now())) {
+      return [{ kind: 'continue', source: manual, job }];
+    }
+    return [{ kind: 'fresh', source: manual }];
+  }
+
+  // Scheduled call: due sources and open jobs, fairly.
+  const sources = await rpc(c => store.listCrawlSources(c));
+  const jobs = await rpc(c => store.listOpenJobs(c));
+  const { work, retire } = selectWork(
+    sources,
+    jobs,
+    deps.now(),
+    MAX_SOURCES_PER_RUN
+  );
+  for (const job of retire) {
+    // Private cleanup only; a failure leaves the job inert until next time.
+    await rpc(c => store.retireJob(job.job_id, c)).catch(error =>
+      console.error(`Retiring job ${job.job_id} failed: ${error}`)
+    );
+  }
+  return work;
+}
+
+/**
+ * Serves the selected sources one at a time. Each starts only with its share
+ * of the remaining work time (the time left divided by the sources left), so
+ * the first of two gets at most half and the second the rest; and it may use
+ * the sends left, less one kept for each source after it.
+ */
+async function serve(
+  items: WorkItem[],
+  deps: HandlerDeps,
+  budget: Budget,
+  report: Report
+): Promise<void> {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const later = items.length - i - 1;
+    const share = budget.workLeft() / (later + 1);
+    const needed =
+      item.kind === 'fresh' ? FRESH_START_MS : CONTINUATION_START_MS;
+    if (budget.closed || share < needed) {
+      // Not started: not claimed, not stamped, still due.
+      report.notStarted(item.source.id);
+      continue;
+    }
+    const run: SourceRun = {
+      budget,
+      shareEndsAt: budget.elapsed() + share,
+      sendLimit: Math.max(0, MAX_SENDS_PER_INVOCATION - budget.sends - later),
+      progress: report.start(item.source.id),
+    };
     try {
-      results.push(await ingestSource(source, deps));
+      report.finish(
+        item.kind === 'fresh'
+          ? await ingestSource(item.source, deps, run)
+          : await continueJob(item.source, item.job, deps, run)
+      );
     } catch (error) {
+      if (error instanceof BackstopError || budget.closed) return;
       // Source-level failure (for example the database): report it, keep going.
       const message = error instanceof Error ? error.message : 'Ingest failed';
-      console.error(`Ingest failed for source ${source.id}: ${message}`);
-      results.push({ source_id: source.id, status: 'error', error: message });
+      console.error(`Ingest failed for source ${item.source.id}: ${message}`);
+      report.finish({ source_id: item.source.id, status: 'error', error: message });
     }
   }
-  return json({ results });
 }
 
 async function readBody(req: Request): Promise<Record<string, unknown> | null> {

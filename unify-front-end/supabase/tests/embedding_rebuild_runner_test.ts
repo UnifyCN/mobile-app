@@ -332,7 +332,7 @@ Deno.test(
           rebuild: createRebuildStore(supabaseHttp(h.db).client),
           now: () => new Date(),
           fetchPage: () => Promise.reject(new Error('no')),
-          embed: () => Promise.reject(new Error('no')),
+          embedChecked: () => Promise.reject(new Error('no')),
           serviceRoleKey: KEY,
         }
       );
@@ -374,7 +374,7 @@ Deno.test('an unknown action is refused and never starts a crawl', async () => {
         rebuild: createRebuildStore(supabaseHttp(h.db).client),
         now: () => new Date(),
         fetchPage: () => Promise.reject(new Error('no page may be fetched')),
-        embed: () => Promise.reject(new Error('no')),
+        embedChecked: () => Promise.reject(new Error('no')),
         serviceRoleKey: KEY,
       }
     );
