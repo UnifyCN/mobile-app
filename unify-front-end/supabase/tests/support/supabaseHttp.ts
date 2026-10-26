@@ -78,5 +78,5 @@ export function supabaseHttp(db: Db) {
     },
     global: { fetch: handle },
   });
-  return { client, requests: shim.requests };
+  return { client, requests: shim.requests, fetch: handle };
 }

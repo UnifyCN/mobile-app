@@ -24,7 +24,8 @@ import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSourc
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import { computeContentHash } from '../functions/ingest-documents/lib/text.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
-import { openIngestDb } from './support/ingestDb.ts';
+import { openQwenIngestDb } from './support/ingestDb.ts';
+import { QWEN } from './support/embeddingModels.ts';
 import { embedding, rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
 
@@ -201,7 +202,7 @@ async function assertOneGeneration(db: Db, url: string, texts: string[]) {
 Deno.test(
   'a manual call during a scheduled refresh cannot leave two versions',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await db.query(
@@ -266,7 +267,7 @@ Deno.test(
 Deno.test(
   'an owner whose lease expired cannot commit after a newer claim',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await ingestSource(
@@ -319,7 +320,7 @@ Deno.test(
 Deno.test(
   'four calls at once for one source leave one consistent version',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await db.query(
@@ -411,7 +412,7 @@ Deno.test(
 Deno.test(
   'a failed replacement keeps the previous version and the next crawl repairs it',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await ingestSource(
@@ -462,7 +463,7 @@ Deno.test(
 Deno.test(
   'a failed replacement never gives a record another record date',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const processing = await source(db, PROCESSING_PAGE);
       const pages = processingPages();
@@ -546,7 +547,7 @@ Deno.test(
 Deno.test(
   'an empty non-country file fails and keeps every stored record',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const processing = await source(db, PROCESSING_PAGE);
       const pages = processingPages();
@@ -597,7 +598,7 @@ Deno.test(
 Deno.test(
   'an empty required country group preserves all stored records',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const processing = await source(db, PROCESSING_PAGE);
       const pages = processingPages();
@@ -640,7 +641,7 @@ Deno.test(
 Deno.test(
   'a malformed newest draw keeps the previous complete set',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await ingestSource(
@@ -687,7 +688,7 @@ for (const [field, bad] of [
   Deno.test(
     `a malformed newest ${field} (${bad}) keeps the previous complete set and dates`,
     async () => {
-      const db = await openIngestDb();
+      const db = await openQwenIngestDb();
       try {
         const ee = await source(db, EE_PAGE);
         await ingestSource(
@@ -735,7 +736,7 @@ for (const [field, bad] of [
 Deno.test(
   'a valid comma-grouped count and CRS still replace the set',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ee = await source(db, EE_PAGE);
       await ingestSource(
@@ -774,7 +775,7 @@ Deno.test(
 Deno.test(
   'a valid empty news window removes the expired item from retrieval',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const news = await source(db, NEWS_PAGE);
       const feed = JSON.stringify({
@@ -808,7 +809,10 @@ Deno.test(
       await db.exec(
         `update public.knowledge_chunks set embedding = '${embedding(0.5)}'`
       );
-      assertEquals((await search(`$1::vector, 0.1, 10`)).length, 1);
+      assertEquals(
+        (await search(`$1::vector, 0.1, 10, null, '${QWEN}'`)).length,
+        1
+      );
 
       const result = await ingestSource(
         news,
@@ -821,8 +825,11 @@ Deno.test(
         chunks_created: 0,
       });
       assertEquals(await chunksOf(db, NEWS_PAGE), []);
-      assertEquals(await search(`$1::vector, 0.1, 10`), []);
-      assertEquals(await search(`$1::vector, 0.1, 10, 'Ontario'`), []);
+      assertEquals(await search(`$1::vector, 0.1, 10, null, '${QWEN}'`), []);
+      assertEquals(
+        await search(`$1::vector, 0.1, 10, 'Ontario', '${QWEN}'`),
+        []
+      );
       const doc = await documentOf(db, NEWS_PAGE);
       assertEquals(
         [doc.fetched_at, doc.published_at, doc.chunk_count],
@@ -852,7 +859,7 @@ Deno.test(
 // Falsifier: a second valid empty window fails metadata refresh instead of
 // advancing the source metadata while retrieval stays empty.
 Deno.test('repeated valid empty news windows refresh metadata', async () => {
-  const db = await openIngestDb();
+  const db = await openQwenIngestDb();
   try {
     const news = await source(db, NEWS_PAGE);
     const feed = JSON.stringify({
@@ -896,7 +903,7 @@ Deno.test('repeated valid empty news windows refresh metadata', async () => {
 Deno.test(
   'the Ontario page keeps its own update date in the database',
   async () => {
-    const db = await openIngestDb();
+    const db = await openQwenIngestDb();
     try {
       const ontario = (
         await createStore(supabaseHttp(db).client).listCrawlSources()

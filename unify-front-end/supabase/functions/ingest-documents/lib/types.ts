@@ -5,6 +5,8 @@ export type Metadata = Record<string, unknown>;
 export interface StoredDocument {
   id: number;
   contentHash: string | null;
+  /** The model that made the document's vectors. */
+  embeddingModel: string;
 }
 
 /** One chunk of a new generation, staged before the generation is promoted. */
@@ -46,14 +48,25 @@ export interface IngestStore {
   /** Only an enabled source may match. */
   findEnabledCrawlSourceByUrl(url: string): Promise<CrawlSource | null>;
   findDocument(url: string): Promise<StoredDocument | null>;
-  /** A token for this refresh, or null while another call holds the source. */
-  claimSource(sourceId: number, leaseSeconds: number): Promise<string | null>;
-  /** Stores one batch of at most 20 chunks and renews the lease. */
+  /**
+   * A token for this refresh, or null while another call holds the source,
+   * writers are paused or `embeddingModel` is not the model being served.
+   */
+  claimSource(
+    sourceId: number,
+    leaseSeconds: number,
+    embeddingModel: string
+  ): Promise<string | null>;
+  /**
+   * Stores one batch of at most 20 chunks and renews the lease. Throws when
+   * writers are paused or `embeddingModel` is not the model being served.
+   */
   stageChunks(
     sourceId: number,
     token: string,
     chunks: StagedChunk[],
-    leaseSeconds: number
+    leaseSeconds: number,
+    embeddingModel: string
   ): Promise<void>;
   /**
    * Replaces the document (title, metadata, hash) and all its chunks with the
@@ -69,13 +82,15 @@ export interface IngestStore {
       contentHash: string;
       chunkCount: number;
       updatedAt: string;
+      embeddingModel: string;
     }
   ): Promise<void>;
   /**
    * For an unchanged document: merges `documentPatch` into its metadata and
    * sets each group's chunk metadata. Returns false, and changes nothing, when
-   * the stored chunks are not exactly one generation with `contentHash`; the
-   * caller then replaces them.
+   * the stored chunks are not exactly one generation with `contentHash`, or the
+   * document or any chunk has another model than `embeddingModel` or no vector;
+   * the caller then replaces them.
    */
   refreshMetadata(
     sourceId: number,
@@ -84,6 +99,7 @@ export interface IngestStore {
       contentHash: string;
       documentPatch: Metadata;
       chunkGroups: ChunkMetadataGroup[];
+      embeddingModel: string;
     }
   ): Promise<boolean>;
   /** Ends the lease and drops staged chunks of this token only. */

@@ -14,7 +14,11 @@ import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
-import { INGEST_RELEASE_ORDER, openIngestDb } from './support/ingestDb.ts';
+import {
+  INGEST_RELEASE_ORDER,
+  openIngestDb,
+  openQwenIngestDb,
+} from './support/ingestDb.ts';
 import { postgrestShim } from './support/postgrestShim.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 
@@ -34,14 +38,16 @@ const PROCESSING_PAGE =
 function openDb(
   options: { recordSources: boolean } = { recordSources: true }
 ): Promise<Db> {
-  return openIngestDb(
-    options.recordSources
-      ? INGEST_RELEASE_ORDER
-      : INGEST_RELEASE_ORDER.slice(
+  // The store writes under the Qwen model, so a database that takes writes
+  // serves Qwen. The older slice has no control row and only lists sources.
+  return options.recordSources
+    ? openQwenIngestDb()
+    : openIngestDb(
+        INGEST_RELEASE_ORDER.slice(
           0,
           INGEST_RELEASE_ORDER.indexOf('crawl_sources_record_sources')
         )
-  );
+      );
 }
 
 const VECTOR = new Array(1536).fill(0.01);

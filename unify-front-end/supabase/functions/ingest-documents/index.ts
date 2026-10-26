@@ -1,13 +1,11 @@
 // @ts-nocheck
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { embedTexts, embedTextsChecked } from '../_shared/embeddings.ts';
 import { fetchWithRetry } from '../_shared/fetchWithRetry.ts';
 import { handleIngestRequest, isAuthorized } from './lib/handler.ts';
-import { createStore } from './lib/supabaseStore.ts';
+import { createRebuildStore, createStore } from './lib/supabaseStore.ts';
 import type { IngestDeps } from './lib/types.ts';
-
-const EMBEDDING_MODEL =
-  Deno.env.get('OPENAI_EMBEDDING_MODEL') || 'text-embedding-3-small';
 
 async function fetchPage(url: string): Promise<string> {
   const response = await fetchWithRetry(
@@ -27,31 +25,6 @@ async function fetchPage(url: string): Promise<string> {
   return await response.text();
 }
 
-function createEmbed(apiKey: string): IngestDeps['embed'] {
-  return async texts => {
-    const response = await fetchWithRetry(
-      'https://api.openai.com/v1/embeddings',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({ model: EMBEDDING_MODEL, input: texts }),
-      },
-      { timeoutMs: 30000, retries: 2, retryDelayMs: 500 }
-    );
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `OpenAI embedding error ${response.status}: ${errorText}`
-      );
-    }
-    const data = await response.json();
-    return data.data.map((d: { embedding: number[] }) => d.embedding);
-  };
-}
-
 Deno.serve(async (req: Request) => {
   try {
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
@@ -63,11 +36,11 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openaiApiKey) {
+    const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterApiKey) {
       // A configuration fault is not a source failure: fail the run loudly
       // instead of stamping every source as attempted.
-      throw new Error('Missing OPENAI_API_KEY');
+      throw new Error('Missing OPENROUTER_API_KEY');
     }
 
     const supabase = createClient(
@@ -76,9 +49,11 @@ Deno.serve(async (req: Request) => {
     );
     return await handleIngestRequest(req, {
       store: createStore(supabase),
+      rebuild: createRebuildStore(supabase),
       now: () => new Date(),
       fetchPage,
-      embed: createEmbed(openaiApiKey),
+      embed: texts => embedTexts(texts, openRouterApiKey),
+      embedChecked: texts => embedTextsChecked(texts, openRouterApiKey),
       serviceRoleKey,
     });
   } catch (error: unknown) {
