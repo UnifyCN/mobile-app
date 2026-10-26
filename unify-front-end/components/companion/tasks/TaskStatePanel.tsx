@@ -329,11 +329,12 @@ function PhaseMessage({
   taskRef: string;
 }) {
   const { t } = useTranslation();
-  const line = (text: string, tone: 'neutral' | 'error' = 'neutral') => (
-    <Text style={[styles.statusText, tone === 'error' && styles.statusError]}>
+  const line = (text: string, isError = false) => (
+    <Text style={[styles.statusText, isError && styles.statusError]}>
       {text}
     </Text>
   );
+  const errorLine = (text: string) => line(text, true);
   const action = (label: string, onPress: () => void, disabled = false) => (
     <Pressable
       accessibilityRole='button'
@@ -360,31 +361,29 @@ function PhaseMessage({
     case 'saved':
       return line(t('taskActions.saved'));
     case 'refused':
-      return line(
+      return errorLine(
         phase.reason === 'task_removed'
           ? t('taskActions.removed')
-          : t('taskActions.refused'),
-        'error'
+          : t('taskActions.refused')
       );
     case 'conflict':
-      return line(t('taskActions.conflict'), 'error');
+      return errorLine(t('taskActions.conflict'));
     case 'already_undone':
       return line(t('taskActions.alreadyUndone'));
     case 'signed_out':
-      return line(t('taskActions.signedOut'), 'error');
+      return errorLine(t('taskActions.signedOut'));
     case 'unavailable':
-      return line(t('taskActions.unavailable'), 'error');
+      return errorLine(t('taskActions.unavailable'));
     case 'pending':
     case 'lookup_failed':
       return (
         <View style={styles.statusRow}>
-          {line(
+          {errorLine(
             t(
               phase.phase === 'pending'
                 ? 'taskActions.pending'
                 : 'taskActions.lookupFailed'
-            ),
-            'error'
+            )
           )}
           {action(
             t('taskActions.checkAgain'),
@@ -395,7 +394,7 @@ function PhaseMessage({
     case 'not_applied':
       return (
         <View style={styles.statusRow}>
-          {line(t('taskActions.notApplied'), 'error')}
+          {errorLine(t('taskActions.notApplied'))}
           {action(
             t('taskActions.retry'),
             () => writable && void store?.retry(taskRef),
