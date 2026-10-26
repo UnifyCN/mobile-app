@@ -76,9 +76,13 @@ select s.id, s.source_kind, s.crawl_frequency_hours, s.last_crawled_at,
  where s.enabled
  order by s.id;
 
--- 5. Terminal results in the last 7 days. Each promotion, request-cap failure,
--- configuration change and contract failure wrote exactly one crawl_logs row
--- in the same transaction; superseded and retired jobs write none.
+-- 5. Terminal results in the last 7 days. Each promotion, request-cap failure
+-- and contract failure wrote exactly one crawl_logs row in the same
+-- transaction, and so did a configuration change that a writer found during
+-- its work ('Source configuration changed'). A job that
+-- ingest_generation_retire closed as 'configuration_changed' or
+-- 'model_changed' wrote no crawl_logs row, so a missing row there is not a
+-- lost error. Superseded jobs ('superseded', 'newer_generation') write none.
 select j.crawl_source_id, j.status, j.terminal_reason, j.closed_at,
        j.chunk_count, j.requests_reserved, j.request_cap,
        j.promoted_document_id, j.generation_fingerprint

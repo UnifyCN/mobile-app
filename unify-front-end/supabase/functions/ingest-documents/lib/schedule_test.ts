@@ -105,3 +105,65 @@ Deno.test('ineligible jobs are never selected and go to retirement', () => {
     retire: ['model', 'config', 'disabled'],
   });
 });
+
+// The one-source fallback (MAX_SOURCES_PER_RUN lowered to 1). A compatible
+// weekly job last served 48 hours ago and an hourly source attempted 2 hours ago.
+const hourly = source(1, { crawl_frequency_hours: 1, last_crawled_at: hoursAgo(2) });
+const weekly = source(2, { crawl_frequency_hours: 168, last_crawled_at: hoursAgo(1) });
+const waiting = job('older', 2, {
+  created_at: hoursAgo(72),
+  last_service_at: hoursAgo(48),
+  fetched_at: hoursAgo(72),
+  crawl_frequency_hours: 168,
+});
+
+// Falsifier: with one place, fresh work always wins and the older job waits.
+Deno.test('with one place, a continuation that waited longer is served', () => {
+  assertEquals(shape(selectWork([hourly, weekly], [waiting], NOW, 1)), { work: ['continue:older'], retire: [] });
+});
+
+// Falsifier: the times are compared as text, so a UTC offset or PostgREST's
+// microsecond form reverses which item waited longer.
+Deno.test('with one place, the wait is compared as instants in any timestamp form', () => {
+  const fresh = source(1, { crawl_frequency_hours: 1, last_crawled_at: '2026-10-25T09:00:00Z' });
+  const later = { ...waiting, last_service_at: '2026-10-25T06:00:00-05:00' };
+  assertEquals(shape(selectWork([fresh, weekly], [later], NOW, 1)).work, ['fresh:1']);
+  const offsetFresh = source(1, { crawl_frequency_hours: 1, last_crawled_at: '2026-10-25T04:30:00-05:00' });
+  const earlier = { ...waiting, last_service_at: '2026-10-25T08:00:00.123456+00:00' };
+  assertEquals(shape(selectWork([offsetFresh, weekly], [earlier], NOW, 1)).work, ['continue:older']);
+});
+
+// Falsifier: a never-served job counts as waiting forever and displaces a
+// source that waited longer, or a never-crawled source loses its place.
+Deno.test('with one place, never-served jobs wait from creation and never-crawled sources wait longest', () => {
+  const newJob = { ...waiting, last_service_at: null, created_at: hoursAgo(1), fetched_at: hoursAgo(1) };
+  const dayOld = source(1, { last_crawled_at: hoursAgo(30) });
+  assertEquals(shape(selectWork([dayOld, weekly], [newJob], NOW, 1)).work, ['fresh:1']);
+  const oldJob = { ...waiting, last_service_at: null, created_at: hoursAgo(48) };
+  assertEquals(shape(selectWork([hourly, weekly], [oldJob], NOW, 1)).work, ['continue:older']);
+  const neverCrawled = source(1, { last_crawled_at: null });
+  assertEquals(shape(selectWork([neverCrawled, weekly], [oldJob], NOW, 1)).work, ['fresh:1']);
+});
+
+// Falsifier: an older fresh source or an equal wait loses its place to the
+// continuation, so the choice is not deterministic.
+Deno.test('with one place, an older or equally old fresh source is served', () => {
+  const older = source(1, { crawl_frequency_hours: 1, last_crawled_at: hoursAgo(50) });
+  assertEquals(shape(selectWork([older, weekly], [waiting], NOW, 1)).work, ['fresh:1']);
+  const tied = source(1, { crawl_frequency_hours: 1, last_crawled_at: '2026-10-23T12:00:00Z' });
+  const sameInstant = { ...waiting, last_service_at: '2026-10-23T07:00:00.000000-05:00' };
+  assertEquals(shape(selectWork([tied, weekly], [sameInstant], NOW, 1)).work, ['fresh:1']);
+});
+
+// Falsifier: one place with one queue no longer serves that queue's head.
+Deno.test('with one place and one queue, the head of that queue is served', () => {
+  assertEquals(shape(selectWork([hourly, source(3, { last_crawled_at: null })], [], NOW, 1)).work, ['fresh:3']);
+  assertEquals(shape(selectWork([source(1, { last_crawled_at: hoursAgo(1) }), weekly], [waiting], NOW, 1)).work, ['continue:older']);
+});
+
+// Falsifier: the production two-source order changes with the waits.
+Deno.test('with two places, fresh then continuation whichever waited longer', () => {
+  assertEquals(shape(selectWork([hourly, weekly], [waiting], NOW, 2)).work, ['fresh:1', 'continue:older']);
+  const older = source(1, { crawl_frequency_hours: 1, last_crawled_at: hoursAgo(50) });
+  assertEquals(shape(selectWork([older, weekly], [waiting], NOW)).work, ['fresh:1', 'continue:older']);
+});

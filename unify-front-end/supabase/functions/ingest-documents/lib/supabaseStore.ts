@@ -86,7 +86,8 @@ export function createStore(supabase: SupabaseLike): IngestStore {
         .select(sourceColumns)
         .eq('id', id);
       if (call?.signal) query = query.abortSignal(call.signal);
-      const { data } = await query.maybeSingle();
+      const { data, error } = await query.maybeSingle();
+      fail(error, 'Reading the crawl source');
       return data ?? null;
     },
     async findEnabledCrawlSourceByUrl(url, call) {
@@ -96,7 +97,8 @@ export function createStore(supabase: SupabaseLike): IngestStore {
         .eq('url', url)
         .eq('enabled', true);
       if (call?.signal) query = query.abortSignal(call.signal);
-      const { data } = await query.maybeSingle();
+      const { data, error } = await query.maybeSingle();
+      fail(error, 'Reading the crawl source');
       return data ?? null;
     },
     async findDocument(url, call) {

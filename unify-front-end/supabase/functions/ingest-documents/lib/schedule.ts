@@ -31,10 +31,13 @@ const NEVER = '';
 /**
  * The scheduled selection, at most `limit` (2) sources, served in order. When
  * both queues have work: one fresh source in the existing due order, then one
- * continuation. Otherwise up to `limit` from the one queue. Continuations go
- * by last service, creation time and id, so a failing job moves behind the
- * others once its service starts. Jobs that can never promote are returned
- * for retirement and never selected.
+ * continuation. With one place (the memory-pressure fallback) the head that
+ * waited longer goes alone: a fresh source since its last attempt (never
+ * attempted waits longest), a job since its last service or creation; an
+ * equal wait goes to the fresh source. Otherwise up to `limit` from the one
+ * queue. Continuations go by last service, creation time and id, so a failing
+ * job moves behind the others once its service starts. Jobs that can never
+ * promote are returned for retirement and never selected.
  */
 export function selectWork(
   sources: CrawlSource[],
@@ -63,9 +66,18 @@ export function selectWork(
     now,
     limit
   ).map(source => ({ kind: 'fresh' as const, source }));
-  const work: WorkItem[] =
-    fresh.length > 0 && continuations.length > 0
-      ? [fresh[0], continuations[0]].slice(0, limit)
-      : [...fresh, ...continuations].slice(0, limit);
+  let work: WorkItem[];
+  if (fresh.length > 0 && continuations.length > 0) {
+    const [f] = fresh;
+    const [c] = continuations;
+    const since = (t: string | null) => (t === null ? -Infinity : Date.parse(t));
+    const continuationFirst =
+      limit === 1 &&
+      since(c.job.last_service_at ?? c.job.created_at) <
+        since(f.source.last_crawled_at);
+    work = continuationFirst ? [c] : [f, c].slice(0, limit);
+  } else {
+    work = [...fresh, ...continuations].slice(0, limit);
+  }
   return { work, retire };
 }
