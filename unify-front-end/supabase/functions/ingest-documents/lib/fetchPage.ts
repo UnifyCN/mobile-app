@@ -25,7 +25,7 @@ export async function fetchSourcePage(
     { timeoutMs: 15000, retries: 2, retryDelayMs: 500 }
   );
   if (!response.ok) {
-    await response.body?.cancel().catch(() => {});
+    cancelQuietly(response.body);
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
   return await readWithin(
@@ -59,7 +59,7 @@ async function readWithin(
       parts.push(value);
     }
   } catch (error) {
-    await reader.cancel().catch(() => {});
+    cancelQuietly(reader);
     throw error;
   } finally {
     signal?.removeEventListener('abort', onAbort);
@@ -71,4 +71,18 @@ async function readWithin(
     offset += part.byteLength;
   }
   return new TextDecoder().decode(bytes);
+}
+
+/**
+ * Starts cancelling a body without waiting for it: a stream's cleanup can stay
+ * pending or fail, and neither may delay or replace the caller's error.
+ */
+function cancelQuietly(
+  body: { cancel(): Promise<void> } | null | undefined
+): void {
+  try {
+    body?.cancel().catch(() => {});
+  } catch {
+    // A cleanup that throws at once is ignored too.
+  }
 }

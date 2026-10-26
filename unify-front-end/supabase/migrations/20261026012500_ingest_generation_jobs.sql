@@ -23,8 +23,8 @@
 --       caller's request id, the issuing lease token, the exact ordered chunk
 --       indexes and text hashes, and the outcome.
 --   ingest_generation_* functions      open, begin_service, reserve, stage,
---       promote, reject, supersede (live-write path: current lease, serving
---       model and contract, writers enabled); retire (service-only private
+--       promote, reject, supersede, refresh (live-write path: current lease,
+--       serving model and contract, writers enabled); retire (service-only private
 --       cleanup, no lease); list_open and status (read-only).
 --
 -- Rules the functions enforce:
@@ -34,8 +34,9 @@
 --     write sees the change.
 --   * A job binds the configuration its input was fetched with (url, ordered
 --     data_urls, source_kind, province, enabled, label, crawl frequency).
---     Opening compares the caller's configuration with the locked current
---     row; reserve, stage and promote compare the stored one again. A changed
+--     Opening and the unchanged-content refresh compare the caller's
+--     configuration with the locked current row; reserve, stage and promote
+--     compare the stored one again. A changed
 --     or disabled source closes the job and never receives its text.
 --   * Every reservation is debited once, before any vector can be staged, up
 --     to 2 * ceil(n / 20) + 5 per job. A stage must name its reservation, the
@@ -1041,6 +1042,57 @@ begin
 end;
 $$;
 
+-- A fresh fetch found the live document unchanged: in one transaction, compare
+-- the configuration the caller fetched with against the locked current row,
+-- supersede the source's open job, and refresh the live dates and province
+-- (refresh_knowledge_metadata, unchanged). The source row stays share-locked
+-- until the transaction ends, so a configuration change either waits for this
+-- write or is seen by it. A changed or disabled source raises and changes
+-- nothing. Returns false, changing no live row, when the live chunks are not
+-- one generation of this content and model: the caller then publishes anew.
+create or replace function public.ingest_generation_refresh(
+  p_source_id bigint,
+  p_token uuid,
+  p_source_config jsonb,
+  p_embedding_model text,
+  p_contract text,
+  p_content_hash text,
+  p_document_patch jsonb,
+  p_chunk_groups jsonb,
+  p_lease_seconds integer
+)
+returns boolean
+language plpgsql
+set search_path = ''
+set lock_timeout = '5s'
+as $$
+declare
+  v_current jsonb;
+  v_job uuid;
+begin
+  perform public.ingest_generation_lock_writer(
+    p_source_id, p_token, p_embedding_model, p_contract, p_lease_seconds
+  );
+  v_current := public.ingest_generation_source_config(p_source_id);
+  if v_current is null or v_current is distinct from p_source_config then
+    raise exception 'Source configuration changed';
+  end if;
+  if not (v_current ->> 'enabled')::boolean then
+    raise exception 'Source is disabled';
+  end if;
+  select id into v_job from public.knowledge_generation_jobs
+   where crawl_source_id = p_source_id and status = 'open'
+   for update;
+  if v_job is not null then
+    perform public.ingest_generation_close(v_job, 'superseded', 'superseded', null, null);
+  end if;
+  return public.refresh_knowledge_metadata(
+    p_source_id, p_token, p_content_hash, p_document_patch, p_chunk_groups,
+    p_embedding_model
+  );
+end;
+$$;
+
 -- Service-only cleanup, separate from the live-write path and needing no
 -- lease: closes an open job that can never promote (another serving model or
 -- contract, or a changed, disabled or deleted source) and drops only its
@@ -1135,6 +1187,7 @@ revoke execute on function public.ingest_generation_promote(uuid, uuid, text, te
 revoke execute on function public.ingest_generation_begin_service(uuid, uuid, text, text, integer) from public, anon, authenticated;
 revoke execute on function public.ingest_generation_reject(uuid, uuid, uuid, text, text, text, integer) from public, anon, authenticated;
 revoke execute on function public.ingest_generation_supersede(bigint, uuid, text, text, integer) from public, anon, authenticated;
+revoke execute on function public.ingest_generation_refresh(bigint, uuid, jsonb, text, text, text, jsonb, jsonb, integer) from public, anon, authenticated;
 revoke execute on function public.ingest_generation_retire(uuid) from public, anon, authenticated;
 revoke execute on function public.ingest_generation_list_open() from public, anon, authenticated;
 grant execute on function public.ingest_generation_source_config(bigint) to service_role;
@@ -1151,5 +1204,6 @@ grant execute on function public.ingest_generation_promote(uuid, uuid, text, tex
 grant execute on function public.ingest_generation_begin_service(uuid, uuid, text, text, integer) to service_role;
 grant execute on function public.ingest_generation_reject(uuid, uuid, uuid, text, text, text, integer) to service_role;
 grant execute on function public.ingest_generation_supersede(bigint, uuid, text, text, integer) to service_role;
+grant execute on function public.ingest_generation_refresh(bigint, uuid, jsonb, text, text, text, jsonb, jsonb, integer) to service_role;
 grant execute on function public.ingest_generation_retire(uuid) to service_role;
 grant execute on function public.ingest_generation_list_open() to service_role;

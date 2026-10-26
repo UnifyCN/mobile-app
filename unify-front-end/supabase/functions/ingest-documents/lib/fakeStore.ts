@@ -13,7 +13,6 @@ import {
 import type { CrawlSource } from './pickDueSources.ts';
 import { sourceConfig } from './supabaseStore.ts';
 import type {
-  ChunkMetadataGroup,
   CrawlLogEntry,
   IngestStore,
   JobStatus,
@@ -258,21 +257,22 @@ export class FakeStore implements IngestStore {
     this.stagedModel.delete(token);
     return Promise.resolve();
   }
-  refreshMetadata(
-    sourceId: number,
-    token: string,
-    input: {
-      contentHash: string;
-      documentPatch: Metadata;
-      chunkGroups: ChunkMetadataGroup[];
-      embeddingModel: string;
-    }
-  ) {
+  refreshUnchanged(input: Parameters<IngestStore['refreshUnchanged']>[0]) {
+    const { sourceId } = input;
     try {
-      this.guardWrite(input.embeddingModel);
-      this.owns(sourceId, token);
+      this.guardJobWrite(sourceId, input.token, input.embeddingModel, input.contract);
+      const current = this.currentConfig(sourceId);
+      if (current === null || JSON.stringify(current) !== JSON.stringify(input.sourceConfig)) {
+        throw new Error('Source configuration changed');
+      }
+      if (!current.enabled) throw new Error('Source is disabled');
     } catch (error) {
       return Promise.reject(error);
+    }
+    const open = this.jobs.find(j => j.sourceId === sourceId && j.status === 'open');
+    if (open) {
+      this.close(open, 'superseded', 'superseded', null);
+      open.rows.clear();
     }
     const url = this.sources.find(s => s.id === sourceId)!.url;
     const d = this.documents.find(x => x.url === url);
@@ -661,18 +661,6 @@ export class FakeStore implements IngestStore {
         job.rows.clear();
       }
       return Promise.resolve(this.summary(job));
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-  supersedeOpenJob(input: Parameters<IngestStore['supersedeOpenJob']>[0]) {
-    try {
-      this.guardJobWrite(input.sourceId, input.token, input.embeddingModel, input.contract);
-      const job = this.jobs.find(j => j.sourceId === input.sourceId && j.status === 'open');
-      if (!job) return Promise.resolve({ superseded: false });
-      this.close(job, 'superseded', 'superseded', null);
-      job.rows.clear();
-      return Promise.resolve({ superseded: true });
     } catch (error) {
       return Promise.reject(error);
     }

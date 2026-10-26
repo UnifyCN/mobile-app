@@ -60,7 +60,8 @@ export function isAuthorized(req: Request, serviceRoleKey: string): boolean {
 
 /** What the invocation has done so far, answerable at any moment. */
 class Report {
-  private selected: number[] = [];
+  /** Null until the sources are chosen. */
+  private selected: number[] | null = null;
   private results: SourceResult[] = [];
   private progress = new Map<number, Progress>();
   private skippedStart = new Set<number>();
@@ -81,8 +82,25 @@ class Report {
   finish(result: SourceResult): void {
     this.results.push(result);
   }
-  /** Started but unfinished sources are pending at the backstop. */
+  /** Whether the body was read and the sources chosen. */
+  get setupComplete(): boolean {
+    return this.selected !== null;
+  }
+  /**
+   * Started but unfinished sources are pending at the backstop. Before the
+   * sources are chosen nothing is known about them, so that is all it says.
+   */
   body(atBackstop: boolean) {
+    if (this.selected === null) {
+      return {
+        version: RESPONSE_VERSION,
+        results: [],
+        unstarted_source_ids: null,
+        provider_sends: this.budget.sends,
+        setup_complete: false,
+        stop_reason: 'response_backstop',
+      };
+    }
     const finished = new Set(this.results.map(r => r.source_id));
     const results = [...this.results];
     if (atBackstop) {
@@ -116,36 +134,55 @@ export async function handleIngestRequest(
       return json({ error: 'Unauthorized' }, 401);
     }
 
-    const parsed = await readBody(req);
-    if (parsed === null) return json({ error: 'Invalid JSON body' }, 400);
-
-    // The one administrative action. Anything else with an action is refused,
-    // so a mistyped action can never start a crawl.
-    if (parsed.action !== undefined) {
-      return parsed.action === 'embedding_rebuild'
-        ? await handleRebuildAction(parsed, deps)
-        : json({ error: 'Unknown action' }, 400);
-    }
-
-    const selection = await select(parsed, deps, budget);
-    if (selection instanceof Response) return selection;
-
+    // Reading the body, choosing the sources and serving them all run under
+    // the response backstop.
     const report = new Report(budget);
-    report.select(selection);
-    const work = serve(selection, deps, budget, report);
+    const work = run(req, deps, budget, report);
     const first = await Promise.race([
-      work.then(() => 'done' as const),
+      work,
       budget.backstop.then(() => 'backstop' as const),
     ]);
-    if (first === 'backstop') {
-      // Nothing may start now; the work in flight stops at its next check.
-      budget.close();
-      work.catch(() => {});
+    if (first !== 'backstop') {
+      // The administrative rebuild runs as before, outside the crawl's budget.
+      return first instanceof Response ? first : await first.rebuild();
     }
-    return json(report.body(first === 'backstop'));
+    // Nothing may start now; the work in flight stops at its next check.
+    budget.close();
+    work.catch(() => {});
+    return json(report.body(true), report.setupComplete ? 200 : 503);
   } finally {
     budget.dispose();
   }
+}
+
+/**
+ * One request after authentication: its answer, or the administrative
+ * rebuild to run. After the backstop every store call is refused and no
+ * source starts, so a step that finishes late starts nothing.
+ */
+async function run(
+  req: Request,
+  deps: HandlerDeps,
+  budget: Budget,
+  report: Report
+): Promise<Response | { rebuild: () => Promise<Response> }> {
+  const parsed = await readBody(req);
+  if (parsed === null) return json({ error: 'Invalid JSON body' }, 400);
+
+  // The one administrative action. Anything else with an action is refused,
+  // so a mistyped action can never start a crawl.
+  if (parsed.action !== undefined) {
+    return parsed.action === 'embedding_rebuild'
+      ? { rebuild: () => handleRebuildAction(parsed, deps) }
+      : json({ error: 'Unknown action' }, 400);
+  }
+
+  const selection = await select(parsed, deps, budget);
+  if (selection instanceof Response) return selection;
+
+  report.select(selection);
+  await serve(selection, deps, budget, report);
+  return json(report.body(false));
 }
 
 /** The sources this call serves, or a refusal for a bad manual call. */

@@ -139,7 +139,7 @@ export async function embedTextsChecked(
     throw new EmbeddingError('network', 'Embedding request did not complete');
   }
   if (!response.ok) {
-    await response.body?.cancel();
+    cancelQuietly(response.body);
     throw new EmbeddingError(
       'http',
       `Embedding request failed with HTTP ${response.status}`,
@@ -202,7 +202,7 @@ async function readText(
       parts.push(value);
     }
   } catch (error) {
-    await reader.cancel().catch(() => {});
+    cancelQuietly(reader);
     if (error instanceof EmbeddingError) throw error;
     throw new EmbeddingError('network', 'Embedding request did not complete');
   } finally {
@@ -216,6 +216,20 @@ async function readText(
   }
   // Like response.json(): UTF-8, and a leading byte order mark is dropped.
   return new TextDecoder().decode(bytes);
+}
+
+/**
+ * Starts cancelling a body without waiting for it: a stream's cleanup can stay
+ * pending or fail, and neither may delay or replace the caller's error.
+ */
+function cancelQuietly(
+  body: { cancel(): Promise<void> } | null | undefined
+): void {
+  try {
+    body?.cancel().catch(() => {});
+  } catch {
+    // A cleanup that throws at once is ignored too.
+  }
 }
 
 function invalid(reason: string, identity?: EmbeddingIdentity): EmbeddingError {

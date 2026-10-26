@@ -151,22 +151,6 @@ export function createStore(supabase: SupabaseLike): IngestStore {
       });
       fail(error, 'Promoting the new chunks');
     },
-    async refreshMetadata(sourceId, token, input, call) {
-      const data = await rpc<boolean | null>(
-        'refresh_knowledge_metadata',
-        {
-          p_source_id: sourceId,
-          p_token: token,
-          p_content_hash: input.contentHash,
-          p_document_patch: input.documentPatch,
-          p_chunk_groups: input.chunkGroups,
-          p_embedding_model: input.embeddingModel,
-        },
-        'Metadata refresh',
-        call
-      );
-      return data === true;
-    },
     async releaseSource(sourceId, token, call) {
       await rpc(
         'release_crawl_source',
@@ -288,19 +272,24 @@ export function createStore(supabase: SupabaseLike): IngestStore {
         call
       );
     },
-    supersedeOpenJob(input, call) {
-      return rpc(
-        'ingest_generation_supersede',
+    async refreshUnchanged(input, call) {
+      const data = await rpc<boolean | null>(
+        'ingest_generation_refresh',
         {
           p_source_id: input.sourceId,
           p_token: input.token,
+          p_source_config: input.sourceConfig,
           p_embedding_model: input.embeddingModel,
           p_contract: input.contract,
+          p_content_hash: input.contentHash,
+          p_document_patch: input.documentPatch,
+          p_chunk_groups: input.chunkGroups,
           p_lease_seconds: LEASE_SECONDS,
         },
-        'Superseding the open generation',
+        'Metadata refresh',
         call
       );
+      return data === true;
     },
     retireJob(jobId, call) {
       return rpc(

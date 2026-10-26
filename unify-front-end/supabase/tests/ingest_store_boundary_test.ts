@@ -352,9 +352,9 @@ Deno.test(
     );
     assertEquals(workDates, [{ d: '2026-10-28' }]);
     // The attempt is stored right after the claim, before any other work.
-    // Any open job of other text is superseded, so it can never promote over
-    // this verified version. One fenced refresh call carries the four date
-    // groups. No chunk row is written through the table API, and nothing is
+    // One fenced refresh call checks the fetched configuration, supersedes
+    // any open job of other text (so it can never promote over this verified
+    // version) and carries the four date groups. No chunk row is written through the table API, and nothing is
     // embedded again.
     assertEquals(
       run.requests
@@ -363,8 +363,7 @@ Deno.test(
       [
         'claim_crawl_source',
         'record_crawl_attempt',
-        'ingest_generation_supersede',
-        'refresh_knowledge_metadata',
+        'ingest_generation_refresh',
         'release_crawl_source',
       ]
     );

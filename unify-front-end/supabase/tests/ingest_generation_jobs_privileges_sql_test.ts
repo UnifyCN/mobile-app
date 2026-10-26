@@ -17,6 +17,7 @@ export const GENERATION_FUNCTIONS = [
   'ingest_generation_promote(uuid, uuid, text, text, integer, integer)',
   'ingest_generation_reject(uuid, uuid, uuid, text, text, text, integer)',
   'ingest_generation_supersede(bigint, uuid, text, text, integer)',
+  'ingest_generation_refresh(bigint, uuid, jsonb, text, text, text, jsonb, jsonb, integer)',
   'ingest_generation_retire(uuid)',
   'ingest_generation_list_open()',
   'ingest_generation_status(uuid, uuid, uuid)',

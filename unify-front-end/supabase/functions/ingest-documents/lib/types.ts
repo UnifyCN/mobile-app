@@ -204,24 +204,6 @@ export interface IngestStore {
       embeddingModel: string;
     }
   ): Promise<void>;
-  /**
-   * For an unchanged document: merges `documentPatch` into its metadata and
-   * sets each group's chunk metadata. Returns false, and changes nothing, when
-   * the stored chunks are not exactly one generation with `contentHash`, or the
-   * document or any chunk has another model than `embeddingModel` or no vector;
-   * the caller then replaces them.
-   */
-  refreshMetadata(
-    sourceId: number,
-    token: string,
-    input: {
-      contentHash: string;
-      documentPatch: Metadata;
-      chunkGroups: ChunkMetadataGroup[];
-      embeddingModel: string;
-    },
-    call?: CallOptions
-  ): Promise<boolean>;
   /** Ends the lease and drops staged chunks of this token only. */
   releaseSource(sourceId: number, token: string, call?: CallOptions): Promise<void>;
   /** Stamps the source's last attempt, whatever its outcome. Never moves it back. */
@@ -272,10 +254,26 @@ export interface IngestStore {
     input: JobWrite & { jobId: string; requestId: string; error: string; durationMs: number },
     call?: CallOptions
   ): Promise<JobSummary>;
-  supersedeOpenJob(
-    input: JobWrite & { sourceId: number },
+  /**
+   * For an unchanged document, in one transaction under the live lease:
+   * refuses (throws) when the source's configuration is no longer
+   * `sourceConfig` or the source is disabled; supersedes the source's open
+   * job, which holds other text; then merges `documentPatch` into the
+   * document's metadata and sets each group's chunk metadata. Returns false,
+   * changing no live row, when the stored chunks are not exactly one
+   * generation with `contentHash`, or the document or any chunk has another
+   * model or no vector; the caller then replaces them.
+   */
+  refreshUnchanged(
+    input: JobWrite & {
+      sourceId: number;
+      sourceConfig: SourceConfig;
+      contentHash: string;
+      documentPatch: Metadata;
+      chunkGroups: ChunkMetadataGroup[];
+    },
     call?: CallOptions
-  ): Promise<{ superseded: boolean }>;
+  ): Promise<boolean>;
   /** Service-only cleanup of a job that can never promote. No lease. */
   retireJob(jobId: string, call?: CallOptions): Promise<{ retired: boolean }>;
   listOpenJobs(call?: CallOptions): Promise<OpenJob[]>;

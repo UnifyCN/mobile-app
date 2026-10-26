@@ -287,7 +287,10 @@ Deno.test('a source that becomes national drops the province on the next crawl',
   });
   await ingestSource(provincial, h.deps);
 
-  await ingestSource({ ...provincial, province: null }, h.deps);
+  // The stored row changes, and the next crawl reads it.
+  const national = { ...provincial, province: null };
+  h.store.sources[0] = national;
+  await ingestSource(national, h.deps);
 
   const doc = h.store.documents[0];
   assertEquals(doc.metadata.province, null);

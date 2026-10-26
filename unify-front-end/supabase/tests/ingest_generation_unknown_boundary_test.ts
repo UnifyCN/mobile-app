@@ -12,6 +12,7 @@ import {
   assert,
   assertEquals,
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
+import { createClient } from 'npm:@supabase/supabase-js@2.50.4';
 import { EmbeddingError } from '../functions/_shared/embeddings.ts';
 import { handleIngestRequest } from '../functions/ingest-documents/lib/handler.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
@@ -234,3 +235,100 @@ Deno.test('after the backstop a returning call starts nothing', opts, async () =
     await db.close();
   }
 });
+
+/**
+ * A client whose first open is answered 504 without reaching the database.
+ * With `commitBeforeRelease` the saved open runs when the lease release
+ * arrives: after the status read found nothing, and before the release.
+ */
+function gatewayOpen(db: Db, commitBeforeRelease: boolean) {
+  const http = supabaseHttp(db);
+  let saved: (() => Promise<Response>) | undefined;
+  const late: number[] = [];
+  const fetch: typeof globalThis.fetch = async (input, init) => {
+    const path = new URL(String(input)).pathname;
+    if (path.endsWith('/rpc/ingest_generation_open') && !saved) {
+      saved = () => http.fetch(input, { ...init, signal: undefined });
+      return new Response(JSON.stringify({ message: 'Gateway timeout' }), {
+        status: 504,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    if (path.endsWith('/rpc/release_crawl_source') && saved && commitBeforeRelease) {
+      const open = saved;
+      saved = () => Promise.reject(new Error('already run'));
+      commitBeforeRelease = false;
+      late.push((await open()).status);
+    }
+    return await http.fetch(input, init);
+  };
+  const client = createClient('https://local-emulation.test', 'test-key', {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    global: { fetch },
+  });
+  return { client, late };
+}
+
+for (const visible of [true, false]) {
+  // Falsifier: an open whose outcome is unknown, and that the status read does
+  // not find yet, is reported as a terminal error, loses its operation id, or
+  // writes a terminal crawl log; or a provider request is sent before the
+  // outcome is known.
+  Deno.test(
+    `an unknown open not found by status stays pending (${visible ? 'commits later' : 'never commits'})`,
+    opts,
+    async () => {
+      const db = await openQwenIngestDb();
+      try {
+        const source = await htmlSource(db);
+        const gateway = gatewayOpen(db, visible);
+        const first = await invoke(db, source.id, { client: gateway.client });
+        const [result] = first.body.results;
+
+        assertEquals(gateway.late, visible ? [200] : []);
+        assertEquals(
+          [
+            result.status,
+            result.stop_reason,
+            result.unknown_outcome,
+            result.job_id,
+            result.staged,
+            result.remaining,
+            result.reserved,
+          ],
+          ['pending', 'unknown_outcome', true, null, null, null, null]
+        );
+        assert(typeof result.operation_id === 'string');
+        assertEquals(first.sent.length, 0, 'no provider request while unresolved');
+        assertEquals(await crawlLogs(db, source.id), [], 'no terminal event');
+        const opened = await rows<{ operation_ids: string[]; status: string }>(
+          db,
+          `select operation_ids::text[] as operation_ids, status
+             from public.knowledge_generation_jobs`
+        );
+        assertEquals(
+          opened,
+          visible ? [{ operation_ids: [result.operation_id as string], status: 'open' }] : []
+        );
+
+        // The next call reconciles: it continues the committed job, or opens
+        // a new one; either way one generation is published.
+        const second = await invoke(db, source.id, { at: '2026-10-25T01:00:00.000Z' });
+        assertEquals(second.body.results[0].status, 'success');
+        const promoted = await rows<{ operation_ids: string[] }>(
+          db,
+          `select operation_ids::text[] as operation_ids
+             from public.knowledge_generation_jobs where status = 'promoted'`
+        );
+        assertEquals(promoted.length, 1);
+        assertEquals(
+          promoted[0].operation_ids.includes(result.operation_id as string),
+          visible
+        );
+        assertEquals((await crawlLogs(db, source.id)).map(l => l.status), ['success']);
+      } finally {
+        await db.close();
+      }
+    }
+  );
+}

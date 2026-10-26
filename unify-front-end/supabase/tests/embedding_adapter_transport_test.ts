@@ -80,7 +80,7 @@ async function settleWithin<T>(
   promise: Promise<T>,
   ms: number
 ): Promise<{ settled: boolean; value?: T; error?: unknown }> {
-  let timer: number | undefined;
+  let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<{ settled: false }>(resolve => {
     timer = setTimeout(() => resolve({ settled: false }), ms);
   });
@@ -286,3 +286,117 @@ Deno.test(
     }
   }
 );
+
+/**
+ * A body whose cancellation cleanup never finishes on its own (`pending`) or
+ * fails (`rejected`). Both are valid stream behaviour. `release` ends a
+ * pending cleanup so the test leaves nothing behind.
+ */
+function cleanupBody(
+  cleanup: 'pending' | 'rejected',
+  body: 'stall' | 'oversize',
+  status = 200
+) {
+  let release = () => {};
+  const done = new Promise<void>(resolve => (release = resolve));
+  let started!: () => void;
+  const cancelStarted = new Promise<void>(resolve => (started = resolve));
+  let readStarted!: () => void;
+  const reading = new Promise<void>(resolve => (readStarted = resolve));
+  const stream = new ReadableStream<Uint8Array>(
+    {
+      pull(controller) {
+        readStarted();
+        if (body === 'oversize') {
+          controller.enqueue(new Uint8Array(10));
+          return;
+        }
+        return new Promise<void>(() => {}); // never resolves
+      },
+      cancel() {
+        started();
+        return cleanup === 'pending'
+          ? done
+          : Promise.reject(new Error('private-cleanup-detail'));
+      },
+    },
+    { highWaterMark: 0 }
+  );
+  return { response: new Response(stream, { status }), cancelStarted, reading, release };
+}
+
+const ABORTED = ['network', 'Embedding request did not complete'];
+const TOO_LARGE = ['response', 'Invalid embedding response: the body is too large'];
+
+for (const cleanup of ['pending', 'rejected'] as const) {
+  for (const trigger of ['abort', 'oversize'] as const) {
+    // Falsifier: the required error waits for the stream's cancellation
+    // cleanup, so a cleanup that never finishes keeps the call open; or a
+    // failed cleanup replaces the error or goes unhandled.
+    Deno.test(
+      `${trigger} returns its fixed error while cancellation cleanup is ${cleanup}`,
+      opts,
+      async () => {
+        const body = cleanupBody(cleanup, trigger === 'abort' ? 'stall' : 'oversize');
+        try {
+          await withFetch(
+            () => body.response,
+            async () => {
+              const caller = new AbortController();
+              const call = embedTextsChecked(['one'], 'key', {
+                signal: caller.signal,
+                maxResponseBytes: 5,
+                retries: 0,
+              });
+              await body.reading;
+              if (trigger === 'abort') caller.abort();
+              await body.cancelStarted;
+
+              const outcome = await settleWithin(call, 500);
+              assert(outcome.settled, 'the call waits for cancellation cleanup');
+              assertInstanceOf(outcome.error, EmbeddingError);
+              const error = outcome.error as EmbeddingError;
+              assertEquals(
+                [error.category, error.message],
+                trigger === 'abort' ? ABORTED : TOO_LARGE
+              );
+            }
+          );
+        } finally {
+          body.release();
+        }
+      }
+    );
+  }
+
+  // Falsifier: an HTTP error waits for its body's cancellation cleanup, or a
+  // failed cleanup is thrown instead of the HTTP error. The call uses the
+  // caller defaults: a 400 is not retried.
+  Deno.test(
+    `an HTTP error returns its fixed error while body cleanup is ${cleanup}`,
+    opts,
+    async () => {
+      const body = cleanupBody(cleanup, 'stall', 400);
+      try {
+        await withFetch(
+          () => body.response,
+          async sent => {
+            const outcome = await settleWithin(embedTextsChecked(['one'], 'key'), 500);
+            assert(outcome.settled, 'the call waits for cancellation cleanup');
+            assertInstanceOf(outcome.error, EmbeddingError);
+            const error = outcome.error as EmbeddingError;
+            assertEquals(
+              [error.category, error.message, error.status],
+              ['http', 'Embedding request failed with HTTP 400', 400]
+            );
+            assertEquals(sent.length, 1);
+            const started = await settleWithin(body.cancelStarted, 500);
+            assert(started.settled, 'the error body was not cancelled');
+          }
+        );
+      } finally {
+        body.release();
+      }
+    }
+  );
+}

@@ -244,7 +244,7 @@ async function serveSource(
     // Best effort: an unreleased lease expires on its own. Never after the
     // backstop.
     if (!budget.closed) {
-      await call(run, c => store.releaseSource(source.id, token, c)).catch(
+      await rpc(run, c => store.releaseSource(source.id, token, c)).catch(
         error => console.error(`Lease release failed for ${source.url}: ${error}`)
       );
     }
@@ -266,7 +266,7 @@ async function log(
 ): Promise<void> {
   if (run.budget.closed || result.status === 'pending') return;
   const status = result.status;
-  await call(run, c =>
+  await rpc(run, c =>
     deps.store.logCrawl(
       {
         crawl_source_id: source.id,
@@ -283,11 +283,25 @@ async function log(
 }
 
 /**
- * One database call: refused after the backstop, its wait bounded by the
- * remaining response time and 15 seconds. A call that ends without an answer
- * marks the source's outcome unknown.
+ * One database call that starts new work: refused, like any other work, once
+ * the work deadline or the source's share has passed.
  */
 async function call<T>(
+  run: SourceRun,
+  f: (call: CallOptions) => Promise<T>
+): Promise<T> {
+  assertWork(run);
+  return await rpc(run, f);
+}
+
+/**
+ * One database call: refused after the backstop, its wait bounded by the
+ * remaining response time and 15 seconds. A call that ends without an answer
+ * marks the source's outcome unknown. Without the work check it is only for
+ * cleanup, status reads and storing the answer of a provider call already
+ * made.
+ */
+async function rpc<T>(
   run: SourceRun,
   f: (call: CallOptions) => Promise<T>
 ): Promise<T> {
@@ -347,21 +361,27 @@ async function fetchWithin<T>(
 }
 
 /**
- * Unchanged content: the source's open job, if any, holds other text and must
- * never promote over this verified version, so it is superseded first.
+ * Unchanged content: one database transaction checks the fetched
+ * configuration, supersedes the source's open job (it holds other text and
+ * must never promote over this verified version) and refreshes the dates.
  */
 async function refreshUnchanged(
   run: SourceRun,
   deps: IngestDeps,
   source: CrawlSource,
   attempt: Attempt,
-  input: Parameters<IngestDeps['store']['refreshMetadata']>[2]
+  input: { contentHash: string; documentPatch: Metadata; chunkGroups: ChunkMetadataGroup[] }
 ): Promise<boolean> {
-  await call(run, c =>
-    deps.store.supersedeOpenJob({ ...writer(attempt), sourceId: source.id }, c)
-  );
   return await call(run, c =>
-    deps.store.refreshMetadata(source.id, attempt.token, input, c)
+    deps.store.refreshUnchanged(
+      {
+        ...writer(attempt),
+        sourceId: source.id,
+        sourceConfig: sourceConfig(source),
+        ...input,
+      },
+      c
+    )
   );
 }
 
@@ -403,7 +423,6 @@ async function crawlHtml(
         province: stamp.province,
       },
       chunkGroups: [{ metadata: chunkMetadata(stamp), indexes: null }],
-      embeddingModel: EMBEDDING_MODEL,
     }))
   ) {
     return { result: { source_id: source.id, status: 'skipped' }, logged: false };
@@ -484,7 +503,6 @@ async function crawlRecords(
         chunks.length === 0
           ? [{ metadata: {}, indexes: [] }]
           : groupByMetadata(chunks.map(chunk => chunk.metadata)),
-      embeddingModel: EMBEDDING_MODEL,
     }))
   ) {
     return { result: { source_id: source.id, status: 'skipped' }, logged: false };
@@ -705,7 +723,7 @@ async function runJob(
         // The answer broke the contract: the job fails, its old document stays.
         const rejected = note(
           run,
-          await call(run, c =>
+          await rpc(run, c =>
             store.rejectBatch(
               {
                 ...writer(attempt),
@@ -737,7 +755,7 @@ async function runJob(
     }
     state = note(
       run,
-      await call(run, c =>
+      await rpc(run, c =>
         store.stageBatch(
           {
             ...writer(attempt),
@@ -756,7 +774,6 @@ async function runJob(
     );
   }
   if (state.status === 'open') {
-    assertWork(run);
     state = note(
       run,
       await call(run, c =>
@@ -802,9 +819,10 @@ function closedOutcome(
 }
 
 /**
- * The outcome of a source whose work stopped early. With an open job it is
- * pending, with what the database said; an unknown database outcome is read
- * back first when time allows. Without a job it is an error, as before.
+ * The outcome of a source whose work stopped early. With an open job, or an
+ * open whose outcome is unknown, it is pending, with what the database said;
+ * an unknown database outcome is read back first when time allows. Without a
+ * job it is an error, as before.
  */
 async function stopped(
   deps: IngestDeps,
@@ -829,7 +847,7 @@ async function stopped(
         : null;
     if (key) {
       try {
-        const status = await call(run, c => deps.store.generationStatus(key, c));
+        const status = await rpc(run, c => deps.store.generationStatus(key, c));
         if (status.found) {
           note(run, status as JobSummary);
           progress.statusRead = true;
@@ -856,7 +874,11 @@ async function stopped(
           : progress.job_id !== null
             ? 'store_error'
             : null;
-  if (reason === null || progress.job_id === null) {
+  // An open whose outcome is unknown, and not found yet, may still commit: it
+  // stays pending under its operation id until a later call finds out.
+  const openUnknown =
+    progress.unknown && progress.job_id === null && progress.operation_id !== null;
+  if (reason === null || (progress.job_id === null && !openUnknown)) {
     console.error(`Crawl failed for ${source.url}: ${message}`);
     return {
       result: {
