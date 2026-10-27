@@ -1,0 +1,28 @@
+FAULT: a completed parent accepts step writes
+  exit=1
+  checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... FAILED (636ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (643ms)
+FAULT: step removal without confirmation
+  exit=1
+  removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... FAILED (316ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (325ms)
+FAULT: no step revision check
+  exit=1
+  edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... FAILED (337ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (346ms)
+FAULT: step receipts shown as the task last receipt
+  exit=1
+  a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... FAILED (371ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (376ms)
+FAULT: custom parent not scoped to the account
+  exit=1
+  no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... FAILED (448ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (454ms)
+FAULT: step Undo ignores newer edits
+  exit=1
+  Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... FAILED (415ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (423ms)
+FAULT: content parent not checked
+  exit=1
+  a content-backed parent needs its published task: unknown, removed and failed reads write no step ... FAILED (304ms)
+  FAILED | 0 passed | 1 failed | 14 filtered out (308ms)
