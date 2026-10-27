@@ -56,6 +56,8 @@ export type PlanResultOutcome =
   | 'created'
   | 'failed'
   | 'needs_review'
+  /** Left out by the user in a revised retry review: never added. */
+  | 'excluded'
   | 'removed'
   | 'already_removed'
   | 'kept';
@@ -69,6 +71,8 @@ export interface PlanResult {
   outcome: PlanResultOutcome;
   reason: string | null;
   itemOperationId: string | null;
+  /** A `needs_review` addition: the revised review that can add it after a new approval. */
+  planProposalId: string | null;
 }
 
 export interface PlanReceipt {
@@ -81,6 +85,10 @@ export interface PlanReceipt {
   results: PlanResult[];
   /** Keys of failed additions that a Retry would run (with their original identity). */
   retryable: string[];
+  /** A retry receipt: the plan approval it continues. */
+  retryOf: string | null;
+  /** The revised review this receipt approved (a reviewed retry), if any. */
+  planProposalId: string | null;
   undoneBy: string | null;
   undoable: boolean;
   /** How many tasks this approval added (an Undo removes them, after confirmation). */
@@ -91,7 +99,8 @@ export interface PlanProposal {
   id: string;
   revision: number;
   status: 'draft' | 'applied' | 'cancelled';
-  kind: 'plan' | 'undo';
+  /** 'retry': the revised review of a saved plan's failed additions after its context changed. */
+  kind: 'plan' | 'undo' | 'retry';
   goal: string;
   items: PlanDraftItem[];
   /** The items exactly as the server returned them: approval sends them back. */
@@ -101,6 +110,8 @@ export interface PlanProposal {
   reviewReason: 'edited' | 'context_changed' | 'restored' | null;
   source: { conversationId: string; messageId: number | null } | null;
   undoOf: string | null;
+  /** Kind retry: the plan approval receipt whose failed additions it reviews again. */
+  retryOf: string | null;
   /** Tasks approval adds (kind plan) or removes (kind undo). */
   changeCount: number;
   /** Additions with a possible match the user has not resolved. Approval waits for them. */
@@ -120,6 +131,11 @@ export interface PlanView {
   proposalId: string | null;
   items: PlanTaskNow[];
   receipt: PlanReceipt | null;
+  /**
+   * The latest revised review of this plan's failed additions: open (it needs the user's
+   * approval), approved (its receipt says what it added) or closed.
+   */
+  review: PlanProposal | null;
   updatedAt: string;
 }
 
@@ -241,6 +257,7 @@ const OUTCOMES: readonly PlanResultOutcome[] = [
   'created',
   'failed',
   'needs_review',
+  'excluded',
   'removed',
   'already_removed',
   'kept',
@@ -270,11 +287,14 @@ export function parsePlanReceipt(raw: unknown): PlanReceipt {
         outcome: r.outcome as PlanResultOutcome,
         reason: strOrNull(r, 'reason'),
         itemOperationId: strOrNull(r, 'item_operation_id'),
+        planProposalId: strOrNull(r, 'plan_proposal_id'),
       };
     }),
     retryable: Array.isArray(raw.retryable)
       ? raw.retryable.filter((k): k is string => typeof k === 'string')
       : [],
+    retryOf: strOrNull(raw, 'retry_of'),
+    planProposalId: strOrNull(raw, 'plan_proposal_id'),
     undoneBy: strOrNull(raw, 'undone_by'),
     undoable: raw.undoable === true,
     removalCount: typeof raw.removal_count === 'number' ? raw.removal_count : 0,
@@ -299,7 +319,7 @@ export function parsePlanProposal(raw: unknown): PlanProposal {
   const status = raw.status;
   if (status !== 'draft' && status !== 'applied' && status !== 'cancelled')
     throw new ContractError('plan proposal status');
-  const kind = raw.kind === 'undo' ? 'undo' : raw.kind === 'plan' ? 'plan' : null;
+  const kind = raw.kind === 'undo' || raw.kind === 'plan' || raw.kind === 'retry' ? raw.kind : null;
   if (!kind) throw new ContractError('plan proposal kind');
   const reason = raw.review_reason ?? null;
   if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason))
@@ -318,6 +338,7 @@ export function parsePlanProposal(raw: unknown): PlanProposal {
     reviewReason: reason as PlanProposal['reviewReason'],
     source: sourceOf(raw.source),
     undoOf: strOrNull(raw, 'undo_of'),
+    retryOf: strOrNull(raw, 'retry_of'),
     changeCount: int(raw, 'change_count'),
     unresolved: Array.isArray(raw.unresolved)
       ? raw.unresolved.filter((k): k is string => typeof k === 'string')
@@ -342,6 +363,7 @@ export function parsePlanView(raw: unknown): PlanView {
     items: arr(raw, 'items').map(parsePlanTask),
     receipt:
       raw.receipt === null || raw.receipt === undefined ? null : parsePlanReceipt(raw.receipt),
+    review: raw.review === null || raw.review === undefined ? null : parsePlanProposal(raw.review),
     updatedAt: str(raw, 'updated_at'),
   };
 }

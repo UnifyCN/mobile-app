@@ -54,6 +54,8 @@ export function PlanEntry({ onOpen }: { onOpen: (target: PlanTarget) => void }) 
       done: live.filter(i => i.state === 'completed').length,
       total: live.length,
     });
+    // A Retry found a change: the remaining addition waits for the user's new approval.
+    if (plan!.review?.status === 'draft') summary = t('plans.entryNeedsReview', { progress: summary });
     title = t('plans.entryTitle');
     label = t('plans.entryA11y', { goal: plan!.goal, summary });
     target = { planId: plan!.planId };

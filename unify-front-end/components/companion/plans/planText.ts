@@ -16,8 +16,21 @@ export function planReceiptSummary(t: T, receipt: PlanReceipt): string {
     return removed > 0 ? tr('plans.undoneRemoved', { count: removed }) : tr('plans.undoneNone');
   }
   if (receipt.kind === 'plan_retry') {
+    // A reviewed retry names its review; a plain retry does not.
+    const reviewed = receipt.planProposalId !== null;
+    const lines: string[] = [];
     const created = by('created');
-    return created.length ? tr('plans.receiptRetried', { titles: recordedTitles(created, t) }) : '';
+    if (created.length)
+      lines.push(tr(reviewed ? 'plans.receiptReviewed' : 'plans.receiptRetried', { titles: recordedTitles(created, t) }));
+    const reused = by('reused');
+    if (reused.length) lines.push(tr('plans.receiptReviewedReused', { titles: recordedTitles(reused, t) }));
+    const excluded = by('excluded');
+    if (excluded.length) lines.push(tr('plans.receiptLeftOut', { titles: recordedTitles(excluded, t) }));
+    const failed = by('failed');
+    if (failed.length) lines.push(tr('plans.receiptFailed', { titles: recordedTitles(failed, t) }));
+    const review = by('needs_review');
+    if (review.length) lines.push(tr('plans.receiptNeedsReview', { titles: recordedTitles(review, t) }));
+    return lines.join(' ');
   }
   const created = by('created').length;
   const reused = by('reused').length;

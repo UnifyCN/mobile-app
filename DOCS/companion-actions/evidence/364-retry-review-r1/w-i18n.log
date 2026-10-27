@@ -1,0 +1,13 @@
+
+> web-app@0.1.0 check-i18n
+> node scripts/check-i18n-parity.mjs
+
+✔ vi: 2541 keys OK
+✔ es: 2541 keys OK
+✔ hi: 2541 keys OK
+✔ ar: 2565 keys OK
+✔ fr-CA: 2541 keys OK
+✔ pa: 2541 keys OK
+
+i18n parity OK: 2541 EN keys.
+i18n_exit=0

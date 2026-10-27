@@ -587,6 +587,121 @@ describeStack('Settlement plans against the real local stack (mobile)', () => {
     expect(sqlCount(acc.id)).toBe(1);
   }, 60_000);
 
+  it('a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task', async () => {
+    // Wrong if: the needs-review result is not shown, the same Retry is offered again,
+    // the review is missing the remaining addition or its before/current context, it is
+    // gone after a restart, approval adds zero or two tasks, or the reused tasks change.
+    const acc = await newAccount('plan-e');
+    mockUserId = acc.id;
+    psql(`create function public.test364_mobile_fault() returns trigger language plpgsql as $f$
+            begin if new.title = '${PHONE}' then raise exception 'injected fault'; end if; return new; end $f$;
+          create trigger test364_mobile_fault before insert on custom_checklist_tasks
+            for each row execute function public.test364_mobile_fault();`);
+    let saved: any;
+    try {
+      saved = await savedPlanFor(acc);
+    } finally {
+      psql('drop trigger test364_mobile_fault on custom_checklist_tasks; drop function public.test364_mobile_fault();');
+    }
+    expect(saved.status).toBe('partial');
+    const reused = () =>
+      psql(`select string_agg(sanity_checklist_id || ':' || coalesce(revision, 0) || ':' || completed, ',' order by sanity_checklist_id)
+              from user_tasks where user_id = '${acc.id}';`);
+    const reusedBefore = reused();
+
+    const first = mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText(`Could not add: ${PHONE}. Everything else is saved.`)).toBeTruthy();
+    const patched = await http(`/rest/v1/user_onboarding_profiles?id=eq.${acc.id}`, {
+      method: 'PATCH', jwt: acc.jwt, body: JSON.stringify({ city: 'Surrey' }),
+    });
+    expect(patched.status).toBeLessThan(300);
+    fireEvent.press(await enabledButton(within(sheet), 'Try adding 1 task again'));
+    expect(await within(sheet).findByText(`Not added, because something changed: ${PHONE}.`, {}, { timeout: 10_000 })).toBeTruthy();
+    expect(await within(sheet).findByText('City: Surrey', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('Before: Vancouver')).toBeTruthy();
+    expect(within(sheet).getByRole('checkbox', { name: `Add ${PHONE}` }).props.accessibilityState.checked).toBe(true);
+    await enabledButton(within(sheet), 'Approve and add 1 task');
+    expect(within(sheet).queryByRole('button', { name: 'Try adding 1 task again' })).toBeNull();
+    expect(sqlCount(acc.id)).toBe(0);
+
+    // A restart: new query client, no store state. The review is reached from the entry.
+    first.unmount();
+    clients.splice(0).forEach(client => client.clear());
+    clearPlanStores(null);
+    mount();
+    const entry = await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, .*needs your review`) }, { timeout: 10_000 });
+    fireEvent.press(entry);
+    sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText('City: Surrey', {}, { timeout: 10_000 })).toBeTruthy();
+    // It changes again before approval: nothing is written and the refreshed review shows it.
+    await http(`/rest/v1/user_onboarding_profiles?id=eq.${acc.id}`, {
+      method: 'PATCH', jwt: acc.jwt, body: JSON.stringify({ city: 'Burnaby' }),
+    });
+    fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+    expect(await within(sheet).findByText('City: Burnaby', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('Before: Surrey')).toBeTruthy();
+    expect(sqlCount(acc.id)).toBe(0);
+    const approve = await enabledButton(within(sheet), 'Approve and add 1 task');
+    fireEvent.press(approve);
+    fireEvent.press(approve);
+    expect(await within(sheet).findByText(`Added after your review: ${PHONE}.`, {}, { timeout: 10_000 })).toBeTruthy();
+    expect(sqlCount(acc.id, `title = '${PHONE}'`)).toBe(1);
+    expect(sqlCount(acc.id)).toBe(1);
+    expect(reused()).toBe(reusedBefore);
+    expect(within(sheet).queryByRole('button', { name: /Approve and add/ })).toBeNull();
+    expect(await within(sheet).findByRole('button', { name: `${PHONE}, Not started` }, { timeout: 10_000 })).toBeTruthy();
+    expect(JSON.stringify(mockCapture.mock.calls)).not.toContain(PHONE);
+  }, 90_000);
+
+  it('a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again', async () => {
+    // Wrong if: the review approval is sent twice, a failed lookup is shown as saved or
+    // as not saved, or approval stays available while the outcome is unknown.
+    const acc = await newAccount('plan-f');
+    mockUserId = acc.id;
+    psql(`create function public.test364_mobile_fault() returns trigger language plpgsql as $f$
+            begin if new.title = '${PHONE}' then raise exception 'injected fault'; end if; return new; end $f$;
+          create trigger test364_mobile_fault before insert on custom_checklist_tasks
+            for each row execute function public.test364_mobile_fault();`);
+    let saved: any;
+    try {
+      saved = await savedPlanFor(acc);
+    } finally {
+      psql('drop trigger test364_mobile_fault on custom_checklist_tasks; drop function public.test364_mobile_fault();');
+    }
+    await http(`/rest/v1/user_onboarding_profiles?id=eq.${acc.id}`, {
+      method: 'PATCH', jwt: acc.jwt, body: JSON.stringify({ city: 'Surrey' }),
+    });
+    const retried = await actions(acc.jwt, {
+      action: 'plan_retry', operation_id: (globalThis.crypto as Crypto).randomUUID(),
+      receipt_operation_id: saved.operation_id, authorization: { kind: 'ui_control' },
+    }, 'ios');
+    expect(retried.json.receipt.results[0].outcome).toBe('needs_review');
+    let applies = 0;
+    let lookups = 0;
+    global.fetch = (async (url: any, init: any) => {
+      const body = String(init?.body ?? '');
+      if (body.includes('"action":"plan_apply"')) {
+        applies++;
+        await realFetch(url, init);
+        throw new TypeError('Network request failed');
+      }
+      if (body.includes('"action":"plan_status"') && ++lookups === 1) throw new TypeError('Network request failed');
+      return realFetch(url, init);
+    }) as typeof fetch;
+    mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, .*needs your review`) }, { timeout: 10_000 }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+    expect(await within(sheet).findByText('We could not check the result. The change may or may not have saved.', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(isEnabled(within(sheet).getByRole('button', { name: 'Approve and add 1 task' }))).toBe(false);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    expect(await within(sheet).findByText(`Added after your review: ${PHONE}.`, {}, { timeout: 10_000 })).toBeTruthy();
+    expect(applies).toBe(1);
+    expect(sqlCount(acc.id)).toBe(1);
+  }, 60_000);
+
   it("an account change hides the previous account's plan entry, cards and open plan before the next account renders", async () => {
     const a = await newAccount('plan-d1');
     const b = await newAccount('plan-d2');

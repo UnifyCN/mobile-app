@@ -16,7 +16,10 @@ existing tasks"). Approval adds only the included additions (each with its own t
 receipt and #363 Undo), saves the plan as ordered references to the shared tasks and
 records a plan receipt. Reopening reads current task progress; the receipt keeps the
 titles recorded when it was saved. A partial result names what was saved and what
-failed and offers Retry of only the failed additions. Undo of a plan receipt asks before
+failed and offers Retry of only the failed additions. When something a failed addition
+depends on changed before Retry, the Retry opens a revised review of exactly that
+remaining addition inside the saved plan (approved and current context shown); only a
+new approval adds it. Undo of a plan receipt asks before
 it removes what that receipt added, and never reverses a later edit or another receipt.
 Steps, reminders, saved details, general task edits and job UI stay out of scope.
 
@@ -45,9 +48,10 @@ not an audience rule or settlement advice.
 - `plan_apply {operation_id, authorization:{kind:'approved_proposal', proposal_id, proposal_revision}, items}`: bound to the draft id, revision and exact items. Relevant context is read again under the draft's row lock; when it changed nothing is written and the refreshed revision comes back (409 `needs_review`). A removed reused task or an unresolved match is refused (422). Approved already under another id: 409 `proposal_changed` with the saved draft and receipt.
 - Execution: the plan row first (its failure writes nothing); then each included addition in its own subtransaction: `task.create_custom` through the shared executor, its own receipt (operation id derived from the approval id and the item key) and its plan reference commit together, or the item is recorded as failed. Reused tasks get a reference only; their progress rows are not written. The plan receipt (in `companion_action_receipts`, `task_ref` null, `inverse` null) lists `reused`/`created`/`failed` per item with the title at the time.
 - `plan_status`: applied/partial with the reply, `pending` while the operation lock is held, `not_applied`.
-- `plan_retry {operation_id, receipt_operation_id}`: only additions still failed, each with its original identity; an item whose matches or profile changed since approval is `needs_review`, not written; nothing left is 422 `nothing_to_retry`.
+- `plan_retry {operation_id, receipt_operation_id}`: only additions still failed, each with its original identity; an item whose matches or profile changed since it was last approved is `needs_review`, not written, and moves to one revised review (a draft of `kind: 'retry'` with `plan_id` and `retry_of` = the plan receipt; the `needs_review` result names it as `plan_proposal_id`). `previous_context` is the approved context, `context` the current one, `review_reason: context_changed`. An addition in an open review is not retryable (no blind repeat); nothing left is 422 `nothing_to_retry`. The plan revision moves only when a retry saved something.
+- Revised retry review: `plan_revise` (include, `confirm_new`, use a matching task) and `plan_cancel` work on it as on a plan draft; Not now gives the addition back to Retry. `plan_apply` on it re-reads the context under the draft lock (changed again: 409 `needs_review`, new revision, nothing written), then writes each remaining addition with the identity it had in the plan approval (so one plan item never makes two tasks, whatever path reaches it) at its original plan position, or references the chosen existing task, or records it `excluded`. One `plan_retry` receipt (`retry_of`, `plan_proposal_id`, per-item results); the added task keeps its own task receipt (evidence names the reviewed approval). A plan Undo closes an open review.
 - `plan_undo {operation_id, receipt_operation_id, authorization:{kind:'ui_control', removal_confirmed?}}`: removes the plan and the tasks this receipt added (soft removal, #361 trigger stops their pending reminders) when each is still at the revision it was added at; an added task already removed (e.g. by its own Undo) is left alone. Removing a task needs `removal_confirmed`. A newer edit of an added task, or a later change of the plan (a retry), is a conflict: nothing changes and a compensating draft (`kind: undo`) is returned that keeps the edited tasks; approving it (with removal confirmation when it removes) applies it. A receipt is reversed at most once (the shared `undo_of` unique index). The shared task Undo answers `not_undoable` for a plan receipt.
-- `plans`: saved plans (not undone), newest first, each with current progress read from the task rows, labels, and its plan receipt (`retryable`, `undoable`, `undone_by`, `removal_count`); open plan drafts. `conversation_plans {conversation_id}`: the plan drafts that conversation produced, any status.
+- `plans`: saved plans (not undone), newest first, each with current progress read from the task rows, labels, its plan receipt (`retryable`, `undoable`, `undone_by`, `removal_count`) and `review` (the latest revised retry review: open, approved with its receipt, or closed); open plan drafts. The entry says "needs your review" while a review is open. `conversation_plans {conversation_id}`: the plan drafts that conversation produced, any status.
 
 ## Shared-contract interface (recorded early for the #366 sibling)
 
@@ -183,6 +187,17 @@ content and allowance hooks are stand-ins.
   `no-explicit-any` in #361/#362 test files (same files as the integration tip), none in
   #364 files.
 
+## Retry after a context change (SPEC review F3 correction, r1)
+
+SPEC review r1 F3: a retry after a relevant profile change persisted `needs_review`, but
+the saved plan showed nothing, kept the old failure and offered the same Retry. Fixed in
+the migration (pending, undeployed, same CLI-created identity; mobile and web mirrors
+byte-identical, rollback drops the one added function) and in both clients (contract,
+receipt text, saved-plan review block reusing the draft review, entry summary, six new
+`plans.*` keys in all seven locales). Root F1/F2 and Standards S1 are kept unchanged;
+the web review block uses the shared `Reveal`. Evidence:
+`evidence/364-retry-review-r1/README.md`.
+
 ## Changed existing tests
 
 - Web `supabase/tests/companion-actions/support.ts`: `migrate('up')` also applies #364;
@@ -190,6 +205,12 @@ content and allowance hooks are stand-ins.
   #364; schema-cache wait knows the #364 functions; plan request helpers added. No
   assertion changed; all #361/#363 boundary files still pass in the full run.
 - Mobile: none (new test only). It uses `createTestQueryClient` from the accepted CI fix.
+- Retry-review correction (r1): web `planSupport.ts` gains `failTitle` (a copy of the
+  fault helper in `plan_recovery_test.ts`, which is unchanged) and `partialPlan`; new file
+  `plan_retry_review_test.ts`. Mobile `planLocalStack.test.tsx` and web
+  `PlanLocalStack.test.tsx` gain cases; no existing assertion changed. Web
+  `PlanPanelMotion.test.tsx` fixtures gain the new typed fields (`planProposalId`,
+  `retryOf`, `review`) only. The web case needs `ACTIONS_DB_CONTAINER` (no default).
 
 ## Incident (reported, not hidden)
 
@@ -224,5 +245,9 @@ runs set `ACTIONS_DB_CONTAINER`/`ACTIONS_REST_CONTAINER` to this ticket's contai
   simulator, device, VoiceOver or TalkBack run. Web is jsdom plus one headless Chromium
   fixture (not the Next app); no Safari/Firefox or real screen reader.
 - Web Arabic plural forms follow the repo's v3 convention (general form for every count).
-- Plan Undo after a retry is a reviewed compensation (it never reverses the retry's
-  receipt automatically).
+- Plan Undo after a retry that saved something is a reviewed compensation (it never
+  reverses the retry's receipt automatically). A retry that only opened a review does
+  not change the plan, so Undo stays direct and closes that review.
+- Revised retry review: relevant context is the same as for approval (profile city,
+  province, arrival date; same-title matches). A changed task state, other profile
+  fields or a removed reused task do not reopen review of an addition.

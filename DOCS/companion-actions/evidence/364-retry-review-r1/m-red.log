@@ -1,0 +1,238 @@
+FAIL __tests__/companionActions/planLocalStack.test.tsx (14.289 s)
+  Settlement plans against the real local stack (mobile)
+    ✕ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (11836 ms)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+
+  ● Settlement plans against the real local stack (mobile) › a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+
+    Unable to find an element with text: Not added, because something changed: Set up phone service.
+
+    <View>
+      <View>
+        <View>
+          <View
+            accessibilityLabel="Open history"
+            accessibilityRole="button"
+            accessible={true}
+          />
+          <Text>
+            Companion
+          </Text>
+          <View
+            accessibilityLabel="New chat"
+            accessibilityRole="button"
+            accessible={true}
+          />
+        </View>
+        <View
+          accessibilityLabel="Your tasks, In progress: 0 · Waiting: 0"
+          accessibilityRole="button"
+          accessible={true}
+        >
+          <View />
+          <View>
+            <Text>
+              Your tasks
+            </Text>
+            <Text>
+              In progress: 0 · Waiting: 0
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityLabel="Your plan, Your first week in Vancouver, 0 of 2 done"
+          accessibilityRole="button"
+          accessible={true}
+        >
+          <View />
+          <View>
+            <Text>
+              Your plan
+            </Text>
+            <Text>
+              Your first week in Vancouver
+            </Text>
+            <Text>
+              0 of 2 done
+            </Text>
+          </View>
+        </View>
+        <View
+          accessible={true}
+        >
+          <View>
+            <View
+              pointerEvents="none"
+            />
+            <Text>
+              Ask me anything.
+            </Text>
+            <Text>
+              Fact-checked answers about anything in Canada.
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View>
+          <Text>
+            Try one of these
+          </Text>
+          <View>
+            <TextInput
+              editable={true}
+              placeholder="Ask anything..."
+              value=""
+            />
+            <View
+              accessibilityState={
+                {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+            >
+              <View />
+            </View>
+          </View>
+          <View>
+            <Text>
+              Companion can make mistakes. Verify important info.
+            </Text>
+          </View>
+        </View>
+      </View>
+      <Modal>
+        <View>
+          <View
+            accessible={false}
+          >
+            <View />
+          </View>
+          <View
+            pointerEvents="box-none"
+          >
+            <View
+              accessibilityViewIsModal={true}
+              testID="companion-task-sheet"
+            >
+              <View />
+              <View>
+                <View />
+                <Text
+                  accessibilityRole="header"
+                >
+                  Your plan
+                </Text>
+                <View
+                  accessibilityLabel="Close"
+                  accessibilityRole="button"
+                  accessible={true}
+                />
+              </View>
+              <RCTScrollView>
+                <View>
+                  <View>
+                    <View>
+                      <Text>
+                        Saved plan · uses your shared Checklist
+                      </Text>
+                      <Text
+                        accessibilityRole="header"
+                      >
+                        Your first week in Vancouver
+                      </Text>
+                    </View>
+                    <View>
+                      <View
+                        accessibilityLabel="Get your SIN, Not started"
+                        accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "disabled": false,
+                          }
+                        }
+                        accessible={true}
+                      >
+                        <View>
+                          <Text>
+                            Get your SIN
+                          </Text>
+                          <Text>
+                            Not started
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessibilityLabel="Open a bank account, Not started"
+                        accessibilityRole="button"
+                        accessibilityState={
+                          {
+                            "disabled": false,
+                          }
+                        }
+                        accessible={true}
+                      >
+                        <View>
+                          <Text>
+                            Open a bank account
+                          </Text>
+                          <Text>
+                            Not started
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View>
+                      <View>
+                        <Text>
+                          Saved the plan with 2 tasks you already had.
+                        </Text>
+                        <Text />
+                        <View
+                          accessibilityLabel="Undo plan change"
+                          accessibilityRole="button"
+                          accessibilityState={
+                            {
+                              "disabled": false,
+                            }
+                          }
+                          accessible={true}
+                        >
+                          <Text>
+                            Undo plan change
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+
+      619 |     expect(patched.status).toBeLessThan(300);
+      620 |     fireEvent.press(await enabledButton(within(sheet), 'Try adding 1 task again'));
+    > 621 |     expect(await within(sheet).findByText(`Not added, because something changed: ${PHONE}.`, {}, { timeout: 10_000 })).toBeTruthy();
+          |                                ^
+      622 |     expect(await within(sheet).findByText('City: Surrey', {}, { timeout: 10_000 })).toBeTruthy();
+      623 |     expect(within(sheet).getByText('Before: Vancouver')).toBeTruthy();
+      624 |     expect(within(sheet).getByRole('checkbox', { name: `Add ${PHONE}` }).props.accessibilityState.checked).toBe(true);
+
+      at Object.findByText (__tests__/companionActions/planLocalStack.test.tsx:621:32)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 skipped, 6 total
+Snapshots:   0 total
+Time:        14.51 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "retry after a relevant profile change".
+exit=1

@@ -24,6 +24,7 @@ import {
 import type { TaskState } from '@/services/companionActions/contract';
 import {
   planProposalKey,
+  plansKey,
   usePlanClient,
   usePlanPhase,
   usePlanProposal,
@@ -113,10 +114,13 @@ function DraftReview({
   proposal,
   store,
   phase,
+  embedded = false,
 }: {
   proposal: PlanProposal;
   store: PlanStore | null;
   phase: PlanPhase;
+  /** Shown inside a saved plan (a revised retry review): the plan's header is above it. */
+  embedded?: boolean;
 }) {
   const { t, i18n } = useTranslation();
   const key = proposalKey(proposal.id);
@@ -147,6 +151,8 @@ function DraftReview({
     if (result.kind === 'ok' || result.kind === 'changed') {
       setRequest(null);
       queryClient.setQueryData(planProposalKey(owner.accountId as string, proposal.id), result.proposal);
+      // A retry review lives in the saved plan: closing it gives the addition back to Retry.
+      if (proposal.kind === 'retry') void queryClient.invalidateQueries({ queryKey: plansKey(owner.accountId as string) });
       // A saved edit is a new revision: an earlier not-applied approval cannot apply.
       store?.supersedeNotApplied(key);
       store?.dismiss(key);
@@ -173,15 +179,23 @@ function DraftReview({
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const profile = proposal.context?.profile;
   const before = proposal.reviewReason === 'context_changed' ? proposal.previousContext?.profile : null;
+  const approveLabel =
+    proposal.changeCount > 0
+      ? t('plans.approve', { count: proposal.changeCount })
+      : proposal.kind === 'retry'
+        ? t('plans.retryReviewSkip')
+        : t('plans.saveExisting');
 
   return (
     <View style={styles.root}>
-      <View>
-        <Text style={styles.eyebrow}>{t('plans.draftBadge')}</Text>
-        <Text style={styles.title} accessibilityRole='header'>
-          {proposal.goal}
-        </Text>
-      </View>
+      {!embedded && (
+        <View>
+          <Text style={styles.eyebrow}>{t('plans.draftBadge')}</Text>
+          <Text style={styles.title} accessibilityRole='header'>
+            {proposal.goal}
+          </Text>
+        </View>
+      )}
 
       {view.stale && (
         <View style={styles.notice}>
@@ -219,35 +233,37 @@ function DraftReview({
         )}
       </View>
 
-      <View style={styles.block}>
-        <Text style={styles.label}>{t('plans.existingSection')}</Text>
-        {proposal.items.map((item, index) => {
-          if (item.kind !== 'existing') return null;
-          const now = tasks.get(item.taskRef);
-          const title = (now && planTaskTitle(now)) ?? item.label ?? t('plans.untitledTask');
-          const removed = now?.removed ?? false;
-          return (
-            <View key={item.taskRef} style={styles.row}>
-              <View style={styles.rowText}>
-                <Text style={styles.rowTitle}>{title}</Text>
-                <Text style={[styles.rowState, removed && styles.error]}>
-                  {removed
-                    ? t('plans.removedFromChecklist')
-                    : t('plans.alreadyInChecklist', { state: stateLabel(now?.state ?? 'not_started') })}
-                </Text>
+      {(proposal.kind !== 'retry' || proposal.items.some(i => i.kind === 'existing')) && (
+        <View style={styles.block}>
+          <Text style={styles.label}>{t('plans.existingSection')}</Text>
+          {proposal.items.map((item, index) => {
+            if (item.kind !== 'existing') return null;
+            const now = tasks.get(item.taskRef);
+            const title = (now && planTaskTitle(now)) ?? item.label ?? t('plans.untitledTask');
+            const removed = now?.removed ?? false;
+            return (
+              <View key={item.taskRef} style={styles.row}>
+                <View style={styles.rowText}>
+                  <Text style={styles.rowTitle}>{title}</Text>
+                  <Text style={[styles.rowState, removed && styles.error]}>
+                    {removed
+                      ? t('plans.removedFromChecklist')
+                      : t('plans.alreadyInChecklist', { state: stateLabel(now?.state ?? 'not_started') })}
+                  </Text>
+                </View>
+                {removed && (
+                  <SmallButton
+                    label={t('plans.dropFromPlan')}
+                    name={t('plans.dropA11y', { title })}
+                    disabled={!canEdit}
+                    onPress={() => replaceItem(index, [])}
+                  />
+                )}
               </View>
-              {removed && (
-                <SmallButton
-                  label={t('plans.dropFromPlan')}
-                  name={t('plans.dropA11y', { title })}
-                  disabled={!canEdit}
-                  onPress={() => replaceItem(index, [])}
-                />
-              )}
-            </View>
-          );
-        })}
-      </View>
+            );
+          })}
+        </View>
+      )}
 
       {proposal.items.some(i => i.kind === 'new') && (
         <View style={styles.block}>
@@ -327,11 +343,7 @@ function DraftReview({
         <View style={styles.actions}>
           <Pressable
             accessibilityRole='button'
-            accessibilityLabel={
-              proposal.changeCount > 0
-                ? t('plans.approve', { count: proposal.changeCount })
-                : t('plans.saveExisting')
-            }
+            accessibilityLabel={approveLabel}
             disabled={!canApprove}
             accessibilityState={{ disabled: !canApprove }}
             onPress={() => canApprove && void store?.approve(proposal)}
@@ -342,11 +354,7 @@ function DraftReview({
               pressed && canApprove && styles.pressed,
             ]}
           >
-            <Text style={styles.primaryButtonText}>
-              {proposal.changeCount > 0
-                ? t('plans.approve', { count: proposal.changeCount })
-                : t('plans.saveExisting')}
-            </Text>
+            <Text style={styles.primaryButtonText}>{approveLabel}</Text>
           </Pressable>
           <SmallButton
             label={t('taskCreate.notNow')}
@@ -411,7 +419,14 @@ function SavedPlan({
   const live = plan?.items ?? [];
   const added = receipt?.results.filter(r => r.outcome === 'created') ?? [];
   const failed = receipt?.results.filter(r => r.outcome === 'failed' && receipt.retryable.includes(r.key ?? '')) ?? [];
-  const retried = phase.phase === 'saved' && phase.reply.receipt.kind === 'plan_retry' ? phase.reply.receipt : null;
+  const review = plan?.review ?? null;
+  // Once its revised review is approved, the earlier "needs review" retry line is superseded.
+  const retried =
+    phase.phase === 'saved' &&
+    phase.reply.receipt.kind === 'plan_retry' &&
+    !(review?.status === 'applied' && phase.reply.receipt.results.every(r => r.outcome === 'needs_review'))
+      ? phase.reply.receipt
+      : null;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
 
   return (
@@ -445,6 +460,7 @@ function SavedPlan({
           <View style={styles.receiptBox}>
             <Text style={styles.receipt}>{planReceiptSummary(t, receipt)}</Text>
             {retried && <Text style={styles.contextLine}>{planReceiptSummary(t, retried)}</Text>}
+            {review && !receipt.undoneBy && <RetryReview review={review} store={store} />}
             {receipt.results.some(r => r.outcome === 'failed') && failed.length > 0 && (
               <Text style={[styles.contextLine, styles.error]}>
                 {t('plans.receiptFailed', { titles: recordedTitles(failed, t) })}
@@ -517,6 +533,40 @@ function SavedPlan({
           </View>
         ) : null}
       </View>
+    </View>
+  );
+}
+
+/**
+ * The revised review of a saved plan's failed additions, opened when a Retry found that
+ * something they depend on changed. It lives in the saved plan (the persistent entry
+ * reaches it after a restart), shows the remaining change with the approved and current
+ * context through the same review as a draft, and needs its own approval. Once approved
+ * it keeps saying what that approval actually saved.
+ */
+function RetryReview({ review, store }: { review: PlanProposal; store: PlanStore | null }) {
+  const { t } = useTranslation();
+  const query = usePlanProposal(review.id);
+  const key = proposalKey(review.id);
+  const phase = usePlanPhase(store, key);
+  const fromPhase = phase.phase === 'needs_review' || phase.phase === 'changed' ? phase.proposal : null;
+  // The newest revision wins; at the same revision a closed or approved state wins.
+  const latest = [query.data, fromPhase].reduce<PlanProposal>(
+    (best, next) =>
+      next && (next.revision > best.revision || (next.revision === best.revision && next.status !== 'draft'))
+        ? next
+        : best,
+    review
+  );
+  const result = phase.phase === 'saved' ? phase.reply.receipt : latest.status === 'applied' ? latest.receipt : null;
+  if (result) return <Text style={styles.receipt}>{planReceiptSummary(t, result)}</Text>;
+  if (latest.status !== 'draft') return null;
+  return (
+    <View style={styles.review}>
+      <Text style={styles.label} accessibilityRole='header'>
+        {t('plans.retryReviewTitle')}
+      </Text>
+      <DraftReview proposal={latest} store={store} phase={phase} embedded />
     </View>
   );
 }
