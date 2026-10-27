@@ -30,7 +30,7 @@ not an audience rule or settlement advice.
 
 | Part | Where | Notes |
 |---|---|---|
-| Migration | mobile `unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql` (authority, created with `supabase migration new`), web mirror byte-identical (sha256 `ead38d1f…`) | Additive and plan-only: columns on `companion_plans` (context, source, proposal_id, operation_id, updated_at, removed_at), table `companion_plan_proposals` (RLS on, no client policy, `revoke all` from anon/authenticated, explicit `service_role` grants), `companion_plan_*` functions. Replaces no shared #361/#363 function. Gate unchanged (ships off). |
+| Migration | mobile `unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql` (authority, created with `supabase migration new`), web mirror byte-identical (sha256 `7fc13153…`) | Additive and plan-only: columns on `companion_plans` (context, source, proposal_id, operation_id, updated_at, removed_at), table `companion_plan_proposals` (RLS on, no client policy, `revoke all` from anon/authenticated, explicit `service_role` grants), `companion_plan_*` functions. Replaces no shared #361/#363 function. Gate unchanged (ships off). |
 | Rollback | `unify-front-end/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql`, mirrored (sha256 `29f9086f…`) | Run before the #363 and #361 rollback scripts. Archives plan drafts and plan columns to `companion_rollback_archive_364`; re-application restores them and moves every open draft to a new revision marked `restored` (no pre-rollback approval is used). Plan actions answer 503 `feature_unavailable` while rolled back; #361/#363 keep working; added tasks stay. No reminder is touched. |
 | Endpoint | web `supabase/functions/companion-actions/plans.ts` (parsing), `planHandler.ts`; `handler.ts` one dispatch block | Actions `plan_prepare`, `plan_proposal`, `plan_revise`, `plan_cancel`, `plan_apply`, `plan_status`, `plan_retry`, `plan_undo`, `plans`, `conversation_plans`. Account from the JWT only. No model, rag-query or generation allowance. |
 | Suggestion | web `supabase/functions/rag-query/lib/actions/proposals.ts`, `index.ts` | `[PLAN]`, `[PLAN_TASK]: <task key>`, `[PLAN_NEW]: <title>` lines become `actionProposal {type:'plan', version:1, goal, items}` and are stripped. A reused key must be one of the Checklist tasks this answer read for the account (eligible, not removed); labels come from that read; a new title equal to a listed content task's title carries it as `candidates` (a possible match, never a merge). Anything invalid drops the whole plan. A plan wins over a `[TASK]` line. |
@@ -49,9 +49,9 @@ not an audience rule or settlement advice.
 - Execution: the plan row first (its failure writes nothing); then each included addition in its own subtransaction: `task.create_custom` through the shared executor, its own receipt (operation id derived from the approval id and the item key) and its plan reference commit together, or the item is recorded as failed. Reused tasks get a reference only; their progress rows are not written. The plan receipt (in `companion_action_receipts`, `task_ref` null, `inverse` null) lists `reused`/`created`/`failed` per item with the title at the time.
 - `plan_status`: applied/partial with the reply, `pending` while the operation lock is held, `not_applied`.
 - `plan_retry {operation_id, receipt_operation_id}`: only additions still failed, each with its original identity; an item whose matches or profile changed since it was last approved is `needs_review`, not written, and moves to one revised review (a draft of `kind: 'retry'` with `plan_id` and `retry_of` = the plan receipt; the `needs_review` result names it as `plan_proposal_id`). `previous_context` is the approved context, `context` the current one, `review_reason: context_changed`. An addition in an open review is not retryable (no blind repeat); nothing left is 422 `nothing_to_retry`. The plan revision moves only when a retry saved something.
-- Revised retry review: `plan_revise` (include, `confirm_new`, use a matching task) and `plan_cancel` work on it as on a plan draft; Not now gives the addition back to Retry. `plan_apply` on it re-reads the context under the draft lock (changed again: 409 `needs_review`, new revision, nothing written), then writes each remaining addition with the identity it had in the plan approval (so one plan item never makes two tasks, whatever path reaches it) at its original plan position, or references the chosen existing task, or records it `excluded`. One `plan_retry` receipt (`retry_of`, `plan_proposal_id`, per-item results); the added task keeps its own task receipt (evidence names the reviewed approval). A plan Undo closes an open review.
+- Revised retry review: `plan_revise` (include, `confirm_new`, use a matching task) and `plan_cancel` work on it as on a plan draft; Not now gives the addition back to Retry. `plan_apply` on it re-reads the context under the draft lock (changed again: 409 `needs_review`, new revision, nothing written), then writes each remaining addition with the identity it had in the plan approval (so one plan item never makes two tasks, whatever path reaches it) at its original plan position, or references the chosen existing task, or records it `excluded`. One `plan_retry` receipt (`retry_of`, `plan_proposal_id`, per-item results); the added task keeps its own task receipt (evidence names the reviewed approval). A plan Undo closes every open review. Separate Retries can leave more than one review open (for different additions); each is approved, edited or closed on its own and the others keep their revision, items and context.
 - `plan_undo {operation_id, receipt_operation_id, authorization:{kind:'ui_control', removal_confirmed?}}`: removes the plan and the tasks this receipt added (soft removal, #361 trigger stops their pending reminders) when each is still at the revision it was added at; an added task already removed (e.g. by its own Undo) is left alone. Removing a task needs `removal_confirmed`. A newer edit of an added task, or a later change of the plan (a retry), is a conflict: nothing changes and a compensating draft (`kind: undo`) is returned that keeps the edited tasks; approving it (with removal confirmation when it removes) applies it. A receipt is reversed at most once (the shared `undo_of` unique index). The shared task Undo answers `not_undoable` for a plan receipt.
-- `plans`: saved plans (not undone), newest first, each with current progress read from the task rows, labels, its plan receipt (`retryable`, `undoable`, `undone_by`, `removal_count`) and `review` (the latest revised retry review: open, approved with its receipt, or closed); open plan drafts. The entry says "needs your review" while a review is open. `conversation_plans {conversation_id}`: the plan drafts that conversation produced, any status.
+- `plans`: saved plans (not undone), newest first, each with current progress read from the task rows, labels, its plan receipt (`retryable`, `undoable`, `undone_by`, `removal_count`) and `reviews` (every revised retry review that is open or approved with its receipt, oldest first); open plan drafts. The earlier single field `review` (the latest review, any status) is still sent unchanged for a reader of that shape, but can hide an older open review; both clients read `reviews` and fall back to `review` only when `reviews` is absent. The entry says "needs your review" while any review is open. `conversation_plans {conversation_id}`: the plan drafts that conversation produced, any status.
 
 ## Shared-contract interface (recorded early for the #366 sibling)
 
@@ -198,6 +198,21 @@ receipt text, saved-plan review block reusing the draft review, entry summary, s
 the web review block uses the shared `Reveal`. Evidence:
 `evidence/364-retry-review-r1/README.md`.
 
+## Several open retry reviews (SPEC review r2 R2-SPEC-1 correction)
+
+SPEC review r2 R2-SPEC-1: the plans read returned only the newest revised review while
+Retry kept refusing additions in every open review, so a second review (for example a
+library card after a city change) hid an earlier open one (a phone task with a possible
+match) after a restart, with no control and no Retry. Fixed in the pending migration
+(same identity, edited in place; mobile and web mirrors byte-identical; rollback
+unchanged) by returning `reviews` from the plan view, and in both clients: the saved plan
+shows one review section per open review, keyed by its id; when more than one is open each
+heading names what it would add (new key `plans.retryReviewNamed`, real text in all seven
+locales on both platforms); the entry says "needs your review" while any is open. No
+review is approved, closed or reclassified by another; Retry, approval, Not now, Undo,
+lookup and identity rules are unchanged. Evidence:
+`evidence/364-multiple-reviews-r2/README.md`.
+
 ## Changed existing tests
 
 - Web `supabase/tests/companion-actions/support.ts`: `migrate('up')` also applies #364;
@@ -211,6 +226,10 @@ the web review block uses the shared `Reveal`. Evidence:
   `PlanLocalStack.test.tsx` gain cases; no existing assertion changed. Web
   `PlanPanelMotion.test.tsx` fixtures gain the new typed fields (`planProposalId`,
   `retryOf`, `review`) only. The web case needs `ACTIONS_DB_CONTAINER` (no default).
+- Multiple-reviews correction (r2): new web file `plan_multiple_reviews_test.ts`; mobile
+  `planLocalStack.test.tsx` and web `PlanLocalStack.test.tsx` gain one case each; no
+  existing assertion changed. Web `PlanPanelMotion.test.tsx` fixture `review: null`
+  becomes `reviews: []` (type only).
 
 ## Incident (reported, not hidden)
 

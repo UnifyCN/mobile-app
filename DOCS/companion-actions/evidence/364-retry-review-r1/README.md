@@ -22,7 +22,11 @@ shared work).
   choice; `excluded`). `companion_plan_view` returns `review`. `plan_revise` accepts a
   retry review. A plan Undo closes an open review. A retry that wrote nothing no longer
   moves the plan revision. New function: security definer, `search_path` pinned,
-  revoked from public/anon/authenticated and not granted to service_role (internal);
+  revoked from public/anon/authenticated, with no explicit service_role grant in the
+  migration (correction r2: "no explicit grant" is not "no privilege". Locally the
+  default privileges of `postgres` in `public` give `service_role` EXECUTE at creation and
+  the migration does not revoke it, so effective service_role execute is true; see
+  `../364-multiple-reviews-r2/function-privileges.txt`. Hosted privileges not checked);
   rollback drops it. Edge function source unchanged.
 - Clients (mobile and web): contract fields (`review`, `kind 'retry'`, `retryOf`,
   `planProposalId`, outcome `excluded`); receipt text for reviewed/left-out/needs-review

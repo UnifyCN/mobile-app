@@ -702,6 +702,90 @@ describeStack('Settlement plans against the real local stack (mobile)', () => {
     expect(sqlCount(acc.id)).toBe(1);
   }, 60_000);
 
+  it('two unfinished retry reviews both stay reachable after a restart; each is approved on its own', async () => {
+    // Wrong if: after a restart either review is missing, Retry is offered for an addition
+    // waiting in a review, approving one review removes or changes the other, an approval
+    // adds the wrong task or two, the saved addition changes, or the typed message is lost.
+    const LIBRARY = 'Get a library card';
+    const acc = await newAccount('plan-g');
+    mockUserId = acc.id;
+    const fault = (titles: string[]) =>
+      psql(`create or replace function public.test364_mobile_fault2() returns trigger language plpgsql as $f$
+              begin if new.title in (${titles.map(t => `'${t}'`).join(', ') || 'null'}) then raise exception 'injected fault'; end if; return new; end $f$;`);
+    fault([PHONE, LIBRARY]);
+    psql(`create trigger test364_mobile_fault2 before insert on custom_checklist_tasks
+            for each row execute function public.test364_mobile_fault2();`);
+    try {
+      const p = await actions(acc.jwt, { action: 'plan_prepare', goal: GOAL,
+        items: [...SUGGESTION.items, { kind: 'new', title: LIBRARY }] });
+      const draft = p.json.plan_proposal;
+      const saved = await actions(acc.jwt, {
+        action: 'plan_apply', operation_id: (globalThis.crypto as Crypto).randomUUID(),
+        authorization: { kind: 'approved_proposal', proposal_id: draft.plan_proposal_id, proposal_revision: draft.proposal_revision },
+        items: draft.items,
+      }, 'ios');
+      expect(saved.json.receipt.results.map((r: { outcome: string }) => r.outcome)).toEqual(['reused', 'reused', 'failed', 'failed']);
+      fault([LIBRARY]);
+      // The user adds their own phone task elsewhere: Retry asks how to treat the match.
+      const mine = await http('/rest/v1/custom_checklist_tasks', {
+        method: 'POST', jwt: acc.jwt, headers: { prefer: 'return=representation' },
+        body: JSON.stringify({ user_id: acc.id, title: PHONE, description: '', priority: 'Do soon' }),
+      });
+      expect(mine.status).toBeLessThan(300);
+
+      const first = mount();
+      fireEvent.changeText(composer(), 'Keep this question');
+      fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+      let sheet = await screen.findByTestId('companion-task-sheet');
+      fireEvent.press(await enabledButton(within(sheet), 'Try adding 2 tasks again'));
+      await within(sheet).findByRole('checkbox', { name: `Add ${PHONE}` }, { timeout: 10_000 });
+      // The library card failed again; a relevant change opens a separate review for it.
+      await http(`/rest/v1/user_onboarding_profiles?id=eq.${acc.id}`, {
+        method: 'PATCH', jwt: acc.jwt, body: JSON.stringify({ city: 'Surrey' }),
+      });
+      fireEvent.press(await enabledButton(within(sheet), 'Try adding 1 task again'));
+      await within(sheet).findByRole('checkbox', { name: `Add ${LIBRARY}` }, { timeout: 10_000 });
+      fault([]);
+
+      // A restart: new query client, no store state. Both reviews are reached from the entry.
+      first.unmount();
+      clients.splice(0).forEach(client => client.clear());
+      clearPlanStores(null);
+      mount();
+      fireEvent.changeText(composer(), 'Keep this question');
+      fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, .*needs your review`) }, { timeout: 10_000 }));
+      sheet = await screen.findByTestId('companion-task-sheet');
+      await within(sheet).findByRole('checkbox', { name: `Add ${LIBRARY}` }, { timeout: 10_000 });
+      expect(within(sheet).queryByRole('checkbox', { name: `Add ${PHONE}` })).not.toBeNull();
+      expect(within(sheet).queryByRole('button', { name: /Try adding/ })).toBeNull();
+      // Each open review is its own section, named by what it would add.
+      const review = (title: string) => {
+        const named = within(sheet).getAllByTestId('plan-retry-review')
+          .filter(s => within(s).queryByRole('header', { name: `Review the remaining change: ${title}` }));
+        expect(named).toHaveLength(1);
+        return within(named[0]);
+      };
+
+      // Approving the library-card review leaves the phone review as it was.
+      fireEvent.press(await enabledButton(review(LIBRARY), 'Approve and add 1 task'));
+      expect(await within(sheet).findByText(`Added after your review: ${LIBRARY}.`, {}, { timeout: 10_000 })).toBeTruthy();
+      expect(sqlCount(acc.id, `title = '${LIBRARY}'`)).toBe(1);
+      expect(within(sheet).getByRole('checkbox', { name: `Add ${PHONE}` }).props.accessibilityState.checked).toBe(true);
+      expect(within(sheet).getByText(`You may already have this task: ${PHONE}`)).toBeTruthy();
+
+      // The phone review: the user keeps their own task instead of adding another.
+      fireEvent.press(await enabledButton(within(sheet), 'Use the task I have'));
+      fireEvent.press(await enabledButton(within(sheet), 'Save without adding it'));
+      expect(await within(sheet).findByText(`Using the task you already have: ${PHONE}.`, {}, { timeout: 10_000 })).toBeTruthy();
+      expect(sqlCount(acc.id, `title = '${PHONE}'`)).toBe(1);
+      expect(sqlCount(acc.id)).toBe(2);
+      expect(within(sheet).queryByRole('button', { name: /Approve and add|Save without adding/ })).toBeNull();
+      expect(composer().props.value).toBe('Keep this question');
+    } finally {
+      psql('drop trigger if exists test364_mobile_fault2 on custom_checklist_tasks; drop function if exists public.test364_mobile_fault2();');
+    }
+  }, 120_000);
+
   it("an account change hides the previous account's plan entry, cards and open plan before the next account renders", async () => {
     const a = await newAccount('plan-d1');
     const b = await newAccount('plan-d2');

@@ -132,10 +132,11 @@ export interface PlanView {
   items: PlanTaskNow[];
   receipt: PlanReceipt | null;
   /**
-   * The latest revised review of this plan's failed additions: open (it needs the user's
-   * approval), approved (its receipt says what it added) or closed.
+   * Every revised review of this plan's failed additions that is open (it needs the
+   * user's approval) or approved (its receipt says what it added), oldest first. Separate
+   * Retries can leave more than one open; each is approved, edited or closed on its own.
    */
-  review: PlanProposal | null;
+  reviews: PlanProposal[];
   updatedAt: string;
 }
 
@@ -363,7 +364,13 @@ export function parsePlanView(raw: unknown): PlanView {
     items: arr(raw, 'items').map(parsePlanTask),
     receipt:
       raw.receipt === null || raw.receipt === undefined ? null : parsePlanReceipt(raw.receipt),
-    review: raw.review === null || raw.review === undefined ? null : parsePlanProposal(raw.review),
+    // `review` (the latest review only) is the earlier single-review shape: read it only
+    // from a service that does not send `reviews`.
+    reviews: Array.isArray(raw.reviews)
+      ? raw.reviews.map(parsePlanProposal)
+      : raw.review === null || raw.review === undefined
+        ? []
+        : [parsePlanProposal(raw.review)],
     updatedAt: str(raw, 'updated_at'),
   };
 }

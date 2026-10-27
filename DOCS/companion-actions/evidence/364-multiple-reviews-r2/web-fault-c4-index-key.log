@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (8 tests | 7 skipped) 1214ms
+   ✓ Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer  1214ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 7 skipped (8)
+   Start at  16:12:08
+   Duration  1.91s (transform 184ms, setup 0ms, collect 394ms, tests 1.21s, environment 129ms, prepare 28ms)
+
+c4-index-key exit=0

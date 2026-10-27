@@ -1,0 +1,32 @@
+running 2 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... FAILED (452ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+error: AssertionError: Values are not equal: an unfinished review is not reachable from the saved plan
+
+
+    [Diff] Actual / Expected
+
+
++   [
++     "a4dd9ff7-0995-4c44-8176-942b5ee55b80",
++     "cdba1d81-e4f4-45ec-a0c2-d6a4616d8d04",
++   ]
+-   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:88:5)
+
+ FAILURES 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+
+FAILED | 1 passed | 1 failed (459ms)
+
+error: Test failed
+exit=1

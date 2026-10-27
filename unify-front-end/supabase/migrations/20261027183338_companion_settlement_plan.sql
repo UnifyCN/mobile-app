@@ -368,8 +368,17 @@ language sql stable security definer set search_path = public, pg_temp as $$
         from public.companion_plan_tasks pt where pt.plan_id = p_plan.id), '[]'::jsonb),
     'receipt', (select public.companion_plan_receipt_view(r) from public.companion_action_receipts r
                  where r.user_id = p_plan.user_id and r.operation_id = p_plan.operation_id),
-    -- The latest revised review of this plan's failed additions (open, approved or
-    -- closed), so a later visit can reach it without the message that started it.
+    -- Every revised review of this plan's failed additions that is open or approved,
+    -- oldest first, so a later visit reaches each one without the message that started
+    -- it. Separate Retries can leave several open at once (different additions); each is
+    -- approved, edited or closed on its own. A closed review gave its additions back to
+    -- Retry and is not listed.
+    'reviews', coalesce((select jsonb_agg(public.companion_plan_proposal_view(pp) order by pp.created_at, pp.id)
+                           from public.companion_plan_proposals pp
+                          where pp.user_id = p_plan.user_id and pp.kind = 'retry' and pp.plan_id = p_plan.id
+                            and pp.status in ('draft', 'applied')), '[]'::jsonb),
+    -- Earlier single-review field, kept unchanged for a reader of that shape: the latest
+    -- review (open, approved or closed). It can hide an older open review; read 'reviews'.
     'review', (select public.companion_plan_proposal_view(pp) from public.companion_plan_proposals pp
                 where pp.user_id = p_plan.user_id and pp.kind = 'retry' and pp.plan_id = p_plan.id
                 order by pp.created_at desc, pp.id desc limit 1))

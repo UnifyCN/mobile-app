@@ -1,0 +1,46 @@
+running 5 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... ok (652ms)
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review ... FAILED (368ms)
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review ... ok (510ms)
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task ... ok (775ms)
+cleanup ... ok (4ms)
+
+ ERRORS 
+
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review => ./plan_multiple_reviews_test.ts:134:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
++   [
++     [
++       "4ff5cd56-9b6c-4ebd-a906-dca4226c8d47",
++       1,
++       [
++         {
++           include: true,
++           key: "n2",
++           kind: "new",
++           priority: "Do soon",
++           title: "Set up phone service",
++         },
++       ],
++     ],
++   ]
+-   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:146:5)
+
+ FAILURES 
+
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review => ./plan_multiple_reviews_test.ts:134:6
+
+FAILED | 4 passed | 1 failed (2s)
+
+error: Test failed
+mf-m3-notnow-closes-all exit=1
