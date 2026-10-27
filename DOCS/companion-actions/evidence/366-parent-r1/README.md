@@ -95,3 +95,27 @@ not evidence.
   order is legal, the tests assert the one observed with the waits shown.
 - No client code here; mobile/web client behaviour, native devices and browsers are not exercised by
   these runs.
+
+## Combined candidate (after merging root's client corrections)
+
+Merged root's exact commits (parent instruction `handoff-366-client-root-r1.md`): mobile `d5b6bd66`
+(tree `8d4cd8f5`) into SQL commit `361487d4`; web `2a61bc4d` (tree `1f15a642`) into SQL commit `dc00e26`.
+Both root checkouts were clean at those heads; both were children of the starting pins; merges had no
+conflicts (disjoint files). Integration tips re-read: mobile `1597c2c5`, web `02377a33`, unchanged and
+already ancestors. Root's F2/S366-1/S366-2 fixes are theirs; these runs only show the merge is green.
+
+| Gate | Log | Result |
+|---|---|---|
+| Backend suite, own stack, merged web functions | `c1-combined-backend-all.log` | 11 files, 87 passed, exit 0 |
+| Mobile real local stack (`companionActionsLocalStack.test.tsx`), `ACTIONS_DB_CONTAINER=supabase_db_unify-actions-366-parent-r1`, `ACTIONS_REST_CONTAINER=supabase_rest_unify-actions-366-parent-r1`, identities checked with `docker inspect` (project label, DB port 60932) | `c2-mobile-localstack.log` | 3 passed, natural exit 0, no `--forceExit` |
+| Mobile `npm run test:ci` (local-stack suite skipped: no env) | `c3-mobile-test-ci-summary.log` | main 135 suites, 1428 passed, 5 skipped; DST 13 passed; natural exit 0 |
+| Mobile `npm run typecheck` | `c4-mobile-typecheck.log` | exit 0 |
+| Web `npm test` | `c5-web-npm-test-summary.log` | 53 files, 642 passed, exit 0 |
+| Web `npm run build` (includes TypeScript) | `c6-web-build-summary.log` | exit 0 |
+| Migration/rollback mirrors #361/#363/#366 | `c7-mirror-check.log` | byte-identical |
+| Own stack stopped (`supabase stop --no-backup`) | `c9-stack-stop.log` | exit 0; no container/volume left; 60931-60934 and 3098 free |
+
+Counts overlap with root's runs; they are separate runs, not summed. Mobile lint/i18n/export and web
+lint/i18n were not rerun: no client, locale or lint-relevant source changed outside root's commits, which
+root gated. Mobile `node_modules` was an APFS clone of root's installed tree (identical lockfile), kept
+ignored. No browser, native-device, hosted or live-provider run.
