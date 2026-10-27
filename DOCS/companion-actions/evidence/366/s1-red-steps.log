@@ -1,0 +1,250 @@
+running 15 tests from ./steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... FAILED (1s)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... FAILED (163ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... FAILED (325ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... FAILED (177ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... FAILED (235ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... FAILED (176ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... FAILED (199ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... FAILED (204ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... FAILED (220ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... FAILED (194ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... FAILED (182ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... FAILED (181ms)
+another account cannot read, change, look up or undo my steps ... FAILED (329ms)
+step controls, lookup and Undo never touch the AI allowance ... FAILED (214ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... FAILED (4s)
+
+ ERRORS 
+
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task => ./steps_test.ts:30:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:40:5)
+
+a content-backed parent needs its published task: unknown, removed and failed reads write no step => ./steps_test.ts:58:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:66:5)
+
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing => ./steps_test.ts:90:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     422,
+-     "unsupported_operation",
++     404,
++     "task_not_found",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:107:5)
+
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused => ./steps_test.ts:126:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at addStep (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:21:3)
+    at async fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:135:18)
+
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused => ./steps_test.ts:155:6
+error: AssertionError: Values are not equal: [{"error":"invalid_request","reason":"unsupported_operation"},{"error":"invalid_request","reason":"unsupported_operation"},{"error":"invalid_request","reason":"unsupported_operation"},{"error":"invalid_request","reason":"unsupported_operation"},{"error":"invalid_request","reason":"unsupported_operation"},{"error":"invalid_request","reason":"unsupported_operation"}]
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     422,
+-     422,
+-     422,
+-     422,
+-     422,
+-     422,
++     200,
++     200,
++     200,
++     200,
++     200,
++     200,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:166:5)
+
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing => ./steps_test.ts:189:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at addStep (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:21:3)
+    at async fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:197:15)
+
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically => ./steps_test.ts:214:6
+error: TypeError: Cannot read properties of undefined (reading 'steps')
+    const s1 = created.json.receipt.steps[0];
+                                    ^
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:224:37)
+
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title => ./steps_test.ts:268:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at addStep (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:21:3)
+    at async fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:276:15)
+
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead => ./steps_test.ts:297:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at addStep (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:21:3)
+    at async fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:305:15)
+
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state => ./steps_test.ts:323:6
+error: TypeError: Cannot read properties of undefined (reading 'steps')
+    const s = add.json.receipt.steps[0];
+                               ^
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:332:32)
+
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order => ./steps_test.ts:364:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:374:5)
+
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft => ./steps_test.ts:410:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at addStep (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:21:3)
+    at async fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:419:19)
+
+another account cannot read, change, look up or undo my steps => ./steps_test.ts:442:6
+error: TypeError: Cannot read properties of undefined (reading 'steps')
+    const s = add.json.receipt.steps[0];
+                               ^
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:451:32)
+
+step controls, lookup and Undo never touch the AI allowance => ./steps_test.ts:471:6
+error: TypeError: Cannot read properties of undefined (reading 'steps')
+    const s = add.json.receipt.steps[0];
+                               ^
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:481:32)
+
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved => ./steps_test.ts:490:6
+error: AssertionError: Values are not equal: both writes must wait on the held parent
+
+
+    [Diff] Actual / Expected
+
+
+-   0
++   2
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_test.ts:512:5)
+
+ FAILURES 
+
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task => ./steps_test.ts:30:6
+a content-backed parent needs its published task: unknown, removed and failed reads write no step => ./steps_test.ts:58:6
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing => ./steps_test.ts:90:6
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused => ./steps_test.ts:126:6
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused => ./steps_test.ts:155:6
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing => ./steps_test.ts:189:6
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically => ./steps_test.ts:214:6
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title => ./steps_test.ts:268:6
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead => ./steps_test.ts:297:6
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state => ./steps_test.ts:323:6
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order => ./steps_test.ts:364:6
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft => ./steps_test.ts:410:6
+another account cannot read, change, look up or undo my steps => ./steps_test.ts:442:6
+step controls, lookup and Undo never touch the AI allowance => ./steps_test.ts:471:6
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved => ./steps_test.ts:490:6
+
+FAILED | 0 passed | 15 failed (8s)
+
+error: Test failed
