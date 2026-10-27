@@ -18,7 +18,6 @@ import {
   draftEditItems,
   parsePlanProposal,
   parsePlanReply,
-  parsePlanTask,
   parsePlanView,
 } from './planContract';
 
