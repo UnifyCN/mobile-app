@@ -5,6 +5,7 @@ import {
   screen,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
@@ -184,7 +185,7 @@ beforeAll(async () => {
 
 beforeEach(() => {
   jest.clearAllMocks();
-  client = new QueryClient();
+  client = createTestQueryClient();
   mockStore.clear();
   mockStage = stage();
   // The persona and province come from the profile hook, not the stage hook.

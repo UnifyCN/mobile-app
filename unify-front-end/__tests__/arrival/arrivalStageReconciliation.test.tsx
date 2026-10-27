@@ -7,6 +7,7 @@
 import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 const gate = () => {
   let release!: () => void;
@@ -234,7 +235,7 @@ beforeEach(() => {
   mockRead.mockClear();
   mockChecklist.mockClear();
   mockTrack.mockClear();
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
 });
 afterEach(() => {
   client.clear();

@@ -11,6 +11,7 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 type Row = Record<string, unknown>;
 let mockRow: Row;
@@ -159,7 +160,7 @@ beforeEach(() => {
   mockFailReads = false;
   mockWrites.length = 0;
   mockTrackChanged.mockReset();
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.spyOn(console, 'error').mockImplementation(() => undefined);
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
 });

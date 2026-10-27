@@ -1,0 +1,21 @@
+{
+  "label": "cleanup-final-green",
+  "command": [
+    "node",
+    "node_modules/jest/bin/jest.js",
+    "--runTestsByPath",
+    "__tests__/helpers/queryClientCleanup.test.ts",
+    "--runInBand",
+    "--watchAll=false",
+    "--json",
+    "--outputFile=/Users/savargupta/.t3/worktrees/Unify/t3-27ee6519/unify-front-end/.scratch/ci363/cleanup-final-green-jest.json"
+  ],
+  "verdict": "pass",
+  "seconds": 2.017,
+  "exit_code": 0,
+  "timed_out": false,
+  "assertions_passed": true,
+  "passed_tests": 2,
+  "failed_tests": 0,
+  "skipped_tests": 0
+}

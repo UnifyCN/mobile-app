@@ -8,7 +8,8 @@ import {
   waitFor,
   within,
 } from '@testing-library/react-native';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
@@ -39,7 +40,8 @@ import { MessageWithSources } from '@/components/companion/MessageWithSources';
 // test produces with controlled providers (copied from UnifyCN/web-app
 // supabase/functions/rag-query/fixtures; the handler test fails there if they
 // drift, this copy must be refreshed by hand). Stubbed: the network (expo/fetch
-// returns the recorded stream), the Supabase client (an in-memory messages
+// returns the recorded stream; global fetch returns an unavailable action service),
+// the Supabase client (an in-memory messages
 // table, no RLS), analytics, usage, the bottom sheet animation and icons.
 
 const mockDb = {
@@ -47,6 +49,8 @@ const mockDb = {
   columnMissing: false,
 };
 const mockFetch = jest.fn();
+const mockActionFetch = jest.fn();
+const originalFetch = global.fetch;
 const mockTrackResponse = jest.fn();
 const mockTrackSent = jest.fn();
 
@@ -251,7 +255,7 @@ function Conversation() {
 }
 
 function renderConversation() {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
   return render(
@@ -317,9 +321,18 @@ beforeEach(async () => {
   mockDb.messages = [];
   mockDb.columnMissing = false;
   mockFetch.mockReset();
+  mockActionFetch.mockReset().mockResolvedValue({
+    status: 503,
+    json: async () => ({ error: 'service_unavailable' }),
+  });
+  global.fetch = mockActionFetch as unknown as typeof fetch;
   mockTrackResponse.mockReset();
   mockTrackSent.mockReset();
   await i18next.changeLanguage('en');
+});
+
+afterEach(() => {
+  global.fetch = originalFetch;
 });
 
 describe('Companion context on mobile: Vancouver arrival', () => {
@@ -329,6 +342,13 @@ describe('Companion context on mobile: Vancouver arrival', () => {
     expect(text).toContain('next week');
     expect(text).toContain('Checklist tasks used: 3');
     expect(text).toMatch(/Official pages checked Oct 25, 2026/);
+    expect(mockActionFetch).toHaveBeenCalledWith(
+      'https://test.supabase.co/functions/v1/companion-actions',
+      expect.objectContaining({
+        body: expect.stringContaining('"action":"interpret"'),
+      })
+    );
+    expect(mockFetch).toHaveBeenCalledTimes(1);
   });
 
   it('saves the context with the answer, unchanged, and the reopened answer shows the same', async () => {

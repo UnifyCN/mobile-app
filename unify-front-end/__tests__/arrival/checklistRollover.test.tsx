@@ -7,6 +7,7 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
@@ -184,7 +185,7 @@ beforeEach(() => {
   mockStore.clear();
   mockFocusCallbacks = [];
   foregroundListeners = [];
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.useFakeTimers({
     now: new Date(2026, 9, 23, 23, 59),
     doNotFake: [
