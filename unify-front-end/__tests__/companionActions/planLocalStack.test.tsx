@@ -361,7 +361,7 @@ async function send(text: string) {
 const isEnabled = (el: { props: { accessibilityState?: { disabled?: boolean } } }) =>
   el.props.accessibilityState?.disabled !== true;
 async function enabledButton(scope: ReturnType<typeof within>, name: string | RegExp) {
-  const button = await scope.findByRole('button', { name }, { timeout: 10_000 });
+  await scope.findByRole('button', { name }, { timeout: 10_000 });
   await waitFor(() => expect(isEnabled(scope.getByRole('button', { name }))).toBe(true), { timeout: 10_000 });
   return scope.getByRole('button', { name });
 }
