@@ -653,10 +653,10 @@ describeStack('Task steps against the real local stack (mobile, #366)', () => {
     await waitFor(() => expect(screen.queryByRole('checkbox', { name: 'Bring two IDs' })).toBeNull(), {
       timeout: 10_000,
     });
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Undo this step change' })).not.toBeDisabled(), {
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Undo “Removed step: Bring two IDs”' })).not.toBeDisabled(), {
       timeout: 10_000,
     });
-    fireEvent.press(screen.getByRole('button', { name: 'Undo this step change' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Undo “Removed step: Bring two IDs”' }));
     expect(await screen.findByRole('checkbox', { name: 'Bring two IDs' }, { timeout: 10_000 })).toBeTruthy();
 
     await toggle('Bring two IDs', true);

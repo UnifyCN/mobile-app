@@ -430,8 +430,8 @@ describe('Task steps (mobile, stand-in network)', () => {
     const removal = stepWrites().find(w => w.operations[0].type === 'step.remove')!;
     expect(removal.authorization).toEqual({ kind: 'ui_control', removal_confirmed: true });
     await waitFor(() => expect(screen.queryByRole('checkbox', { name: 'Choose a bank' })).toBeNull());
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Undo this step change' })).toBeEnabled());
-    fireEvent.press(screen.getByRole('button', { name: 'Undo this step change' }));
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Undo “Removed step: Choose a bank”' })).toBeEnabled());
+    fireEvent.press(screen.getByRole('button', { name: 'Undo “Removed step: Choose a bank”' }));
     expect(await screen.findByRole('checkbox', { name: 'Choose a bank' })).toBeTruthy();
     const undo = server.sent.filter(b => b.action === 'undo');
     expect(undo).toHaveLength(1);

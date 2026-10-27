@@ -134,7 +134,7 @@ export function ReceiptBlock({
           accessibilityRole='button'
           accessibilityLabel={
             isStep
-              ? t('taskSteps.undoA11y')
+              ? t('taskSteps.undoA11y', { change: text })
               : removes
                 ? t('taskCreate.undoA11y', { title })
                 : t('taskActions.undo')
