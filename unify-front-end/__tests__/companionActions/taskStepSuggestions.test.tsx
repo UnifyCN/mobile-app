@@ -49,6 +49,7 @@ jest.mock('@react-navigation/native', () => {
     useIsFocused: () => true,
   };
 });
+
 jest.mock('@react-navigation/bottom-tabs', () => ({
   useBottomTabBarHeight: () => 0,
 }));
@@ -529,4 +530,107 @@ describe('Suggested steps through Companion (mobile, #366)', () => {
     expect(server.steps().map(s => s.title)).toEqual([SIN_STEPS[1]]);
     expect(mockStream.mock.calls.length).toBe(calls);
   });
+});
+
+it.each(['normal', 'lost_reply', 'not_applied'] as const)('an approved suggestion offers receipt-specific Undo (%s), confirms removal and keeps a later unrelated step', async requestCase => {
+  // Wrong if Undo is absent, writes before confirmation, or removes another action's step.
+  let retryAllowed = false;
+  let lookup: 'pending' | 'failed' | 'not_applied' = 'pending';
+  useServer(scriptedServer({}, { override: body => {
+    if (body.action === 'undo' && requestCase === 'lost_reply') {
+      server.handle(body);
+      return 'network-error';
+    }
+    if (body.action === 'undo' && requestCase === 'not_applied' && !retryAllowed) return 'network-error';
+    if (body.action === 'status' && requestCase === 'not_applied') {
+      if (lookup === 'failed') return { status: 500, body: { error: 'internal' } };
+      return { status: 200, body: { status: lookup } };
+    }
+    return undefined;
+  } }));
+  answersSteps('Preparation steps.', 'sanity:sin', ['Bring two IDs', 'Choose a bank']);
+  renderScreen();
+  await send('How do I prepare for my SIN?');
+  const card = await screen.findByTestId('step-draft-card');
+  fireEvent.press(await within(card).findByRole('button', { name: 'Review suggested steps for Get a SIN' }));
+  const sheet = await screen.findByTestId('companion-task-sheet');
+  const approve = await within(sheet).findByRole('button', { name: 'Add selected steps (2)' });
+  await waitFor(() => expect(enabled(approve)).toBe(true));
+  fireEvent.press(approve);
+  await within(sheet).findByText('Steps added to this task: 2');
+  const added = stepApplies()[0];
+  expect(server.handle({
+    action: 'apply', operation_id: 'unrelated-later-step', authorization: { kind: 'ui_control' },
+    operations: [{ type: 'step.create', task_ref: 'sanity:sin', titles: ['Call a translator'] }],
+  }).status).toBe(200);
+  const undo = await within(sheet).findByRole('button', { name: 'Undo “Steps added: 2”' });
+  await waitFor(() => expect(enabled(undo)).toBe(true));
+  fireEvent.press(undo);
+  await within(sheet).findByText('Remove these 2 steps?');
+  expect(server.sent.filter(b => b.action === 'undo')).toHaveLength(0);
+  fireEvent.press(within(sheet).getByRole('button', { name: 'Keep step' }));
+  expect(server.steps()).toHaveLength(3);
+  expect(server.sent.filter(b => b.action === 'undo')).toHaveLength(0);
+  fireEvent.press(within(sheet).getByRole('button', { name: 'Undo “Steps added: 2”' }));
+  const remove = await within(sheet).findByRole('button', { name: 'Remove step' });
+  await waitFor(() => expect(enabled(remove)).toBe(true));
+  fireEvent.press(remove);
+  if (requestCase === 'not_applied') {
+    await within(sheet).findByText('The change is still being saved. Check again in a moment.');
+    expect(server.sent.filter(b => b.action === 'undo')).toHaveLength(1);
+    lookup = 'failed';
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    await within(sheet).findByText('We could not check the result. The change may or may not have saved.');
+    expect(server.steps().filter(s => !s.removed)).toHaveLength(3);
+    lookup = 'not_applied';
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    const retry = await within(sheet).findByRole('button', { name: 'Try again' });
+    await waitFor(() => expect(enabled(retry)).toBe(true));
+    retryAllowed = true;
+    fireEvent.press(retry);
+  }
+  await within(sheet).findByText('Steps removed: 2');
+  expect(within(sheet).queryByText('Steps added to this task: 2')).toBeNull();
+  expect(server.steps().filter(s => !s.removed).map(s => s.title)).toEqual(['Call a translator']);
+  const undos = server.sent.filter(b => b.action === 'undo');
+  expect(undos).toHaveLength(requestCase === 'not_applied' ? 2 : 1);
+  expect(undos.at(-1)?.operation_id).toBe(undos[0].operation_id);
+  expect(undos[0].receipt_operation_id).toBe(added.operation_id);
+  expect(undos[0].authorization).toEqual({ kind: 'ui_control', removal_confirmed: true });
+});
+
+it('a reopened suggested-step receipt reflects a newer edit and keeps it through a refused Undo', async () => {
+  // Wrong if the old receipt stays current, or Undo overwrites the newer step without review.
+  answersSteps('Preparation steps.', 'sanity:sin', ['Bring two IDs']);
+  renderScreen();
+  await send('How do I prepare for my SIN?');
+  const card = await screen.findByTestId('step-draft-card');
+  fireEvent.press(await within(card).findByRole('button', { name: 'Review suggested steps for Get a SIN' }));
+  let sheet = await screen.findByTestId('companion-task-sheet');
+  const approve = await within(sheet).findByRole('button', { name: 'Add selected steps (1)' });
+  await waitFor(() => expect(enabled(approve)).toBe(true));
+  fireEvent.press(approve);
+  await within(sheet).findByRole('button', { name: 'Undo “Added step: Bring two IDs”' });
+  const step = server.steps()[0];
+  expect(server.handle({ action: 'apply', operation_id: 'newer-rename', authorization: { kind: 'ui_control' },
+    operations: [{ type: 'step.update', step_id: step.step_id, title: 'Check the newer ID requirements', expected_revision: step.revision }] }).status).toBe(200);
+  fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+  await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+  fireEvent.press(await within(screen.getByTestId('step-draft-card')).findByRole('button', { name: 'View' }));
+  sheet = await screen.findByTestId('companion-task-sheet');
+  await within(sheet).findByText(/This task changed after this/);
+  const undo = within(sheet).getByRole('button', { name: 'Undo “Added step: Bring two IDs”' });
+  await waitFor(() => expect(enabled(undo)).toBe(true));
+  fireEvent.press(undo);
+  const remove = await within(sheet).findByRole('button', { name: 'Remove step' });
+  await waitFor(() => expect(enabled(remove)).toBe(true));
+  fireEvent.press(remove);
+  await within(sheet).findByText('This step changed after it was added. Nothing was removed. Remove it now?');
+  const compensate = await within(sheet).findByRole('button', { name: 'Remove step' });
+  await waitFor(() => expect(enabled(compensate)).toBe(true));
+  expect(server.steps().filter(s => !s.removed).map(s => s.title)).toEqual(['Check the newer ID requirements']);
+  const writes = stepApplies().length;
+  fireEvent.press(within(sheet).getByRole('button', { name: 'Keep current' }));
+  expect(stepApplies()).toHaveLength(writes);
+  expect(server.steps().filter(s => !s.removed).map(s => s.title)).toEqual(['Check the newer ID requirements']);
 });

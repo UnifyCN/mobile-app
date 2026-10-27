@@ -27,6 +27,7 @@ import {
 } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
 import { PhaseMessage } from './TaskStatePanel';
+import { ReceiptBlock } from './ReceiptBlock';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -106,11 +107,13 @@ export function StepProposalPanel({
   const writable =
     Boolean(store && bound) &&
     view.canWrite &&
-    proposal.status === 'draft' &&
     !parent.removed &&
     parent.state !== 'completed';
-  const canWrite = writable && !busy;
-  const receipt = phase.phase === 'saved' ? phase.receipt : proposal.receipt;
+  const canWrite = writable && proposal.status === 'draft' && !busy;
+  const savedReceipt = phase.phase === 'saved' ? phase.receipt : null;
+  const receipt = savedReceipt && savedReceipt.operationId !== proposal.receipt?.operationId
+    ? savedReceipt
+    : proposal.receipt ?? savedReceipt;
   const task = taskTitle ?? t('taskSteps.cardTitleUnknownTask');
 
   /** A Not now or selection change, made and shown only as the session that opened it. */
@@ -233,7 +236,7 @@ export function StepProposalPanel({
           <Text style={[styles.hint, styles.error]}>{t('taskActions.refused')}</Text>
         )}
         {proposal.status === 'cancelled' && <Text style={styles.hint}>{t('taskSteps.closed')}</Text>}
-        {receipt && (
+        {receipt?.operationType === 'step.create' && (
           <Text style={styles.savedText}>
             {t('taskSteps.added', { count: receipt.steps?.length ?? 0 })}
           </Text>
@@ -243,6 +246,14 @@ export function StepProposalPanel({
         )}
         {phase.phase === 'refused' && phase.reason === 'task_completed' && (
           <Text style={[styles.hint, styles.error]}>{t('taskSteps.taskCompleted')}</Text>
+        )}
+        {receipt && (
+          <ReceiptBlock
+            receipt={receipt}
+            storeKey={key}
+            store={store}
+            canWrite={writable && !busy && phase.phase !== 'undo_review'}
+          />
         )}
       </View>
 
