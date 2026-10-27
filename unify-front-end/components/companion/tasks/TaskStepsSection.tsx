@@ -199,7 +199,7 @@ export function TaskStepsSection({
             accessibilityLabel={t('taskSteps.newStepLabel')}
             returnKeyType='done'
             onSubmitEditing={add}
-            style={styles.input}
+            style={[styles.input, { minHeight: minTarget() }]}
           />
           <Pressable
             accessibilityRole='button'
@@ -377,7 +377,7 @@ function StepRow({
             }
             maxLength={STEP_TITLE_MAX}
             accessibilityLabel={t('taskSteps.editLabel')}
-            style={styles.input}
+            style={[styles.input, { minHeight: minTarget() }]}
           />
           <View style={styles.actions}>
             <Pressable
@@ -579,7 +579,6 @@ const styles = StyleSheet.create({
     color: INK,
     flexGrow: 1,
     flexBasis: 180,
-    minHeight: 44,
     borderWidth: 1,
     borderColor: BORDER,
     borderRadius: 12,

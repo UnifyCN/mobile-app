@@ -470,7 +470,7 @@ describe('Task steps (mobile, stand-in network)', () => {
   });
 
   it('on Android the step controls are at least 48dp; iOS keeps 44pt', async () => {
-    // Wrong if: a checkbox, edit, remove or add control is smaller than the platform minimum.
+    // Wrong if: a step control or either text field is smaller than the platform minimum.
     const os = Platform.OS;
     try {
       for (const [platform, min] of [['android', 48], ['ios', 44]] as const) {
@@ -479,7 +479,9 @@ describe('Task steps (mobile, stand-in network)', () => {
         await openSteps();
         await addStep(`Step on ${platform}`);
         await screen.findByRole('checkbox', { name: `Step on ${platform}` });
+        const newStepField = screen.getByLabelText('New step');
         for (const control of [
+          newStepField,
           screen.getByRole('checkbox', { name: `Step on ${platform}` }),
           screen.getByRole('button', { name: `Edit step: Step on ${platform}` }),
           screen.getByRole('button', { name: `Remove step: Step on ${platform}` }),
@@ -490,6 +492,10 @@ describe('Task steps (mobile, stand-in network)', () => {
           );
           expect(Math.max(style.minHeight ?? 0, style.height ?? 0)).toBeGreaterThanOrEqual(min);
         }
+        fireEvent.press(screen.getByRole('button', { name: `Edit step: Step on ${platform}` }));
+        const editStyle = StyleSheet.flatten(screen.getByLabelText('Step text').props.style);
+        expect(Math.max(editStyle.minHeight ?? 0, editStyle.height ?? 0)).toBeGreaterThanOrEqual(min);
+        fireEvent.press(screen.getByRole('button', { name: 'Cancel' }));
         view.unmount();
       }
     } finally {

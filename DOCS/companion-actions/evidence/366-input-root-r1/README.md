@@ -1,0 +1,7 @@
+# Step text-field target correction
+
+Standards S366-3 required the new-step and rename text fields to declare the platform minimum. Both now apply minTarget() at render time. Their shared fixed44minimum is removed. Android declares48dp; iOS declares44pt. No SQL, receipt, request, locale or other client behavior changed.
+
+The existing target test keeps all four original button/checkbox checks and adds both fields. Before source changes it fails by assertion: expected at least48, got44. The first full green attempt exposed a test setup issue: the Android rename draft correctly survived unmount, so the iOS fixture later had two Step text fields. The test now cancels its own edit before switching the mocked platform. No product draft rule changed. Replaying that final test against unchanged00b8c56b still fails48versus44; after restoration all14step cases pass with natural exit0. Original assertions were retained.
+
+TypeScript and changed-file eslint exit0; lint reports13existing-pattern warnings and no errors. These tests inspect rendered native style declarations under a mocked platform, not physical-device targets, text scaling or TalkBack/VoiceOver. Broader gates were not repeated for this two-field style change. The combined backend correction worker must preserve it and verify final candidate gates as needed. Separate SPEC F3concurrent step-proposal context remains unresolved. No ticket acceptance follows.
