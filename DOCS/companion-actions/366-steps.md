@@ -51,12 +51,52 @@ conflict blocked a #366 mutation (#364 had not been accepted when this was hande
 ### Behaviour rules (tested)
 
 - One level only: a parent is always a task ref (`sanity:` published id or `custom:` positive id); `step:` refs, a `parent_step_id` field or any unknown field are refused. Steps never become main-list tasks.
-- The parent must be this account's live, unfinished task. Missing, rolled-back (failed creation), hard-deleted, removed, another account's, or completed parents write nothing. The parent row is share-locked, so a parent removal and a step write are ordered, never interleaved. Adding, checking or editing steps never changes the parent's state or revision.
+- The parent must be this account's live, unfinished task. Missing, rolled-back (failed creation), hard-deleted, removed, another account's, or completed parents write nothing. A parent completion/removal and a step write are ordered, never interleaved, also when a content-backed task has no progress row yet (see "Parent ordering (review F1)" below). Adding, checking or editing steps never changes the parent's state or revision (an absent progress row stays absent, revision 0).
 - Direct controls: `ui_control` adds exactly the one typed step; check, rename and remove act on one step at the revision shown. Every removal (and the Undo of an add) needs `removal_confirmed`; Keep sends nothing. Suggestions are drafts until the shown revision is approved; changing the selection saves a new revision first; a relevant change (a live step with a suggested title appears) answers `needs_review`; an unrelated change (checking another step) does not.
 - One operation id per intent: duplicate and concurrent sends save once; a lost reply is looked up; `pending`/lookup failure never write; `not_applied` retries the same id and payload; a reused id with another payload is refused.
 - Receipts keep each step's title and done state as saved; a later rename or check makes them historical, never rewrites them. Undo targets one receipt: removal Undo restores; an Undo after a newer edit changes nothing and offers a reviewed change (a removal one also needs confirmation); two Undo requests apply once.
 - Completion keeps unfinished steps unfinished, stops pending reminders in the same transaction (#361 trigger), and Undo/reopen restarts none. The completion receipt records "done of total" at that moment.
 - Clients: typed step and edit text live in the account's action store (close, reopen and updates keep it); writes are off offline or after a failed read; the focused checkbox stays the same element through its save and re-read; an account change drops steps, drafts and typed text before the next account renders; controls meet 48dp (Android) / 44pt (iOS) on mobile and 44px rows/icon buttons on web.
+
+## Parent ordering (review F1, correction r1)
+
+Review `review-366-SPEC-r1.md` F1: with no `user_tasks` row for `sanity:<id>`, `step.create` read the
+parent as Not started *before* its add lock, and nothing made a legacy insert wait. A held step add
+saved (200) after a legacy completion/dismissal had committed and been publicly read with no step.
+Step checks/renames had the same window (they took no parent lock at all).
+
+Design (in the pending, undeployed `20261027183644_companion_task_steps.sql`, mirrored byte for byte;
+no new migration):
+
+- Parent lock: `companion_step_parent_lock(user, task_ref)` = transaction advisory lock on
+  `hashtextextended(user || ':' || task_ref, 366)` (the key the add lock already used). Per account
+  and task, so unrelated tasks/accounts never wait.
+- Step writes: `companion_step_parent` takes the parent lock *before* it reads a content-backed
+  parent (then `for share` on the row when one exists). Every step write and step Undo goes through
+  it; `step.create` keeps the same lock for positions (re-entrant).
+- Legacy and service writes: a new `BEFORE INSERT OR UPDATE` trigger `companion_user_tasks_step_order`
+  on `user_tasks` takes the same lock when the row it writes is completed or removed and is either an
+  insert (a first insert, and the insert part of an `INSERT ... ON CONFLICT` upsert, whose BEFORE INSERT
+  trigger fires before the conflict check) or an update that moves a row onto a `(user, sanity id)` key.
+  A plain UPDATE of an existing row takes no parent lock: the step write's `for share` row lock orders it.
+- Lock order: parent lock → progress row, for step writes and upserts alike; a plain UPDATE takes the
+  row only. Writes to existing steps lock their step rows before the parent lock, and no legacy or
+  task writer locks step rows, so there is no cycle. One operation per apply, one parent per operation.
+  Deliberate fault M4 (every UPDATE takes the parent lock) produced a real `40P01 deadlock detected`,
+  which is why plain updates are excluded.
+- Observable legal orders: (a) the step holds the parent first → the legacy completion/dismissal waits
+  (pg_stat_activity: `advisory`) until the step commits; the step is saved (receipt `not_started` →
+  `not_started`) and stays as history of the completed/removed task, parent revision 1 (the legacy
+  insert's own). (b) The legacy write holds the parent first → the step write waits, then reads the
+  change and is refused 422 `task_completed`/`task_removed`, nothing saved. A completion committed and
+  read with no step can no longer be followed by a saved step.
+- Rollback drops the trigger and the lock function (legacy writes then take no step lock); re-applying
+  restores ordering (tested). Older clients' requests are unchanged; they may wait for one step write.
+
+Tests: web `supabase/tests/companion-actions/steps_parent_race_test.ts` (11), through real local
+GoTrue/JWT/PostgREST/edge with the released request shapes (mobile `setChecklistItemCompletion`,
+`setChecklistItemDismissed`, `updateTaskCompletion`; web `services/checklist.ts`). Logs and the
+red/green/mutation record: `DOCS/companion-actions/evidence/366-parent-r1/README.md`.
 
 ## How to run
 
@@ -104,7 +144,7 @@ Mobile stand-in: `npx jest __tests__/companionActions/taskSteps.test.tsx __tests
 - Mobile rendering is Jest + React Native Testing Library; the real-stack cases send real HTTP with real JWTs, the others use the scripted stand-in (client behaviour only). Platform target sizes are declared styles. No device, simulator, TalkBack or VoiceOver run.
 - The web browser check is one headless Chromium with the real components and hooks in a bundled fixture (not the Next.js shell or its cookie proxy, which the fixture server imitates). No Safari/Firefox, screen reader or 200% zoom.
 - No live model: whether a real model writes good `[STEP <id>]` lines is unproved; the parsing and the context restriction are tested.
-- A step on a content-backed task with no progress row cannot lock a parent row; a legacy client that inserts a completed row in the same instant can race one step write (the step is then history of the completed task).
+- Parent ordering (F1) is proven on the local stack only, with the released legacy request shapes listed below. No hosted row/lock test was run. A hosted writer that bypasses `user_tasks` triggers (`session_replication_role = replica`, bulk loads) would not take the parent lock.
 - Steps are changed through explicit controls and reviewed suggestions. A chat command grammar for steps (for example "check step X") was not added: #363's command grammar is unchanged, and resolving a parent and step from free text needs its own clarification design.
 - The mobile main Jest run keeps the known open-handle qualification (see the final section); focused runs used `--forceExit` only to end the runner after its summary.
 

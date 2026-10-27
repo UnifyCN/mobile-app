@@ -11,6 +11,7 @@
 --     never shows a receipt it does not understand. They come back when the migration is
 --     applied again; a restored draft then needs a new review.
 --   * No reminder is touched.
+--   * The step parent lock trigger on user_tasks is dropped; legacy writes take no step lock.
 --   * Archive rows hold account data: drop the table by hand once the rollback window is over.
 create table if not exists public.companion_rollback_archive_366 (
   id bigint generated always as identity primary key,
@@ -589,7 +590,9 @@ begin
                   where u.user_id = p_user_id));
 end $$;
 
+drop trigger companion_user_tasks_step_order on public.user_tasks;
 drop function
+  public.companion_user_tasks_step_order(), public.companion_step_parent_lock(uuid, text),
   public.companion_proposal_context(uuid, jsonb), public.companion_step_context(uuid, jsonb),
   public.companion_read_steps(uuid),
   public.companion_undo_step(uuid, uuid, text, integer, jsonb, public.companion_action_receipts),

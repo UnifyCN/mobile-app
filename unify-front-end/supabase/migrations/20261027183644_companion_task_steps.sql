@@ -147,8 +147,21 @@ begin
   end if;
 end $$;
 
--- The parent of a step write: this account's live, unfinished task. Locks it (shared), so
--- a completion or removal of the parent and a step write are ordered, not interleaved.
+-- The parent lock of the steps of one task of one account. Step writes take it before
+-- they read the parent. A write that completes or removes a content-backed task takes it
+-- too (companion_user_tasks_step_order below), because such a task may have no progress
+-- row yet, and a new row has no row lock a step write could wait for.
+create function public.companion_step_parent_lock(p_user uuid, p_ref text) returns void
+language sql set search_path = public, pg_temp as $$
+  select pg_advisory_xact_lock(hashtextextended(p_user::text || ':' || p_ref, 366))
+$$;
+
+-- The parent of a step write: this account's live, unfinished task. A completion or
+-- removal of the parent and a step write are ordered, never interleaved: a custom task
+-- row and an existing progress row are locked (shared); a content-backed task is read
+-- only after its parent lock, which a completing or removing insert also takes. A step
+-- write that holds the parent first stays as history of the later completion/removal;
+-- one that comes later is refused.
 -- A content-backed task without a progress row is Not started; that its published
 -- document exists is checked by the action service before a new step is added.
 -- Returns the parent's current state.
@@ -162,6 +175,8 @@ begin
     perform public.companion_fail('CA422', 'invalid_task_ref');
   end if;
   if split_part(p_ref, ':', 1) = 'sanity' then
+    -- Lock order: parent lock, then the progress row (as an upsert takes them).
+    perform public.companion_step_parent_lock(p_user, p_ref);
     select * into v_us from public.user_tasks
      where user_id = p_user and sanity_checklist_id = substr(p_ref, 8) for share;
     if not found then return 'not_started'; end if;
@@ -186,6 +201,28 @@ begin
   end if;
   return public.companion_task_state(v_ct.completed, v_ct.progress_state);
 end $$;
+
+-- A legacy client (or the action service) that completes or removes a content-backed task
+-- takes its parent lock before the row is written. This covers a first insert, the insert
+-- part of an INSERT ... ON CONFLICT upsert (its BEFORE INSERT trigger fires before the
+-- conflict check, so the lock comes before the row lock, as in a step write) and an
+-- update that moves a row onto a task. It then waits for a step write that holds the
+-- parent, and a later step write reads the change. A plain update of an existing row is
+-- ordered by the row lock instead, so it takes no parent lock (no lock order inversion).
+-- Other rows (not completed, not removed, no content id) take nothing.
+create function public.companion_user_tasks_step_order() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  if new.user_id is not null and new.sanity_checklist_id is not null
+     and (new.completed is true or new.dismissed_at is not null)
+     and (tg_op = 'INSERT'
+          or (new.user_id, new.sanity_checklist_id) is distinct from (old.user_id, old.sanity_checklist_id)) then
+    perform public.companion_step_parent_lock(new.user_id, 'sanity:' || new.sanity_checklist_id);
+  end if;
+  return new;
+end $$;
+create trigger companion_user_tasks_step_order before insert or update on public.user_tasks
+  for each row execute function public.companion_user_tasks_step_order();
 
 -- One step of this account, locked. Raises step_not_found for any other account's step.
 create function public.companion_step_row(p_user uuid, p_step jsonb) returns public.companion_task_steps
@@ -231,7 +268,7 @@ begin
     v_ref := p_op->>'task_ref';
     v_parent := public.companion_step_parent(p_user, v_ref);
     -- One writer per parent orders the positions of concurrent additions.
-    perform pg_advisory_xact_lock(hashtextextended(p_user::text || ':' || v_ref, 366));
+    perform public.companion_step_parent_lock(p_user, v_ref);
     if (select count(*) from public.companion_task_steps
          where user_id = p_user and task_ref = v_ref and removed_at is null)
        + jsonb_array_length(p_op->'titles') > 50 then
@@ -1073,6 +1110,7 @@ $$;
 -- ------------------------------------------------------------------ grants
 revoke all on function
   public.companion_step_title_ok(jsonb), public.companion_uuid_ok(jsonb), public.companion_step_validate(jsonb),
+  public.companion_step_parent_lock(uuid, text), public.companion_user_tasks_step_order(),
   public.companion_step_parent(uuid, text), public.companion_step_row(uuid, jsonb),
   public.companion_step_conflict(public.companion_task_steps, bigint), public.companion_apply_step(uuid, jsonb),
   public.companion_steps_current(uuid, jsonb),

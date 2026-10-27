@@ -1,0 +1,114 @@
+[0m[38;5;245mrunning 9 tests from ./steps_parent_race_test.ts[0m
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyFirst":"settled","legacyWhileStepHeld":[],"mid1":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:56.640192+00:00"}],"steps":[]},"mid2":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:56.640192+00:00"}],"steps":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held completion step","step_id":"f41e7834-e80b-47c9-a68c-e71a1dd88f3e","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-27T20:33:56.611834+00:00","after_state":"not_started","before_state":"not_started","operation_id":"e09dd249-89a1-459a-b58f-a4de6df21ae1","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held completion step","step_id":"f41e7834-e80b-47c9-a68c-e71a1dd88f3e","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"e09dd249-89a1-459a-b58f-a4de6df21ae1"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:56.640192+00:00"}],"steps":[{"done":false,"title":"held completion step","step_id":"f41e7834-e80b-47c9-a68c-e71a1dd88f3e","position":0,"revision":1,"task_ref":"sanity:sin-number"}]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ... [0m[31mFAILED[0m [0m[38;5;245m(415ms)[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyState":"settled","stepState":"settled","mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:56.868002+00:00"}],"steps":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_completed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:56.868002+00:00"}],"steps":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(227ms)[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyFirst":"settled","legacyWhileStepHeld":[],"mid1":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:57.151651+00:00"}],"steps":[]},"mid2":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:57.151651+00:00"}],"steps":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held dismissal step","step_id":"31b9397b-6cda-4869-b617-b2f21673a450","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-27T20:33:57.136055+00:00","after_state":"not_started","before_state":"not_started","operation_id":"cde5ca50-89de-4183-b0b2-719e42d08d52","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held dismissal step","step_id":"31b9397b-6cda-4869-b617-b2f21673a450","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"cde5ca50-89de-4183-b0b2-719e42d08d52"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:57.151651+00:00"}],"steps":[{"done":false,"title":"held dismissal step","step_id":"31b9397b-6cda-4869-b617-b2f21673a450","position":0,"revision":1,"task_ref":"sanity:sin-number"}]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ... [0m[31mFAILED[0m [0m[38;5;245m(280ms)[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyState":"settled","stepState":"settled","mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:57.378906+00:00"}],"steps":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_removed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:57.378906+00:00"}],"steps":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(228ms)[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ...
+[0m[38;5;245m------- output -------[0m
+{"checkState":"not advisory","legacyFirst":"settled","legacyWhileCheckHeld":[],"mid1":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.176567+00:00"}],"steps":[{"done":false,"title":"check me","step_id":"148731a1-5acd-481e-9381-3b4f68bd7830","position":0,"revision":1,"task_ref":"sanity:sin-number"}]},"mid2":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.176567+00:00"}],"steps":[{"done":false,"title":"check me","step_id":"148731a1-5acd-481e-9381-3b4f68bd7830","position":0,"revision":1,"task_ref":"sanity:sin-number"}]},"check":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":true,"title":"check me","step_id":"148731a1-5acd-481e-9381-3b4f68bd7830","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-27T20:33:57.659416+00:00","after_state":"not_started","before_state":"not_started","operation_id":"a842a08f-bf21-48b4-bc26-5af14b92f161","after_revision":2,"operation_type":"step.set_done","before_revision":1},"results":[{"type":"step.set_done","state":"not_started","steps":[{"done":true,"title":"check me","step_id":"148731a1-5acd-481e-9381-3b4f68bd7830","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":2,"before_revision":1}],"replayed":false,"operation_id":"a842a08f-bf21-48b4-bc26-5af14b92f161"},"headers":{}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.176567+00:00"}],"steps":[{"done":true,"title":"check me","step_id":"148731a1-5acd-481e-9381-3b4f68bd7830","position":0,"revision":2,"task_ref":"sanity:sin-number"}]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ... [0m[31mFAILED[0m [0m[38;5;245m(1s)[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ...
+[0m[38;5;245m------- output -------[0m
+{"shape":"upsert","legacyState":"blocked","stepState":"blocked","legacyWhileStepHeld":["transactionid"],"mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.39919+00:00"}],"steps":[]},"step":{"status":200},"legacy":{"status":200,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.432717+00:00"}],"steps":[{"done":false,"title":"existing upsert","step_id":"779cd83c-3a5f-4c25-963b-19d858a86609","position":0,"revision":1,"task_ref":"sanity:sin-number"}]}}
+{"shape":"update","legacyState":"blocked","stepState":"blocked","legacyWhileStepHeld":["transactionid"],"mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.666592+00:00"}],"steps":[]},"step":{"status":200},"legacy":{"status":204,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:33:59.699952+00:00"}],"steps":[{"done":false,"title":"existing update","step_id":"d12731b0-e28d-4e18-a3bf-ebe24ef9cbe9","position":0,"revision":1,"task_ref":"sanity:sin-number"}]}}
+[0m[38;5;245m----- output end -----[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ... [0m[32mok[0m [0m[38;5;245m(509ms)[0m
+independent parents and accounts are not serialized behind a held parent ... [0m[32mok[0m [0m[38;5;245m(303ms)[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ...
+[0m[38;5;245m------- output -------[0m
+[{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"}]
+[0m[38;5;245m----- output end -----[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ... [0m[32mok[0m [0m[38;5;245m(253ms)[0m
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again ... [0m[31mFAILED[0m [0m[38;5;245m(582ms)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: a step was saved after the completion was committed and publicly read without it
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   200[22m[39m
+[32m[1m+   422[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m132[0m:[0m[33m13[0m)
+
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: a step was saved after the dismissal was committed and publicly read without it
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   200[22m[39m
+[32m[1m+   422[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m132[0m:[0m[33m13[0m)
+
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read [0m[38;5;245m=> ./steps_parent_race_test.ts:186:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: a step was checked after the completion was committed and publicly read
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   200[22m[39m
+[32m[1m+   422[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m220[0m:[0m[33m11[0m)
+
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again [0m[38;5;245m=> ./steps_parent_race_test.ts:336:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: re-applied: ordered again
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [41m[37msettled[31m[49m
+[22m[39m[32m[1m+   [42m[37mblocked[32m[49m
+[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m364[0m:[0m[33m7[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read [0m[38;5;245m=> ./steps_parent_race_test.ts:186:6[0m
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again [0m[38;5;245m=> ./steps_parent_race_test.ts:336:6[0m
+
+[0m[31mFAILED[0m | 5 passed | 4 failed [0m[38;5;245m(4s)[0m
+
+[0m[1m[31merror[0m: Test failed
+exit=1
