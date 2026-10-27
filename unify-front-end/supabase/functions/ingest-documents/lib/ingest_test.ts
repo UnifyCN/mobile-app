@@ -199,17 +199,20 @@ Deno.test(
     const docBefore = JSON.stringify(doc);
 
     pages[source.url] = page(prose(90_000, 'new'));
+    const logsBefore = h.store.logs.length;
     const result = await ingestSource(source, h.deps);
 
-    assertEquals(result.status, 'error');
+    // The checked first batch stays in the open job for the next call; a
+    // pending job writes no crawl log.
+    assertEquals(result.status, 'pending');
+    assertEquals(result.stop_reason, 'provider_error');
+    assertEquals(result.error, 'embedding service unavailable');
+    assertEquals(result.staged, 20);
     assertEquals(
       h.store.chunksOf(doc.id).map(c => c.chunk_text),
       before
     );
-    assertEquals(
-      h.store.logs.at(-1)?.error_message,
-      'embedding service unavailable'
-    );
+    assertEquals(h.store.logs.length, logsBefore);
     assertEquals(
       JSON.stringify(doc),
       docBefore,
@@ -284,11 +287,36 @@ Deno.test('a source that becomes national drops the province on the next crawl',
   });
   await ingestSource(provincial, h.deps);
 
-  await ingestSource({ ...provincial, province: null }, h.deps);
+  // The stored row changes, and the next crawl reads it.
+  const national = { ...provincial, province: null };
+  h.store.sources[0] = national;
+  await ingestSource(national, h.deps);
 
   const doc = h.store.documents[0];
   assertEquals(doc.metadata.province, null);
   for (const c of h.store.chunksOf(doc.id)) {
     assert(!('province' in c.metadata), JSON.stringify(c.metadata));
   }
+});
+
+// Falsifier: when the live chunks need repair, the refresh returns false; if it
+// closes the open equal job first, the next fetch embeds the 20 checked rows
+// again (batches 20, 20, 13 instead of 20, 13 for this 53-chunk page).
+Deno.test('a false refresh keeps the equal repair job and its checked rows', async () => {
+  const source = makeSource(1);
+  // Publishing takes calls 1-3; the repair's second call (5) fails.
+  const h = makeHarness([source], { [source.url]: page(prose(90_000)) }, { failEmbedOnCall: 5 });
+
+  assertEquals((await ingestSource(source, h.deps)).status, 'success');
+  assertEquals(h.embedBatches, [20, 20, 13]);
+  h.store.chunks[0].embedding = [];
+  const repair = await ingestSource(source, h.deps);
+  assertEquals([repair.status, repair.staged, repair.remaining], ['pending', 20, 33]);
+
+  const done = await ingestSource(source, h.deps);
+
+  assertEquals(done.status, 'success');
+  assertEquals(h.embedBatches.slice(3), [20, 20, 20, 13]);
+  assertEquals(h.store.chunks.length, 53);
+  assert(h.store.chunks.every(c => c.embedding.length > 0));
 });

@@ -20,12 +20,13 @@ import {
 } from 'https://deno.land/std@0.224.0/assert/mod.ts';
 import { handleIngestRequest } from '../functions/ingest-documents/lib/handler.ts';
 import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
+import { ingestUntilSettled } from '../functions/ingest-documents/lib/testSupport.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import { computeContentHash } from '../functions/ingest-documents/lib/text.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
 import { openQwenIngestDb } from './support/ingestDb.ts';
-import { QWEN } from './support/embeddingModels.ts';
+import { QWEN, withReceipt } from './support/embeddingModels.ts';
 import { embedding, rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
 
@@ -93,10 +94,10 @@ function deps(db: Db, run: Run): IngestDeps & { serviceRoleKey: string } {
       if (body === undefined) throw new Error(`HTTP 404: ${url}`);
       return await Promise.resolve(body);
     },
-    embed: async texts => {
+    embedChecked: withReceipt(async texts => {
       await run.beforeEmbed?.();
       return texts.map(() => VECTOR);
-    },
+    }),
     serviceRoleKey: KEY,
   };
 }
@@ -435,7 +436,9 @@ Deno.test(
         })
       );
 
-      assertEquals(failed.status, 'error');
+      // The promotion rolled back; the checked job waits for the next call.
+      assertEquals(failed.status, 'pending');
+      assertEquals(failed.stop_reason, 'store_error');
       assertMatch(failed.error ?? '', /injected delete failure/);
       await assertOneGeneration(db, EE_PAGE, [drawText(400)]);
       assertEquals(await leftovers(db), { leases: 0, staged: 0 });
@@ -469,7 +472,7 @@ Deno.test(
       const pages = processingPages();
       assertEquals(
         (
-          await ingestSource(
+          await ingestUntilSettled(
             processing,
             deps(db, { at: '2026-10-23T12:00:00Z', pages })
           )
@@ -488,17 +491,20 @@ Deno.test(
         create trigger test_fail_delete before delete on public.knowledge_chunks
           for each statement execute function public.test_fail_delete();`);
 
-      const failed = await ingestSource(
+      const failed = await ingestUntilSettled(
         processing,
         deps(db, { at: '2026-10-24T12:00:00Z', pages })
       );
       await db.exec('drop trigger test_fail_delete on public.knowledge_chunks');
-      const next = await ingestSource(
+      const next = await ingestUntilSettled(
         processing,
         deps(db, { at: '2026-10-25T12:00:00Z', pages })
       );
 
-      assertEquals(failed.status, 'error');
+      // The failed promotion rolled back and its checked job stayed open;
+      // the next call reuses it (equal text) and publishes it whole.
+      assertEquals(failed.status, 'pending');
+      assertEquals(failed.stop_reason, 'store_error');
       assertEquals(next.status, 'success');
       const chunks = await chunksOf(db, PROCESSING_PAGE);
       assertEquals(chunks.length, 1950);
@@ -551,7 +557,7 @@ Deno.test(
     try {
       const processing = await source(db, PROCESSING_PAGE);
       const pages = processingPages();
-      await ingestSource(
+      await ingestUntilSettled(
         processing,
         deps(db, { at: '2026-10-23T12:00:00Z', pages })
       );
@@ -604,7 +610,7 @@ Deno.test(
       const pages = processingPages();
       assertEquals(
         (
-          await ingestSource(
+          await ingestUntilSettled(
             processing,
             deps(db, { at: '2026-10-24T00:00:00Z', pages })
           )

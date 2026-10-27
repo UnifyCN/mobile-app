@@ -22,6 +22,7 @@ import {
   LEGACY,
   QWEN,
   setControl,
+  withReceipt,
 } from './support/embeddingModels.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
@@ -48,11 +49,11 @@ function crawl(db: Db, run: Run): Crawl {
     store: createStore(supabaseHttp(db).client),
     now: () => new Date(run.at),
     fetchPage: async () => await Promise.resolve(run.pages),
-    embed: async texts => {
+    embedChecked: withReceipt(async texts => {
       batches.push(texts.length);
       await run.onEmbed?.(batches.length, texts.length);
       return texts.map(() => VECTOR);
-    },
+    }),
   };
   return { batches, deps };
 }
@@ -84,7 +85,7 @@ const PAGE_A = page(prose(6_000, 'a'));
 async function secondCrawl(change: string) {
   const db = await openIngestDb();
   try {
-    await setControl(db, 'qwen', QWEN);
+    await setControl(db, 'qwen', QWEN, `, contract_version = '${CONTRACT}'`);
     const source = await htmlSource(db);
     const first = crawl(db, { at: '2026-10-25T00:00:00Z', pages: PAGE_A });
     assertEquals((await ingestSource(source, first.deps)).status, 'success');
@@ -167,7 +168,7 @@ Deno.test(
   async () => {
     const db = await openIngestDb();
     try {
-      await setControl(db, 'qwen', QWEN);
+      await setControl(db, 'qwen', QWEN, `, contract_version = '${CONTRACT}'`);
       const [news] = await rows<{ id: number }>(
         db,
         `select id::int as id from public.crawl_sources where url = $1`,
@@ -232,7 +233,7 @@ Deno.test(
   async () => {
     const db = await openIngestDb();
     try {
-      await setControl(db, 'qwen', QWEN);
+      await setControl(db, 'qwen', QWEN, `, contract_version = '${CONTRACT}'`);
       const source = await htmlSource(db);
       const first = crawl(db, {
         at: '2026-10-25T00:00:00Z',
@@ -261,7 +262,10 @@ Deno.test(
       });
       const failed = await ingestSource(source, attempt.deps);
 
-      assertEquals(failed.status, 'error');
+      // The first checked batch waits in the open job; nothing is live.
+      assertEquals(failed.status, 'pending');
+      assertEquals(failed.stop_reason, 'provider_error');
+      assertEquals(failed.staged, 20);
       assertEquals(attempt.batches, [20, 20]);
       assertEquals(await state(), before);
       assertEquals(
@@ -281,7 +285,7 @@ Deno.test(
   async () => {
     const db = await openIngestDb();
     try {
-      await setControl(db, 'qwen', QWEN);
+      await setControl(db, 'qwen', QWEN, `, contract_version = '${CONTRACT}'`);
       const source = await htmlSource(db);
       const first = crawl(db, {
         at: '2026-10-25T00:00:00Z',
@@ -311,8 +315,11 @@ Deno.test(
       });
       const result = await ingestSource(source, attempt.deps);
 
-      assertEquals(result.status, 'error');
+      // The compatible job stays open and inert while writers are paused.
+      assertEquals(result.status, 'pending');
+      assertEquals(result.stop_reason, 'store_error');
       assertMatch(result.error ?? '', /paused/);
+      assertEquals(result.staged, 0);
       assertEquals(
         await rows(
           db,

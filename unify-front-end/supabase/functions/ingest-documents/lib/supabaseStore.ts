@@ -1,5 +1,7 @@
+import { LEASE_SECONDS } from './ingest.ts';
+import type { CrawlSource } from './pickDueSources.ts';
 import type { RebuildStore } from './rebuild.ts';
-import type { IngestStore } from './types.ts';
+import type { CallOptions, IngestStore, SourceConfig } from './types.ts';
 
 /**
  * The part of the supabase-js client the store uses. The real client and the
@@ -16,41 +18,96 @@ function fail(error: { message: string } | null, action: string) {
   if (error) throw new Error(`${action} failed: ${error.message}`);
 }
 
+/**
+ * A failed database call. `unknown` is true when no database answer arrived
+ * (the wait was aborted, the connection failed, or a gateway timed out): the
+ * call may still have committed, so the caller reads the status before any
+ * new external work.
+ */
+export class StoreCallError extends Error {
+  constructor(
+    message: string,
+    readonly unknown: boolean
+  ) {
+    super(message);
+    this.name = 'StoreCallError';
+  }
+}
+
+const GATEWAY_STATUSES = new Set([0, 502, 503, 504]);
+
+/** The configuration a job binds, in the database's canonical shape. */
+export function sourceConfig(source: CrawlSource): SourceConfig {
+  return {
+    url: source.url,
+    data_urls: source.data_urls ?? [],
+    source_kind: source.source_kind,
+    province: source.province,
+    enabled: source.enabled,
+    label: source.label,
+    crawl_frequency_hours: source.crawl_frequency_hours,
+  };
+}
+
 export function createStore(supabase: SupabaseLike): IngestStore {
+  const rpc = async <T>(
+    fn: string,
+    args: Record<string, unknown>,
+    action: string,
+    call?: CallOptions
+  ): Promise<T> => {
+    let query = supabase.rpc(fn, args);
+    if (call?.signal) query = query.abortSignal(call.signal);
+    const { data, error, status } = await query;
+    if (error) {
+      throw new StoreCallError(
+        `${action} failed: ${error.message}`,
+        GATEWAY_STATUSES.has(status) || call?.signal?.aborted === true
+      );
+    }
+    return data as T;
+  };
   const sourceColumns =
     'id, url, label, enabled, crawl_frequency_hours, last_crawled_at, province, source_kind, data_urls';
   return {
-    async listCrawlSources() {
-      const { data, error } = await supabase
+    async listCrawlSources(call) {
+      let query = supabase
         .from('crawl_sources')
         .select(sourceColumns)
         .eq('enabled', true);
+      if (call?.signal) query = query.abortSignal(call.signal);
+      const { data, error } = await query;
       fail(error, 'Listing crawl sources');
       return data ?? [];
     },
-    async getCrawlSource(id) {
-      const { data } = await supabase
+    async getCrawlSource(id, call) {
+      let query = supabase
         .from('crawl_sources')
         .select(sourceColumns)
-        .eq('id', id)
-        .maybeSingle();
+        .eq('id', id);
+      if (call?.signal) query = query.abortSignal(call.signal);
+      const { data, error } = await query.maybeSingle();
+      fail(error, 'Reading the crawl source');
       return data ?? null;
     },
-    async findEnabledCrawlSourceByUrl(url) {
-      const { data } = await supabase
+    async findEnabledCrawlSourceByUrl(url, call) {
+      let query = supabase
         .from('crawl_sources')
         .select(sourceColumns)
         .eq('url', url)
-        .eq('enabled', true)
-        .maybeSingle();
+        .eq('enabled', true);
+      if (call?.signal) query = query.abortSignal(call.signal);
+      const { data, error } = await query.maybeSingle();
+      fail(error, 'Reading the crawl source');
       return data ?? null;
     },
-    async findDocument(url) {
-      const { data, error } = await supabase
+    async findDocument(url, call) {
+      let query = supabase
         .from('knowledge_documents')
         .select('id, content_hash, embedding_model')
-        .eq('source_url', url)
-        .maybeSingle();
+        .eq('source_url', url);
+      if (call?.signal) query = query.abortSignal(call.signal);
+      const { data, error } = await query.maybeSingle();
       fail(error, 'Document read');
       return data
         ? {
@@ -60,14 +117,18 @@ export function createStore(supabase: SupabaseLike): IngestStore {
           }
         : null;
     },
-    async claimSource(sourceId, leaseSeconds, embeddingModel) {
-      const { data, error } = await supabase.rpc('claim_crawl_source', {
-        p_source_id: sourceId,
-        p_lease_seconds: leaseSeconds,
-        p_embedding_model: embeddingModel,
-      });
-      fail(error, 'Claiming the source');
-      return (data as string | null) ?? null;
+    async claimSource(sourceId, leaseSeconds, embeddingModel, call) {
+      const data = await rpc<string | null>(
+        'claim_crawl_source',
+        {
+          p_source_id: sourceId,
+          p_lease_seconds: leaseSeconds,
+          p_embedding_model: embeddingModel,
+        },
+        'Claiming the source',
+        call
+      );
+      return data ?? null;
     },
     async stageChunks(sourceId, token, chunks, leaseSeconds, embeddingModel) {
       const { error } = await supabase.rpc('stage_knowledge_chunks', {
@@ -92,36 +153,175 @@ export function createStore(supabase: SupabaseLike): IngestStore {
       });
       fail(error, 'Promoting the new chunks');
     },
-    async refreshMetadata(sourceId, token, input) {
-      const { data, error } = await supabase.rpc('refresh_knowledge_metadata', {
-        p_source_id: sourceId,
-        p_token: token,
-        p_content_hash: input.contentHash,
-        p_document_patch: input.documentPatch,
-        p_chunk_groups: input.chunkGroups,
-        p_embedding_model: input.embeddingModel,
-      });
-      fail(error, 'Metadata refresh');
-      return data === true;
+    async releaseSource(sourceId, token, call) {
+      await rpc(
+        'release_crawl_source',
+        { p_source_id: sourceId, p_token: token },
+        'Releasing the source',
+        call
+      );
     },
-    async releaseSource(sourceId, token) {
-      const { error } = await supabase.rpc('release_crawl_source', {
-        p_source_id: sourceId,
-        p_token: token,
-      });
-      fail(error, 'Releasing the source');
+    async recordAttempt(sourceId, at, call) {
+      await rpc(
+        'record_crawl_attempt',
+        { p_source_id: sourceId, p_at: at },
+        'Recording the crawl attempt',
+        call
+      );
     },
-    async recordAttempt(sourceId, at) {
-      const { error } = await supabase.rpc('record_crawl_attempt', {
-        p_source_id: sourceId,
-        p_at: at,
-      });
-      fail(error, 'Recording the crawl attempt');
-    },
-    async logCrawl(entry) {
-      const { error } = await supabase.from('crawl_logs').insert(entry);
+    async logCrawl(entry, call) {
+      let query = supabase.from('crawl_logs').insert(entry);
+      if (call?.signal) query = query.abortSignal(call.signal);
+      const { error } = await query;
       // Logging is best effort and must not fail the crawl.
       if (error) console.error(`crawl_logs insert failed: ${error.message}`);
+    },
+    openGeneration(input, call) {
+      return rpc(
+        'ingest_generation_open',
+        {
+          p_operation_id: input.operationId,
+          p_source_id: input.sourceId,
+          p_token: input.token,
+          p_source_config: input.sourceConfig,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_content_hash: input.contentHash,
+          p_title: input.title,
+          p_document_metadata: input.documentMetadata,
+          p_fetched_at: input.fetchedAt,
+          p_rows: input.rows,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Opening the generation',
+        call
+      );
+    },
+    beginService(input, call) {
+      return rpc(
+        'ingest_generation_begin_service',
+        {
+          p_job_id: input.jobId,
+          p_token: input.token,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Starting the generation service',
+        call
+      );
+    },
+    reserveBatch(input, call) {
+      return rpc(
+        'ingest_generation_reserve',
+        {
+          p_request_id: input.requestId,
+          p_job_id: input.jobId,
+          p_token: input.token,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Reserving the batch',
+        call
+      );
+    },
+    stageBatch(input, call) {
+      return rpc(
+        'ingest_generation_stage',
+        {
+          p_request_id: input.requestId,
+          p_job_id: input.jobId,
+          p_token: input.token,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_receipt: input.receipt,
+          p_rows: input.rows,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Staging the batch',
+        call
+      );
+    },
+    promoteJob(input, call) {
+      return rpc(
+        'ingest_generation_promote',
+        {
+          p_job_id: input.jobId,
+          p_token: input.token,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_duration_ms: input.durationMs,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Promoting the generation',
+        call
+      );
+    },
+    rejectBatch(input, call) {
+      return rpc(
+        'ingest_generation_reject',
+        {
+          p_job_id: input.jobId,
+          p_token: input.token,
+          p_request_id: input.requestId,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_error: input.error,
+          p_duration_ms: input.durationMs,
+        },
+        'Rejecting the batch',
+        call
+      );
+    },
+    async refreshUnchanged(input, call) {
+      const data = await rpc<boolean | null>(
+        'ingest_generation_refresh',
+        {
+          p_source_id: input.sourceId,
+          p_token: input.token,
+          p_source_config: input.sourceConfig,
+          p_embedding_model: input.embeddingModel,
+          p_contract: input.contract,
+          p_content_hash: input.contentHash,
+          p_document_patch: input.documentPatch,
+          p_chunk_groups: input.chunkGroups,
+          p_lease_seconds: LEASE_SECONDS,
+        },
+        'Metadata refresh',
+        call
+      );
+      return data === true;
+    },
+    retireJob(jobId, call) {
+      return rpc(
+        'ingest_generation_retire',
+        { p_job_id: jobId },
+        'Retiring the generation',
+        call
+      );
+    },
+    async listOpenJobs(call) {
+      return (
+        (await rpc<unknown[] | null>(
+          'ingest_generation_list_open',
+          {},
+          'Listing open generations',
+          call
+        )) ?? []
+      ) as never;
+    },
+    generationStatus(key, call) {
+      return rpc(
+        'ingest_generation_status',
+        {
+          p_job_id: key.jobId ?? null,
+          p_operation_id: key.operationId ?? null,
+          p_request_id: key.requestId ?? null,
+        },
+        'Reading the generation status',
+        call
+      );
     },
   };
 }

@@ -12,8 +12,9 @@
 //   * rows come back as JSON would: timestamps as ISO strings, bigint as number.
 //   * rpc() calls a function by named arguments, as PostgREST does, and a
 //     raised exception comes back as an error with its SQLSTATE.
-// What it does not prove: PostgREST's own URL parsing, row-level security, or
-// request size limits. Those are noted in the report.
+// What it does not prove: PostgREST's own URL parsing, row-level security,
+// request size limits, or an aborted wait (it accepts abortSignal and answers
+// at once). Those are noted in the report.
 import type { Db } from './sharedDb.ts';
 
 interface Filter {
@@ -124,6 +125,10 @@ class Query implements PromiseLike<{ data: unknown; error: ApiError | null }> {
   }
   in(column: string, value: unknown[]) {
     this.filters.push({ op: 'in', column, value });
+    return this;
+  }
+  /** Accepted and ignored: the shim answers at once, so nothing waits. */
+  abortSignal(_signal: AbortSignal) {
     return this;
   }
   single() {
@@ -353,8 +358,11 @@ export function postgrestShim(db: Db) {
   return {
     client: {
       from: (table: string) => new Query(db, table, requests),
-      rpc: (fn: string, args: Record<string, unknown> = {}) =>
-        rpc(db, fn, args, requests),
+      rpc: (fn: string, args: Record<string, unknown> = {}) => {
+        const result = rpc(db, fn, args, requests);
+        // Like a builder: abortSignal is accepted and ignored.
+        return Object.assign(result, { abortSignal: () => result });
+      },
     },
     requests,
   };

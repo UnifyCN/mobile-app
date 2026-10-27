@@ -19,6 +19,7 @@ import { ingestSource } from '../functions/ingest-documents/lib/ingest.ts';
 import type { CrawlSource } from '../functions/ingest-documents/lib/pickDueSources.ts';
 import { createStore } from '../functions/ingest-documents/lib/supabaseStore.ts';
 import type { IngestDeps } from '../functions/ingest-documents/lib/types.ts';
+import { withReceipt } from './support/embeddingModels.ts';
 import { openQwenIngestDb } from './support/ingestDb.ts';
 import { rows, type Db } from './support/sharedDb.ts';
 import { supabaseHttp } from './support/supabaseHttp.ts';
@@ -59,7 +60,7 @@ function depsFor(
     store,
     now: () => new Date(at),
     fetchPage,
-    embed: texts => Promise.resolve(texts.map(() => VECTOR)),
+    embedChecked: withReceipt(texts => Promise.resolve(texts.map(() => VECTOR))),
   };
 }
 

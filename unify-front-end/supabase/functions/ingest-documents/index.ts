@@ -1,29 +1,11 @@
 // @ts-nocheck
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
-import { embedTexts, embedTextsChecked } from '../_shared/embeddings.ts';
-import { fetchWithRetry } from '../_shared/fetchWithRetry.ts';
+import { embedTextsChecked } from '../_shared/embeddings.ts';
+import { fetchSourcePage } from './lib/fetchPage.ts';
 import { handleIngestRequest, isAuthorized } from './lib/handler.ts';
 import { createRebuildStore, createStore } from './lib/supabaseStore.ts';
 import type { IngestDeps } from './lib/types.ts';
-
-async function fetchPage(url: string): Promise<string> {
-  const response = await fetchWithRetry(
-    url,
-    {
-      method: 'GET',
-      headers: {
-        'User-Agent':
-          'UnifyBot/1.0 (+https://unifysocial.ca; educational-knowledge-indexer)',
-      },
-    },
-    { timeoutMs: 15000, retries: 2, retryDelayMs: 500 }
-  );
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-  }
-  return await response.text();
-}
 
 Deno.serve(async (req: Request) => {
   try {
@@ -51,9 +33,9 @@ Deno.serve(async (req: Request) => {
       store: createStore(supabase),
       rebuild: createRebuildStore(supabase),
       now: () => new Date(),
-      fetchPage,
-      embed: texts => embedTexts(texts, openRouterApiKey),
-      embedChecked: texts => embedTextsChecked(texts, openRouterApiKey),
+      fetchPage: fetchSourcePage,
+      embedChecked: (texts, options) =>
+        embedTextsChecked(texts, openRouterApiKey, options),
       serviceRoleKey,
     });
   } catch (error: unknown) {

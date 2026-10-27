@@ -298,7 +298,11 @@ for (const model of ACCEPTED_MODELS) {
             String(result.error)
           );
           assertEquals(
-            f.requests.filter(r => r.table === 'stage_knowledge_chunks'),
+            f.requests.filter(
+              r =>
+                r.table === 'stage_knowledge_chunks' ||
+                r.table === 'ingest_generation_stage'
+            ),
             []
           );
           assertEquals(
@@ -338,7 +342,11 @@ for (const rejected of REJECTED_IDENTITIES) {
           'Invalid embedding response: the model identity is not accepted'
         );
         assertEquals(
-          f.requests.filter(r => r.table === 'stage_knowledge_chunks'),
+          f.requests.filter(
+            r =>
+              r.table === 'stage_knowledge_chunks' ||
+              r.table === 'ingest_generation_stage'
+          ),
           []
         );
         assertEquals(
@@ -446,12 +454,21 @@ Deno.test(
       () => new Response('secret-detail Bearer abc', { status: 401 })
     );
     try {
-      const result = (await (await ingest(f.sourceId)).json()).results[0];
+      const text = await (await ingest(f.sourceId)).text();
+      const result = JSON.parse(text).results[0];
 
-      assertEquals(result.status, 'error');
+      // The job stays open for a later call; nothing was staged.
+      assertEquals(result.status, 'pending');
+      assertEquals(result.stop_reason, 'provider_error');
       assertEquals(result.error, 'Embedding request failed with HTTP 401');
+      assertEquals(result.staged, 0);
+      assert(!text.includes('secret-detail'), 'the provider body leaked');
       assertEquals(
-        f.requests.filter(r => r.table === 'stage_knowledge_chunks'),
+        f.requests.filter(
+          r =>
+            r.table === 'stage_knowledge_chunks' ||
+            r.table === 'ingest_generation_stage'
+        ),
         []
       );
       assertEquals(

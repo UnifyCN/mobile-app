@@ -10,6 +10,7 @@ export const INGEST_RELEASE_ORDER = [
   'match_chunks_chunk_source_url',
   'ingest_refresh_generations',
   'qwen_embedding_model_guards',
+  'ingest_generation_jobs',
   'seed_province_crawl_sources',
   'seed_ircc_record_sources',
 ];
@@ -35,8 +36,8 @@ export async function openIngestDb(
 }
 
 /**
- * The shared database in the state after the Qwen cutover: Qwen serving and
- * writers enabled. Tests that write through createStore use this, because the
+ * The shared database in the state after the Qwen cutover: Qwen serving with
+ * its contract, and writers enabled (the hosted control row after activation). Tests that write through createStore use this, because the
  * store always names the Qwen model.
  */
 export async function openQwenIngestDb(
@@ -45,7 +46,9 @@ export async function openQwenIngestDb(
   const db = await openIngestDb(order);
   await db.exec(
     `update public.knowledge_embedding_cutover
-        set phase = 'qwen', serving_model = 'qwen/qwen3-embedding-8b'`
+        set phase = 'qwen', serving_model = 'qwen/qwen3-embedding-8b',
+            target_model = 'qwen/qwen3-embedding-8b',
+            contract_version = 'qwen3-8b-prefix1536-l2-v1'`
   );
   return db;
 }
