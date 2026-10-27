@@ -1,0 +1,11 @@
+# 2026-10-27T19:27:42Z m1 red: mounted plan acceptance against the real local stack (no plan UI yet)
+  ● Settlement plans against the real local stack (mobile) › a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    Unable to find an element with testID: plan-card
+  ● Settlement plans against the real local stack (mobile) › the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    Unable to find an element with text: Checking your saved plan…
+  ● Settlement plans against the real local stack (mobile) › a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    Unable to find an element with role: button, name: /Draft plan, Your first week in Vancouver/
+  ● Settlement plans against the real local stack (mobile) › an account change hides the previous account's plan entry, cards and open plan before the next account renders
+    Unable to find an element with role: button, name: /Your plan, Your first week in Vancouver/
+Tests:       4 failed, 4 total
+exit=1

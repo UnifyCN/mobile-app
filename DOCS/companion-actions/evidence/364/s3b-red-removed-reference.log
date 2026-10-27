@@ -1,0 +1,33 @@
+# 2026-10-27T18:46:38Z s3b red: removed reused task in a refreshed draft
+running 1 test from ./plan_test.ts
+a relevant change since review asks for a new review; an unrelated progress change does not ... FAILED (606ms)
+
+ ERRORS 
+
+a relevant change since review asks for a new review; an unrelated progress change does not => ./plan_test.ts:238:6
+error: AssertionError: Values are not equal: {"plan":{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":true,"position":2,"revision":2,"task_ref":"sanity:bank-account","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:2","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":false}]},"plan_id":"71f7272d-abe7-4991-acf7-84604bb57c5e","receipt":{"kind":"plan","status":"applied","plan_id":"71f7272d-abe7-4991-acf7-84604bb57c5e","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:2","after_revision":1,"item_operation_id":"c4964059-c1ad-9d65-a15f-f26fb7ba8c2d"}],"created_at":"2026-10-27T18:47:07.728935+00:00","operation_id":"ac4155a0-6fcc-4b37-8ae8-4145fbf65ce7"},"removed":false,"revision":1,"created_at":"2026-10-27T18:47:07.728935+00:00","updated_at":"2026-10-27T18:47:07.728935+00:00","proposal_id":"ddb4ce24-4e13-460f-983b-d6af9664292f"},"status":"applied","receipt":{"kind":"plan","status":"applied","plan_id":"71f7272d-abe7-4991-acf7-84604bb57c5e","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:2","after_revision":1,"item_operation_id":"c4964059-c1ad-9d65-a15f-f26fb7ba8c2d"}],"created_at":"2026-10-27T18:47:07.728935+00:00","operation_id":"ac4155a0-6fcc-4b37-8ae8-4145fbf65ce7"},"replayed":false,"operation_id":"ac4155a0-6fcc-4b37-8ae8-4145fbf65ce7"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     422,
++     "task_removed",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:280:9)
+
+ FAILURES 
+
+a relevant change since review asks for a new review; an unrelated progress change does not => ./plan_test.ts:238:6
+
+FAILED | 0 passed | 1 failed | 7 filtered out (609ms)
+
+error: Test failed
+exit=1

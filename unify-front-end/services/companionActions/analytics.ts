@@ -1,16 +1,20 @@
 import { TASK_STATES, type TaskState } from './contract';
 import type { TaskActionResultEvent } from './taskActionStore';
+import type { PlanResultEvent } from './planStore';
 
 /** Where the task controls were opened. */
 export type TaskActionSurface = 'checklist' | 'companion';
 
 /** Properties of `companion_action_result` (mobile-app#361). Same as web. */
 export interface TaskActionResultProperties {
-  operation_type: 'task.set_state' | 'task.create_custom';
-  action: TaskActionResultEvent['action'];
-  outcome: TaskActionResultEvent['outcome'];
+  /** plan.save: a settlement plan approval, retry or Undo (#364). */
+  operation_type: 'task.set_state' | 'task.create_custom' | 'plan.save';
+  action: TaskActionResultEvent['action'] | PlanResultEvent['action'];
+  outcome: TaskActionResultEvent['outcome'] | PlanResultEvent['outcome'];
   entry_surface: TaskActionSurface;
   to_state?: TaskState;
+  /** #364: how many tasks the plan change added or removed (a count, never a title). */
+  change_count?: number;
 }
 
 const ACTIONS = [
@@ -63,5 +67,39 @@ export function buildTaskActionResultProperties(
   ) {
     props.to_state = event.toState;
   }
+  return props;
+}
+
+const PLAN_ACTIONS = ['approve_plan', 'retry_plan', 'undo_plan', 'approve_plan_compensation', 'lookup'] as const;
+const PLAN_OUTCOMES = [
+  'applied',
+  'partial',
+  'replayed',
+  'needs_review',
+  'undo_conflict',
+  'already_undone',
+  'refused',
+  'unknown',
+  'pending',
+  'not_applied',
+  'lookup_failed',
+  'unavailable',
+] as const;
+
+/** `companion_action_result` for a plan (#364): categorical values and a small count only. */
+export function buildPlanResultProperties(
+  event: PlanResultEvent,
+  surface: TaskActionSurface
+): TaskActionResultProperties | null {
+  if (!(PLAN_ACTIONS as readonly string[]).includes(event.action)) return null;
+  if (!(PLAN_OUTCOMES as readonly string[]).includes(event.outcome)) return null;
+  const props: TaskActionResultProperties = {
+    operation_type: 'plan.save',
+    action: event.action,
+    outcome: event.outcome,
+    entry_surface: surface === 'companion' ? 'companion' : 'checklist',
+  };
+  if (Number.isInteger(event.changeCount) && event.changeCount! >= 0 && event.changeCount! <= 12)
+    props.change_count = event.changeCount;
   return props;
 }

@@ -33,6 +33,8 @@ import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
 import { TaskProposalPanel } from './TaskProposalPanel';
+import { PlanPanel } from '../plans/PlanPanel';
+import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -52,6 +54,10 @@ interface TaskActionsSheetProps {
   proposalId?: string | null;
   /** Open straight on one task, e.g. one a command added (#363). */
   initialTask?: { taskRef: string; title: string } | null;
+  /** Open on a settlement plan draft or saved plan (#364). */
+  plan?: PlanTarget | null;
+  /** A task row of the plan was opened (#364). */
+  onOpenTask?: (taskRef: string, title: string) => void;
 }
 
 /**
@@ -65,6 +71,8 @@ export function TaskActionsSheet({
   onClose,
   proposalId = null,
   initialTask = null,
+  plan = null,
+  onOpenTask,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -89,7 +97,7 @@ export function TaskActionsSheet({
 
   const back = () => setSelectedRef(null);
   // Opened on a draft or one task: there is no list to go back to.
-  const canGoBack = Boolean(selectedRef) && !proposalId && !initialRef;
+  const canGoBack = Boolean(selectedRef) && !proposalId && !initialRef && !plan;
 
   return (
     <Modal
@@ -141,7 +149,11 @@ export function TaskActionsSheet({
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {proposalId
+                {plan
+                  ? 'proposalId' in plan
+                    ? t('plans.reviewTitle')
+                    : t('plans.planTitle')
+                  : proposalId
                   ? t('taskCreate.drawerTitle')
                   : selectedRef
                     ? t('taskActions.drawerTitle')
@@ -156,7 +168,18 @@ export function TaskActionsSheet({
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible && proposalId ? (
+            {visible && plan ? (
+              <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps='handled'
+              >
+                <PlanPanel
+                  target={plan}
+                  onOpenTask={(taskRef, title) => onOpenTask?.(taskRef, title)}
+                />
+              </ScrollView>
+            ) : visible && proposalId ? (
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (
               <SheetBody

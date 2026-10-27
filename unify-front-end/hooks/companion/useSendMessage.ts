@@ -42,6 +42,12 @@ import {
   createTaskOperation,
   parseSuggestedTask,
 } from '@/services/companionActions/contract';
+import { parseSuggestedPlan } from '@/services/companionActions/planContract';
+import {
+  conversationPlansKey,
+  createMobilePlanClient,
+  plansKey,
+} from '@/hooks/companion/usePlans';
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -361,6 +367,23 @@ export const useSendMessage = ({
       } catch (error) {
         console.error('Failed to save bot message:', error);
         // Continue anyway - message will be saved but might not show immediately
+      }
+
+      // #364: a suggested plan becomes a server-owned plan draft for review, tied to
+      // this answer. The action service checks every reused task again; preparing
+      // writes no task and no plan. A failure only means no plan card.
+      const suggestedPlan = parseSuggestedPlan(completion.actionProposal);
+      ensureOwned();
+      if (suggestedPlan && savedAnswerId !== null) {
+        await createMobilePlanClient(owner).prepare(suggestedPlan.goal, suggestedPlan.items, {
+          conversationId: conversationIdToUse,
+          messageId: savedAnswerId,
+        });
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationPlansKey(owner.accountId, conversationIdToUse),
+        });
+        queryClient.invalidateQueries({ queryKey: plansKey(owner.accountId ?? null) });
       }
 
       // #363: a suggested task becomes a server-owned draft for review, tied to this
