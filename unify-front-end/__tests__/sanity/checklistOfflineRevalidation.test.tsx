@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { renderHook, waitFor } from '@testing-library/react-native';
 
 jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
@@ -71,7 +72,7 @@ describe('checklist offline revalidation', () => {
 
   it('loads the checklist for the Other/Newcomer persona', async () => {
     mockFetch.mockResolvedValue([]);
-    const client = new QueryClient({
+    const client = createTestQueryClient({
       defaultOptions: { queries: { retry: false } },
     });
     const wrapper = ({ children }: PropsWithChildren) => (
@@ -111,7 +112,7 @@ describe('checklist offline revalidation', () => {
     mockFetch.mockRejectedValue(new Error('offline'));
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    const client = new QueryClient({
+    const client = createTestQueryClient({
       defaultOptions: { queries: { retry: false } },
     });
     const wrapper = ({ children }: PropsWithChildren) => (
@@ -144,7 +145,7 @@ describe('checklist offline revalidation', () => {
 
   describe('province targeting', () => {
     const renderChecklist = (province: string | null) => {
-      const client = new QueryClient({
+      const client = createTestQueryClient({
         defaultOptions: { queries: { retry: false } },
       });
       const wrapper = ({ children }: PropsWithChildren) => (

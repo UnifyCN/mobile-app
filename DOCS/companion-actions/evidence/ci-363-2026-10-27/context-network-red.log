@@ -1,0 +1,43 @@
+  console.log
+    [CI363_NETWORK_REQUESTS] 1
+
+      at Object.<anonymous> (.scratch/ci363/network-guard.cjs:7:24)
+
+FAIL __tests__/companion/companionContext.acceptance.test.tsx
+  Companion context on mobile: Vancouver arrival
+    ✕ the streaming answer shows the place, arrival, Checklist count and check time before the text finishes (682 ms)
+    ○ skipped saves the context with the answer, unchanged, and the reopened answer shows the same
+    ○ skipped Sources and context opens a sheet with each page, publisher, address and read time, and the context used
+    ○ skipped analytics never receive the context: no place, task title, URL or publisher
+    ○ skipped every locale shows the context control in its own language, with no raw keys
+  Companion context on mobile: missing, conflicting and unavailable information
+    ○ skipped a stated province that differs from the profile is shown in words, and the profile is said to be unchanged
+    ○ skipped guidance that could not be checked says so and shows no check time
+    ○ skipped an older rag-query with no context: the answer saves and renders as before, with no context control
+    ○ skipped before the column is migrated, the answer still saves and reopens, without its context
+
+  ● Companion context on mobile: Vancouver arrival › the streaming answer shows the place, arrival, Checklist count and check time before the text finishes
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: "https://test.supabase.co/functions/v1/companion-actions", ObjectContaining {"body": StringContaining "\"action\":\"interpret\""}
+
+    Number of calls: 0
+
+      332 |     expect(text).toContain('Checklist tasks used: 3');
+      333 |     expect(text).toMatch(/Official pages checked Oct 25, 2026/);
+    > 334 |     expect(mockActionFetch).toHaveBeenCalledWith(
+          |                             ^
+      335 |       'https://test.supabase.co/functions/v1/companion-actions',
+      336 |       expect.objectContaining({
+      337 |         body: expect.stringContaining('"action":"interpret"'),
+
+      at Object.toHaveBeenCalledWith (__tests__/companion/companionContext.acceptance.test.tsx:334:29)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 8 skipped, 9 total
+Snapshots:   0 total
+Time:        2.652 s, estimated 4 s
+Ran all test suites within paths "__tests__/companion/companionContext.acceptance.test.tsx".

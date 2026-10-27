@@ -5,6 +5,7 @@
  */
 import { createElement, type PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
 const mockGetUserInfo = jest.fn();
@@ -51,7 +52,7 @@ const info = (over: Record<string, unknown> = {}) => ({
 
 const clients: QueryClient[] = [];
 const makeClient = () => {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   clients.push(client);
