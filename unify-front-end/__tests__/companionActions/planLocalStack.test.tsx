@@ -10,6 +10,8 @@
 // Runs only when ACTIONS_API_URL, ACTIONS_ANON_KEY and ACTIONS_SERVICE_ROLE_KEY point at
 // the disposable 127.0.0.1 stack of the web repo (supabase/tests/companion-actions/run.sh,
 // ACTIONS_KEEP=1). See DOCS/companion-actions/364-plan.md.
+// Enabled runs must explicitly name that project's ACTIONS_DB_CONTAINER and
+// ACTIONS_REST_CONTAINER. There is no default container selection.
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -25,9 +27,14 @@ import * as path from 'path';
 const API_URL = process.env.ACTIONS_API_URL ?? '';
 const ANON_KEY = process.env.ACTIONS_ANON_KEY ?? '';
 const SERVICE_KEY = process.env.ACTIONS_SERVICE_ROLE_KEY ?? '';
-const DB_CONTAINER = process.env.ACTIONS_DB_CONTAINER ?? 'supabase_db_unify-actions-364';
-const REST_CONTAINER = process.env.ACTIONS_REST_CONTAINER ?? 'supabase_rest_unify-actions-364';
+const DB_CONTAINER = process.env.ACTIONS_DB_CONTAINER?.trim() ?? '';
+const REST_CONTAINER = process.env.ACTIONS_REST_CONTAINER?.trim() ?? '';
 const enabled = /^http:\/\/127\.0\.0\.1:\d+$/.test(API_URL) && Boolean(ANON_KEY && SERVICE_KEY);
+if (enabled && (!DB_CONTAINER || !REST_CONTAINER)) {
+  throw new Error(
+    'ACTIONS_DB_CONTAINER and ACTIONS_REST_CONTAINER are required for enabled local-stack tests.'
+  );
+}
 process.env.EXPO_PUBLIC_SUPABASE_URL = API_URL;
 process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = ANON_KEY;
 const mockJwts = new Map<string, string>();
@@ -392,6 +399,27 @@ function switchAccount(id: string) {
 const describeStack = enabled ? describe : describe.skip;
 
 describeStack('Settlement plans against the real local stack (mobile)', () => {
+  it('a saved task completion reconciles the plan entry without reopening the screen', async () => {
+    const acc = await newAccount('plan-progress');
+    mockUserId = acc.id;
+    const saved = await savedPlanFor(acc);
+    mount();
+    const entry = await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, 0 of 3 done`) }, { timeout: 10_000 });
+    fireEvent.changeText(composer(), 'Keep this question');
+    fireEvent.press(entry);
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: `${PHONE}, Not started` }));
+    await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'Completed' })).not.toBeDisabled());
+    fireEvent.press(within(sheet).getByRole('radio', { name: 'Completed' }));
+    await within(sheet).findByText('Changed from Not started to Completed', {}, { timeout: 10_000 });
+    const current = await actions(acc.jwt, { action: 'read' });
+    const phoneRef = saved.receipt.results[2].task_ref;
+    expect(current.json.tasks.find((row: { task_ref: string }) => row.task_ref === phoneRef).state).toBe('completed');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, 1 of 3 done`) }, { timeout: 10_000 });
+    expect(composer().props.value).toBe('Keep this question');
+  }, 60_000);
   beforeAll(async () => {
     const applied = (name: string) => psql(`select to_regclass('public.${name}') is not null;`) === 't';
     const migrations = path.resolve(__dirname, '../../supabase/migrations');

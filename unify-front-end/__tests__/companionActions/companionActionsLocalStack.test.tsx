@@ -5,7 +5,8 @@
 // Only Sanity content, profile and generation hooks are stand-ins.
 //
 // Runs only when ACTIONS_API_URL, ACTIONS_ANON_KEY and ACTIONS_SERVICE_ROLE_KEY
-// point at the disposable 127.0.0.1 stack of the web repo
+// point at the disposable 127.0.0.1 stack of the web repo, and both
+// ACTIONS_DB_CONTAINER and ACTIONS_REST_CONTAINER explicitly name its containers
 // (supabase/tests/companion-actions/run.sh, ACTIONS_KEEP=1). Otherwise it is skipped.
 // See DOCS/companion-actions/361-task-actions.md.
 import React from 'react';
@@ -29,9 +30,14 @@ import * as path from 'path';
 const API_URL = process.env.ACTIONS_API_URL ?? '';
 const ANON_KEY = process.env.ACTIONS_ANON_KEY ?? '';
 const SERVICE_KEY = process.env.ACTIONS_SERVICE_ROLE_KEY ?? '';
-const DB_CONTAINER = process.env.ACTIONS_DB_CONTAINER ?? 'supabase_db_unify-actions-361';
-const REST_CONTAINER = process.env.ACTIONS_REST_CONTAINER ?? 'supabase_rest_unify-actions-361';
+const DB_CONTAINER = process.env.ACTIONS_DB_CONTAINER?.trim() ?? '';
+const REST_CONTAINER = process.env.ACTIONS_REST_CONTAINER?.trim() ?? '';
 const enabled = /^http:\/\/127\.0\.0\.1:\d+$/.test(API_URL) && Boolean(ANON_KEY && SERVICE_KEY);
+if (enabled && (!DB_CONTAINER || !REST_CONTAINER)) {
+  throw new Error(
+    'ACTIONS_DB_CONTAINER and ACTIONS_REST_CONTAINER are required for enabled local-stack tests.'
+  );
+}
 process.env.EXPO_PUBLIC_SUPABASE_URL = API_URL;
 process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = ANON_KEY;
 const mockJwts = new Map<string, string>();
