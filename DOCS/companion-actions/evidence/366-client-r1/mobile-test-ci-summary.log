@@ -1,0 +1,11 @@
+> unify-front-end@1.6.0 test:ci
+> unify-front-end@1.6.0 test:main
+> jest __tests__ --runInBand --watchAll=false
+Test Suites: 1 skipped, 135 passed, 135 of 136 total
+Tests:       5 skipped, 1428 passed, 1433 total
+Time:        43.163 s
+> unify-front-end@1.6.0 test:dst
+> TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/
+Test Suites: 2 passed, 2 total
+Tests:       13 passed, 13 total
+Time:        0.768 s

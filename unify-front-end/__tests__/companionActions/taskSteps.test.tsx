@@ -13,6 +13,7 @@ import {
   within,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { AppState, Platform, StyleSheet } from 'react-native';
@@ -225,7 +226,7 @@ function testI18n() {
 const clients: QueryClient[] = [];
 function renderScreen() {
   // gcTime Infinity: no garbage-collection timer outlives the test.
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
   clients.push(client);
@@ -495,4 +496,98 @@ describe('Task steps (mobile, stand-in network)', () => {
       (Platform as { OS: string }).OS = os;
     }
   });
+  it.each(['rename', 'add'] as const)('%s: a changed draft needs a new authorized intent after not_applied', async kind => {
+    const type = kind === 'rename' ? 'step.update' : 'step.create';
+    let drop = true;
+    mockOverride = body => body.action === 'apply' && body.operations?.[0]?.type === type && drop ? 'network-error' : undefined;
+    renderScreen();
+    await openSteps();
+    if (kind === 'rename') {
+      await addStep('Original title');
+      const edit = await screen.findByRole('button', { name: 'Edit step: Original title' });
+      await waitFor(() => expect(edit).toBeEnabled());
+      fireEvent.press(edit);
+    }
+    const field = screen.getByLabelText(kind === 'rename' ? 'Step text' : 'New step');
+    const save = () => screen.getByRole('button', { name: kind === 'rename' ? 'Save step' : 'Add step' });
+    fireEvent.changeText(field, 'First authorized title');
+    fireEvent.press(save());
+    const retry = await screen.findByRole('button', { name: 'Try again' });
+    const before = stepWrites().filter(w => w.operations[0].type === type);
+    expect(before).toHaveLength(1);
+    fireEvent.changeText(field, 'New visible draft');
+    expect(retry).toBeDisabled();
+    fireEvent.press(retry);
+    expect(stepWrites().filter(w => w.operations[0].type === type)).toHaveLength(1);
+    drop = false;
+    await waitFor(() => expect(save()).toBeEnabled());
+    fireEvent.press(save());
+    expect(await screen.findByRole('checkbox', { name: 'New visible draft' })).toBeTruthy();
+    expect(screen.queryByRole('checkbox', { name: 'First authorized title' })).toBeNull();
+    const writes = stepWrites().filter(w => w.operations[0].type === type);
+    expect(writes).toHaveLength(2);
+    expect(writes[1].operation_id).not.toBe(writes[0].operation_id);
+  });
+
+  it.each(['rename', 'add'] as const)('%s: an unchanged or restored draft retries the exact original operation', async kind => {
+    const type = kind === 'rename' ? 'step.update' : 'step.create';
+    let drop = true;
+    mockOverride = body => body.action === 'apply' && body.operations?.[0]?.type === type && drop ? 'network-error' : undefined;
+    renderScreen();
+    await openSteps();
+    if (kind === 'rename') {
+      await addStep('Original title');
+      const edit = await screen.findByRole('button', { name: 'Edit step: Original title' });
+      await waitFor(() => expect(edit).toBeEnabled());
+      fireEvent.press(edit);
+    }
+    const field = screen.getByLabelText(kind === 'rename' ? 'Step text' : 'New step');
+    fireEvent.changeText(field, 'First authorized title');
+    fireEvent.press(screen.getByRole('button', { name: kind === 'rename' ? 'Save step' : 'Add step' }));
+    const retry = await screen.findByRole('button', { name: 'Try again' });
+    fireEvent.changeText(field, 'Unsaved alternate');
+    fireEvent.changeText(field, 'First authorized title');
+    expect(retry).toBeEnabled();
+    drop = false;
+    fireEvent.press(retry);
+    expect(await screen.findByRole('checkbox', { name: 'First authorized title' })).toBeTruthy();
+    const writes = stepWrites().filter(w => w.operations[0].type === type);
+    expect(writes).toHaveLength(2);
+    expect(writes[1].operation_id).toBe(writes[0].operation_id);
+    expect(writes[1].operations).toEqual(writes[0].operations);
+  });
+
+  it.each(['rename', 'add'] as const)('%s: editing cannot replace an unknown write before confirmed non-application', async kind => {
+    const type = kind === 'rename' ? 'step.update' : 'step.create';
+    let pending = true;
+    mockOverride = body => {
+      if (body.action === 'apply' && body.operations?.[0]?.type === type) return 'network-error';
+      if (body.action === 'status' && pending) return { status: 200, body: { status: 'pending' } };
+      return undefined;
+    };
+    renderScreen();
+    await openSteps();
+    if (kind === 'rename') {
+      await addStep('Original title');
+      const edit = await screen.findByRole('button', { name: 'Edit step: Original title' });
+      await waitFor(() => expect(edit).toBeEnabled());
+      fireEvent.press(edit);
+    }
+    const field = screen.getByLabelText(kind === 'rename' ? 'Step text' : 'New step');
+    const save = () => screen.getByRole('button', { name: kind === 'rename' ? 'Save step' : 'Add step' });
+    fireEvent.changeText(field, 'First authorized title');
+    fireEvent.press(save());
+    const lookup = await screen.findByRole('button', { name: 'Check again' });
+    fireEvent.changeText(field, 'New visible draft');
+    expect(save()).toBeDisabled();
+    expect(screen.queryByRole('button', { name: 'Try again' })).toBeNull();
+    fireEvent.press(save());
+    expect(stepWrites().filter(w => w.operations[0].type === type)).toHaveLength(1);
+    pending = false;
+    fireEvent.press(lookup);
+    expect(await screen.findByRole('button', { name: 'Try again' })).toBeDisabled();
+    expect(save()).toBeEnabled();
+    expect(field.props.value).toBe('New visible draft');
+  });
+
 });

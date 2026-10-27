@@ -83,12 +83,24 @@ export function TaskStepsSection({
   const completed = progress.state === 'completed';
   // Steps of a completed task are its history: read only until it is reopened.
   const canEdit = writable && !completed;
-  const canAdd = canEdit && !isUnresolved(listPhase) && newStep.trim().length > 0;
+  const failedAdd =
+    listPhase.phase === 'not_applied' &&
+    listPhase.write.kind === 'apply' &&
+    listPhase.write.operation?.type === 'step.create'
+      ? listPhase.write.operation
+      : null;
+  const changedAdd =
+    failedAdd?.titles.length === 1 && newStep.trim() !== failedAdd.titles[0];
+  const canAdd =
+    canEdit &&
+    (!isUnresolved(listPhase) || changedAdd) &&
+    newStep.trim().length > 0;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
 
   function add() {
     if (!canAdd || !store) return;
     const submitted = newStep;
+    if (changedAdd) store.supersedeNotApplied(stepsKey(taskRef));
     void store
       .applyOperation(
         stepsKey(taskRef),
@@ -208,7 +220,12 @@ export function TaskStepsSection({
       )}
 
       <View accessibilityLiveRegion='polite' style={styles.status}>
-        <StepPhase store={store} storeKey={stepsKey(taskRef)} writable={writable} />
+        <StepPhase
+          store={store}
+          storeKey={stepsKey(taskRef)}
+          writable={writable}
+          draft={newStep}
+        />
       </View>
     </View>
   );
@@ -235,6 +252,17 @@ function StepRow({
   const editing = edit !== undefined;
   const editChanged =
     editing && edit.trim().length > 0 && edit.trim() !== step.title;
+  const failedUpdate =
+    phase.phase === 'not_applied' &&
+    phase.write.kind === 'apply' &&
+    phase.write.operation?.type === 'step.update'
+      ? phase.write.operation
+      : null;
+  const changedUpdate =
+    failedUpdate !== null &&
+    edit !== undefined &&
+    edit.trim() !== failedUpdate.title;
+  const canSaveEdit = canEdit && editChanged && (!busy || changedUpdate);
 
   function toggle() {
     if (!canWrite || !store) return;
@@ -246,8 +274,9 @@ function StepRow({
   }
 
   function saveEdit() {
-    if (!canWrite || !store || !editChanged) return;
+    if (!canSaveEdit || !store || edit === undefined) return;
     const submitted = edit;
+    if (changedUpdate) store.supersedeNotApplied(stepKey(step.stepId));
     void store
       .applyOperation(
         stepKey(step.stepId),
@@ -307,7 +336,9 @@ function StepRow({
           <>
             <Pressable
               accessibilityRole='button'
-              accessibilityLabel={t('taskSteps.editA11y', { title: step.title })}
+              accessibilityLabel={t('taskSteps.editA11y', {
+                title: step.title,
+              })}
               disabled={!canWrite}
               accessibilityState={{ disabled: !canWrite }}
               onPress={() =>
@@ -327,7 +358,11 @@ function StepRow({
               onPress={() => setConfirming(true)}
               style={[styles.iconButton, squareTarget()]}
             >
-              <MaterialIcons name='delete-outline' size={18} color={INK_MUTED} />
+              <MaterialIcons
+                name='delete-outline'
+                size={18}
+                color={INK_MUTED}
+              />
             </Pressable>
           </>
         )}
@@ -337,7 +372,9 @@ function StepRow({
         <View style={styles.editBlock}>
           <TextInput
             value={edit}
-            onChangeText={text => store?.setDraft(editDraftKey(step.stepId), text)}
+            onChangeText={text =>
+              store?.setDraft(editDraftKey(step.stepId), text)
+            }
             maxLength={STEP_TITLE_MAX}
             accessibilityLabel={t('taskSteps.editLabel')}
             style={styles.input}
@@ -346,22 +383,26 @@ function StepRow({
             <Pressable
               accessibilityRole='button'
               accessibilityLabel={t('taskSteps.save')}
-              disabled={!canWrite || !editChanged}
-              accessibilityState={{ disabled: !canWrite || !editChanged }}
+              disabled={!canSaveEdit}
+              accessibilityState={{ disabled: !canSaveEdit }}
               onPress={saveEdit}
               style={({ pressed }) => [
                 styles.secondaryButton,
                 { minHeight: minTarget() },
-                (!canWrite || !editChanged) && styles.disabled,
+                !canSaveEdit && styles.disabled,
                 pressed && styles.pressed,
               ]}
             >
-              <Text style={styles.secondaryButtonText}>{t('taskSteps.save')}</Text>
+              <Text style={styles.secondaryButtonText}>
+                {t('taskSteps.save')}
+              </Text>
             </Pressable>
             <Pressable
               accessibilityRole='button'
               accessibilityLabel={t('taskSteps.cancelEdit')}
-              onPress={() => store?.setDraft(editDraftKey(step.stepId), undefined)}
+              onPress={() =>
+                store?.setDraft(editDraftKey(step.stepId), undefined)
+              }
               style={({ pressed }) => [
                 styles.secondaryButton,
                 { minHeight: minTarget() },
@@ -381,7 +422,9 @@ function StepRow({
           <Text style={styles.confirmTitle}>
             {t('taskSteps.confirmRemove', { title: step.title })}
           </Text>
-          <Text style={styles.confirmBody}>{t('taskSteps.confirmRemoveBody')}</Text>
+          <Text style={styles.confirmBody}>
+            {t('taskSteps.confirmRemoveBody')}
+          </Text>
           <View style={styles.actions}>
             <Pressable
               accessibilityRole='button'
@@ -396,7 +439,9 @@ function StepRow({
                 pressed && canWrite && styles.pressed,
               ]}
             >
-              <Text style={styles.primaryButtonText}>{t('taskSteps.remove')}</Text>
+              <Text style={styles.primaryButtonText}>
+                {t('taskSteps.remove')}
+              </Text>
             </Pressable>
             <Pressable
               accessibilityRole='button'
@@ -408,14 +453,21 @@ function StepRow({
                 pressed && styles.pressed,
               ]}
             >
-              <Text style={styles.secondaryButtonText}>{t('taskSteps.keep')}</Text>
+              <Text style={styles.secondaryButtonText}>
+                {t('taskSteps.keep')}
+              </Text>
             </Pressable>
           </View>
         </View>
       )}
 
       <View accessibilityLiveRegion='polite'>
-        <StepPhase store={store} storeKey={stepKey(step.stepId)} writable={canEdit} />
+        <StepPhase
+          store={store}
+          storeKey={stepKey(step.stepId)}
+          writable={canEdit}
+          draft={edit}
+        />
       </View>
     </View>
   );
@@ -426,13 +478,26 @@ function StepPhase({
   store,
   storeKey,
   writable,
+  draft,
 }: {
   store: TaskActionStore | null;
   storeKey: string;
   writable: boolean;
+  draft?: string;
 }) {
   const { t } = useTranslation();
   const phase = useTaskActionPhase(store, storeKey);
+  const operation =
+    phase.phase === 'not_applied' && phase.write.kind === 'apply'
+      ? phase.write.operation
+      : undefined;
+  const matchesDraft =
+    draft === undefined ||
+    (operation?.type === 'step.update'
+      ? draft.trim() === operation.title
+      : operation?.type === 'step.create'
+        ? operation.titles.length === 1 && draft.trim() === operation.titles[0]
+        : true);
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   if (phase.phase === 'idle') return null;
   const stepMessage =
@@ -441,16 +506,19 @@ function StepPhase({
       : phase.phase === 'refused' && phase.reason === 'task_completed'
         ? t('taskSteps.taskCompleted')
         : phase.phase === 'refused' &&
-            (phase.reason === 'task_removed' || phase.reason === 'task_not_found')
+            (phase.reason === 'task_removed' ||
+              phase.reason === 'task_not_found')
           ? t('taskSteps.removedTask')
           : null;
   return (
     <View style={styles.phase}>
       {stepMessage ? (
-        <Text style={[styles.statusText, styles.statusError]}>{stepMessage}</Text>
+        <Text style={[styles.statusText, styles.statusError]}>
+          {stepMessage}
+        </Text>
       ) : (
         <PhaseMessage
-          writable={writable}
+          writable={writable && matchesDraft}
           phase={phase}
           stateLabel={stateLabel}
           store={store}
@@ -528,7 +596,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
-  secondaryButtonText: { ...typography.secondary, fontWeight: '600', color: INK },
+  secondaryButtonText: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: INK,
+  },
   primaryButton: {
     paddingHorizontal: 14,
     borderRadius: 12,
@@ -536,7 +608,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: ACCENT_STRONG,
   },
-  primaryButtonText: { ...typography.secondary, fontWeight: '600', color: '#fff' },
+  primaryButtonText: {
+    ...typography.secondary,
+    fontWeight: '600',
+    color: '#fff',
+  },
   offer: {
     gap: 8,
     padding: 12,
