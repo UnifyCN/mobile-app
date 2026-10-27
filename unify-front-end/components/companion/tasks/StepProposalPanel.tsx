@@ -242,7 +242,7 @@ export function StepProposalPanel({
           </Text>
         )}
         {phase.phase !== 'saved' && phase.phase !== 'needs_review' && (
-          <PhaseMessage writable={writable} phase={phase} stateLabel={s => s} store={store} taskRef={key} />
+          <PhaseMessage writable={writable} phase={phase} stateLabel={s => s} store={store} taskRef={key} steps={view.stepsByRef.get(proposal.operation.task_ref)} />
         )}
         {phase.phase === 'refused' && phase.reason === 'task_completed' && (
           <Text style={[styles.hint, styles.error]}>{t('taskSteps.taskCompleted')}</Text>

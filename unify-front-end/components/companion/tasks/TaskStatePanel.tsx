@@ -19,6 +19,7 @@ import {
   setStateOperation,
   type TaskReceipt,
   type TaskState,
+  type TaskStep,
 } from '@/services/companionActions/contract';
 import {
   isUnresolved,
@@ -269,6 +270,7 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
           stateLabel={stateLabel}
           store={store}
           taskRef={taskRef}
+          steps={view.stepsByRef.get(taskRef)}
         />
         {receipt && phase.phase !== 'undo_review' && (
           <ReceiptBlock
@@ -290,12 +292,14 @@ export function PhaseMessage({
   stateLabel,
   store,
   taskRef,
+  steps = [],
 }: {
   writable: boolean;
   phase: TaskActionPhase;
   stateLabel: (s: TaskState) => string;
   store: TaskActionStore | null;
   taskRef: string;
+  steps?: readonly TaskStep[];
 }) {
   const { t } = useTranslation();
   const line = (text: string, isError = false) => (
@@ -381,6 +385,19 @@ export function PhaseMessage({
         // #366: Undo of a step change met a newer edit. Nothing changed; the offered
         // change needs approval, and a removal also its confirmation (this button).
         const removes = isRemoval(proposed);
+        const targets = proposed.type === 'step.remove_created'
+          ? proposed.steps
+          : proposed.type === 'step.remove'
+            ? [{ step_id: proposed.step_id, expected_revision: proposed.expected_revision }]
+            : [];
+        const currentTargets = targets.map(target => ({
+          ...target,
+          current: steps.find(step => step.stepId === target.step_id),
+        }));
+        const detailsMatch = currentTargets.length > 0 && currentTargets.every(
+          target => target.current?.revision === target.expected_revision
+        );
+        const canApprove = writable && (!removes || detailsMatch);
         return (
           <View style={styles.review}>
             <Text style={styles.statusText}>
@@ -393,6 +410,20 @@ export function PhaseMessage({
                 {t('taskSteps.proposedText', { title: proposed.title })}
               </Text>
             )}
+            {removes && (
+              <View>
+                {currentTargets.map(target => target.current && (
+                  <Text key={target.step_id} style={styles.statusText}>
+                    {target.current.title}
+                  </Text>
+                ))}
+                {!detailsMatch && (
+                  <Text style={[styles.statusText, styles.statusError]}>
+                    {t('taskSteps.removalNeedsRefresh', { keep: t('taskActions.keepCurrent'), undo: t('taskSteps.undo') })}
+                  </Text>
+                )}
+              </View>
+            )}
             <View style={styles.reviewActions}>
               <Pressable
                 accessibilityRole='button'
@@ -401,10 +432,10 @@ export function PhaseMessage({
                     ? t('taskSteps.remove')
                     : t('taskActions.applyCompensating')
                 }
-                disabled={!writable}
-                accessibilityState={{ disabled: !writable }}
+                disabled={!canApprove}
+                accessibilityState={{ disabled: !canApprove }}
                 onPress={() =>
-                  writable &&
+                  canApprove &&
                   void store?.approveCompensation(taskRef, {
                     removalConfirmed: removes,
                   })
@@ -412,8 +443,8 @@ export function PhaseMessage({
                 style={({ pressed }) => [
                   styles.primaryButton,
                   { minHeight: minTarget() },
-                  !writable && styles.buttonDisabled,
-                  pressed && writable && styles.stateOptionPressed,
+                  !canApprove && styles.buttonDisabled,
+                  pressed && canApprove && styles.stateOptionPressed,
                 ]}
               >
                 <Text style={styles.primaryButtonText}>

@@ -1,0 +1,242 @@
+[
+  {
+    "file": "bulk-mobile.log.gz",
+    "raw_bytes": 1401,
+    "raw_sha256": "7b93434a621d789e40f4db70a0263f122f676e75e58c2ab0d8050581f051be76"
+  },
+  {
+    "file": "bulk-web.log.gz",
+    "raw_bytes": 675,
+    "raw_sha256": "c7261d38f428463f3dd56e0dc450cb3808d05794b672789d837493775b0095f5"
+  },
+  {
+    "file": "final-mobile-guard-check.log.gz",
+    "raw_bytes": 60,
+    "raw_sha256": "50602084200f2561b7b2f3ed05fb2fce29f49d9c32fbf60450ec6e579f4cf089"
+  },
+  {
+    "file": "final-mobile-sequence.log.gz",
+    "raw_bytes": 63,
+    "raw_sha256": "e053597f2cd51982e3731b6342f379742e37a34e66e23e3fe35437edb992f894"
+  },
+  {
+    "file": "final-web-guard-check.log.gz",
+    "raw_bytes": 54,
+    "raw_sha256": "a28af8e12296f5182544485de9dc48f8254bf13f3f8749e61ac215080e0cc510"
+  },
+  {
+    "file": "final-web-sequence.log.gz",
+    "raw_bytes": 54,
+    "raw_sha256": "91f7908dd36851419db1f23b2eaaa05cd5b671e2802cc86e540581521e06517c"
+  },
+  {
+    "file": "locale-checks.json.gz",
+    "raw_bytes": 2300,
+    "raw_sha256": "d50cf3ec1c0978653b58e3f413981f94956e2dca832ce48dd089e108c152bc08"
+  },
+  {
+    "file": "mobile-all-changed-lint.json.gz",
+    "raw_bytes": 313,
+    "raw_sha256": "05da8da53d2dc0cda396725b4d3a3cc7daa507995a9ec1dc9bca2413e4e9615b"
+  },
+  {
+    "file": "mobile-all-changed-lint.log.gz",
+    "raw_bytes": 3430,
+    "raw_sha256": "d04513edafd158217fe5bd270589aa096921e8aec947876c757a836161747496"
+  },
+  {
+    "file": "mobile-app-gates.log.gz",
+    "raw_bytes": 87,
+    "raw_sha256": "6852467616782d3cbf745c2d70b0c1d1a313492353bd605bbfd7e144147d778b"
+  },
+  {
+    "file": "mobile-fault-ignore-revision.log.gz",
+    "raw_bytes": 2406,
+    "raw_sha256": "69a79d441dcbdd0065d8e7c180858cee9bdf6490abde28749ff74563f54baa0d"
+  },
+  {
+    "file": "mobile-fault-verify-only-one.log.gz",
+    "raw_bytes": 2408,
+    "raw_sha256": "1138a715080b7321be6dea212d0b9800e10e84aad67d940d7d7fa3dfcf7aa3ec"
+  },
+  {
+    "file": "mobile-final-focused.log.gz",
+    "raw_bytes": 358,
+    "raw_sha256": "1abd2ab7cc0373163ee55b93865373f6b7f2edf30ed1e91d7d301757d5beb4a2"
+  },
+  {
+    "file": "mobile-final-sequence-initial.json.gz",
+    "raw_bytes": 504,
+    "raw_sha256": "424d775c3b19e37cae123b8acd3fbbaf7448459ba85f259659fd4f93a2937691"
+  },
+  {
+    "file": "mobile-final-sequence.json.gz",
+    "raw_bytes": 664,
+    "raw_sha256": "e2564bc4dc487670feb3467ffd6aec127b28288e7638f4f9b52d575bfb7b237f"
+  },
+  {
+    "file": "mobile-gates.json.gz",
+    "raw_bytes": 846,
+    "raw_sha256": "655bfc7e8088474cd9287eb71e31100ed3a853571ec6f2e246d0e44e5609f91f"
+  },
+  {
+    "file": "mobile-guard-faults-initial.json.gz",
+    "raw_bytes": 401,
+    "raw_sha256": "b987dca78ce1d18f57e5c5aea40c2828c38153957e60f7118efb719056a882f7"
+  },
+  {
+    "file": "mobile-guard-faults.json.gz",
+    "raw_bytes": 401,
+    "raw_sha256": "67a0491574b08a5f6960787bf11cffb0007d95ddeb9cbdf7c28a85e03de81102"
+  },
+  {
+    "file": "mobile-i18n.log.gz",
+    "raw_bytes": 304,
+    "raw_sha256": "e2543cca560e9db53bf1ecdad1111d9483feff1f582fa10fe886b2940d4c1a0e"
+  },
+  {
+    "file": "mobile-lint.log.gz",
+    "raw_bytes": 1862,
+    "raw_sha256": "10a2d4ffe95a08788d9f6cab7722858191a4b7c1ee350c39a538116696371f40"
+  },
+  {
+    "file": "mobile-native-export.log.gz",
+    "raw_bytes": 8627,
+    "raw_sha256": "b0db75f20bc5d50cda687eb992406072c3a2015cd81eb3abc2fda6b520848669"
+  },
+  {
+    "file": "mobile-retained-f6-initial.log.gz",
+    "raw_bytes": 3305,
+    "raw_sha256": "89527b59e1dd0c12fdb63f8cbd9c0f6ec56d571958437c9c5e5c147812d66b2a"
+  },
+  {
+    "file": "mobile-retained-f6.log.gz",
+    "raw_bytes": 2622,
+    "raw_sha256": "46b3e3afd74e5ebc13a586786ffc2df37242bb0b29ec4038c5b38f32187cffdf"
+  },
+  {
+    "file": "mobile-test-ci.log.gz",
+    "raw_bytes": 203336,
+    "raw_sha256": "d16d9663bd979237009e27ee99bda224edbdf4b89d85fe7cc0113e69e43222e2"
+  },
+  {
+    "file": "mobile-typecheck.log.gz",
+    "raw_bytes": 51,
+    "raw_sha256": "e0581e2aa8fa3e96da10002c54ad52951781fe8b7a8bb3fb58a42afd28801dc1"
+  },
+  {
+    "file": "parent-readonly-red-mobile.log.gz",
+    "raw_bytes": 3085,
+    "raw_sha256": "def710760e5e2b65835d9da0eb81f1efdea0de3fe56b124c043769c27fbe686a"
+  },
+  {
+    "file": "parent-readonly-red-web.log.gz",
+    "raw_bytes": 4028,
+    "raw_sha256": "61ecb04b078a2128694963c41cf146ed91d77341a10145787d32f99ac53c89a7"
+  },
+  {
+    "file": "visibility-green-mobile.log.gz",
+    "raw_bytes": 357,
+    "raw_sha256": "f1d1134025a496d70ad36eb97b2006a8adace1ec6ba89f77c5abc54e8b8969f0"
+  },
+  {
+    "file": "visibility-green-web.log.gz",
+    "raw_bytes": 675,
+    "raw_sha256": "e52ffcf0bdf8e6ed3e0fa09b263f1419b23768b74b51ca3b1d32f02278417481"
+  },
+  {
+    "file": "visibility-red-mobile.log.gz",
+    "raw_bytes": 24077,
+    "raw_sha256": "842d4fb48709f7c0e2db691253798902fdcc98b76fc7a87bede1b5791dcfb63c"
+  },
+  {
+    "file": "visibility-red-web.log.gz",
+    "raw_bytes": 29287,
+    "raw_sha256": "addbf0441f2b3845b0dc322e13449744c2da9b22d81f152c1a8fca50fb3f11bf"
+  },
+  {
+    "file": "web-app-gates.log.gz",
+    "raw_bytes": 58,
+    "raw_sha256": "83710e2e3304e909592adc84396d1d91d7b5219844e250b85da208662078c688"
+  },
+  {
+    "file": "web-build.log.gz",
+    "raw_bytes": 2198,
+    "raw_sha256": "52af0296b6d71c83bc47c67d004028cfabbe74f3dc50823ba95ae232f3183821"
+  },
+  {
+    "file": "web-fault-ignore-revision.log.gz",
+    "raw_bytes": 4028,
+    "raw_sha256": "d2efa5387d04e825ffa90e970eb49a1abb3a10611b6ef73e2fbaf8bc67ff9ef1"
+  },
+  {
+    "file": "web-fault-verify-only-one.log.gz",
+    "raw_bytes": 4030,
+    "raw_sha256": "1e7f1107fa89035f867ed259d7059855417d9d78c82db929a2630b560efa003c"
+  },
+  {
+    "file": "web-final-focused.log.gz",
+    "raw_bytes": 758,
+    "raw_sha256": "60f9450ad799ed90c28cb4a9540a5c7820ddb07fa7a4fb002122e5275c652298"
+  },
+  {
+    "file": "web-final-sequence-initial.json.gz",
+    "raw_bytes": 532,
+    "raw_sha256": "28b49a84eb74cb0660573391c248ffb034220e7e1eb2f0f5949163172dccd6a6"
+  },
+  {
+    "file": "web-final-sequence.json.gz",
+    "raw_bytes": 532,
+    "raw_sha256": "3be3e52baf4a39491ae9ef2345ea8cc78f31ebbfaa003050eea72c3a3a4310f3"
+  },
+  {
+    "file": "web-gates-initial.json.gz",
+    "raw_bytes": 202,
+    "raw_sha256": "51d42aa34a048bae7925571f0ebe659e73a3425e958690f62ae29cb70683accb"
+  },
+  {
+    "file": "web-gates.json.gz",
+    "raw_bytes": 786,
+    "raw_sha256": "d2577c9a4fac717fc9fa24cc81dc77d337de017b22dbb8af87d150f8cb865165"
+  },
+  {
+    "file": "web-guard-faults-initial.json.gz",
+    "raw_bytes": 401,
+    "raw_sha256": "e7ac6dd544ade80c0a67515ea633769918b595fc19c63ed008781860edbe2589"
+  },
+  {
+    "file": "web-guard-faults.json.gz",
+    "raw_bytes": 401,
+    "raw_sha256": "ea1f91468852d86e3ace22245b97843aa74a5ab24cf2da6a562e3c6dfb82913b"
+  },
+  {
+    "file": "web-i18n.log.gz",
+    "raw_bytes": 226,
+    "raw_sha256": "a54f78e4792eebd10d81b8c943d11ac1863425e6c501b5df9321f4efffd67be6"
+  },
+  {
+    "file": "web-lint.log.gz",
+    "raw_bytes": 0,
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "web-retained-f6.log.gz",
+    "raw_bytes": 1696,
+    "raw_sha256": "9b9ae4ba96602620ec38c059407c040c07cb538282b3113c719413a8f2f53ddb"
+  },
+  {
+    "file": "web-tests.log.gz",
+    "raw_bytes": 6938,
+    "raw_sha256": "3d150cb01db8d5cd0b530bc4709f502892937b571cfecd63416e038a313ef70b"
+  },
+  {
+    "file": "web-types-initial.log.gz",
+    "raw_bytes": 328,
+    "raw_sha256": "341ef86e964b5e83e1c1eed7ec4331f6cec51a3274ea5e002b3bbb341e0c5c26"
+  },
+  {
+    "file": "web-types.log.gz",
+    "raw_bytes": 0,
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

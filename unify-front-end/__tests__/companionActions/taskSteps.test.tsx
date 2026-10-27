@@ -640,3 +640,23 @@ it.each(['approve', 'keep'] as const)(
     }
   }
 );
+
+it('completing the parent blocks the step-add receipt Undo', async () => {
+  // Wrong if a completed task still permits a step removal request from its add receipt.
+  renderScreen();
+  await openSteps();
+  await addStep('Prepare the papers');
+  const name = 'Undo “Added step: Prepare the papers”';
+  const undo = await screen.findByRole('button', { name });
+  await waitFor(() => expect(undo).toBeEnabled());
+  const complete = screen.getByRole('radio', { name: 'Completed' });
+  await waitFor(() => expect(complete).toBeEnabled());
+  fireEvent.press(complete);
+  await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected());
+  const readonlyUndo = screen.queryByRole('button', { name });
+  if (readonlyUndo) {
+    expect(readonlyUndo).toBeDisabled();
+    fireEvent.press(readonlyUndo);
+  }
+  expect(server.sent.filter(b => b.action === 'undo')).toHaveLength(0);
+});
