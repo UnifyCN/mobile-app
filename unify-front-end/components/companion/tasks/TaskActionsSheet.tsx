@@ -33,6 +33,9 @@ import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
 import { TaskProposalPanel } from './TaskProposalPanel';
+import { StepProposalPanel } from './StepProposalPanel';
+import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
+import { useStepProposal } from '@/hooks/companion/useTaskActions';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -52,6 +55,8 @@ interface TaskActionsSheetProps {
   proposalId?: string | null;
   /** Open straight on one task, e.g. one a command added (#363). */
   initialTask?: { taskRef: string; title: string } | null;
+  /** #366: open on the review of suggested steps for one task. */
+  stepProposalId?: string | null;
 }
 
 /**
@@ -65,6 +70,7 @@ export function TaskActionsSheet({
   onClose,
   proposalId = null,
   initialTask = null,
+  stepProposalId = null,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -89,7 +95,8 @@ export function TaskActionsSheet({
 
   const back = () => setSelectedRef(null);
   // Opened on a draft or one task: there is no list to go back to.
-  const canGoBack = Boolean(selectedRef) && !proposalId && !initialRef;
+  const canGoBack =
+    Boolean(selectedRef) && !proposalId && !stepProposalId && !initialRef;
 
   return (
     <Modal
@@ -141,7 +148,9 @@ export function TaskActionsSheet({
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {proposalId
+                {stepProposalId
+                  ? t('taskSteps.reviewTitle')
+                  : proposalId
                   ? t('taskCreate.drawerTitle')
                   : selectedRef
                     ? t('taskActions.drawerTitle')
@@ -156,7 +165,9 @@ export function TaskActionsSheet({
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible && proposalId ? (
+            {visible && stepProposalId ? (
+              <StepProposalBody proposalId={stepProposalId} />
+            ) : visible && proposalId ? (
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (
               <SheetBody
@@ -187,6 +198,28 @@ function ProposalBody({ proposalId }: { proposalId: string }) {
       keyboardShouldPersistTaps='handled'
     >
       <TaskProposalPanel proposalId={proposalId} view={view} store={store} />
+    </ScrollView>
+  );
+}
+
+function StepProposalBody({ proposalId }: { proposalId: string }) {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  const titles = useChecklistTaskTitles();
+  const draft = useStepProposal(proposalId);
+  const taskRef = draft.data?.operation.task_ref;
+  return (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps='handled'
+    >
+      <StepProposalPanel
+        proposalId={proposalId}
+        view={view}
+        store={store}
+        taskTitle={taskRef ? (titles.get(taskRef) ?? null) : null}
+      />
     </ScrollView>
   );
 }

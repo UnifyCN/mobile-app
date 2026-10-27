@@ -17,15 +17,18 @@ import type {
   TaskActionClient,
   UndoResult,
 } from './client';
-import type {
-  Authorization,
-  CompensatingProposal,
-  CurrentTaskValue,
-  Operation,
-  SetStateOperation,
-  TaskProposal,
-  TaskReceipt,
-  TaskState,
+import {
+  isRemoval,
+  type Authorization,
+  type CompensatingProposal,
+  type CurrentTaskValue,
+  type Operation,
+  type OperationType,
+  type SetStateOperation,
+  type StepProposal,
+  type TaskProposal,
+  type TaskReceipt,
+  type TaskState,
 } from './contract';
 
 export interface PendingWrite {
@@ -56,7 +59,7 @@ export type TaskActionPhase =
     }
   | { phase: 'already_undone' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { phase: 'needs_review'; proposal: TaskProposal }
+  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal }
   /** #363: this command already added its task, or a task with that title exists. */
   | { phase: 'command_used' }
   | { phase: 'needs_clarification' }
@@ -72,7 +75,10 @@ export interface TaskActionResultEvent {
     | 'lookup'
     /** #363: an added task, from an approved draft or a clear command. */
     | 'approve_create'
-    | 'command_create';
+    | 'command_create'
+    /** #366: a step control (add, edit, check, remove) or approved suggested steps. */
+    | 'step_change'
+    | 'approve_steps';
   outcome:
     | 'applied'
     | 'replayed'
@@ -87,6 +93,8 @@ export interface TaskActionResultEvent {
     | 'unavailable'
     | 'needs_review';
   toState?: TaskState;
+  /** The registered operation type; never content. */
+  operationType?: OperationType;
 }
 
 export interface TaskActionStoreDeps {
@@ -205,7 +213,7 @@ export class TaskActionStore {
     if (p.phase !== 'undo_review') return Promise.resolve();
     const op = p.proposal.operations[0];
     // A removal needs the user's explicit confirmation; without it nothing is sent.
-    if (op.type === 'task.remove_created' && options.removalConfirmed !== true)
+    if (isRemoval(op) && options.removalConfirmed !== true)
       return Promise.resolve();
     return this.run(taskRef, {
       operationId: this.deps.newOperationId(),
@@ -215,9 +223,7 @@ export class TaskActionStore {
         kind: 'approved_proposal',
         proposal_id: p.proposal.proposalId,
         proposal_revision: p.proposal.proposalRevision,
-        ...(op.type === 'task.remove_created'
-          ? { removal_confirmed: true as const }
-          : {}),
+        ...(isRemoval(op) ? { removal_confirmed: true as const } : {}),
       },
     });
   }
@@ -247,6 +253,11 @@ export class TaskActionStore {
 
   private actionOf(write: PendingWrite): TaskActionResultEvent['action'] {
     if (write.kind === 'undo') return 'undo';
+    if (write.operation?.type.startsWith('step.'))
+      return write.operation.type === 'step.create' &&
+        write.authorization?.kind === 'approved_proposal'
+        ? 'approve_steps'
+        : 'step_change';
     if (write.operation?.type === 'task.create_custom')
       return write.authorization?.kind === 'direct_command'
         ? 'command_create'
@@ -280,6 +291,7 @@ export class TaskActionStore {
           write.operation?.type === 'task.set_state'
             ? write.operation.state
             : undefined,
+        operationType: write.operation?.type,
       });
 
     switch (result.kind) {

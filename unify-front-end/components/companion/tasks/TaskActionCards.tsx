@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
 import type {
+  StepProposal,
   TaskProposal,
   TaskReceipt,
 } from '@/services/companionActions/contract';
@@ -33,6 +34,11 @@ interface CardsProps {
   canWrite: boolean;
   onReview: (proposalId: string) => void;
   onViewTask: (taskRef: string, title: string) => void;
+  /** #366: suggested-step drafts of the conversation, and how to open one. */
+  stepProposals?: StepProposal[];
+  onReviewSteps?: (proposalId: string) => void;
+  /** The current title of a Checklist task, or null when this account has no such task. */
+  taskTitleOf?: (taskRef: string) => string | null;
 }
 
 /**
@@ -50,9 +56,13 @@ export function TaskActionCards({
   canWrite,
   onReview,
   onViewTask,
+  stepProposals = [],
+  onReviewSteps,
+  taskTitleOf,
 }: CardsProps) {
   if (messageId === null) return null;
   const mine = proposals.filter(p => p.source?.messageId === messageId);
+  const mySteps = stepProposals.filter(p => p.source?.messageId === messageId);
   const command = commands.find(c => c.messageId === messageId) ?? null;
   return (
     <>
@@ -62,6 +72,15 @@ export function TaskActionCards({
           proposal={p}
           store={store}
           onReview={() => onReview(p.proposalId)}
+        />
+      ))}
+      {mySteps.map(p => (
+        <StepDraftCard
+          key={p.proposalId}
+          proposal={p}
+          store={store}
+          taskTitle={taskTitleOf?.(p.operation.task_ref) ?? null}
+          onReview={() => onReviewSteps?.(p.proposalId)}
         />
       ))}
       {isUser && (
@@ -154,6 +173,57 @@ function DraftCard({
         name={
           draft ? t('taskCreate.reviewA11y', { title }) : t('taskCreate.view')
         }
+        onPress={onReview}
+      />
+    </View>
+  );
+}
+
+/** #366: suggested steps for one task. Says it is not saved; opens the sheet for review. */
+function StepDraftCard({
+  proposal,
+  store,
+  taskTitle,
+  onReview,
+}: {
+  proposal: StepProposal;
+  store: TaskActionStore | null;
+  taskTitle: string | null;
+  onReview: () => void;
+}) {
+  const { t } = useTranslation();
+  const phase = useTaskActionPhase(store, `proposal:${proposal.proposalId}`);
+  const saved = phase.phase === 'saved' ? phase.receipt : proposal.receipt;
+  const draft = proposal.status === 'draft' && !saved;
+  const heading = taskTitle
+    ? t('taskSteps.cardTitle', { task: taskTitle })
+    : t('taskSteps.cardTitleUnknownTask');
+  const status = saved
+    ? t('taskSteps.added', { count: saved.steps?.length ?? 0 })
+    : proposal.status === 'cancelled'
+      ? t('taskSteps.closed')
+      : isUnresolved(phase)
+        ? t('taskActions.checking')
+        : t('taskSteps.draftBadge');
+  const task = taskTitle ?? t('taskSteps.cardTitleUnknownTask');
+  return (
+    <View testID='step-draft-card' style={[styles.card, draft && styles.cardDraft]}>
+      <CardIcon />
+      <View style={styles.text}>
+        <Text style={styles.eyebrow}>{t('taskSteps.cardEyebrow')}</Text>
+        <Text style={styles.title}>{heading}</Text>
+        {draft && (
+          <Text style={styles.status}>
+            {t('taskSteps.cardCount', { count: proposal.operation.titles.length })}
+          </Text>
+        )}
+        <Text style={styles.status} accessibilityLiveRegion='polite'>
+          {status}
+        </Text>
+      </View>
+      <CardButton
+        label={draft ? t('taskSteps.review') : t('taskSteps.view')}
+        name={draft ? t('taskSteps.reviewA11y', { task }) : t('taskSteps.view')}
         onPress={onReview}
       />
     </View>

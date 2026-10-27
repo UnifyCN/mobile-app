@@ -15,6 +15,7 @@ import { Theme } from '@/constants/Theme';
 import {
   TASK_STATES,
   WAITING_REASON_MAX,
+  isRemoval,
   setStateOperation,
   type TaskReceipt,
   type TaskState,
@@ -32,6 +33,7 @@ import {
 } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
 import { ReceiptBlock } from './ReceiptBlock';
+import { TaskStepsSection } from './TaskStepsSection';
 
 const STATE_ICON: Record<
   TaskState,
@@ -64,8 +66,9 @@ interface TaskStatePanelProps {
 /**
  * Explicit controls for one existing Checklist task (mobile-app#361): the four
  * states, an editable waiting reason, the exact saved receipt with Undo for that
- * receipt only, and every unresolved outcome. Used by the Checklist task sheet and
- * the Companion task sheet; both read the same saved record.
+ * receipt only, and every unresolved outcome. Since #366 also the task's steps.
+ * Used by the Checklist task sheet and the Companion task sheet; both read the same
+ * saved record.
  */
 export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const { t } = useTranslation();
@@ -161,6 +164,14 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
           <Text style={styles.noticeText}>{t('taskActions.removed')}</Text>
         </View>
       )}
+
+      <TaskStepsSection
+        taskRef={taskRef}
+        progress={progress}
+        view={view}
+        store={store}
+        writable={writable}
+      />
 
       <Text style={styles.sectionLabel} accessibilityRole='header'>
         {t('taskActions.stateLabel')}
@@ -366,6 +377,53 @@ export function PhaseMessage({
       );
     case 'undo_review': {
       const proposed = phase.proposal.operations[0];
+      if (proposed.type.startsWith('step.')) {
+        // #366: Undo of a step change met a newer edit. Nothing changed; the offered
+        // change needs approval, and a removal also its confirmation (this button).
+        const removes = isRemoval(proposed);
+        return (
+          <View style={styles.review}>
+            <Text style={styles.statusText}>
+              {removes
+                ? t('taskSteps.undoConflictRemove')
+                : t('taskSteps.undoConflict')}
+            </Text>
+            <View style={styles.reviewActions}>
+              <Pressable
+                accessibilityRole='button'
+                accessibilityLabel={
+                  removes
+                    ? t('taskSteps.remove')
+                    : t('taskActions.applyCompensating')
+                }
+                disabled={!writable}
+                accessibilityState={{ disabled: !writable }}
+                onPress={() =>
+                  writable &&
+                  void store?.approveCompensation(taskRef, {
+                    removalConfirmed: removes,
+                  })
+                }
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  { minHeight: minTarget() },
+                  !writable && styles.buttonDisabled,
+                  pressed && writable && styles.stateOptionPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {removes
+                    ? t('taskSteps.remove')
+                    : t('taskActions.applyCompensating')}
+                </Text>
+              </Pressable>
+              {action(t('taskActions.keepCurrent'), () =>
+                store?.dismiss(taskRef)
+              )}
+            </View>
+          </View>
+        );
+      }
       if (proposed.type === 'task.remove_created') {
         // Undo of an added task met a newer edit: nothing was removed. Removing it
         // now is a reviewed change; this button is the user's confirmation.
@@ -402,6 +460,7 @@ export function PhaseMessage({
           </View>
         );
       }
+      if (proposed.type !== 'task.set_state') return null;
       return (
         <View style={styles.review}>
           <Text style={styles.reviewTitle}>

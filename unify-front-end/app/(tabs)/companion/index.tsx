@@ -63,6 +63,7 @@ import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
+import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import {
   useConversationActions,
   useTaskActionStore,
@@ -158,6 +159,7 @@ export default function CompanionScreen() {
   const [sheet, setSheet] = useState<
     | { kind: 'tasks' }
     | { kind: 'proposal'; proposalId: string }
+    | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
     | null
   >(null);
@@ -510,6 +512,16 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'proposal', proposalId });
   }, []);
+  // #366: suggested steps for a task this account has; the card names it.
+  const taskTitles = useChecklistTaskTitles();
+  const taskTitleOf = useCallback(
+    (taskRef: string) => taskTitles.get(taskRef) ?? null,
+    [taskTitles]
+  );
+  const openSteps = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'steps', proposalId });
+  }, []);
   const openTask = useCallback((taskRef: string, title: string) => {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
@@ -551,6 +563,9 @@ export default function CompanionScreen() {
             canWrite={actionsWritable}
             onReview={openDraft}
             onViewTask={openTask}
+            stepProposals={conversationActions?.stepProposals ?? []}
+            onReviewSteps={openSteps}
+            taskTitleOf={taskTitleOf}
           />
         </>
       );
@@ -561,6 +576,8 @@ export default function CompanionScreen() {
       actionsWritable,
       openDraft,
       openTask,
+      openSteps,
+      taskTitleOf,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -771,6 +788,7 @@ export default function CompanionScreen() {
         visible={sheet !== null}
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
+        stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
         initialTask={
           sheet?.kind === 'task'
             ? { taskRef: sheet.taskRef, title: sheet.title }

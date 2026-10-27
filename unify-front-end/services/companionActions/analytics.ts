@@ -1,4 +1,4 @@
-import { TASK_STATES, type TaskState } from './contract';
+import { TASK_STATES, type OperationType, type TaskState } from './contract';
 import type { TaskActionResultEvent } from './taskActionStore';
 
 /** Where the task controls were opened. */
@@ -6,7 +6,7 @@ export type TaskActionSurface = 'checklist' | 'companion';
 
 /** Properties of `companion_action_result` (mobile-app#361). Same as web. */
 export interface TaskActionResultProperties {
-  operation_type: 'task.set_state' | 'task.create_custom';
+  operation_type: OperationType;
   action: TaskActionResultEvent['action'];
   outcome: TaskActionResultEvent['outcome'];
   entry_surface: TaskActionSurface;
@@ -20,7 +20,18 @@ const ACTIONS = [
   'lookup',
   'approve_create',
   'command_create',
+  'step_change',
+  'approve_steps',
 ] as const;
+/** #366: step operation types, allowlisted. Never a step title or id. */
+const STEP_TYPES: readonly OperationType[] = [
+  'step.create',
+  'step.update',
+  'step.set_done',
+  'step.remove',
+  'step.restore',
+  'step.remove_created',
+];
 const OUTCOMES = [
   'applied',
   'replayed',
@@ -50,9 +61,11 @@ export function buildTaskActionResultProperties(
   const props: TaskActionResultProperties = {
     // Categorical only: never the task title, the message or a reference.
     operation_type:
-      event.action === 'approve_create' || event.action === 'command_create'
-        ? 'task.create_custom'
-        : 'task.set_state',
+      event.operationType && STEP_TYPES.includes(event.operationType)
+        ? event.operationType
+        : event.action === 'approve_create' || event.action === 'command_create'
+          ? 'task.create_custom'
+          : 'task.set_state',
     action: event.action,
     outcome: event.outcome,
     entry_surface: surface === 'companion' ? 'companion' : 'checklist',

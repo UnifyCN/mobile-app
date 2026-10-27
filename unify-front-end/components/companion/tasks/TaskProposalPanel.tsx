@@ -7,6 +7,7 @@ import { typography } from '@/constants/Typography';
 import {
   TITLE_MAX,
   createTaskOperation,
+  isStepProposal,
   type ProposalContext,
   type TaskProposal,
 } from '@/services/companionActions/contract';
@@ -95,6 +96,7 @@ export function TaskProposalPanel({
   // A refreshed revision from a needs-review reply is newer than the last read.
   const proposal: TaskProposal | undefined =
     phase.phase === 'needs_review' &&
+    !isStepProposal(phase.proposal) &&
     phase.proposal.proposalRevision >= (query.data?.proposalRevision ?? 0)
       ? phase.proposal
       : query.data;

@@ -42,10 +42,39 @@ export function ReceiptBlock({
   const [confirming, setConfirming] = useState(false);
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const title = receipt.title ?? '';
+  const steps = receipt.steps ?? [];
+  const first = steps[0];
+  const isStep = receipt.operationType.startsWith('step.');
+  // #366: a step receipt names the steps as they were saved, never their current text.
+  const stepText = (): string => {
+    const stepTitle = first?.title ?? '';
+    switch (receipt.operationType) {
+      case 'step.create':
+        return steps.length === 1
+          ? t('taskSteps.receiptAdded', { title: stepTitle })
+          : t('taskSteps.receiptAddedMany', { count: steps.length });
+      case 'step.update':
+        return t('taskSteps.receiptRenamed', {
+          from: first?.beforeTitle ?? '',
+          to: stepTitle,
+        });
+      case 'step.set_done':
+        return first?.done
+          ? t('taskSteps.receiptChecked', { title: stepTitle })
+          : t('taskSteps.receiptUnchecked', { title: stepTitle });
+      case 'step.restore':
+        return t('taskSteps.receiptRestored', { title: stepTitle });
+      default:
+        return steps.length === 1
+          ? t('taskSteps.receiptRemoved', { title: stepTitle })
+          : t('taskSteps.receiptRemovedMany', { count: steps.length });
+    }
+  };
   // A reason-only save keeps the state: name what changed instead of
   // "Waiting to Waiting".
-  const text =
-    receipt.operationType === 'task.create_custom'
+  const text = isStep
+    ? stepText()
+    : receipt.operationType === 'task.create_custom'
       ? t('taskCreate.added', { title })
       : receipt.operationType === 'task.remove_created'
         ? t('taskCreate.removed', { title })
@@ -66,7 +95,15 @@ export function ReceiptBlock({
     hour: 'numeric',
     minute: '2-digit',
   }).format(new Date(receipt.createdAt));
-  const removes = receipt.operationType === 'task.create_custom';
+  // Undo of an added task or added steps removes them: it asks first.
+  const removes =
+    receipt.operationType === 'task.create_custom' ||
+    receipt.operationType === 'step.create';
+  const confirmTitle = isStep
+    ? steps.length === 1
+      ? t('taskSteps.confirmRemove', { title: first?.title ?? '' })
+      : t('taskSteps.confirmRemoveMany', { count: steps.length })
+    : t('taskCreate.confirmRemove', { title });
 
   function undo() {
     if (!canWrite || !store) return;
@@ -80,6 +117,14 @@ export function ReceiptBlock({
   return (
     <View style={styles.receipt}>
       <Text style={styles.receiptText}>{text}</Text>
+      {receipt.stepsTotal !== null && receipt.stepsTotal > 0 && (
+        <Text style={styles.receiptMeta}>
+          {t('taskSteps.receiptAtCompletion', {
+            done: receipt.stepsDone ?? 0,
+            total: receipt.stepsTotal,
+          })}
+        </Text>
+      )}
       <Text style={styles.receiptMeta}>
         {time}
         {!receipt.current ? ` · ${t('taskActions.receiptHistorical')}` : ''}
@@ -88,9 +133,11 @@ export function ReceiptBlock({
         <Pressable
           accessibilityRole='button'
           accessibilityLabel={
-            removes
-              ? t('taskCreate.undoA11y', { title })
-              : t('taskActions.undo')
+            isStep
+              ? t('taskSteps.undoA11y')
+              : removes
+                ? t('taskCreate.undoA11y', { title })
+                : t('taskActions.undo')
           }
           disabled={!canWrite}
           accessibilityState={{ disabled: !canWrite }}
@@ -104,22 +151,28 @@ export function ReceiptBlock({
         >
           <MaterialIcons name='undo' size={18} color={ACCENT_STRONG} />
           <Text style={styles.undoText}>
-            {removes ? t('taskCreate.undo') : t('taskActions.undo')}
+            {isStep
+              ? t('taskSteps.undo')
+              : removes
+                ? t('taskCreate.undo')
+                : t('taskActions.undo')}
           </Text>
         </Pressable>
       )}
       {confirming && (
         <View style={styles.confirm}>
-          <Text style={styles.confirmTitle}>
-            {t('taskCreate.confirmRemove', { title })}
-          </Text>
+          <Text style={styles.confirmTitle}>{confirmTitle}</Text>
           <Text style={styles.confirmBody}>
-            {t('taskCreate.confirmRemoveBody')}
+            {isStep
+              ? t('taskSteps.confirmRemoveBody')
+              : t('taskCreate.confirmRemoveBody')}
           </Text>
           <View style={styles.actions}>
             <Pressable
               accessibilityRole='button'
-              accessibilityLabel={t('taskCreate.remove')}
+              accessibilityLabel={
+                isStep ? t('taskSteps.remove') : t('taskCreate.remove')
+              }
               disabled={!canWrite}
               accessibilityState={{ disabled: !canWrite }}
               onPress={() => {
@@ -137,12 +190,14 @@ export function ReceiptBlock({
               ]}
             >
               <Text style={styles.primaryButtonText}>
-                {t('taskCreate.remove')}
+                {isStep ? t('taskSteps.remove') : t('taskCreate.remove')}
               </Text>
             </Pressable>
             <Pressable
               accessibilityRole='button'
-              accessibilityLabel={t('taskCreate.keep')}
+              accessibilityLabel={
+                isStep ? t('taskSteps.keep') : t('taskCreate.keep')
+              }
               onPress={() => setConfirming(false)}
               style={({ pressed }) => [
                 styles.secondaryButton,
@@ -151,7 +206,7 @@ export function ReceiptBlock({
               ]}
             >
               <Text style={styles.secondaryButtonText}>
-                {t('taskCreate.keep')}
+                {isStep ? t('taskSteps.keep') : t('taskCreate.keep')}
               </Text>
             </Pressable>
           </View>

@@ -481,6 +481,200 @@ describeStack('Task progress against the real local stack (mobile)', () => {
   }, 60_000);
 });
 
+// ------------------------------------------------------------------ #366 task steps
+// The same real stack with the #363 and #366 migrations of this repo applied. A new step
+// under a content-backed task needs its published document: the edge runtime asks the
+// content stand-in below (ACTIONS_CONTENT_PORT, see the web repo's run.sh).
+const CONTENT_PORT = Number(process.env.ACTIONS_CONTENT_PORT ?? '60675');
+
+function startContentStandIn(published: string[]) {
+  const server = require('http').createServer((req: any, res: any) => {
+    const url = new URL(req.url, 'http://stand-in');
+    let id: unknown = null;
+    try {
+      id = JSON.parse(url.searchParams.get('$id') ?? 'null');
+    } catch {
+      id = null;
+    }
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify({ result: typeof id === 'string' && published.includes(id) ? id : null }));
+  });
+  return new Promise<{ close: () => Promise<void> }>(resolve =>
+    server.listen(CONTENT_PORT, '127.0.0.1', () =>
+      resolve({ close: () => new Promise<void>(done => server.close(() => done())) })
+    )
+  );
+}
+
+const SIN_STEPS = [
+  'Review the official requirements',
+  'Prepare the required documents',
+  'Submit the application yourself',
+];
+
+async function openChecklistTask() {
+  fireEvent.press(await screen.findByText('Get a SIN'));
+  fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
+  const input = await screen.findByLabelText('New step');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Add step' })).toBeTruthy());
+  return input;
+}
+
+async function addStepThroughControl(title: string) {
+  fireEvent.changeText(screen.getByLabelText('New step'), title);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Add step' })).not.toBeDisabled(), {
+    timeout: 10_000,
+  });
+  fireEvent.press(screen.getByRole('button', { name: 'Add step' }));
+  return screen.findByRole('checkbox', { name: title }, { timeout: 10_000 });
+}
+
+async function toggle(title: string, checked: boolean) {
+  await waitFor(() => expect(screen.getByRole('checkbox', { name: title })).not.toBeDisabled(), {
+    timeout: 10_000,
+  });
+  fireEvent.press(screen.getByRole('checkbox', { name: title }));
+  await waitFor(
+    () =>
+      checked
+        ? expect(screen.getByRole('checkbox', { name: title })).toBeChecked()
+        : expect(screen.getByRole('checkbox', { name: title })).not.toBeChecked(),
+    { timeout: 10_000 }
+  );
+}
+
+const stepsOf = (json: any, ref: string) =>
+  (json.steps ?? []).filter((s: any) => s.task_ref === ref).map((s: any) => [s.title, s.done]);
+
+describeStack('Task steps against the real local stack (mobile, #366)', () => {
+  let content: { close: () => Promise<void> };
+  beforeAll(async () => {
+    const steps = await http('/rest/v1/rpc/companion_read_steps', {
+      method: 'POST',
+      key: SERVICE_KEY,
+      body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+    });
+    if (steps.status !== 200) {
+      // This repo's migrations, exactly as they ship.
+      for (const file of ['20261026165156_companion_task_create.sql', '20261027183644_companion_task_steps.sql']) {
+        psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations', file), 'utf8'));
+      }
+      execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
+      for (let i = 0; i < 50; i++) {
+        const ready = await http('/rest/v1/rpc/companion_read_steps', {
+          method: 'POST',
+          key: SERVICE_KEY,
+          body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+        });
+        if (ready.status === 200) break;
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+    }
+    content = await startContentStandIn(['sin']);
+  }, 60_000);
+
+  afterAll(async () => {
+    await content?.close();
+  });
+
+  afterEach(() => {
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  it('steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none', async () => {
+    // Wrong if: a step is missing from another surface, checking every step changes the
+    // task, completion marks the unfinished step done, or another account reads a step.
+    const owner = await newAccount('steps-owner');
+    const stranger = await newAccount('steps-stranger');
+    mockUserId = owner.id;
+    mockCapture = jest.fn();
+
+    const checklist = mount(<ChecklistScreen />);
+    await openChecklistTask();
+    for (const title of SIN_STEPS) await addStepThroughControl(title);
+    expect(screen.getByLabelText('New step').props.value).toBe('');
+    for (const title of SIN_STEPS) await toggle(title, true);
+    expect(
+      await screen.findByText('All steps are done. This task stays Not started until you mark it complete.')
+    ).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Mark task complete' })).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'Not started' })).toBeSelected();
+
+    await toggle(SIN_STEPS[2], false);
+    expect(screen.queryByRole('button', { name: 'Mark task complete' })).toBeNull();
+    await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).not.toBeDisabled(), {
+      timeout: 10_000,
+    });
+    fireEvent.press(screen.getByRole('radio', { name: 'Completed' }));
+    expect(await screen.findByText('Completed with 2 of 3 steps done.', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(screen.getByRole('checkbox', { name: SIN_STEPS[2] })).toBeDisabled());
+    checklist.unmount();
+
+    const web = await actions(owner.jwt, { action: 'read' });
+    expect(web.json.tasks.find((t: any) => t.task_ref === 'sanity:sin')).toMatchObject({ state: 'completed' });
+    expect(stepsOf(web.json, 'sanity:sin')).toEqual([
+      [SIN_STEPS[0], true],
+      [SIN_STEPS[1], true],
+      [SIN_STEPS[2], false],
+    ]);
+    const other = await actions(stranger.jwt, { action: 'read' });
+    expect(other.json.steps).toEqual([]);
+
+    // A later Companion mount (another conversation) reads the same saved steps.
+    mount(<CompanionScreen />);
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
+    expect(await within(sheet).findByText('Completed with 2 of 3 steps done.', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByRole('checkbox', { name: SIN_STEPS[0] })).toBeChecked();
+    expect(within(sheet).getByRole('checkbox', { name: SIN_STEPS[2] })).not.toBeChecked();
+  }, 90_000);
+
+  it('removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task', async () => {
+    // Wrong if: a step is removed without confirmation, Keep sends a write, the Undo does
+    // not restore the step, or the offered completion does not save Completed.
+    const owner = await newAccount('steps-remove');
+    mockUserId = owner.id;
+    mockCapture = jest.fn();
+    mount(<ChecklistScreen />);
+    await openChecklistTask();
+    await addStepThroughControl('Bring two IDs');
+    await addStepThroughControl('Choose a bank');
+
+    fireEvent.press(screen.getByRole('button', { name: 'Remove step: Bring two IDs' }));
+    expect(await screen.findByText('Remove “Bring two IDs”?')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Keep step' }));
+    expect(screen.getByRole('checkbox', { name: 'Bring two IDs' })).toBeTruthy();
+    expect(stepsOf((await actions(owner.jwt, { action: 'read' })).json, 'sanity:sin')).toHaveLength(2);
+
+    fireEvent.press(screen.getByRole('button', { name: 'Remove step: Bring two IDs' }));
+    fireEvent.press(await screen.findByRole('button', { name: 'Remove step' }));
+    expect(await screen.findByText('Removed step: Bring two IDs', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(screen.queryByRole('checkbox', { name: 'Bring two IDs' })).toBeNull(), {
+      timeout: 10_000,
+    });
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Undo this step change' })).not.toBeDisabled(), {
+      timeout: 10_000,
+    });
+    fireEvent.press(screen.getByRole('button', { name: 'Undo this step change' }));
+    expect(await screen.findByRole('checkbox', { name: 'Bring two IDs' }, { timeout: 10_000 })).toBeTruthy();
+
+    await toggle('Bring two IDs', true);
+    await toggle('Choose a bank', true);
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Mark task complete' })).not.toBeDisabled(), {
+      timeout: 10_000,
+    });
+    fireEvent.press(screen.getByRole('button', { name: 'Mark task complete' }));
+    await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected(), { timeout: 10_000 });
+    const after = await actions(owner.jwt, { action: 'read' });
+    expect(after.json.tasks.find((t: any) => t.task_ref === 'sanity:sin')).toMatchObject({ state: 'completed' });
+    expect(stepsOf(after.json, 'sanity:sin')).toEqual([
+      ['Bring two IDs', true],
+      ['Choose a bank', true],
+    ]);
+  }, 90_000);
+});
+
 if (!enabled) {
   it('local stack checks are skipped: ACTIONS_API_URL, ACTIONS_ANON_KEY and ACTIONS_SERVICE_ROLE_KEY are not set', () => {
     expect(enabled).toBe(false);
