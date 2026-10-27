@@ -12,6 +12,7 @@ import {
   within,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -335,7 +336,7 @@ function testI18n() {
 const clients: QueryClient[] = [];
 function renderScreen() {
   // gcTime Infinity: no garbage-collection timer outlives the test.
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
   clients.push(client);
