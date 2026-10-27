@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-362-web
+
+ ✓ components/companion/tasks/TaskSteps.test.tsx (14 tests) 1747ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  369ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  402ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  14:49:15
+   Duration  2.81s (transform 224ms, setup 0ms, collect 655ms, tests 1.75s, environment 245ms, prepare 45ms)
+
+exit 0

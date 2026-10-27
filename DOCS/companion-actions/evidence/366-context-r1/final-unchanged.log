@@ -1,0 +1,415 @@
+running 23 tests from ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts
+F3 serial control: a matching step saved before the approval needs a new review ... ok (321ms)
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["9164c6a5-ee52-40c8-829d-cf0df109b92f"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["51f83e47-e7b9-4f62-a827-bc0af1bf220d","9164c6a5-ee52-40c8-829d-cf0df109b92f"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ... FAILED (350ms)
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["702820fe-c10c-4412-b920-cc06e01f86ea","c16ebb1a-cb5c-4191-9df4-78c048c7162b"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ... ok (313ms)
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ...
+------- output -------
+{"case":"a direct add of the same title (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["380c4023-145b-4ab6-a9ab-64561ae7254f"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["240dd6e7-6da4-4bb7-9803-d2916b0d9f68","380c4023-145b-4ab6-a9ab-64561ae7254f"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ... FAILED (322ms)
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ...
+------- output -------
+{"case":"a direct add of the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["09f6828e-b2ed-42c1-89b0-08d6cc637d1e","845ceb19-2681-463d-aebc-6b505cc90874"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ... ok (288ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) ... FAILED (253ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ...
+------- output -------
+{"case":"a rename of another step to the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"settled","mid":["4d6da30c-1cff-4bd1-b875-713802395c57"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["1a4d6361-9774-44d9-acf7-07b3657bdf8c","4d6da30c-1cff-4bd1-b875-713802395c57"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ... FAILED (292ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ...
+------- output -------
+{"case":"a rename of another step to the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["7e69354b-036c-4188-a9c7-dcbf72d8d3ca"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["7e69354b-036c-4188-a9c7-dcbf72d8d3ca","c2e34064-be87-4705-9e29-2c6575e921d5"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ... FAILED (325ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ...
+------- output -------
+{"case":"a rename of another step to the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["44ec41f0-2966-4c65-8455-14c42a843422","e77d7209-0aca-4b3a-aef3-00445ba52ac7"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ... ok (291ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) ... FAILED (247ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ...
+------- output -------
+{"case":"a rename of the matching step to another title (custom task)","order":"approval-first","reviewed":["60ca6d20-a541-43b7-89ea-b149b3eba03b"],"changeWaited":"settled","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["fcb05acc-5c34-43f7-b17e-437f1751e904"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ... FAILED (293ms)
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"change-first","reviewed":["fdc6803b-63d1-4623-a5f7-102c6078a907"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["a6c58daa-f3c7-4471-9a5f-771aa91b41fd"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ... FAILED (313ms)
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"approval-first","reviewed":["ee5338ba-3242-4ffe-820e-3c84c5db21bc"],"changeWaited":"blocked","mid":["ee5338ba-3242-4ffe-820e-3c84c5db21bc"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["cedc0595-b109-4e11-af52-b78238996692"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ... ok (285ms)
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) ... FAILED (268ms)
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ...
+------- output -------
+{"case":"an Undo that restores a removed matching step (custom task)","order":"approval-first","reviewed":[],"changeWaited":"settled","mid":["ec2565c9-bd5a-4df0-acd3-acad1d21dfa3"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["ec2565c9-bd5a-4df0-acd3-acad1d21dfa3","ef901cc9-fd5a-4a62-81c1-a052d1a0634d"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ... FAILED (345ms)
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"change-first","reviewed":["fd26b1da-2fcc-48c2-852e-0fe15b9b5cdb"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["08ca19a9-7f08-44e0-86f8-21609ad44c55"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ... FAILED (423ms)
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"approval-first","reviewed":["64a4c803-76c2-49f0-9d59-3eb93d8ee902"],"changeWaited":"blocked","mid":["64a4c803-76c2-49f0-9d59-3eb93d8ee902"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["d0ddff33-f758-4772-ba66-28ebb6b6eff9"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ... ok (412ms)
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["0be2b22a-8ea6-476e-9c75-0ec743c460de","c31696b9-2cae-44b9-a1bb-7d54ffa7500e"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ... ok (284ms)
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ...
+------- output -------
+{"case":"a rename of another step to the same title (custom task)","order":"late-window","reviewed":[],"changeWaited":"settled","mid":["b166c19d-f002-4746-a213-dba0804e2329"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["08a35dcf-baeb-4f4d-a3c1-96cb79e7347a","b166c19d-f002-4746-a213-dba0804e2329"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ... FAILED (297ms)
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ...
+------- output -------
+{"case":"an Undo that restores a removed matching step (custom task)","order":"late-window","reviewed":[],"changeWaited":"settled","mid":["63d5ca75-a324-4c75-8858-6b5a34aa0623"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["63d5ca75-a324-4c75-8858-6b5a34aa0623","e4919f1a-d856-4aa0-a881-225ff500d3d0"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ... FAILED (345ms)
+F3 unrelated changes while an approval waits do not force a new review ...
+------- output -------
+{"case":"another title on the same task","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["303ee5dc-44e1-4cf3-8fca-5e4dd03aa9cc"]}
+{"case":"another title on the same task","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["15990e9e-10c0-4336-be50-2f1b7b4a8c1e"]}
+{"case":"checking the matching step","order":"change-first","reviewed":["3f7cb7d2-d595-49d4-a7cf-d154db4b2018"],"changeWaited":"blocked","mid":["3f7cb7d2-d595-49d4-a7cf-d154db4b2018"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["14e9df61-d088-42dc-af9c-62f763161d86","3f7cb7d2-d595-49d4-a7cf-d154db4b2018"]}
+{"case":"checking the matching step","order":"approval-first","reviewed":["ea864fb9-7816-46ce-acd3-e68e64b02d9b"],"changeWaited":"blocked","mid":["ea864fb9-7816-46ce-acd3-e68e64b02d9b"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["cb9f5881-0486-464c-b9ee-f52ae4cd8b58","ea864fb9-7816-46ce-acd3-e68e64b02d9b"]}
+----- output end -----
+F3 unrelated changes while an approval waits do not force a new review ... ok (1s)
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ...
+------- output -------
+{"mid":["9c0fcd60-b977-4dc8-8bc2-a3ff374820ed"],"openAtMid":true,"r1":[200,null,null],"r2":[403,"forbidden","invalid_authorization"],"final":["2c23f02e-3af9-49e2-964b-861e68557e02","9c0fcd60-b977-4dc8-8bc2-a3ff374820ed"]}
+----- output end -----
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ... FAILED (372ms)
+F3 rolling back and re-applying #366 keeps the approval context check ordered ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["68de9842-54e0-4648-b0f4-61dbf8566069"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["68de9842-54e0-4648-b0f4-61dbf8566069","81a2624c-71c0-4682-8758-90415d7debd9"]}
+----- output end -----
+F3 rolling back and re-applying #366 keeps the approval context check ordered ... FAILED (487ms)
+
+ ERRORS 
+
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:236:7)
+
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:236:7)
+
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval waits on the parent
+
+
+    [Diff] Actual / Expected
+
+
+-   settled
++   blocked
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at race (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:173:7)
+    at async fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:235:17)
+
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:257:7)
+
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:236:7)
+
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval waits on the parent
+
+
+    [Diff] Actual / Expected
+
+
+-   settled
++   blocked
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at race (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:173:7)
+    at async fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:235:17)
+
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:257:7)
+
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:236:7)
+
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval waits on the parent
+
+
+    [Diff] Actual / Expected
+
+
+-   settled
++   blocked
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at race (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:173:7)
+    at async fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:235:17)
+
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:257:7)
+
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:236:7)
+
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:273:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:315:9)
+
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:273:8
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:315:9)
+
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:379:6
+error: AssertionError: Values are not equal: no approval saved after the matching step was read
+
+
+    [Diff] Actual / Expected
+
+
+-   [
+-     200,
+-   ]
++   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:420:5)
+
+F3 rolling back and re-applying #366 keeps the approval context check ordered => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:447:6
+error: AssertionError: Values are not equal: the approval saved after a relevant change was committed and publicly read without a new review
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at assertNoStaleApproval (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:209:5)
+    at fn (file:///tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:459:5)
+
+ FAILURES 
+
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:250:8
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:229:8
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:273:8
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:273:8
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:379:6
+F3 rolling back and re-applying #366 keeps the approval context check ordered => ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts:447:6
+
+FAILED | 8 passed | 15 failed (8s)
+
+error: Test failed

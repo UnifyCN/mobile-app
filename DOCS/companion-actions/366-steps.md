@@ -52,7 +52,7 @@ conflict blocked a #366 mutation (#364 had not been accepted when this was hande
 
 - One level only: a parent is always a task ref (`sanity:` published id or `custom:` positive id); `step:` refs, a `parent_step_id` field or any unknown field are refused. Steps never become main-list tasks.
 - The parent must be this account's live, unfinished task. Missing, rolled-back (failed creation), hard-deleted, removed, another account's, or completed parents write nothing. A parent completion/removal and a step write are ordered, never interleaved, also when a content-backed task has no progress row yet (see "Parent ordering (review F1)" below). Adding, checking or editing steps never changes the parent's state or revision (an absent progress row stays absent, revision 0).
-- Direct controls: `ui_control` adds exactly the one typed step; check, rename and remove act on one step at the revision shown. Every removal (and the Undo of an add) needs `removal_confirmed`; Keep sends nothing. Suggestions are drafts until the shown revision is approved; changing the selection saves a new revision first; a relevant change (a live step with a suggested title appears) answers `needs_review`; an unrelated change (checking another step) does not.
+- Direct controls: `ui_control` adds exactly the one typed step; check, rename and remove act on one step at the revision shown. Every removal (and the Undo of an add) needs `removal_confirmed`; Keep sends nothing. Suggestions are drafts until the shown revision is approved; changing the selection saves a new revision first; a relevant change (a live step with a suggested title appears or goes away) answers `needs_review`, also when it commits while the approval is already waiting (see "Approval context (review F3)" below); an unrelated change (checking a step, another title, another task or account) does not. Two explicit direct adds of the same title stay legal.
 - One operation id per intent: duplicate and concurrent sends save once; a lost reply is looked up; `pending`/lookup failure never write; `not_applied` retries the same id and payload; a reused id with another payload is refused.
 - Receipts keep each step's title and done state as saved; a later rename or check makes them historical, never rewrites them. Undo targets one receipt: removal Undo restores; an Undo after a newer edit changes nothing and offers a reviewed change (a removal one also needs confirmation); two Undo requests apply once.
 - Completion keeps unfinished steps unfinished, stops pending reminders in the same transaction (#361 trigger), and Undo/reopen restarts none. The completion receipt records "done of total" at that moment.
@@ -73,14 +73,15 @@ no new migration):
   and task, so unrelated tasks/accounts never wait.
 - Step writes: `companion_step_parent` takes the parent lock *before* it reads a content-backed
   parent (then `for share` on the row when one exists). Every step write and step Undo goes through
-  it; `step.create` keeps the same lock for positions (re-entrant).
+  it, and the same lock orders the positions of concurrent adds. (Correction F3 below extends the
+  lock to custom parents too.)
 - Legacy and service writes: a new `BEFORE INSERT OR UPDATE` trigger `companion_user_tasks_step_order`
   on `user_tasks` takes the same lock when the row it writes is completed or removed and is either an
   insert (a first insert, and the insert part of an `INSERT ... ON CONFLICT` upsert, whose BEFORE INSERT
   trigger fires before the conflict check) or an update that moves a row onto a `(user, sanity id)` key.
   A plain UPDATE of an existing row takes no parent lock: the step write's `for share` row lock orders it.
 - Lock order: parent lock → progress row, for step writes and upserts alike; a plain UPDATE takes the
-  row only. Writes to existing steps lock their step rows before the parent lock, and no legacy or
+  row only. (Full order after F3: operation lock → proposal row → step rows → parent lock → task row.) Writes to existing steps lock their step rows before the parent lock, and no legacy or
   task writer locks step rows, so there is no cycle. One operation per apply, one parent per operation.
   Deliberate fault M4 (every UPDATE takes the parent lock) produced a real `40P01 deadlock detected`,
   which is why plain updates are excluded.
@@ -97,6 +98,42 @@ Tests: web `supabase/tests/companion-actions/steps_parent_race_test.ts` (11), th
 GoTrue/JWT/PostgREST/edge with the released request shapes (mobile `setChecklistItemCompletion`,
 `setChecklistItemDismissed`, `updateTaskCompletion`; web `services/checklist.ts`). Logs and the
 red/green/mutation record: `DOCS/companion-actions/evidence/366-parent-r1/README.md`.
+
+## Approval context (review F3, correction r1)
+
+Review `review-366-SPEC-r2.md` F3: the approval of suggested steps read its relevant context (live
+steps of the task with a suggested title) in `companion_recheck_proposal` *before* it waited for the
+parent lock in `companion_apply_step`, and did not read it again after the wait. A direct add of the
+same title could commit and be publicly read while the approval waited; the approval then saved a
+second step without a new review (200, two steps). Renames, removals and Undo restores of custom-task
+steps also took no parent lock, so they could commit even after the approval had read its context.
+
+Design (same pending, undeployed migration, mirrored byte for byte; rollback unchanged):
+
+- `companion_recheck_proposal` takes the parent lock of a `step_create` draft after its proposal row
+  lock and draft checks and *before* it reads the context. The lock is held until the approval's
+  steps are inserted and committed, so no relevant change can commit between the read and the save.
+  A change that committed while the approval waited is read and answers `needs_review` (new draft
+  revision, refreshed context); nothing is written or consumed.
+- `companion_step_parent` takes the parent lock first for custom parents as well (then `for share`
+  on the custom task row), so every step change (add, rename, check, remove, restore, Undo,
+  compensation) of any task is ordered by it. The separate add lock in `step.create` became
+  redundant and was removed.
+- Lock order: operation lock → proposal row → step rows → parent lock → task row. Approvals,
+  compensation approvals, direct writes, step Undo, prepare (parent lock, then a new proposal row)
+  and legacy upserts all follow it; revise and cancel take the proposal row only (revise's context is
+  re-read under the lock at approval). No new proposal-row/parent-row/advisory inversion; F1's
+  trigger and plain-UPDATE rule and the absent-parent revision-0 rule are unchanged.
+- Not changed: no text deduplication (two explicit adds of one title are legal), no account-wide
+  serialization (per account and task), no new command grammar, same action service and receipts.
+
+Tests: web `supabase/tests/companion-actions/steps_context_race_test.ts` (23): serial control; eight
+relevant change kinds (same-title add on both task sources, rename to/away from the title, confirmed
+removal, Undo restore, confirmed Undo of an add) each with the change queued first (a second SQL
+holder keeps the approval blocked while a complete public read shows the change) and with the
+approval first; three cases that stop the approval after its context read (an uncommitted receipt row
+with its operation id); unrelated changes; competing approvals with replays; rollback/re-apply.
+Logs, red/green, deliberate faults and limits: `DOCS/companion-actions/evidence/366-context-r1/README.md`.
 
 ## How to run
 
@@ -145,6 +182,7 @@ Mobile stand-in: `npx jest __tests__/companionActions/taskSteps.test.tsx __tests
 - The web browser check is one headless Chromium with the real components and hooks in a bundled fixture (not the Next.js shell or its cookie proxy, which the fixture server imitates). No Safari/Firefox, screen reader or 200% zoom.
 - No live model: whether a real model writes good `[STEP <id>]` lines is unproved; the parsing and the context restriction are tested.
 - Parent ordering (F1) is proven on the local stack only, with the released legacy request shapes listed below. No hosted row/lock test was run. A hosted writer that bypasses `user_tasks` triggers (`session_replication_role = replica`, bulk loads) would not take the parent lock.
+- Approval context (F3) is proven on the local stack only, with the eight change kinds above. A writer that changes `companion_task_steps` outside the action service (none exists; clients have read-only RLS) would not take the parent lock.
 - Steps are changed through explicit controls and reviewed suggestions. A chat command grammar for steps (for example "check step X") was not added: #363's command grammar is unchanged, and resolving a parent and step from free text needs its own clarification design.
 - The mobile main Jest run keeps the known open-handle qualification (see the final section); focused runs used `--forceExit` only to end the runner after its summary.
 

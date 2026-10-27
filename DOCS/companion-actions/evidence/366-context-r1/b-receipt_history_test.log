@@ -1,0 +1,8 @@
+running 4 tests from ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... ok (262ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... ok (228ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... ok (262ms)
+cleanup ... ok (3ms)
+
+ok | 4 passed | 0 failed (761ms)
+

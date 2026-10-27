@@ -147,21 +147,25 @@ begin
   end if;
 end $$;
 
--- The parent lock of the steps of one task of one account. Step writes take it before
--- they read the parent. A write that completes or removes a content-backed task takes it
+-- The parent lock of the steps of one task of one account. Every step write takes it
+-- before it reads the parent, so it orders all step changes of the task. The approval of
+-- suggested steps takes it before it reads the task's matching steps (its relevant
+-- context, companion_recheck_proposal below), so no relevant change commits between that
+-- read and the insert. A write that completes or removes a content-backed task takes it
 -- too (companion_user_tasks_step_order below), because such a task may have no progress
 -- row yet, and a new row has no row lock a step write could wait for.
+-- Lock order: operation lock, proposal row, step rows, parent lock, task row.
 create function public.companion_step_parent_lock(p_user uuid, p_ref text) returns void
 language sql set search_path = public, pg_temp as $$
   select pg_advisory_xact_lock(hashtextextended(p_user::text || ':' || p_ref, 366))
 $$;
 
--- The parent of a step write: this account's live, unfinished task. A completion or
--- removal of the parent and a step write are ordered, never interleaved: a custom task
--- row and an existing progress row are locked (shared); a content-backed task is read
--- only after its parent lock, which a completing or removing insert also takes. A step
--- write that holds the parent first stays as history of the later completion/removal;
--- one that comes later is refused.
+-- The parent of a step write: this account's live, unfinished task, read after its parent
+-- lock. A completion or removal of the parent and a step write are ordered, never
+-- interleaved: a custom task row and an existing progress row are locked (shared); a
+-- content-backed task is read only after its parent lock, which a completing or removing
+-- insert also takes. A step write that holds the parent first stays as history of the
+-- later completion/removal; one that comes later is refused.
 -- A content-backed task without a progress row is Not started; that its published
 -- document exists is checked by the action service before a new step is added.
 -- Returns the parent's current state.
@@ -174,9 +178,9 @@ begin
   if p_ref is null or not public.companion_task_ref_valid(p_ref) then
     perform public.companion_fail('CA422', 'invalid_task_ref');
   end if;
+  -- Lock order: parent lock, then the task row (as an upsert takes them).
+  perform public.companion_step_parent_lock(p_user, p_ref);
   if split_part(p_ref, ':', 1) = 'sanity' then
-    -- Lock order: parent lock, then the progress row (as an upsert takes them).
-    perform public.companion_step_parent_lock(p_user, p_ref);
     select * into v_us from public.user_tasks
      where user_id = p_user and sanity_checklist_id = substr(p_ref, 8) for share;
     if not found then return 'not_started'; end if;
@@ -266,9 +270,8 @@ declare
 begin
   if v_type = 'step.create' then
     v_ref := p_op->>'task_ref';
+    -- The parent lock (held from here) orders the positions of concurrent additions.
     v_parent := public.companion_step_parent(p_user, v_ref);
-    -- One writer per parent orders the positions of concurrent additions.
-    perform public.companion_step_parent_lock(p_user, v_ref);
     if (select count(*) from public.companion_task_steps
          where user_id = p_user and task_ref = v_ref and removed_at is null)
        + jsonb_array_length(p_op->'titles') > 50 then
@@ -1063,6 +1066,12 @@ begin
      or v_prop.revision is distinct from public.companion_nonneg_int(p_auth->'proposal_revision', 9)
      or v_prop.operations_hash <> public.companion_ops_hash(p_ops) then
     return null;
+  end if;
+  -- #366: suggested steps read their context after the parent lock, which every step
+  -- change of the task takes and which is held until the steps are inserted. A matching
+  -- step that committed while this approval waited is read here and needs a new review.
+  if v_prop.kind = 'step_create' then
+    perform public.companion_step_parent_lock(p_user, p_ops->0->>'task_ref');
   end if;
   v_now := public.companion_proposal_context(p_user, p_ops);
   if v_prop.context is not null and v_now = v_prop.context then
