@@ -1,0 +1,47 @@
+[
+  {
+    "name": "tests",
+    "args": [
+      "npm",
+      "test"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "types",
+    "args": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "i18n",
+    "args": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "args": [
+      "npx",
+      "eslint",
+      "components/companion/tasks/TaskStatePanel.tsx",
+      "components/companion/tasks/TaskSteps.test.tsx"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "build",
+    "args": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0
+  }
+]

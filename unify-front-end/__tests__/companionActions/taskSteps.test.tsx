@@ -597,3 +597,46 @@ describe('Task steps (mobile, stand-in network)', () => {
   });
 
 });
+
+it.each(['approve', 'keep'] as const)(
+  'a conflicting rename Undo shows its exact proposed text before %s',
+  async choice => {
+    // Wrong if approval can restore an undisclosed title, or Keep sends a write.
+    expect(server.handle({
+      action: 'apply', operation_id: 'existing-step',
+      authorization: { kind: 'ui_control' },
+      operations: [{ type: 'step.create', task_ref: 'sanity:sin', titles: ['Gather the original papers'] }],
+    }).status).toBe(200);
+    renderScreen();
+    await openSteps();
+    const edit = await screen.findByRole('button', { name: 'Edit step: Gather the original papers' });
+    await waitFor(() => expect(edit).toBeEnabled());
+    fireEvent.press(edit);
+    fireEvent.changeText(screen.getByLabelText('Step text'), 'Call the service centre');
+    fireEvent.press(screen.getByRole('button', { name: 'Save step' }));
+    const undo = await screen.findByRole('button', { name: 'Undo “Renamed step “Gather the original papers” to “Call the service centre””' });
+    await waitFor(() => expect(undo).toBeEnabled());
+    const step = server.steps()[0];
+    expect(server.handle({
+      action: 'apply', operation_id: 'remote-rename',
+      authorization: { kind: 'ui_control' },
+      operations: [{ type: 'step.update', step_id: step.step_id, title: 'Keep the newer instructions', expected_revision: step.revision }],
+    }).status).toBe(200);
+    fireEvent.press(undo);
+    const approve = await screen.findByRole('button', { name: 'Apply this change' });
+    await waitFor(() => expect(approve).toBeEnabled());
+    expect(screen.getByRole('checkbox', { name: 'Keep the newer instructions' })).toBeTruthy();
+    expect(screen.getByText('Proposed step text: Gather the original papers')).toBeTruthy();
+    const writesBefore = stepWrites().length;
+    if (choice === 'keep') {
+      fireEvent.press(screen.getByRole('button', { name: 'Keep current' }));
+      expect(stepWrites()).toHaveLength(writesBefore);
+      expect(server.steps()[0].title).toBe('Keep the newer instructions');
+    } else {
+      fireEvent.press(approve);
+      await screen.findByRole('checkbox', { name: 'Gather the original papers' });
+      expect(stepWrites()).toHaveLength(writesBefore + 1);
+      expect(stepWrites().at(-1)?.operations[0].title).toBe('Gather the original papers');
+    }
+  }
+);

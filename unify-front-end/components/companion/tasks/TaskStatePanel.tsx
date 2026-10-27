@@ -388,6 +388,11 @@ export function PhaseMessage({
                 ? t('taskSteps.undoConflictRemove')
                 : t('taskSteps.undoConflict')}
             </Text>
+            {proposed.type === 'step.update' && (
+              <Text style={styles.statusText}>
+                {t('taskSteps.proposedText', { title: proposed.title })}
+              </Text>
+            )}
             <View style={styles.reviewActions}>
               <Pressable
                 accessibilityRole='button'
