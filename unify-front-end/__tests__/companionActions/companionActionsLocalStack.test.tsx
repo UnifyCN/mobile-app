@@ -18,6 +18,7 @@ import {
   within,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
@@ -293,7 +294,7 @@ function testI18n() {
 const clients: QueryClient[] = [];
 function mount(node: React.ReactElement) {
   // A new query client per mount: nothing is shared but the server.
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
   clients.push(client);

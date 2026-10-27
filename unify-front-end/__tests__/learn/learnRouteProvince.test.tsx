@@ -7,6 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 let mockProvince: string | null = null;
 let mockUserLoading = false;
@@ -51,7 +52,7 @@ import LearnStackLayout from '@/app/(tabs)/Learn/_layout';
 const BC = 'British Columbia';
 
 function renderLayout() {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   clients.push(client);
