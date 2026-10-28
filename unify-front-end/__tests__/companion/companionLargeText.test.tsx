@@ -307,6 +307,9 @@ describe('N2: at accessibility text sizes content reflows into one scroll', () =
     expect(scrollAncestors(factCheck).some(s => s.props.horizontal)).toBe(false);
     const composer = screen.getByPlaceholderText(en.companion.inputPlaceholder);
     expect(verticalScrollOf(composer)).toBeNull();
+    // The disclaimer follows the content instead of pinning several lines of large
+    // text under the composer, where it took the conversation's height.
+    expect(verticalScrollOf(screen.getByText(en.companion.disclaimer))).toBe(region);
   });
 
   it('at default text, the existing direction-B layout stays: a horizontal starter strip above the composer', async () => {
@@ -316,6 +319,7 @@ describe('N2: at accessibility text sizes content reflows into one scroll', () =
     expect(scrollAncestors(factCheck)[0].props.horizontal).toBe(true);
     expect(verticalScrollOf(factCheck)).toBeNull();
     expect(verticalScrollOf(screen.getByRole('button', { name: /Your tasks/ }))).toBeNull();
+    expect(verticalScrollOf(screen.getByText(en.companion.disclaimer))).toBeNull();
   });
 
   it('in a populated conversation at AX XXXL, the entry scrolls with the messages', async () => {
@@ -329,6 +333,9 @@ describe('N2: at accessibility text sizes content reflows into one scroll', () =
     const message = await screen.findByText('Compare the newcomer accounts.');
     expect(verticalScrollOf(entry)).not.toBeNull();
     expect(verticalScrollOf(entry)).toBe(verticalScrollOf(message));
+    expect(verticalScrollOf(screen.getByText(en.companion.disclaimer))).toBe(
+      verticalScrollOf(message)
+    );
   });
 
   it('in a populated conversation at default text, the entry stays fixed above the messages', async () => {
@@ -339,6 +346,7 @@ describe('N2: at accessibility text sizes content reflows into one scroll', () =
     const entry = await screen.findByRole('button', { name: /Your tasks/ });
     await screen.findByText('Which bank should I use?');
     expect(verticalScrollOf(entry)).toBeNull();
+    expect(verticalScrollOf(screen.getByText(en.companion.disclaimer))).toBeNull();
   });
 });
 

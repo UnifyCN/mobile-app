@@ -622,11 +622,23 @@ export default function CompanionScreen() {
     ]
   );
 
-  const renderLoadingIndicator = useCallback(() => {
-    // Only show typing indicator when waiting for bot response (not when saving user message)
-    if (!isWaitingForBot) return null;
-    return <TypingIndicator />;
-  }, [isWaitingForBot]);
+  const disclaimer = <Disclaimer text={t('companion.disclaimer')} />;
+
+  const renderLoadingIndicator = useCallback(
+    () => (
+      <>
+        {/* Only show typing indicator when waiting for bot response (not when saving user message) */}
+        {isWaitingForBot && <TypingIndicator />}
+        {/* At large text the disclaimer follows the messages (see the pinned section). */}
+        {largeText && (
+          <View style={styles.listEntries}>
+            <Disclaimer text={t('companion.disclaimer')} />
+          </View>
+        )}
+      </>
+    ),
+    [isWaitingForBot, largeText, t]
+  );
 
   const keyExtractor = useCallback((item: Message) => item.id, []);
 
@@ -758,6 +770,7 @@ export default function CompanionScreen() {
                 </Text>
               </View>
               {largeText && starters}
+              {largeText && disclaimer}
             </ScrollView>
           </View>
         ) : (
@@ -838,12 +851,9 @@ export default function CompanionScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Disclaimer */}
-          <View style={styles.disclaimerContainer}>
-            <Text style={styles.disclaimerText}>
-              {t('companion.disclaimer')}
-            </Text>
-          </View>
+          {/* Disclaimer. At large text its several lines would take the
+              conversation's height, so it scrolls with the content instead. */}
+          {!largeText && disclaimer}
         </View>
       </Animated.View>
 
@@ -863,6 +873,14 @@ export default function CompanionScreen() {
         plan={sheet?.kind === 'plan' ? sheet.target : null}
         onOpenTask={openTask}
       />
+    </View>
+  );
+}
+
+function Disclaimer({ text }: { text: string }) {
+  return (
+    <View style={styles.disclaimerContainer}>
+      <Text style={styles.disclaimerText}>{text}</Text>
     </View>
   );
 }
