@@ -1,9 +1,9 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import { typography } from '@/constants/Typography';
 import React, { memo, useState, useCallback, useRef } from 'react';
 import {
   AccessibilityInfo,
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Linking,

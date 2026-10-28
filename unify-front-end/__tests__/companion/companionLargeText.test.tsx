@@ -19,7 +19,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Dimensions, StyleSheet } from 'react-native';
+import { AccessibilityInfo, Dimensions, StyleSheet } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 
@@ -97,7 +97,8 @@ jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Medium: 'medium' },
 }));
 jest.mock('@expo/vector-icons/MaterialIcons', () => () => null);
-jest.mock('@expo/vector-icons', () => ({ Feather: Object.assign(() => null, { glyphMap: {} }) }));
+jest.mock('@expo/vector-icons', () => ({ Feather: Object.assign(() => null, { glyphMap: {} }), Ionicons: () => null }));
+jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn() }));
 jest.mock('expo-constants', () => ({
   __esModule: true,
   default: { expoConfig: { version: '9.9.9', extra: {} } },
@@ -145,18 +146,12 @@ jest.mock('@/context/ToastContext', () => ({
 jest.mock('@/components/companion/AnimatedDottedBackground', () => ({
   AnimatedDottedBackground: () => null,
 }));
-jest.mock('@/components/companion/MessageWithSources', () => {
-  const { Text } = require('react-native');
-  return {
-    MessageWithSources: ({ item }: { item: { text: string } }) => <Text>{item.text}</Text>,
-  };
-});
 jest.mock('@/components/companion/PartnerSpotlightBanner', () => () => null);
 jest.mock('@/components/icons/SendIcon.svg', () => () => null);
 jest.mock('lucide-react-native', () => ({ History: () => null, Plus: () => null }));
 jest.mock('@/components/common/BottomSheet', () => ({
   __esModule: true,
-  default: () => null,
+  default: ({ visible, children }: { visible: boolean; children: React.ReactNode }) => visible ? children : null,
 }));
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 47, bottom: 34, left: 0, right: 0 }),
@@ -234,7 +229,8 @@ function renderScreen() {
       <I18nextProvider i18n={testI18n()}>
         <CompanionScreen />
       </I18nextProvider>
-    </QueryClientProvider>
+    </QueryClientProvider>,
+    { createNodeMock: () => ({}) }
   );
 }
 
@@ -256,6 +252,7 @@ let userCounter = 0;
 beforeEach(() => {
   mockUserId = `layout-user-${++userCounter}`;
   mockMessages = [];
+  require('@/services/checklist/customChecklistTasks').getCustomChecklistTasks.mockResolvedValue([]);
   const server = scriptedServer({ 'custom:1': { state: 'in_progress', revision: 1 } });
   global.fetch = server.fetch as unknown as typeof fetch;
   setFontScale(DEFAULT);
@@ -264,6 +261,7 @@ afterEach(() => {
   // Unmount first, so no query of this screen (and its 5 s retry of a failed read)
   // outlives the test and its scripted network.
   cleanup();
+  jest.restoreAllMocks();
   global.fetch = realFetch;
   clients.splice(0).forEach(client => {
     client.clear();
@@ -429,6 +427,80 @@ describe('N2: a live size change measures the static text again', () => {
 });
 
 describe('N2: a live text-size change reflows the mounted screen', () => {
+  it('refreshes an open task sheet while keeping the selected task, waiting input and composer', async () => {
+    const server = scriptedServer({ 'custom:1': { state: 'waiting', revision: 1 } });
+    global.fetch = server.fetch as unknown as typeof fetch;
+    require('@/services/checklist/customChecklistTasks').getCustomChecklistTasks.mockResolvedValue([{
+      id: 1, user_id: mockUserId, title: 'Get a phone plan', description: '',
+      priority: 'Do now', completed: false, completed_at: null, created_at: '2026-10-25T00:00:00Z',
+    }]);
+    setFontScale(AX_MEDIUM);
+    renderScreen();
+    const entry = await screen.findByRole('button', { name: /Your tasks/ });
+    const composer = screen.getByPlaceholderText(en.companion.inputPlaceholder);
+    fireEvent.changeText(composer, 'Retained composer draft');
+    fireEvent.press(entry);
+    const sheet = screen.getByTestId('companion-task-sheet');
+    const row = await screen.findByRole('button', { name: 'Get a phone plan, Waiting' });
+    const heading = screen.getByRole('header', { name: en.taskActions.listTitle });
+    const rowText = screen.getByText('Get a phone plan');
+    setFontScale(AX_XXXL);
+    expect(screen.getByTestId('companion-task-sheet')).toBe(sheet);
+    expect(screen.getByRole('button', { name: 'Get a phone plan, Waiting' })).toBe(row);
+    expect(screen.getByRole('header', { name: en.taskActions.listTitle })).not.toBe(heading);
+    expect(screen.getByText('Get a phone plan')).not.toBe(rowText);
+    fireEvent.press(row);
+    const reason = await screen.findByPlaceholderText(en.taskActions.waitingPlaceholder);
+    fireEvent.changeText(reason, 'Waiting for a reply from the provider');
+    for (const scale of [AX_MEDIUM, AX_XXXL]) {
+      setFontScale(scale);
+      expect(screen.getByTestId('companion-task-sheet')).toBe(sheet);
+      expect(screen.getByText('Get a phone plan')).toBeTruthy();
+      expect(screen.getByRole('radio', { name: 'Waiting' })).toBeSelected();
+      expect(screen.getByPlaceholderText(en.taskActions.waitingPlaceholder)).toBe(reason);
+      expect(reason.props.value).toBe('Waiting for a reply from the provider');
+      expect(composer.props.value).toBe('Retained composer draft');
+    }
+    expect(StyleSheet.flatten(reason.props.style).minHeight).toBe(86);
+    expect(server.writes()).toHaveLength(0);
+  });
+
+  it('keeps real message sources and context open and returns focus only on explicit close', async () => {
+    const fixture = require('./fixtures/rag-query-context-province-conflict.json');
+    mockMessages = [{
+      id: 1,
+      role: 'assistant',
+      content: 'Layout fixture answer',
+      created_at: '2026-10-27T10:00:00Z',
+      sources: [{ document_id: 1, document_title: 'Layout source title', url: 'https://example.invalid/source' }],
+      companion_context: fixture.context,
+    }];
+    const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent');
+    renderScreen();
+    await screen.findByText('Layout fixture answer');
+    const composer = screen.getByPlaceholderText(en.companion.inputPlaceholder);
+    fireEvent.changeText(composer, 'Retained composer draft');
+    fireEvent.press(screen.getByText(en.companion.sourcesCount.replace('{{count}}', '1')));
+    expect(screen.getByText('Layout source title')).toBeTruthy();
+    const opener = screen.getByRole('button', { name: en.companion.context.openDetails });
+    fireEvent.press(opener);
+    const close = screen.getByRole('button', { name: en.companion.context.closeAria });
+    for (const scale of [XXXL, AX_MEDIUM, AX_XXXL]) {
+      setFontScale(scale);
+      expect(screen.getByRole('button', { name: en.companion.context.closeAria })).toBe(close);
+      expect(screen.getByLabelText(en.companion.context.openDetails, { includeHiddenElements: true })).toBe(opener);
+      expect(screen.getByText('Layout source title', { includeHiddenElements: true })).toBeTruthy();
+      expect(screen.getByPlaceholderText(en.companion.inputPlaceholder)).toBe(composer);
+      expect(composer.props.value).toBe('Retained composer draft');
+      expect(focus).not.toHaveBeenCalled();
+    }
+    fireEvent.press(close);
+    expect(screen.queryByRole('button', { name: en.companion.context.closeAria })).toBeNull();
+    expect(screen.getByText('Layout source title')).toBeTruthy();
+    expect(focus).toHaveBeenCalledTimes(1);
+    expect(focus).toHaveBeenCalledWith(expect.anything(), 'focus');
+  });
+
   it('switches layout without a remount and keeps the typed message', async () => {
     renderScreen();
     await screen.findByRole('button', { name: /Your tasks/ });

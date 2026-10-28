@@ -1,5 +1,6 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';

@@ -1,5 +1,6 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React, { forwardRef } from 'react';
-import { I18nManager, Pressable, StyleSheet, Text, View } from 'react-native';
+import { I18nManager, Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Theme } from '@/constants/Theme';

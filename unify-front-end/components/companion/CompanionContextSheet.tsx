@@ -1,10 +1,10 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React from 'react';
 import {
   Linking,
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';

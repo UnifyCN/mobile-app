@@ -1,11 +1,12 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   Platform,
   Pressable,
   StyleSheet,
-  Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -74,6 +75,7 @@ interface TaskStatePanelProps {
  */
 export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const { t } = useTranslation();
+  const { fontScale } = useWindowDimensions();
   const phase = useTaskActionPhase(store, taskRef);
   const progress = progressFor(taskRef, view);
   const draft = useTaskActionDraft(store, taskRef);
@@ -234,7 +236,15 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
             editable={Boolean(store)}
             accessibilityLabel={t('taskActions.waitingLabel')}
             accessibilityLabelledBy={`reason-${taskRef}`}
-            style={styles.reasonInput}
+            style={[
+              styles.reasonInput,
+              {
+                minHeight: Math.max(
+                  72,
+                  Math.ceil(typography.secondary.lineHeight * fontScale) + 20
+                ),
+              },
+            ]}
             textAlignVertical='top'
           />
           <View style={styles.reasonFooter}>

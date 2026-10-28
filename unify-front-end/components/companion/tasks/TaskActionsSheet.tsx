@@ -1,3 +1,4 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   AccessibilityInfo,
@@ -7,7 +8,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';

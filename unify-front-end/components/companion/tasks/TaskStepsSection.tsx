@@ -1,9 +1,9 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useState } from 'react';
 import {
   Platform,
   Pressable,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';

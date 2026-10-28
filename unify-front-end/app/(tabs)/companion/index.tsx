@@ -572,7 +572,7 @@ export default function CompanionScreen() {
       // Saved messages have positive integer ids; optimistic and streaming ones do not.
       const savedId = Number(item.id);
       return (
-        <React.Fragment key={scaleKey}>
+        <React.Fragment>
           <MessageWithSources
             item={displayItem}
             suggestedNextSteps={
@@ -622,7 +622,6 @@ export default function CompanionScreen() {
       lastSuggestedNextSteps,
       lastVerified,
       handleSuggestionClick,
-      scaleKey,
     ]
   );
 

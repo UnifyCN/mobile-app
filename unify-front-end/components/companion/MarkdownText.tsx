@@ -1,6 +1,7 @@
+import { LiveText as Text } from '@/components/common/LiveText';
 import { typography } from '@/constants/Typography';
 import React, { memo, useMemo } from 'react';
-import { View, Text, StyleSheet, Linking } from 'react-native';
+import { View, StyleSheet, Linking } from 'react-native';
 import { Theme } from '@/constants/Theme';
 
 /**
