@@ -51,6 +51,8 @@ export interface TaskStep {
 /** One step as a receipt recorded it when it was saved (historical text). */
 export interface ReceiptStep {
   stepId: string;
+  /** The saved revision of this step, not its parent task. */
+  afterRevision: number;
   title: string;
   /** The title before a rename; null otherwise. */
   beforeTitle: string | null;
@@ -301,6 +303,7 @@ function parseReceiptSteps(raw: unknown): ReceiptStep[] | null {
     if (!isObject(item)) throw new ContractError('receipt.steps');
     return {
       stepId: str(item, 'step_id'),
+      afterRevision: int(item, 'after_revision'),
       title: str(item, 'title'),
       beforeTitle: strOrNull(item, 'before_title'),
       beforeDone: bool(item, 'before_done'),

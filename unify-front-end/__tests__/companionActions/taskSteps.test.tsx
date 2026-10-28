@@ -660,3 +660,48 @@ it('completing the parent blocks the step-add receipt Undo', async () => {
   }
   expect(server.sent.filter(b => b.action === 'undo')).toHaveLength(0);
 });
+
+it('a direct step receipt keeps its original text and becomes historical after a newer edit', async () => {
+  renderScreen(); await openSteps(); await addStep('Original direct step');
+  // Wrong if a fresh step read leaves its previous receipt labelled current.
+  const undoName = 'Undo “Added step: Original direct step”';
+  await waitFor(()=>expect(screen.getByRole('button',{name:undoName})).toBeEnabled());
+  expect(screen.queryByText(/This task changed after this/)).toBeNull();
+  const step=server.steps()[0];
+  expect(server.handle({action:'apply',operation_id:'r6-external-rename',authorization:{kind:'ui_control'},operations:[{type:'step.update',step_id:step.step_id,title:'Current direct step',expected_revision:step.revision}]}).status).toBe(200);
+  await act(async()=>{await clients.at(-1)!.refetchQueries({queryKey:['companion-task-actions']});});
+  await screen.findByRole('checkbox',{name:'Current direct step'});
+  expect(screen.getByText('Added step: Original direct step')).toBeTruthy();
+  expect(screen.getByText(/This task changed after this/)).toBeTruthy();
+});
+
+it('a checked-step receipt stays historical when a later client restores the same checkbox value', async () => {
+  // Wrong if matching text and checkbox values hide later revisions.
+  renderScreen(); await openSteps(); await addStep('Prepare the papers');
+  const box = await screen.findByRole('checkbox', { name: 'Prepare the papers' });
+  await waitFor(() => expect(box).toBeEnabled());
+  fireEvent.press(box);
+  await screen.findByText('Checked step: Prepare the papers');
+  await waitFor(() => expect(screen.getAllByText(/This task changed after this/)).toHaveLength(1));
+  const step = server.steps()[0];
+  for (const [index, done] of [false, true].entries()) {
+    expect(server.handle({ action: 'apply', operation_id: `remote-check-${index}`, authorization: { kind: 'ui_control' },
+      operations: [{ type: 'step.set_done', step_id: step.step_id, done, expected_revision: step.revision + index }] }).status).toBe(200);
+  }
+  await act(async () => { await clients.at(-1)!.refetchQueries({ queryKey: ['companion-task-actions'] }); });
+  expect(screen.getByRole('checkbox', { name: 'Prepare the papers' })).toBeChecked();
+  expect(screen.getByText('Checked step: Prepare the papers')).toBeTruthy();
+  await waitFor(() => expect(screen.getAllByText(/This task changed after this/)).toHaveLength(2));
+});
+
+it('an unrelated added step does not make the direct receipt historical', async () => {
+  // Wrong if another step's revision changes the recorded result of this one.
+  renderScreen(); await openSteps(); await addStep('Prepare the papers');
+  await screen.findByText('Added step: Prepare the papers');
+  expect(server.handle({ action: 'apply', operation_id: 'remote-other-step', authorization: { kind: 'ui_control' },
+    operations: [{ type: 'step.create', task_ref: 'sanity:sin', titles: ['Ask about service hours'] }] }).status).toBe(200);
+  await act(async () => { await clients.at(-1)!.refetchQueries({ queryKey: ['companion-task-actions'] }); });
+  await screen.findByRole('checkbox', { name: 'Ask about service hours' });
+  expect(screen.getByText('Added step: Prepare the papers')).toBeTruthy();
+  expect(screen.queryByText(/This task changed after this/)).toBeNull();
+});
