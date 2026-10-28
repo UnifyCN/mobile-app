@@ -14,6 +14,7 @@ import {
 } from '@/services/companionActions/taskActionStore';
 import { useTaskActionPhase } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
+import { changeLines, editReceiptText, receiptChangeText } from './editText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -31,15 +32,18 @@ interface CardsProps {
   store: TaskActionStore | null;
   /** A connection and a fresh read: a retry is a write. */
   canWrite: boolean;
-  onReview: (proposalId: string) => void;
+  onReview: (proposalId: string, kind: TaskProposal['kind']) => void;
   onViewTask: (taskRef: string, title: string) => void;
+  /** The account's Checklist title of a task (#365 edits name existing tasks). */
+  titleFor?: (taskRef: string) => string | null;
 }
 
 /**
- * Compact cards under a conversation message (direction B, mobile-app#363): a task
- * draft the answer suggested, or the result of a clear command in the user's own
- * message. A draft card says it is not saved; it opens the bottom sheet for review.
- * A result card shows the saved task by its receipt, not by any assistant text.
+ * Compact cards under a conversation message (direction B, mobile-app#363, #365): a
+ * task draft or a task change the answer suggested, or the result of a clear command in
+ * the user's own message. A draft card says it is not saved; it opens the bottom sheet
+ * for review. A result card shows the saved change by its receipt, not by any
+ * assistant text.
  */
 export function TaskActionCards({
   messageId,
@@ -50,20 +54,35 @@ export function TaskActionCards({
   canWrite,
   onReview,
   onViewTask,
+  titleFor = () => null,
 }: CardsProps) {
   if (messageId === null) return null;
   const mine = proposals.filter(p => p.source?.messageId === messageId);
   const command = commands.find(c => c.messageId === messageId) ?? null;
   return (
     <>
-      {mine.map(p => (
-        <DraftCard
-          key={p.proposalId}
-          proposal={p}
-          store={store}
-          onReview={() => onReview(p.proposalId)}
-        />
-      ))}
+      {mine.map(p =>
+        p.kind === 'task_edit' ? (
+          <EditDraftCard
+            key={p.proposalId}
+            proposal={p}
+            store={store}
+            title={
+              p.task?.title ??
+              titleFor(p.operation.task_ref) ??
+              null
+            }
+            onReview={() => onReview(p.proposalId, p.kind)}
+          />
+        ) : (
+          <DraftCard
+            key={p.proposalId}
+            proposal={p}
+            store={store}
+            onReview={() => onReview(p.proposalId, p.kind)}
+          />
+        )
+      )}
       {isUser && (
         <CommandCard
           messageId={messageId}
@@ -71,6 +90,7 @@ export function TaskActionCards({
           store={store}
           canWrite={canWrite}
           onViewTask={onViewTask}
+          titleFor={titleFor}
         />
       )}
     </>
@@ -120,7 +140,7 @@ function DraftCard({
   store,
   onReview,
 }: {
-  proposal: TaskProposal;
+  proposal: Extract<TaskProposal, { kind: 'task_create' }>;
   store: TaskActionStore | null;
   onReview: () => void;
 }) {
@@ -160,19 +180,82 @@ function DraftCard({
   );
 }
 
+/** A suggested change to an existing task (#365): what it changes, not yet saved. */
+function EditDraftCard({
+  proposal,
+  store,
+  title,
+  onReview,
+}: {
+  proposal: Extract<TaskProposal, { kind: 'task_edit' }>;
+  store: TaskActionStore | null;
+  title: string | null;
+  onReview: () => void;
+}) {
+  const { t } = useTranslation();
+  const phase = useTaskActionPhase(store, `proposal:${proposal.proposalId}`);
+  const saved = phase.phase === 'saved' ? phase.receipt : proposal.receipt;
+  const draft = proposal.status === 'draft' && !saved;
+  const name = title ?? t('taskEdit.unknownTask');
+  const summary = changeLines(t as never, proposal.operation, proposal.task)
+    .map(line => `${line.label}: ${line.to}`)
+    .join(' · ');
+  const status = saved
+    ? t('taskEdit.saved')
+    : proposal.status === 'cancelled'
+      ? t('taskEdit.closed')
+      : isUnresolved(phase)
+        ? t('taskActions.checking')
+        : t('taskEdit.draftBadge');
+  return (
+    <View
+      testID='task-edit-draft-card'
+      style={[styles.card, draft && styles.cardDraft]}
+    >
+      <CardIcon />
+      <View style={styles.text}>
+        <Text style={styles.eyebrow}>{t('taskEdit.cardEyebrow')}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.status}>{summary}</Text>
+        <Text style={styles.status} accessibilityLiveRegion='polite'>
+          {status}
+        </Text>
+      </View>
+      <CardButton
+        label={draft ? t('taskEdit.review') : t('taskEdit.view')}
+        name={
+          draft
+            ? t('taskEdit.reviewA11y', { title: name })
+            : t('taskEdit.view')
+        }
+        onPress={onReview}
+      />
+    </View>
+  );
+}
+
 function commandText(
   t: (k: string, o?: Record<string, unknown>) => string,
-  phase: TaskActionPhase
+  phase: TaskActionPhase,
+  titleFor: (taskRef: string) => string | null
 ): string | null {
   switch (phase.phase) {
     case 'saving':
-    case 'checking':
+    case 'checking': {
+      const op = phase.write.operation;
+      if (op && op.type !== 'task.create_custom') {
+        return t('taskEdit.commandSaving', {
+          title:
+            ('task_ref' in op ? titleFor(op.task_ref) : null) ??
+            t('taskEdit.unknownTask'),
+        });
+      }
       return t('taskCreate.commandAdding', {
-        title:
-          phase.write.operation?.type === 'task.create_custom'
-            ? phase.write.operation.title
-            : '',
+        title: op?.type === 'task.create_custom' ? op.title : '',
       });
+    }
+    case 'conflict':
+      return t('taskEdit.commandConflict');
     case 'pending':
       return t('taskActions.pending');
     case 'lookup_failed':
@@ -200,17 +283,53 @@ function CommandCard({
   store,
   canWrite,
   onViewTask,
+  titleFor,
 }: {
   messageId: number;
   saved: TaskReceipt | null;
   store: TaskActionStore | null;
   canWrite: boolean;
   onViewTask: (taskRef: string, title: string) => void;
+  titleFor: (taskRef: string) => string | null;
 }) {
   const { t } = useTranslation();
   const key = `command:${messageId}`;
   const phase = useTaskActionPhase(store, key);
   const receipt = phase.phase === 'saved' ? phase.receipt : saved;
+  if (
+    receipt &&
+    (receipt.operationType === 'task.edit_details' ||
+      receipt.operationType === 'task.set_state')
+  ) {
+    // #365: a clear edit command's saved change, named field by field.
+    const title =
+      receipt.title ?? titleFor(receipt.taskRef) ?? t('taskEdit.unknownTask');
+    return (
+      <View testID='task-command-card' style={styles.card}>
+        <CardIcon />
+        <View style={styles.text} accessibilityLiveRegion='polite'>
+          <Text style={styles.result}>
+            {editReceiptText(t as never, receipt, title)}
+          </Text>
+          {receipt.changes.map(change => (
+            <Text key={change.field} style={styles.status}>
+              {receiptChangeText(t as never, change)}
+            </Text>
+          ))}
+          {!receipt.current && (
+            <Text style={styles.status}>
+              {t('taskActions.receiptHistorical')}
+            </Text>
+          )}
+        </View>
+        <CardButton
+          label={t('taskCreate.view')}
+          name={t('taskEdit.viewA11y', { title })}
+          onPress={() => onViewTask(receipt.taskRef, title)}
+        />
+      </View>
+    );
+  }
   if (receipt) {
     const title = receipt.title ?? '';
     return (
@@ -232,7 +351,7 @@ function CommandCard({
       </View>
     );
   }
-  const text = commandText(t as never, phase);
+  const text = commandText(t as never, phase, titleFor);
   if (!text) return null;
   return (
     <View testID='task-command-card' style={styles.card}>

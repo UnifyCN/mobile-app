@@ -32,6 +32,7 @@ import type { TaskState } from '@/services/companionActions/contract';
 import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
+import { useTaskTitles } from '@/hooks/companion/useTaskTitles';
 import { TaskProposalPanel } from './TaskProposalPanel';
 import { TaskStatePanel } from './TaskStatePanel';
 
@@ -50,6 +51,8 @@ interface TaskActionsSheetProps {
   onClose: () => void;
   /** Open on the review of one task draft (#363) instead of the task list. */
   proposalId?: string | null;
+  /** #365: the draft is a change to an existing task, not a new task. */
+  proposalKind?: 'task_create' | 'task_edit';
   /** Open straight on one task, e.g. one a command added (#363). */
   initialTask?: { taskRef: string; title: string } | null;
 }
@@ -64,6 +67,7 @@ export function TaskActionsSheet({
   visible,
   onClose,
   proposalId = null,
+  proposalKind = 'task_create',
   initialTask = null,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
@@ -142,7 +146,9 @@ export function TaskActionsSheet({
               )}
               <Text style={styles.heading} accessibilityRole='header'>
                 {proposalId
-                  ? t('taskCreate.drawerTitle')
+                  ? proposalKind === 'task_edit'
+                    ? t('taskEdit.drawerTitle')
+                    : t('taskCreate.drawerTitle')
                   : selectedRef
                     ? t('taskActions.drawerTitle')
                     : t('taskActions.listTitle')}
@@ -180,13 +186,19 @@ export function TaskActionsSheet({
 function ProposalBody({ proposalId }: { proposalId: string }) {
   const view = useTaskProgress();
   const store = useTaskActionStore('companion');
+  const titleFor = useTaskTitles();
   return (
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={styles.scrollContent}
       keyboardShouldPersistTaps='handled'
     >
-      <TaskProposalPanel proposalId={proposalId} view={view} store={store} />
+      <TaskProposalPanel
+        proposalId={proposalId}
+        view={view}
+        store={store}
+        titleFor={titleFor}
+      />
     </ScrollView>
   );
 }

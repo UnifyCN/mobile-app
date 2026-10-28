@@ -33,6 +33,7 @@ import {
 import { minTarget } from '@/utils/touchTarget';
 import { ReceiptBlock } from './ReceiptBlock';
 import { PhaseMessage } from './TaskStatePanel';
+import { TaskEditProposalPanel } from './TaskEditProposalPanel';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -47,6 +48,8 @@ interface TaskProposalPanelProps {
   proposalId: string;
   view: TaskProgressView;
   store: TaskActionStore | null;
+  /** The Checklist title of a task, for an edit draft that does not carry one (#365). */
+  titleFor?: (taskRef: string) => string | null;
 }
 
 const PROFILE_FIELDS = [
@@ -67,6 +70,7 @@ export function TaskProposalPanel({
   proposalId,
   view,
   store,
+  titleFor,
 }: TaskProposalPanelProps) {
   const { t, i18n } = useTranslation();
   const key = `proposal:${proposalId}`;
@@ -108,6 +112,18 @@ export function TaskProposalPanel({
       </Text>
     );
   }
+  // #365: a draft of a change to an existing task has its own review.
+  if (proposal.kind === 'task_edit') {
+    return (
+      <TaskEditProposalPanel
+        proposal={proposal}
+        view={view}
+        store={store}
+        fallbackTitle={titleFor?.(proposal.operation.task_ref) ?? null}
+      />
+    );
+  }
+  const created = proposal;
 
   const busy = isUnresolved(phase) || requestBusy;
   const writable =
@@ -162,8 +178,8 @@ export function TaskProposalPanel({
     const submitted = title;
     const result = await proposalRequest(c =>
       c.revise(
-        proposal!.proposalId,
-        proposal!.proposalRevision,
+        created.proposalId,
+        created.proposalRevision,
         createTaskOperation(submitted)
       )
     );
@@ -179,24 +195,24 @@ export function TaskProposalPanel({
   function approve() {
     if (!canApprove || !store) return;
     store.dismiss(key);
-    void store.applyOperation(key, proposal!.operation, {
+    void store.applyOperation(key, created.operation, {
       kind: 'approved_proposal',
-      proposal_id: proposal!.proposalId,
-      proposal_revision: proposal!.proposalRevision,
+      proposal_id: created.proposalId,
+      proposal_revision: created.proposalRevision,
     });
   }
 
   function notNow() {
     if (!canWrite) return;
     void proposalRequest(c =>
-      c.cancel(proposal!.proposalId, proposal!.proposalRevision)
+      c.cancel(created.proposalId, created.proposalRevision)
     );
   }
 
   const profileLines = (ctx: ProposalContext | null) => {
     const before =
-      proposal!.reviewReason === 'context_changed'
-        ? proposal!.previousContext?.profile
+      created.reviewReason === 'context_changed'
+        ? created.previousContext?.profile
         : null;
     return PROFILE_FIELDS.flatMap(([field, label]) => {
       const value = ctx?.profile?.[field];

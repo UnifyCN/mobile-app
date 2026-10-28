@@ -63,6 +63,7 @@ import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
+import { useTaskTitles } from '@/hooks/companion/useTaskTitles';
 import {
   useConversationActions,
   useTaskActionStore,
@@ -157,7 +158,11 @@ export default function CompanionScreen() {
   // typed message stay mounted.
   const [sheet, setSheet] = useState<
     | { kind: 'tasks' }
-    | { kind: 'proposal'; proposalId: string }
+    | {
+        kind: 'proposal';
+        proposalId: string;
+        proposalKind: 'task_create' | 'task_edit';
+      }
     | { kind: 'task'; taskRef: string; title: string }
     | null
   >(null);
@@ -506,10 +511,15 @@ export default function CompanionScreen() {
   );
   const actionStore = useTaskActionStore('companion');
   const { canWrite: actionsWritable } = useTaskProgress();
-  const openDraft = useCallback((proposalId: string) => {
-    Keyboard.dismiss();
-    setSheet({ kind: 'proposal', proposalId });
-  }, []);
+  const openDraft = useCallback(
+    (proposalId: string, proposalKind: 'task_create' | 'task_edit') => {
+      Keyboard.dismiss();
+      setSheet({ kind: 'proposal', proposalId, proposalKind });
+    },
+    []
+  );
+  // #365: names the task of an edit card or receipt from the account's Checklist.
+  const titleFor = useTaskTitles();
   const openTask = useCallback((taskRef: string, title: string) => {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
@@ -551,6 +561,7 @@ export default function CompanionScreen() {
             canWrite={actionsWritable}
             onReview={openDraft}
             onViewTask={openTask}
+            titleFor={titleFor}
           />
         </>
       );
@@ -561,6 +572,7 @@ export default function CompanionScreen() {
       actionsWritable,
       openDraft,
       openTask,
+      titleFor,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -771,6 +783,9 @@ export default function CompanionScreen() {
         visible={sheet !== null}
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
+        proposalKind={
+          sheet?.kind === 'proposal' ? sheet.proposalKind : undefined
+        }
         initialTask={
           sheet?.kind === 'task'
             ? { taskRef: sheet.taskRef, title: sheet.title }
