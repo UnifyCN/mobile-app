@@ -351,6 +351,17 @@ describe('N2: at accessibility text sizes content reflows into one scroll', () =
   });
 });
 
+describe('N2: the welcome title scales like a title, not like body text', () => {
+  it('uses the iOS Title 1 ramp, so a long word still fits at AX XXXL', async () => {
+    renderScreen();
+    await screen.findByRole('button', { name: /Your tasks/ });
+    const title = screen.getByText(en.companion.welcomeTitle);
+    // 28 pt is Title 1's default size: the default rendering is unchanged.
+    expect(StyleSheet.flatten(title.props.style).fontSize).toBe(28);
+    expect(title.props.dynamicTypeRamp).toBe('title1');
+  });
+});
+
 describe('N2: a live text-size change reflows the mounted screen', () => {
   it('switches layout without a remount and keeps the typed message', async () => {
     renderScreen();

@@ -762,7 +762,9 @@ export default function CompanionScreen() {
             >
               {largeText && entries}
               <View style={styles.emptyState}>
-                <Text style={styles.welcomeTitle}>
+                {/* A title grows like iOS Title 1, not by the body multiplier,
+                    so a long word still fits the width at accessibility sizes. */}
+                <Text style={styles.welcomeTitle} dynamicTypeRamp='title1'>
                   {t('companion.welcomeTitle')}
                 </Text>
                 <Text style={styles.welcomeCaption}>
