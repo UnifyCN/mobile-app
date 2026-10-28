@@ -1,0 +1,12 @@
+undo_forgets_reason              undo_test.ts       RED
+undo_ignores_newer_edit          undo_test.ts       RED
+receipt_always_current           undo_test.ts       RED
+approval_hash_unchecked          boundary_test.ts   RED
+custom_revision_unchecked        boundary_test.ts   RED
+registry_accepts_any_type        boundary_test.ts   RED
+command_reusable                 edit_command_test.ts RED
+command_duplicate_title_unchecked command_test.ts    RED
+undo_removal_unconfirmed         create_test.ts     RED
+removal_of_any_task              create_test.ts     RED
+edit_undo_as_state_change        edit_undo_test.ts  RED
+11 of 11 RED
