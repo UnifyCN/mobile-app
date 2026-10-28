@@ -1,0 +1,12 @@
+# 2026-10-27T19:07:24Z s7 green
+running 6 tests from ./plan_access_test.ts
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks ... ok (942ms)
+forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing ... ok (571ms)
+a new conversation and another platform resume the same plan with current progress; receipts stay historical ... ok (380ms)
+a removed task stays a disabled reference in the plan and is never recreated ... ok (323ms)
+prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance ... ok (416ms)
+cleanup ... ok (4ms)
+
+ok | 6 passed | 0 failed (2s)
+
+exit=0

@@ -1,0 +1,48 @@
+# 2026-10-27T19:09:37Z s8 red: rollback (empty placeholder down script)
+running 3 tests from ./plan_rollback_test.ts
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans ... FAILED (822ms)
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing ... FAILED (937ms)
+cleanup ... ok (5ms)
+
+ ERRORS 
+
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans => ./plan_rollback_test.ts:26:6
+error: AssertionError: Values are not equal: {"contract_version":1,"plans":[{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":false,"position":2,"revision":1,"task_ref":"sanity:bank-account","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:1","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":true}]},"plan_id":"072ff13a-122b-4e28-874a-2c2ce2023ac5","receipt":{"kind":"plan","status":"applied","plan_id":"072ff13a-122b-4e28-874a-2c2ce2023ac5","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:1","after_revision":1,"item_operation_id":"3d69d564-381b-384b-4e9e-296d89d14e18"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":[],"undone_by":null,"created_at":"2026-10-27T19:10:08.575779+00:00","operation_id":"3ed13df3-423b-4f71-8e38-efb6ece7f0b6","removal_count":1},"removed":false,"revision":1,"created_at":"2026-10-27T19:10:08.575779+00:00","updated_at":"2026-10-27T19:10:08.575779+00:00","proposal_id":"dc970fa4-8e97-49b4-906e-b5069e77c6cc"}],"drafts":[{"goal":"Your first week in Vancouver","kind":"plan","items":[{"key":"n1","kind":"new","title":"Set up phone service","include":true,"priority":"Do soon"},{"kind":"existing","label":"Open a bank account","task_ref":"sanity:bank-account"},{"kind":"existing","label":"Get your SIN","task_ref":"sanity:sin-number"}],"tasks":[{"state":"not_started","exists":true,"source":"sanity","removed":false,"revision":1,"task_ref":"sanity:bank-account","waiting_reason":null},{"state":"not_started","exists":true,"source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null}],"source":null,"status":"draft","context":{"matches":{"n1":[{"title":"Set up phone service","task_ref":"custom:1"}]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:bank-account","available":true},{"task_ref":"sanity:sin-number","available":true}]},"plan_id":null,"receipt":null,"undo_of":null,"created_at":"2026-10-27T19:10:08.611681+00:00","unresolved":["n1"],"updated_at":"2026-10-27T19:10:08.653586+00:00","change_count":1,"review_reason":"edited","plan_proposal_id":"e08d688b-39b5-49fe-b907-1ebddd215eea","previous_context":null,"proposal_revision":2}]}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     503,
++     "feature_unavailable",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_rollback_test.ts:37:5)
+
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing => ./plan_rollback_test.ts:61:6
+error: PostgresError: cannot drop desired object(s) because other objects depend on them
+      errorResponse = Errors.postgres(parseError(x))
+                             ^
+    at ErrorResponse (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+    at handle (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+    at Socket.data (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+    at Socket.emit (ext:deno_node/_events.mjs:439:20)
+    at addChunk (node:_stream_readable:452:12)
+    at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+    at Socket.Readable.push (node:_stream_readable:308:48)
+
+ FAILURES 
+
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans => ./plan_rollback_test.ts:26:6
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing => ./plan_rollback_test.ts:61:6
+
+FAILED | 1 passed | 2 failed (1s)
+
+error: Test failed
+exit=1

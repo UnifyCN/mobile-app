@@ -36,6 +36,8 @@ import { TaskProposalPanel } from './TaskProposalPanel';
 import { StepProposalPanel } from './StepProposalPanel';
 import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import { useStepProposal } from '@/hooks/companion/useTaskActions';
+import { PlanPanel } from '../plans/PlanPanel';
+import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
 import { DetailProposalPanel, SavedDetailsPanel } from './SavedDetails';
 
@@ -62,6 +64,10 @@ interface TaskActionsSheetProps {
   detailProposalId?: string | null;
   /** #370: open on the saved details instead of the task list. */
   openDetails?: boolean;
+  /** Open on a settlement plan draft or saved plan (#364). */
+  plan?: PlanTarget | null;
+  /** A task row of the plan was opened (#364). */
+  onOpenTask?: (taskRef: string, title: string) => void;
 }
 
 /**
@@ -78,6 +84,8 @@ export function TaskActionsSheet({
   stepProposalId = null,
   detailProposalId = null,
   openDetails = false,
+  plan = null,
+  onOpenTask,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -115,7 +123,8 @@ export function TaskActionsSheet({
     !proposalId &&
     !stepProposalId &&
     !detailProposalId &&
-    !initialRef;
+    !initialRef &&
+    !plan;
 
   return (
     <Modal
@@ -173,6 +182,10 @@ export function TaskActionsSheet({
                   ? t('savedDetails.reviewTitle')
                   : stepProposalId
                   ? t('taskSteps.reviewTitle')
+                  : plan
+                  ? 'proposalId' in plan
+                    ? t('plans.reviewTitle')
+                    : t('plans.planTitle')
                   : proposalId
                   ? t('taskCreate.drawerTitle')
                   : selectedRef
@@ -197,6 +210,17 @@ export function TaskActionsSheet({
               />
             ) : visible && stepProposalId ? (
               <StepProposalBody proposalId={stepProposalId} />
+            ) : visible && plan ? (
+              <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps='handled'
+              >
+                <PlanPanel
+                  target={plan}
+                  onOpenTask={(taskRef, title) => onOpenTask?.(taskRef, title)}
+                />
+              </ScrollView>
             ) : visible && proposalId ? (
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (

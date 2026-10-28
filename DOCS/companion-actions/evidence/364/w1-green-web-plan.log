@@ -1,0 +1,9 @@
+# 2026-10-27T20:08:52Z w1 web plan acceptance against the real local stack. Written after the web port (not red-first); sensitivity: see w1-mutations.log
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (4 tests) 2098ms
+   ✓ Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept  793ms
+   ✓ Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task  445ms
+   ✓ Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again  385ms
+   ✓ Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it  474ms
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+exit=0

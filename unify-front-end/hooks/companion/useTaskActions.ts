@@ -49,6 +49,11 @@ import {
 } from '@/services/companionActions/taskActionStore';
 import { newOperationId } from '@/services/companionActions/operationId';
 import { createMobileTaskActionClient } from '@/services/companionActions/transport';
+import {
+  PLANS_ROOT,
+  PLAN_PROPOSAL_ROOT,
+  CONVERSATION_PLANS_ROOT,
+} from './planQueryKeys';
 
 /** Root of every task-progress query. Each key carries the account id. */
 export const TASK_PROGRESS_ROOT = 'companion-task-actions' as const;
@@ -257,6 +262,10 @@ export function useTaskActionStore(
         void queryClient.invalidateQueries({
           queryKey: [DETAIL_PROPOSAL_ROOT, userId],
         });
+        // Plans join current shared progress and must refresh after a task save.
+        for (const root of [PLANS_ROOT, PLAN_PROPOSAL_ROOT, CONVERSATION_PLANS_ROOT]) {
+          void queryClient.invalidateQueries({ queryKey: [root, userId] });
+        }
       },
       onResult: event => {
         const props = buildTaskActionResultProperties(event, surface);

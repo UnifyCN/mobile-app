@@ -1,0 +1,9 @@
+# 2026-10-27T19:11:24Z s8 green (test expectation for the task Undo after a full rollback corrected to the accepted #361 stale-revision rule)
+running 3 tests from ./plan_rollback_test.ts
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans ... ok (1s)
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing ... ok (1s)
+cleanup ... ok (8ms)
+
+ok | 3 passed | 0 failed (2s)
+
+exit=0

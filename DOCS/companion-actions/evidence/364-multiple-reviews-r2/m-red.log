@@ -1,0 +1,35 @@
+FAIL __tests__/companionActions/planLocalStack.test.tsx
+  Settlement plans against the real local stack (mobile)
+    ✕ two unfinished retry reviews both stay reachable after a restart; each is approved on its own (1239 ms)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+
+  ● Settlement plans against the real local stack (mobile) › two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      757 |       sheet = await screen.findByTestId('companion-task-sheet');
+      758 |       await within(sheet).findByRole('checkbox', { name: `Add ${LIBRARY}` }, { timeout: 10_000 });
+    > 759 |       expect(within(sheet).queryByRole('checkbox', { name: `Add ${PHONE}` })).not.toBeNull();
+          |                                                                                   ^
+      760 |       expect(within(sheet).queryByRole('button', { name: /Try adding/ })).toBeNull();
+      761 |       // Each open review is its own section, named by what it would add.
+      762 |       const review = (title: string) => {
+
+      at Object.toBeNull (__tests__/companionActions/planLocalStack.test.tsx:759:83)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 skipped, 8 total
+Snapshots:   0 total
+Time:        2.372 s, estimated 6 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "two unfinished retry reviews".
+exit=1

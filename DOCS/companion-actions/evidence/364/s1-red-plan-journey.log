@@ -1,0 +1,31 @@
+# web 02377a3 + uncommitted test; empty 364 migration; 2026-10-27T18:36:09Z
+running 2 tests from ./plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... FAILED (375ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one => ./plan_test.ts:38:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at draftFor (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:34:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:49:19)
+
+ FAILURES 
+
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one => ./plan_test.ts:38:6
+
+FAILED | 1 passed | 1 failed (382ms)
+
+error: Test failed
+exit=1 (assertion failure; recorded via grep exit before pipefail fix)

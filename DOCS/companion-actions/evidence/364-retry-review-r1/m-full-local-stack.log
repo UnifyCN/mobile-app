@@ -1,0 +1,120 @@
+  console.error
+    An update to PlanEntry inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionScreen inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to SheetBody inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+PASS __tests__/companionActions/planLocalStack.test.tsx (10.344 s)
+  Settlement plans against the real local stack (mobile)
+    ✓ a saved task completion reconciles the plan entry without reopening the screen (1365 ms)
+    ✓ a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task (1091 ms)
+    ✓ the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation (599 ms)
+    ✓ a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes (508 ms)
+    ✓ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (1101 ms)
+    ✓ a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again (685 ms)
+    ✓ an account change hides the previous account's plan entry, cards and open plan before the next account renders (4110 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        10.446 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i.
+exit=0

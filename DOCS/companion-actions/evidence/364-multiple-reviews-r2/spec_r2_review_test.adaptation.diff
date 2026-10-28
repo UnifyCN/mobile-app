@@ -1,0 +1,4 @@
+70c70
+<       const reachable = [...fresh.json.drafts.map((x:any)=>x.plan_proposal_id),...fresh.json.plans.flatMap((x:any)=>x.review?[x.review.plan_proposal_id]:[])];
+---
+>       const reachable = [...fresh.json.drafts.map((x:any)=>x.plan_proposal_id),...fresh.json.plans.flatMap((x:any)=>x.review?[x.review.plan_proposal_id]:[]),...fresh.json.plans.flatMap((x:any)=>(x.reviews??[]).filter((r:any)=>r.status==='draft').map((r:any)=>r.plan_proposal_id))];

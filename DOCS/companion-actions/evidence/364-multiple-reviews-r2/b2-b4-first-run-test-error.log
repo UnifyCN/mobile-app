@@ -1,0 +1,23 @@
+running 5 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... ok (692ms)
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review ... ok (437ms)
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review ... ok (515ms)
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task ... FAILED (592ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+error: ReferenceError: Cannot access 'undo' before initialization
+    const itemUndo = await undo(f.a, f.libraryOp, { authorization: { kind: 'ui_control', removal_confirmed: true } });
+                     ^
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:225:22)
+
+ FAILURES 
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+
+FAILED | 4 passed | 1 failed (2s)
+
+error: Test failed
+exit=1
