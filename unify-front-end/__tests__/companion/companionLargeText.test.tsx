@@ -10,6 +10,7 @@
 import React from 'react';
 import {
   act,
+  cleanup,
   fireEvent,
   render,
   screen,
@@ -260,8 +261,14 @@ beforeEach(() => {
   setFontScale(DEFAULT);
 });
 afterEach(() => {
+  // Unmount first, so no query of this screen (and its 5 s retry of a failed read)
+  // outlives the test and its scripted network.
+  cleanup();
   global.fetch = realFetch;
-  clients.splice(0).forEach(client => client.clear());
+  clients.splice(0).forEach(client => {
+    client.clear();
+    client.unmount();
+  });
 });
 
 describe('N1: the empty welcome never draws over the task entry', () => {
@@ -359,6 +366,53 @@ describe('N2: the welcome title scales like a title, not like body text', () => 
     // 28 pt is Title 1's default size: the default rendering is unchanged.
     expect(StyleSheet.flatten(title.props.style).fontSize).toBe(28);
     expect(title.props.dynamicTypeRamp).toBe('title1');
+  });
+});
+
+// Fabric keeps the old measurement of mounted text that React does not re-create after
+// a live size change (React's next commit re-uses its older shadow nodes). The static text
+// blocks are created again; the screen, composer and draft stay mounted.
+describe('N2: a live size change measures the static text again', () => {
+  it('re-creates welcome, entry, header and starter text but keeps the composer and draft', async () => {
+    setFontScale(AX_MEDIUM);
+    renderScreen();
+    await screen.findByRole('button', { name: /Your tasks/ });
+    const composer = screen.getByPlaceholderText(en.companion.inputPlaceholder);
+    fireEvent.changeText(composer, 'Where do I get a SIN?');
+    const before = [
+      screen.getByText(en.companion.welcomeTitle),
+      screen.getByText(en.companion.welcomeCaption),
+      screen.getByText(en.taskActions.entryTitle),
+      screen.getByText(en.companion.title),
+      screen.getByText(en.companion.starters.factCheck),
+      screen.getByText(en.companion.disclaimer),
+    ];
+    // Same layout mode (both large): only the size changes.
+    setFontScale(AX_XXXL);
+    const after = [
+      screen.getByText(en.companion.welcomeTitle),
+      screen.getByText(en.companion.welcomeCaption),
+      screen.getByText(en.taskActions.entryTitle),
+      screen.getByText(en.companion.title),
+      screen.getByText(en.companion.starters.factCheck),
+      screen.getByText(en.companion.disclaimer),
+    ];
+    after.forEach((node, i) => expect(node).not.toBe(before[i]));
+    expect(screen.getByPlaceholderText(en.companion.inputPlaceholder)).toBe(composer);
+    expect(composer.props.value).toBe('Where do I get a SIN?');
+  });
+
+  it('re-creates message rows in place, without a new list', async () => {
+    mockMessages = [
+      { id: 1, role: 'user', content: 'Which bank should I use?', created_at: '2026-10-27T10:00:00Z' },
+    ];
+    renderScreen();
+    const message = await screen.findByText('Which bank should I use?');
+    const list = verticalScrollOf(message);
+    setFontScale(XXXL);
+    const again = screen.getByText('Which bank should I use?');
+    expect(again).not.toBe(message);
+    expect(verticalScrollOf(again)).toBe(list);
   });
 });
 

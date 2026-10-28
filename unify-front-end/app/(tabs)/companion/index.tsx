@@ -44,7 +44,7 @@ import PartnerSpotlightBanner from '@/components/companion/PartnerSpotlightBanne
 import { shouldShowCompanionSpotlight } from '@/constants/PartnerSpotlight';
 import { Theme } from '@/constants/Theme';
 import { TAB_HEADER_METRICS } from '@/constants/TabHeader';
-import { isLargeText } from '@/utils/textScale';
+import { isLargeText, textScaleKey } from '@/utils/textScale';
 import SendIcon from '@/components/icons/SendIcon.svg';
 import { AnimatedDottedBackground } from '@/components/companion/AnimatedDottedBackground';
 import CompanionHeader from '@/components/CompanionHeader';
@@ -126,6 +126,9 @@ export default function CompanionScreen() {
   // change in Settings without a restart, and the screen (and its draft) stays mounted.
   const { fontScale } = useWindowDimensions();
   const largeText = isLargeText(fontScale);
+  // Static text blocks below are created again for each size (see textScaleKey); the
+  // screen, the composer and its draft, the list and the sheets stay mounted.
+  const scaleKey = textScaleKey(fontScale);
   const { showToast } = useToast();
   const { height: kbHeight, progress: kbProgress } =
     useReanimatedKeyboardAnimation();
@@ -569,7 +572,7 @@ export default function CompanionScreen() {
       // Saved messages have positive integer ids; optimistic and streaming ones do not.
       const savedId = Number(item.id);
       return (
-        <>
+        <React.Fragment key={scaleKey}>
           <MessageWithSources
             item={displayItem}
             suggestedNextSteps={
@@ -600,7 +603,7 @@ export default function CompanionScreen() {
             store={planStore}
             onOpen={proposalId => openPlan({ proposalId })}
           />
-        </>
+        </React.Fragment>
       );
     },
     [
@@ -619,10 +622,13 @@ export default function CompanionScreen() {
       lastSuggestedNextSteps,
       lastVerified,
       handleSuggestionClick,
+      scaleKey,
     ]
   );
 
-  const disclaimer = <Disclaimer text={t('companion.disclaimer')} />;
+  const disclaimer = (
+    <Disclaimer key={scaleKey} text={t('companion.disclaimer')} />
+  );
 
   const renderLoadingIndicator = useCallback(
     () => (
@@ -632,12 +638,12 @@ export default function CompanionScreen() {
         {/* At large text the disclaimer follows the messages (see the pinned section). */}
         {largeText && (
           <View style={styles.listEntries}>
-            <Disclaimer text={t('companion.disclaimer')} />
+            <Disclaimer key={scaleKey} text={t('companion.disclaimer')} />
           </View>
         )}
       </>
     ),
-    [isWaitingForBot, largeText, t]
+    [isWaitingForBot, largeText, scaleKey, t]
   );
 
   const keyExtractor = useCallback((item: Message) => item.id, []);
@@ -654,19 +660,23 @@ export default function CompanionScreen() {
   const entries = (
     <>
       <CompanionTasksEntry
+        textKey={scaleKey}
         onOpen={() => {
           Keyboard.dismiss();
           setSheet({ kind: 'tasks' });
         }}
       />
-      <PlanEntry onOpen={openPlan} />
+      <PlanEntry textKey={scaleKey} onOpen={openPlan} />
     </>
   );
 
   const starters = (
     <>
-      <Text style={styles.startersLabel}>{t('companion.tryOneOfThese')}</Text>
+      <Text key={scaleKey} style={styles.startersLabel}>
+        {t('companion.tryOneOfThese')}
+      </Text>
       <StarterPrompts
+        textKey={scaleKey}
         onPromptSelect={handleStarterPromptSelect}
         personalizedStarters={personalization?.starters}
         layout={largeText ? 'stack' : 'row'}
@@ -679,6 +689,7 @@ export default function CompanionScreen() {
       <View style={styles.contentWrapper}>
         {/* Header */}
         <CompanionHeader
+          key={scaleKey}
           title={t('companion.title')}
           showBackButton={false}
           leftButton={
@@ -761,7 +772,7 @@ export default function CompanionScreen() {
               keyboardDismissMode='interactive'
             >
               {largeText && entries}
-              <View style={styles.emptyState}>
+              <View key={scaleKey} style={styles.emptyState}>
                 {/* A title grows like iOS Title 1, not by the body multiplier,
                     so a long word still fits the width at accessibility sizes. */}
                 <Text style={styles.welcomeTitle} dynamicTypeRamp='title1'>

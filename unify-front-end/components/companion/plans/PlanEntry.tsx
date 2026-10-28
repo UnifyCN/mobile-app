@@ -16,7 +16,14 @@ export type PlanTarget = { proposalId: string } | { planId: string };
  * needs the user's review; otherwise the most recently saved plan, with its current
  * progress read from the shared tasks.
  */
-export function PlanEntry({ onOpen }: { onOpen: (target: PlanTarget) => void }) {
+export function PlanEntry({
+  onOpen,
+  textKey,
+}: {
+  onOpen: (target: PlanTarget) => void;
+  /** Changes with the system text size, so the text is measured again (see textScaleKey). */
+  textKey?: string;
+}) {
   const { t } = useTranslation();
   const { status, plans, drafts } = usePlans();
   if (status === 'unavailable' || status === 'signed_out') return null;
@@ -25,7 +32,7 @@ export function PlanEntry({ onOpen }: { onOpen: (target: PlanTarget) => void }) 
     return (
       <View style={[styles.card, { minHeight: minTarget() }]} accessibilityLiveRegion='polite'>
         <Icon />
-        <View style={styles.text}>
+        <View key={textKey} style={styles.text}>
           <Text style={styles.title}>{t('plans.entryTitle')}</Text>
           <Text style={styles.summary}>
             {status === 'loading' ? t('plans.entryLoading') : t('plans.entryFailed')}
@@ -70,7 +77,7 @@ export function PlanEntry({ onOpen }: { onOpen: (target: PlanTarget) => void }) 
       style={({ pressed }) => [styles.card, { minHeight: minTarget() }, pressed && styles.pressed]}
     >
       <Icon draft={Boolean(draft)} />
-      <View style={styles.text}>
+      <View key={textKey} style={styles.text}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.goal} numberOfLines={2}>
           {goal}

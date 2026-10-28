@@ -18,6 +18,16 @@ export const isLargeText = (fontScale: number) => fontScale >= LARGE_TEXT_SCALE;
  */
 export const BAR_LABEL_MAX_SCALE = 1.35;
 
+/**
+ * React key for blocks of static text, so they are created again after a live text-size
+ * change. Fabric measures mounted text again when the size changes, but React's next commit
+ * re-uses its own older shadow nodes (React Native 0.83 ships
+ * updateRuntimeShadowNodeReferencesOnCommit off), so text that React does not re-create
+ * keeps its old measurement and is clipped or overlaps. Key only stateless text blocks:
+ * never a screen, an input or anything that holds a draft.
+ */
+export const textScaleKey = (fontScale: number) => `text-scale-${fontScale}`;
+
 const TAB_BAR_BASE_HEIGHT = 56;
 
 /** Tab bar height for the bottom inset and the label's scaled line height. */

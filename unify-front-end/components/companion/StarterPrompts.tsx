@@ -39,6 +39,11 @@ interface StarterPromptsProps {
    * in a column, for large text, where a fixed-width card would break words.
    */
   layout?: 'row' | 'stack';
+  /**
+   * Changes when the system text size changes, so the cards are created again and
+   * measured at the new size; the chosen starters stay (see textScaleKey).
+   */
+  textKey?: string;
 }
 
 interface StaticCard {
@@ -233,6 +238,7 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
   onPromptSelect,
   personalizedStarters,
   layout = 'row',
+  textKey = '',
 }) => {
   const { t } = useTranslation();
   const topicStarterDefs = useMemo(() => selectRandomTopicStarterDefs(), []);
@@ -364,7 +370,7 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
           handlePersonalizedPress(starter, index)
         );
         return (
-          <View key={starter.id}>
+          <View key={`${starter.id}${textKey}`}>
             <Animated.View
               entering={FadeIn.duration(200)}
               exiting={FadeOut.duration(150)}
@@ -418,7 +424,7 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
         );
         return (
           <TouchableOpacity
-            key={card.id}
+            key={`${card.id}${textKey}`}
             style={cardStyle}
             {...pressHandlers}
             delayLongPress={400}

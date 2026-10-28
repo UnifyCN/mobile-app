@@ -11,7 +11,14 @@ import { useTaskProgress } from '@/hooks/companion/useTaskActions';
  * same in every conversation and never reads as a historical receipt. Hidden when
  * the feature is off, the contract version is unsupported, or nobody is signed in.
  */
-export function CompanionTasksEntry({ onOpen }: { onOpen: () => void }) {
+export function CompanionTasksEntry({
+  onOpen,
+  textKey,
+}: {
+  onOpen: () => void;
+  /** Changes with the system text size, so the text is measured again (see textScaleKey). */
+  textKey?: string;
+}) {
   const { t } = useTranslation();
   const view = useTaskProgress();
   if (view.status === 'unavailable' || view.status === 'signed_out')
@@ -42,7 +49,7 @@ export function CompanionTasksEntry({ onOpen }: { onOpen: () => void }) {
       <View style={styles.icon}>
         <MaterialIcons name='checklist' size={20} color='#9A4A00' />
       </View>
-      <View style={styles.text}>
+      <View key={textKey} style={styles.text}>
         <Text style={styles.title}>{t('taskActions.entryTitle')}</Text>
         <Text style={styles.summary} numberOfLines={2}>
           {summary}
