@@ -196,6 +196,7 @@ import CompanionScreen from '@/app/(tabs)/companion/index';
 import CompanionHeader from '@/components/CompanionHeader';
 import { TabIcon } from '@/components/navigation/TabIcon';
 import { getTabBarHeight, BAR_LABEL_MAX_SCALE } from '@/utils/textScale';
+import { TAB_HEADER_METRICS } from '@/constants/TabHeader';
 
 // iOS content size multipliers that React Native reports (RCTFontSizeMultiplier).
 const DEFAULT = 1;
@@ -374,15 +375,15 @@ describe('N2: a live text-size change reflows the mounted screen', () => {
 });
 
 describe('N2: bar chrome (screen title, tab labels) follows UIKit bar scaling', () => {
-  it('the header title keeps one line, stops at the bar maximum and the header can grow', () => {
+  it('the header title keeps one line and stops at a size that fits the bar row', () => {
     render(<CompanionHeader title='Companion' showBackButton={false} />);
     const title = screen.getByText('Companion');
     expect(title.props.maxFontSizeMultiplier).toBe(BAR_LABEL_MAX_SCALE);
     expect(title.props.numberOfLines).toBe(1);
-    const header = title.parent!.parent!;
-    const style = StyleSheet.flatten(header.props.style);
-    expect(style.height).toBeUndefined();
-    expect(style.minHeight).toBeGreaterThanOrEqual(44);
+    const { lineHeight } = StyleSheet.flatten(title.props.style);
+    expect(lineHeight * BAR_LABEL_MAX_SCALE).toBeLessThanOrEqual(
+      TAB_HEADER_METRICS.rowHeight
+    );
   });
 
   it('a tab label keeps one line at the bar maximum and offers the large content viewer', () => {

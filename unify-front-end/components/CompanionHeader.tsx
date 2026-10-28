@@ -46,8 +46,7 @@ const CompanionHeader = ({
         styles.header,
         {
           paddingTop: insets.top,
-          // A minimum, not a fixed height: the bar never clips its title.
-          minHeight: headerHeight,
+          height: headerHeight,
         },
       ]}
     >
@@ -71,7 +70,8 @@ const CompanionHeader = ({
       ) : (
         leftButton || <View style={styles.placeholder} />
       )}
-      {/* A bar title, as in UIKit: one line, scaling up to the bar maximum. */}
+      {/* A bar title, as in UIKit: one line, scaling up to the bar maximum, so it
+          always fits the fixed bar row. */}
       <Text
         style={styles.title}
         numberOfLines={1}
