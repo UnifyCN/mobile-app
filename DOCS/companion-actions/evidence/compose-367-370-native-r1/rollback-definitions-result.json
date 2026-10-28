@@ -1,0 +1,16 @@
+{
+  "command": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=none",
+    "--allow-net",
+    "--allow-env",
+    "--allow-read",
+    "--allow-write=/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/live-stage-definitions-grants.json",
+    "compose_367_370_rollback_test.ts"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions",
+  "exit": 0,
+  "seconds": 5.707963228225708
+}

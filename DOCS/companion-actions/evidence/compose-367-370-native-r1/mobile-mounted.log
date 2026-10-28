@@ -1,0 +1,321 @@
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      266 |   const client = createTestQueryClient({ defaultOptions: { queries: { retry: false, gcTime: Infinity } } });
+      267 |   clients.push(client);
+    > 268 |   return render(
+          |                ^
+      269 |     <QueryClientProvider client={client}>
+      270 |       <I18nextProvider i18n={testI18n()}>
+      271 |         <RetainedTabs />
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3782:31)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6684:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at renderWithAct (node_modules/@testing-library/react-native/src/render-act.ts:13:11)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:69:33)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:44:10)
+      at mount (__tests__/companionActions/planLocalStack.test.tsx:268:16)
+      at Object.mount (__tests__/companionActions/planLocalStack.test.tsx:1026:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      266 |   const client = createTestQueryClient({ defaultOptions: { queries: { retry: false, gcTime: Infinity } } });
+      267 |   clients.push(client);
+    > 268 |   return render(
+          |                ^
+      269 |     <QueryClientProvider client={client}>
+      270 |       <I18nextProvider i18n={testI18n()}>
+      271 |         <RetainedTabs />
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at renderWithAct (node_modules/@testing-library/react-native/src/render-act.ts:13:11)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:69:33)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:44:10)
+      at mount (__tests__/companionActions/planLocalStack.test.tsx:268:16)
+      at Object.mount (__tests__/companionActions/planLocalStack.test.tsx:1026:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      369 | };
+      370 | async function send(text: string) {
+    > 371 |   fireEvent.changeText(await screen.findByPlaceholderText(/Ask anything|limit/i), text);
+          |             ^
+      372 |   fireEvent.press(sendButton());
+      373 | }
+      374 | const isEnabled = (el: { props: { accessibilityState?: { disabled?: boolean } } }) =>
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at fireEvent (node_modules/@testing-library/react-native/src/fire-event.ts:122:11)
+      at Function.fireEvent [as changeText] (node_modules/@testing-library/react-native/src/fire-event.ts:133:3)
+      at changeText (__tests__/companionActions/planLocalStack.test.tsx:371:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+FAIL __tests__/companionActions/planLocalStack.test.tsx
+  Settlement plans against the real local stack (mobile)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+  Independent retained mobile Checklist completion
+    ○ skipped Checklist completion refreshes the retained Companion plan entry
+  Plan and task steps together against the real local stack (mobile)
+    ○ skipped a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+  Task removal against the real local stack (mobile, #367)
+    ✕ composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account (619 ms)
+    ○ skipped a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+    ○ skipped a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+    ○ skipped a removal request card turns historical after another device removed the task; its review cannot remove again
+    ○ skipped another account sees none of a removal review, card or receipt
+
+  ● Task removal against the real local stack (mobile, #367) › composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account
+
+    Unable to find an element with role: button, name: Saved details
+
+    [36m<View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Select Checklist tab"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mChecklist[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Select Companion tab"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCompanion[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Open history"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mCompanion[0m
+              [36m</Text>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"New chat"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<RCTScrollView>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<View />[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mYour tasks[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mIn progress: 0 · Waiting: 0[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Your plan, Your first week in Vancouver, 0 of 3 done"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<View />[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mYour plan[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mYour first week in Vancouver[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0m0 of 3 done[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mRemember that I prefer Friday appointments[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33mtestID[39m=[32m"detail-command-card"[39m
+                  [36m>[39m
+                    [36m<View>[39m
+                      [36m<View />[39m
+                      [36m<View>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mSaved: “I prefer Friday appointments”.[0m
+                          [36m</Text>[39m
+                          [36m<Text>[39m
+                            [0mSaved earlier. This detail has changed since.[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                    [36m<View[39m
+                      [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                      [33maccessibilityRole[39m=[32m"button"[39m
+                      [33maccessibilityState[39m=[32m{
+                        {
+                          "disabled": false,
+                        }
+                      }[39m
+                      [33maccessible[39m=[32m{true}[39m
+                    [36m>[39m
+                      [36m<Text>[39m
+                        [0mView saved details[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mCompanion can make mistakes. Verify important info.[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</RCTScrollView>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mplaceholder[39m=[32m"Ask anything..."[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+                [36m<View[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": true,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      1028 |     const detailCard = await screen.findByTestId('detail-command-card', {}, { timeout: 10_000 });
+      1029 |     expect(within(detailCard).getByText(/I prefer Friday appointments/)).toBeTruthy();
+    > 1030 |     fireEvent.press(within(detailCard).getByRole('button', { name: 'Saved details' }));
+           |                                        ^
+      1031 |     let sheet = await screen.findByTestId('companion-task-sheet');
+      1032 |     fireEvent.press(await enabledButton(within(sheet), 'Edit saved detail: I prefer Friday appointments'));
+      1033 |     fireEvent.changeText(within(sheet).getByLabelText('Saved detail'), 'I prefer Saturday appointments');
+
+      at Object.getByRole (__tests__/companionActions/planLocalStack.test.tsx:1030:40)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 14 skipped, 15 total
+Snapshots:   0 total
+Time:        1.658 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "composition:".

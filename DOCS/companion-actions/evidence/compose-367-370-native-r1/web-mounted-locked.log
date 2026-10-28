@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ✓ components/companion/tasks/TaskRemovalLocalStack.test.tsx (4 tests) 3973ms
+   ✓ Task removal against the real local stack (web, #367) > composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account  1424ms
+   ✓ Task removal against the real local stack (web, #367) > a removal request opens a review in the drawer; Cancel writes nothing and returns focus; the confirmed removal names the plan; Undo restores; the draft stays  951ms
+   ✓ Task removal against the real local stack (web, #367) > the Checklist delete control opens the reviewed removal; a change on another device before approval revises the review and removes nothing  521ms
+   ✓ Task removal against the real local stack (web, #367) > an old removal request opened after another device removed the task offers nothing to remove; the card turns historical  613ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  13:20:22
+   Duration  5.29s (transform 290ms, setup 0ms, collect 763ms, tests 3.97s, environment 302ms, prepare 42ms)
+

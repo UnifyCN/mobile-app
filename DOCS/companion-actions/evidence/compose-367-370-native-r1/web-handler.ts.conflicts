@@ -1,0 +1,603 @@
+// Companion actions request handler (mobile-app#361). One authenticated HTTP
+// boundary for both clients: mobile calls it directly with the user's JWT, web
+// through the same-origin /api/companion/actions proxy. The account comes from
+// the JWT only. Every write is one SQL transaction executed by the service role.
+// This path never calls the AI-generation quota or a model: task controls, result
+// lookup and Undo stay available at the AI limit.
+import type { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { type ActionRequest, type Operation, PLATFORMS, type Platform, parseAction, parseEnvelope } from './contract.ts';
+import { type CommandResolution, resolveCommand, resolveRemember, titleKey } from './commands.ts';
+import { profileFactOf } from '../rag-query/lib/context/profileFacts.ts';
+import type { ListTasks } from './targets.ts';
+import { isPlanAction, type PlanActionName, parsePlanAction } from './plans.ts';
+import { handlePlanRequest } from './planHandler.ts';
+
+/**
+ * Whether a published Checklist document exists (#366): true, false, or null when the
+ * content read failed. A new step under a content-backed task needs it, so a step can
+ * never be saved under a content id that does not exist.
+ */
+export type ContentTaskLookup = (sanityId: string) => Promise<boolean | null>;
+
+export interface HandlerDeps {
+  /** Service-role client. Used for the user lookup, the gate and the action SQL. */
+  admin: SupabaseClient;
+  /**
+   * The caller's live Checklist tasks by title, read with the caller's JWT (#365). Absent:
+   * published tasks cannot be named, so an edit that needs them is unclear, never guessed.
+   */
+  listTasks?: ListTasks;
+  /** Published Checklist content read. Absent: content-backed parents cannot be checked. */
+  contentTaskExists?: ContentTaskLookup | null;
+  /** Allowlisted, content-free result line for operational metrics. */
+  log?: (line: ResultLine) => void;
+}
+
+/** Only categorical fields. Never task titles, reasons, ids of rows or message text. */
+export interface ResultLine {
+  event: 'companion_action_result';
+  action: ActionRequest['action'] | PlanActionName | 'unknown';
+  operation_type: Operation['type'] | null;
+  platform: Platform | null;
+  http_status: number;
+  outcome: string;
+}
+
+const SQLSTATE_TO_HTTP: Record<string, [number, string]> = {
+  CA403: [403, 'forbidden'],
+  CA404: [404, 'not_found'],
+  CA409: [409, 'revision_conflict'],
+  CA410: [409, 'operation_id_reused'],
+  CA411: [409, 'already_undone'],
+  CA412: [409, 'command_already_used'],
+  CA413: [409, 'needs_clarification'],
+  CA414: [409, 'detail_exists'],
+  CA422: [422, 'invalid_request'],
+};
+
+function json(body: unknown, status = 200, headers: Record<string, string> = {}): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...headers },
+  });
+}
+
+interface DbError {
+  code?: string;
+  message?: string;
+  details?: string;
+}
+
+function mapDbError(error: DbError): Response {
+  // lock_not_available: another request holds this operation or task. The outcome is unknown.
+  if (error.code === '55P03') return json({ error: 'operation_in_flight' }, 503, { 'retry-after': '1' });
+  const mapped = SQLSTATE_TO_HTTP[error.code ?? ''];
+  if (!mapped) {
+    console.error('companion-actions: database error', error.code);
+    return json({ error: 'internal' }, 500);
+  }
+  let detail: unknown;
+  try {
+    detail = error.details ? JSON.parse(error.details) : undefined;
+  } catch {
+    detail = undefined;
+  }
+  return json({ error: mapped[1], reason: error.message, ...(detail && Object.keys(detail).length ? { detail } : {}) }, mapped[0]);
+}
+
+async function callerOf(admin: SupabaseClient, req: Request): Promise<{ userId: string; jwt: string } | null> {
+  const token = (req.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, '').trim();
+  if (!token) return null;
+  const { data, error } = await admin.auth.getUser(token);
+  return error || !data.user ? null : { userId: data.user.id, jwt: token };
+}
+
+/** The caller's own saved user message, or null. Read by the service, never taken from the client. */
+async function ownUserMessage(admin: SupabaseClient, userId: string, messageId: number): Promise<string | null> {
+  const { data, error } = await admin
+    .from('messages')
+    .select('content, role, conversations!inner(user_id)')
+    .eq('id', messageId)
+    .eq('conversations.user_id', userId)
+    .eq('role', 'user')
+    .maybeSingle();
+  if (error || !data || typeof (data as { content?: unknown }).content !== 'string') return null;
+  return (data as { content: string }).content;
+}
+
+/** Live custom tasks of the caller with the same title (shown when a command is unclear). */
+async function sameTitleTasks(admin: SupabaseClient, userId: string, title: string) {
+  const { data, error } = await admin
+    .from('custom_checklist_tasks')
+    .select('id, title, revision')
+    .eq('user_id', userId)
+    .is('removed_at', null);
+  if (error) throw error;
+  const key = titleKey(title);
+  return (data ?? [])
+    .filter(row => titleKey(String(row.title)) === key)
+    .map(row => ({ task_ref: `custom:${row.id}`, revision: row.revision, title: row.title }));
+}
+
+/**
+ * #370: a saved detail never states what the profile owns (province, city, arrival date,
+ * immigration status). Refused before any write; updating the profile is separate.
+ */
+function profileFactRefusal(op: Operation): Response | null {
+  if (op.type !== 'detail.create' && op.type !== 'detail.update') return null;
+  const field = profileFactOf(op.text);
+  return field ? json({ error: 'invalid_request', reason: 'profile_fact', detail: { field } }, 422) : null;
+}
+
+/** Live saved details of the caller with the same text (shown when a remember command repeats one). */
+async function sameTextDetails(admin: SupabaseClient, userId: string, text: string) {
+  const { data, error } = await admin
+    .from('companion_saved_details')
+    .select('id, body')
+    .eq('user_id', userId)
+    .is('removed_at', null);
+  if (error) throw error;
+  const key = titleKey(text);
+  return (data ?? [])
+    .filter(row => titleKey(String(row.body)) === key)
+    .map(row => ({ detail_id: row.id, text: row.body }));
+}
+
+const CONTENT_QUERY = '*[_type == "checklist" && _id == $id][0]._id';
+
+/** The published-content read from the function environment (the rag-query Sanity settings). */
+export function contentLookupFromEnv(get: (key: string) => string | undefined): ContentTaskLookup | null {
+  // Test stacks point this at a local stand-in; production derives the Sanity CDN URL.
+  const override = get('COMPANION_CONTENT_QUERY_URL')?.trim();
+  const projectId = get('SANITY_PROJECT_ID')?.trim() ?? '';
+  const dataset = get('SANITY_DATASET')?.trim() || 'production';
+  const base = override ||
+    (/^[a-z0-9]{1,32}$/.test(projectId) && /^[\w-]{1,64}$/.test(dataset)
+      ? `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}`
+      : '');
+  if (!base) return null;
+  return async sanityId => {
+    try {
+      const url = new URL(base);
+      url.searchParams.set('query', CONTENT_QUERY);
+      url.searchParams.set('$id', JSON.stringify(sanityId));
+      const res = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(5000) });
+      if (!res.ok) return null;
+      const body = (await res.json()) as { result?: unknown };
+      if (body.result === null) return false;
+      return body.result === sanityId ? true : null;
+    } catch {
+      return null;
+    }
+  };
+}
+
+/** A new step under a content-backed task: its published document must exist. */
+async function contentParentRefusal(
+  lookup: ContentTaskLookup | null | undefined,
+  op: Operation,
+): Promise<Response | null> {
+  if (op.type !== 'step.create' || !op.task_ref.startsWith('sanity:')) return null;
+  const exists = lookup ? await lookup(op.task_ref.slice('sanity:'.length)) : null;
+  if (exists === true) return null;
+  if (exists === false) {
+    return json({ error: 'not_found', reason: 'task_not_found', detail: { task_ref: op.task_ref } }, 404);
+  }
+  // Nothing was written; the client may look the operation up and send it again.
+  return json({ error: 'content_unavailable' }, 503, { 'retry-after': '1' });
+}
+
+/** What a clear edit command resolves to against the account's live Checklist (#365). */
+type EditResolution =
+  | {
+      kind: 'edit';
+      operation: Operation;
+      target: { task_ref: string; title: string };
+      /** The current values of what the change touches, for the receipt and the card. */
+      before: Record<string, unknown>;
+    }
+  | {
+      kind: 'clarify';
+      reason: 'task_not_found' | 'task_ambiguous' | 'shared_task_field' | 'no_change' | 'tasks_unavailable' | 'invalid_value';
+      candidates?: { task_ref: string; title: string }[];
+    };
+
+/** Without the revision: what a command names, whatever revision it was read at. */
+const withoutRevision = (op: unknown) => {
+  const { expected_revision: _r, ...rest } = (op ?? {}) as Record<string, unknown>;
+  return JSON.stringify(Object.keys(rest).sort().map(k => [k, rest[k]]));
+};
+
+export function createHandler(
+  { admin, contentTaskExists, listTasks, log = line => console.log(JSON.stringify(line)) }: HandlerDeps,
+) {
+  /**
+   * Names the one live task a command means, by its title, among every task the
+   * account's Checklist shows (in the command's language), and builds the exact operation
+   * at its current revision. Anything uncertain is a question, never a guess: no match,
+   * two matches, published tasks that could not be read, shared content fields, a value
+   * the database refuses, or a change that changes nothing.
+   */
+  async function resolveEdit(
+    userId: string,
+    jwt: string,
+    command: Extract<CommandResolution, { kind: 'edit' }>,
+  ): Promise<EditResolution> {
+    let list;
+    try {
+      list = listTasks ? await listTasks(jwt, userId, command.lang) : null;
+    } catch {
+      list = null;
+    }
+    if (!list || !list.complete) return { kind: 'clarify', reason: 'tasks_unavailable' };
+    const key = titleKey(command.target);
+    const matches = list.tasks.filter(t => titleKey(t.title) === key);
+    if (matches.length === 0) return { kind: 'clarify', reason: 'task_not_found' };
+    if (matches.length > 1) return { kind: 'clarify', reason: 'task_ambiguous', candidates: matches };
+    const target = matches[0];
+    const { change } = command;
+    if (change.field !== 'state' && target.task_ref.startsWith('sanity:')) {
+      return { kind: 'clarify', reason: 'shared_task_field' };
+    }
+    const draft = change.field === 'state'
+      ? {
+        type: 'task.set_state',
+        task_ref: target.task_ref,
+        state: change.value,
+        ...(change.waiting_reason ? { waiting_reason: change.waiting_reason } : {}),
+      }
+      : { type: 'task.edit_details', task_ref: target.task_ref, [change.field]: change.value };
+    const [{ data: op, error }, { data: context, error: contextError }] = await Promise.all([
+      admin.rpc('companion_edit_operation', { p_user: userId, p_draft: draft }),
+      admin.rpc('companion_edit_context', { p_user: userId, p_ref: target.task_ref }),
+    ]);
+    if (error || contextError) {
+      const failure = error ?? contextError!;
+      if (failure.message === 'no_change') return { kind: 'clarify', reason: 'no_change' };
+      if (failure.message === 'task_removed' || failure.message === 'task_not_found') {
+        return { kind: 'clarify', reason: 'task_not_found' };
+      }
+      if (failure.code === 'CA422') return { kind: 'clarify', reason: 'invalid_value' };
+      throw failure;
+    }
+    const ctx = context as Record<string, unknown>;
+    const before = change.field === 'state'
+      ? { state: ctx.state, waiting_reason: ctx.waiting_reason ?? null }
+      : { [change.field]: ctx[change.field] };
+    return { kind: 'edit', operation: op as Operation, target, before };
+  }
+
+  /**
+   * The operation that already used this command message, or null. A use is recorded in
+   * the same transaction as its receipt, so a use is a committed write.
+   */
+  async function commandUse(userId: string, messageId: number): Promise<string | null> {
+    const { data, error } = await admin.from('companion_command_uses').select('operation_id')
+      .eq('user_id', userId).eq('message_id', messageId).maybeSingle();
+    if (error) throw error;
+    return (data as { operation_id: string } | null)?.operation_id ?? null;
+  }
+
+  return async function handle(req: Request): Promise<Response> {
+    let action: ResultLine['action'] = 'unknown';
+    let platform: Platform | null = null;
+    let operationType: ResultLine['operation_type'] = null;
+    const finish = (res: Response, outcome: string): Response => {
+      log({ event: 'companion_action_result', action, operation_type: operationType, platform, http_status: res.status, outcome });
+      return res;
+    };
+
+    if (req.method !== 'POST') return finish(json({ error: 'method_not_allowed' }, 405), 'rejected');
+    const caller = await callerOf(admin, req);
+    if (!caller) return finish(json({ error: 'unauthorized' }, 401), 'unauthorized');
+    const { userId, jwt } = caller;
+
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return finish(json({ error: 'invalid_json' }, 400), 'rejected');
+    }
+    const envelope = parseEnvelope(body);
+    if (!envelope.ok) return finish(json({ error: 'invalid_request', reason: envelope.reason }, 400), 'rejected');
+
+    // Version negotiation and gate, read per request so a flag flip is a rollback.
+    const { data: gate, error: gateError } = await admin.from('companion_feature_gate').select('*').maybeSingle();
+    if (gateError || !gate) return finish(json({ error: 'feature_unavailable' }, 503), 'unavailable');
+    const version = envelope.value.version;
+    if (!Number.isInteger(version) || (version as number) < gate.min_contract_version ||
+        (version as number) > gate.max_contract_version) {
+      return finish(json({
+        error: 'unsupported_contract_version',
+        supported: { min: gate.min_contract_version, max: gate.max_contract_version },
+      }, 426), 'unsupported_version');
+    }
+    const rawPlatform = envelope.value.platform;
+    if (typeof rawPlatform === 'string' && (PLATFORMS as readonly string[]).includes(rawPlatform)) {
+      platform = rawPlatform as Platform;
+    }
+    if (!gate.enabled) return finish(json({ error: 'feature_disabled' }, 403), 'feature_disabled');
+    if (!platform || !gate.allowed_platforms.includes(platform)) {
+      return finish(json({ error: 'platform_not_enabled' }, 403), 'platform_not_enabled');
+    }
+
+    // Settlement plans (#364): same boundary, own actions and SQL functions.
+    if (isPlanAction((body as Record<string, unknown>).action)) {
+      const plan = parsePlanAction(body as Record<string, unknown>);
+      if (!plan.ok) {
+        return finish(json({ error: plan.status === 403 ? 'forbidden' : 'invalid_request', reason: plan.reason }, plan.status), 'rejected');
+      }
+      action = plan.value.action;
+      const handled = await handlePlanRequest(admin, userId, version as number, plan.value, { json, mapDbError });
+      return finish(handled.response, handled.outcome);
+    }
+
+    const parsed = parseAction(body as Record<string, unknown>);
+    if (!parsed.ok) {
+      const error = parsed.status === 403 ? 'forbidden' : parsed.status === 422 ? 'invalid_request' : 'invalid_request';
+      return finish(json({ error, reason: parsed.reason }, parsed.status), 'rejected');
+    }
+    const request = parsed.value;
+    action = request.action;
+
+    if (request.action === 'read') {
+      const { data, error } = await admin.rpc('companion_read_tasks', { p_user_id: userId });
+      if (error) return finish(mapDbError(error), 'failed');
+      // #366: the live steps of every task, read after the tasks. After a rollback of the
+      // step migration the read function is gone: the tasks are still served, without steps.
+      const steps = await admin.rpc('companion_read_steps', { p_user_id: userId });
+      if (steps.error && steps.error.code !== 'PGRST202') return finish(mapDbError(steps.error), 'failed');
+      // #370: the live saved details, served the same way (absent after a rollback).
+      const details = await admin.rpc('companion_read_details', { p_user_id: userId });
+      if (details.error && details.error.code !== 'PGRST202') return finish(mapDbError(details.error), 'failed');
+      return finish(json({
+        contract_version: version,
+        tasks: data,
+        ...(steps.error ? {} : { steps: steps.data }),
+        ...(details.error ? {} : { details: details.data }),
+      }), 'read');
+    }
+
+    if (request.action === 'prepare') {
+      // A draft for review: writes only the proposal, never task progress.
+      operationType = request.operation.type;
+      const factRefusal = profileFactRefusal(request.operation);
+      if (factRefusal) return finish(factRefusal, 'rejected');
+      const parentRefusal = await contentParentRefusal(contentTaskExists, request.operation);
+      if (parentRefusal) return finish(parentRefusal, 'rejected');
+      const { data, error } = await admin.rpc('companion_prepare_proposal', {
+        p_user_id: userId,
+        p_operations: [request.operation],
+        p_source: request.source,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      return finish(json({ proposal: data }), 'prepared');
+    }
+
+    if (request.action === 'prepare_edit') {
+      // #365: an edit of one existing task, for review. Writes only the proposal. A
+      // content-backed task must be one the account's Checklist shows; its title is read
+      // from there for display. A custom task's ownership is checked by the database.
+      operationType = request.draft.type;
+      let title: string | null = null;
+      if (request.draft.task_ref.startsWith('sanity:')) {
+        let list;
+        try {
+          list = listTasks ? await listTasks(jwt, userId, request.language) : { complete: false, tasks: [] };
+        } catch {
+          return finish(json({ error: 'tasks_unavailable' }, 503), 'unavailable');
+        }
+        const target = list.tasks.find(t => t.task_ref === request.draft.task_ref);
+        if (!target) {
+          return list.complete
+            ? finish(json({ error: 'not_found', reason: 'task_not_found' }, 404), 'rejected')
+            : finish(json({ error: 'tasks_unavailable' }, 503), 'unavailable');
+        }
+        title = target.title;
+      }
+      const { data, error } = await admin.rpc('companion_prepare_edit', {
+        p_user_id: userId,
+        p_draft: request.draft,
+        p_source: request.source,
+        p_title: title,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      return finish(json({ proposal: data }), 'prepared');
+    }
+
+    if (request.action === 'proposal') {
+      const { data, error } = await admin.rpc('companion_get_proposal', {
+        p_user_id: userId,
+        p_proposal_id: request.proposal_id,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      return finish(json({ proposal: data }), 'read');
+    }
+
+    if (request.action === 'interpret') {
+      // Reads only. The message must be the caller's own user message.
+      const text = await ownUserMessage(admin, userId, request.message_id);
+      if (text === null) return finish(json({ error: 'not_found', reason: 'message_not_found' }, 404), 'rejected');
+      const resolved = resolveCommand(text);
+      if (resolved.kind === 'edit') {
+        let edit: EditResolution;
+        try {
+          edit = await resolveEdit(userId, jwt, resolved);
+        } catch {
+          return finish(json({ error: 'internal' }, 500), 'failed');
+        }
+        if (edit.kind === 'edit') operationType = edit.operation.type;
+        return finish(json({ command: edit }), `interpret_${edit.kind}`);
+      }
+<<<<<<< HEAD
+      // #370: not a task command: a clear remember command, an unclear one, a profile
+      // fact (refused; the profile owns it) or nothing.
+      if (resolved.kind === 'none') {
+        const remember = resolveRemember(text);
+        if (remember.kind !== 'remember') return finish(json({ command: remember }), `interpret_${remember.kind}`);
+        operationType = 'detail.create';
+        let sameText;
+        try {
+          sameText = await sameTextDetails(admin, userId, remember.text);
+        } catch {
+          // No saved-details schema (rolled back): nothing can be saved, so it is no command.
+          return finish(json({ command: { kind: 'none' } }), 'interpret_none');
+        }
+        return finish(json({
+          command: {
+            kind: 'remember',
+            operation: { type: 'detail.create', text: remember.text },
+            same_text_details: sameText,
+          },
+        }), 'interpret_remember');
+      }
+=======
+      // A removal request (#367) only names a task to review; the client opens its review.
+>>>>>>> c022bb48e61b5195ce3d22e5e9190b4d8b2920a9
+      if (resolved.kind !== 'create') return finish(json({ command: resolved }), `interpret_${resolved.kind}`);
+      operationType = 'task.create_custom';
+      let same;
+      try {
+        same = await sameTitleTasks(admin, userId, resolved.title);
+      } catch {
+        return finish(json({ error: 'internal' }, 500), 'failed');
+      }
+      return finish(json({
+        command: {
+          kind: 'create',
+          operation: { type: 'task.create_custom', title: resolved.title, priority: 'Do soon' },
+          same_title_tasks: same,
+        },
+      }), 'interpret_create');
+    }
+
+    if (request.action === 'conversation_actions') {
+      const { data, error } = await admin.rpc('companion_conversation_actions', {
+        p_user_id: userId,
+        p_conversation_id: request.conversation_id,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      return finish(json(data), 'read');
+    }
+
+    if (request.action === 'cancel') {
+      const { data, error } = await admin.rpc('companion_cancel_proposal', {
+        p_user_id: userId,
+        p_proposal_id: request.proposal_id,
+        p_proposal_revision: request.proposal_revision,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      const result = data as { changed?: boolean; proposal: unknown };
+      if (result.changed) return finish(json({ error: 'proposal_changed', proposal: result.proposal }, 409), 'proposal_changed');
+      return finish(json({ proposal: result.proposal }), 'cancelled');
+    }
+
+    if (request.action === 'revise') {
+      operationType = request.operation.type;
+      const factRefusal = profileFactRefusal(request.operation);
+      if (factRefusal) return finish(factRefusal, 'rejected');
+      const { data, error } = await admin.rpc('companion_revise_proposal', {
+        p_user_id: userId,
+        p_proposal_id: request.proposal_id,
+        p_proposal_revision: request.proposal_revision,
+        p_operations: [request.operation],
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      const result = data as { changed?: boolean; proposal: unknown };
+      // The edit named an older revision (or the draft is no longer open): nothing
+      // changed, and the current proposal is returned for review.
+      if (result.changed) return finish(json({ error: 'proposal_changed', proposal: result.proposal }, 409), 'proposal_changed');
+      return finish(json({ proposal: result.proposal }), 'revised');
+    }
+
+    if (request.action === 'status') {
+      const { data, error } = await admin.rpc('companion_action_status', {
+        p_user_id: userId,
+        p_operation_id: request.operation_id,
+      });
+      if (error) return finish(mapDbError(error), 'failed');
+      return finish(json(data), `status_${(data as { status: string }).status}`);
+    }
+
+    if (request.action === 'apply') {
+      operationType = request.operations[0].type;
+      const factRefusal = profileFactRefusal(request.operations[0]);
+      if (factRefusal) return finish(factRefusal, 'rejected');
+      if (request.authorization.kind === 'direct_command') {
+        // The command is read from the user's own saved message, here, and must resolve
+        // to exactly the submitted operation. A client or model cannot widen it.
+        const messageId = request.authorization.message_id;
+        let used: string | null;
+        try {
+          used = await commandUse(userId, messageId);
+        } catch {
+          return finish(json({ error: 'internal' }, 500), 'failed');
+        }
+        // One message authorizes one write. Another operation under it is refused; a retry
+        // of the same operation replays its recorded result below.
+        if (used && used !== request.operation_id) {
+          return finish(json({ error: 'command_already_used', reason: 'command_already_used' }, 409), 'failed');
+        }
+        const text = await ownUserMessage(admin, userId, messageId);
+        const resolved = text === null ? null : resolveCommand(text);
+        const op = request.operations[0];
+        let allowed = used === request.operation_id;
+        if (allowed) {
+          // Committed already: what the message resolves to now may differ (a renamed task).
+        } else if (resolved?.kind === 'create') {
+          allowed = op.type === 'task.create_custom' && op.title === resolved.title && op.priority === 'Do soon';
+        } else if (resolved?.kind === 'edit') {
+          // #365: the message must name exactly this change to exactly this task now. The
+          // revision is checked by the database (a change in between is a conflict).
+          try {
+            const edit = await resolveEdit(userId, jwt, resolved);
+            allowed = edit.kind === 'edit' && withoutRevision(edit.operation) === withoutRevision(op);
+          } catch {
+            return finish(json({ error: 'internal' }, 500), 'failed');
+          }
+        } else if (resolved?.kind === 'none' && text !== null) {
+          // #370: a remember command saves exactly the detail the message states.
+          const remember = resolveRemember(text);
+          allowed = remember.kind === 'remember' && op.type === 'detail.create' && op.text === remember.text;
+        }
+        // The same operation may have committed while this request read the task (a
+        // concurrent retry): look again before refusing, so a retry replays its result.
+        if (!allowed && (await commandUse(userId, messageId).catch(() => null)) !== request.operation_id) {
+          return finish(json({ error: 'forbidden', reason: 'invalid_authorization' }, 403), 'rejected');
+        }
+      }
+      const parentRefusal = await contentParentRefusal(contentTaskExists, request.operations[0]);
+      if (parentRefusal) return finish(parentRefusal, parentRefusal.status === 404 ? 'rejected' : 'unavailable');
+      const { data, error } = await admin.rpc('companion_apply_actions', {
+        p_user_id: userId,
+        p_operation_id: request.operation_id,
+        p_contract_version: version,
+        p_authorization: request.authorization,
+        p_operations: request.operations,
+      });
+      if (error) return finish(mapDbError(error), error.code === 'CA409' ? 'conflict' : 'failed');
+      const result = data as { replayed?: boolean; needs_review?: boolean; proposal?: unknown };
+      // Relevant context changed since review: nothing was written; the refreshed
+      // proposal needs a new approval.
+      if (result.needs_review) return finish(json({ error: 'needs_review', proposal: result.proposal }, 409), 'needs_review');
+      return finish(json(data), result.replayed ? 'replayed' : 'applied');
+    }
+
+    // undo (the operation type is the receipt's; not known before the database reads it)
+    const { data, error } = await admin.rpc('companion_undo_action', {
+      p_user_id: userId,
+      p_operation_id: request.operation_id,
+      p_contract_version: version,
+      p_authorization: request.authorization,
+      p_receipt_operation_id: request.receipt_operation_id,
+    });
+    if (error) return finish(mapDbError(error), 'failed');
+    const result = data as { conflict?: boolean; replayed?: boolean };
+    if (result.conflict) {
+      // Nothing changed. The newer edit is kept; the proposal is the reviewed compensating change.
+      const { conflict: _c, ...rest } = result as Record<string, unknown>;
+      return finish(json({ error: 'undo_conflict', ...rest }, 409), 'undo_conflict');
+    }
+    return finish(json(data), result.replayed ? 'replayed' : 'undone');
+  };
+}

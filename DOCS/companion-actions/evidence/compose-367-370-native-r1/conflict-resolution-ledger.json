@@ -1,0 +1,154 @@
+[
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/app/(tabs)/companion/index.tsx",
+    "textConflicts": 2,
+    "decision": "Retain detail and removal panel targets and handlers together. Keep the accepted state owner and existing navigation.",
+    "beforeSha256": "45cc019142afabcb1a19fe3d40695aecbe17b42eadf882a375143b0d8937dcc5",
+    "afterSha256": "35caa5ac79d347c9df1d2d21135889943dc5d6e0dfa7e2c1de3803feb5d4de1d"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/components/companion/tasks/TaskActionCards.tsx",
+    "textConflicts": 8,
+    "decision": "Keep detail draft and command cards beside removal review cards. Route each card to its own panel. Retain mobile LiveText import.",
+    "beforeSha256": "804da3ba8ea4776f564679fa72d6167abd81ac813dcf210ab21634eb0225306b",
+    "afterSha256": "22acc40031606b39d5eed593c7edfa52d896869493ce08033cec310562f0c9a4"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/components/companion/tasks/TaskActionsSheet.tsx",
+    "textConflicts": 1,
+    "decision": "Keep LiveText and the stable SheetBody owner. Add useRef for the reviewed removed-task title retention.",
+    "beforeSha256": "70124299b69f5966504cf244d65211ee7b24b78d8431c09681aa21ed68016d26",
+    "afterSha256": "6e218a142851ebe59fd5220c0080c87602301e8ca44c243f4873103c46489da9"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/components/companion/tasks/TaskProposalPanel.tsx",
+    "textConflicts": 2,
+    "decision": "Exclude both detail and removal proposals from task-create and task-edit narrowing.",
+    "beforeSha256": "3b0ecaf373c72fbb3840f3879668d8b0eedd12c757477c50e639f15cc17f81c1",
+    "afterSha256": "6ee70b9ee8c684971513571099c4a16b28f60dd31820cc60d9f8a984cf7d0f78"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/services/companionActions/analytics.ts",
+    "textConflicts": 1,
+    "decision": "Union the reviewed action and outcome allowlists. Retain account epochs, draft ownership, pending lookup, retry and Undo behavior.",
+    "beforeSha256": "b4d2884c91aa6f3598eb432b495db6040c494a75a9194d9af59477ca42b8152e",
+    "afterSha256": "161952b3ce78ddae435c6e94a6380b46320560dfb7839d233fae1976d2867e65"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/services/companionActions/client.ts",
+    "textConflicts": 10,
+    "decision": "Keep separate detail and removal preparation and lookup methods. Route all four proposal kinds. Keep detail results separate from task results.",
+    "beforeSha256": "615c4acabb95f7ecb856a731ff056422528beba4245b30c0e75f0f537c795f1d",
+    "afterSha256": "2314b8e2d43fa67f4d8c72c51f4a86abcf7112dd11e0605ff28e6b58b19fecf7"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/services/companionActions/contract.ts",
+    "textConflicts": 12,
+    "decision": "Retain all detail and removal operation types, receipt fields and proposal parsers. Keep exact revision, confirmation and compensation checks.",
+    "beforeSha256": "15dff01fe65c924cd8dc2df3b7f45bfa4b73c87540b297a8e355ddb8c5ce0cef",
+    "afterSha256": "6a8425bb588e655006e9a570f1d36d75848f6d14c265027254a418a83879332a"
+  },
+  {
+    "platform": "mobile",
+    "file": "unify-front-end/services/companionActions/taskActionStore.ts",
+    "textConflicts": 2,
+    "decision": "Union the reviewed action and outcome allowlists. Retain account epochs, draft ownership, pending lookup, retry and Undo behavior.",
+    "beforeSha256": "acafe151d9f3f148a521e0e7631f8dfb98ac0d17b30edb75e4f01fe3e8a8c0d8",
+    "afterSha256": "aa9d22193cd9afbe3684ed487fcd83005bc8c7bcff0f46bf8dffcc2ffed06180"
+  },
+  {
+    "platform": "web",
+    "file": "app/(main)/companion/page.tsx",
+    "textConflicts": 1,
+    "decision": "Retain detail and removal panel targets and handlers together. Keep the accepted state owner and existing navigation.",
+    "beforeSha256": "fc6adfb3b88f206c7eb9c5b667340d1dcd7454eaba23ac6c125eb2199655c65a",
+    "afterSha256": "962ef5b1c743e6daa8be7c85322e20425ed13cf62c3d32c1887871a81bbe8dc0"
+  },
+  {
+    "platform": "web",
+    "file": "components/companion/tasks/TaskActionCards.tsx",
+    "textConflicts": 5,
+    "decision": "Keep detail draft and command cards beside removal review cards. Route each card to its own panel. Retain mobile LiveText import.",
+    "beforeSha256": "64f6caec78f8cc2fc1db1093f2a7cc3c3a84250c55a1e9dac52ae7fcec91ddeb",
+    "afterSha256": "fe6c9c500a2c792f6b6c8e2e65954922b52cef8a811a2941ee77592115b2e247"
+  },
+  {
+    "platform": "web",
+    "file": "components/companion/tasks/TaskProposalPanel.tsx",
+    "textConflicts": 2,
+    "decision": "Exclude both detail and removal proposals from task-create and task-edit narrowing.",
+    "beforeSha256": "d103337fe3380038722e08c5e9768883219275f5ff5fcfbd25c4ddeb0c92c798",
+    "afterSha256": "40375ff3d6fac5040db1e3e39685e5c95497b4f35b2c03849543b35f451a2846"
+  },
+  {
+    "platform": "web",
+    "file": "lib/companionActions/analytics.ts",
+    "textConflicts": 1,
+    "decision": "Union the reviewed action and outcome allowlists. Retain account epochs, draft ownership, pending lookup, retry and Undo behavior.",
+    "beforeSha256": "85d2868232a5bf1e66a6a8d3db869656480dfbb896f3b2dc98d6f883aef0e293",
+    "afterSha256": "55650c5ec40b591adbebd4f06f4f460113cfe79186a1bf408dcb47672ceb7b08"
+  },
+  {
+    "platform": "web",
+    "file": "lib/companionActions/client.ts",
+    "textConflicts": 11,
+    "decision": "Keep separate detail and removal preparation and lookup methods. Route all four proposal kinds. Keep detail results separate from task results.",
+    "beforeSha256": "a8d53f6539e411d16cdf50472a7325e5c252c8de174aa1f3a10bf997a76e8895",
+    "afterSha256": "6e58e85400c6fa86dacf6f7cb4956bdf1de8e6deac140772a11ada0af1760d24"
+  },
+  {
+    "platform": "web",
+    "file": "lib/companionActions/contract.ts",
+    "textConflicts": 14,
+    "decision": "Retain all detail and removal operation types, receipt fields and proposal parsers. Keep exact revision, confirmation and compensation checks.",
+    "beforeSha256": "e9200c7789b10cdf82ce271acceb79f6fec5c8b86d4ac198c4fa67c942f37991",
+    "afterSha256": "c04a2b7d6674d1a11e41863d0fd411f09e817cae38b55c415d01de6d98d0175d"
+  },
+  {
+    "platform": "web",
+    "file": "lib/companionActions/taskActionStore.ts",
+    "textConflicts": 2,
+    "decision": "Union the reviewed action and outcome allowlists. Retain account epochs, draft ownership, pending lookup, retry and Undo behavior.",
+    "beforeSha256": "6de198503196420ec4292629731eee9fcf6de21cfb5c626ed1c76f6df57c7bdb",
+    "afterSha256": "8e7435aa46fa1b054d55b7795a92cdccd82722ee2da9080e1adc4d58b2b3fc3a"
+  },
+  {
+    "platform": "web",
+    "file": "supabase/functions/companion-actions/contract.ts",
+    "textConflicts": 3,
+    "decision": "Retain all detail and removal operation types, receipt fields and proposal parsers. Keep exact revision, confirmation and compensation checks.",
+    "beforeSha256": "e9200c7789b10cdf82ce271acceb79f6fec5c8b86d4ac198c4fa67c942f37991",
+    "afterSha256": "f2e51121d25707e90f043c78bff5bb1037cf8f5fdfbecfa3ff5217806cfd2a5b"
+  },
+  {
+    "platform": "web",
+    "file": "supabase/functions/companion-actions/handler.ts",
+    "textConflicts": 1,
+    "decision": "Retain the remember interpreter and the removal-review route. The authenticated handler derives the owner from the JWT.",
+    "beforeSha256": "f40fb0c8400bbf96de0f3a91540941abcb7242da4da8686fe54c947feebf59d7",
+    "afterSha256": "8fe1968196778bbff008cf7b53f063a176c2f8b168713fa0267bbadaaec223ed"
+  },
+  {
+    "platform": "web",
+    "file": "supabase/tests/companion-actions/README.md",
+    "textConflicts": 1,
+    "decision": "Document the composed migration order, tests and rollback predecessor.",
+    "beforeSha256": "eeac3fa31d09bca86ff4846f2c470133f542250bdd52423d77ca90de6d41ad93",
+    "afterSha256": "afbe8a666f5bce758b0965ef6ddb3f96de2a6a24a045ee0870f29a42a6b75f5c"
+  },
+  {
+    "platform": "web",
+    "file": "supabase/tests/companion-actions/support.ts",
+    "textConflicts": 6,
+    "decision": "Apply #361, #363, #364, #366, #365, #370, #367. Roll back in reverse. Keep both domains fixtures and explicit local container names.",
+    "beforeSha256": "ffb4639fd7d5cb7ddfbc0a6963612e2ac8334aab6aad9b0ffe0b0ef81e1b8253",
+    "afterSha256": "d61674fc8173631bf7c7c9936f797f28a3c8f487924febbd4fc820f5afe40e9c"
+  }
+]
