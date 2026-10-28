@@ -111,8 +111,26 @@ export function changeLines(
   return lines;
 }
 
-/** One recorded change of an edit receipt: "Priority: Do soon → Do now". */
-export function receiptChangeText(t: T, change: FieldChange): string {
+/** A recorded change: an edit's field, or a state change's waiting reason. */
+export interface ReceiptChange {
+  field: FieldChange['field'] | 'waitingReason';
+  before: string | null;
+  after: string | null;
+}
+
+/**
+ * What a receipt saved, field by field: an edit's changes, and a waiting reason that a
+ * state change replaced (so a reason-only change does not read Waiting → Waiting).
+ */
+export function receiptChanges(receipt: TaskReceipt): ReceiptChange[] {
+  const reasons = receipt.waitingReasons;
+  return reasons && reasons.before !== reasons.after
+    ? [...receipt.changes, { field: 'waitingReason', ...reasons }]
+    : receipt.changes;
+}
+
+/** One recorded change of a receipt: "Priority: Do soon → Do now". */
+export function receiptChangeText(t: T, change: ReceiptChange): string {
   return t('taskEdit.receiptChange', {
     field: t(`taskEdit.field.${change.field}`),
     from: shown(t, change.field, change.before),

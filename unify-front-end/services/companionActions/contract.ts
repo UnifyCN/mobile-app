@@ -102,6 +102,11 @@ export interface TaskReceipt {
   /** #366: a completion's step history: done of total when it was saved; null otherwise. */
   stepsDone: number | null;
   stepsTotal: number | null;
+  /**
+   * #365: a state change's waiting reason before and after, as saved; null for other
+   * receipts and for one saved before reasons were recorded.
+   */
+  waitingReasons: { before: string | null; after: string | null } | null;
 }
 
 export interface TaskProgress {
@@ -460,6 +465,13 @@ export function parseReceipt(raw: unknown): TaskReceipt {
     steps: parseReceiptSteps(raw.steps),
     stepsDone: intOrNull(raw, 'steps_done'),
     stepsTotal: intOrNull(raw, 'steps_total'),
+    waitingReasons:
+      raw.after_waiting_reason === undefined
+        ? null
+        : {
+            before: strOrNull(raw, 'before_waiting_reason'),
+            after: strOrNull(raw, 'after_waiting_reason'),
+          },
   };
 }
 

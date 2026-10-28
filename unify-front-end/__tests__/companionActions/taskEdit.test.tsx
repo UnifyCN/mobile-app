@@ -558,3 +558,32 @@ it('keeps the first direct edit receipt and marks it historical after a second e
   expect(within(first).getByText('Changed in Checklist: Mobile plan')).toBeTruthy();
   expect(within(first).getByText('Title: “Get a phone plan” → “Mobile plan”')).toBeTruthy();
 });
+
+// #365 review S365-002 (red first): a reason-only state command names both reasons.
+it('a waiting reason change names the reason before and after on the command card, and keeps them after a later edit', async () => {
+  // Wrong if: the card says only Waiting → Waiting, shows other reasons than the saved
+  // ones, or loses them when the receipt becomes history.
+  renderScreen();
+  await send(`Mark task "${PHONE}" as waiting: Appointment on Friday`);
+  const first = await screen.findByTestId('task-command-card');
+  expect(await within(first).findByText(`${PHONE}: Not started → Waiting`)).toBeTruthy();
+  expect(within(first).getByText('Waiting for: (empty) → “Appointment on Friday”')).toBeTruthy();
+  await send(`Mark task "${PHONE}" as waiting: Appointment on Monday`);
+  await waitFor(() => expect(screen.getAllByTestId('task-command-card')).toHaveLength(2));
+  const second = screen.getAllByTestId('task-command-card')[1];
+  expect(await within(second).findByText(`${PHONE}: Waiting → Waiting`)).toBeTruthy();
+  expect(
+    within(second).getByText('Waiting for: “Appointment on Friday” → “Appointment on Monday”')
+  ).toBeTruthy();
+  expect(server.row(phoneRef)).toMatchObject({ state: 'waiting', reason: 'Appointment on Monday' });
+  // A later edit makes the second receipt history; it keeps its saved reasons.
+  await send(`Rename task "${PHONE}" to "Prepaid plan"`);
+  await screen.findByText('Changed in Checklist: Prepaid plan');
+  expect(await within(second).findByText(/This task changed after this/)).toBeTruthy();
+  expect(
+    within(second).getByText('Waiting for: “Appointment on Friday” → “Appointment on Monday”')
+  ).toBeTruthy();
+  // The private reason text never reaches analytics.
+  expect(mockCapture.mock.calls.length).toBeGreaterThan(0);
+  expect(JSON.stringify(mockCapture.mock.calls)).not.toContain('Appointment on');
+});

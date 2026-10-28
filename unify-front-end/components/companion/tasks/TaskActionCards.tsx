@@ -15,7 +15,12 @@ import {
 } from '@/services/companionActions/taskActionStore';
 import { useTaskActionPhase } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
-import { changeLines, editReceiptText, receiptChangeText } from './editText';
+import {
+  changeLines,
+  editReceiptText,
+  receiptChanges,
+  receiptChangeText,
+} from './editText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -382,7 +387,7 @@ function CommandCard({
           <Text style={styles.result}>
             {editReceiptText(t as never, receipt, title)}
           </Text>
-          {receipt.changes.map(change => (
+          {receiptChanges(receipt).map(change => (
             <Text key={change.field} style={styles.status}>
               {receiptChangeText(t as never, change)}
             </Text>

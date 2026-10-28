@@ -517,6 +517,9 @@ export function scriptedServer(
       after.state = op.state;
       after.reason = op.state === 'waiting' ? (op.waiting_reason ?? null) : null;
       extra.before_reason = before.reason;
+      // As the service records them (#365): the reasons a state change saved.
+      extra.before_waiting_reason = before.reason;
+      extra.after_waiting_reason = after.reason;
     } else {
       const old: Body = { title: titles.get(ref), ...detailsOf(ref) };
       const changes = ['title', 'description', 'priority']

@@ -556,9 +556,12 @@ begin
     perform public.companion_fail('CA422', 'invalid_task_ref');
   end if;
 
+  -- #365: the waiting reason before and after is part of what a state change saved, so its
+  -- receipt names it (a reason-only change would otherwise read Waiting to Waiting).
   return jsonb_build_object(
     'type', 'task.set_state', 'task_ref', v_ref,
     'before_state', v_before_state, 'state', v_state,
+    'before_waiting_reason', v_before_reason, 'after_waiting_reason', v_reason,
     'before_revision', v_before, 'after_revision', v_after,
     'inverse', public.companion_set_state_op(v_ref, v_before_state, v_before_reason, v_after))
     -- #366: a completion records the steps as they were: how many were done of how many.
@@ -572,8 +575,9 @@ end $$;
 -- ------------------------------------------------------------------ receipts
 -- Public summary of a receipt. For an added or removed task (#363), the title recorded
 -- when it was saved. For an edit (#365), the title the task had after it and each changed
--- field with the value before and after: history, so a later edit changes the task, not
--- this record; `current` says whether it still describes the task.
+-- field with the value before and after; for a state change, the waiting reason before and
+-- after: history, so a later edit changes the task, not this record; `current` says
+-- whether it still describes the task.
 create or replace function public.companion_receipt_summary(p_receipt public.companion_action_receipts) returns jsonb
 language sql stable security definer set search_path = public, pg_temp as $$
   select jsonb_build_object(
@@ -595,6 +599,12 @@ language sql stable security definer set search_path = public, pg_temp as $$
          jsonb_build_object('title', r->>'title')
        when r->>'type' = 'task.edit_details' then
          jsonb_build_object('title', r->>'title', 'changes', r->'changes')
+       else '{}'::jsonb end
+    -- #365: a state change saved with its waiting reasons names them. A receipt saved
+    -- before they were recorded has neither field, not invented ones.
+    || case when r ? 'after_waiting_reason' then
+         jsonb_build_object('before_waiting_reason', r->'before_waiting_reason',
+                            'after_waiting_reason', r->'after_waiting_reason')
        else '{}'::jsonb end
     -- #366: a completion names how many steps were done; a step receipt names its steps
     -- as they were saved and is current while every one of them is unchanged.

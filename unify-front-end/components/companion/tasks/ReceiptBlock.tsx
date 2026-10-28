@@ -9,7 +9,11 @@ import type {
 } from '@/services/companionActions/contract';
 import type { TaskActionStore } from '@/services/companionActions/taskActionStore';
 import { minTarget } from '@/utils/touchTarget';
-import { editReceiptText, receiptChangeText } from './editText';
+import {
+  editReceiptText,
+  receiptChanges,
+  receiptChangeText,
+} from './editText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -123,7 +127,7 @@ export function ReceiptBlock({
   return (
     <View style={styles.receipt}>
       <Text style={styles.receiptText}>{text}</Text>
-      {receipt.changes.map(change => (
+      {receiptChanges(receipt).map(change => (
         <Text key={change.field} style={styles.receiptText}>
           {receiptChangeText(t as never, change)}
         </Text>
