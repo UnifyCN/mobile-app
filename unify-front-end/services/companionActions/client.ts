@@ -1,5 +1,5 @@
 /**
- * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #366).
+ * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #366, #370).
  * Mirror of the web app's lib/companionActions/client.ts.
  * Each call names an outcome the interface can show truthfully:
  *   - a recorded result, or a definite refusal (nothing was written);
@@ -13,7 +13,10 @@ import {
   type CompensatingProposal,
   type CreateTaskOperation,
   type CurrentTaskValue,
+  type DetailCreateOperation,
+  type DetailProposal,
   type Operation,
+  type SavedDetail,
   type StepCreateOperation,
   type StepProposal,
   type TaskProgress,
@@ -23,7 +26,9 @@ import {
   TASK_ACTIONS_CONTRACT_VERSION,
   parseCommand,
   parseCurrent,
+  parseDetailProposal,
   parseProposal,
+  parseSavedDetail,
   parseReceipt,
   parseStep,
   parseStepProposal,
@@ -60,7 +65,8 @@ export type Unauthorized = { kind: 'unauthorized' };
 
 export type ReadResult =
   /** steps: #366, the live steps of every task ([] from a service without steps). */
-  | { kind: 'ok'; tasks: TaskProgress[]; steps: TaskStep[] }
+  /** details: #370, the live saved details ([] from a service without them). */
+  | { kind: 'ok'; tasks: TaskProgress[]; steps: TaskStep[]; details: SavedDetail[] }
   | Unavailable
   | Refused
   | Unknown
@@ -78,7 +84,9 @@ export type ApplyResult =
     }
   | { kind: 'in_flight' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal }
+  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal }
+  /** #370: a live saved detail already says this; nothing was written. */
+  | { kind: 'detail_exists' }
   /** #363: this command message already authorized a write. */
   | { kind: 'command_used' }
   /** #363: a live task already has this title; nothing was written. */
@@ -93,6 +101,15 @@ export type ProposalResult =
   | { kind: 'ok'; proposal: TaskProposal }
   /** The draft moved on (edited, applied, cancelled): this is its current state. */
   | { kind: 'changed'; proposal: TaskProposal }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
+/** A detail draft request (#370): the current draft, or a definite answer that nothing changed. */
+export type DetailProposalResult =
+  | { kind: 'ok'; proposal: DetailProposal }
+  | { kind: 'changed'; proposal: DetailProposal }
   | Unavailable
   | Refused
   | Unknown
@@ -125,6 +142,9 @@ export type ConversationActionsResult =
         operationId: string;
         receipt: TaskReceipt;
       }[];
+      /** #370: suggested-detail drafts and remember results of this conversation. */
+      detailProposals: DetailProposal[];
+      detailCommands: { messageId: number; operationId: string; receipt: TaskReceipt }[];
     }
   | Unavailable
   | Refused
@@ -198,6 +218,16 @@ export interface TaskActionClient {
     proposalId: string,
     proposalRevision: number
   ): Promise<StepProposalResult>;
+  /** #370: a server-owned draft of one suggested detail. Writes no detail. */
+  prepareDetail(
+    operation: DetailCreateOperation,
+    source: { conversationId: string; messageId?: number }
+  ): Promise<DetailProposalResult>;
+  detailProposal(proposalId: string): Promise<DetailProposalResult>;
+  cancelDetail(
+    proposalId: string,
+    proposalRevision: number
+  ): Promise<DetailProposalResult>;
 }
 
 type Json = Record<string, unknown>;
@@ -277,6 +307,8 @@ export function createTaskActionClient(opts: {
     draftCall(body, parseTaskProposal);
   const stepDraftCall = (body: Json): Promise<StepProposalResult> =>
     draftCall(body, parseStepProposal);
+  const detailDraftCall = (body: Json): Promise<DetailProposalResult> =>
+    draftCall(body, parseDetailProposal);
   const sourceOf = (source: { conversationId: string; messageId?: number } | null) =>
     source
       ? {
@@ -301,10 +333,12 @@ export function createTaskActionClient(opts: {
       const tasks = asObject(reply.body).tasks;
       if (!Array.isArray(tasks)) return { kind: 'unknown' };
       const steps = asObject(reply.body).steps;
+      const details = asObject(reply.body).details;
       return {
         kind: 'ok',
         tasks: tasks.map(parseTask),
         steps: Array.isArray(steps) ? steps.map(parseStep) : [],
+        details: Array.isArray(details) ? details.map(parseSavedDetail) : [],
       };
     },
 
@@ -346,14 +380,20 @@ export function createTaskActionClient(opts: {
           actual: typeof detail.actual === 'number' ? detail.actual : null,
         };
       }
-      if (reply.status === 409 && body.error === 'needs_review')
+      if (reply.status === 409 && body.error === 'needs_review') {
+        const draftKind = asObject(body.proposal).kind;
         return {
           kind: 'needs_review',
           proposal:
-            asObject(body.proposal).kind === 'step_create'
+            draftKind === 'step_create'
               ? parseStepProposal(body.proposal)
-              : parseTaskProposal(body.proposal),
+              : draftKind === 'detail_create'
+                ? parseDetailProposal(body.proposal)
+                : parseTaskProposal(body.proposal),
         };
+      }
+      if (reply.status === 409 && body.error === 'detail_exists')
+        return { kind: 'detail_exists' };
       if (reply.status === 409 && body.error === 'command_already_used')
         return { kind: 'command_used' };
       if (reply.status === 409 && body.error === 'needs_clarification')
@@ -472,23 +512,31 @@ export function createTaskActionClient(opts: {
       if (!Array.isArray(body.proposals) || !Array.isArray(body.commands))
         return { kind: 'unknown' };
       const isSteps = (p: unknown) => asObject(p).kind === 'step_create';
+      const commandEntry = (c: unknown) => {
+        const o = asObject(c);
+        if (
+          typeof o.message_id !== 'number' ||
+          typeof o.operation_id !== 'string'
+        )
+          throw new Error('command entry');
+        return {
+          messageId: o.message_id,
+          operationId: o.operation_id,
+          receipt: parseReceipt(o.receipt),
+        };
+      };
       return {
         kind: 'ok',
         proposals: body.proposals.filter(p => !isSteps(p)).map(parseTaskProposal),
         stepProposals: body.proposals.filter(isSteps).map(parseStepProposal),
-        commands: body.commands.map(c => {
-          const o = asObject(c);
-          if (
-            typeof o.message_id !== 'number' ||
-            typeof o.operation_id !== 'string'
-          )
-            throw new Error('command entry');
-          return {
-            messageId: o.message_id,
-            operationId: o.operation_id,
-            receipt: parseReceipt(o.receipt),
-          };
-        }),
+        commands: body.commands.map(commandEntry),
+        // #370: absent from a service without saved details.
+        detailProposals: Array.isArray(body.detail_proposals)
+          ? body.detail_proposals.map(parseDetailProposal)
+          : [],
+        detailCommands: Array.isArray(body.detail_commands)
+          ? body.detail_commands.map(commandEntry)
+          : [],
       };
     },
 
@@ -511,6 +559,22 @@ export function createTaskActionClient(opts: {
 
     cancelSteps(proposalId, proposalRevision) {
       return stepDraftCall({
+        action: 'cancel',
+        proposal_id: proposalId,
+        proposal_revision: proposalRevision,
+      });
+    },
+
+    prepareDetail(operation, source) {
+      return detailDraftCall({ action: 'prepare', operation, ...sourceOf(source) });
+    },
+
+    detailProposal(proposalId) {
+      return detailDraftCall({ action: 'proposal', proposal_id: proposalId });
+    },
+
+    cancelDetail(proposalId, proposalRevision) {
+      return detailDraftCall({
         action: 'cancel',
         proposal_id: proposalId,
         proposal_revision: proposalRevision,
@@ -563,6 +627,12 @@ export function createTaskActionClient(opts: {
       client.reviseSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
     cancelSteps: (...args) =>
       client.cancelSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
+    prepareDetail: (...args) =>
+      client.prepareDetail(...args).catch(() => ({ kind: 'unknown' }) as const),
+    detailProposal: (...args) =>
+      client.detailProposal(...args).catch(() => ({ kind: 'unknown' }) as const),
+    cancelDetail: (...args) =>
+      client.cancelDetail(...args).catch(() => ({ kind: 'unknown' }) as const),
     status: (...args) =>
       client.status(...args).catch(() => ({ kind: 'lookup_failed' }) as const),
   };

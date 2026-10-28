@@ -24,6 +24,7 @@ import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
 import { execFileSync } from 'child_process';
+import { randomUUID } from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -679,6 +680,123 @@ describeStack('Task steps against the real local stack (mobile, #366)', () => {
       ['Bring two IDs', true],
       ['Choose a bank', true],
     ]);
+  }, 90_000);
+});
+
+// ------------------------------------------------------------------ #370 saved details
+// The same real stack with this repo's #370 migration applied. A detail is saved through
+// the real service from a real user message (the clear remember command), then viewed,
+// edited and removed through the real mobile sheet.
+const restAs = (jwt: string, pathname: string, init: RequestInit = {}) =>
+  http(pathname, { ...init, jwt, headers: { prefer: 'return=representation' } });
+
+async function rememberThroughService(account: { id: string; jwt: string }, text: string) {
+  const conversation = await restAs(account.jwt, '/rest/v1/conversations?select=id,conversation_identifier', {
+    method: 'POST',
+    body: JSON.stringify({ user_id: account.id, title: 't' }),
+  });
+  const message = await restAs(account.jwt, '/rest/v1/messages?select=id', {
+    method: 'POST',
+    body: JSON.stringify({ conversation_id: conversation.json[0].id, role: 'user', content: `Remember that ${text}` }),
+  });
+  const id = message.json[0].id as number;
+  const interpreted = await actions(account.jwt, { action: 'interpret', message_id: id });
+  expect(interpreted.json.command).toMatchObject({ kind: 'remember', operation: { type: 'detail.create', text } });
+  const saved = await actions(account.jwt, {
+    action: 'apply',
+    operation_id: randomUUID(),
+    authorization: { kind: 'direct_command', message_id: id },
+    operations: [interpreted.json.command.operation],
+  });
+  expect(saved.status).toBe(200);
+  return saved.json.receipt;
+}
+
+/** What a later Companion answer reads: the user's own JWT and RLS (rag-query's read). */
+const laterContext = async (jwt: string) =>
+  ((await restAs(jwt, '/rest/v1/companion_saved_details?select=body', { method: 'GET' })).json as any[]).map(
+    r => r.body
+  );
+
+describeStack('Saved details against the real local stack (mobile, #370)', () => {
+  beforeAll(async () => {
+    const probe = () =>
+      http('/rest/v1/rpc/companion_read_details', {
+        method: 'POST',
+        key: SERVICE_KEY,
+        body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+      });
+    if ((await probe()).status !== 200) {
+      // This repo's migration, exactly as it ships (after #361, #363 and #366 above).
+      psql(
+        fs.readFileSync(
+          path.resolve(__dirname, '../../supabase/migrations/20261028004902_companion_saved_details.sql'),
+          'utf8'
+        )
+      );
+      execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
+      for (let i = 0; i < 50; i++) {
+        if ((await probe()).status === 200) break;
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+    }
+  }, 60_000);
+
+  afterEach(() => {
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  it('a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none', async () => {
+    // Wrong if: the sheet does not show the saved detail, the edit or removal is not the
+    // real persisted change, an unconfirmed removal writes, a removed detail is still read
+    // as remembered context, or another account reads it.
+    const owner = await newAccount('details-owner');
+    const stranger = await newAccount('details-stranger');
+    await rememberThroughService(owner, 'I can attend appointments on Fridays');
+    mockUserId = owner.id;
+    mockCapture = jest.fn();
+
+    mount(<CompanionScreen />);
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: /Saved details/ }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText('I can attend appointments on Fridays', {}, { timeout: 10_000 })).toBeTruthy();
+
+    const edit = await within(sheet).findByRole('button', { name: 'Edit saved detail: I can attend appointments on Fridays' });
+    await waitFor(() => expect(edit).not.toBeDisabled(), { timeout: 10_000 });
+    fireEvent.press(edit);
+    fireEvent.changeText(within(sheet).getByLabelText('Saved detail'), 'I can attend appointments on Saturdays');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Save change' }));
+    expect(
+      await within(sheet).findByText(
+        'Changed “I can attend appointments on Fridays” to “I can attend appointments on Saturdays”.',
+        {},
+        { timeout: 10_000 }
+      )
+    ).toBeTruthy();
+    expect(await laterContext(owner.jwt)).toEqual(['I can attend appointments on Saturdays']);
+
+    const remove = await within(sheet).findByRole('button', {
+      name: 'Remove saved detail: I can attend appointments on Saturdays',
+    });
+    await waitFor(() => expect(remove).not.toBeDisabled(), { timeout: 10_000 });
+    fireEvent.press(remove);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Cancel' }));
+    expect(await laterContext(owner.jwt)).toEqual(['I can attend appointments on Saturdays']);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Remove saved detail: I can attend appointments on Saturdays' }));
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Remove detail' }));
+    expect(
+      await within(sheet).findByText(
+        'Removed “I can attend appointments on Saturdays”. It will not be used in later conversations.',
+        {},
+        { timeout: 10_000 }
+      )
+    ).toBeTruthy();
+    expect(await laterContext(owner.jwt)).toEqual([]);
+    expect((await actions(owner.jwt, { action: 'read' })).json.details).toEqual([]);
+    expect((await actions(stranger.jwt, { action: 'read' })).json.details).toEqual([]);
+    expect(await laterContext(stranger.jwt)).toEqual([]);
   }, 90_000);
 });
 

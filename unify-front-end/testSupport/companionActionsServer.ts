@@ -1,4 +1,4 @@
-// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #366). It answers
+// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #366, #370). It answers
 // the companion-actions request contract from a small in-memory record so the
 // rendered client can be driven through real controls. It is not evidence of the
 // server's behaviour: authorization, revisions, receipts and persistence are
@@ -589,7 +589,242 @@ export function scriptedServer(
     return null;
   }
 
+  // #370 stand-in state: saved details, detail receipts and suggested-detail drafts.
+  const details = new Map<
+    string,
+    { text: string; revision: number; removed: boolean; source: Body; created: number }
+  >();
+  const detailReceipts = new Map<string, Body>();
+  const detailDrafts = new Map<string, Body>();
+  const detailCommands = new Map<number, string>();
+  let nextDetail = 1;
+
+  const detailCurrent = (r: Body): Body => {
+    const d = details.get(r.detail.detail_id);
+    const undone = [...detailReceipts.values()].some(x => x.undo_of === r.operation_id);
+    return {
+      ...r,
+      undone_by: undone ? 'undone' : null,
+      current: !undone && !!d && d.revision === r.after_revision,
+      undoable: r.kind === 'change' && !undone,
+    };
+  };
+  const detailView = (id: string) => {
+    const d = details.get(id)!;
+    return {
+      detail_id: id,
+      text: d.text,
+      scope: 'companion',
+      revision: d.revision,
+      source: d.source,
+      created_at: `2026-10-27T10:00:0${d.created}.000Z`,
+      updated_at: '2026-10-27T10:00:00.000Z',
+    };
+  };
+  const detailDraftView = (d: Body): Body => ({
+    proposal_id: d.proposal_id,
+    proposal_revision: d.proposal_revision,
+    status: d.status,
+    kind: 'detail_create',
+    operations: d.operations,
+    context: {
+      same_text_details: [...details.entries()]
+        .filter(([, x]) => !x.removed && x.text.toLowerCase() === d.operations[0].text.toLowerCase())
+        .map(([detail_id, x]) => ({ detail_id, text: x.text })),
+    },
+    review_reason: null,
+    source: d.source ?? null,
+    receipt: d.receipt_operation_id ? detailCurrent(detailReceipts.get(d.receipt_operation_id)!) : null,
+  });
+  const rememberOf = (text: string) => /^remember that (.+?)\.?$/i.exec(text.trim())?.[1] ?? null;
+
+  /** Executes one detail operation, as the service would, and records its receipt. */
+  function applyDetail(operationId: string, op: Body, auth: Body, undoOf: string | null): Reply {
+    if (op.type === 'detail.remove' && auth.removal_confirmed !== true)
+      return { status: 403, body: { error: 'forbidden', reason: 'removal_requires_confirmation' } };
+    let id: string;
+    let before: { text: string | null; revision: number };
+    if (op.type === 'detail.create') {
+      if ([...details.values()].some(x => !x.removed && x.text === op.text))
+        return { status: 409, body: { error: 'detail_exists' } };
+      id = `5d000000-0000-4000-8000-${String(nextDetail).padStart(12, '0')}`;
+      details.set(id, {
+        text: op.text,
+        revision: 1,
+        removed: false,
+        source: { kind: auth.kind, conversation_id: null },
+        created: nextDetail++,
+      });
+      before = { text: null, revision: 0 };
+    } else {
+      id = op.detail_id;
+      const d = details.get(id);
+      if (!d) return { status: 404, body: { error: 'not_found', reason: 'detail_not_found' } };
+      if (d.revision !== op.expected_revision)
+        return {
+          status: 409,
+          body: { error: 'revision_conflict', detail: { detail_id: id, expected: op.expected_revision, actual: d.revision } },
+        };
+      before = { text: d.text, revision: d.revision };
+      if (op.type === 'detail.update') d.text = op.text;
+      if (op.type === 'detail.remove') d.removed = true;
+      if (op.type === 'detail.restore') d.removed = false;
+      d.revision += 1;
+    }
+    const d = details.get(id)!;
+    const receipt: Body = {
+      operation_id: operationId,
+      created_at: '2026-10-27T18:00:00.000Z',
+      kind: undoOf ? 'undo' : 'change',
+      operation_type: op.type,
+      undo_of: undoOf,
+      task_ref: null,
+      before_state: null,
+      after_state: null,
+      before_revision: before.revision,
+      after_revision: d.revision,
+      detail: {
+        detail_id: id,
+        text: d.text,
+        before_text: op.type === 'detail.update' ? before.text : null,
+        removed: d.removed,
+      },
+      inverse:
+        op.type === 'detail.update'
+          ? { type: 'detail.update', detail_id: id, text: before.text, expected_revision: d.revision }
+          : op.type === 'detail.remove'
+            ? { type: 'detail.restore', detail_id: id, expected_revision: d.revision }
+            : { type: 'detail.remove', detail_id: id, expected_revision: d.revision },
+    };
+    detailReceipts.set(operationId, receipt);
+    return { status: 200, body: { status: 'applied', replayed: false, receipt: detailCurrent(receipt) } };
+  }
+
+  function handleDetails(body: Body): Reply | null {
+    const op = body.operations?.[0] ?? body.operation;
+    if (body.action === 'interpret') {
+      const m = messages.get(body.message_id);
+      const text = m?.role === 'user' ? rememberOf(m.text) : null;
+      if (!text) return null;
+      return {
+        status: 200,
+        body: {
+          command: {
+            kind: 'remember',
+            operation: { type: 'detail.create', text },
+            same_text_details: [...details.entries()]
+              .filter(([, x]) => !x.removed && x.text === text)
+              .map(([detail_id, x]) => ({ detail_id, text: x.text })),
+          },
+        },
+      };
+    }
+    if (body.action === 'apply' && op?.type?.startsWith('detail.')) {
+      const replay = detailReceipts.get(body.operation_id);
+      if (replay) return { status: 200, body: { status: 'applied', replayed: true, receipt: detailCurrent(replay) } };
+      const auth = body.authorization ?? {};
+      let undoOf: string | null = null;
+      if (auth.kind === 'direct_command') {
+        const m = messages.get(auth.message_id);
+        if (!m || rememberOf(m.text) !== op.text || detailCommands.has(auth.message_id))
+          return { status: 403, body: { error: 'forbidden' } };
+      } else if (auth.kind === 'approved_proposal') {
+        const d = detailDrafts.get(auth.proposal_id) ?? proposals.get(auth.proposal_id);
+        if (!d || d.status !== 'draft' || d.proposal_revision !== auth.proposal_revision)
+          return { status: 403, body: { error: 'forbidden' } };
+        undoOf = d.undo_of ?? null;
+      } else if (op.type === 'detail.create' || op.type === 'detail.restore') {
+        return { status: 403, body: { error: 'forbidden' } };
+      }
+      const reply = applyDetail(body.operation_id, op, auth, null);
+      if (reply.status === 200) {
+        if (auth.kind === 'direct_command') detailCommands.set(auth.message_id, body.operation_id);
+        if (auth.kind === 'approved_proposal') {
+          const d = detailDrafts.get(auth.proposal_id) ?? proposals.get(auth.proposal_id)!;
+          d.status = 'applied';
+          d.receipt_operation_id = body.operation_id;
+          if (undoOf) detailReceipts.get(body.operation_id)!.undo_of = undoOf;
+        }
+      }
+      return reply;
+    }
+    if (body.action === 'undo' && detailReceipts.has(body.receipt_operation_id)) {
+      const replay = detailReceipts.get(body.operation_id);
+      if (replay) return { status: 200, body: { status: 'applied', replayed: true, receipt: detailCurrent(replay) } };
+      const target = detailReceipts.get(body.receipt_operation_id)!;
+      const inv = target.inverse;
+      if (inv.type === 'detail.remove' && body.authorization?.removal_confirmed !== true)
+        return { status: 403, body: { error: 'forbidden', reason: 'removal_requires_confirmation' } };
+      if ([...detailReceipts.values()].some(x => x.undo_of === target.operation_id))
+        return { status: 409, body: { error: 'already_undone' } };
+      const d = details.get(inv.detail_id)!;
+      if (d.revision !== inv.expected_revision) {
+        const id = `7e1f1f6c-3333-4333-8333-${String(nextDraft++).padStart(12, '0')}`;
+        const comp: Body = {
+          proposal_id: id,
+          proposal_revision: 1,
+          status: 'draft',
+          operations: [{ ...inv, expected_revision: d.revision }],
+          undo_of: target.operation_id,
+        };
+        proposals.set(id, comp);
+        return {
+          status: 409,
+          body: {
+            error: 'undo_conflict',
+            current: [],
+            proposal: { proposal_id: id, proposal_revision: 1, operations: comp.operations },
+          },
+        };
+      }
+      return applyDetail(body.operation_id, inv, body.authorization ?? {}, target.operation_id);
+    }
+    if (body.action === 'status' && detailReceipts.has(body.operation_id))
+      return { status: 200, body: { status: 'applied', receipt: detailCurrent(detailReceipts.get(body.operation_id)!) } };
+    if (body.action === 'prepare' && op?.type === 'detail.create') {
+      const id = `7e1f1f6c-4444-4444-8444-${String(nextDraft++).padStart(12, '0')}`;
+      const d: Body = { proposal_id: id, proposal_revision: 1, status: 'draft', operations: [op], source: body.source };
+      detailDrafts.set(id, d);
+      return { status: 200, body: { proposal: detailDraftView(d) } };
+    }
+    if ((body.action === 'proposal' || body.action === 'cancel') && detailDrafts.has(body.proposal_id)) {
+      const d = detailDrafts.get(body.proposal_id)!;
+      if (body.action === 'proposal') return { status: 200, body: { proposal: detailDraftView(d) } };
+      if (d.status !== 'draft' || d.proposal_revision !== body.proposal_revision)
+        return { status: 409, body: { error: 'proposal_changed', proposal: detailDraftView(d) } };
+      d.status = 'cancelled';
+      return { status: 200, body: { proposal: detailDraftView(d) } };
+    }
+    return null;
+  }
+
+  function withDetails(body: Body, reply: Reply): Reply {
+    if (reply.status !== 200) return reply;
+    if (body.action === 'read')
+      (reply.body as Body).details = [...details.keys()].filter(id => !details.get(id)!.removed).map(detailView);
+    if (body.action === 'conversation_actions') {
+      const b = reply.body as Body;
+      b.detail_proposals = [...detailDrafts.values()]
+        .filter(d => d.source?.conversation_id === body.conversation_id)
+        .map(detailDraftView);
+      b.detail_commands = [...detailCommands.entries()]
+        .filter(([id]) => messages.get(id)?.conversation === body.conversation_id)
+        .map(([message_id, operation_id]) => ({
+          message_id,
+          operation_id,
+          receipt: detailCurrent(detailReceipts.get(operation_id)!),
+        }));
+    }
+    return reply;
+  }
+
   function handle(body: Body): Reply {
+    const detailReply = handleDetails(body);
+    if (detailReply) return detailReply;
+    return withDetails(body, handleOthers(body));
+  }
+
+  function handleOthers(body: Body): Reply {
     const stepReply = handleSteps(body);
     if (stepReply) return stepReply;
     const created = handleCreate(body);
@@ -817,6 +1052,15 @@ export function scriptedServer(
       profile = next;
     },
     drafts: () => [...drafts.values()],
+    /** #370: every detail the stand-in holds, removed ones included. */
+    details: () => [...details.entries()].map(([detail_id, d]) => ({ detail_id, ...d })),
+    detailDrafts: () => [...detailDrafts.values()],
+    /** #370: another platform edits a detail: its revision moves on. */
+    editDetailElsewhere(detailId: string, text: string) {
+      const d = details.get(detailId)!;
+      d.text = text;
+      d.revision += 1;
+    },
     /** #366: every step the stand-in holds, removed ones included. */
     steps: () => [...steps.entries()].map(([id, s]) => ({ step_id: id, ...s })),
     stepDrafts: () => [...stepDrafts.values()],

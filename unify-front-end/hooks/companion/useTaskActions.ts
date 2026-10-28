@@ -34,6 +34,8 @@ import type {
   TaskActionClient,
 } from '@/services/companionActions/client';
 import type {
+  DetailProposal,
+  SavedDetail,
   StepProposal,
   TaskProgress,
   TaskProposal,
@@ -87,6 +89,8 @@ export interface TaskProgressView {
   byRef: ReadonlyMap<string, TaskProgress>;
   /** #366: live steps by task_ref, in order. */
   stepsByRef: ReadonlyMap<string, readonly TaskStep[]>;
+  /** #370: the account's live saved details, oldest first. */
+  details: readonly SavedDetail[];
   /** True when the shown progress may be out of date (the last read failed). */
   stale: boolean;
   /** Writes are allowed only right after a successful read. */
@@ -151,6 +155,11 @@ export function useTaskProgress(): TaskProgressView {
     return map;
   }, [result]);
 
+  const details = useMemo(
+    () => (result?.kind === 'ok' ? result.details : []),
+    [result]
+  );
+
   let status: TaskProgressStatus;
   if (userId === null || result?.kind === 'unauthorized') status = 'signed_out';
   else if (result?.kind === 'unavailable' || result?.kind === 'refused')
@@ -164,6 +173,7 @@ export function useTaskProgress(): TaskProgressView {
     status,
     byRef,
     stepsByRef,
+    details,
     stale,
     // A refetch after a save may still carry the old revision: wait for it.
     canWrite: status === 'ready' && !stale && !query.isFetching,
@@ -174,8 +184,8 @@ export function useTaskProgress(): TaskProgressView {
 
 /**
  * Removes every other account's private work: unresolved task actions, task
- * progress, Checklist rows (memory, disk and query cache), conversation
- * lists and threads, and task drafts and command results (#363). All of these are keyed by account, so a mounted view
+ * progress and saved details, Checklist rows (memory, disk and query cache), conversation
+ * lists and threads, and task, step and detail drafts and command results (#363, #366, #370). All of these are keyed by account, so a mounted view
  * already reads only the signed-in account's entry; this drops the rest and
  * cancels reads still in flight for another account.
  */
@@ -196,6 +206,7 @@ function useTaskActionAccountScope(
       [TASK_PROPOSAL_ROOT, 1],
       [CONVERSATION_ACTIONS_ROOT, 1],
       [STEP_PROPOSAL_ROOT, 1],
+      [DETAIL_PROPOSAL_ROOT, 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],
@@ -241,6 +252,10 @@ export function useTaskActionStore(
         // #366: suggested-step drafts.
         void queryClient.invalidateQueries({
           queryKey: [STEP_PROPOSAL_ROOT, userId],
+        });
+        // #370: suggested-detail drafts.
+        void queryClient.invalidateQueries({
+          queryKey: [DETAIL_PROPOSAL_ROOT, userId],
         });
       },
       onResult: event => {
@@ -303,6 +318,28 @@ export function useStepProposal(proposalId: string | null) {
       const owner = ownAccountWork();
       if (owner.accountId !== userId) throw new ReadFailed('account changed');
       const result = await createMobileTaskActionClient(owner).stepProposal(proposalId as string);
+      if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
+      throw new ReadFailed(result.kind);
+    },
+    staleTime: 0,
+    retry: 1,
+  });
+}
+
+/** #370: one suggested-detail draft, read from the action service as the signed-in account. */
+export const DETAIL_PROPOSAL_ROOT = 'companion-detail-proposal' as const;
+export const detailProposalKey = (userId: string | null, proposalId: string | null) =>
+  [DETAIL_PROPOSAL_ROOT, userId, proposalId] as const;
+
+export function useDetailProposal(proposalId: string | null) {
+  const userId = useTaskActionAccount() ?? null;
+  return useQuery({
+    queryKey: detailProposalKey(userId, proposalId),
+    enabled: Boolean(userId && proposalId),
+    queryFn: async (): Promise<DetailProposal> => {
+      const owner = ownAccountWork();
+      if (owner.accountId !== userId) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(owner).detailProposal(proposalId as string);
       if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
       throw new ReadFailed(result.kind);
     },

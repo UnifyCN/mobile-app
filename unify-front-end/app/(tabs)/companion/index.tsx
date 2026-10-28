@@ -161,6 +161,9 @@ export default function CompanionScreen() {
     | { kind: 'proposal'; proposalId: string }
     | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
+    // #370: a suggested detail's review, or the saved details.
+    | { kind: 'detail'; proposalId: string }
+    | { kind: 'details' }
     | null
   >(null);
   // Local greeting message shown when user clicks "Ask Anything"
@@ -183,8 +186,10 @@ export default function CompanionScreen() {
     setGreetingMessage(null);
     setOptimisticMessages([]);
     // A draft or task view names the previous account's record: close it. The task
-    // list stays open and reads only the new account's tasks.
-    setSheet(current => (current?.kind === 'tasks' ? current : null));
+    // list and the saved details stay open and read only the new account's records.
+    setSheet(current =>
+      current?.kind === 'tasks' || current?.kind === 'details' ? current : null
+    );
   }
 
   // Fetch messages for the current conversation
@@ -526,6 +531,14 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
   }, []);
+  const openDetail = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'detail', proposalId });
+  }, []);
+  const openDetails = useCallback(() => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'details' });
+  }, []);
 
   const renderMessage = useCallback(
     ({ item, index }: { item: Message; index: number }) => {
@@ -566,6 +579,10 @@ export default function CompanionScreen() {
             stepProposals={conversationActions?.stepProposals ?? []}
             onReviewSteps={openSteps}
             taskTitleOf={taskTitleOf}
+            detailProposals={conversationActions?.detailProposals ?? []}
+            detailCommands={conversationActions?.detailCommands ?? []}
+            onReviewDetail={openDetail}
+            onViewDetails={openDetails}
           />
         </>
       );
@@ -577,6 +594,8 @@ export default function CompanionScreen() {
       openDraft,
       openTask,
       openSteps,
+      openDetail,
+      openDetails,
       taskTitleOf,
       displayMessages.length,
       streamingBotMessage,
@@ -789,6 +808,8 @@ export default function CompanionScreen() {
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
         stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
+        detailProposalId={sheet?.kind === 'detail' ? sheet.proposalId : null}
+        openDetails={sheet?.kind === 'details'}
         initialTask={
           sheet?.kind === 'task'
             ? { taskRef: sheet.taskRef, title: sheet.title }

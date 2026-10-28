@@ -22,6 +22,7 @@ import {
   type Authorization,
   type CompensatingProposal,
   type CurrentTaskValue,
+  type DetailProposal,
   type Operation,
   type OperationType,
   type SetStateOperation,
@@ -59,7 +60,9 @@ export type TaskActionPhase =
     }
   | { phase: 'already_undone' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal }
+  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal }
+  /** #370: a live saved detail already says this; nothing was written. */
+  | { phase: 'detail_exists' }
   /** #363: this command already added its task, or a task with that title exists. */
   | { phase: 'command_used' }
   | { phase: 'needs_clarification' }
@@ -78,7 +81,11 @@ export interface TaskActionResultEvent {
     | 'command_create'
     /** #366: a step control (add, edit, check, remove) or approved suggested steps. */
     | 'step_change'
-    | 'approve_steps';
+    | 'approve_steps'
+    /** #370: a saved-detail control (edit, remove), an approved draft or a remember command. */
+    | 'detail_change'
+    | 'approve_detail'
+    | 'command_detail';
   outcome:
     | 'applied'
     | 'replayed'
@@ -251,8 +258,21 @@ export class TaskActionStore {
     return this.lookup(taskRef, p.write);
   }
 
+  /** Keys with a shown state that start with `prefix` (#370: receipts of removed details). */
+  keysWith(prefix: string): string[] {
+    return [...this.phases.entries()]
+      .filter(([key, phase]) => key.startsWith(prefix) && phase.phase !== 'idle')
+      .map(([key]) => key);
+  }
+
   private actionOf(write: PendingWrite): TaskActionResultEvent['action'] {
     if (write.kind === 'undo') return 'undo';
+    if (write.operation?.type.startsWith('detail.'))
+      return write.authorization?.kind === 'direct_command'
+        ? 'command_detail'
+        : write.operation.type === 'detail.create'
+          ? 'approve_detail'
+          : 'detail_change';
     if (write.operation?.type.startsWith('step.'))
       return write.operation.type === 'step.create' &&
         write.authorization?.kind === 'approved_proposal'
@@ -336,6 +356,11 @@ export class TaskActionStore {
       case 'needs_clarification':
         this.set(taskRef, { phase: 'needs_clarification' });
         report('refused');
+        return;
+      case 'detail_exists':
+        this.set(taskRef, { phase: 'detail_exists' });
+        report('refused');
+        this.deps.onChanged();
         return;
       case 'unknown':
       case 'in_flight':
