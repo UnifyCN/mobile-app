@@ -1,0 +1,37 @@
+{
+  "code_commit": "3bb5484c477052e807b718aaa6a181b6e8932564",
+  "code_tree": "40be63ff4579a89c32561bd4a7605ab6b960cdad",
+  "test_source_sha256": "173e4ee0229ccd3d97eecab42fa68d2eef3c14bfca6e30dce92f8daa510af607",
+  "mobile_ci": {
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-881f2449/unify-front-end",
+    "start": 1793229637.895794,
+    "falsifier": "Any failed assertion or nonzero natural exit; both main and DST must run.",
+    "pid": 43682,
+    "exit": 0,
+    "seconds": 72.51634907722473,
+    "natural_exit": true
+  },
+  "summary_lines": [
+    "Test Suites: 1 skipped, 142 passed, 142 of 143 total",
+    "Tests:       23 skipped, 1500 passed, 1523 total",
+    "Test Suites: 2 passed, 2 total",
+    "Tests:       13 passed, 13 total"
+  ],
+  "types": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "exit": 0,
+    "provenance": "Observed independent tool exit; record written after the run.",
+    "output_log": "types-final.log"
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 10,
+    "all_map_to_unchanged_base_lines": true
+  },
+  "service": "230 unique successful cases across the failed full attempt and one focused retry. Fresh full command still required."
+}
