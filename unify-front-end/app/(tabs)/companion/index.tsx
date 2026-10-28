@@ -13,6 +13,7 @@ import {
   Pressable,
   TouchableOpacity,
   FlatList,
+  ScrollView,
   StyleSheet,
   Dimensions,
   Keyboard,
@@ -20,6 +21,7 @@ import {
   Platform,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  useWindowDimensions,
 } from 'react-native';
 import { History, Plus } from 'lucide-react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -42,6 +44,7 @@ import PartnerSpotlightBanner from '@/components/companion/PartnerSpotlightBanne
 import { shouldShowCompanionSpotlight } from '@/constants/PartnerSpotlight';
 import { Theme } from '@/constants/Theme';
 import { TAB_HEADER_METRICS } from '@/constants/TabHeader';
+import { isLargeText } from '@/utils/textScale';
 import SendIcon from '@/components/icons/SendIcon.svg';
 import { AnimatedDottedBackground } from '@/components/companion/AnimatedDottedBackground';
 import CompanionHeader from '@/components/CompanionHeader';
@@ -119,6 +122,10 @@ export default function CompanionScreen() {
   }>();
   const router = useRouter();
   const tabBarHeight = useBottomTabBarHeight();
+  // The current system text size. It updates live, so the layout below follows a
+  // change in Settings without a restart, and the screen (and its draft) stays mounted.
+  const { fontScale } = useWindowDimensions();
+  const largeText = isLargeText(fontScale);
   const { showToast } = useToast();
   const { height: kbHeight, progress: kbProgress } =
     useReanimatedKeyboardAnimation();
@@ -632,6 +639,29 @@ export default function CompanionScreen() {
     router.replace('/(tabs)/companion' as any);
   }, [resetDraftState, router]);
 
+  const entries = (
+    <>
+      <CompanionTasksEntry
+        onOpen={() => {
+          Keyboard.dismiss();
+          setSheet({ kind: 'tasks' });
+        }}
+      />
+      <PlanEntry onOpen={openPlan} />
+    </>
+  );
+
+  const starters = (
+    <>
+      <Text style={styles.startersLabel}>{t('companion.tryOneOfThese')}</Text>
+      <StarterPrompts
+        onPromptSelect={handleStarterPromptSelect}
+        personalizedStarters={personalization?.starters}
+        layout={largeText ? 'stack' : 'row'}
+      />
+    </>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.contentWrapper}>
@@ -680,13 +710,9 @@ export default function CompanionScreen() {
           }
         />
 
-        <CompanionTasksEntry
-          onOpen={() => {
-            Keyboard.dismiss();
-            setSheet({ kind: 'tasks' });
-          }}
-        />
-        <PlanEntry onOpen={openPlan} />
+        {/* At default sizes the entries stay above the conversation. At large text
+            they scroll with it, so they never take the height the conversation needs. */}
+        {(!largeText || showLoadingState) && entries}
 
         {/* Messages - takes up available space. The FlatList is intentionally
             NOT wrapped in a Pressable: wrapping a scrollable in a Pressable
@@ -696,7 +722,7 @@ export default function CompanionScreen() {
             dismissal: keyboardDismissMode='interactive' handles smooth
             drag-to-dismiss, keyboardShouldPersistTaps='handled' dismisses on
             tap-outside-children. The tap-to-dismiss Pressable is only used
-            for the non-scrollable empty/loading states. */}
+            for the non-scrollable loading state. */}
         {showLoadingState ? (
           <Pressable style={styles.messagesArea} onPress={Keyboard.dismiss}>
             <View style={styles.emptyContainer}>
@@ -704,22 +730,36 @@ export default function CompanionScreen() {
             </View>
           </Pressable>
         ) : showEmptyState ? (
-          <Pressable style={styles.messagesArea} onPress={Keyboard.dismiss}>
-            <View style={styles.emptyState}>
-              <View style={styles.dottedLineContainer} pointerEvents='none'>
+          <View style={styles.messagesArea}>
+            <View style={styles.dottedLineFrame} pointerEvents='none'>
+              <View style={styles.dottedLineContainer}>
                 <AnimatedDottedBackground
                   width={dottedLineWidth}
                   height={dottedLineHeight}
                 />
               </View>
-              <Text style={styles.welcomeTitle}>
-                {t('companion.welcomeTitle')}
-              </Text>
-              <Text style={styles.welcomeCaption}>
-                {t('companion.welcomeCaption')}
-              </Text>
             </View>
-          </Pressable>
+            {/* The welcome scrolls inside its own region: when the space is short
+                (larger text, a small screen) it can never draw over the entries
+                above it or take their taps. */}
+            <ScrollView
+              style={styles.messagesList}
+              contentContainerStyle={styles.emptyScrollContent}
+              keyboardShouldPersistTaps='handled'
+              keyboardDismissMode='interactive'
+            >
+              {largeText && entries}
+              <View style={styles.emptyState}>
+                <Text style={styles.welcomeTitle}>
+                  {t('companion.welcomeTitle')}
+                </Text>
+                <Text style={styles.welcomeCaption}>
+                  {t('companion.welcomeCaption')}
+                </Text>
+              </View>
+              {largeText && starters}
+            </ScrollView>
+          </View>
         ) : (
           <FlatList
             ref={flatListRef}
@@ -728,6 +768,8 @@ export default function CompanionScreen() {
             keyExtractor={keyExtractor}
             style={styles.messagesList}
             contentContainerStyle={styles.messagesContent}
+            ListHeaderComponent={largeText ? entries : undefined}
+            ListHeaderComponentStyle={styles.listEntries}
             ListFooterComponent={renderLoadingIndicator}
             keyboardShouldPersistTaps='handled'
             keyboardDismissMode='interactive'
@@ -747,18 +789,9 @@ export default function CompanionScreen() {
 
       <Animated.View style={[styles.stickyContainer, bottomAnimatedStyle]}>
         <View style={styles.bottomSection}>
-          {/* Starter Prompts - Only show when no messages and no greeting */}
-          {showEmptyState && (
-            <>
-              <Text style={styles.startersLabel}>
-                {t('companion.tryOneOfThese')}
-              </Text>
-              <StarterPrompts
-                onPromptSelect={handleStarterPromptSelect}
-                personalizedStarters={personalization?.starters}
-              />
-            </>
-          )}
+          {/* Starter Prompts - Only show when no messages and no greeting. At
+              large text they scroll with the welcome instead. */}
+          {showEmptyState && !largeText && starters}
 
           {showPartnerSpotlight && (
             <View style={styles.spotlightContainer}>
@@ -849,10 +882,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  emptyScrollContent: {
+    flexGrow: 1,
+  },
   emptyState: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
     alignItems: 'stretch',
+    paddingHorizontal: 18,
+    paddingBottom: 8,
+  },
+  // Same box as the welcome area, so the background keeps its position.
+  dottedLineFrame: {
+    ...StyleSheet.absoluteFillObject,
     paddingHorizontal: 18,
     paddingBottom: 8,
   },
@@ -892,6 +934,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     gap: 4,
     paddingVertical: 10,
+  },
+  // The entries keep their own side margins inside the list's padding.
+  listEntries: {
+    marginHorizontal: -18,
   },
   bottomSection: {
     backgroundColor: '#fff',

@@ -1,10 +1,18 @@
 import { typography } from '@/constants/Typography';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { BAR_LABEL_MAX_SCALE } from '@/utils/textScale';
 
 export const TabIcon = ({ IconComponent, title, focused }: any) => {
   return (
-    <View style={styles.tab}>
+    // The label stops growing with the other bar chrome; on iOS a long press shows it
+    // in the Large Content Viewer, as on a system tab bar.
+    <View
+      testID='tab-icon'
+      style={styles.tab}
+      accessibilityShowsLargeContentViewer
+      accessibilityLargeContentTitle={title}
+    >
       <IconComponent
         height={styles.tabIcon.height}
         width={styles.tabIcon.width}
@@ -15,6 +23,9 @@ export const TabIcon = ({ IconComponent, title, focused }: any) => {
           styles.tabText,
           focused ? styles.activeTab : styles.inactiveTab,
         ]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        maxFontSizeMultiplier={BAR_LABEL_MAX_SCALE}
       >
         {title}
       </Text>

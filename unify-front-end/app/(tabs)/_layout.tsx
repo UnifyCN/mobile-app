@@ -3,6 +3,7 @@ import { Tabs, useRouter, usePathname } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { HIDDEN_TAB_BAR_ROUTES } from '@/constants/Routes';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useWindowDimensions } from 'react-native';
 import { TabIcon } from '@/components/navigation/TabIcon';
 import * as Haptics from 'expo-haptics';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ import ChecklistIcon from '@/components/icons/ChecklistIcon';
 import { useHapticsPreference } from '@/context/HapticsContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTabBarBottomPadding } from '@/utils/safeAreaSpacing';
+import { getTabBarHeight } from '@/utils/textScale';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -25,6 +27,9 @@ export default function TabLayout() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const tabBarBottomPadding = getTabBarBottomPadding(insets.bottom);
+  // The label row grows with the system text size up to the bar maximum.
+  const { fontScale } = useWindowDimensions();
+  const tabBarHeight = getTabBarHeight(insets.bottom, fontScale);
 
   const getTabDisplayName = (routeName: string) => {
     switch (routeName) {
@@ -88,7 +93,7 @@ export default function TabLayout() {
                 flexDirection: 'row',
                 paddingTop: 12,
                 paddingBottom: tabBarBottomPadding,
-                height: 56 + tabBarBottomPadding,
+                height: tabBarHeight,
                 borderTopWidth: 1,
                 borderTopColor: '#F0F0F0',
               },

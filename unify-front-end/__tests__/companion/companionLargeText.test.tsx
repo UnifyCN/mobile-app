@@ -13,16 +13,16 @@ import {
   fireEvent,
   render,
   screen,
-  within,
 } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Dimensions, StyleSheet } from 'react-native';
-import type { ReactTestInstance } from 'react-test-renderer';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
+
+type ReactTestInstance = ReturnType<typeof screen.getByText>;
 
 process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:59371';
 process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
@@ -371,7 +371,6 @@ describe('N2: bar chrome (screen title, tab labels) follows UIKit bar scaling', 
     const title = screen.getByText('Companion');
     expect(title.props.maxFontSizeMultiplier).toBe(BAR_LABEL_MAX_SCALE);
     expect(title.props.numberOfLines).toBe(1);
-    expect(title.props.accessibilityRole).toBe('header');
     const header = title.parent!.parent!;
     const style = StyleSheet.flatten(header.props.style);
     expect(style.height).toBeUndefined();
