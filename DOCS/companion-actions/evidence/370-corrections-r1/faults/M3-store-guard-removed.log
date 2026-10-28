@@ -1,0 +1,99 @@
+  console.error
+    An update to VirtualizedList inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at Object.enqueueSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16926:13)
+      at VirtualizedList.Object.<anonymous>.process.env.NODE_ENV.Component.setState (node_modules/react/cjs/react.development.js:655:20)
+      at node_modules/@babel/runtime/helpers/superPropGet.js:6:14
+      at VirtualizedList.setState (node_modules/react-native/node_modules/@react-native/virtualized-lists/Lists/StateSafePureComponent.js:39:7)
+      at VirtualizedList.setState [as _updateCellsToRender] (node_modules/react-native/node_modules/@react-native/virtualized-lists/Lists/VirtualizedList.js:1909:10)
+      at Timeout._updateCellsToRender [as _onTimeout] (node_modules/react-native/node_modules/@react-native/virtualized-lists/Lists/VirtualizedList.js:1806:16)
+
+PASS __tests__/companionActions/savedDetails.test.tsx (5.399 s)
+  ✓ a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt (178 ms)
+  Saved personal details through Companion (mobile, #370)
+    ✓ a clear remember message saves exactly that detail once, with no AI answer, and its receipt names it (602 ms)
+    ✓ an inferred detail is only a draft: Not now saves nothing, and approval saves it once (1256 ms)
+    ✓ edits at the revision shown and keeps typed text through close and reopen; its receipt names before and after (255 ms)
+    ✓ every removal asks first; Cancel sends nothing; Remove names the detail and Undo restores it (214 ms)
+    ✓ the Undo of a save removes it only after confirmation; an Undo after a newer edit offers a reviewed change (108 ms)
+    ✓ a lost reply is looked up and shown from its receipt; the edit is never sent again (137 ms)
+    ✓ an account change drops the previous account's details and typed edits before the next account renders (129 ms)
+  the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1)
+    ✓ a newer edit read while the review is open withholds approval and names nothing stale (244 ms)
+    ✓ current_detail absent: approval stays unavailable and nothing is removed (156 ms)
+    ✓ current_detail a different detail: approval stays unavailable and nothing is removed (156 ms)
+    ✓ current_detail an older revision: approval stays unavailable and nothing is removed (125 ms)
+    ✓ current_detail a removed detail: approval stays unavailable and nothing is removed (141 ms)
+    ✓ current_detail malformed text: approval stays unavailable and nothing is removed (135 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        5.772 s, estimated 7 s
+Ran all test suites matching /__tests__\/companionActions\/savedDetails.test.tsx/i.
+COMMAND ['reset']
+COMMAND ['npx', 'jest', '__tests__/companionActions/companionActionsLocalStack.test.tsx', '--runInBand', '--watchAll=false', '-t', 'S370-1']
+FAIL __tests__/companionActions/companionActionsLocalStack.test.tsx
+  Task progress against the real local stack (mobile)
+    ○ skipped a state and waiting reason saved in the mobile Checklist are the same record in Companion, on web and in the legacy table; another account sees nothing
+  Task steps against the real local stack (mobile, #366)
+    ○ skipped steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none
+    ○ skipped removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task
+  Saved details against the real local stack (mobile, #370)
+    ✕ S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review (2 ms)
+    ○ skipped a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none
+
+  ● Saved details against the real local stack (mobile, #370) › a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none
+
+    Command failed: docker exec -i supabase_db_unify-details-370-corrections-r1 psql -v ON_ERROR_STOP=1 -q -U postgres -d postgres
+    ERROR:  relation "public.companion_proposals" does not exist
+
+      333 |
+      334 | function psql(sqlText: string) {
+    > 335 |   execFileSync(
+          |               ^
+      336 |     'docker',
+      337 |     ['exec', '-i', DB_CONTAINER, 'psql', '-v', 'ON_ERROR_STOP=1', '-q', '-U', 'postgres', '-d', 'postgres'],
+      338 |     { input: sqlText, stdio: ['pipe', 'pipe', 'pipe'] }
+
+      at psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:335:15)
+      at Object.psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:734:7)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Saved details against the real local stack (mobile, #370) › S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review
+
+    Command failed: docker exec -i supabase_db_unify-details-370-corrections-r1 psql -v ON_ERROR_STOP=1 -q -U postgres -d postgres
+    ERROR:  relation "public.companion_proposals" does not exist
+
+      333 |
+      334 | function psql(sqlText: string) {
+    > 335 |   execFileSync(
+          |               ^
+      336 |     'docker',
+      337 |     ['exec', '-i', DB_CONTAINER, 'psql', '-v', 'ON_ERROR_STOP=1', '-q', '-U', 'postgres', '-d', 'postgres'],
+      338 |     { input: sqlText, stdio: ['pipe', 'pipe', 'pipe'] }
+
+      at psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:335:15)
+      at Object.psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:734:7)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 skipped, 5 total
+Snapshots:   0 total
+Time:        3.531 s, estimated 13 s
+Ran all test suites matching /__tests__\/companionActions\/companionActionsLocalStack.test.tsx/i with tests matching "S370-1".

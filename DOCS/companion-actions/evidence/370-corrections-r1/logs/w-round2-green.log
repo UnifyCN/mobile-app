@@ -1,0 +1,51 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ✓ lib/companionActions/taskActionStore.detailReview.test.ts (5 tests) 3ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ components/companion/tasks/SavedDetails.test.tsx (16 tests) 1017ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  430ms
+
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+   Start at  20:47:26
+   Duration  2.26s (transform 248ms, setup 0ms, collect 696ms, tests 1.02s, environment 295ms, prepare 85ms)
+

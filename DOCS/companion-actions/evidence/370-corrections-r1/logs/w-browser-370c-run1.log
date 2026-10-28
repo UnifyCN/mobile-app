@@ -1,0 +1,27 @@
+COMMAND ['node', 'build/s370c-stack/browser-370c.mjs']
+PASS  the saved detail is shown
+PASS  pointer: the editor opens with the shared entrance motion
+PASS  keyboard Enter: the editor opens without entrance motion
+PASS  keyboard Space: the editor opens without entrance motion
+PASS  saving: hidden before 300ms, then visible (loading delay)
+PASS  keyboard edit saves once at the shown revision
+PASS  a later answer reads the edited text
+FAIL  checking: hidden before 300ms, then visible (loading delay)  {"firstAfterAct":null,"n":0,"sample":[]}
+PASS  a lost reply is looked up, never sent twice
+PASS  pointer: the removal confirmation opens with the shared entrance motion
+PASS  keyboard: the removal confirmation opens without entrance motion
+PASS  Cancel after Remove sends nothing
+PASS  the confirmed removal carries the confirmation
+PASS  a removed detail is no longer read by a later answer
+PASS  Undo of the removal restores the detail for later answers
+PASS  390px: no horizontal overflow
+FAIL  detail controls are at least 44px tall  []
+PASS  CSS 200 percent zoom has no horizontal overflow
+PASS  another account reads none of it
+PASS  pointer: the Undo-of-save confirmation opens with the shared entrance motion
+PASS  keyboard: the Undo-of-save confirmation opens without entrance motion
+PASS  Cancel of the Undo-of-save confirmation keeps the detail
+PASS  Arabic: right to left, Arabic copy, no overflow
+INFO  reduced motion, pointer: editor frames  {"name":"reduced motion, pointer: editor frames","instant":false,"detail":{"firstAfterAct":46,"n":87,"sample":[{"t":0,"o":0,"tr":"matrix(1, 0, 0, 1, 0, -4)","v":"visible"},{"t":40,"o":0.795437,"tr":"matrix(1, 0, 0, 1, 0, -1.05767)","v":"visible"},{"t":91,"o":0.983253,"tr":"matrix(1, 0, 0, 1, 0, -0.13787)","v":"visible"},{"t":140,"o":1,"tr":"none","v":"visible"},{"t":190,"o":1,"tr":"none","v":"visible"},{"t":242,"o":1,"tr":"none","v":"visible"},{"t":291,"o":1,"tr":"none","v":"visible"},{"t":340,"o":1,"tr":"none","v":"visible"},{"t":390,"o":1,"tr":"none","v":"visible"},{"t":440,"o":1,"tr":"none","v":"visible"},{"t":490,"o":1,"tr":"none","v":"visible"},{"t":540,"o":1,"tr":"none","v":"visible"},{"t":591,"o":1,"tr":"none","v":"visible"},{"t":640,"o":1,"tr":"none","v":"visible"}]}}
+
+21 passed, 2 failed, 0 errors

@@ -1,0 +1,23 @@
+PASS __tests__/companionActions/savedDetails.test.tsx
+  ✓ a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt (168 ms)
+  Saved personal details through Companion (mobile, #370)
+    ✓ a clear remember message saves exactly that detail once, with no AI answer, and its receipt names it (287 ms)
+    ✓ an inferred detail is only a draft: Not now saves nothing, and approval saves it once (735 ms)
+    ✓ edits at the revision shown and keeps typed text through close and reopen; its receipt names before and after (157 ms)
+    ✓ every removal asks first; Cancel sends nothing; Remove names the detail and Undo restores it (184 ms)
+    ✓ the Undo of a save removes it only after confirmation; an Undo after a newer edit offers a reviewed change (131 ms)
+    ✓ a lost reply is looked up and shown from its receipt; the edit is never sent again (126 ms)
+    ✓ an account change drops the previous account's details and typed edits before the next account renders (81 ms)
+  the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1)
+    ✓ a newer edit read while the review is open withholds approval and names nothing stale (167 ms)
+    ✓ current_detail absent: approval stays unavailable and nothing is removed (116 ms)
+    ✓ current_detail a different detail: approval stays unavailable and nothing is removed (116 ms)
+    ✓ current_detail an older revision: approval stays unavailable and nothing is removed (119 ms)
+    ✓ current_detail a removed detail: approval stays unavailable and nothing is removed (116 ms)
+    ✓ current_detail malformed text: approval stays unavailable and nothing is removed (116 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        3.643 s, estimated 7 s
+Ran all test suites matching /__tests__\/companionActions\/savedDetails.test.tsx/i.
