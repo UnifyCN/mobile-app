@@ -26,7 +26,10 @@ const ACTIONS = [
   'command_create',
   'step_change',
   'approve_steps',
+  'approve_removal',
 ] as const;
+/** #367: removal operation types, allowlisted. Never a task title or reference. */
+const REMOVAL_TYPES: readonly OperationType[] = ['task.remove', 'task.restore'];
 /** #366: step operation types, allowlisted. Never a step title or id. */
 const STEP_TYPES: readonly OperationType[] = [
   'step.create',
@@ -49,6 +52,7 @@ const OUTCOMES = [
   'lookup_failed',
   'unavailable',
   'needs_review',
+  'undo_blocked',
 ] as const;
 
 /**
@@ -65,7 +69,9 @@ export function buildTaskActionResultProperties(
   const props: TaskActionResultProperties = {
     // Categorical only: never the task title, the message or a reference.
     operation_type:
-      event.operationType && STEP_TYPES.includes(event.operationType)
+      event.operationType &&
+      (STEP_TYPES.includes(event.operationType) ||
+        REMOVAL_TYPES.includes(event.operationType))
         ? event.operationType
         : event.action === 'approve_create' || event.action === 'command_create'
           ? 'task.create_custom'

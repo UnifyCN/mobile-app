@@ -1,5 +1,5 @@
 /**
- * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #366).
+ * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #366, #367).
  * Mirror of the web app's lib/companionActions/client.ts.
  * Each call names an outcome the interface can show truthfully:
  *   - a recorded result, or a definite refusal (nothing was written);
@@ -14,7 +14,9 @@ import {
   type CreateTaskOperation,
   type CurrentTaskValue,
   type Operation,
+  type RemovalProposal,
   type StepCreateOperation,
+  type TaskRemoveOperation,
   type StepProposal,
   type TaskProgress,
   type TaskProposal,
@@ -25,6 +27,7 @@ import {
   parseCurrent,
   parseProposal,
   parseReceipt,
+  parseRemovalProposal,
   parseStep,
   parseStepProposal,
   parseTask,
@@ -78,7 +81,7 @@ export type ApplyResult =
     }
   | { kind: 'in_flight' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal }
+  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal | RemovalProposal }
   /** #363: this command message already authorized a write. */
   | { kind: 'command_used' }
   /** #363: a live task already has this title; nothing was written. */
@@ -93,6 +96,15 @@ export type ProposalResult =
   | { kind: 'ok'; proposal: TaskProposal }
   /** The draft moved on (edited, applied, cancelled): this is its current state. */
   | { kind: 'changed'; proposal: TaskProposal }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
+/** A removal review request (#367): the current review of one task. */
+export type RemovalProposalResult =
+  | { kind: 'ok'; proposal: RemovalProposal }
+  | { kind: 'changed'; proposal: RemovalProposal }
   | Unavailable
   | Refused
   | Unknown
@@ -120,6 +132,8 @@ export type ConversationActionsResult =
       proposals: TaskProposal[];
       /** #366: suggested-step drafts of this conversation. */
       stepProposals: StepProposal[];
+      /** #367: removal reviews a removal request in this conversation opened. */
+      removalProposals: RemovalProposal[];
       commands: {
         messageId: number;
         operationId: string;
@@ -138,6 +152,11 @@ export type UndoResult =
       current: CurrentTaskValue[];
       proposal: CompensatingProposal;
     }
+  /**
+   * #367: Undo of a removal found the task back already, or removed again by a newer
+   * removal; nothing changed and nothing is offered.
+   */
+  | { kind: 'undo_blocked'; reason: 'not_removed' | 'removed_again' }
   | { kind: 'already_undone' }
   | { kind: 'in_flight' }
   | Unavailable
@@ -198,6 +217,12 @@ export interface TaskActionClient {
     proposalId: string,
     proposalRevision: number
   ): Promise<StepProposalResult>;
+  /** #367: the review of one task's removal (its current effects). Writes no task. */
+  prepareRemoval(
+    operation: TaskRemoveOperation,
+    source: { conversationId: string; messageId?: number } | null
+  ): Promise<RemovalProposalResult>;
+  removalProposal(proposalId: string): Promise<RemovalProposalResult>;
 }
 
 type Json = Record<string, unknown>;
@@ -277,6 +302,8 @@ export function createTaskActionClient(opts: {
     draftCall(body, parseTaskProposal);
   const stepDraftCall = (body: Json): Promise<StepProposalResult> =>
     draftCall(body, parseStepProposal);
+  const removalCall = (body: Json): Promise<RemovalProposalResult> =>
+    draftCall(body, parseRemovalProposal);
   const sourceOf = (source: { conversationId: string; messageId?: number } | null) =>
     source
       ? {
@@ -346,14 +373,18 @@ export function createTaskActionClient(opts: {
           actual: typeof detail.actual === 'number' ? detail.actual : null,
         };
       }
-      if (reply.status === 409 && body.error === 'needs_review')
+      if (reply.status === 409 && body.error === 'needs_review') {
+        const kind = asObject(body.proposal).kind;
         return {
           kind: 'needs_review',
           proposal:
-            asObject(body.proposal).kind === 'step_create'
+            kind === 'step_create'
               ? parseStepProposal(body.proposal)
-              : parseTaskProposal(body.proposal),
+              : kind === 'task_remove'
+                ? parseRemovalProposal(body.proposal)
+                : parseTaskProposal(body.proposal),
         };
+      }
       if (reply.status === 409 && body.error === 'command_already_used')
         return { kind: 'command_used' };
       if (reply.status === 409 && body.error === 'needs_clarification')
@@ -383,6 +414,13 @@ export function createTaskActionClient(opts: {
           receipt: parseReceipt(body.receipt),
         };
       }
+      if (
+        reply.status === 409 &&
+        body.error === 'undo_conflict' &&
+        body.proposal === null &&
+        (body.reason === 'not_removed' || body.reason === 'removed_again')
+      )
+        return { kind: 'undo_blocked', reason: body.reason };
       if (reply.status === 409 && body.error === 'undo_conflict') {
         const current = Array.isArray(body.current)
           ? body.current.map(parseCurrent)
@@ -471,11 +509,18 @@ export function createTaskActionClient(opts: {
       const body = asObject(reply.body);
       if (!Array.isArray(body.proposals) || !Array.isArray(body.commands))
         return { kind: 'unknown' };
-      const isSteps = (p: unknown) => asObject(p).kind === 'step_create';
+      const kindOf = (p: unknown) => asObject(p).kind;
       return {
         kind: 'ok',
-        proposals: body.proposals.filter(p => !isSteps(p)).map(parseTaskProposal),
-        stepProposals: body.proposals.filter(isSteps).map(parseStepProposal),
+        proposals: body.proposals
+          .filter(p => kindOf(p) !== 'step_create' && kindOf(p) !== 'task_remove')
+          .map(parseTaskProposal),
+        stepProposals: body.proposals
+          .filter(p => kindOf(p) === 'step_create')
+          .map(parseStepProposal),
+        removalProposals: body.proposals
+          .filter(p => kindOf(p) === 'task_remove')
+          .map(parseRemovalProposal),
         commands: body.commands.map(c => {
           const o = asObject(c);
           if (
@@ -515,6 +560,14 @@ export function createTaskActionClient(opts: {
         proposal_id: proposalId,
         proposal_revision: proposalRevision,
       });
+    },
+
+    prepareRemoval(operation, source) {
+      return removalCall({ action: 'prepare', operation, ...sourceOf(source) });
+    },
+
+    removalProposal(proposalId) {
+      return removalCall({ action: 'proposal', proposal_id: proposalId });
     },
 
     async status(operationId) {
@@ -563,6 +616,10 @@ export function createTaskActionClient(opts: {
       client.reviseSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
     cancelSteps: (...args) =>
       client.cancelSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
+    prepareRemoval: (...args) =>
+      client.prepareRemoval(...args).catch(() => ({ kind: 'unknown' }) as const),
+    removalProposal: (...args) =>
+      client.removalProposal(...args).catch(() => ({ kind: 'unknown' }) as const),
     status: (...args) =>
       client.status(...args).catch(() => ({ kind: 'lookup_failed' }) as const),
   };

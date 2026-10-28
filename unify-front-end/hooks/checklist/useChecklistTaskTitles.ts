@@ -11,21 +11,34 @@ import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
  * task a suggestion is for; a ref it does not hold has no title.
  */
 export function useChecklistTaskTitles(): ReadonlyMap<string, string> {
+  return useChecklistTaskTitlesState().titles;
+}
+
+/**
+ * The same titles, and whether the Checklist read has finished (#367): a removal request
+ * names a task by title, and an unread Checklist must not read as "no such task".
+ */
+export function useChecklistTaskTitlesState(): {
+  titles: ReadonlyMap<string, string>;
+  ready: boolean;
+} {
   const today = useRefreshingToday();
   const { currentStage, stageChanged, isLoading: stageLoading } = useUserStage(today);
   const { persona, province } = useChecklistProfile();
-  const { tasks } = useChecklistTasks({
+  const { tasks, isLoading, error } = useChecklistTasks({
     currentStage,
     stageChanged,
     persona,
     isStageLoading: stageLoading,
     province,
   });
-  return useMemo(() => {
+  const titles = useMemo(() => {
     const map = new Map<string, string>();
     for (const task of tasks) {
       if (!task.dismissed_at) map.set(getChecklistTaskOrderKey(task), task.task.task_name);
     }
     return map;
   }, [tasks]);
+  const ready = !isLoading && !error;
+  return useMemo(() => ({ titles, ready }), [titles, ready]);
 }

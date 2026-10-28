@@ -7,6 +7,7 @@ import { typography } from '@/constants/Typography';
 import {
   TITLE_MAX,
   createTaskOperation,
+  isRemovalProposal,
   isStepProposal,
   type ProposalContext,
   type TaskProposal,
@@ -97,6 +98,7 @@ export function TaskProposalPanel({
   const proposal: TaskProposal | undefined =
     phase.phase === 'needs_review' &&
     !isStepProposal(phase.proposal) &&
+    !isRemovalProposal(phase.proposal) &&
     phase.proposal.proposalRevision >= (query.data?.proposalRevision ?? 0)
       ? phase.proposal
       : query.data;

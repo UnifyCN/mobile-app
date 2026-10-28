@@ -25,6 +25,8 @@ interface ReceiptBlockProps {
   store: TaskActionStore | null;
   /** A connection, a fresh read and no unresolved write. */
   canWrite: boolean;
+  /** #367: the Checklist title, for a content-backed task the receipt does not name. */
+  taskTitle?: string | null;
 }
 
 /**
@@ -37,11 +39,15 @@ export function ReceiptBlock({
   storeKey,
   store,
   canWrite,
+  taskTitle = null,
 }: ReceiptBlockProps) {
   const { t, i18n } = useTranslation();
   const [confirming, setConfirming] = useState(false);
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
-  const title = receipt.title ?? '';
+  const title = receipt.title ?? taskTitle ?? '';
+  // #367: a removal and its restore name the task (a custom title, else the Checklist one).
+  const removal = receipt.operationType === 'task.remove';
+  const restore = receipt.operationType === 'task.restore';
   const steps = receipt.steps ?? [];
   const first = steps[0];
   const isStep = receipt.operationType.startsWith('step.');
@@ -74,6 +80,14 @@ export function ReceiptBlock({
   // "Waiting to Waiting".
   const text = isStep
     ? stepText()
+    : removal
+      ? title
+        ? t('taskRemove.receiptRemoved', { title })
+        : t('taskRemove.receiptRemovedUnknown')
+      : restore
+        ? title
+          ? t('taskRemove.receiptRestored', { title })
+          : t('taskRemove.receiptRestoredUnknown')
     : receipt.operationType === 'task.create_custom'
       ? t('taskCreate.added', { title })
       : receipt.operationType === 'task.remove_created'
@@ -117,6 +131,15 @@ export function ReceiptBlock({
   return (
     <View style={styles.receipt}>
       <Text style={styles.receiptText}>{text}</Text>
+      {removal && (
+        <Text style={styles.receiptMeta}>
+          {t('taskRemove.receiptEffects', {
+            plans: receipt.plans?.length ?? 0,
+            steps: receipt.stepsKept ?? 0,
+            reminders: receipt.remindersStopped ?? 0,
+          })}
+        </Text>
+      )}
       {receipt.stepsTotal !== null && receipt.stepsTotal > 0 && (
         <Text style={styles.receiptMeta}>
           {t('taskSteps.receiptAtCompletion', {
@@ -133,7 +156,9 @@ export function ReceiptBlock({
         <Pressable
           accessibilityRole='button'
           accessibilityLabel={
-            isStep
+            removal
+              ? t('taskRemove.undoRemovalA11y', { change: text })
+              : isStep
               ? t('taskSteps.undoA11y', { change: text })
               : removes
                 ? t('taskCreate.undoA11y', { title })
@@ -151,7 +176,9 @@ export function ReceiptBlock({
         >
           <MaterialIcons name='undo' size={18} color={ACCENT_STRONG} />
           <Text style={styles.undoText}>
-            {isStep
+            {removal
+              ? t('taskRemove.undoRemoval')
+              : isStep
               ? t('taskSteps.undo')
               : removes
                 ? t('taskCreate.undo')
