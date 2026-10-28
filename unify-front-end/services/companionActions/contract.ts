@@ -1,5 +1,5 @@
 /**
- * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366).
+ * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366, #367).
  * The server is supabase/functions/companion-actions in the web repo. Responses are
  * checked here: unknown fields are ignored, a missing or mistyped field is a
  * contract error. Mirror of the web app's lib/companionActions/contract.ts.
@@ -26,6 +26,8 @@ export type OperationType =
   | 'task.create_custom'
   | 'task.remove_created'
   | 'task.edit_details'
+  | 'task.remove'
+  | 'task.restore'
   | StepOperationType;
 
 /** A field an edit changes (#365). */
@@ -107,6 +109,16 @@ export interface TaskReceipt {
    * receipts and for one saved before reasons were recorded.
    */
   waitingReasons: { before: string | null; after: string | null } | null;
+  /** #367: a removal's effects as saved: the plans that held it, steps kept, reminders stopped. */
+  plans: RemovalPlan[] | null;
+  stepsKept: number | null;
+  remindersStopped: number | null;
+}
+
+/** A saved plan a removal affects (#367): it keeps the reference, shown as removed. */
+export interface RemovalPlan {
+  planId: string;
+  goal: string;
 }
 
 export interface TaskProgress {
@@ -208,11 +220,29 @@ export type StepOperation =
   | StepRestoreOperation
   | StepRemoveCreatedOperation;
 
+/**
+ * #367: remove one task. Only as the approval of its reviewed removal draft, which names
+ * the task and its effects, with the user's confirmation.
+ */
+export interface TaskRemoveOperation {
+  type: 'task.remove';
+  task_ref: string;
+  expected_revision: number;
+}
+/** #367: the reviewed restore offered when a removal's Undo meets a newer edit. */
+export interface TaskRestoreOperation {
+  type: 'task.restore';
+  task_ref: string;
+  expected_revision: number;
+}
+
 export type Operation =
   | SetStateOperation
   | CreateTaskOperation
   | RemoveCreatedOperation
   | EditDetailsOperation
+  | TaskRemoveOperation
+  | TaskRestoreOperation
   | StepOperation;
 
 /** An edit for review: the action service binds it to the task's current revision (#365). */
@@ -225,6 +255,7 @@ export type CompensatingOperation =
   | SetStateOperation
   | RemoveCreatedOperation
   | EditDetailsOperation
+  | TaskRestoreOperation
   | Exclude<StepOperation, StepCreateOperation>;
 
 export interface CompensatingProposal {
@@ -235,6 +266,7 @@ export interface CompensatingProposal {
 
 /** An operation that removes something: it is sent only after the user confirmed. */
 export const isRemoval = (op: Operation): boolean =>
+  op.type === 'task.remove' ||
   op.type === 'task.remove_created' ||
   op.type === 'step.remove' ||
   op.type === 'step.remove_created';
@@ -338,10 +370,14 @@ export type CommandResult =
       operation: SetStateOperation | EditDetailsOperation;
       target: { taskRef: string; title: string };
     }
+  /** #367: review the removal of the task with this title; it never writes by itself. */
+  | { kind: 'remove'; title: string }
   | {
       kind: 'clarify';
       reason: ClarifyReason;
       candidates: { taskRef: string; title: string }[];
+      /** #367: the unclear command asked for a removal. */
+      intent?: 'remove';
     }
   | { kind: 'none' };
 
@@ -389,6 +425,8 @@ const OPERATION_TYPES: readonly OperationType[] = [
   'task.create_custom',
   'task.remove_created',
   'task.edit_details',
+  'task.remove',
+  'task.restore',
   'step.create',
   'step.update',
   'step.set_done',
@@ -436,6 +474,14 @@ function parseReceiptSteps(raw: unknown): ReceiptStep[] | null {
 const intOrNull = (o: Json, k: string): number | null =>
   o[k] === undefined || o[k] === null ? null : int(o, k);
 
+function parsePlans(raw: unknown, where: string): RemovalPlan[] {
+  if (!Array.isArray(raw)) throw new ContractError(where);
+  return raw.map(p => {
+    if (!isObject(p)) throw new ContractError(where);
+    return { planId: str(p, 'plan_id'), goal: str(p, 'goal') };
+  });
+}
+
 export function parseReceipt(raw: unknown): TaskReceipt {
   if (!isObject(raw)) throw new ContractError('receipt');
   const kind =
@@ -472,6 +518,12 @@ export function parseReceipt(raw: unknown): TaskReceipt {
             before: strOrNull(raw, 'before_waiting_reason'),
             after: strOrNull(raw, 'after_waiting_reason'),
           },
+    plans:
+      raw.plans === undefined || raw.plans === null
+        ? null
+        : parsePlans(raw.plans, 'receipt.plans'),
+    stepsKept: intOrNull(raw, 'steps_kept'),
+    remindersStopped: intOrNull(raw, 'reminders_stopped'),
   };
 }
 
@@ -534,6 +586,13 @@ export function parseOperation(raw: unknown): CompensatingOperation {
   }
   if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('step.')) {
     return parseStepOperation(raw) as CompensatingOperation;
+  }
+  if (isObject(raw) && raw.type === 'task.restore') {
+    return {
+      type: 'task.restore',
+      task_ref: str(raw, 'task_ref'),
+      expected_revision: int(raw, 'expected_revision'),
+    };
   }
   if (isObject(raw) && raw.type === 'task.remove_created') {
     return {
@@ -787,8 +846,9 @@ export interface StepProposal {
   receipt: TaskReceipt | null;
 }
 
-export const isStepProposal = (p: TaskProposal | StepProposal): p is StepProposal =>
-  'existingSteps' in p;
+export const isStepProposal = (
+  p: TaskProposal | StepProposal | RemovalProposal
+): p is StepProposal => 'existingSteps' in p;
 
 export function parseStepProposal(raw: unknown): StepProposal {
   if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'step_create') {
@@ -882,16 +942,15 @@ export function parseCommand(raw: unknown): CommandResult {
     if (!(CLARIFY_REASONS as readonly unknown[]).includes(reason)) {
       throw new ContractError('command.reason');
     }
-    return {
-      kind: 'clarify',
-      reason: reason as ClarifyReason,
-      candidates: Array.isArray(raw.candidates)
-        ? raw.candidates.map(c => {
-            if (!isObject(c)) throw new ContractError('command.candidates');
-            return { taskRef: str(c, 'task_ref'), title: str(c, 'title') };
-          })
-        : [],
-    };
+    const candidates = Array.isArray(raw.candidates)
+      ? raw.candidates.map(c => {
+          if (!isObject(c)) throw new ContractError('command.candidates');
+          return { taskRef: str(c, 'task_ref'), title: str(c, 'title') };
+        })
+      : [];
+    return raw.intent === 'remove'
+      ? { kind: 'clarify', reason: reason as ClarifyReason, candidates, intent: 'remove' }
+      : { kind: 'clarify', reason: reason as ClarifyReason, candidates };
   }
   if (raw.kind === 'edit') {
     const op = raw.operation;
@@ -908,6 +967,7 @@ export function parseCommand(raw: unknown): CommandResult {
       },
     };
   }
+  if (raw.kind === 'remove') return { kind: 'remove', title: str(raw, 'title') };
   if (raw.kind === 'create') {
     return {
       kind: 'create',
@@ -1001,3 +1061,102 @@ export function editDraftOf(s: SuggestedEdit): EditDraft | null {
   }
   return { type: 'task.edit_details', task_ref: s.taskRef, [s.field]: s.value };
 }
+/** #367: what removing a task affects, read by the action service when the review was prepared. */
+export interface RemovalEffects {
+  taskRef: string;
+  /** A custom task's title; null for a content-backed task (its title is published content). */
+  title: string | null;
+  state: TaskState;
+  revision: number;
+  removed: boolean;
+  plans: RemovalPlan[];
+  stepsTotal: number;
+  remindersPending: number;
+}
+
+/** #367: a server-owned removal review. Approval binds to its revision and needs confirmation. */
+export interface RemovalProposal {
+  proposalId: string;
+  proposalRevision: number;
+  status: 'draft' | 'applied' | 'cancelled';
+  operation: TaskRemoveOperation;
+  effects: RemovalEffects;
+  /** With reviewReason "context_changed": what the earlier revision named. */
+  previousEffects: RemovalEffects | null;
+  reviewReason: 'edited' | 'context_changed' | 'restored' | null;
+  source: { conversationId: string; messageId: number | null } | null;
+  receipt: TaskReceipt | null;
+}
+
+export const isRemovalProposal = (
+  p: TaskProposal | StepProposal | RemovalProposal
+): p is RemovalProposal => 'effects' in p;
+
+function parseEffects(raw: unknown): RemovalEffects {
+  if (!isObject(raw)) throw new ContractError('removal.context');
+  return {
+    taskRef: str(raw, 'task_ref'),
+    title: strOrNull(raw, 'title'),
+    state: state(raw, 'state'),
+    revision: int(raw, 'revision'),
+    removed: bool(raw, 'removed'),
+    plans: parsePlans(raw.plans, 'removal.plans'),
+    stepsTotal: int(raw, 'steps_total'),
+    remindersPending: int(raw, 'reminders_pending'),
+  };
+}
+
+export function parseRemovalProposal(raw: unknown): RemovalProposal {
+  if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'task_remove') {
+    throw new ContractError('removal proposal');
+  }
+  const status = raw.status;
+  if (status !== 'draft' && status !== 'applied' && status !== 'cancelled') {
+    throw new ContractError('proposal.status');
+  }
+  const reason = raw.review_reason ?? null;
+  if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason)) {
+    throw new ContractError('proposal.review_reason');
+  }
+  const op = raw.operations[0];
+  if (!isObject(op) || op.type !== 'task.remove') throw new ContractError('removal operation');
+  return {
+    proposalId: str(raw, 'proposal_id'),
+    proposalRevision: int(raw, 'proposal_revision'),
+    status,
+    operation: {
+      type: 'task.remove',
+      task_ref: str(op, 'task_ref'),
+      expected_revision: int(op, 'expected_revision'),
+    },
+    effects: parseEffects(raw.context),
+    previousEffects:
+      raw.previous_context === null || raw.previous_context === undefined
+        ? null
+        : parseEffects(raw.previous_context),
+    reviewReason: reason as RemovalProposal['reviewReason'],
+    source: isObject(raw.source)
+      ? {
+          conversationId: str(raw.source, 'conversation_id'),
+          messageId:
+            raw.source.message_id === undefined || raw.source.message_id === null
+              ? null
+              : int(raw.source, 'message_id'),
+        }
+      : null,
+    receipt: raw.receipt === null || raw.receipt === undefined ? null : parseReceipt(raw.receipt),
+  };
+}
+
+/** The operation a removal review is requested with; the server binds the current revision. */
+export const taskRemoveOperation = (
+  task: Pick<TaskProgress, 'taskRef' | 'revision'>
+): TaskRemoveOperation => ({
+  type: 'task.remove',
+  task_ref: task.taskRef,
+  expected_revision: task.revision,
+});
+
+/** How task titles are compared when a removal request names one (server: companion_title_key). */
+export const titleKey = (title: string): string =>
+  title.trim().replace(/\s+/gu, ' ').toLowerCase();

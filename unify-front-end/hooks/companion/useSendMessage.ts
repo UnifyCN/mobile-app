@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import {
@@ -45,6 +45,7 @@ import {
   parseSuggestedSteps,
   parseSuggestedTask,
   type CommandResult,
+  titleKey,
 } from '@/services/companionActions/contract';
 import { parseSuggestedPlan } from '@/services/companionActions/planContract';
 import {
@@ -54,11 +55,17 @@ import {
 } from '@/hooks/companion/usePlans';
 import { normalizeSanityLanguage } from '@/services/sanity/i18n';
 
-/** The question for a command that was not clear enough to change anything (#363, #365). */
+/** The question for a command that was not clear enough to change anything (#363, #365, #367). */
 function clarifyQuestion(
   t: (key: string, options?: Record<string, unknown>) => string,
   command: Extract<CommandResult, { kind: 'clarify' }>
 ): string {
+  if (command.intent === 'remove')
+    return t(
+      command.reason === 'multiple'
+        ? 'taskRemove.clarifyMultiple'
+        : 'taskRemove.clarifyMissingTitle'
+    );
   switch (command.reason) {
     case 'missing_title':
       return t('taskCreate.clarifyMissingTitle');
@@ -87,6 +94,11 @@ interface UseSendMessageParams {
   isHistoryLoaded: boolean;
   setCurrentConversationId: (id: string | null) => void;
   isPremium: boolean;
+  /**
+   * #367: titles of the account's live Checklist tasks by task ref (a removal request
+   * names one); null while the Checklist read has not finished.
+   */
+  taskTitles?: ReadonlyMap<string, string> | null;
 }
 
 export const useSendMessage = ({
@@ -95,8 +107,14 @@ export const useSendMessage = ({
   isHistoryLoaded,
   setCurrentConversationId,
   isPremium,
+  taskTitles,
 }: UseSendMessageParams) => {
   const [isLoading, setIsLoading] = useState(false);
+  // #367: a send reads the latest titles, also ones that finish loading after it started.
+  const titlesRef = useRef(taskTitles ?? null);
+  useEffect(() => {
+    titlesRef.current = taskTitles ?? null;
+  }, [taskTitles]);
   const [isWaitingForBot, setIsWaitingForBot] = useState(false);
   const [lastSuggestedNextSteps, setLastSuggestedNextSteps] = useState<
     string[] | undefined
@@ -218,7 +236,50 @@ export const useSendMessage = ({
         ensureOwned();
         if (interpreted.kind === 'ok' && interpreted.command.kind !== 'none') {
           const command = interpreted.command;
-          if (
+          // #367: a removal request opens a review (never a removal) of the one live task
+          // with that title. No match or several matches: a reply, and nothing is prepared.
+          let removalReply: string | null = null;
+          if (command.kind === 'remove') {
+            setIsWaitingForBot(false);
+            // An unread Checklist is not "no such task": wait for it, briefly.
+            for (let i = 0; i < 50 && titlesRef.current === null; i++) {
+              await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            ensureOwned();
+            const titles = titlesRef.current;
+            const key = titleKey(command.title);
+            const matches = [...(titles ?? new Map<string, string>())].filter(
+              ([, title]) => titleKey(title) === key
+            );
+            if (titles === null) {
+              removalReply = t('taskRemove.commandFailed', { title: command.title });
+            } else if (matches.length === 1) {
+              const prepared = await actions.prepareRemoval(
+                { type: 'task.remove', task_ref: matches[0][0], expected_revision: 0 },
+                { conversationId: conversationIdToUse, messageId: savedUserId }
+              );
+              ensureOwned();
+              if (prepared.kind !== 'ok' && prepared.kind !== 'changed')
+                removalReply = t('taskRemove.commandFailed', { title: command.title });
+            } else {
+              removalReply = t(
+                matches.length === 0
+                  ? 'taskRemove.commandNoMatch'
+                  : 'taskRemove.commandSeveral',
+                { title: command.title }
+              );
+            }
+          }
+          if (command.kind === 'remove') {
+            if (removalReply)
+              await saveMessage.mutateAsync({
+                conversationIdentifier: conversationIdToUse,
+                role: 'assistant',
+                content: removalReply,
+                owner,
+              });
+            ensureOwned();
+          } else if (
             (command.kind === 'create' &&
               command.sameTitleTasks.length === 0) ||
             command.kind === 'edit'

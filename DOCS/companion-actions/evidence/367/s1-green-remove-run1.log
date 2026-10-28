@@ -1,0 +1,19 @@
+running 15 tests from ./remove_test.ts
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing ... ok (538ms)
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores ... ok (566ms)
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it ... ok (313ms)
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes ... ok (319ms)
+a relevant change between review and approval needs a new review; an unrelated change does not ... ok (825ms)
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins ... ok (473ms)
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review ... ok (456ms)
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere ... ok (470ms)
+Undo restores the task into plans that still exist and never brings back a plan removed separately ... ok (370ms)
+another account cannot review, approve, undo or look up a removal ... ok (517ms)
+an unknown outcome is looked up before retry; a retry with the same identity removes once ... ok (287ms)
+old messages, receipts and drafts cannot recreate a removed task ... ok (338ms)
+removal commands in every supported language ask for a review and never write ... ok (393ms)
+legacy dismissal and account deletion keep their behavior ... ok (477ms)
+a removal review from a conversation is listed there and reads as removed on another device ... ok (298ms)
+
+ok | 15 passed | 0 failed (6s)
+

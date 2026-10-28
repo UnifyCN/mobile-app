@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
 import type {
+  RemovalProposal,
   StepProposal,
   TaskProposal,
   TaskReceipt,
@@ -45,6 +46,11 @@ interface CardsProps {
   onReviewSteps?: (proposalId: string) => void;
   /** The current title of a Checklist task, or null when this account has no such task. */
   taskTitleOf?: (taskRef: string) => string | null;
+  /** #367: removal reviews a removal request in this conversation opened, and how to open one. */
+  removalProposals?: RemovalProposal[];
+  onReviewRemoval?: (proposal: RemovalProposal, title: string) => void;
+  /** #367: whether a task is removed now (on this or another device). */
+  isRemovedNow?: (taskRef: string) => boolean;
 }
 
 /**
@@ -65,10 +71,14 @@ export function TaskActionCards({
   stepProposals = [],
   onReviewSteps,
   taskTitleOf,
+  removalProposals = [],
+  onReviewRemoval,
+  isRemovedNow,
 }: CardsProps) {
   if (messageId === null) return null;
   const mine = proposals.filter(p => p.source?.messageId === messageId);
   const mySteps = stepProposals.filter(p => p.source?.messageId === messageId);
+  const myRemovals = removalProposals.filter(p => p.source?.messageId === messageId);
   const command = commands.find(c => c.messageId === messageId) ?? null;
   return (
     <>
@@ -97,6 +107,16 @@ export function TaskActionCards({
           store={store}
           taskTitle={taskTitleOf?.(p.operation.task_ref) ?? null}
           onReview={() => onReviewSteps?.(p.proposalId)}
+        />
+      ))}
+      {myRemovals.map(p => (
+        <RemovalCard
+          key={p.proposalId}
+          proposal={p}
+          store={store}
+          title={p.effects.title ?? taskTitleOf?.(p.operation.task_ref) ?? null}
+          removedNow={isRemovedNow?.(p.operation.task_ref) ?? false}
+          onReview={title => onReviewRemoval?.(p, title)}
         />
       ))}
       {isUser && (
@@ -297,6 +317,67 @@ function EditDraftCard({
         }
         onPress={onReview}
       />
+    </View>
+  );
+}
+
+/**
+ * #367: a removal request in the user's own message. It only opened a review; the card
+ * says nothing is removed until the user confirms in the sheet. A task removed elsewhere
+ * turns the card historical, with no control that could act on it.
+ */
+function RemovalCard({
+  proposal,
+  store,
+  title,
+  removedNow,
+  onReview,
+}: {
+  proposal: RemovalProposal;
+  store: TaskActionStore | null;
+  title: string | null;
+  removedNow: boolean;
+  onReview: (title: string) => void;
+}) {
+  const { t } = useTranslation();
+  const taskRef = proposal.operation.task_ref;
+  const phase = useTaskActionPhase(store, taskRef);
+  const saved =
+    phase.phase === 'saved' && phase.receipt.operationType === 'task.remove'
+      ? phase.receipt
+      : proposal.receipt;
+  const name = title ?? t('taskRemove.unknownTask');
+  const open = proposal.status === 'draft' && !saved && !removedNow;
+  const status = saved
+    ? t('taskRemove.cardRemoved')
+    : removedNow
+      ? t('taskActions.removed')
+      : isUnresolved(phase)
+        ? t('taskActions.checking')
+        : t('taskRemove.cardDraft');
+  return (
+    <View testID='task-removal-card' style={[styles.card, open && styles.cardDraft]}>
+      <View style={styles.icon}>
+        <MaterialIcons name='delete-outline' size={18} color={ACCENT_STRONG} />
+      </View>
+      <View style={styles.text}>
+        <Text style={styles.eyebrow}>{t('taskRemove.cardEyebrow')}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.status} accessibilityLiveRegion='polite'>
+          {status}
+        </Text>
+      </View>
+      {(open || saved) && (
+        <CardButton
+          label={open ? t('taskRemove.cardReview') : t('taskCreate.view')}
+          name={
+            open
+              ? t('taskRemove.cardReviewA11y', { title: name })
+              : t('taskCreate.view')
+          }
+          onPress={() => onReview(name)}
+        />
+      )}
     </View>
   );
 }
