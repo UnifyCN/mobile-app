@@ -27,6 +27,9 @@ import { execFileSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
+import { createTaskActionClient } from '@/services/companionActions/client';
+import { verifiedCompensationDetail } from '@/services/companionActions/contract';
+import { TaskActionStore } from '@/services/companionActions/taskActionStore';
 
 const API_URL = process.env.ACTIONS_API_URL ?? '';
 const ANON_KEY = process.env.ACTIONS_ANON_KEY ?? '';
@@ -797,6 +800,81 @@ describeStack('Saved details against the real local stack (mobile, #370)', () =>
     expect((await actions(owner.jwt, { action: 'read' })).json.details).toEqual([]);
     expect((await actions(stranger.jwt, { action: 'read' })).json.details).toEqual([]);
     expect(await laterContext(stranger.jwt)).toEqual([]);
+  }, 90_000);
+
+  it('S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review', async () => {
+    // Wrong if: the client drops the service's current_detail, the review names the
+    // historical text, an unconfirmed or stale approval removes anything, or the newly
+    // reviewed removal does not remove exactly the current revision.
+    const owner = await newAccount('details-undo-conflict');
+    const created = await rememberThroughService(owner, 'I can attend appointments on Fridays');
+    const detailId = created.detail.detail_id as string;
+    const editElsewhere = async (text: string, expected_revision: number) =>
+      expect(
+        (
+          await actions(owner.jwt, {
+            action: 'apply',
+            operation_id: randomUUID(),
+            authorization: { kind: 'ui_control' },
+            operations: [{ type: 'detail.update', detail_id: detailId, text, expected_revision }],
+          })
+        ).status
+      ).toBe(200);
+    // The real client and store; the transport is real HTTP with the owner's JWT.
+    const client = createTaskActionClient({
+      transport: async body => {
+        const reply = await actions(owner.jwt, body, 'ios');
+        return { status: reply.status, body: reply.json };
+      },
+      platform: 'ios',
+      appVersion: 'test',
+    });
+    const store = new TaskActionStore({ client, newOperationId: () => randomUUID(), onChanged: () => {} });
+    const key = `detail:${detailId}`;
+    const live = async () => {
+      const r = await client.read();
+      if (r.kind !== 'ok') throw new Error(`read ${r.kind}`);
+      return r.details;
+    };
+
+    await editElsewhere('I can attend appointments on Saturdays', 1);
+    await store.undo(key, created.operation_id, { removalConfirmed: true });
+    let p = store.get(key);
+    if (p.phase !== 'undo_review') throw new Error(`phase ${p.phase}`);
+    expect(p.currentDetail).toEqual({
+      detailId,
+      text: 'I can attend appointments on Saturdays',
+      revision: 2,
+      removed: false,
+    });
+    expect(p.proposal.operations).toEqual([{ type: 'detail.remove', detail_id: detailId, expected_revision: 2 }]);
+    expect(verifiedCompensationDetail(p.proposal.operations[0], p.currentDetail, await live())).toEqual(p.currentDetail);
+
+    // Without the removal confirmation nothing is sent.
+    await store.approveCompensation(key);
+    expect((await live()).map(d => [d.text, d.revision])).toEqual([['I can attend appointments on Saturdays', 2]]);
+
+    // A newer edit: the newer read withholds the review, and the service refuses it too.
+    await editElsewhere('I can attend appointments on Sundays', 2);
+    expect(verifiedCompensationDetail(p.proposal.operations[0], p.currentDetail, await live())).toBeNull();
+    await store.approveCompensation(key, { removalConfirmed: true });
+    expect(store.get(key).phase).toBe('conflict');
+    expect((await live()).map(d => [d.text, d.revision])).toEqual([['I can attend appointments on Sundays', 3]]);
+
+    // A new Undo reviews the current detail; its confirmed approval removes exactly revision 3.
+    await store.undo(key, created.operation_id, { removalConfirmed: true });
+    p = store.get(key);
+    if (p.phase !== 'undo_review') throw new Error(`phase ${p.phase}`);
+    expect(p.currentDetail).toMatchObject({ text: 'I can attend appointments on Sundays', revision: 3, removed: false });
+    await store.approveCompensation(key, { removalConfirmed: true });
+    const done = store.get(key);
+    if (done.phase !== 'saved') throw new Error(`phase ${done.phase}`);
+    expect([done.receipt.operationType, done.receipt.detail?.text]).toEqual([
+      'detail.remove',
+      'I can attend appointments on Sundays',
+    ]);
+    expect(await live()).toEqual([]);
+    expect(await laterContext(owner.jwt)).toEqual([]);
   }, 90_000);
 });
 
