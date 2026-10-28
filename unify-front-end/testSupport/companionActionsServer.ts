@@ -1,4 +1,4 @@
-// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #366). It answers
+// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #365, #366). It answers
 // the companion-actions request contract from a small in-memory record so the
 // rendered client can be driven through real controls. It is not evidence of the
 // server's behaviour: authorization, revisions, receipts and persistence are
@@ -44,7 +44,11 @@ export function receiptOf(
 
 export function scriptedServer(
   initial: Record<string, Partial<Row>> = {},
-  opts: { override?: (body: Body) => Reply | 'network-error' | undefined } = {}
+  opts: {
+    override?: (body: Body) => Reply | 'network-error' | undefined;
+    /** #365: published tasks the account's Checklist shows, by ref, with their titles. */
+    published?: Record<string, string>;
+  } = {}
 ) {
   const rows = new Map<string, Row>();
   for (const [ref, row] of Object.entries(initial)) {
@@ -75,6 +79,10 @@ export function scriptedServer(
   };
   let nextCustom = 500;
   let nextDraft = 1;
+  // #365 stand-in state: a custom task's description and priority.
+  const details = new Map<string, { description: string; priority: string }>();
+  const detailsOf = (ref: string) =>
+    details.get(ref) ?? { description: '', priority: 'Do soon' };
   // #366 stand-in state: steps by id, and suggested-step drafts.
   const steps = new Map<
     string,
@@ -94,7 +102,11 @@ export function scriptedServer(
 
   function current(ref: string, receipt: Body): Body {
     const row = rowOf(ref);
-    const { before_reason: _hidden, ...visible } = receipt;
+    const {
+      before_reason: _hidden,
+      inverse_fields: _inverse,
+      ...visible
+    } = receipt;
     return {
       ...visible,
       ...(titles.has(ref) ? { title: titles.get(ref) } : {}),
@@ -115,7 +127,7 @@ export function scriptedServer(
     proposal_id: d.proposal_id,
     proposal_revision: d.proposal_revision,
     status: d.status,
-    kind: 'task_create',
+    kind: d.kind ?? 'task_create',
     operations: d.operations,
     context: d.context,
     previous_context: d.previous_context ?? null,
@@ -395,6 +407,248 @@ export function scriptedServer(
     return applied(receipt);
   }
 
+  // ------------------------------------------------------------- #365 edits
+  const snapshot = (ref: string): Body => {
+    const row = rowOf(ref);
+    const custom = ref.startsWith('custom:');
+    return {
+      task_ref: ref,
+      revision: row.revision,
+      removed: row.removed,
+      state: row.state,
+      waiting_reason: row.reason,
+      title: custom ? (titles.get(ref) ?? null) : (opts.published?.[ref] ?? null),
+      ...(custom ? detailsOf(ref) : { description: null, priority: null }),
+    };
+  };
+  const relevant = (op: Body, task: Body) =>
+    JSON.stringify(
+      op.type === 'task.set_state'
+        ? [task.removed, task.state, task.waiting_reason]
+        : [task.removed, ...['title', 'description', 'priority'].map(k => (k in op ? task[k] : null))]
+    );
+  const canonical = (op: Body) =>
+    JSON.stringify(Object.keys(op).sort().map(k => [k, op[k]]));
+  const withoutRevision = (op: Body) => {
+    const { expected_revision: _r, ...rest } = op;
+    return JSON.stringify(Object.keys(rest).sort().map(k => [k, rest[k]]));
+  };
+  const STATES: Record<string, string> = {
+    'not started': 'not_started',
+    'in progress': 'in_progress',
+    waiting: 'waiting',
+    completed: 'completed',
+  };
+  /** The English examples of the edit grammar only; the service's grammar is tested there. */
+  function resolveEdit(text: string): Body | null {
+    const q = '"([^"]*)"';
+    let m = text.match(new RegExp(`^Rename task ${q} to ${q}$`, 'i'));
+    let change: Body | null = m ? { field: 'title', value: m[2] } : null;
+    if (!m) {
+      m = text.match(new RegExp(`^Set priority of task ${q} to (.+)$`, 'i'));
+      if (m) change = { field: 'priority', value: m[2] };
+    }
+    if (!m) {
+      m = text.match(new RegExp(`^Mark task ${q} as ([^:]+?)(?::\\s*(.+))?$`, 'i'));
+      if (m) {
+        const state = STATES[m[2].trim().toLowerCase()];
+        if (!state) return { kind: 'clarify', reason: 'invalid_value' };
+        change = { field: 'state', value: state, reason: m[3]?.trim() };
+      }
+    }
+    if (!m || !change) return null;
+    const name = m[1].trim().toLowerCase();
+    const live = [
+      ...[...titles.entries()].filter(([ref]) => !rowOf(ref).removed),
+      ...Object.entries(opts.published ?? {}).filter(([ref]) => !rowOf(ref).removed),
+    ].filter(([, t]) => t.toLowerCase() === name);
+    if (live.length === 0) return { kind: 'clarify', reason: 'task_not_found' };
+    if (live.length > 1)
+      return {
+        kind: 'clarify',
+        reason: 'task_ambiguous',
+        candidates: live.map(([task_ref, title]) => ({ task_ref, title })),
+      };
+    const [ref, title] = live[0];
+    if (change.field !== 'state' && ref.startsWith('sanity:'))
+      return { kind: 'clarify', reason: 'shared_task_field' };
+    const now = snapshot(ref);
+    const operation: Body =
+      change.field === 'state'
+        ? {
+            type: 'task.set_state',
+            task_ref: ref,
+            state: change.value,
+            expected_revision: now.revision,
+            ...(change.reason ? { waiting_reason: change.reason } : {}),
+          }
+        : {
+            type: 'task.edit_details',
+            task_ref: ref,
+            expected_revision: now.revision,
+            [change.field]: change.value,
+          };
+    const same =
+      change.field === 'state'
+        ? now.state === change.value && (now.waiting_reason ?? undefined) === change.reason
+        : now[change.field] === change.value;
+    if (same) return { kind: 'clarify', reason: 'no_change' };
+    return { kind: 'edit', operation, target: { task_ref: ref, title } };
+  }
+
+  function writeEdit(body: Body, op: Body, undoOf?: Body): Reply {
+    const ref = op.task_ref;
+    const before = rowOf(ref);
+    if (before.removed)
+      return { status: 422, body: { error: 'invalid_request', reason: 'task_removed' } };
+    if (before.revision !== op.expected_revision)
+      return {
+        status: 409,
+        body: {
+          error: 'revision_conflict',
+          detail: { task_ref: ref, expected: op.expected_revision, actual: before.revision },
+        },
+      };
+    const after: Row = { ...before, revision: before.revision + 1 };
+    const extra: Body = undoOf
+      ? { kind: 'undo', undo_of: undoOf.operation_id, undoable: false }
+      : {};
+    if (op.type === 'task.set_state') {
+      after.state = op.state;
+      after.reason = op.state === 'waiting' ? (op.waiting_reason ?? null) : null;
+      extra.before_reason = before.reason;
+    } else {
+      const old: Body = { title: titles.get(ref), ...detailsOf(ref) };
+      const changes = ['title', 'description', 'priority']
+        .filter(k => k in op && op[k] !== old[k])
+        .map(k => ({ field: k, before: old[k], after: op[k] }));
+      if (op.title !== undefined) titles.set(ref, op.title);
+      details.set(ref, {
+        description: op.description ?? old.description,
+        priority: op.priority ?? old.priority,
+      });
+      extra.operation_type = 'task.edit_details';
+      extra.title = titles.get(ref);
+      extra.changes = changes;
+      extra.inverse_fields = Object.fromEntries(changes.map(c => [c.field, c.before]));
+    }
+    const receipt = receiptOf(ref, body, before, after, extra);
+    if (undoOf) {
+      undoOf.undone_by = body.operation_id;
+      undoOf.undoable = false;
+    }
+    after.receipts = [...before.receipts, receipt];
+    rows.set(ref, after);
+    byOperation.set(body.operation_id, receipt);
+    return applied(receipt);
+  }
+
+  function handleEdit(body: Body): Reply | null {
+    if (body.action === 'interpret') {
+      const m = messages.get(body.message_id);
+      const r = m && m.role === 'user' ? resolveEdit(m.text) : null;
+      return r ? { status: 200, body: { command: r } } : null;
+    }
+    const op = body.operation;
+    if (
+      body.action === 'prepare' &&
+      (op?.type === 'task.set_state' || op?.type === 'task.edit_details')
+    ) {
+      const id = `7e1f1f6c-3333-4333-8333-${String(nextDraft++).padStart(12, '0')}`;
+      const task = snapshot(op.task_ref);
+      const d: Body = {
+        proposal_id: id,
+        proposal_revision: 1,
+        status: 'draft',
+        kind: 'task_edit',
+        operations: [{ ...op, expected_revision: task.revision }],
+        context: { task },
+        source: body.source ?? null,
+      };
+      drafts.set(id, d);
+      return { status: 200, body: { proposal: draftView(d) } };
+    }
+    if (body.action === 'undo' && !byOperation.get(body.operation_id)) {
+      const target = byOperation.get(body.receipt_operation_id);
+      if (target?.operation_type !== 'task.edit_details' || target.kind === 'undo')
+        return null;
+      if (target.undone_by) return { status: 409, body: { error: 'already_undone' } };
+      const now = rowOf(target.task_ref);
+      const inverse = {
+        type: 'task.edit_details',
+        task_ref: target.task_ref,
+        ...target.inverse_fields,
+        expected_revision: now.revision,
+      };
+      if (now.revision !== target.after_revision) {
+        const proposal = {
+          proposal_id: '7e1f1f6c-1111-4111-8111-000000000003',
+          proposal_revision: 1,
+          operations: [inverse],
+        };
+        proposals.set(proposal.proposal_id, { ...proposal, undo_of: target.operation_id });
+        return {
+          status: 409,
+          body: {
+            error: 'undo_conflict',
+            receipt_operation_id: target.operation_id,
+            current: [{ ...snapshot(target.task_ref) }],
+            proposal,
+          },
+        };
+      }
+      return writeEdit(body, inverse, target);
+    }
+    if (body.action !== 'apply' || byOperation.get(body.operation_id)) return null;
+    const applyOp = body.operations?.[0];
+    const auth = body.authorization ?? {};
+    if (auth.kind === 'direct_command') {
+      const m = messages.get(auth.message_id);
+      const r = m && m.role === 'user' ? resolveEdit(m.text) : null;
+      if (!r) return null; // not an edit command: #363 create handling
+      if (commandUses.has(auth.message_id))
+        return { status: 409, body: { error: 'command_already_used' } };
+      if (r.kind !== 'edit' || withoutRevision(r.operation) !== withoutRevision(applyOp))
+        return { status: 403, body: { error: 'forbidden' } };
+      const reply = writeEdit(body, applyOp);
+      if (reply.status === 200) commandUses.set(auth.message_id, body.operation_id);
+      return reply;
+    }
+    if (auth.kind !== 'approved_proposal') return null;
+    const d = drafts.get(auth.proposal_id);
+    if (d?.kind === 'task_edit') {
+      if (
+        d.status !== 'draft' ||
+        d.proposal_revision !== auth.proposal_revision ||
+        // jsonb, as the server stores it, has no key order.
+        d.operations.map(canonical).join() !== body.operations.map(canonical).join()
+      )
+        return { status: 403, body: { error: 'forbidden' } };
+      const now = snapshot(applyOp.task_ref);
+      const rebased = { ...applyOp, expected_revision: now.revision };
+      if (relevant(applyOp, now) !== relevant(applyOp, d.context.task)) {
+        d.previous_context = d.context;
+        d.context = { task: now };
+        d.operations = [rebased];
+        d.proposal_revision += 1;
+        d.review_reason = 'context_changed';
+        return { status: 409, body: { error: 'needs_review', proposal: draftView(d) } };
+      }
+      const reply = writeEdit(body, rebased);
+      if (reply.status === 200) {
+        d.status = 'applied';
+        d.receipt_operation_id = body.operation_id;
+      }
+      return reply;
+    }
+    const compensation = proposals.get(auth.proposal_id);
+    if (applyOp?.type === 'task.edit_details' && compensation && !compensation.used) {
+      compensation.used = true;
+      return writeEdit(body, applyOp, byOperation.get(compensation.undo_of));
+    }
+    return null;
+  }
+
   const stepView = (id: string) => {
     const s = steps.get(id)!;
     return {
@@ -590,6 +844,8 @@ export function scriptedServer(
   }
 
   function handle(body: Body): Reply {
+    const edited = handleEdit(body);
+    if (edited) return edited;
     const stepReply = handleSteps(body);
     if (stepReply) return stepReply;
     const created = handleCreate(body);
@@ -807,7 +1063,22 @@ export function scriptedServer(
     customTasks: () =>
       [...titles.entries()]
         .filter(([ref]) => !rowOf(ref).removed)
-        .map(([ref, title]) => ({ id: ref.slice(7), title })),
+        .map(([ref, title]) => ({ id: ref.slice(7), title, ...detailsOf(ref) })),
+    /** #365: a custom task that exists before the test, as the Checklist created it. */
+    addCustomTask(title: string, priority = 'Do soon') {
+      const ref = `custom:${nextCustom++}`;
+      rows.set(ref, { state: 'not_started', reason: null, revision: 1, removed: false, receipts: [] });
+      titles.set(ref, title);
+      details.set(ref, { description: '', priority });
+      return ref;
+    },
+    /** #365: another platform edits a custom task's details: the revision moves on. */
+    editDetailsElsewhere(ref: string, fields: { title?: string; priority?: string; description?: string }) {
+      const before = rowOf(ref);
+      if (fields.title !== undefined) titles.set(ref, fields.title);
+      details.set(ref, { ...detailsOf(ref), ...fields } as { description: string; priority: string });
+      rows.set(ref, { ...before, revision: before.revision + 1 });
+    },
     /** A message the client saved; the stand-in reads it like the service does. */
     saveMessage(id: number, role: string, text: string, conversation: string) {
       messages.set(id, { role, text, conversation });

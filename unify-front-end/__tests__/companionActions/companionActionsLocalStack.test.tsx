@@ -285,6 +285,7 @@ jest.mock('@/components/partners/SpotlightRow', () => () => null);
 
 import ChecklistScreen from '@/app/(tabs)/Checklist/index';
 import CompanionScreen from '@/app/(tabs)/companion/index';
+import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 
 function testI18n() {
   const i18n = createInstance();
@@ -372,15 +373,24 @@ describeStack('Task progress against the real local stack (mobile)', () => {
       method: 'GET',
       key: SERVICE_KEY,
     });
-    if (gate.status !== 200) {
-      // This repo's migration file, exactly as it ships.
-      psql(
-        fs.readFileSync(
-          path.resolve(__dirname, '../../supabase/migrations/20261025235536_companion_task_actions.sql'),
-          'utf8'
-        )
-      );
-    }
+    // This repo's migration files, exactly as they ship, in order (#361, #363, #366, #365),
+    // each only when the stack does not have it yet.
+    const migration = (file: string) =>
+      psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations', file), 'utf8'));
+    const hasFunction = (signature: string) =>
+      execFileSync(
+        'docker',
+        ['exec', '-i', DB_CONTAINER, 'psql', '-tA', '-U', 'postgres', '-d', 'postgres', '-c',
+          `select to_regprocedure('${signature}') is not null`],
+        { stdio: ['pipe', 'pipe', 'pipe'] }
+      ).toString().trim() === 't';
+    if (gate.status !== 200) migration('20261025235536_companion_task_actions.sql');
+    if (!hasFunction('public.companion_prepare_proposal(uuid,jsonb,jsonb)'))
+      migration('20261026165156_companion_task_create.sql');
+    if (!hasFunction('public.companion_read_steps(uuid)'))
+      migration('20261027183644_companion_task_steps.sql');
+    if (!hasFunction('public.companion_prepare_edit(uuid,jsonb,jsonb,text)'))
+      migration('20261028001530_companion_task_edit.sql');
     psql(`update public.companion_feature_gate set enabled = true, min_contract_version = 1,
             max_contract_version = 1, allowed_platforms = '{ios,android,web}';`);
     execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
@@ -680,6 +690,81 @@ describeStack('Task steps against the real local stack (mobile, #366)', () => {
       ['Choose a bank', true],
     ]);
   }, 90_000);
+});
+
+describeStack('Task edits against the real local stack (mobile, #365)', () => {
+  afterEach(() => {
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  it('an edit draft approved in the mobile sheet and a clear command change the same custom task in the table every Checklist reads; another account can use neither', async () => {
+    const owner = await newAccount('editor');
+    const stranger = await newAccount('stranger');
+    mockUserId = owner.id;
+    mockCapture = jest.fn();
+    const rest = (table: string, body: Record<string, unknown>, select: string) =>
+      http(`/rest/v1/${table}?select=${select}`, {
+        method: 'POST',
+        jwt: owner.jwt,
+        headers: { Prefer: 'return=representation' },
+        body: JSON.stringify(body),
+      });
+    // A custom task, created the way today's Checklist does (direct insert, user JWT).
+    const task = await rest('custom_checklist_tasks', { user_id: owner.id, title: 'Get a phone plan', description: '', priority: 'Do soon' }, 'id');
+    expect(task.status).toBe(201);
+    const ref = `custom:${task.json[0].id}`;
+    const conversation = await rest('conversations', { user_id: owner.id, title: 't' }, 'id,conversation_identifier');
+    const answer = await rest('messages', { conversation_id: conversation.json[0].id, role: 'assistant', content: 'A prepaid plan needs no credit check.' }, 'id');
+    // What the send hook asks for after an answer that suggests this change.
+    const prepared = await actions(owner.jwt, {
+      action: 'prepare',
+      operation: { type: 'task.edit_details', task_ref: ref, title: 'Get a prepaid phone plan' },
+      source: { conversation_id: conversation.json[0].conversation_identifier, message_id: answer.json[0].id },
+    }, 'ios');
+    expect(prepared.status).toBe(200);
+    const proposalId = prepared.json.proposal.proposal_id;
+    expect((await actions(stranger.jwt, { action: 'proposal', proposal_id: proposalId })).status).toBe(404);
+
+    mount(<TaskActionsSheet visible proposalId={proposalId} proposalKind='task_edit' onClose={() => {}} />);
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText('Now: “Get a phone plan”', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('After you save: “Get a prepaid phone plan”')).toBeTruthy();
+    const approve = await within(sheet).findByRole('button', { name: 'Save this change to Get a phone plan' });
+    await waitFor(() => expect(approve).not.toBeDisabled(), { timeout: 10_000 });
+    fireEvent.press(approve);
+    expect(
+      await within(sheet).findByText('Changed in Checklist: Get a prepaid phone plan', {}, { timeout: 10_000 })
+    ).toBeTruthy();
+    expect(within(sheet).getByText('Title: “Get a phone plan” → “Get a prepaid phone plan”')).toBeTruthy();
+
+    // A clear command in the owner's own saved message, through the same boundary.
+    const command = await rest('messages', {
+      conversation_id: conversation.json[0].id, role: 'user',
+      content: 'Set priority of task "Get a prepaid phone plan" to Do now',
+    }, 'id');
+    const messageId = command.json[0].id;
+    expect((await actions(stranger.jwt, { action: 'interpret', message_id: messageId })).status).toBe(404);
+    const interpreted = await actions(owner.jwt, { action: 'interpret', message_id: messageId }, 'ios');
+    expect(interpreted.json.command.kind).toBe('edit');
+    const forged = await actions(stranger.jwt, {
+      action: 'apply', operation_id: '00000000-0000-4000-8000-000000000365',
+      operations: [interpreted.json.command.operation], authorization: { kind: 'direct_command', message_id: messageId },
+    });
+    expect(forged.status).toBe(403);
+    const applied = await actions(owner.jwt, {
+      action: 'apply', operation_id: '00000000-0000-4000-8000-000000000366',
+      operations: [interpreted.json.command.operation], authorization: { kind: 'direct_command', message_id: messageId },
+    }, 'ios');
+    expect(applied.status).toBe(200);
+
+    // The row every Checklist (this app, web, released v1.6.0) reads with select('*').
+    const legacy = await http(`/rest/v1/custom_checklist_tasks?select=title,priority,description&id=eq.${task.json[0].id}`, {
+      method: 'GET', jwt: owner.jwt,
+    });
+    expect(legacy.json).toEqual([{ title: 'Get a prepaid phone plan', priority: 'Do now', description: '' }]);
+    const theirs = await http(`/rest/v1/custom_checklist_tasks?select=id&id=eq.${task.json[0].id}`, { method: 'GET', jwt: stranger.jwt });
+    expect(theirs.json).toEqual([]);
+  }, 60_000);
 });
 
 if (!enabled) {

@@ -1,5 +1,5 @@
 /**
- * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #366).
+ * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366).
  * The server is supabase/functions/companion-actions in the web repo. Responses are
  * checked here: unknown fields are ignored, a missing or mistyped field is a
  * contract error. Mirror of the web app's lib/companionActions/contract.ts.
@@ -18,12 +18,25 @@ export type TaskState = (typeof TASK_STATES)[number];
 export const WAITING_REASON_MAX = 500;
 /** Longest task title the action service stores (#363). */
 export const TITLE_MAX = 200;
+/** Longest custom task description an edit stores (#365). */
+export const DESCRIPTION_MAX = 2000;
 
 export type OperationType =
   | 'task.set_state'
   | 'task.create_custom'
   | 'task.remove_created'
+  | 'task.edit_details'
   | StepOperationType;
+
+/** A field an edit changes (#365). */
+export type EditField = 'title' | 'description' | 'priority';
+
+/** One changed field of an edit, as the receipt recorded it (history). */
+export interface FieldChange {
+  field: EditField;
+  before: string;
+  after: string;
+}
 
 /** #366: one level of steps under one task. */
 export type StepOperationType =
@@ -68,8 +81,13 @@ export interface TaskReceipt {
   kind: 'change' | 'undo';
   /** What the receipt did: a state change, an added task (#363), or its removal by Undo. */
   operationType: OperationType;
-  /** The current title of an added (or removed) task; null for a state change. */
+  /**
+   * The title recorded with an added or removed task, or the title a task had after an
+   * edit (#365); null for a state change.
+   */
   title: string | null;
+  /** #365: each field an edit changed, with the values before and after. */
+  changes: FieldChange[];
   undoOf: string | null;
   taskRef: string;
   beforeState: TaskState;
@@ -131,6 +149,18 @@ export interface RemoveCreatedOperation {
   expected_revision: number;
 }
 
+/**
+ * Title, description or priority of one custom task (#365). Only by an approved draft,
+ * a clear command or a reviewed Undo. A published task's are shared content.
+ */
+export interface EditDetailsOperation {
+  type: 'task.edit_details';
+  task_ref: string;
+  expected_revision: number;
+  title?: string;
+  description?: string;
+  priority?: Priority;
+}
 /** #366 step operations. A direct control adds exactly one step. */
 export interface StepCreateOperation {
   type: 'step.create';
@@ -177,12 +207,19 @@ export type Operation =
   | SetStateOperation
   | CreateTaskOperation
   | RemoveCreatedOperation
+  | EditDetailsOperation
   | StepOperation;
+
+/** An edit for review: the action service binds it to the task's current revision (#365). */
+export type EditDraft =
+  | Omit<SetStateOperation, 'expected_revision'>
+  | Omit<EditDetailsOperation, 'expected_revision'>;
 
 /** The reviewed change offered when an Undo meets a newer edit. */
 export type CompensatingOperation =
   | SetStateOperation
   | RemoveCreatedOperation
+  | EditDetailsOperation
   | Exclude<StepOperation, StepCreateOperation>;
 
 export interface CompensatingProposal {
@@ -222,19 +259,67 @@ export interface ProposalContext {
   sameTitleTasks: { taskRef: string; title: string }[];
 }
 
-/** A server-owned draft of one new task (#363). Approval binds to its revision. */
-export interface TaskProposal {
+interface ProposalBase {
   proposalId: string;
   proposalRevision: number;
   status: 'draft' | 'applied' | 'cancelled';
-  operation: CreateTaskOperation;
-  context: ProposalContext | null;
-  /** With reviewReason "context_changed": what the earlier revision was reviewed against. */
-  previousContext: ProposalContext | null;
   reviewReason: 'edited' | 'context_changed' | 'restored' | null;
   source: { conversationId: string; messageId: number | null } | null;
   receipt: TaskReceipt | null;
 }
+
+/** A server-owned draft of one new task (#363). Approval binds to its revision. */
+export interface TaskCreateProposal extends ProposalBase {
+  kind: 'task_create';
+  operation: CreateTaskOperation;
+  context: ProposalContext | null;
+  /** With reviewReason "context_changed": what the earlier revision was reviewed against. */
+  previousContext: ProposalContext | null;
+}
+
+/** The values of one task an edit draft was prepared against (#365). */
+export interface TaskSnapshot {
+  taskRef: string;
+  revision: number;
+  removed: boolean;
+  state: TaskState;
+  waitingReason: string | null;
+  /** A custom task's own values; for a published task only its shown title (or null). */
+  title: string | null;
+  description: string | null;
+  priority: Priority | null;
+}
+
+/**
+ * A server-owned draft of one change to an existing task (#365). Approval binds to its
+ * revision and to the values of the fields it changes.
+ */
+export interface TaskEditProposal extends ProposalBase {
+  kind: 'task_edit';
+  operation: SetStateOperation | EditDetailsOperation;
+  /** The values the change is from. */
+  task: TaskSnapshot | null;
+  /** With reviewReason "context_changed": the values the earlier revision was from. */
+  previousTask: TaskSnapshot | null;
+}
+
+export type TaskProposal = TaskCreateProposal | TaskEditProposal;
+
+/** Why a command was not clear enough to make a change (nothing was written). */
+export type ClarifyReason =
+  | 'missing_title'
+  | 'multiple'
+  | 'too_long'
+  /** #365 edits */
+  | 'missing_value'
+  | 'invalid_value'
+  | 'task_not_found'
+  | 'task_ambiguous'
+  | 'shared_task_field'
+  | 'no_change'
+  | 'tasks_unavailable'
+  | 'value_too_long'
+  | 'multiple_changes';
 
 export type CommandResult =
   | {
@@ -242,7 +327,17 @@ export type CommandResult =
       operation: CreateTaskOperation;
       sameTitleTasks: { taskRef: string; title: string }[];
     }
-  | { kind: 'clarify'; reason: 'missing_title' | 'multiple' | 'too_long' }
+  /** #365: exactly one change to exactly one named task, at its current revision. */
+  | {
+      kind: 'edit';
+      operation: SetStateOperation | EditDetailsOperation;
+      target: { taskRef: string; title: string };
+    }
+  | {
+      kind: 'clarify';
+      reason: ClarifyReason;
+      candidates: { taskRef: string; title: string }[];
+    }
   | { kind: 'none' };
 
 export class ContractError extends Error {
@@ -288,6 +383,7 @@ const OPERATION_TYPES: readonly OperationType[] = [
   'task.set_state',
   'task.create_custom',
   'task.remove_created',
+  'task.edit_details',
   'step.create',
   'step.update',
   'step.set_done',
@@ -295,6 +391,25 @@ const OPERATION_TYPES: readonly OperationType[] = [
   'step.restore',
   'step.remove_created',
 ];
+const EDIT_FIELDS: readonly EditField[] = ['title', 'description', 'priority'];
+
+function parseChanges(raw: unknown): FieldChange[] {
+  if (raw === undefined || raw === null) return [];
+  if (!Array.isArray(raw)) throw new ContractError('receipt.changes');
+  return raw.map(c => {
+    if (
+      !isObject(c) ||
+      !(EDIT_FIELDS as readonly unknown[]).includes(c.field)
+    ) {
+      throw new ContractError('receipt.changes');
+    }
+    return {
+      field: c.field as EditField,
+      before: str(c, 'before'),
+      after: str(c, 'after'),
+    };
+  });
+}
 
 function parseReceiptSteps(raw: unknown): ReceiptStep[] | null {
   if (raw === undefined || raw === null) return null;
@@ -333,6 +448,7 @@ export function parseReceipt(raw: unknown): TaskReceipt {
     kind,
     operationType: operationType as OperationType,
     title: strOrNull(raw, 'title'),
+    changes: parseChanges(raw.changes),
     undoOf: strOrNull(raw, 'undo_of'),
     taskRef: str(raw, 'task_ref'),
     beforeState: state(raw, 'before_state'),
@@ -385,7 +501,25 @@ export function parseCurrent(raw: unknown): CurrentTaskValue {
   };
 }
 
+export function parseEditOperation(raw: unknown): EditDetailsOperation {
+  if (!isObject(raw) || raw.type !== 'task.edit_details') {
+    throw new ContractError('edit operation');
+  }
+  const op: EditDetailsOperation = {
+    type: 'task.edit_details',
+    task_ref: str(raw, 'task_ref'),
+    expected_revision: int(raw, 'expected_revision'),
+  };
+  if (raw.title !== undefined) op.title = str(raw, 'title');
+  if (raw.description !== undefined) op.description = str(raw, 'description');
+  if (raw.priority !== undefined) op.priority = priorityOf(raw, 'priority');
+  return op;
+}
+
 export function parseOperation(raw: unknown): CompensatingOperation {
+  if (isObject(raw) && raw.type === 'task.edit_details') {
+    return parseEditOperation(raw);
+  }
   if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('step.')) {
     return parseStepOperation(raw) as CompensatingOperation;
   }
@@ -481,12 +615,20 @@ export function setStateOperation(
   return op;
 }
 
-const PRIORITIES: readonly Priority[] = [
+export const PRIORITIES: readonly Priority[] = [
   'Do now',
   'Do soon',
   'Explore and connect',
   'Optional / later',
 ];
+
+function priorityOf(o: Json, k: string): Priority {
+  const v = str(o, k);
+  if (!(PRIORITIES as readonly string[]).includes(v)) {
+    throw new ContractError(k);
+  }
+  return v as Priority;
+}
 
 export function parseCreateOperation(raw: unknown): CreateTaskOperation {
   if (!isObject(raw) || raw.type !== 'task.create_custom') {
@@ -530,6 +672,24 @@ function parseContext(raw: unknown): ProposalContext | null {
 
 const REVIEW_REASONS = ['edited', 'context_changed', 'restored'] as const;
 
+function parseSnapshot(raw: unknown): TaskSnapshot | null {
+  if (raw === null || raw === undefined) return null;
+  if (!isObject(raw)) throw new ContractError('context.task');
+  return {
+    taskRef: str(raw, 'task_ref'),
+    revision: int(raw, 'revision'),
+    removed: bool(raw, 'removed'),
+    state: state(raw, 'state'),
+    waitingReason: strOrNull(raw, 'waiting_reason'),
+    title: strOrNull(raw, 'title'),
+    description: strOrNull(raw, 'description'),
+    priority:
+      raw.priority === null || raw.priority === undefined
+        ? null
+        : priorityOf(raw, 'priority'),
+  };
+}
+
 export function parseTaskProposal(raw: unknown): TaskProposal {
   if (!isObject(raw) || !Array.isArray(raw.operations)) {
     throw new ContractError('proposal');
@@ -554,13 +714,10 @@ export function parseTaskProposal(raw: unknown): TaskProposal {
             : int(raw.source, 'message_id'),
       }
     : null;
-  return {
+  const base: ProposalBase = {
     proposalId: str(raw, 'proposal_id'),
     proposalRevision: int(raw, 'proposal_revision'),
     status,
-    operation: parseCreateOperation(raw.operations[0]),
-    context: parseContext(raw.context),
-    previousContext: parseContext(raw.previous_context),
     reviewReason: reason as TaskProposal['reviewReason'],
     source,
     receipt:
@@ -568,8 +725,43 @@ export function parseTaskProposal(raw: unknown): TaskProposal {
         ? null
         : parseReceipt(raw.receipt),
   };
+  if (raw.kind === 'task_edit') {
+    const op = raw.operations[0];
+    return {
+      ...base,
+      kind: 'task_edit',
+      operation: isObject(op) && op.type === 'task.edit_details'
+        ? parseEditOperation(op)
+        : (parseOperation(op) as SetStateOperation),
+      task: parseSnapshot(isObject(raw.context) ? raw.context.task : null),
+      previousTask: parseSnapshot(
+        isObject(raw.previous_context) ? raw.previous_context.task : null
+      ),
+    };
+  }
+  return {
+    ...base,
+    kind: 'task_create',
+    operation: parseCreateOperation(raw.operations[0]),
+    context: parseContext(raw.context),
+    previousContext: parseContext(raw.previous_context),
+  };
 }
 
+const CLARIFY_REASONS: readonly ClarifyReason[] = [
+  'missing_title',
+  'multiple',
+  'too_long',
+  'missing_value',
+  'invalid_value',
+  'task_not_found',
+  'task_ambiguous',
+  'shared_task_field',
+  'no_change',
+  'tasks_unavailable',
+  'value_too_long',
+  'multiple_changes',
+];
 /** Suggested steps for one task (#366), a server-owned draft. Approval binds to its revision. */
 export interface StepProposal {
   proposalId: string;
@@ -675,14 +867,34 @@ export function parseCommand(raw: unknown): CommandResult {
   if (raw.kind === 'none') return { kind: 'none' };
   if (raw.kind === 'clarify') {
     const reason = raw.reason;
-    if (
-      reason !== 'missing_title' &&
-      reason !== 'multiple' &&
-      reason !== 'too_long'
-    ) {
+    if (!(CLARIFY_REASONS as readonly unknown[]).includes(reason)) {
       throw new ContractError('command.reason');
     }
-    return { kind: 'clarify', reason };
+    return {
+      kind: 'clarify',
+      reason: reason as ClarifyReason,
+      candidates: Array.isArray(raw.candidates)
+        ? raw.candidates.map(c => {
+            if (!isObject(c)) throw new ContractError('command.candidates');
+            return { taskRef: str(c, 'task_ref'), title: str(c, 'title') };
+          })
+        : [],
+    };
+  }
+  if (raw.kind === 'edit') {
+    const op = raw.operation;
+    if (!isObject(raw.target)) throw new ContractError('command.target');
+    return {
+      kind: 'edit',
+      operation:
+        isObject(op) && op.type === 'task.edit_details'
+          ? parseEditOperation(op)
+          : (parseOperation(op) as SetStateOperation),
+      target: {
+        taskRef: str(raw.target, 'task_ref'),
+        title: str(raw.target, 'title'),
+      },
+    };
   }
   if (raw.kind === 'create') {
     return {
@@ -717,4 +929,63 @@ export function parseSuggestedTask(
   return title && title.length <= TITLE_MAX
     ? { type: 'task.create_custom', title }
     : null;
+}
+
+/** A change to one listed task the answer suggests (#365), allowlisted fields only. */
+export interface SuggestedEdit {
+  type: 'task.edit';
+  taskRef: string;
+  field: 'state' | 'waiting' | 'title' | 'description' | 'priority';
+  value: string;
+}
+
+const SUGGESTED_FIELDS: readonly SuggestedEdit['field'][] = [
+  'state',
+  'waiting',
+  'title',
+  'description',
+  'priority',
+];
+
+/**
+ * The edit an answer suggests (rag-query `actionProposal`, #365). Not authorization:
+ * the action service prepares the reviewable draft, and only the user approves it.
+ */
+export function parseSuggestedEdit(raw: unknown): SuggestedEdit | null {
+  if (!isObject(raw) || raw.type !== 'task.edit' || raw.version !== 1)
+    return null;
+  if (typeof raw.task_ref !== 'string' || typeof raw.value !== 'string')
+    return null;
+  if (!(SUGGESTED_FIELDS as readonly unknown[]).includes(raw.field)) return null;
+  const value = raw.value.trim();
+  if (raw.field !== 'description' && !value) return null;
+  return {
+    type: 'task.edit',
+    taskRef: raw.task_ref,
+    field: raw.field as SuggestedEdit['field'],
+    value,
+  };
+}
+
+/** The edit draft a suggestion asks the action service to prepare, or null. */
+export function editDraftOf(s: SuggestedEdit): EditDraft | null {
+  if (s.field === 'state') {
+    return (TASK_STATES as readonly string[]).includes(s.value)
+      ? { type: 'task.set_state', task_ref: s.taskRef, state: s.value as TaskState }
+      : null;
+  }
+  if (s.field === 'waiting') {
+    return {
+      type: 'task.set_state',
+      task_ref: s.taskRef,
+      state: 'waiting',
+      waiting_reason: s.value.slice(0, WAITING_REASON_MAX),
+    };
+  }
+  if (s.field === 'priority') {
+    return (PRIORITIES as readonly string[]).includes(s.value)
+      ? { type: 'task.edit_details', task_ref: s.taskRef, priority: s.value as Priority }
+      : null;
+  }
+  return { type: 'task.edit_details', task_ref: s.taskRef, [s.field]: s.value };
 }

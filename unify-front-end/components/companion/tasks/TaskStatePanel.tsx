@@ -33,6 +33,7 @@ import {
   type TaskProgressView,
 } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
+import { DETAIL_FIELDS, priorityLabel } from './editText';
 import { ReceiptBlock } from './ReceiptBlock';
 import { TaskStepsSection } from './TaskStepsSection';
 
@@ -492,6 +493,58 @@ export function PhaseMessage({
                 </Text>
               </Pressable>
               {action(t('taskCreate.keep'), () => store?.dismiss(taskRef))}
+            </View>
+          </View>
+        );
+      }
+      if (proposed.type === 'task.edit_details') {
+        // #365: Undo of an edit met a newer change: nothing was undone. Restoring the
+        // recorded earlier values now is a reviewed change at the current revision.
+        const edit = proposed;
+        return (
+          <View style={styles.review}>
+            <Text style={styles.reviewTitle}>
+              {t('taskActions.undoConflictTitle')}
+            </Text>
+            <Text style={styles.statusText}>{t('taskEdit.undoConflict')}</Text>
+            {DETAIL_FIELDS.map(field =>
+              edit[field] === undefined ? null : (
+                <Text key={field} style={styles.statusText}>
+                  {t('taskEdit.restoreLine', {
+                    field: t(`taskEdit.field.${field}`),
+                    value:
+                      field === 'priority'
+                        ? priorityLabel(t as never, edit[field] ?? null)
+                        : edit[field]
+                          ? `“${edit[field]}”`
+                          : t('taskEdit.empty'),
+                  })}
+                </Text>
+              )
+            )}
+            <View style={styles.reviewActions}>
+              <Pressable
+                accessibilityRole='button'
+                accessibilityLabel={t('taskEdit.restore')}
+                disabled={!writable}
+                accessibilityState={{ disabled: !writable }}
+                onPress={() =>
+                  writable && void store?.approveCompensation(taskRef)
+                }
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  { minHeight: minTarget() },
+                  !writable && styles.buttonDisabled,
+                  pressed && writable && styles.stateOptionPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>
+                  {t('taskEdit.restore')}
+                </Text>
+              </Pressable>
+              {action(t('taskActions.keepCurrent'), () =>
+                store?.dismiss(taskRef)
+              )}
             </View>
           </View>
         );

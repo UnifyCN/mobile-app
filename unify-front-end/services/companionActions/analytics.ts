@@ -26,8 +26,12 @@ const ACTIONS = [
   'command_create',
   'step_change',
   'approve_steps',
+  'approve_edit',
+  'command_edit',
 ] as const;
 /** #366: step operation types, allowlisted. Never a step title or id. */
+/** #365: an edit names its registered type. */
+const EDIT_TYPES: readonly OperationType[] = ['task.edit_details'];
 const STEP_TYPES: readonly OperationType[] = [
   'step.create',
   'step.update',
@@ -65,7 +69,9 @@ export function buildTaskActionResultProperties(
   const props: TaskActionResultProperties = {
     // Categorical only: never the task title, the message or a reference.
     operation_type:
-      event.operationType && STEP_TYPES.includes(event.operationType)
+      event.operationType &&
+      (STEP_TYPES.includes(event.operationType) ||
+        EDIT_TYPES.includes(event.operationType))
         ? event.operationType
         : event.action === 'approve_create' || event.action === 'command_create'
           ? 'task.create_custom'

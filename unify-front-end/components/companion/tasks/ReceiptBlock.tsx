@@ -9,6 +9,7 @@ import type {
 } from '@/services/companionActions/contract';
 import type { TaskActionStore } from '@/services/companionActions/taskActionStore';
 import { minTarget } from '@/utils/touchTarget';
+import { editReceiptText, receiptChangeText } from './editText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -25,18 +26,21 @@ interface ReceiptBlockProps {
   store: TaskActionStore | null;
   /** A connection, a fresh read and no unresolved write. */
   canWrite: boolean;
+  /** The task's title, for a receipt that does not record one (#365). */
+  taskTitle?: string | null;
 }
 
 /**
  * The exact saved result of one action and the Undo of that receipt only
- * (mobile-app#361, #363). An added task's Undo removes it, so it asks first; Keep
- * sends nothing.
+ * (mobile-app#361, #363, #365). An added task's Undo removes it, so it asks first; Keep
+ * sends nothing. An edit names each changed field with its recorded before and after.
  */
 export function ReceiptBlock({
   receipt,
   storeKey,
   store,
   canWrite,
+  taskTitle = null,
 }: ReceiptBlockProps) {
   const { t, i18n } = useTranslation();
   const [confirming, setConfirming] = useState(false);
@@ -74,7 +78,9 @@ export function ReceiptBlock({
   // "Waiting to Waiting".
   const text = isStep
     ? stepText()
-    : receipt.operationType === 'task.create_custom'
+    : receipt.operationType === 'task.edit_details'
+      ? editReceiptText(t as never, receipt, receipt.title ?? taskTitle ?? '')
+      : receipt.operationType === 'task.create_custom'
       ? t('taskCreate.added', { title })
       : receipt.operationType === 'task.remove_created'
         ? t('taskCreate.removed', { title })
@@ -117,6 +123,11 @@ export function ReceiptBlock({
   return (
     <View style={styles.receipt}>
       <Text style={styles.receiptText}>{text}</Text>
+      {receipt.changes.map(change => (
+        <Text key={change.field} style={styles.receiptText}>
+          {receiptChangeText(t as never, change)}
+        </Text>
+      ))}
       {receipt.stepsTotal !== null && receipt.stepsTotal > 0 && (
         <Text style={styles.receiptMeta}>
           {t('taskSteps.receiptAtCompletion', {

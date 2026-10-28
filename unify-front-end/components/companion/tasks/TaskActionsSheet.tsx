@@ -32,9 +32,9 @@ import type { TaskState } from '@/services/companionActions/contract';
 import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
+import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import { TaskProposalPanel } from './TaskProposalPanel';
 import { StepProposalPanel } from './StepProposalPanel';
-import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import { useStepProposal } from '@/hooks/companion/useTaskActions';
 import { PlanPanel } from '../plans/PlanPanel';
 import type { PlanTarget } from '../plans/PlanEntry';
@@ -55,6 +55,8 @@ interface TaskActionsSheetProps {
   onClose: () => void;
   /** Open on the review of one task draft (#363) instead of the task list. */
   proposalId?: string | null;
+  /** #365: the draft is a change to an existing task, not a new task. */
+  proposalKind?: 'task_create' | 'task_edit';
   /** Open straight on one task, e.g. one a command added (#363). */
   initialTask?: { taskRef: string; title: string } | null;
   /** #366: open on the review of suggested steps for one task. */
@@ -75,6 +77,7 @@ export function TaskActionsSheet({
   visible,
   onClose,
   proposalId = null,
+  proposalKind = 'task_create',
   initialTask = null,
   stepProposalId = null,
   plan = null,
@@ -167,7 +170,9 @@ export function TaskActionsSheet({
                     ? t('plans.reviewTitle')
                     : t('plans.planTitle')
                   : proposalId
-                  ? t('taskCreate.drawerTitle')
+                  ? proposalKind === 'task_edit'
+                    ? t('taskEdit.drawerTitle')
+                    : t('taskCreate.drawerTitle')
                   : selectedRef
                     ? t('taskActions.drawerTitle')
                     : t('taskActions.listTitle')}
@@ -218,13 +223,20 @@ export function TaskActionsSheet({
 function ProposalBody({ proposalId }: { proposalId: string }) {
   const view = useTaskProgress();
   const store = useTaskActionStore('companion');
+  const titles = useChecklistTaskTitles();
+  const titleFor = (taskRef: string) => titles.get(taskRef) ?? null;
   return (
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={styles.scrollContent}
       keyboardShouldPersistTaps='handled'
     >
-      <TaskProposalPanel proposalId={proposalId} view={view} store={store} />
+      <TaskProposalPanel
+        proposalId={proposalId}
+        view={view}
+        store={store}
+        titleFor={titleFor}
+      />
     </ScrollView>
   );
 }

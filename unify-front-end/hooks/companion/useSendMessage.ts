@@ -40,8 +40,11 @@ import { createMobileTaskActionClient } from '@/services/companionActions/transp
 import {
   TITLE_MAX,
   createTaskOperation,
+  editDraftOf,
+  parseSuggestedEdit,
   parseSuggestedSteps,
   parseSuggestedTask,
+  type CommandResult,
 } from '@/services/companionActions/contract';
 import { parseSuggestedPlan } from '@/services/companionActions/planContract';
 import {
@@ -49,6 +52,29 @@ import {
   createMobilePlanClient,
   plansKey,
 } from '@/hooks/companion/usePlans';
+import { normalizeSanityLanguage } from '@/services/sanity/i18n';
+
+/** The question for a command that was not clear enough to change anything (#363, #365). */
+function clarifyQuestion(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  command: Extract<CommandResult, { kind: 'clarify' }>
+): string {
+  switch (command.reason) {
+    case 'missing_title':
+      return t('taskCreate.clarifyMissingTitle');
+    case 'multiple':
+      return t('taskCreate.clarifyMultiple');
+    case 'too_long':
+      return t('taskCreate.clarifyTooLong', { max: TITLE_MAX });
+    case 'task_ambiguous':
+      return t('taskEdit.clarify.task_ambiguous', {
+        title: command.candidates[0]?.title ?? '',
+        number: command.candidates.length,
+      });
+    default:
+      return t(`taskEdit.clarify.${command.reason}`);
+  }
+}
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -102,7 +128,7 @@ export const useSendMessage = ({
   const saveMessage = useSaveMessage();
   const { trackCompanionMessageSent, trackCompanionResponseReceived } =
     useAnalytics();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // The signed-in account's action store: a clear command's write is tracked there.
   const actionStore = useTaskActionStore('companion');
 
@@ -193,9 +219,12 @@ export const useSendMessage = ({
         if (interpreted.kind === 'ok' && interpreted.command.kind !== 'none') {
           const command = interpreted.command;
           if (
-            command.kind === 'create' &&
-            command.sameTitleTasks.length === 0
+            (command.kind === 'create' &&
+              command.sameTitleTasks.length === 0) ||
+            command.kind === 'edit'
           ) {
+            // A clear command makes exactly its one change (#365 edits too). Its card
+            // shows the saved receipt, never assistant text.
             setIsWaitingForBot(false);
             await actionStore?.applyOperation(
               `command:${savedUserId}`,
@@ -209,14 +238,7 @@ export const useSendMessage = ({
                 ? t('taskCreate.clarifyDuplicate', {
                     title: command.sameTitleTasks[0].title,
                   })
-                : t(
-                    command.reason === 'missing_title'
-                      ? 'taskCreate.clarifyMissingTitle'
-                      : command.reason === 'multiple'
-                        ? 'taskCreate.clarifyMultiple'
-                        : 'taskCreate.clarifyTooLong',
-                    { max: TITLE_MAX }
-                  );
+                : clarifyQuestion(t as never, command);
             await saveMessage.mutateAsync({
               conversationIdentifier: conversationIdToUse,
               role: 'assistant',
@@ -388,14 +410,22 @@ export const useSendMessage = ({
       }
 
       // #363: a suggested task becomes a server-owned draft for review, tied to this
-      // answer. Preparing writes no task; a failure only means no draft card.
+      // answer. #365: so does a suggested change to a listed task. Preparing writes no
+      // task; a failure only means no draft card.
       const suggested = parseSuggestedTask(completion.actionProposal);
+      const suggestedEdit = parseSuggestedEdit(completion.actionProposal);
+      const editDraft = suggestedEdit ? editDraftOf(suggestedEdit) : null;
       ensureOwned();
-      if (suggested && savedAnswerId !== null) {
-        await actions.prepare(createTaskOperation(suggested.title), {
+      if ((suggested || editDraft) && savedAnswerId !== null) {
+        const source = {
           conversationId: conversationIdToUse,
           messageId: savedAnswerId,
-        });
+        };
+        await (suggested
+          ? actions.prepare(createTaskOperation(suggested.title), source)
+          : actions.prepare(editDraft!, source, {
+              language: normalizeSanityLanguage(i18n.language),
+            }));
         ensureOwned();
         queryClient.invalidateQueries({
           queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),

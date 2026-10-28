@@ -161,7 +161,11 @@ export default function CompanionScreen() {
   // typed message stay mounted.
   const [sheet, setSheet] = useState<
     | { kind: 'tasks' }
-    | { kind: 'proposal'; proposalId: string }
+    | {
+        kind: 'proposal';
+        proposalId: string;
+        proposalKind: 'task_create' | 'task_edit';
+      }
     | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
     | { kind: 'plan'; target: PlanTarget }
@@ -512,10 +516,13 @@ export default function CompanionScreen() {
   );
   const actionStore = useTaskActionStore('companion');
   const { canWrite: actionsWritable } = useTaskProgress();
-  const openDraft = useCallback((proposalId: string) => {
-    Keyboard.dismiss();
-    setSheet({ kind: 'proposal', proposalId });
-  }, []);
+  const openDraft = useCallback(
+    (proposalId: string, proposalKind: 'task_create' | 'task_edit') => {
+      Keyboard.dismiss();
+      setSheet({ kind: 'proposal', proposalId, proposalKind });
+    },
+    []
+  );
   // #366: suggested steps for a task this account has; the card names it.
   const taskTitles = useChecklistTaskTitles();
   const taskTitleOf = useCallback(
@@ -811,6 +818,9 @@ export default function CompanionScreen() {
         visible={sheet !== null}
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
+        proposalKind={
+          sheet?.kind === 'proposal' ? sheet.proposalKind : undefined
+        }
         stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
         initialTask={
           sheet?.kind === 'task'
