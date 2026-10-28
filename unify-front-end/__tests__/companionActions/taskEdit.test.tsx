@@ -389,7 +389,12 @@ const sendButton = () => {
   return button;
 };
 async function send(text: string) {
-  fireEvent.changeText(await screen.findByPlaceholderText(/Ask anything|limit/i), text);
+  await screen.findByPlaceholderText(/Ask anything|limit/i);
+  await waitFor(() =>
+    expect(screen.getByPlaceholderText(/Ask anything|limit/i).props.editable).toBe(true)
+  );
+  fireEvent.changeText(screen.getByPlaceholderText(/Ask anything|limit/i), text);
+  await waitFor(() => expect(sendButton().props.disabled).toBe(false));
   fireEvent.press(sendButton());
 }
 const writes = () => server.sent.filter(b => b.action === 'apply');
@@ -563,14 +568,40 @@ it('keeps the first direct edit receipt and marks it historical after a second e
 it('a waiting reason change names the reason before and after on the command card, and keeps them after a later edit', async () => {
   // Wrong if: the card says only Waiting → Waiting, shows other reasons than the saved
   // ones, or loses them when the receipt becomes history.
+  // Hold the committed first response until the second interaction has started.
+  // The test controls this order without a sleep or a faster/slower machine.
+  let releaseFirstApply: () => void = () => {};
+  const firstApplyReply = new Promise<void>(resolve => { releaseFirstApply = resolve; });
+  let holdFirstApply = true;
+  global.fetch = async (input, init) => {
+    const response = await (server.fetch as unknown as typeof fetch)(input, init);
+    if (
+      holdFirstApply &&
+      typeof init?.body === 'string' &&
+      JSON.parse(init.body).action === 'apply'
+    ) {
+      holdFirstApply = false;
+      await firstApplyReply;
+    }
+    return response;
+  };
   renderScreen();
   await send(`Mark task "${PHONE}" as waiting: Appointment on Friday`);
-  const first = await screen.findByTestId('task-command-card');
+  await waitFor(() => expect(writes()).toHaveLength(1));
+  expect(composer().props.editable).toBe(false);
+  // The driver must wait for the real controls before the next user action.
+  const secondSend = send(`Mark task "${PHONE}" as waiting: Appointment on Monday`);
+  try {
+    await act(async () => { await Promise.resolve(); });
+  } finally {
+    releaseFirstApply();
+  }
+  await secondSend;
+  await waitFor(() => expect(screen.getAllByTestId('task-command-card')).toHaveLength(2));
+  const first = screen.getAllByTestId('task-command-card')[0];
+  const second = screen.getAllByTestId('task-command-card')[1];
   expect(await within(first).findByText(`${PHONE}: Not started → Waiting`)).toBeTruthy();
   expect(within(first).getByText('Waiting for: (empty) → “Appointment on Friday”')).toBeTruthy();
-  await send(`Mark task "${PHONE}" as waiting: Appointment on Monday`);
-  await waitFor(() => expect(screen.getAllByTestId('task-command-card')).toHaveLength(2));
-  const second = screen.getAllByTestId('task-command-card')[1];
   expect(await within(second).findByText(`${PHONE}: Waiting → Waiting`)).toBeTruthy();
   expect(
     within(second).getByText('Waiting for: “Appointment on Friday” → “Appointment on Monday”')
