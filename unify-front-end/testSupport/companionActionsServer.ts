@@ -597,6 +597,7 @@ export function scriptedServer(
   const detailReceipts = new Map<string, Body>();
   const detailDrafts = new Map<string, Body>();
   const detailCommands = new Map<number, string>();
+  let conflictDetail: (value: Body) => unknown = value => value;
   let nextDetail = 1;
 
   const detailCurrent = (r: Body): Body => {
@@ -773,7 +774,7 @@ export function scriptedServer(
           body: {
             error: 'undo_conflict',
             current: [],
-            current_detail: { detail_id: inv.detail_id, text: d.text, revision: d.revision, removed: d.removed },
+            current_detail: conflictDetail({ detail_id: inv.detail_id, text: d.text, revision: d.revision, removed: d.removed }),
             proposal: { proposal_id: id, proposal_revision: 1, operations: comp.operations },
           },
         };
@@ -1056,6 +1057,10 @@ export function scriptedServer(
     /** #370: every detail the stand-in holds, removed ones included. */
     details: () => [...details.entries()].map(([detail_id, d]) => ({ detail_id, ...d })),
     detailDrafts: () => [...detailDrafts.values()],
+    /** #370: what a conflicting Undo reports as `current_detail` (undefined omits it). */
+    setConflictDetail(transform: (value: Body) => unknown) {
+      conflictDetail = transform;
+    },
     /** #370: another platform edits a detail: its revision moves on. */
     editDetailElsewhere(detailId: string, text: string) {
       const d = details.get(detailId)!;

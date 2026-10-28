@@ -19,8 +19,10 @@ import type {
 } from './client';
 import {
   isRemoval,
+  verifiedCompensationDetail,
   type Authorization,
   type CompensatingProposal,
+  type CurrentDetailValue,
   type CurrentTaskValue,
   type DetailProposal,
   type Operation,
@@ -56,6 +58,8 @@ export type TaskActionPhase =
       phase: 'undo_review';
       receiptOperationId: string;
       current: CurrentTaskValue | null;
+      /** #370: the detail the reviewed change acts on, as the service read it. */
+      currentDetail: CurrentDetailValue | null;
       proposal: CompensatingProposal;
     }
   | { phase: 'already_undone' }
@@ -222,6 +226,12 @@ export class TaskActionStore {
     // A removal needs the user's explicit confirmation; without it nothing is sent.
     if (isRemoval(op) && options.removalConfirmed !== true)
       return Promise.resolve();
+    // #370: a detail change is approved only for the current detail the service named.
+    if (
+      op.type.startsWith('detail.') &&
+      !verifiedCompensationDetail(op, p.currentDetail)
+    )
+      return Promise.resolve();
     return this.run(taskRef, {
       operationId: this.deps.newOperationId(),
       kind: 'apply',
@@ -333,6 +343,7 @@ export class TaskActionStore {
             result.current.find(c => c.taskRef === taskRef) ??
             result.current[0] ??
             null,
+          currentDetail: result.currentDetail,
           proposal: result.proposal,
         });
         report('undo_conflict');

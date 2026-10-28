@@ -7,6 +7,7 @@ import {
   detailRemoveOperation,
   detailUpdateOperation,
   isDetailProposal,
+  verifiedCompensationDetail,
   type DetailProposal,
   type SavedDetail,
   type TaskReceipt,
@@ -220,20 +221,38 @@ export function DetailPhase({
       return line(t('taskActions.signedOut'), true);
     case 'undo_review': {
       const op = phase.proposal.operations[0];
+      // The receipt keeps its historical text; the reviewed change names the detail as
+      // the service read it now, and only while no newer read contradicts it.
+      const current = verifiedCompensationDetail(
+        op,
+        phase.currentDetail,
+        view.status === 'ready' ? view.details : undefined
+      );
+      if (!current) {
+        return (
+          <View style={styles.block}>
+            {line(t('savedDetails.undoConflict'))}
+            {line(t('savedDetails.reviewUnverified'), true)}
+            <View style={styles.actions}>
+              <Button label={t('taskActions.keepCurrent')} onPress={() => store?.dismiss(storeKey)} />
+            </View>
+          </View>
+        );
+      }
       const removes = op.type === 'detail.remove';
       const label =
         op.type === 'detail.update'
           ? t('savedDetails.reviewUpdate', { text: op.text })
           : op.type === 'detail.restore'
-            ? t('savedDetails.reviewRestore', { text })
-            : t('savedDetails.reviewRemove', { text });
+            ? t('savedDetails.reviewRestore', { text: current.text })
+            : t('savedDetails.reviewRemove', { text: current.text });
       return (
         <View style={styles.block}>
           {line(t('savedDetails.undoConflict'))}
           {confirming ? (
             <View style={styles.confirm}>
               <Text style={styles.confirmTitle}>{t('savedDetails.confirmTitle')}</Text>
-              <Text style={styles.confirmBody}>{t('savedDetails.confirmBody', { text })}</Text>
+              <Text style={styles.confirmBody}>{t('savedDetails.confirmBody', { text: current.text })}</Text>
               <View style={styles.actions}>
                 <Button
                   primary

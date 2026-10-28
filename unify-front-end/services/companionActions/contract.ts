@@ -909,6 +909,70 @@ export function parseSavedDetail(raw: unknown): SavedDetail {
   };
 }
 
+/**
+ * A detail as the service read it when an Undo conflicted (#370 `current_detail`). The
+ * receipt keeps its own historical text; this is what the reviewed change acts on now.
+ */
+export interface CurrentDetailValue {
+  detailId: string;
+  text: string;
+  revision: number;
+  removed: boolean;
+}
+
+/** `current_detail`, or null when absent or malformed: then nothing can be verified. */
+export function parseCurrentDetail(raw: unknown): CurrentDetailValue | null {
+  if (!isObject(raw)) return null;
+  try {
+    return {
+      detailId: str(raw, 'detail_id'),
+      text: str(raw, 'text'),
+      revision: int(raw, 'revision'),
+      removed: bool(raw, 'removed'),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The current detail a conflicting Undo's reviewed change acts on, or null when it cannot
+ * be verified (#370): the service's value must name that operation's detail, at the
+ * revision it expects, in a state it applies to (restore: removed; otherwise live). A
+ * newer known read of the detail (`live`, the account's live details from a finished
+ * read) also withholds it; an older read does not. Null means: do not approve.
+ */
+export function verifiedCompensationDetail(
+  op: CompensatingOperation,
+  current: CurrentDetailValue | null,
+  live?: readonly SavedDetail[]
+): CurrentDetailValue | null {
+  if (op.type !== 'detail.update' && op.type !== 'detail.remove' && op.type !== 'detail.restore')
+    return null;
+  if (
+    !current ||
+    current.detailId !== op.detail_id ||
+    current.revision !== op.expected_revision ||
+    current.removed !== (op.type === 'detail.restore')
+  )
+    return null;
+  if (live) {
+    const read = live.find(d => d.detailId === current.detailId);
+    if (op.type === 'detail.restore') {
+      // Live again at this revision or later: restored or changed elsewhere.
+      if (read && read.revision >= current.revision) return null;
+    } else if (!read) {
+      return null; // removed elsewhere
+    } else if (
+      read.revision > current.revision ||
+      (read.revision === current.revision && read.text !== current.text)
+    ) {
+      return null;
+    }
+  }
+  return current;
+}
+
 /** A detail the answer suggested saving (#370), a server-owned draft. Approval binds to its revision. */
 export interface DetailProposal {
   proposalId: string;

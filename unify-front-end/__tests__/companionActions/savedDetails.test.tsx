@@ -16,7 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { AppState, StyleSheet, TouchableOpacity } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 import { clearTaskActionStores } from '@/services/companionActions/taskActionStore';
@@ -647,4 +647,78 @@ it('a conflicting detail removal names the current revision, allows Cancel and p
   await within(card).findByText(`Removed “${current}”. It will not be used in later conversations.`);
   expect(server.details()[0].removed).toBe(true);
   expect(server.sent.filter(body => body.action === 'apply' && body.operations?.[0]?.type === 'detail.remove').at(-1)?.operations[0].expected_revision).toBe(2);
+});
+
+describe('the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1)', () => {
+  const SATURDAYS = 'I can attend appointments on Saturdays';
+  /** The app returns to the foreground: every AppState listener hears 'active'. */
+  function captureForeground() {
+    const listeners: ((state: string) => void)[] = [];
+    jest.spyOn(AppState, 'addEventListener').mockImplementation(((
+      _name: string,
+      cb: (state: string) => void
+    ) => {
+      listeners.push(cb);
+      return { remove: () => {} };
+    }) as never);
+    return () =>
+      act(async () => {
+        listeners.forEach(cb => cb('active'));
+      });
+  }
+  afterEach(() => jest.restoreAllMocks());
+
+  /** Saves Fridays by command, then confirms its Undo after another device changed it. */
+  async function conflictingUndo() {
+    await send(`Remember that ${FRIDAYS}`);
+    const card = await screen.findByTestId('detail-command-card');
+    const undo = await within(card).findByRole('button', { name: `Undo saving “${FRIDAYS}”` });
+    await waitFor(() => expect(enabled(undo)).toBe(true));
+    fireEvent.press(undo);
+    server.editDetailElsewhere(server.details()[0].detail_id, SATURDAYS);
+    fireEvent.press(within(card).getByRole('button', { name: 'Remove detail' }));
+    await within(card).findByText(en.savedDetails.undoConflict);
+    return card;
+  }
+  const removals = () =>
+    server.sent.filter(b => b.action === 'apply' && b.operations?.[0]?.type === 'detail.remove');
+
+  it('a newer edit read while the review is open withholds approval and names nothing stale', async () => {
+    const foreground = captureForeground();
+    renderScreen();
+    const card = await conflictingUndo();
+    const review = within(card).getByRole('button', { name: `Remove “${SATURDAYS}”` });
+    await waitFor(() => expect(enabled(review)).toBe(true));
+    fireEvent.press(review);
+    expect(within(card).getByText(`“${SATURDAYS}” will no longer be used in later conversations.`)).toBeTruthy();
+    // A third edit lands elsewhere and this device reads it while the review is open.
+    server.editDetailElsewhere(server.details()[0].detail_id, 'I can attend appointments on Sundays');
+    await foreground();
+    await within(card).findByText(en.savedDetails.reviewUnverified);
+    expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+    expect(within(card).queryByText(new RegExp(SATURDAYS))).toBeNull();
+    expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+    expect(removals()).toHaveLength(0);
+    expect(server.details()[0]).toMatchObject({ revision: 3, removed: false });
+    fireEvent.press(within(card).getByRole('button', { name: en.taskActions.keepCurrent }));
+    await waitFor(() => expect(within(card).queryByText(en.savedDetails.reviewUnverified)).toBeNull());
+  });
+
+  it.each([
+    ['absent', () => undefined],
+    ['a different detail', (v: any) => ({ ...v, detail_id: 'e1000000-0000-4000-8000-000000000999' })],
+    ['an older revision', (v: any) => ({ ...v, revision: v.revision - 1 })],
+    ['a removed detail', (v: any) => ({ ...v, removed: true })],
+    ['malformed text', (v: any) => ({ ...v, text: 42 })],
+  ])('current_detail %s: approval stays unavailable and nothing is removed', async (_name, transform) => {
+    server.setConflictDetail(transform);
+    renderScreen();
+    const card = await conflictingUndo();
+    await within(card).findByText(en.savedDetails.reviewUnverified);
+    expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+    expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+    expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+    expect(removals()).toHaveLength(0);
+    expect(server.details()[0]).toMatchObject({ text: SATURDAYS, revision: 2, removed: false });
+  });
 });
