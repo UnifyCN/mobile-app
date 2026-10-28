@@ -357,7 +357,16 @@ function CommandCard({
   const { t } = useTranslation();
   const key = `command:${messageId}`;
   const phase = useTaskActionPhase(store, key);
-  const receipt = phase.phase === 'saved' ? phase.receipt : saved;
+  const receipt = phase.phase === 'saved'
+    ? saved?.operationId === phase.receipt.operationId
+      ? {
+          ...phase.receipt,
+          current: saved.current,
+          undoable: saved.undoable,
+          undoneBy: saved.undoneBy,
+        }
+      : phase.receipt
+    : saved;
   if (
     receipt &&
     (receipt.operationType === 'task.edit_details' ||

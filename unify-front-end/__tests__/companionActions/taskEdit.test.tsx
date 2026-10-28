@@ -539,3 +539,22 @@ describe('Edit existing tasks through Companion (mobile)', () => {
     expect(priorityOf(phoneRef)).toBe('Do now');
   });
 });
+
+
+it('keeps the first direct edit receipt and marks it historical after a second edit', async () => {
+  renderScreen();
+  await send(`Rename task "${PHONE}" to "Mobile plan"`);
+  const first = await screen.findByTestId('task-command-card');
+  await within(first).findByText('Changed in Checklist: Mobile plan');
+  await send('Rename task "Mobile plan" to "Prepaid plan"');
+  await screen.findByText('Changed in Checklist: Prepaid plan');
+  await waitFor(() => {
+    const data = clients[0].getQueryData<{
+      commands: Array<{ receipt: { current: boolean } }>;
+    }>(['companion-conversation-actions', mockUserId, 'conv-1']);
+    expect(data?.commands[0]?.receipt.current).toBe(false);
+  });
+  expect(await within(first).findByText(/This task changed after this/)).toBeTruthy();
+  expect(within(first).getByText('Changed in Checklist: Mobile plan')).toBeTruthy();
+  expect(within(first).getByText('Title: “Get a phone plan” → “Mobile plan”')).toBeTruthy();
+});
