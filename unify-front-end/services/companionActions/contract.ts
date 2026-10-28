@@ -1,5 +1,5 @@
 /**
- * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366).
+ * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366, #370).
  * The server is supabase/functions/companion-actions in the web repo. Responses are
  * checked here: unknown fields are ignored, a missing or mistyped field is a
  * contract error. Mirror of the web app's lib/companionActions/contract.ts.
@@ -26,7 +26,67 @@ export type OperationType =
   | 'task.create_custom'
   | 'task.remove_created'
   | 'task.edit_details'
-  | StepOperationType;
+  | StepOperationType
+  | DetailOperationType;
+
+/** #370: saved personal details. */
+export type DetailOperationType =
+  | 'detail.create'
+  | 'detail.update'
+  | 'detail.remove'
+  | 'detail.restore';
+
+/** Longest saved detail the action service stores (#370). */
+export const DETAIL_TEXT_MAX = 300;
+
+/** A personal detail the user approved for later conversations, as the service reads it. */
+export interface SavedDetail {
+  detailId: string;
+  text: string;
+  revision: number;
+  /** How it was authorized and in which conversation (identifiers only). */
+  source: {
+    kind: 'direct_command' | 'approved_proposal' | null;
+    conversationId: string | null;
+  };
+  createdAt: string;
+}
+
+/** The detail a receipt changed, with its text when it was saved (historical). */
+export interface ReceiptDetail {
+  detailId: string;
+  text: string;
+  /** The text before an edit; null otherwise. */
+  beforeText: string | null;
+  removed: boolean;
+}
+
+export interface DetailCreateOperation {
+  type: 'detail.create';
+  text: string;
+}
+export interface DetailUpdateOperation {
+  type: 'detail.update';
+  detail_id: string;
+  text: string;
+  expected_revision: number;
+}
+export interface DetailRemoveOperation {
+  type: 'detail.remove';
+  detail_id: string;
+  expected_revision: number;
+}
+/** The inverse of a removal. Only as an Undo (direct, or its reviewed change). */
+export interface DetailRestoreOperation {
+  type: 'detail.restore';
+  detail_id: string;
+  expected_revision: number;
+}
+export type DetailOperation =
+  | DetailCreateOperation
+  | DetailUpdateOperation
+  | DetailRemoveOperation
+  | DetailRestoreOperation;
 
 /** A field an edit changes (#365). */
 export type EditField = 'title' | 'description' | 'priority';
@@ -107,6 +167,11 @@ export interface TaskReceipt {
    * receipts and for one saved before reasons were recorded.
    */
   waitingReasons: { before: string | null; after: string | null } | null;
+  /**
+   * #370: the detail a saved-detail receipt changed; null otherwise. Such a receipt has
+   * no task: its taskRef is '' and its task states are not used.
+   */
+  detail: ReceiptDetail | null;
 }
 
 export interface TaskProgress {
@@ -213,7 +278,8 @@ export type Operation =
   | CreateTaskOperation
   | RemoveCreatedOperation
   | EditDetailsOperation
-  | StepOperation;
+  | StepOperation
+  | DetailOperation;
 
 /** An edit for review: the action service binds it to the task's current revision (#365). */
 export type EditDraft =
@@ -225,7 +291,8 @@ export type CompensatingOperation =
   | SetStateOperation
   | RemoveCreatedOperation
   | EditDetailsOperation
-  | Exclude<StepOperation, StepCreateOperation>;
+  | Exclude<StepOperation, StepCreateOperation>
+  | Exclude<DetailOperation, DetailCreateOperation>;
 
 export interface CompensatingProposal {
   proposalId: string;
@@ -237,7 +304,8 @@ export interface CompensatingProposal {
 export const isRemoval = (op: Operation): boolean =>
   op.type === 'task.remove_created' ||
   op.type === 'step.remove' ||
-  op.type === 'step.remove_created';
+  op.type === 'step.remove_created' ||
+  op.type === 'detail.remove';
 
 /** removal_confirmed: the user confirmed a removal in the interface (every removal needs it). */
 export type Authorization =
@@ -343,7 +411,21 @@ export type CommandResult =
       reason: ClarifyReason;
       candidates: { taskRef: string; title: string }[];
     }
+  /** #370: a clear remember command for exactly this detail. */
+  | {
+      kind: 'remember';
+      operation: DetailCreateOperation;
+      sameTextDetails: { detailId: string; text: string }[];
+    }
+  | {
+      kind: 'remember_clarify';
+      reason: 'missing_detail' | 'unclear_reference' | 'multiple' | 'too_long';
+    }
+  /** The profile owns this fact; it is not saved as a detail. */
+  | { kind: 'profile_fact'; field: ProfileFactField }
   | { kind: 'none' };
+
+export type ProfileFactField = 'province' | 'arrival_date' | 'persona';
 
 export class ContractError extends Error {
   constructor(where: string) {
@@ -395,6 +477,10 @@ const OPERATION_TYPES: readonly OperationType[] = [
   'step.remove',
   'step.restore',
   'step.remove_created',
+  'detail.create',
+  'detail.update',
+  'detail.remove',
+  'detail.restore',
 ];
 const EDIT_FIELDS: readonly EditField[] = ['title', 'description', 'priority'];
 
@@ -447,6 +533,35 @@ export function parseReceipt(raw: unknown): TaskReceipt {
   if (!(OPERATION_TYPES as readonly unknown[]).includes(operationType)) {
     throw new ContractError('receipt.operation_type');
   }
+  if (String(operationType).startsWith('detail.')) {
+    if (!isObject(raw.detail)) throw new ContractError('receipt.detail');
+    return {
+      operationId: str(raw, 'operation_id'),
+      createdAt: str(raw, 'created_at'),
+      kind,
+      operationType: operationType as OperationType,
+      title: null,
+      changes: [],
+      undoOf: strOrNull(raw, 'undo_of'),
+      taskRef: '',
+      beforeState: 'not_started',
+      afterState: 'not_started',
+      afterRevision: int(raw, 'after_revision'),
+      undoneBy: strOrNull(raw, 'undone_by'),
+      current: bool(raw, 'current'),
+      undoable: bool(raw, 'undoable'),
+      steps: null,
+      stepsDone: null,
+      stepsTotal: null,
+      waitingReasons: null,
+      detail: {
+        detailId: str(raw.detail, 'detail_id'),
+        text: str(raw.detail, 'text'),
+        beforeText: strOrNull(raw.detail, 'before_text'),
+        removed: raw.detail.removed === true,
+      },
+    };
+  }
   return {
     operationId: str(raw, 'operation_id'),
     createdAt: str(raw, 'created_at'),
@@ -472,6 +587,7 @@ export function parseReceipt(raw: unknown): TaskReceipt {
             before: strOrNull(raw, 'before_waiting_reason'),
             after: strOrNull(raw, 'after_waiting_reason'),
           },
+    detail: null,
   };
 }
 
@@ -531,6 +647,11 @@ export function parseEditOperation(raw: unknown): EditDetailsOperation {
 export function parseOperation(raw: unknown): CompensatingOperation {
   if (isObject(raw) && raw.type === 'task.edit_details') {
     return parseEditOperation(raw);
+  }
+  if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('detail.')) {
+    const op = parseDetailOperation(raw);
+    if (op.type === 'detail.create') throw new ContractError('operation');
+    return op;
   }
   if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('step.')) {
     return parseStepOperation(raw) as CompensatingOperation;
@@ -787,7 +908,9 @@ export interface StepProposal {
   receipt: TaskReceipt | null;
 }
 
-export const isStepProposal = (p: TaskProposal | StepProposal): p is StepProposal =>
+export const isStepProposal = (
+  p: TaskProposal | StepProposal | DetailProposal
+): p is StepProposal =>
   'existingSteps' in p;
 
 export function parseStepProposal(raw: unknown): StepProposal {
@@ -915,6 +1038,28 @@ export function parseCommand(raw: unknown): CommandResult {
       sameTitleTasks: sameTitle(raw.same_title_tasks),
     };
   }
+  if (raw.kind === 'remember') {
+    const op = isObject(raw.operation) ? parseDetailOperation(raw.operation) : null;
+    if (!op || op.type !== 'detail.create') throw new ContractError('command.operation');
+    return { kind: 'remember', operation: op, sameTextDetails: sameText(raw.same_text_details) };
+  }
+  if (raw.kind === 'remember_clarify') {
+    const reason = raw.reason;
+    if (
+      reason !== 'missing_detail' &&
+      reason !== 'unclear_reference' &&
+      reason !== 'multiple' &&
+      reason !== 'too_long'
+    )
+      throw new ContractError('command.reason');
+    return { kind: 'remember_clarify', reason };
+  }
+  if (raw.kind === 'profile_fact') {
+    const field = raw.field;
+    if (field !== 'province' && field !== 'arrival_date' && field !== 'persona')
+      throw new ContractError('command.field');
+    return { kind: 'profile_fact', field };
+  }
   throw new ContractError('command.kind');
 }
 
@@ -1000,4 +1145,191 @@ export function editDraftOf(s: SuggestedEdit): EditDraft | null {
       : null;
   }
   return { type: 'task.edit_details', task_ref: s.taskRef, [s.field]: s.value };
+}
+
+// ------------------------------------------------------------------ #370 saved details
+
+function parseDetailOperation(raw: Json): DetailOperation {
+  switch (raw.type) {
+    case 'detail.create':
+      return { type: 'detail.create', text: str(raw, 'text') };
+    case 'detail.update':
+      return {
+        type: 'detail.update',
+        detail_id: str(raw, 'detail_id'),
+        text: str(raw, 'text'),
+        expected_revision: int(raw, 'expected_revision'),
+      };
+    case 'detail.remove':
+    case 'detail.restore':
+      return {
+        type: raw.type,
+        detail_id: str(raw, 'detail_id'),
+        expected_revision: int(raw, 'expected_revision'),
+      };
+    default:
+      throw new ContractError('operation');
+  }
+}
+
+const sameText = (raw: unknown) =>
+  (Array.isArray(raw) ? raw : []).map(e => {
+    if (!isObject(e)) throw new ContractError('same_text_details');
+    return { detailId: str(e, 'detail_id'), text: str(e, 'text') };
+  });
+
+export function parseSavedDetail(raw: unknown): SavedDetail {
+  if (!isObject(raw)) throw new ContractError('detail');
+  const source = isObject(raw.source) ? raw.source : {};
+  const kind = source.kind;
+  return {
+    detailId: str(raw, 'detail_id'),
+    text: str(raw, 'text'),
+    revision: int(raw, 'revision'),
+    source: {
+      kind: kind === 'direct_command' || kind === 'approved_proposal' ? kind : null,
+      conversationId: typeof source.conversation_id === 'string' ? source.conversation_id : null,
+    },
+    createdAt: str(raw, 'created_at'),
+  };
+}
+
+/**
+ * A detail as the service read it when an Undo conflicted (#370 `current_detail`). The
+ * receipt keeps its own historical text; this is what the reviewed change acts on now.
+ */
+export interface CurrentDetailValue {
+  detailId: string;
+  text: string;
+  revision: number;
+  removed: boolean;
+}
+
+/** `current_detail`, or null when absent or malformed: then nothing can be verified. */
+export function parseCurrentDetail(raw: unknown): CurrentDetailValue | null {
+  if (!isObject(raw)) return null;
+  try {
+    return {
+      detailId: str(raw, 'detail_id'),
+      text: str(raw, 'text'),
+      revision: int(raw, 'revision'),
+      removed: bool(raw, 'removed'),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The current detail a conflicting Undo's reviewed change acts on, or null when it cannot
+ * be verified (#370): the service's value must name that operation's detail, at the
+ * revision it expects, in a state it applies to (restore: removed; otherwise live). A
+ * newer known read of the detail (`live`, the account's live details from a finished
+ * read) also withholds it; an older read does not. Null means: do not approve.
+ */
+export function verifiedCompensationDetail(
+  op: CompensatingOperation,
+  current: CurrentDetailValue | null,
+  live?: readonly SavedDetail[]
+): CurrentDetailValue | null {
+  if (op.type !== 'detail.update' && op.type !== 'detail.remove' && op.type !== 'detail.restore')
+    return null;
+  if (
+    !current ||
+    current.detailId !== op.detail_id ||
+    current.revision !== op.expected_revision ||
+    current.removed !== (op.type === 'detail.restore')
+  )
+    return null;
+  if (live) {
+    const read = live.find(d => d.detailId === current.detailId);
+    if (op.type === 'detail.restore') {
+      // Live again at this revision or later: restored or changed elsewhere.
+      if (read && read.revision >= current.revision) return null;
+    } else if (!read) {
+      return null; // removed elsewhere
+    } else if (
+      read.revision > current.revision ||
+      (read.revision === current.revision && read.text !== current.text)
+    ) {
+      return null;
+    }
+  }
+  return current;
+}
+
+/** A detail the answer suggested saving (#370), a server-owned draft. Approval binds to its revision. */
+export interface DetailProposal {
+  proposalId: string;
+  proposalRevision: number;
+  status: 'draft' | 'applied' | 'cancelled';
+  operation: DetailCreateOperation;
+  /** Live details with the same text (shown; the approval would be refused). */
+  sameTextDetails: { detailId: string; text: string }[];
+  reviewReason: 'edited' | 'context_changed' | 'restored' | null;
+  source: { conversationId: string; messageId: number | null } | null;
+  receipt: TaskReceipt | null;
+}
+
+export function parseDetailProposal(raw: unknown): DetailProposal {
+  if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'detail_create') {
+    throw new ContractError('detail proposal');
+  }
+  const status = raw.status;
+  if (status !== 'draft' && status !== 'applied' && status !== 'cancelled') {
+    throw new ContractError('proposal.status');
+  }
+  const reason = raw.review_reason ?? null;
+  if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason)) {
+    throw new ContractError('proposal.review_reason');
+  }
+  const op = isObject(raw.operations[0]) ? parseDetailOperation(raw.operations[0]) : null;
+  if (!op || op.type !== 'detail.create') throw new ContractError('detail proposal operation');
+  const context = isObject(raw.context) ? raw.context : {};
+  return {
+    proposalId: str(raw, 'proposal_id'),
+    proposalRevision: int(raw, 'proposal_revision'),
+    status,
+    operation: op,
+    sameTextDetails: sameText(context.same_text_details),
+    reviewReason: reason as DetailProposal['reviewReason'],
+    source: isObject(raw.source)
+      ? {
+          conversationId: str(raw.source, 'conversation_id'),
+          messageId:
+            raw.source.message_id === undefined || raw.source.message_id === null
+              ? null
+              : int(raw.source, 'message_id'),
+        }
+      : null,
+    receipt: raw.receipt === null || raw.receipt === undefined ? null : parseReceipt(raw.receipt),
+  };
+}
+
+export const isDetailProposal = (
+  p: TaskProposal | StepProposal | DetailProposal
+): p is DetailProposal => 'sameTextDetails' in p;
+
+/** The exact operations the saved-detail controls send (#370). */
+export const detailUpdateOperation = (detail: SavedDetail, text: string): DetailUpdateOperation => ({
+  type: 'detail.update',
+  detail_id: detail.detailId,
+  text: text.trim(),
+  expected_revision: detail.revision,
+});
+export const detailRemoveOperation = (detail: SavedDetail): DetailRemoveOperation => ({
+  type: 'detail.remove',
+  detail_id: detail.detailId,
+  expected_revision: detail.revision,
+});
+
+/**
+ * The detail an answer suggests saving (rag-query `actionProposal`, #370), allowlisted
+ * fields only. A suggestion is not authorization: the action service prepares the draft.
+ */
+export function parseSuggestedDetail(raw: unknown): { type: 'detail.create'; text: string } | null {
+  if (!isObject(raw) || raw.type !== 'detail.create' || raw.version !== 1) return null;
+  if (typeof raw.text !== 'string') return null;
+  const text = raw.text.trim();
+  return text && text.length <= DETAIL_TEXT_MAX ? { type: 'detail.create', text } : null;
 }

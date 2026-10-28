@@ -1,0 +1,14 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible: "Close|Got it|Learn"
+    timeout: 180000
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Got it"
+    optional: true

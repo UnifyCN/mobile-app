@@ -168,6 +168,9 @@ export default function CompanionScreen() {
       }
     | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
+    // #370: a suggested detail's review, or the saved details.
+    | { kind: 'detail'; proposalId: string }
+    | { kind: 'details' }
     | { kind: 'plan'; target: PlanTarget }
     | null
   >(null);
@@ -191,8 +194,10 @@ export default function CompanionScreen() {
     setGreetingMessage(null);
     setOptimisticMessages([]);
     // A draft or task view names the previous account's record: close it. The task
-    // list stays open and reads only the new account's tasks.
-    setSheet(current => (current?.kind === 'tasks' ? current : null));
+    // list and the saved details stay open and read only the new account's records.
+    setSheet(current =>
+      current?.kind === 'tasks' || current?.kind === 'details' ? current : null
+    );
   }
 
   // Fetch messages for the current conversation
@@ -537,6 +542,14 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
   }, []);
+  const openDetail = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'detail', proposalId });
+  }, []);
+  const openDetails = useCallback(() => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'details' });
+  }, []);
   // #364: the plan drafts of the open conversation, and the account's plan store.
   const { data: conversationPlans } = useConversationPlans(currentConversationId);
   const planStore = usePlanStore('companion');
@@ -584,6 +597,10 @@ export default function CompanionScreen() {
             stepProposals={conversationActions?.stepProposals ?? []}
             onReviewSteps={openSteps}
             taskTitleOf={taskTitleOf}
+            detailProposals={conversationActions?.detailProposals ?? []}
+            detailCommands={conversationActions?.detailCommands ?? []}
+            onReviewDetail={openDetail}
+            onViewDetails={openDetails}
           />
           <PlanCards
             messageId={
@@ -603,6 +620,8 @@ export default function CompanionScreen() {
       openDraft,
       openTask,
       openSteps,
+      openDetail,
+      openDetails,
       taskTitleOf,
       conversationPlans,
       planStore,
@@ -822,6 +841,8 @@ export default function CompanionScreen() {
           sheet?.kind === 'proposal' ? sheet.proposalKind : undefined
         }
         stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
+        detailProposalId={sheet?.kind === 'detail' ? sheet.proposalId : null}
+        openDetails={sheet?.kind === 'details'}
         initialTask={
           sheet?.kind === 'task'
             ? { taskRef: sheet.taskRef, title: sheet.title }

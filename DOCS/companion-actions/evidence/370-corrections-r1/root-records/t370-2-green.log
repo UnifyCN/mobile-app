@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ✓ components/companion/tasks/SavedDetails.test.tsx (9 tests | 1 skipped) 787ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  429ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed | 1 skipped (9)
+   Start at  19:19:11
+   Duration  1.84s (transform 226ms, setup 0ms, collect 627ms, tests 787ms, environment 212ms, prepare 39ms)
+

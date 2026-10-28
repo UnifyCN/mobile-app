@@ -28,6 +28,9 @@ const ACTIONS = [
   'approve_steps',
   'approve_edit',
   'command_edit',
+  'detail_change',
+  'approve_detail',
+  'command_detail',
 ] as const;
 /** #366: step operation types, allowlisted. Never a step title or id. */
 /** #365: an edit names its registered type. */
@@ -39,6 +42,11 @@ const STEP_TYPES: readonly OperationType[] = [
   'step.remove',
   'step.restore',
   'step.remove_created',
+  // #370: saved-detail operation types. Never the detail text or id.
+  'detail.create',
+  'detail.update',
+  'detail.remove',
+  'detail.restore',
 ];
 const OUTCOMES = [
   'applied',
@@ -67,7 +75,7 @@ export function buildTaskActionResultProperties(
   if (!(ACTIONS as readonly string[]).includes(event.action)) return null;
   if (!(OUTCOMES as readonly string[]).includes(event.outcome)) return null;
   const props: TaskActionResultProperties = {
-    // Categorical only: never the task title, the message or a reference.
+    // Categorical only: never the task title, the detail text, the message or a reference.
     operation_type:
       event.operationType &&
       (STEP_TYPES.includes(event.operationType) ||
@@ -75,7 +83,9 @@ export function buildTaskActionResultProperties(
         ? event.operationType
         : event.action === 'approve_create' || event.action === 'command_create'
           ? 'task.create_custom'
-          : 'task.set_state',
+          : event.action === 'approve_detail' || event.action === 'command_detail'
+            ? 'detail.create'
+            : 'task.set_state',
     action: event.action,
     outcome: event.outcome,
     entry_surface: surface === 'companion' ? 'companion' : 'checklist',

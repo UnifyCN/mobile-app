@@ -39,6 +39,7 @@ import { useStepProposal } from '@/hooks/companion/useTaskActions';
 import { PlanPanel } from '../plans/PlanPanel';
 import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
+import { DetailProposalPanel, SavedDetailsPanel } from './SavedDetails';
 
 const STATE_ORDER: TaskState[] = [
   'in_progress',
@@ -61,6 +62,10 @@ interface TaskActionsSheetProps {
   initialTask?: { taskRef: string; title: string } | null;
   /** #366: open on the review of suggested steps for one task. */
   stepProposalId?: string | null;
+  /** #370: open on the review of one suggested detail. */
+  detailProposalId?: string | null;
+  /** #370: open on the saved details instead of the task list. */
+  openDetails?: boolean;
   /** Open on a settlement plan draft or saved plan (#364). */
   plan?: PlanTarget | null;
   /** A task row of the plan was opened (#364). */
@@ -80,18 +85,25 @@ export function TaskActionsSheet({
   proposalKind = 'task_create',
   initialTask = null,
   stepProposalId = null,
+  detailProposalId = null,
+  openDetails = false,
   plan = null,
   onOpenTask,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
+  // #370: the saved details view, opened from the list, a card or a review.
+  const [showDetails, setShowDetails] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const initialRef = initialTask?.taskRef ?? null;
   useEffect(() => {
     if (visible) setSelectedRef(initialRef);
   }, [visible, initialRef]);
+  useEffect(() => {
+    if (visible) setShowDetails(openDetails);
+  }, [visible, openDetails]);
   useEffect(() => {
     let cancelled = false;
     AccessibilityInfo.isReduceMotionEnabled()
@@ -104,12 +116,16 @@ export function TaskActionsSheet({
     };
   }, []);
 
-  const back = () => setSelectedRef(null);
+  const back = () => {
+    setSelectedRef(null);
+    setShowDetails(false);
+  };
   // Opened on a draft or one task: there is no list to go back to.
   const canGoBack =
-    Boolean(selectedRef) &&
+    (Boolean(selectedRef) || (showDetails && !openDetails)) &&
     !proposalId &&
     !stepProposalId &&
+    !detailProposalId &&
     !initialRef &&
     !plan;
 
@@ -163,7 +179,11 @@ export function TaskActionsSheet({
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {stepProposalId
+                {showDetails
+                  ? t('savedDetails.title')
+                  : detailProposalId
+                  ? t('savedDetails.reviewTitle')
+                  : stepProposalId
                   ? t('taskSteps.reviewTitle')
                   : plan
                   ? 'proposalId' in plan
@@ -186,7 +206,14 @@ export function TaskActionsSheet({
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible && stepProposalId ? (
+            {visible && showDetails ? (
+              <DetailsBody />
+            ) : visible && detailProposalId ? (
+              <DetailProposalBody
+                proposalId={detailProposalId}
+                onViewDetails={() => setShowDetails(true)}
+              />
+            ) : visible && stepProposalId ? (
               <StepProposalBody proposalId={stepProposalId} />
             ) : visible && plan ? (
               <ScrollView
@@ -210,6 +237,7 @@ export function TaskActionsSheet({
                     : null
                 }
                 onSelect={setSelectedRef}
+                onOpenDetails={() => setShowDetails(true)}
                 onOpenChecklist={onClose}
               />
             ) : null}
@@ -241,6 +269,57 @@ function ProposalBody({ proposalId }: { proposalId: string }) {
   );
 }
 
+/** #370: the account's saved details. */
+function DetailsBody() {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  const { t } = useTranslation();
+  if (view.status === 'loading')
+    return (
+      <Text style={styles.message} accessibilityLiveRegion='polite'>
+        {t('taskActions.loading')}
+      </Text>
+    );
+  if (view.status === 'signed_out')
+    return <Text style={styles.message}>{t('taskActions.signedOut')}</Text>;
+  if (view.status === 'unavailable')
+    return <Text style={styles.message}>{t('taskActions.unavailable')}</Text>;
+  return (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps='handled'
+    >
+      <SavedDetailsPanel view={view} store={store} />
+    </ScrollView>
+  );
+}
+
+function DetailProposalBody({
+  proposalId,
+  onViewDetails,
+}: {
+  proposalId: string;
+  onViewDetails: () => void;
+}) {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  return (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps='handled'
+    >
+      <DetailProposalPanel
+        proposalId={proposalId}
+        view={view}
+        store={store}
+        onViewDetails={onViewDetails}
+      />
+    </ScrollView>
+  );
+}
+
 function StepProposalBody({ proposalId }: { proposalId: string }) {
   const view = useTaskProgress();
   const store = useTaskActionStore('companion');
@@ -267,12 +346,14 @@ function SheetBody({
   selectedRef,
   fallbackTitle,
   onSelect,
+  onOpenDetails,
   onOpenChecklist,
 }: {
   selectedRef: string | null;
   /** The title to show when the Checklist read does not have the task yet. */
   fallbackTitle: string | null;
   onSelect: (taskRef: string) => void;
+  onOpenDetails: () => void;
   onOpenChecklist: () => void;
 }) {
   const { t } = useTranslation();
@@ -377,6 +458,7 @@ function SheetBody({
       }))}
       view={view}
       onSelect={onSelect}
+      onOpenDetails={onOpenDetails}
     />
   );
 }
@@ -385,10 +467,12 @@ function TaskList({
   tasks,
   view,
   onSelect,
+  onOpenDetails,
 }: {
   tasks: { taskRef: string; title: string }[];
   view: TaskProgressView;
   onSelect: (taskRef: string) => void;
+  onOpenDetails: () => void;
 }) {
   const { t } = useTranslation();
   const rows = tasks
@@ -397,14 +481,41 @@ function TaskList({
       (a, b) => STATE_ORDER.indexOf(a.state) - STATE_ORDER.indexOf(b.state)
     );
 
+  // #370: the saved details are one row above the tasks, in every state of the list.
+  const detailsRow = (
+    <Pressable
+      onPress={onOpenDetails}
+      accessibilityRole='button'
+      accessibilityLabel={`${t('savedDetails.entryTitle')}, ${t('savedDetails.entryHint')}`}
+      style={({ pressed }) => [styles.row, pressed && styles.pressed]}
+    >
+      <View style={styles.rowText}>
+        <Text style={styles.rowTitle}>{t('savedDetails.entryTitle')}</Text>
+        <Text style={styles.rowState}>{t('savedDetails.entryHint')}</Text>
+      </View>
+      <MaterialIcons
+        name='chevron-right'
+        size={22}
+        color={INK_MUTED}
+        style={I18nManager.isRTL ? styles.flipped : undefined}
+      />
+    </Pressable>
+  );
+
   if (rows.length === 0) {
-    return <Text style={styles.message}>{t('taskActions.noTasks')}</Text>;
+    return (
+      <View style={styles.listContent}>
+        {detailsRow}
+        <Text style={styles.message}>{t('taskActions.noTasks')}</Text>
+      </View>
+    );
   }
   return (
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={styles.listContent}
     >
+      {detailsRow}
       {view.stale ? (
         <Text style={styles.message}>{t('taskActions.offline')}</Text>
       ) : null}

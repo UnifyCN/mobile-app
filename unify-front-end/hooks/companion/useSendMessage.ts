@@ -38,9 +38,11 @@ import {
 } from '@/hooks/companion/useTaskActions';
 import { createMobileTaskActionClient } from '@/services/companionActions/transport';
 import {
+  DETAIL_TEXT_MAX,
   TITLE_MAX,
   createTaskOperation,
   editDraftOf,
+  parseSuggestedDetail,
   parseSuggestedEdit,
   parseSuggestedSteps,
   parseSuggestedTask,
@@ -73,6 +75,46 @@ function clarifyQuestion(
       });
     default:
       return t(`taskEdit.clarify.${command.reason}`);
+  }
+}
+
+/**
+ * The question or explanation Companion saves for a command that writes nothing (#363
+ * unclear task commands; #365 unclear edits; #370 unclear remember commands, a detail
+ * already saved, and a profile fact, which the profile owns).
+ */
+function commandReply(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  command: Exclude<CommandResult, { kind: 'none' } | { kind: 'edit' }>
+): string {
+  switch (command.kind) {
+    case 'create':
+      return t('taskCreate.clarifyDuplicate', {
+        title: command.sameTitleTasks[0]?.title ?? command.operation.title,
+      });
+    case 'clarify':
+      return clarifyQuestion(t, command);
+    case 'remember':
+      return t('savedDetails.commandExists');
+    case 'remember_clarify':
+      return t(
+        command.reason === 'missing_detail'
+          ? 'savedDetails.clarifyMissing'
+          : command.reason === 'unclear_reference'
+            ? 'savedDetails.clarifyUnclear'
+            : command.reason === 'multiple'
+              ? 'savedDetails.clarifyMultiple'
+              : 'savedDetails.clarifyTooLong',
+        { max: DETAIL_TEXT_MAX }
+      );
+    case 'profile_fact':
+      return t(
+        command.field === 'province'
+          ? 'savedDetails.profileFactProvince'
+          : command.field === 'arrival_date'
+            ? 'savedDetails.profileFactArrival'
+            : 'savedDetails.profileFactPersona'
+      );
   }
 }
 
@@ -212,6 +254,9 @@ export const useSendMessage = ({
       // command adds exactly its task (no AI answer, no allowance used); an unclear
       // one gets a question and writes nothing. Otherwise the AI answers as before.
       // An unavailable action service never blocks the answer.
+      // #370: a clear remember command saves exactly its detail the same way; an
+      // unclear one, a detail already saved or a profile fact gets a reply and writes
+      // nothing.
       const actions = createMobileTaskActionClient(owner);
       if (savedUserId !== null) {
         const interpreted = await actions.interpret(savedUserId);
@@ -221,7 +266,9 @@ export const useSendMessage = ({
           if (
             (command.kind === 'create' &&
               command.sameTitleTasks.length === 0) ||
-            command.kind === 'edit'
+            command.kind === 'edit' ||
+            (command.kind === 'remember' &&
+              command.sameTextDetails.length === 0)
           ) {
             // A clear command makes exactly its one change (#365 edits too). Its card
             // shows the saved receipt, never assistant text.
@@ -233,12 +280,7 @@ export const useSendMessage = ({
             );
             ensureOwned();
           } else {
-            const question =
-              command.kind === 'create'
-                ? t('taskCreate.clarifyDuplicate', {
-                    title: command.sameTitleTasks[0].title,
-                  })
-                : clarifyQuestion(t as never, command);
+            const question = commandReply(t, command);
             await saveMessage.mutateAsync({
               conversationIdentifier: conversationIdToUse,
               role: 'assistant',
@@ -441,6 +483,20 @@ export const useSendMessage = ({
             task_ref: suggestedSteps.taskRef,
             titles: suggestedSteps.titles,
           },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId }
+        );
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+        });
+      }
+
+      // #370: a detail the answer suggested saving becomes a server-owned draft, asked
+      // under this answer. Nothing is saved until the user approves it.
+      const suggestedDetail = parseSuggestedDetail(completion.actionProposal);
+      if (suggestedDetail && savedAnswerId !== null) {
+        await actions.prepareDetail(
+          { type: 'detail.create', text: suggestedDetail.text },
           { conversationId: conversationIdToUse, messageId: savedAnswerId }
         );
         ensureOwned();

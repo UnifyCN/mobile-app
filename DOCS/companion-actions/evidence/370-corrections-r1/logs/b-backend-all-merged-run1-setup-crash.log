@@ -1,0 +1,18 @@
+COMMAND ['sync']
+Traceback (most recent call last):
+  File "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/build/s370c-stack/run_checks.py", line 55, in <module>
+    shutil.rmtree(fn)
+    ~~~~~~~~~~~~~^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 721, in _rmtree_safe_fd
+    _rmtree_safe_fd_step(stack, onexc)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 799, in _rmtree_safe_fd_step
+    onexc(func, path, err)
+    ~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 760, in _rmtree_safe_fd_step
+    orig_st = os.lstat(name, dir_fd=dirfd)
+FileNotFoundError: [Errno 2] No such file or directory: PosixPath('/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/build/s370c-stack/supabase/functions')
+backend_all exit 2
