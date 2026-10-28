@@ -831,7 +831,19 @@ export default function CompanionScreen() {
           <View style={styles.inputContainer}>
             <TextInput
               ref={inputRef}
-              style={[styles.textInput, !canSend && styles.disabledInput]}
+              style={[
+                styles.textInput,
+                // One line of the current text size plus padding: its natural
+                // height. It changes with the size, so the mounted input is
+                // measured again after a live change (see textScaleKey).
+                {
+                  minHeight: Math.max(
+                    44,
+                    Math.ceil(typography.body.lineHeight * fontScale) + 24
+                  ),
+                },
+                !canSend && styles.disabledInput,
+              ]}
               value={inputText}
               onChangeText={setInputText}
               placeholder={

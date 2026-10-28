@@ -402,6 +402,18 @@ describe('N2: a live size change measures the static text again', () => {
     expect(composer.props.value).toBe('Where do I get a SIN?');
   });
 
+  it('keeps the composer mounted and sizes it for the current text size', async () => {
+    renderScreen();
+    await screen.findByRole('button', { name: /Your tasks/ });
+    const composer = screen.getByPlaceholderText(en.companion.inputPlaceholder);
+    const minHeight = () => StyleSheet.flatten(composer.props.style).minHeight;
+    // One body line (24 pt) and 12 pt padding above and below: its natural height.
+    expect(minHeight()).toBe(48);
+    setFontScale(AX_MEDIUM);
+    expect(screen.getByPlaceholderText(en.companion.inputPlaceholder)).toBe(composer);
+    expect(minHeight()).toBe(Math.ceil(24 * AX_MEDIUM) + 24);
+  });
+
   it('re-creates message rows in place, without a new list', async () => {
     mockMessages = [
       { id: 1, role: 'user', content: 'Which bank should I use?', created_at: '2026-10-27T10:00:00Z' },
