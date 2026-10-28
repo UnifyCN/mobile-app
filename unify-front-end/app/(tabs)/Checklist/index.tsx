@@ -26,6 +26,8 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useQueryClient } from '@tanstack/react-query';
+import { plansKey } from '@/hooks/companion/planQueryKeys';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
@@ -187,6 +189,7 @@ function extractTasksInSection(
 
 export default function ChecklistScreen() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
   const {
     trackScreen,
@@ -474,6 +477,8 @@ export default function ChecklistScreen() {
       }
       // The legacy write moved the task's revision: re-read saved progress.
       taskProgress.refetch();
+      // Companion can remain mounted on another tab with its own plan query.
+      void queryClient.invalidateQueries({ queryKey: plansKey(user.id) });
     } catch (error) {
       console.error('Error updating task completion:', error);
       refetch();

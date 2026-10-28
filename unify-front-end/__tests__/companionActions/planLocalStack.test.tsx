@@ -18,7 +18,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { execFileSync } from 'child_process';
 import * as fs from 'fs';
@@ -39,6 +39,8 @@ process.env.EXPO_PUBLIC_SUPABASE_URL = API_URL;
 process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = ANON_KEY;
 const mockJwts = new Map<string, string>();
 
+const mockChecklistRows:any[]=[];
+const mockLegacyCompleted=jest.fn();
 let mockUserId = 'user-1';
 let mockCapture: jest.Mock = jest.fn();
 const mockAuthListeners = new Set<(event: string, session: unknown) => void>();
@@ -199,6 +201,10 @@ jest.mock('react-native-safe-area-context', () => ({
 jest.mock('@/hooks/sanity/useSanityLanguage', () => ({ useSanityLanguage: () => 'en' }));
 jest.mock('@/lib/supabase', () => ({
   supabase: {
+    from:(table:string)=>{
+      const sdk=require('@supabase/supabase-js').createClient(process.env.ACTIONS_API_URL,process.env.ACTIONS_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false},global:{fetch:(globalThis as any).__planRealFetch,headers:{Authorization:`Bearer ${mockJwts.get(mockUserId)}`}}});
+      return sdk.from(table);
+    },
     auth: {
       getUser: async () => ({ data: { user: { id: mockUserId } } }),
       getSession: async () => ({
@@ -226,7 +232,7 @@ jest.mock('@/services/checklist/getUserTasks', () => ({ getUserTasks: jest.fn().
 jest.mock('@/services/checklist/customChecklistTasks', () => ({
   getCustomChecklistTasks: jest.fn().mockResolvedValue([]),
   deleteCustomChecklistTask: jest.fn(),
-  setCustomChecklistTaskCompletion: jest.fn(),
+  setCustomChecklistTaskCompletion: jest.fn(async (input:any)=>{await jest.requireActual('@/services/checklist/customChecklistTasks').setCustomChecklistTaskCompletion(input);mockLegacyCompleted();}),
 }));
 jest.mock('@/services/checklist/checklistTaskOrder', () => ({
   getChecklistTaskOrders: jest.fn().mockResolvedValue([]),
@@ -262,7 +268,7 @@ function mount() {
   return render(
     <QueryClientProvider client={client}>
       <I18nextProvider i18n={testI18n()}>
-        <CompanionScreen />
+        <RetainedTabs />
       </I18nextProvider>
     </QueryClientProvider>
   );
@@ -810,3 +816,49 @@ if (!enabled) {
     expect(enabled).toBe(false);
   });
 }
+
+import ChecklistScreen from '@/app/(tabs)/Checklist';
+jest.mock('react-native-confetti-cannon',()=>()=>null);
+jest.mock('react-native-draggable-flatlist',()=>{
+ const {View}=require('react-native');
+ return {__esModule:true,default:({data,renderItem,ListHeaderComponent,ListFooterComponent}:any)=><View>{ListHeaderComponent}{data.map((item:any,index:number)=><View key={index}>{renderItem({item,drag:()=>{},isActive:false})}</View>)}{ListFooterComponent}</View>,ScaleDecorator:({children}:any)=>children};
+});
+jest.mock('@/hooks/checklist/useChecklistTasks',()=>({useChecklistTasks:()=>{
+ const React=require('react');const [tasks,setTasks]=React.useState(mockChecklistRows);
+ return {tasks,setTasks,refetch:async()=>{},isLoading:false};
+}}));
+jest.mock('@/hooks/checklist/useChecklistProfile',()=>({useChecklistProfile:()=>({persona:'skilled_worker',province:'British Columbia',isLoading:false,refresh:async()=>false})}));
+jest.mock('@/components/checklist/ArrivalCountdownSection',()=>({ArrivalCountdownSection:()=>null}));
+jest.mock('@/components/checklist/ChecklistItem',()=>({ChecklistItem:({task,onPress}:any)=>{
+ const {TouchableOpacity,Text}=require('react-native');return <TouchableOpacity accessibilityRole='button' accessibilityLabel={`Checklist ${task.task.task_name}`} onPress={onPress}><Text>{task.task.task_name}</Text></TouchableOpacity>;
+}}));
+function RetainedTabs(){
+ const [tab,setTab]=React.useState('companion');const [visited,setVisited]=React.useState(false);
+ return <View>
+  <TouchableOpacity accessibilityRole='button' accessibilityLabel='Select Checklist tab' onPress={()=>{setVisited(true);setTab('checklist');}}><Text>Checklist</Text></TouchableOpacity>
+  <TouchableOpacity accessibilityRole='button' accessibilityLabel='Select Companion tab' onPress={()=>setTab('companion')}><Text>Companion</Text></TouchableOpacity>
+  <View style={{display:tab==='companion'?'flex':'none'}}><CompanionScreen/></View>
+  {visited&&<View style={{display:tab==='checklist'?'flex':'none'}}><ChecklistScreen/></View>}
+ </View>;
+}
+describeStack('Independent retained mobile Checklist completion',()=>{
+ beforeEach(()=>{global.fetch=realFetch;clearPlanStores(null);clearTaskActionStores(null);mockLegacyCompleted.mockClear();});
+ afterEach(()=>{global.fetch=realFetch;clients.splice(0).forEach(c=>c.clear());});
+ it('Checklist completion refreshes the retained Companion plan entry',async()=>{
+  // Falsifier: the real Checklist screen completion callback and service save Completed,
+  // but the retained Companion screen still shows its old plan count after tab return.
+  const acc=await newAccount('r3-native-legacy');mockUserId=acc.id;
+  const saved=await savedPlanFor(acc);const ref=saved.receipt.results[2].task_ref;
+  mockChecklistRows.splice(0,mockChecklistRows.length,{user_task_id:1,user_id:acc.id,task_id:null,sanity_checklist_id:null,custom_task_id:Number(ref.slice(7)),source:'custom',completed:false,completed_at:null,dismissed_at:null,task:{task_name:PHONE,task_description:'',priority:'Do soon'}});
+  mount();const entry=await screen.findByRole('button',{name:new RegExp(`Your plan, ${GOAL}, 0 of 3 done`)},{timeout:10_000});
+  fireEvent.changeText(composer(),'Retain my question');
+  fireEvent.press(screen.getByRole('button',{name:'Select Checklist tab'}));
+  fireEvent.press(await screen.findByRole('button',{name:`Checklist ${PHONE}`}));
+  fireEvent.press(await screen.findByRole('button',{name:en.checklist.markAsComplete}));
+  await waitFor(()=>expect(mockLegacyCompleted).toHaveBeenCalledTimes(1),{timeout:10_000});
+  const now=await actions(acc.jwt,{action:'read'});expect(now.json.tasks.find((t:any)=>t.task_ref===ref).state).toBe('completed');
+  fireEvent.press(screen.getByRole('button',{name:'Select Companion tab'}));
+  expect(composer().props.value).toBe('Retain my question');
+  await waitFor(()=>expect(screen.queryByRole('button',{name:new RegExp(`Your plan, ${GOAL}, 1 of 3 done`)})).not.toBeNull(),{timeout:2000});
+ },60_000);
+});

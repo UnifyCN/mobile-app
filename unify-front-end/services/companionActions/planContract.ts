@@ -353,6 +353,8 @@ export function parsePlanProposal(raw: unknown): PlanProposal {
 
 export function parsePlanView(raw: unknown): PlanView {
   if (!isObject(raw)) throw new ContractError('plan');
+  if (raw.reviews !== undefined && !Array.isArray(raw.reviews))
+    throw new ContractError('plan.reviews');
   return {
     planId: str(raw, 'plan_id'),
     goal: str(raw, 'goal'),
