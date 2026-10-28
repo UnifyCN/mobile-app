@@ -1,5 +1,5 @@
 import { LiveText as Text } from '@/components/common/LiveText';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   I18nManager,
@@ -384,11 +384,18 @@ function SheetBody({
     () => tasks.filter(task => !task.dismissed_at),
     [tasks]
   );
-  const selected = active.find(
+  // A task removed in this panel (#367) leaves the active list; its panel stays open on
+  // the removal receipt, so it keeps the title it was opened with.
+  const seenTitles = useRef(new Map<string, string>());
+  const selected = tasks.find(
     task => getChecklistTaskOrderKey(task) === selectedRef
   );
+  if (selected && selectedRef) seenTitles.current.set(selectedRef, selected.task.task_name);
   const phase = useTaskActionPhase(store, selectedRef);
-  const selectedTitle = selected?.task.task_name ?? fallbackTitle;
+  const selectedTitle =
+    selected?.task.task_name ??
+    (selectedRef ? seenTitles.current.get(selectedRef) : undefined) ??
+    fallbackTitle;
 
   if (
     view.status === 'loading' ||
@@ -420,7 +427,12 @@ function SheetBody({
         <Text style={styles.taskTitle} accessibilityRole='header'>
           {selectedTitle}
         </Text>
-        <TaskStatePanel taskRef={selectedRef} view={view} store={store} />
+        <TaskStatePanel
+          taskRef={selectedRef}
+          view={view}
+          store={store}
+          taskTitle={selectedTitle}
+        />
         <Pressable
           accessibilityRole='button'
           accessibilityLabel={t('taskActions.openChecklist')}

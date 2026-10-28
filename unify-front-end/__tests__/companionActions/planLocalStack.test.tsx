@@ -18,7 +18,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { AccessibilityInfo, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { execFileSync } from 'child_process';
 import * as fs from 'fs';
@@ -946,4 +946,304 @@ describeStack('Plan and task steps together against the real local stack (mobile
     await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
     expect(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, 1 of 3 done`) }, { timeout: 10_000 })).toBeTruthy();
   }, 90_000);
+});
+
+// ------------------------------------------------------------------ #367 task removal
+// The same real stack with this repo's #367 migration applied last, in timestamp order:
+// #361, #363, #364, #366, #365 (20261028001530), #367. The actual Companion screen, send
+// hook, removal card, plan entry and task sheet.
+describeStack('Task removal against the real local stack (mobile, #367)', () => {
+  let announcementSpy: jest.SpyInstance<void, [announcement: string]>;
+  beforeAll(async () => {
+    const has = (sig: string) => psql(`select to_regprocedure('public.${sig}') is not null;`) === 't';
+    // The earlier blocks applied #361-#366. #365 precedes #367 and is applied here when
+    // missing; refuse an out-of-order stack instead of guessing.
+    if (!has('companion_read_steps(uuid)') || !has('companion_plans_read(uuid)'))
+      throw new Error('#366 and #364 must be applied before #367');
+    const has365 = has('companion_prepare_edit(uuid,jsonb,jsonb,text)');
+    const has370 = has('companion_read_details(uuid)');
+    const has367 = has('companion_remove_prepare(uuid,text,jsonb)');
+    if (has367 && (!has365 || !has370)) throw new Error('#365 and #370 must be applied before #367');
+    if (has370 && !has365) throw new Error('#365 must be applied before #370');
+    if (!has365)
+      psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations/20261028001530_companion_task_edit.sql'), 'utf8'));
+    if (!has370)
+      psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations/20261028004902_companion_saved_details.sql'), 'utf8'));
+    if (!has367) {
+      psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations/20261028025026_companion_task_remove.sql'), 'utf8'));
+      psql(`update public.companion_feature_gate set enabled = true, min_contract_version = 1,
+              max_contract_version = 1, allowed_platforms = '{ios,android,web}';`);
+      execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
+    }
+    for (let i = 0; i < 50; i++) {
+      const ready = await http('/rest/v1/rpc/companion_read_tasks', {
+        method: 'POST',
+        key: SERVICE_KEY,
+        body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+      });
+      if (ready.status === 200) break;
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+  }, 60_000);
+  beforeEach(() => {
+    global.fetch = realFetch;
+    mockCapture = jest.fn();
+    mockStream.mockReset();
+    clearPlanStores(null);
+    clearTaskActionStores(null);
+    // The react-native Jest preset already mocks this function, so spyOn returns that mock
+    // with the calls of earlier tests (a completion in the steps block): start from none.
+    announcementSpy = jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => {});
+    announcementSpy.mockClear();
+  });
+  afterEach(() => {
+    announcementSpy.mockRestore();
+    global.fetch = realFetch;
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  const taskNow = async (jwt: string, ref: string) =>
+    (await actions(jwt, { action: 'read' })).json.tasks.find((t: { task_ref: string }) => t.task_ref === ref);
+  const removalReceipts = (userId: string) =>
+    Number(psql(`select count(*) from companion_action_receipts where user_id = '${userId}'
+                  and outcome->'results'->0->>'type' = 'task.remove';`));
+  // This file's Checklist rows stand in for the legacy read: the account has "Get your SIN".
+  const sinRow = (userId: string) => ({
+    user_task_id: 1, user_id: userId, task_id: null, sanity_checklist_id: 'sin-number',
+    custom_task_id: null, source: 'sanity', completed: false, completed_at: null, dismissed_at: null,
+    task: { task_name: 'Get your SIN', task_description: '', priority: 'Do now' },
+  });
+  const planItem = async (jwt: string, ref: string) =>
+    (await actions(jwt, { action: 'plans' })).json.plans[0].items.find((i: { task_ref: string }) => i.task_ref === ref);
+
+  it('composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account', async () => {
+    // Added after the merge. Fails on lost detail dispatch, removal, receipts or ownership.
+    const acc = await newAccount('compose-mobile');
+    const stranger = await newAccount('compose-mobile-other');
+    mockUserId = acc.id;
+    await savedPlanFor(acc);
+    mockChecklistRows.splice(0, mockChecklistRows.length, sinRow(acc.id));
+    mount();
+    await send('Remember that I prefer Friday appointments');
+    const detailCard = await screen.findByTestId('detail-command-card', {}, { timeout: 10_000 });
+    expect(within(detailCard).getByText(/I prefer Friday appointments/)).toBeTruthy();
+    fireEvent.press(within(detailCard).getByRole('button', { name: 'View saved details' }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await enabledButton(within(sheet), 'Edit saved detail: I prefer Friday appointments'));
+    fireEvent.changeText(within(sheet).getByLabelText('Saved detail'), 'I prefer Saturday appointments');
+    fireEvent.press(await enabledButton(within(sheet), 'Save change'));
+    await within(sheet).findByText('Changed “I prefer Friday appointments” to “I prefer Saturday appointments”.', {}, { timeout: 10_000 });
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    await send('Remove task: Get your SIN');
+    const removal = await screen.findByTestId('task-removal-card', {}, { timeout: 10_000 });
+    fireEvent.changeText(composer(), 'Keep my next question');
+    fireEvent.press(within(removal).getByRole('button', { name: 'Review removal of Get your SIN' }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    await within(sheet).findByText('Remove “Get your SIN”?', {}, { timeout: 10_000 });
+    fireEvent.press(await enabledButton(within(sheet), 'Remove task'));
+    await within(sheet).findByText('Removed from your Checklist: Get your SIN', {}, { timeout: 10_000 });
+    expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(true);
+    fireEvent.press(await enabledButton(within(sheet), 'Undo: Removed from your Checklist: Get your SIN'));
+    await within(sheet).findByText('Restored to your Checklist: Get your SIN', {}, { timeout: 10_000 });
+    expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    expect(composer().props.value).toBe('Keep my next question');
+    const own = await actions(acc.jwt, { action: 'read' });
+    expect(own.json.details.map((d: { text: string; revision: number }) => [d.text, d.revision])).toEqual([['I prefer Saturday appointments', 2]]);
+    expect((await actions(stranger.jwt, { action: 'read' })).json.details).toEqual([]);
+    switchAccount(stranger.id);
+    await waitFor(() => expect(screen.queryByTestId('detail-command-card')).toBeNull());
+    expect(mockStream).not.toHaveBeenCalled();
+  }, 90_000);
+
+  it('a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays', async () => {
+    // Wrong if: the command removes anything or calls the model; the review does not name
+    // the plan; Cancel writes; the confirmed removal is not the legacy dismissal; the plan
+    // does not read it as removed; Undo does not restore it; the typed draft is lost.
+    const acc = await newAccount('remove-command');
+    mockUserId = acc.id;
+    await savedPlanFor(acc);
+    mockChecklistRows.splice(0, mockChecklistRows.length, sinRow(acc.id));
+    mount();
+    await send('Remove task: Get your SIN');
+    const card = await screen.findByTestId('task-removal-card', {}, { timeout: 10_000 });
+    expect(within(card).getByText('Get your SIN')).toBeTruthy();
+    expect(within(card).getByText('Not removed · needs your confirmation')).toBeTruthy();
+    expect(mockStream).not.toHaveBeenCalled();
+    expect((await taskNow(acc.jwt, 'sanity:sin-number'))?.removed ?? false).toBe(false);
+    expect(removalReceipts(acc.id)).toBe(0);
+    fireEvent.changeText(composer(), 'My next question');
+
+    fireEvent.press(within(card).getByRole('button', { name: 'Review removal of Get your SIN' }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText('Remove “Get your SIN”?', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText(`Saved plans that include it: ${GOAL}. It shows there as removed.`)).toBeTruthy();
+    expect(within(sheet).getByText('Current state: Not started')).toBeTruthy();
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Cancel' }));
+    expect(within(sheet).queryByText('Remove “Get your SIN”?')).toBeNull();
+    expect(removalReceipts(acc.id)).toBe(0);
+    expect((await taskNow(acc.jwt, 'sanity:sin-number'))?.removed ?? false).toBe(false);
+    expect(announcementSpy).not.toHaveBeenCalled();
+
+    // Cancel keeps the request open: the card still offers its review, and the draft stays.
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    expect(composer().props.value).toBe('My next question');
+    const again = await screen.findByTestId('task-removal-card');
+    fireEvent.press(within(again).getByRole('button', { name: 'Review removal of Get your SIN' }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    await within(sheet).findByText('Remove “Get your SIN”?', {}, { timeout: 10_000 });
+    fireEvent.press(await enabledButton(within(sheet), 'Remove task'));
+    expect(await within(sheet).findByText('Removed from your Checklist: Get your SIN', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+    ]));
+    expect(within(sheet).getByText('Saved plans: 1 · Steps kept: 0 · Reminders stopped: 0')).toBeTruthy();
+    expect((await taskNow(acc.jwt, 'sanity:sin-number')).removed).toBe(true);
+    expect(psql(`select dismissed_at is not null from user_tasks where user_id = '${acc.id}' and sanity_checklist_id = 'sin-number';`)).toBe('t');
+    expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(true);
+    expect(removalReceipts(acc.id)).toBe(1);
+
+    const undo = 'Undo: Removed from your Checklist: Get your SIN';
+    fireEvent.press(await enabledButton(within(sheet), undo));
+    expect(await within(sheet).findByText('Restored to your Checklist: Get your SIN', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+      ['Restored to your Checklist: Get your SIN'],
+    ]));
+    expect((await taskNow(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
+    expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
+    // Positive control: a state change in the same panel keeps the state announcement.
+    await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'In progress' }).props.accessibilityState?.disabled).toBe(false), {
+      timeout: 10_000,
+    });
+    fireEvent.press(within(sheet).getByRole('radio', { name: 'In progress' }));
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+      ['Restored to your Checklist: Get your SIN'],
+      ['Saved. Task state: In progress.'],
+    ]), { timeout: 10_000 });
+    expect((await taskNow(acc.jwt, 'sanity:sin-number')).state).toBe('in_progress');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    expect(composer().props.value).toBe('My next question');
+    // The card's review was used: it names its removal, with no review control.
+    const used = await screen.findByTestId('task-removal-card');
+    await waitFor(() => expect(within(used).queryByRole('button', { name: 'Review removal of Get your SIN' })).toBeNull(), {
+      timeout: 10_000,
+    });
+    expect(within(used).getByText('Removed from your Checklist')).toBeTruthy();
+    expect(JSON.stringify(mockCapture.mock.calls)).not.toContain('Get your SIN');
+  }, 90_000);
+
+  it('a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing', async () => {
+    // Wrong if: an approval of the old review removes the changed task; the revised review
+    // is not shown; steps are deleted with the task; a stale Undo writes.
+    const acc = await newAccount('remove-panel');
+    mockUserId = acc.id;
+    const saved = await savedPlanFor(acc);
+    const phoneRef = saved.receipt.results[2].task_ref as string;
+    const step = await actions(acc.jwt, {
+      action: 'apply', operation_id: (globalThis.crypto as Crypto).randomUUID(), authorization: { kind: 'ui_control' },
+      operations: [{ type: 'step.create', task_ref: phoneRef, titles: ['Compare phone plans'] }],
+    });
+    expect(step.status).toBe(200);
+    mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: `${PHONE}, Not started` }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await enabledButton(within(sheet), `Remove task: ${PHONE}`));
+    expect(await within(sheet).findByText(`Remove “${PHONE}”?`, {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('Steps kept as history: 1')).toBeTruthy();
+
+    // Another device moves the task on while the review is open.
+    const before = await taskNow(acc.jwt, phoneRef);
+    const moved = await actions(acc.jwt, {
+      action: 'apply', operation_id: (globalThis.crypto as Crypto).randomUUID(), authorization: { kind: 'ui_control' },
+      operations: [{ type: 'task.set_state', task_ref: phoneRef, state: 'in_progress', expected_revision: before.revision }],
+    });
+    expect(moved.status).toBe(200);
+    fireEvent.press(await enabledButton(within(sheet), 'Remove task'));
+    expect(await within(sheet).findByText('This task changed after you opened this review. Check the details and confirm again.', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('Current state: In progress')).toBeTruthy();
+    expect((await taskNow(acc.jwt, phoneRef)).removed).toBe(false);
+    expect(removalReceipts(acc.id)).toBe(0);
+
+    fireEvent.press(await enabledButton(within(sheet), 'Remove task'));
+    expect(await within(sheet).findByText(`Removed from your Checklist: ${PHONE}`, {}, { timeout: 10_000 })).toBeTruthy();
+    expect(within(sheet).getByText('Saved plans: 1 · Steps kept: 1 · Reminders stopped: 0')).toBeTruthy();
+    const read = (await actions(acc.jwt, { action: 'read' })).json;
+    expect(read.tasks.find((t: { task_ref: string }) => t.task_ref === phoneRef).removed).toBe(true);
+    expect(Number(psql(`select count(*) from companion_task_steps where user_id = '${acc.id}' and task_ref = '${phoneRef}';`))).toBe(1);
+
+    // Another device undoes the removal first; this device's Undo of the same receipt
+    // then changes nothing and says so.
+    const receipt = Number(psql(`select count(*) from companion_action_receipts where user_id = '${acc.id}';`));
+    const removal = psql(`select operation_id from companion_action_receipts where user_id = '${acc.id}'
+                           and outcome->'results'->0->>'type' = 'task.remove';`);
+    const web = await actions(acc.jwt, {
+      action: 'undo', operation_id: (globalThis.crypto as Crypto).randomUUID(),
+      receipt_operation_id: removal, authorization: { kind: 'ui_control' },
+    });
+    expect(web.status).toBe(200);
+    fireEvent.press(await enabledButton(within(sheet), `Undo: Removed from your Checklist: ${PHONE}`));
+    expect(await within(sheet).findByText('That change was already undone.', {}, { timeout: 10_000 })).toBeTruthy();
+    expect(Number(psql(`select count(*) from companion_action_receipts where user_id = '${acc.id}';`))).toBe(receipt + 1);
+    expect((await taskNow(acc.jwt, phoneRef)).removed).toBe(false);
+  }, 90_000);
+
+  it('a removal request card turns historical after another device removed the task; its review cannot remove again', async () => {
+    // Wrong if: the old card or its sheet still offers a removal of the removed task, or
+    // the stale review writes a second removal.
+    const acc = await newAccount('remove-stale');
+    mockUserId = acc.id;
+    mockChecklistRows.splice(0, mockChecklistRows.length, sinRow(acc.id));
+    mount();
+    await send('Remove task: Get your SIN');
+    const card = await screen.findByTestId('task-removal-card', {}, { timeout: 10_000 });
+
+    // Another device removes it through its own reviewed removal.
+    const p = await actions(acc.jwt, { action: 'prepare', operation: { type: 'task.remove', task_ref: 'sanity:sin-number', expected_revision: 0 } });
+    const d = p.json.proposal;
+    const w = await actions(acc.jwt, {
+      action: 'apply', operation_id: (globalThis.crypto as Crypto).randomUUID(), operations: d.operations,
+      authorization: { kind: 'approved_proposal', proposal_id: d.proposal_id, proposal_revision: d.proposal_revision, removal_confirmed: true },
+    });
+    expect(w.status).toBe(200);
+
+    // Opening the old request reads current progress: the task is removed, nothing to confirm.
+    // This screen has not read progress since; the stale review opens on current progress.
+    fireEvent.press(within(card).getByRole('button', { name: 'Review removal of Get your SIN' }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText(en.taskActions.removed, {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(within(sheet).queryByText('Remove “Get your SIN”?')).toBeNull());
+    expect(within(sheet).queryByRole('button', { name: 'Remove task' })).toBeNull();
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    const old = screen.getByTestId('task-removal-card');
+    await waitFor(() => expect(within(old).queryByRole('button', { name: 'Review removal of Get your SIN' })).toBeNull(), {
+      timeout: 10_000,
+    });
+    expect(within(old).getByText(en.taskActions.removed)).toBeTruthy();
+    expect(removalReceipts(acc.id)).toBe(1);
+  }, 60_000);
+
+  it("another account sees none of a removal review, card or receipt", async () => {
+    // Wrong if: the second account's screen shows the first account's card or can read its review.
+    const a = await newAccount('remove-owner');
+    const b = await newAccount('remove-other');
+    mockUserId = a.id;
+    mockChecklistRows.splice(0, mockChecklistRows.length, sinRow(a.id));
+    mount();
+    await send('Remove task: Get your SIN');
+    await screen.findByTestId('task-removal-card', {}, { timeout: 10_000 });
+    switchAccount(b.id);
+    await waitFor(() => expect(screen.queryByTestId('task-removal-card')).toBeNull());
+    const proposal = psql(`select id from companion_proposals where user_id = '${a.id}' and kind = 'task_remove';`);
+    const read = await actions(b.jwt, { action: 'proposal', proposal_id: proposal });
+    expect(read.status).toBe(404);
+  }, 60_000);
 });

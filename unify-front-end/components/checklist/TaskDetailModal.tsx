@@ -56,6 +56,11 @@ interface TaskDetailModalProps {
   onDeleteCustomTask?: () => void;
   onRemoveSuggestedTask?: () => void;
   /**
+   * #367: with the shared task actions on, removal is the reviewed removal in the task
+   * progress view (named effects, confirmation, Undo). It replaces both legacy controls.
+   */
+  onRemoveTask?: () => void;
+  /**
    * Task progress controls (mobile-app#361). When set, the sheet offers "Track
    * progress", which shows them in this same sheet instead of a second modal.
    */
@@ -73,6 +78,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   isCustomTask = false,
   onDeleteCustomTask,
   onRemoveSuggestedTask,
+  onRemoveTask,
   progressPanel,
   progressSummary,
 }) => {
@@ -190,25 +196,42 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
           </Text>
         </View>
 
-        {((isCustomTask && onDeleteCustomTask) ||
-          (!isCustomTask && onRemoveSuggestedTask)) && (
+        {onRemoveTask && progressPanel ? (
           <TouchableOpacity
-            onPress={isCustomTask ? onDeleteCustomTask : onRemoveSuggestedTask}
+            onPress={() => {
+              onRemoveTask();
+              setMode('progress');
+            }}
             style={styles.trashButton}
             accessibilityRole='button'
-            accessibilityLabel={t(
-              isCustomTask
-                ? 'checklist.deleteTask'
-                : 'checklist.removeSuggestedTask'
-            )}
+            accessibilityLabel={t('taskRemove.removeTaskA11y', {
+              title: task.task.task_name,
+            })}
             hitSlop={10}
           >
-            <MaterialIcons
-              name={isCustomTask ? 'delete-outline' : 'visibility-off'}
-              size={22}
-              color='#64748B'
-            />
+            <MaterialIcons name='delete-outline' size={22} color='#64748B' />
           </TouchableOpacity>
+        ) : (
+          ((isCustomTask && onDeleteCustomTask) ||
+            (!isCustomTask && onRemoveSuggestedTask)) && (
+            <TouchableOpacity
+              onPress={isCustomTask ? onDeleteCustomTask : onRemoveSuggestedTask}
+              style={styles.trashButton}
+              accessibilityRole='button'
+              accessibilityLabel={t(
+                isCustomTask
+                  ? 'checklist.deleteTask'
+                  : 'checklist.removeSuggestedTask'
+              )}
+              hitSlop={10}
+            >
+              <MaterialIcons
+                name={isCustomTask ? 'delete-outline' : 'visibility-off'}
+                size={22}
+                color='#64748B'
+              />
+            </TouchableOpacity>
+          )
         )}
       </View>
 

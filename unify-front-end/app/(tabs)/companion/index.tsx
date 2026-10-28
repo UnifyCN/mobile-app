@@ -66,15 +66,17 @@ import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
-import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
+import { useChecklistTaskTitlesState } from '@/hooks/checklist/useChecklistTaskTitles';
 import { PlanEntry, type PlanTarget } from '@/components/companion/plans/PlanEntry';
 import { PlanCards } from '@/components/companion/plans/PlanCards';
 import { useConversationPlans, usePlanStore } from '@/hooks/companion/usePlans';
 import {
+  progressFor,
   useConversationActions,
   useTaskActionStore,
   useTaskProgress,
 } from '@/hooks/companion/useTaskActions';
+import type { RemovalProposal } from '@/services/companionActions/contract';
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 import {
   ownAccountWork,
@@ -280,6 +282,9 @@ export default function CompanionScreen() {
 
   const { data: usage } = useChatbotUsage();
   const isPremium = currentUser?.isPremium ?? false;
+  // Titles of the account's live Checklist tasks: suggestions name their task (#366) and a
+  // removal request names the task to review (#367).
+  const { titles: taskTitles, ready: taskTitlesReady } = useChecklistTaskTitlesState();
   const {
     sendMessage,
     isLoading,
@@ -293,6 +298,7 @@ export default function CompanionScreen() {
     isHistoryLoaded: isConversationHistoryLoaded(dbMessages),
     setCurrentConversationId,
     isPremium,
+    taskTitles: taskTitlesReady ? taskTitles : null,
   });
 
   const messageCount = usage?.message_count ?? 0;
@@ -530,7 +536,8 @@ export default function CompanionScreen() {
     currentConversationId
   );
   const actionStore = useTaskActionStore('companion');
-  const { canWrite: actionsWritable } = useTaskProgress();
+  const taskProgress = useTaskProgress();
+  const actionsWritable = taskProgress.canWrite;
   const openDraft = useCallback(
     (proposalId: string, proposalKind: 'task_create' | 'task_edit') => {
       Keyboard.dismiss();
@@ -539,7 +546,6 @@ export default function CompanionScreen() {
     []
   );
   // #366: suggested steps for a task this account has; the card names it.
-  const taskTitles = useChecklistTaskTitles();
   const taskTitleOf = useCallback(
     (taskRef: string) => taskTitles.get(taskRef) ?? null,
     [taskTitles]
@@ -560,6 +566,20 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'details' });
   }, []);
+  // #367: a removal request's card opens the task's panel on that removal review.
+  const openRemoval = useCallback(
+    (proposal: RemovalProposal, title: string) => {
+      if (proposal.status === 'draft')
+        actionStore?.requestRemoval(proposal.operation.task_ref, proposal.proposalId);
+      openTask(proposal.operation.task_ref, title);
+    },
+    [actionStore, openTask]
+  );
+  const isRemovedNow = useCallback(
+    (taskRef: string) =>
+      taskProgress.status === 'ready' && progressFor(taskRef, taskProgress).removed,
+    [taskProgress]
+  );
   // #364: the plan drafts of the open conversation, and the account's plan store.
   const { data: conversationPlans } = useConversationPlans(currentConversationId);
   const planStore = usePlanStore('companion');
@@ -611,6 +631,9 @@ export default function CompanionScreen() {
             detailCommands={conversationActions?.detailCommands ?? []}
             onReviewDetail={openDetail}
             onViewDetails={openDetails}
+            removalProposals={conversationActions?.removalProposals ?? []}
+            onReviewRemoval={openRemoval}
+            isRemovedNow={isRemovedNow}
           />
           <PlanCards
             messageId={
@@ -633,6 +656,8 @@ export default function CompanionScreen() {
       openDetail,
       openDetails,
       taskTitleOf,
+      openRemoval,
+      isRemovedNow,
       conversationPlans,
       planStore,
       openPlan,

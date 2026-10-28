@@ -8,6 +8,7 @@ import {
   TITLE_MAX,
   createTaskOperation,
   isDetailProposal,
+  isRemovalProposal,
   isStepProposal,
   type ProposalContext,
   type TaskProposal,
@@ -103,6 +104,7 @@ export function TaskProposalPanel({
     phase.phase === 'needs_review' &&
     !isStepProposal(phase.proposal) &&
     !isDetailProposal(phase.proposal) &&
+    !isRemovalProposal(phase.proposal) &&
     phase.proposal.proposalRevision >= (query.data?.proposalRevision ?? 0)
       ? phase.proposal
       : query.data;

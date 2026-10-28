@@ -1,0 +1,159 @@
+{
+  "results": [
+    {
+      "name": "keyboard: Remove task opens the review and focus moves to its heading",
+      "ok": true,
+      "detail": {
+        "tag": "H4",
+        "text": "Remove “Get a SIN”?",
+        "label": null
+      }
+    },
+    {
+      "name": "opening the review sends no write",
+      "ok": true,
+      "detail": [
+        {
+          "contract_version": 1,
+          "client": {
+            "platform": "web",
+            "app_version": "web"
+          },
+          "action": "apply",
+          "operation_id": "2683f323-bc54-41ab-b007-8d4b3368aabe",
+          "authorization": {
+            "kind": "approved_proposal",
+            "proposal_id": "d06f24da-5159-499a-908e-bbd9b5b32638",
+            "proposal_revision": 1,
+            "removal_confirmed": true
+          },
+          "operations": [
+            {
+              "type": "task.remove",
+              "task_ref": "sanity:sin",
+              "expected_revision": 0
+            }
+          ]
+        },
+        {
+          "contract_version": 1,
+          "client": {
+            "platform": "web",
+            "app_version": "web"
+          },
+          "action": "undo",
+          "operation_id": "91c46d0f-d830-4504-8bc0-ea6ee3aa619e",
+          "receipt_operation_id": "2683f323-bc54-41ab-b007-8d4b3368aabe",
+          "authorization": {
+            "kind": "ui_control"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancel sends nothing and returns focus to Remove task",
+      "ok": true,
+      "detail": {
+        "tag": "BUTTON",
+        "text": "Remove task",
+        "label": "Remove task: Get a SIN"
+      }
+    },
+    {
+      "name": "the confirmation removes once and reads back removed",
+      "ok": true,
+      "detail": {
+        "writes": 1,
+        "task": {
+          "state": "not_started",
+          "source": "sanity",
+          "removed": true,
+          "revision": 1,
+          "task_ref": "sanity:sin",
+          "last_receipt": {
+            "kind": "change",
+            "plans": [],
+            "title": null,
+            "current": true,
+            "undo_of": null,
+            "task_ref": "sanity:sin",
+            "undoable": true,
+            "undone_by": null,
+            "created_at": "2026-10-28T04:16:39.520725+00:00",
+            "steps_kept": 0,
+            "after_state": "not_started",
+            "before_state": "not_started",
+            "operation_id": "2683f323-bc54-41ab-b007-8d4b3368aabe",
+            "after_revision": 1,
+            "operation_type": "task.remove",
+            "before_revision": 0,
+            "reminders_stopped": 0
+          },
+          "waiting_reason": null,
+          "state_updated_at": "2026-10-28T04:16:39.520725+00:00"
+        }
+      }
+    },
+    {
+      "name": "focus stays inside the drawer after the removal",
+      "ok": true,
+      "detail": {
+        "tag": "H3",
+        "text": "Get a SIN",
+        "label": null
+      }
+    },
+    {
+      "name": "390px: no horizontal overflow after removal; Undo at least 44px tall",
+      "ok": true,
+      "detail": {
+        "overflow": 0,
+        "undo": 44
+      }
+    },
+    {
+      "name": "keyboard: the Undo of the removal receipt restores the task",
+      "ok": true,
+      "detail": [
+        "apply",
+        "undo"
+      ]
+    },
+    {
+      "name": "another account reads none of it",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "Remove task is at least 44px tall",
+      "ok": true,
+      "detail": {
+        "w": 134,
+        "h": 44
+      }
+    },
+    {
+      "name": "review buttons are at least 44px tall",
+      "ok": true,
+      "detail": [
+        44,
+        44
+      ]
+    },
+    {
+      "name": "Arabic: the review is right to left with Arabic copy and no overflow",
+      "ok": true,
+      "detail": {
+        "dir": "rtl",
+        "overflow": 0,
+        "reviewDir": "rtl"
+      }
+    },
+    {
+      "name": "Arabic: opening the review sends no write",
+      "ok": true,
+      "detail": 2
+    }
+  ],
+  "errors": []
+}

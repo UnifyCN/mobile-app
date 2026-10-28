@@ -811,12 +811,23 @@ export default function ChecklistScreen() {
         isCustomTask={selectedTask?.source === 'custom'}
         onDeleteCustomTask={handleDeleteCustomTask}
         onRemoveSuggestedTask={handleRemoveSuggestedTask}
+        // #367: with the shared task actions on, removal is the reviewed removal (named
+        // effects on plans and steps, confirmation, Undo); otherwise the legacy controls.
+        onRemoveTask={
+          progressEnabled && selectedTask && taskActionStore
+            ? () =>
+                taskActionStore.requestRemoval(
+                  getChecklistTaskOrderKey(selectedTask)
+                )
+            : undefined
+        }
         progressPanel={
           progressEnabled && selectedTask ? (
             <TaskStatePanel
               taskRef={getChecklistTaskOrderKey(selectedTask)}
               view={taskProgress}
               store={taskActionStore}
+              taskTitle={selectedTask.task.task_name}
             />
           ) : undefined
         }

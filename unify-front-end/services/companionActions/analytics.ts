@@ -31,7 +31,10 @@ const ACTIONS = [
   'detail_change',
   'approve_detail',
   'command_detail',
+  'approve_removal',
 ] as const;
+/** #367: removal operation types, allowlisted. Never a task title or reference. */
+const REMOVAL_TYPES: readonly OperationType[] = ['task.remove', 'task.restore'];
 /** #366: step operation types, allowlisted. Never a step title or id. */
 /** #365: an edit names its registered type. */
 const EDIT_TYPES: readonly OperationType[] = ['task.edit_details'];
@@ -61,6 +64,7 @@ const OUTCOMES = [
   'lookup_failed',
   'unavailable',
   'needs_review',
+  'undo_blocked',
 ] as const;
 
 /**
@@ -79,7 +83,8 @@ export function buildTaskActionResultProperties(
     operation_type:
       event.operationType &&
       (STEP_TYPES.includes(event.operationType) ||
-        EDIT_TYPES.includes(event.operationType))
+        EDIT_TYPES.includes(event.operationType) ||
+        REMOVAL_TYPES.includes(event.operationType))
         ? event.operationType
         : event.action === 'approve_create' || event.action === 'command_create'
           ? 'task.create_custom'

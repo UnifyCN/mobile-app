@@ -378,7 +378,7 @@ describeStack('Task progress against the real local stack (mobile)', () => {
       key: SERVICE_KEY,
     });
     // This repo's migration files, exactly as they ship, in timestamp order (#361, #363,
-    // #366, #365, #370), each only when the stack does not have it yet.
+    // #364, #366, #365, #370, #367), each only when the stack does not have it yet.
     const migration = (file: string) =>
       psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations', file), 'utf8'));
     const hasFunction = (signature: string) =>
@@ -391,12 +391,16 @@ describeStack('Task progress against the real local stack (mobile)', () => {
     if (gate.status !== 200) migration('20261025235536_companion_task_actions.sql');
     if (!hasFunction('public.companion_prepare_proposal(uuid,jsonb,jsonb)'))
       migration('20261026165156_companion_task_create.sql');
+    if (!hasFunction('public.companion_plans_read(uuid)'))
+      migration('20261027183338_companion_settlement_plan.sql');
     if (!hasFunction('public.companion_read_steps(uuid)'))
       migration('20261027183644_companion_task_steps.sql');
     if (!hasFunction('public.companion_prepare_edit(uuid,jsonb,jsonb,text)'))
       migration('20261028001530_companion_task_edit.sql');
     if (!hasFunction('public.companion_read_details(uuid)'))
       migration('20261028004902_companion_saved_details.sql');
+    if (!hasFunction('public.companion_remove_prepare(uuid,text,jsonb)'))
+      migration('20261028025026_companion_task_remove.sql');
     psql(`update public.companion_feature_gate set enabled = true, min_contract_version = 1,
             max_contract_version = 1, allowed_platforms = '{ios,android,web}';`);
     execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });

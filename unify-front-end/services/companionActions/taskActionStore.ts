@@ -27,6 +27,7 @@ import {
   type DetailProposal,
   type Operation,
   type OperationType,
+  type RemovalProposal,
   type SetStateOperation,
   type StepProposal,
   type TaskProposal,
@@ -65,8 +66,10 @@ export type TaskActionPhase =
       proposal: CompensatingProposal;
     }
   | { phase: 'already_undone' }
+  /** #367: Undo of a removal changed nothing: the task is back already, or removed again later. */
+  | { phase: 'undo_blocked'; reason: 'not_removed' | 'removed_again' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal }
+  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal | RemovalProposal }
   /** #370: a live saved detail already says this; nothing was written. */
   | { phase: 'detail_exists' }
   /** #363: this command already added its task, or a task with that title exists. */
@@ -94,7 +97,9 @@ export interface TaskActionResultEvent {
     /** #370: a saved-detail control (edit, remove), an approved draft or a remember command. */
     | 'detail_change'
     | 'approve_detail'
-    | 'command_detail';
+    | 'command_detail'
+    /** #367: an approved removal review. */
+    | 'approve_removal';
   outcome:
     | 'applied'
     | 'replayed'
@@ -107,7 +112,8 @@ export interface TaskActionResultEvent {
     | 'not_applied'
     | 'lookup_failed'
     | 'unavailable'
-    | 'needs_review';
+    | 'needs_review'
+    | 'undo_blocked';
   toState?: TaskState;
   /** The registered operation type; never content. */
   operationType?: OperationType;
@@ -138,6 +144,8 @@ export function isUnresolved(p: TaskActionPhase): boolean {
 export class TaskActionStore {
   private phases = new Map<string, TaskActionPhase>();
   private drafts = new Map<string, string>();
+  /** #367: a removal review asked for from outside the task panel (a card or a Checklist control). */
+  private removalRequests = new Map<string, string | null>();
   private listeners = new Set<Listener>();
 
   constructor(private deps: TaskActionStoreDeps) {}
@@ -165,6 +173,27 @@ export class TaskActionStore {
     if (text === undefined) this.drafts.delete(taskRef);
     else this.drafts.set(taskRef, text);
     for (const l of this.listeners) l();
+  }
+
+  /**
+   * #367: ask the task panel of `taskRef` to open its removal review, on the review a
+   * removal request in a conversation prepared (`proposalId`) or on a new one. Sends nothing.
+   */
+  requestRemoval(taskRef: string, proposalId: string | null = null) {
+    this.removalRequests.set(taskRef, proposalId);
+    for (const l of this.listeners) l();
+  }
+
+  /** The panel takes the request once: undefined when there is none. */
+  takeRemovalRequest(taskRef: string): string | null | undefined {
+    if (!this.removalRequests.has(taskRef)) return undefined;
+    const proposalId = this.removalRequests.get(taskRef) ?? null;
+    this.removalRequests.delete(taskRef);
+    return proposalId;
+  }
+
+  hasRemovalRequest(taskRef: string): boolean {
+    return this.removalRequests.has(taskRef);
   }
 
   private set(taskRef: string, phase: TaskActionPhase) {
@@ -294,6 +323,7 @@ export class TaskActionStore {
         write.authorization?.kind === 'approved_proposal'
         ? 'approve_steps'
         : 'step_change';
+    if (write.operation?.type === 'task.remove') return 'approve_removal';
     if (write.operation?.type === 'task.create_custom')
       return write.authorization?.kind === 'direct_command'
         ? 'command_create'
@@ -367,6 +397,11 @@ export class TaskActionStore {
       case 'already_undone':
         this.set(taskRef, { phase: 'already_undone' });
         report('already_undone');
+        this.deps.onChanged();
+        return;
+      case 'undo_blocked':
+        this.set(taskRef, { phase: 'undo_blocked', reason: result.reason });
+        report('undo_blocked');
         this.deps.onChanged();
         return;
       case 'needs_review':

@@ -36,6 +36,7 @@ import {
 import { minTarget } from '@/utils/touchTarget';
 import { DETAIL_FIELDS, priorityLabel } from './editText';
 import { ReceiptBlock } from './ReceiptBlock';
+import { TaskRemovalSection } from './TaskRemovalSection';
 import { TaskStepsSection } from './TaskStepsSection';
 
 const STATE_ICON: Record<
@@ -64,6 +65,8 @@ interface TaskStatePanelProps {
   taskRef: string;
   view: TaskProgressView;
   store: TaskActionStore | null;
+  /** #367: the title the Checklist shows (named in the removal review and its receipt). */
+  taskTitle?: string | null;
 }
 
 /**
@@ -73,7 +76,12 @@ interface TaskStatePanelProps {
  * Used by the Checklist task sheet and the Companion task sheet; both read the same
  * saved record.
  */
-export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
+export function TaskStatePanel({
+  taskRef,
+  view,
+  store,
+  taskTitle = null,
+}: TaskStatePanelProps) {
   const { t } = useTranslation();
   const { fontScale } = useWindowDimensions();
   const phase = useTaskActionPhase(store, taskRef);
@@ -95,6 +103,9 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
   const writable =
     Boolean(store) && view.canWrite && reconciled && !progress.removed;
   const canWrite = writable && !busy;
+  // #367: the Undo of a removal restores a removed task, so it does not need a live task.
+  const canUndoRemoval =
+    Boolean(store) && view.canWrite && reconciled && !busy;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const reasonChanged = reasonValue.trim() !== (progress.waitingReason ?? '');
 
@@ -106,11 +117,20 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
       announced.current !== phase.receipt.operationId
     ) {
       announced.current = phase.receipt.operationId;
-      AccessibilityInfo.announceForAccessibility(
-        t('taskActions.savedAnnouncement', {
-          state: stateLabel(phase.receipt.afterState),
-        })
-      );
+      const receipt = phase.receipt;
+      const title = receipt.title ?? taskTitle;
+      const result = receipt.operationType === 'task.remove'
+        ? title
+          ? t('taskRemove.receiptRemoved', { title })
+          : t('taskRemove.receiptRemovedUnknown')
+        : receipt.operationType === 'task.restore'
+          ? title
+            ? t('taskRemove.receiptRestored', { title })
+            : t('taskRemove.receiptRestoredUnknown')
+          : t('taskActions.savedAnnouncement', {
+              state: stateLabel(receipt.afterState),
+            });
+      AccessibilityInfo.announceForAccessibility(result);
     }
   });
 
@@ -282,16 +302,28 @@ export function TaskStatePanel({ taskRef, view, store }: TaskStatePanelProps) {
           store={store}
           taskRef={taskRef}
           steps={view.stepsByRef.get(taskRef)}
+          canRestore={canUndoRemoval}
         />
         {receipt && phase.phase !== 'undo_review' && (
           <ReceiptBlock
             receipt={receipt}
             storeKey={taskRef}
             store={store}
-            canWrite={canWrite}
+            canWrite={
+              receipt.operationType === 'task.remove' ? canUndoRemoval : canWrite
+            }
+            taskTitle={taskTitle}
           />
         )}
       </View>
+
+      <TaskRemovalSection
+        taskRef={taskRef}
+        taskTitle={taskTitle}
+        progress={progress}
+        store={store}
+        writable={writable}
+      />
     </View>
   );
 }
@@ -304,6 +336,7 @@ export function PhaseMessage({
   store,
   taskRef,
   steps = [],
+  canRestore = false,
 }: {
   writable: boolean;
   phase: TaskActionPhase;
@@ -311,6 +344,8 @@ export function PhaseMessage({
   store: TaskActionStore | null;
   taskRef: string;
   steps?: readonly TaskStep[];
+  /** #367: a fresh read and no unresolved write; the task may be removed. */
+  canRestore?: boolean;
 }) {
   const { t } = useTranslation();
   const line = (text: string, isError = false) => (
@@ -354,6 +389,12 @@ export function PhaseMessage({
       return errorLine(t('taskActions.conflict'));
     case 'already_undone':
       return line(t('taskActions.alreadyUndone'));
+    case 'undo_blocked':
+      return line(
+        phase.reason === 'not_removed'
+          ? t('taskRemove.undoNotRemoved')
+          : t('taskRemove.undoRemovedAgain')
+      );
     case 'command_used':
       return line(t('taskCreate.commandUsed'));
     case 'needs_clarification':
@@ -555,6 +596,33 @@ export function PhaseMessage({
               {action(t('taskActions.keepCurrent'), () =>
                 store?.dismiss(taskRef)
               )}
+            </View>
+          </View>
+        );
+      }
+      if (proposed.type === 'task.restore') {
+        // #367: Undo of a removal met a newer edit of the removed task. Nothing changed;
+        // restoring it keeps that edit and is a reviewed change.
+        return (
+          <View style={styles.review}>
+            <Text style={styles.statusText}>{t('taskRemove.restoreConflict')}</Text>
+            <View style={styles.reviewActions}>
+              <Pressable
+                accessibilityRole='button'
+                accessibilityLabel={t('taskRemove.restoreTask')}
+                disabled={!canRestore}
+                accessibilityState={{ disabled: !canRestore }}
+                onPress={() => canRestore && void store?.approveCompensation(taskRef)}
+                style={({ pressed }) => [
+                  styles.primaryButton,
+                  { minHeight: minTarget() },
+                  !canRestore && styles.buttonDisabled,
+                  pressed && canRestore && styles.stateOptionPressed,
+                ]}
+              >
+                <Text style={styles.primaryButtonText}>{t('taskRemove.restoreTask')}</Text>
+              </Pressable>
+              {action(t('taskRemove.keepRemoved'), () => store?.dismiss(taskRef))}
             </View>
           </View>
         );

@@ -1,0 +1,131 @@
+
+> web-app@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ✓ components/companion/plans/PlanPanelMotion.test.tsx (4 tests) 94ms
+ ✓ components/learn/practice/reflectionRender.test.ts (37 tests) 253ms
+stderr | components/companion/accountOwnershipRequests.test.tsx > web service requests belong to the account that started them > a creation whose tagged insert fails after B signed in does not retry as B
+[companion] conversations.source/lesson_id columns not present — falling back to an untagged insert (apply the source-tag migration). { code: [32m'42703'[39m, message: [32m'column'[39m }
+
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (10 tests | 9 skipped) 3ms
+ ✓ components/companion/tasks/TaskRemovalLocalStack.test.tsx (4 tests | 3 skipped) 1ms
+stderr | components/companion/accountOwnershipRequests.test.tsx > web hooks keep one owner for every request and cache write > a send whose account changes while its cache is prepared saves nothing as B
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ components/companion/accountOwnershipRequests.test.tsx (12 tests) 249ms
+ ✓ components/companion/accountOwnership.test.tsx (7 tests) 364ms
+ ✓ components/companion/CompanionContextDrawer.test.ts (8 tests) 55ms
+ ✓ proxy.matcher.test.ts (9 tests) 5ms
+ ✓ lib/admin/eventForm.test.ts (67 tests) 85ms
+ ✓ components/learn/practice/reflectionControllers.test.ts (27 tests) 41ms
+ ✓ components/learn/help/inLessonAccountOwnership.test.tsx (6 tests) 356ms
+stderr | proxy.learningDestination.test.ts > proxy learning destination flow > keeps the existing gate-query error behavior without consuming intent
+proxy: consent gate query failed Error: test outage
+    at Object.maybeSingle (proxy.learningDestination.test.ts:10:33)
+    at Module.proxy (proxy.ts:115:113)
+    at async (proxy.learningDestination.test.ts:225:22)
+
+ ✓ proxy.learningDestination.test.ts (47 tests) 27ms
+ ✓ lib/documents/documentLanguage.test.ts (9 tests) 256ms
+ ✓ lib/resources/search.test.ts (10 tests) 29ms
+ ✓ hooks/drafts/createDraftHooks.test.ts (6 tests) 11ms
+ ✓ lib/admin/eventVisibility.test.ts (18 tests) 15ms
+ ✓ components/companion/tasks/TaskEdit.test.tsx (7 tests) 838ms
+ ✓ app/api/cron/sentry-snapshot/route.test.ts (8 tests) 7ms
+ ✓ lib/companionActions/receiptReasons.test.ts (1 test) 1ms
+ ✓ lib/resources/partners.test.ts (5 tests) 5ms
+ ✓ components/learn/practice/reflectionGrading.test.ts (52 tests) 9ms
+ ✓ lib/appLinks.test.ts (2 tests) 1ms
+ ✓ services/companion.generateReply.test.ts (3 tests) 8ms
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: absent
+{"label":"absent","expected":"ok","actual":"ok","ids":["last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: empty
+{"label":"empty","expected":"ok","actual":"ok","ids":[]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: two
+{"label":"two","expected":"ok","actual":"ok","ids":["first","last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: null
+{"label":"null","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: object
+{"label":"object","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: string
+{"label":"string","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: number
+{"label":"number","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: bad member
+{"label":"bad member","expected":"unknown","actual":"unknown","ids":null}
+
+ ✓ lib/companionActions/planReviewCollection.test.ts (8 tests) 3ms
+ ✓ app/fonts/fonts.test.ts (7 tests) 8ms
+ ✓ lib/resources/filters.test.ts (14 tests) 14ms
+ ✓ services/coverLetter.jobPosting.test.ts (3 tests) 4ms
+stderr | components/learn/StructuredLessonContent.test.ts > sections whose arrays Sanity omitted render without throwing
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ components/learn/StructuredLessonContent.test.ts (4 tests) 8ms
+ ✓ lib/learn/highlightRange.test.ts (4 tests) 3ms
+ ✓ app/api/learning-destination/route.test.ts (6 tests) 6ms
+stderr | hooks/useCompanion.analytics.test.ts > useSendMessage analytics > first message of a new conversation: turn 1, with its input source
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ app/api/companion/actions/route.test.ts (5 tests) 11ms
+ ✓ hooks/useCompanion.analytics.test.ts (4 tests) 32ms
+ ✓ lib/i18n/groupText.test.ts (17 tests) 8ms
+ ✓ lib/resources/plurals.test.ts (2 tests) 4ms
+stderr | components/companion/companionContext.acceptance.test.ts > Companion context on web: Vancouver arrival > saves the answer's context with it, unchanged, and makes no other write
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ lib/resources/partnerCopy.test.ts (4 tests) 5ms
+ ✓ lib/admin/eventCover.test.ts (27 tests) 4ms
+ ✓ services/checklist.dismissal.test.ts (3 tests) 5ms
+ ✓ lib/authEmailHandoff.test.ts (10 tests) 5ms
+ ✓ components/companion/companionContext.acceptance.test.ts (8 tests) 70ms
+ ✓ lib/jobPosting/handler.test.ts (4 tests) 6ms
+ ✓ lib/analytics.test.ts (14 tests) 4ms
+ ✓ app/api/aiPlatform.test.ts (7 tests) 6ms
+ ✓ lib/motion.test.ts (3 tests) 2ms
+ ✓ lib/pii/scrubEmail.test.ts (22 tests) 3ms
+ ✓ lib/recoveryPending.test.ts (5 tests) 3ms
+ ✓ lib/admin/eventList.test.ts (23 tests) 3ms
+ ✓ lib/whatsNew.test.ts (13 tests) 3ms
+ ✓ lib/posthog.test.ts (4 tests) 2ms
+ ✓ lib/supabase/imageUrl.test.ts (10 tests) 3ms
+ ✓ lib/admin/eventPartners.test.ts (8 tests) 4ms
+ ✓ lib/companionAnalytics.test.ts (9 tests) 2ms
+ ✓ lib/admin/access.test.ts (5 tests) 3ms
+ ✓ lib/search.test.ts (4 tests) 2ms
+ ✓ lib/news/thumbnail.test.ts (2 tests) 1ms
+ ✓ lib/supabase/storageHost.test.ts (5 tests) 2ms
+ ✓ lib/seo/routes.test.ts (4 tests) 5ms
+ ✓ services/auth.signOut.test.ts (1 test) 1ms
+stderr | components/companion/tasks/TaskActions.test.tsx > review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/private/tmp/unify-merge-361-web/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/private/tmp/unify-merge-361-web/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/private/tmp/unify-merge-361-web/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/private/tmp/unify-merge-361-web/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:80:7)
+    at listOnTimeout (node:internal/timers:585:17)
+    at processTimers (node:internal/timers:521:7) [90mundefined[39m
+
+ ✓ components/companion/tasks/TaskCreate.test.tsx (22 tests) 2607ms
+   ✓ Add one task through Companion (web) > shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task  397ms
+ ✓ components/companion/tasks/TaskActions.test.tsx (19 tests) 2692ms
+   ✓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it  434ms
+ ✓ components/companion/tasks/TaskSteps.test.tsx (29 tests) 4134ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  825ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  913ms
+
+ Test Files  60 passed (60)
+      Tests  686 passed | 12 skipped (698)
+   Start at  23:02:59
+   Duration  5.54s (transform 2.90s, setup 0ms, collect 13.09s, tests 12.39s, environment 4.40s, prepare 2.53s)
+
