@@ -987,7 +987,10 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     mockStream.mockReset();
     clearPlanStores(null);
     clearTaskActionStores(null);
+    // The react-native Jest preset already mocks this function, so spyOn returns that mock
+    // with the calls of earlier tests (a completion in the steps block): start from none.
     announcementSpy = jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => {});
+    announcementSpy.mockClear();
   });
   afterEach(() => {
     announcementSpy.mockRestore();
@@ -1066,6 +1069,17 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     ]));
     expect((await taskNow(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
     expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
+    // Positive control: a state change in the same panel keeps the state announcement.
+    await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'In progress' }).props.accessibilityState?.disabled).toBe(false), {
+      timeout: 10_000,
+    });
+    fireEvent.press(within(sheet).getByRole('radio', { name: 'In progress' }));
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+      ['Restored to your Checklist: Get your SIN'],
+      ['Saved. Task state: In progress.'],
+    ]), { timeout: 10_000 });
+    expect((await taskNow(acc.jwt, 'sanity:sin-number')).state).toBe('in_progress');
     fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
     await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
     expect(composer().props.value).toBe('My next question');

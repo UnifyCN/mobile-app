@@ -57,19 +57,39 @@ starts from those exact commits. Not ticket acceptance: independent review follo
 mirrored byte for byte in both repos with its rollback
 `supabase/rollbacks/20261028025026_companion_task_remove.down.sql`.
 
-- Apply order: #361 `20261025235536` → #363 `20261026165156` → #364 `20261027183338` →
-  #366 `20261027183644` → #367 `20261028025026`. Rollback in reverse: #367 before #366.
+- Apply order (timestamp order): #361 `20261025235536` → #363 `20261026165156` → #364
+  `20261027183338` → #366 `20261027183644` → #365 `20261028001530` → #367
+  `20261028025026`. Rollback in reverse: #367 before #365 (corrections r1 composed #367 onto
+  the accepted #365 integration).
 - New functions: `companion_remove_effects`, `companion_remove_lock`,
   `companion_remove_prepare`, `companion_remove_recheck`, `companion_remove_task`,
-  `companion_restore_task`, `companion_undo_remove`.
-- **Shared functions replaced** (each keeps its accepted #366 body verbatim and adds marked
-  #367 lines; the rollback restores the #366 bodies verbatim):
+  `companion_restore_task`, `companion_undo_remove`, and the plan-reference lock
+  `companion_plan_ref_key`, `companion_plan_items_lock` (below).
+- **Shared functions replaced.** Each keeps the body current before #367 verbatim and adds
+  marked #367 lines; the rollback restores those bodies verbatim. #365 bodies:
   `companion_validate_operations`, `companion_check_authorization`, `companion_apply_one`,
-  `companion_receipt_summary`, `companion_undo_action`, `companion_prepare_proposal`,
-  `companion_recheck_proposal`, `companion_conversation_actions`.
-  **Composition note for #365 / #370:** a later migration that replaces any of these must
-  start from the #367 body, not the #366 one, or it silently drops removal.
-- Widened constraint: `companion_proposals_kind_check` adds `task_remove`.
+  `companion_receipt_summary`, `companion_undo_action`, `companion_conversation_actions`.
+  #366 bodies: `companion_prepare_proposal`, `companion_recheck_proposal`. #364 body:
+  `companion_plan_apply` (one added line, the plan-reference lock).
+  **Composition note for #370 and later:** a later migration that replaces any of these must
+  start from the #367 body, or it silently drops removal (or the plan-reference order).
+- **Plan-reference lock (corrections r1, S1).** A removal names the saved plans that refer
+  to the task, and a plan approval checks that each existing task it refers to is still
+  there. Without an order each could read before the other writes: the review found a plan
+  saved for a task whose removal then committed with `plans: []`. Now a plan approval (and
+  the reviewed retry it dispatches) takes a shared advisory lock per existing task it refers
+  to, in one order, before it reads their availability; a removal, a restore and a removal
+  Undo take the same lock exclusively in `companion_remove_lock` before they read the plans.
+  Lock order: proposal row, #366 parent lock, plan-reference lock, task row. Whichever
+  commits first, the other one reads it: a removal after a saved plan needs a new review
+  that names the plan; a plan approval after a removal needs a new review that shows the
+  task as removed. Plan writes of the same task do not wait for each other; plan writes and
+  removals of other tasks do not wait at all (no account-wide lock). A plan Undo only
+  removes a plan and the tasks that plan added (their rows are already ordered by the task
+  row lock), so it takes no plan-reference lock: a removal serialized before or after it
+  names a plan that was live when the removal committed.
+- Widened constraint: `companion_proposals_kind_check` keeps `task_edit` (#365) and adds
+  `task_remove`.
 - Rollback archives removal receipts and drafts to `companion_rollback_archive_367`;
   re-applying restores them (an open review then needs a new review). Removed tasks stay
   removed through a rollback.
@@ -86,10 +106,11 @@ Backend (web repo): `ACTIONS_CONTENT_PORT=<port> supabase/tests/companion-action
 `ACTIONS_REST_CONTAINER`, `ACTIONS_CONTENT_PORT`, then
 
 - mobile: `npx jest __tests__/companionActions/planLocalStack.test.tsx --runInBand`
-  (its earlier blocks apply #361-#366; the #367 block applies #367 and refuses an
-  out-of-order stack);
+  (its earlier blocks apply #361-#366; the #367 block applies #365 when missing, then
+  #367, and refuses #367 without #365);
 - web: `npx vitest run components/companion/tasks/TaskRemovalLocalStack.test.tsx`
-  (applies the missing chain in order, refuses an out-of-order stack);
+  (applies the missing chain in timestamp order, #365 before #367, and refuses an
+  out-of-order stack);
 - web browser: `COMPANION_TASK_REMOVE_PORT=<content port> node scripts/verify-companion-task-remove.mjs`.
 
 Both client local-stack files skip without the environment.
@@ -97,4 +118,6 @@ Both client local-stack files skip without the environment.
 ## Evidence
 
 See `DOCS/companion-actions/evidence/367/HANDOFF.md` for the test order, red/green runs,
-deliberate faults, final gates and proof limits.
+deliberate faults, final gates and proof limits of r1, and
+`DOCS/companion-actions/evidence/367-corrections-r1/HANDOFF.md` for the corrections round
+(composition with #365, S1 plan-reference order, S2 announcement verification).

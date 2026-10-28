@@ -7,7 +7,8 @@
 --     return, copied verbatim: #365 for the six that #365 replaced, #366 for
 --     companion_prepare_proposal and companion_recheck_proposal. Task controls, creation,
 --     edits, plans, steps, receipts, Undo and the reminder policy are unchanged. The
---     earlier registry refuses task.remove and task.restore until re-application.
+--     earlier registry refuses task.remove and task.restore until re-application. The #364
+--     companion_plan_apply returns without the plan-reference lock, which goes with removal.
 --   * Removed tasks stay removed: dismissed_at and removed_at are #361 columns, and no
 --     task row, step, plan reference or reminder changes here. No reminder is restarted.
 --   * Removal receipts, removal drafts and reviewed restores of a removal Undo are archived
@@ -682,9 +683,106 @@ begin
                   where u.user_id = p_user_id));
 end $$;
 
+-- #364 version of the plan writer, copied verbatim from
+-- 20261027183338_companion_settlement_plan.sql (without the plan-reference lock).
+create or replace function public.companion_plan_apply(
+  p_user_id uuid, p_operation_id uuid, p_contract_version integer, p_authorization jsonb, p_items jsonb
+) returns jsonb
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_hash text;
+  v_receipt public.companion_action_receipts%rowtype;
+  v_prop public.companion_plan_proposals%rowtype;
+  v_plan public.companion_plans%rowtype;
+  v_item jsonb; v_pos integer; v_res jsonb; v_create jsonb; v_item_op uuid; v_now jsonb;
+  v_results jsonb := '[]'::jsonb;
+begin
+  if jsonb_typeof(p_authorization) is distinct from 'object' or p_authorization->>'kind' is distinct from 'approved_proposal'
+     or jsonb_typeof(p_authorization->'proposal_id') is distinct from 'string'
+     or (p_authorization->>'proposal_id') !~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+     or public.companion_nonneg_int(p_authorization->'proposal_revision', 9) is null then
+    perform public.companion_fail('CA403', 'invalid_authorization');
+  end if;
+  v_hash := public.companion_ops_hash(jsonb_build_object('plan_apply', p_authorization->>'proposal_id',
+              'revision', p_authorization->'proposal_revision', 'items', p_items));
+  -- One writer per (account, operation); a duplicate waits, then replays the receipt.
+  perform set_config('lock_timeout', '3s', true);
+  perform pg_advisory_xact_lock(public.companion_op_lock_key(p_user_id, p_operation_id));
+  select * into v_receipt from public.companion_action_receipts where user_id = p_user_id and operation_id = p_operation_id;
+  if found then
+    if v_receipt.request_hash <> v_hash then
+      perform public.companion_fail('CA410', 'operation_id_reused');
+    end if;
+    return public.companion_plan_reply(v_receipt, true);
+  end if;
+
+  select * into v_prop from public.companion_plan_proposals
+   where id = (p_authorization->>'proposal_id')::uuid and user_id = p_user_id for update;
+  -- Approved already under another operation id (a competing tap): nothing is written
+  -- and the caller gets the saved draft with its receipt.
+  if found and v_prop.kind in ('plan', 'retry') and v_prop.status = 'applied' then
+    return jsonb_build_object('changed', true, 'plan_proposal', public.companion_plan_proposal_view(v_prop));
+  end if;
+  if not found or v_prop.status <> 'draft'
+     or v_prop.revision <> (p_authorization->>'proposal_revision')::integer
+     or v_prop.items_hash <> public.companion_ops_hash(p_items) then
+    perform public.companion_fail('CA403', 'invalid_authorization');
+  end if;
+  if v_prop.kind = 'undo' then
+    return public.companion_plan_apply_undo(p_user_id, p_operation_id, v_hash, p_contract_version, p_authorization, v_prop);
+  end if;
+  if v_prop.kind = 'retry' then
+    return public.companion_plan_apply_review(p_user_id, p_operation_id, v_hash, p_contract_version, p_authorization, v_prop);
+  end if;
+  -- Read the relevant context again. When it changed, the approval is not used: the
+  -- draft moves to a new revision with the current context for a new review, and
+  -- nothing is written (no receipt either, so the operation stays not applied).
+  v_now := public.companion_plan_context(p_user_id, v_prop.items);
+  if v_now is distinct from v_prop.context then
+    update public.companion_plan_proposals
+       set revision = revision + 1, previous_context = context, context = v_now,
+           review_reason = 'context_changed', updated_at = now()
+     where id = v_prop.id returning * into v_prop;
+    return jsonb_build_object('needs_review', true, 'plan_proposal', public.companion_plan_proposal_view(v_prop));
+  end if;
+  -- A reference to a task removed since preparation is never saved: the user drops it.
+  if exists (select 1 from jsonb_array_elements(v_now->'existing') x where not (x->>'available')::boolean) then
+    perform public.companion_fail('CA422', 'task_removed');
+  end if;
+  if jsonb_array_length(public.companion_plan_unresolved(v_prop.items, v_prop.context)) > 0 then
+    perform public.companion_fail('CA422', 'match_unresolved');
+  end if;
+
+  update public.companion_plan_proposals set status = 'applied', receipt_operation_id = p_operation_id, updated_at = now()
+   where id = v_prop.id;
+  insert into public.companion_plans (user_id, goal, context, source, proposal_id, operation_id, updated_at)
+  values (p_user_id, v_prop.goal, v_prop.context, v_prop.source, v_prop.id, p_operation_id, now())
+  returning * into v_plan;
+
+  for v_item, v_pos in select i, n::integer from jsonb_array_elements(v_prop.items) with ordinality e(i, n) loop
+    if v_item->>'kind' = 'existing' then
+      insert into public.companion_plan_tasks (plan_id, task_ref, position) values (v_plan.id, v_item->>'task_ref', v_pos);
+      v_results := v_results || jsonb_build_array(jsonb_build_object('kind', 'existing', 'task_ref', v_item->>'task_ref',
+                     'outcome', 'reused') || case when v_item ? 'label' then jsonb_build_object('label', v_item->>'label')
+                                                  else '{}'::jsonb end);
+    elsif (v_item->>'include')::boolean then
+      v_results := v_results || jsonb_build_array(
+        public.companion_plan_add_item(p_user_id, p_operation_id, p_contract_version, v_prop, v_plan.id, v_item, v_pos));
+    end if;
+  end loop;
+
+  insert into public.companion_action_receipts
+    (user_id, operation_id, request_hash, contract_version, authorization_evidence, outcome)
+  values (p_user_id, p_operation_id, v_hash, p_contract_version, p_authorization,
+          jsonb_build_object('kind', 'plan', 'plan_id', v_plan.id, 'goal', v_prop.goal, 'results', v_results))
+  returning * into v_receipt;
+  return public.companion_plan_reply(v_receipt, false);
+end $$;
+
 drop function
   public.companion_undo_remove(uuid, uuid, text, integer, public.companion_action_receipts),
   public.companion_restore_task(uuid, jsonb), public.companion_remove_task(uuid, jsonb),
   public.companion_remove_recheck(uuid, public.companion_proposals),
   public.companion_remove_prepare(uuid, text, jsonb), public.companion_remove_lock(uuid, text),
-  public.companion_remove_effects(uuid, text);
+  public.companion_remove_effects(uuid, text), public.companion_plan_items_lock(uuid, jsonb),
+  public.companion_plan_ref_key(uuid, text);
