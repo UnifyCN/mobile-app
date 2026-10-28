@@ -114,11 +114,20 @@ export function TaskStatePanel({
       announced.current !== phase.receipt.operationId
     ) {
       announced.current = phase.receipt.operationId;
-      AccessibilityInfo.announceForAccessibility(
-        t('taskActions.savedAnnouncement', {
-          state: stateLabel(phase.receipt.afterState),
-        })
-      );
+      const receipt = phase.receipt;
+      const title = receipt.title ?? taskTitle;
+      const result = receipt.operationType === 'task.remove'
+        ? title
+          ? t('taskRemove.receiptRemoved', { title })
+          : t('taskRemove.receiptRemovedUnknown')
+        : receipt.operationType === 'task.restore'
+          ? title
+            ? t('taskRemove.receiptRestored', { title })
+            : t('taskRemove.receiptRestoredUnknown')
+          : t('taskActions.savedAnnouncement', {
+              state: stateLabel(receipt.afterState),
+            });
+      AccessibilityInfo.announceForAccessibility(result);
     }
   });
 

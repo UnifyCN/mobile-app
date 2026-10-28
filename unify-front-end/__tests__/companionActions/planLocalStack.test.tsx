@@ -18,7 +18,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { AccessibilityInfo, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { execFileSync } from 'child_process';
 import * as fs from 'fs';
@@ -952,6 +952,7 @@ describeStack('Plan and task steps together against the real local stack (mobile
 // The same real stack with this repo's #367 migration applied after #366 (chronological
 // order). The actual Companion screen, send hook, removal card, plan entry and task sheet.
 describeStack('Task removal against the real local stack (mobile, #367)', () => {
+  let announcementSpy: jest.SpyInstance<void, [announcement: string]>;
   beforeAll(async () => {
     const has = (sig: string) => psql(`select to_regprocedure('public.${sig}') is not null;`) === 't';
     // The earlier blocks applied #361-#366; refuse an out-of-order stack instead of guessing.
@@ -979,8 +980,10 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     mockStream.mockReset();
     clearPlanStores(null);
     clearTaskActionStores(null);
+    announcementSpy = jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => {});
   });
   afterEach(() => {
+    announcementSpy.mockRestore();
     global.fetch = realFetch;
     clients.splice(0).forEach(client => client.clear());
   });
@@ -1026,6 +1029,7 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     expect(within(sheet).queryByText('Remove “Get your SIN”?')).toBeNull();
     expect(removalReceipts(acc.id)).toBe(0);
     expect((await taskNow(acc.jwt, 'sanity:sin-number'))?.removed ?? false).toBe(false);
+    expect(announcementSpy).not.toHaveBeenCalled();
 
     // Cancel keeps the request open: the card still offers its review, and the draft stays.
     fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
@@ -1037,6 +1041,9 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     await within(sheet).findByText('Remove “Get your SIN”?', {}, { timeout: 10_000 });
     fireEvent.press(await enabledButton(within(sheet), 'Remove task'));
     expect(await within(sheet).findByText('Removed from your Checklist: Get your SIN', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+    ]));
     expect(within(sheet).getByText('Saved plans: 1 · Steps kept: 0 · Reminders stopped: 0')).toBeTruthy();
     expect((await taskNow(acc.jwt, 'sanity:sin-number')).removed).toBe(true);
     expect(psql(`select dismissed_at is not null from user_tasks where user_id = '${acc.id}' and sanity_checklist_id = 'sin-number';`)).toBe('t');
@@ -1046,6 +1053,10 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     const undo = 'Undo: Removed from your Checklist: Get your SIN';
     fireEvent.press(await enabledButton(within(sheet), undo));
     expect(await within(sheet).findByText('Restored to your Checklist: Get your SIN', {}, { timeout: 10_000 })).toBeTruthy();
+    await waitFor(() => expect(announcementSpy.mock.calls).toEqual([
+      ['Removed from your Checklist: Get your SIN'],
+      ['Restored to your Checklist: Get your SIN'],
+    ]));
     expect((await taskNow(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
     expect((await planItem(acc.jwt, 'sanity:sin-number')).removed).toBe(false);
     fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
