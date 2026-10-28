@@ -1,0 +1,201 @@
+FAIL __tests__/companionActions/taskEdit.test.tsx
+  ✕ in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question (1625 ms)
+  ○ skipped keeps the first direct edit receipt and marks it historical after a second edit
+  ○ skipped a waiting reason change names the reason before and after on the command card, and keeps them after a later edit
+  Edit existing tasks through Companion (mobile)
+    ○ skipped a clear rename command saves exactly that change without an AI answer, names it in the card, and Checklist reads the new title
+    ○ skipped a state command names a published task by its Checklist title and saves only its state
+    ○ skipped an ambiguous or unknown target asks a question and writes nothing
+    ○ skipped a suggested change is a draft until approved; approval saves the reviewed change once and the typed message stays
+    ○ skipped a newer edit elsewhere gives a revised draft that shows the old and current values and needs its own approval
+
+  ● in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question
+
+    Unable to find an element with testID: detail-command-card
+
+    <View>
+      <View>
+        <View>
+          <View
+            accessibilityLabel="Open history"
+            accessibilityRole="button"
+            accessible={true}
+          />
+          <Text>
+            Companion
+          </Text>
+          <View
+            accessibilityLabel="New chat"
+            accessibilityRole="button"
+            accessible={true}
+          />
+        </View>
+        <View
+          accessibilityLabel="Your tasks, In progress: 0 · Waiting: 1"
+          accessibilityRole="button"
+          accessible={true}
+        >
+          <View />
+          <View>
+            <Text>
+              Your tasks
+            </Text>
+            <Text>
+              In progress: 0 · Waiting: 1
+            </Text>
+          </View>
+        </View>
+        <RCTScrollView>
+          <View>
+            <View>
+              <View>
+                <View>
+                  <Text>
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </Text>
+                </View>
+              </View>
+              <View
+                testID="task-command-card"
+              >
+                <View />
+                <View>
+                  <Text>
+                    Get a phone plan: Not started → Waiting
+                  </Text>
+                  <Text>
+                    Waiting for: (empty) → “Appointment on Friday”
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="View task Get a phone plan"
+                  accessibilityRole="button"
+                  accessibilityState={
+                    {
+                      "disabled": false,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <Text>
+                    View task
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View>
+                <View>
+                  <Text>
+                    Set priority of task "Get a phone plan" to Do now
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View>
+                <View>
+                  <View>
+                    <View
+                      accessible={true}
+                    >
+                      <Text>
+                        
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text>
+                      2 tasks are called “Get a phone plan”, so I did not change any of them. Open the one you mean in Checklist and change it there.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View>
+                <View>
+                  <Text>
+                    Remember that I can attend appointments on Fridays
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View>
+                <View>
+                  <View>
+                    <View
+                      accessible={true}
+                    >
+                      <Text>
+                        
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text>
+                      That detail is already saved. You can see it under Saved details.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View>
+                <View>
+                  <Text>
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View />
+          </View>
+        </RCTScrollView>
+      </View>
+      <View>
+        <View>
+          <View>
+            <TextInput
+              editable={true}
+              placeholder="Ask anything..."
+              value=""
+            />
+            <View
+              accessibilityState={
+                {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+            >
+              <View />
+            </View>
+          </View>
+          <View>
+            <Text>
+              Companion can make mistakes. Verify important info.
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+
+      608 |
+      609 |   await send('Remember that I can attend appointments on Fridays');
+    > 610 |   const detail = await screen.findByTestId('detail-command-card');
+          |                               ^
+      611 |   expect(await within(detail).findByText('Saved: “I can attend appointments on Fridays”.')).toBeTruthy();
+      612 |   await send('Remember that I can attend appointments on Fridays');
+      613 |   expect(
+
+      at Object.findByTestId (__tests__/companionActions/taskEdit.test.tsx:610:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 skipped, 8 total
+Snapshots:   0 total
+Time:        3.562 s, estimated 4 s
+Ran all test suites matching /__tests__\/companionActions\/taskEdit.test.tsx/i with tests matching "in one conversation".

@@ -1,0 +1,32 @@
+{
+ "MC1-clarify-loses-365-question": {
+  "exit": 1,
+  "first_failure": "Unable to find an element with text: 2 tasks are called \u201cGet a phone plan\u201d, so I did not change any of them. Open the one you mean in Checklist and change it there.",
+  "restored_sha256": "7c1f33265037356402978f2ee9291baed1ba9b7a03aab9acc48ad4a26743a08d"
+ },
+ "MC2-edit-command-not-applied": {
+  "exit": 1,
+  "first_failure": "Unable to find node on an unmounted component.",
+  "restored_sha256": "7c1f33265037356402978f2ee9291baed1ba9b7a03aab9acc48ad4a26743a08d"
+ },
+ "MC3-remember-not-applied": {
+  "exit": 1,
+  "first_failure": "Unable to find an element with testID: detail-command-card",
+  "restored_sha256": "7c1f33265037356402978f2ee9291baed1ba9b7a03aab9acc48ad4a26743a08d"
+ },
+ "WC1-clarify-loses-365-question": {
+  "exit": 1,
+  "first_failure": "\u2192 Unable to find an element with the text: 2 tasks are called \u201cGet a phone plan\u201d, so I did not change any of them. Open the one you mean in Checklist and change it there.. This could be because the te",
+  "restored_sha256": "db967fbca35426c0965f17733ea6d6d14b48db91893278761f9a5ed764989f7e"
+ },
+ "WC2-edit-command-not-applied": {
+  "exit": 1,
+  "first_failure": "\u2192 Unable to find role=\"article\" and name \"Get a phone plan: Not started \u2192 Waiting\"",
+  "restored_sha256": "db967fbca35426c0965f17733ea6d6d14b48db91893278761f9a5ed764989f7e"
+ },
+ "WC3-remember-not-applied": {
+  "exit": 1,
+  "first_failure": "\u2192 Unable to find role=\"article\" and name \"Saved details\"",
+  "restored_sha256": "db967fbca35426c0965f17733ea6d6d14b48db91893278761f9a5ed764989f7e"
+ }
+}

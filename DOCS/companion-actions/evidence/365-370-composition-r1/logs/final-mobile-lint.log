@@ -1,0 +1,46 @@
+
+/Users/savargupta/.t3/worktrees/Unify/t3-6a798481/unify-front-end/__tests__/companionActions/companionActionsLocalStack.test.tsx
+   14:3   warning  'act' is defined but never used           @typescript-eslint/no-unused-vars
+   59:17  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   74:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   89:38  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  103:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  115:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  116:7   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  120:9   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  121:11  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  290:1   warning  Import in body of module; reorder to top  import/first
+  291:1   warning  Import in body of module; reorder to top  import/first
+  292:1   warning  Import in body of module; reorder to top  import/first
+  514:18  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+/Users/savargupta/.t3/worktrees/Unify/t3-6a798481/unify-front-end/__tests__/companionActions/savedDetails.test.tsx
+   38:17  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   54:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   69:38  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   83:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   95:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   96:7   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  100:9   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  101:11  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  321:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/savargupta/.t3/worktrees/Unify/t3-6a798481/unify-front-end/__tests__/companionActions/taskEdit.test.tsx
+   10:3   warning  'act' is defined but never used                              @typescript-eslint/no-unused-vars
+   40:17  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   55:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   70:38  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   84:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   96:5   warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   97:7   warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  101:9   warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  102:11  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  322:1   warning  Import in body of module; reorder to top                     import/first
+  553:17  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/savargupta/.t3/worktrees/Unify/t3-6a798481/unify-front-end/hooks/companion/useSendMessage.ts
+  168:17  warning  'usage' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 34 problems (0 errors, 34 warnings)
+  0 errors and 6 warnings potentially fixable with the `--fix` option.
+

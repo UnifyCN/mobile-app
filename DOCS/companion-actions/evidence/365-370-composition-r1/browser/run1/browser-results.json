@@ -1,0 +1,176 @@
+{
+ "errors": [
+  "desktop: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <RedirectErrorBoundary router={{...}}>\n      <InnerLayoutRouter url=\"/companion\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>\n        <SegmentViewNode type=\"page\" pagePath=\"(main)/com...\">\n          <SegmentTrieNode>\n          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>\n            <CompanionPage params={Promise} searchParams={Promise}>\n              <div className=\"flex h-[ca...\">\n                <ConversationList>\n                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>\n                  <div className=\"h-full min...\">\n                    <header>\n                    <CompanionTasksEntry onOpen={function onOpen}>\n                      <div className=\"border-b b...\">\n                        <div className=\"mx-auto fl...\">\n                          <div className=\"min-w-0 fl...\">\n                            <p>\n                            <p\n+                             className=\"truncate text-xs text-ink-muted loading-delayed\"\n-                             className=\"truncate text-xs text-ink-muted\"\n                            >\n+                             Loading task progress…\n-                             In progress: 0 · Waiting: 0\n                          ...\n                    ...\n                    ...\n                ...\n        ...\n      ...\n",
+  "narrow390: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <RedirectErrorBoundary router={{...}}>\n      <InnerLayoutRouter url=\"/companion\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>\n        <SegmentViewNode type=\"page\" pagePath=\"(main)/com...\">\n          <SegmentTrieNode>\n          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>\n            <CompanionPage params={Promise} searchParams={Promise}>\n              <div className=\"flex h-[ca...\">\n                <ConversationList>\n                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>\n                  <div className=\"h-full min...\">\n                    <header>\n                    <CompanionTasksEntry onOpen={function onOpen}>\n                      <div className=\"border-b b...\">\n                        <div className=\"mx-auto fl...\">\n                          <div className=\"min-w-0 fl...\">\n                            <p>\n                            <p\n+                             className=\"truncate text-xs text-ink-muted loading-delayed\"\n-                             className=\"truncate text-xs text-ink-muted\"\n                            >\n+                             Loading task progress…\n-                             In progress: 0 · Waiting: 0\n                          ...\n                    ...\n                    ...\n                ...\n        ...\n      ...\n"
+ ],
+ "console": [
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Sanity checklist fetch failed Error: Request error while attempting to reach is https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+person",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "desktop: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "desktop: Failed to load resource: net::ERR_FAILED",
+  "narrow390: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "narrow390: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "narrow390: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "narrow390: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "narrow390: Access to XMLHttpRequest at 'https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order",
+  "narrow390: Failed to load resource: net::ERR_FAILED"
+ ],
+ "desktop": {
+  "editDraftCard": [
+   "Suggested change",
+   "Get a phone plan",
+   "Priority: Do now",
+   "Draft · not saved yet",
+   "Review"
+  ],
+  "detailDraftCard": [
+   "Save a personal detail",
+   "I need an interpreter for appointments",
+   "Needs your approval. Not saved.",
+   "Review"
+  ],
+  "editDrawerTitle": "Review change",
+  "editDrawerLines": [
+   "Review change",
+   "Draft · not saved yet",
+   "Get a phone plan",
+   "Priority",
+   "Now: Do soon",
+   "After you save: Do now",
+   "Save this change",
+   "Not now"
+  ],
+  "editFocusAfterEscape": "Review the suggested change to Get a phone plan",
+  "detailDrawerTitle": "Remember this detail?",
+  "detailDrawerLines": [
+   "Remember this detail?",
+   "Save a personal detail",
+   "I need an interpreter for appointments",
+   "Companion will use it in later conversations. You can view, edit or remove it at any time.",
+   "Remember this",
+   "Not now"
+  ],
+  "detailFocusAfterEscape": "Review the suggested detail: I need an interpreter for appointments",
+  "composerAfterDrawers": "My next question",
+  "rowBeforeCommands": {
+   "priority": "Do soon",
+   "progress_state": null,
+   "waiting_reason": null,
+   "revision": 1
+  },
+  "detailsBeforeCommands": [],
+  "waitingCard": [
+   "Get a phone plan: Not started → Waiting",
+   "Waiting for: (empty) → “Appointment on Friday”",
+   "View task"
+  ],
+  "rememberCard": [
+   "Saved: “I can attend appointments on Fridays”.",
+   "Saved earlier. This detail has changed since.",
+   "View saved details"
+  ],
+  "rowAfterCommands": {
+   "priority": "Do soon",
+   "progress_state": "waiting",
+   "waiting_reason": "Appointment on Friday",
+   "revision": 2
+  },
+  "detailsAfterCommands": [
+   {
+    "body": "I can attend appointments on Fridays",
+    "revision": 1
+   }
+  ],
+  "savedDetailsDrawer": [
+   "Saved details",
+   "Companion uses these in later conversations. Your profile keeps your province, city, arrival date and status.",
+   "I can attend appointments on Fridays",
+   "Saved from your message",
+   "Edit",
+   "Remove"
+  ],
+  "docOverflow": false,
+  "modelRequests": 0,
+  "actionCounts": {
+   "read": 6,
+   "plans": 5,
+   "conversation_actions": 5,
+   "conversation_plans": 5,
+   "proposal": 2,
+   "interpret": 2,
+   "apply": 2
+  }
+ },
+ "narrow390": {
+  "articles": [
+   "Suggested change: Get a phone plan",
+   "Save a personal detail",
+   "Checklist task: Not started → Waiting",
+   "Saved details"
+  ],
+  "rememberCard": [
+   "Saved: “I can attend appointments on Fridays”.",
+   "View saved details"
+  ],
+  "boxes": [
+   [
+    24,
+    366,
+    false
+   ],
+   [
+    24,
+    366,
+    false
+   ],
+   [
+    24,
+    366,
+    false
+   ],
+   [
+    24,
+    366,
+    false
+   ]
+  ],
+  "docOverflow": false,
+  "modelRequests": 0,
+  "actionCounts": {
+   "read": 2,
+   "plans": 1,
+   "conversation_actions": 1,
+   "conversation_plans": 1
+  }
+ }
+}

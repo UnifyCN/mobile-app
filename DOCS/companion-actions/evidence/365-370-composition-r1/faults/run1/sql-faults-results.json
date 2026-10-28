@@ -1,0 +1,128 @@
+{
+ "F1-365-receipt-waiting-reasons": {
+  "exit": 1,
+  "files": [
+   [
+    "FAILED",
+    "3",
+    "1"
+   ],
+   [
+    "FAILED",
+    "1",
+    "1"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal.",
+   "AssertionError: Values are not equal."
+  ],
+  "assertion_only": true
+ },
+ "F2-365-validate-edit": {
+  "exit": 1,
+  "files": [
+   [
+    "FAILED",
+    "1",
+    "3"
+   ],
+   [
+    "FAILED",
+    "1",
+    "1"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"invalid_request\",\"reason\":\"unsupported_operation\",\"detail\":{\"type\":\"task.edit_details\"}}",
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"invalid_request\",\"reason\":\"unsupported_operation\",\"detail\":{\"type\":\"task.edit_details\"}}",
+   "AssertionError: Values are not equal: {\"error\":\"invalid_request\",\"reason\":\"unsupported_operation\",\"detail\":{\"type\":\"task.edit_details\"}}",
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"invalid_request\",\"reason\":\"unsupported_operation\",\"detail\":{\"type\":\"task.edit_details\"}}"
+  ],
+  "assertion_only": true
+ },
+ "F3-370-apply-detail-dispatch": {
+  "exit": 1,
+  "files": [
+   [
+    "FAILED",
+    "0",
+    "4"
+   ],
+   [
+    "FAILED",
+    "1",
+    "1"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal: remember: {\"error\":\"invalid_request\",\"reason\":\"invalid_task_ref\"}",
+   "Error: remember failed: 422 {\"error\":\"invalid_request\",\"reason\":\"invalid_task_ref\"}",
+   "Error: remember failed: 422 {\"error\":\"invalid_request\",\"reason\":\"invalid_task_ref\"}",
+   "AssertionError: {\"error\":\"invalid_request\",\"reason\":\"invalid_task_ref\"}"
+  ],
+  "assertion_only": false
+ },
+ "F4-rollback-restores-366-bodies": {
+  "exit": 1,
+  "files": [
+   [
+    "ok",
+    "4",
+    "0"
+   ],
+   [
+    "FAILED",
+    "0",
+    "2"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal: the #370 rollback did not restore the #365 schema",
+   "AssertionError: Values are not equal: the #370 rollback failed with #365 data present"
+  ],
+  "assertion_only": true
+ },
+ "F5-kind-check-drops-task_edit": {
+  "exit": 1,
+  "files": [
+   [
+    "FAILED",
+    "1",
+    "3"
+   ],
+   [
+    "FAILED",
+    "1",
+    "1"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"internal\"}",
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"internal\"}",
+   "AssertionError: Values are not equal: {\"error\":\"internal\"}",
+   "AssertionError: Values are not equal: prepare edit draft: {\"error\":\"internal\"}"
+  ],
+  "assertion_only": true
+ },
+ "F6-370-undo-detail-dispatch": {
+  "exit": 1,
+  "files": [
+   [
+    "FAILED",
+    "2",
+    "2"
+   ],
+   [
+    "ok",
+    "2",
+    "0"
+   ]
+  ],
+  "first_errors": [
+   "AssertionError: Values are not equal: a removing Undo applied without confirmation",
+   "AssertionError: Values are not equal: a removing Undo applied without confirmation"
+  ],
+  "assertion_only": true
+ }
+}

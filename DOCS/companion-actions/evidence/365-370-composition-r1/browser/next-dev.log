@@ -1,0 +1,491 @@
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://127.0.0.1:3218
+- Network:       http://127.0.0.1:3218
+✓ Ready in 292ms
+[@sentry/nextjs] Importing `withSentryConfig` from `@sentry/nextjs` is deprecated and will stop working in v11. Import it from `@sentry/nextjs/config` instead:
+  import { withSentryConfig } from '@sentry/nextjs/config';
+- Experiments (use with caution):
+  · clientTraceMetadata
+
+ GET /login 200 in 2.8s (next.js: 2.4s, proxy.ts: 103ms, application-code: 332ms)
+ GET /login 200 in 54ms (next.js: 6ms, proxy.ts: 12ms, application-code: 36ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 1236ms (next.js: 1155ms, proxy.ts: 64ms, application-code: 17ms)
+ GET /api/learning-destination 200 in 414ms (next.js: 297ms, proxy.ts: 64ms, application-code: 53ms)
+ GET /companion 200 in 960ms (next.js: 762ms, proxy.ts: 62ms, application-code: 136ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+ POST /api/companion/actions 200 in 216ms (next.js: 79ms, proxy.ts: 52ms, application-code: 85ms)
+ POST /api/companion/actions 200 in 221ms (next.js: 81ms, proxy.ts: 54ms, application-code: 86ms)
+ POST /api/companion/actions 200 in 111ms (next.js: 3ms, proxy.ts: 35ms, application-code: 72ms)
+ POST /api/companion/actions 200 in 113ms (next.js: 5ms, proxy.ts: 37ms, application-code: 71ms)
+ POST /api/companion/actions 200 in 92ms (next.js: 3ms, proxy.ts: 32ms, application-code: 57ms)
+ POST /api/companion/actions 200 in 95ms (next.js: 3ms, proxy.ts: 33ms, application-code: 59ms)
+ POST /api/companion/actions 200 in 109ms (next.js: 3ms, proxy.ts: 37ms, application-code: 70ms)
+ POST /api/companion/actions 200 in 116ms (next.js: 3ms, proxy.ts: 35ms, application-code: 79ms)
+ POST /api/companion/actions 200 in 115ms (next.js: 1568µs, proxy.ts: 33ms, application-code: 81ms)
+ POST /api/companion/actions 200 in 107ms (next.js: 1664µs, proxy.ts: 29ms, application-code: 76ms)
+ POST /api/companion/actions 200 in 139ms (next.js: 9ms, proxy.ts: 44ms, application-code: 87ms)
+ POST /api/companion/actions 200 in 146ms (next.js: 6ms, proxy.ts: 45ms, application-code: 95ms)
+ POST /api/companion/actions 200 in 149ms (next.js: 8ms, proxy.ts: 47ms, application-code: 93ms)
+ POST /api/companion/actions 200 in 150ms (next.js: 10ms, proxy.ts: 49ms, application-code: 91ms)
+ POST /api/companion/actions 200 in 154ms (next.js: 13ms, proxy.ts: 52ms, application-code: 90ms)
+ POST /api/companion/actions 200 in 156ms (next.js: 9ms, proxy.ts: 48ms, application-code: 99ms)
+ POST /api/companion/actions 200 in 100ms (next.js: 1492µs, proxy.ts: 34ms, application-code: 64ms)
+[browser] Sanity checklist fetch failed Error: Request error while attempting to reach is https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order%28class+asc%2C+class_order+asc%29+%7B%0A++_id%2C%0A++title%2C%0A++description%2C%0A++longer_description%2C%0A++class%2C%0A++class_order%2C%0A++link_tab%2C%0A++%22i18n%22%3A+select%28%24lang+%21%3D+%22en%22+%3D%3E+*%5B_type+%3D%3D+%22translation.metadata%22+%26%26+references%28%5E._id%29%5D%5B0%5D.translations%5B_key+%3D%3D+%24lang%5D%5B0%5D.value-%3E%7B+title%2C+description%2C+longer_description+%7D%2C+null%29%2C%0A++%22module%22%3A+module-%3E%7B_id%7D%2C%0A++%22submodule%22%3A+submodule-%3E%7B_id%2C+%22moduleId%22%3A+module._ref%7D%0A%7D&%24persona=null&%24stage=%22not_arrived%22&%24lang=%22en%22&returnQuery=false&perspective=published
+    at getChecklistByPersonaAndStage (services/checklist.ts:109:39)
+    at Module.getTasks (services/checklist.ts:199:23)
+  107 | ): Promise<SanityChecklistItem[]> {
+  108 |   try {
+> 109 |     const result = await sanityClient.fetch<WithI18n<SanityChecklistItem>[]>(
+      |                                       ^
+  110 |       CHECKLIST_GROQ,
+  111 |       { persona, stage: stageSlug, lang: language },
+  112 |     ); (services/checklist.ts:116:13)
+ POST /api/companion/actions 200 in 116ms (next.js: 1911µs, proxy.ts: 36ms, application-code: 78ms)
+ POST /api/companion/actions 200 in 89ms (next.js: 1765µs, proxy.ts: 27ms, application-code: 60ms)
+ POST /api/companion/actions 200 in 159ms (next.js: 2ms, proxy.ts: 48ms, application-code: 109ms)
+ POST /api/companion/actions 200 in 167ms (next.js: 9ms, proxy.ts: 55ms, application-code: 102ms)
+ POST /api/companion/actions 200 in 172ms (next.js: 10ms, proxy.ts: 57ms, application-code: 105ms)
+ POST /api/companion/actions 200 in 172ms (next.js: 7ms, proxy.ts: 52ms, application-code: 113ms)
+ POST /api/companion/actions 200 in 176ms (next.js: 10ms, proxy.ts: 57ms, application-code: 109ms)
+ POST /api/companion/actions 200 in 178ms (next.js: 8ms, proxy.ts: 56ms, application-code: 114ms)
+ POST /api/companion/actions 200 in 109ms (next.js: 1408µs, proxy.ts: 38ms, application-code: 69ms)
+ POST /api/companion/actions 200 in 103ms (next.js: 1953µs, proxy.ts: 34ms, application-code: 68ms)
+ GET /login 200 in 71ms (next.js: 4ms, proxy.ts: 5ms, application-code: 62ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 78ms (next.js: 3ms, proxy.ts: 63ms, application-code: 12ms)
+ GET /api/learning-destination 200 in 120ms (next.js: 41ms, proxy.ts: 65ms, application-code: 13ms)
+ GET /companion 200 in 177ms (next.js: 10ms, proxy.ts: 58ms, application-code: 109ms)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+ POST /api/companion/actions 200 in 177ms (next.js: 7ms, proxy.ts: 64ms, application-code: 107ms)
+ POST /api/companion/actions 200 in 187ms (next.js: 4ms, proxy.ts: 67ms, application-code: 116ms)
+ POST /api/companion/actions 200 in 109ms (next.js: 4ms, proxy.ts: 35ms, application-code: 70ms)
+ POST /api/companion/actions 200 in 117ms (next.js: 4ms, proxy.ts: 37ms, application-code: 76ms)
+ POST /api/companion/actions 200 in 79ms (next.js: 1571µs, proxy.ts: 43ms, application-code: 34ms)
+ GET /login 200 in 1138ms (next.js: 144ms, proxy.ts: 574ms, application-code: 421ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 289ms (next.js: 65ms, proxy.ts: 187ms, application-code: 36ms)
+ GET /api/learning-destination 200 in 202ms (next.js: 64ms, proxy.ts: 51ms, application-code: 86ms)
+ GET /companion 200 in 352ms (next.js: 173ms, proxy.ts: 75ms, application-code: 104ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+ POST /api/companion/actions 200 in 680ms (next.js: 53ms, proxy.ts: 165ms, application-code: 462ms)
+ POST /api/companion/actions 200 in 714ms (next.js: 110ms, proxy.ts: 116ms, application-code: 487ms)
+ POST /api/companion/actions 200 in 460ms (next.js: 4ms, proxy.ts: 150ms, application-code: 306ms)
+ POST /api/companion/actions 200 in 461ms (next.js: 14ms, proxy.ts: 138ms, application-code: 310ms)
+ POST /api/companion/actions 200 in 354ms (next.js: 4ms, proxy.ts: 93ms, application-code: 257ms)
+ POST /api/companion/actions 200 in 380ms (next.js: 8ms, proxy.ts: 93ms, application-code: 279ms)
+ POST /api/companion/actions 200 in 282ms (next.js: 3ms, proxy.ts: 69ms, application-code: 211ms)
+ POST /api/companion/actions 200 in 287ms (next.js: 11ms, proxy.ts: 69ms, application-code: 207ms)
+ POST /api/companion/actions 200 in 545ms (next.js: 8ms, proxy.ts: 237ms, application-code: 300ms)
+[browser] Sanity checklist fetch failed Error: Request error while attempting to reach is https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order%28class+asc%2C+class_order+asc%29+%7B%0A++_id%2C%0A++title%2C%0A++description%2C%0A++longer_description%2C%0A++class%2C%0A++class_order%2C%0A++link_tab%2C%0A++%22i18n%22%3A+select%28%24lang+%21%3D+%22en%22+%3D%3E+*%5B_type+%3D%3D+%22translation.metadata%22+%26%26+references%28%5E._id%29%5D%5B0%5D.translations%5B_key+%3D%3D+%24lang%5D%5B0%5D.value-%3E%7B+title%2C+description%2C+longer_description+%7D%2C+null%29%2C%0A++%22module%22%3A+module-%3E%7B_id%7D%2C%0A++%22submodule%22%3A+submodule-%3E%7B_id%2C+%22moduleId%22%3A+module._ref%7D%0A%7D&%24persona=null&%24stage=%22not_arrived%22&%24lang=%22en%22&returnQuery=false&perspective=published
+    at getChecklistByPersonaAndStage (services/checklist.ts:109:39)
+    at Module.getTasks (services/checklist.ts:199:23)
+  107 | ): Promise<SanityChecklistItem[]> {
+  108 |   try {
+> 109 |     const result = await sanityClient.fetch<WithI18n<SanityChecklistItem>[]>(
+      |                                       ^
+  110 |       CHECKLIST_GROQ,
+  111 |       { persona, stage: stageSlug, lang: language },
+  112 |     ); (services/checklist.ts:116:13)
+ POST /api/companion/actions 200 in 463ms (next.js: 18ms, proxy.ts: 161ms, application-code: 285ms)
+ POST /api/companion/actions 200 in 772ms (next.js: 54ms, proxy.ts: 167ms, application-code: 551ms)
+ POST /api/companion/actions 200 in 772ms (next.js: 22ms, proxy.ts: 228ms, application-code: 522ms)
+ POST /api/companion/actions 200 in 774ms (next.js: 57ms, proxy.ts: 161ms, application-code: 555ms)
+ POST /api/companion/actions 200 in 780ms (next.js: 18ms, proxy.ts: 212ms, application-code: 550ms)
+ POST /api/companion/actions 200 in 953ms (next.js: 24ms, proxy.ts: 216ms, application-code: 713ms)
+ POST /api/companion/actions 200 in 968ms (next.js: 27ms, proxy.ts: 214ms, application-code: 727ms)
+ POST /api/companion/actions 200 in 545ms (next.js: 8ms, proxy.ts: 132ms, application-code: 404ms)
+ POST /api/companion/actions 200 in 551ms (next.js: 2ms, proxy.ts: 283ms, application-code: 266ms)
+ POST /api/companion/actions 200 in 418ms (next.js: 1961µs, proxy.ts: 49ms, application-code: 366ms)
+ POST /api/companion/actions 200 in 463ms (next.js: 42ms, proxy.ts: 134ms, application-code: 288ms)
+ POST /api/companion/actions 200 in 470ms (next.js: 44ms, proxy.ts: 120ms, application-code: 307ms)
+ POST /api/companion/actions 200 in 479ms (next.js: 34ms, proxy.ts: 118ms, application-code: 326ms)
+ POST /api/companion/actions 200 in 485ms (next.js: 19ms, proxy.ts: 109ms, application-code: 357ms)
+ POST /api/companion/actions 200 in 479ms (next.js: 43ms, proxy.ts: 134ms, application-code: 302ms)
+ POST /api/companion/actions 200 in 484ms (next.js: 38ms, proxy.ts: 108ms, application-code: 337ms)
+ POST /api/companion/actions 200 in 187ms (next.js: 3ms, proxy.ts: 64ms, application-code: 120ms)
+ POST /api/companion/actions 200 in 198ms (next.js: 3ms, proxy.ts: 54ms, application-code: 141ms)
+ GET /login 200 in 92ms (next.js: 15ms, proxy.ts: 6ms, application-code: 71ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 193ms (next.js: 44ms, proxy.ts: 122ms, application-code: 27ms)
+ GET /api/learning-destination 200 in 94ms (next.js: 3ms, proxy.ts: 47ms, application-code: 44ms)
+ GET /companion 200 in 154ms (next.js: 21ms, proxy.ts: 71ms, application-code: 62ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+ POST /api/companion/actions 200 in 244ms (next.js: 10ms, proxy.ts: 62ms, application-code: 171ms)
+ POST /api/companion/actions 200 in 253ms (next.js: 3ms, proxy.ts: 79ms, application-code: 171ms)
+ POST /api/companion/actions 200 in 152ms (next.js: 1984µs, proxy.ts: 54ms, application-code: 96ms)
+ POST /api/companion/actions 200 in 225ms (next.js: 3ms, proxy.ts: 89ms, application-code: 134ms)
+ POST /api/companion/actions 200 in 140ms (next.js: 3ms, proxy.ts: 37ms, application-code: 100ms)
+ GET /login 200 in 45ms (next.js: 7ms, proxy.ts: 4ms, application-code: 34ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 114ms (next.js: 5ms, proxy.ts: 97ms, application-code: 13ms)
+ GET /api/learning-destination 200 in 110ms (next.js: 22ms, proxy.ts: 82ms, application-code: 7ms)
+ GET /companion 200 in 141ms (next.js: 9ms, proxy.ts: 63ms, application-code: 69ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+ POST /api/companion/actions 200 in 162ms (next.js: 1776µs, proxy.ts: 54ms, application-code: 106ms)
+ POST /api/companion/actions 200 in 165ms (next.js: 3ms, proxy.ts: 46ms, application-code: 116ms)
+ POST /api/companion/actions 200 in 145ms (next.js: 1956µs, proxy.ts: 41ms, application-code: 102ms)
+ POST /api/companion/actions 200 in 156ms (next.js: 3ms, proxy.ts: 45ms, application-code: 107ms)
+ POST /api/companion/actions 200 in 128ms (next.js: 3ms, proxy.ts: 42ms, application-code: 82ms)
+ POST /api/companion/actions 200 in 131ms (next.js: 3ms, proxy.ts: 40ms, application-code: 88ms)
+ POST /api/companion/actions 200 in 113ms (next.js: 3ms, proxy.ts: 41ms, application-code: 69ms)
+ POST /api/companion/actions 200 in 116ms (next.js: 4ms, proxy.ts: 37ms, application-code: 74ms)
+ POST /api/companion/actions 200 in 106ms (next.js: 1371µs, proxy.ts: 32ms, application-code: 73ms)
+ POST /api/companion/actions 200 in 105ms (next.js: 1415µs, proxy.ts: 31ms, application-code: 73ms)
+ POST /api/companion/actions 200 in 138ms (next.js: 4ms, proxy.ts: 45ms, application-code: 89ms)
+ POST /api/companion/actions 200 in 144ms (next.js: 5ms, proxy.ts: 47ms, application-code: 92ms)
+ POST /api/companion/actions 200 in 154ms (next.js: 8ms, proxy.ts: 50ms, application-code: 96ms)
+ POST /api/companion/actions 200 in 166ms (next.js: 8ms, proxy.ts: 48ms, application-code: 111ms)
+ POST /api/companion/actions 200 in 168ms (next.js: 7ms, proxy.ts: 54ms, application-code: 107ms)
+ POST /api/companion/actions 200 in 170ms (next.js: 7ms, proxy.ts: 51ms, application-code: 112ms)
+ POST /api/companion/actions 200 in 98ms (next.js: 1277µs, proxy.ts: 40ms, application-code: 56ms)
+[browser] Sanity checklist fetch failed Error: Request error while attempting to reach is https://placeholder.apicdn.sanity.io/v2024-01-01/data/query/production?query=*%5B%0A++_type+%3D%3D+%22checklist%22%0A++%26%26+%28language+%3D%3D+%22en%22+%7C%7C+%21defined%28language%29%29%0A++%26%26+%24persona+in+personas%0A++%26%26+stage+%3D%3D+%24stage%0A%5D+%7C+order%28class+asc%2C+class_order+asc%29+%7B%0A++_id%2C%0A++title%2C%0A++description%2C%0A++longer_description%2C%0A++class%2C%0A++class_order%2C%0A++link_tab%2C%0A++%22i18n%22%3A+select%28%24lang+%21%3D+%22en%22+%3D%3E+*%5B_type+%3D%3D+%22translation.metadata%22+%26%26+references%28%5E._id%29%5D%5B0%5D.translations%5B_key+%3D%3D+%24lang%5D%5B0%5D.value-%3E%7B+title%2C+description%2C+longer_description+%7D%2C+null%29%2C%0A++%22module%22%3A+module-%3E%7B_id%7D%2C%0A++%22submodule%22%3A+submodule-%3E%7B_id%2C+%22moduleId%22%3A+module._ref%7D%0A%7D&%24persona=null&%24stage=%22not_arrived%22&%24lang=%22en%22&returnQuery=false&perspective=published
+    at getChecklistByPersonaAndStage (services/checklist.ts:109:39)
+    at Module.getTasks (services/checklist.ts:199:23)
+  107 | ): Promise<SanityChecklistItem[]> {
+  108 |   try {
+> 109 |     const result = await sanityClient.fetch<WithI18n<SanityChecklistItem>[]>(
+      |                                       ^
+  110 |       CHECKLIST_GROQ,
+  111 |       { persona, stage: stageSlug, lang: language },
+  112 |     ); (services/checklist.ts:116:13)
+ POST /api/companion/actions 200 in 92ms (next.js: 1502µs, proxy.ts: 31ms, application-code: 60ms)
+ POST /api/companion/actions 200 in 108ms (next.js: 1398µs, proxy.ts: 30ms, application-code: 76ms)
+ POST /api/companion/actions 200 in 167ms (next.js: 3ms, proxy.ts: 57ms, application-code: 106ms)
+ POST /api/companion/actions 200 in 174ms (next.js: 7ms, proxy.ts: 63ms, application-code: 105ms)
+ POST /api/companion/actions 200 in 180ms (next.js: 5ms, proxy.ts: 62ms, application-code: 113ms)
+ POST /api/companion/actions 200 in 181ms (next.js: 6ms, proxy.ts: 62ms, application-code: 112ms)
+ POST /api/companion/actions 200 in 182ms (next.js: 8ms, proxy.ts: 64ms, application-code: 110ms)
+ POST /api/companion/actions 200 in 195ms (next.js: 7ms, proxy.ts: 65ms, application-code: 124ms)
+ POST /api/companion/actions 200 in 100ms (next.js: 3ms, proxy.ts: 35ms, application-code: 62ms)
+ POST /api/companion/actions 200 in 108ms (next.js: 1388µs, proxy.ts: 29ms, application-code: 78ms)
+ GET /login 200 in 52ms (next.js: 3ms, proxy.ts: 1777µs, application-code: 47ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (app/(auth)
+ GET /home 200 in 64ms (next.js: 4ms, proxy.ts: 47ms, application-code: 12ms)
+ GET /api/learning-destination 200 in 78ms (next.js: 15ms, proxy.ts: 55ms, application-code: 8ms)
+ GET /companion 200 in 104ms (next.js: 3ms, proxy.ts: 46ms, application-code: 55ms)
+[browser] You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled (components/ui/ToastProvider.tsx:46:34)
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/companion" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="(main)/com...">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>
+            <CompanionPage params={Promise} searchParams={Promise}>
+              <div className="flex h-[ca...">
+                <ConversationList>
+                <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>
+                  <div className="h-full min...">
+                    <header>
+                    <CompanionTasksEntry onOpen={function onOpen}>
+                      <div className="border-b b...">
+                        <div className="mx-auto fl...">
+                          <div className="min-w-0 fl...">
+                            <p>
+                            <p
++                             className="truncate text-xs text-ink-muted loading-delayed"
+-                             className="truncate text-xs text-ink-muted"
+                            >
++                             Loading task progress…
+-                             In progress: 0 · Waiting: 0
+                          ...
+                    ...
+                    ...
+                ...
+        ...
+      ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at CompanionTasksEntry (components/companion/tasks/TaskActionsDrawer.tsx:309:11)
+    at CompanionPage (app/(main)/companion/page.tsx:205:13)
+  307 |             {t("taskActions.entryTitle")}
+  308 |           </p>
+> 309 |           <p
+      |           ^
+  310 |             className={cn(
+  311 |               "truncate text-xs text-ink-muted",
+  312 |               view.status === "loading" && "loading-delayed",
+ POST /api/companion/actions 200 in 145ms (next.js: 6ms, proxy.ts: 48ms, application-code: 91ms)
+ POST /api/companion/actions 200 in 150ms (next.js: 3ms, proxy.ts: 48ms, application-code: 100ms)
+ POST /api/companion/actions 200 in 121ms (next.js: 3ms, proxy.ts: 48ms, application-code: 70ms)
+ POST /api/companion/actions 200 in 131ms (next.js: 4ms, proxy.ts: 51ms, application-code: 76ms)
+ POST /api/companion/actions 200 in 106ms (next.js: 2ms, proxy.ts: 35ms, application-code: 68ms)
+[?25h

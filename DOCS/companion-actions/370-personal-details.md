@@ -1,7 +1,8 @@
 # #370 Save and manage approved personal details
 
 Spec: UnifyCN/mobile-app#359. Ticket: #370. Builds on #360-#363 and #366 (accepted, integrated
-at mobile `30fa639d` / web `0f6b8209`). Date: 2026-10-27. Not #364 or #365 (not imported).
+at mobile `30fa639d` / web `0f6b8209`). Date: 2026-10-27. Composed with accepted #364/#365 on
+2026-10-28 (see "Composition with #365" below).
 
 A user can ask Companion to remember one personal detail ("Remember that I can attend
 appointments on Fridays"), approve a detail Companion suggests, and view, edit or remove
@@ -13,8 +14,8 @@ arrival date and immigration status stay with the profile: they are refused as d
 
 | Part | Where | Notes |
 |---|---|---|
-| Migration | `unify-front-end/supabase/migrations/20261028004902_companion_saved_details.sql` (CLI-generated); web `supabase/migrations/` byte-identical | Additive. New table `companion_saved_details` (owner, `scope='companion'`, `body`, provenance `source`, `revision`, soft `removed_at`), RLS select-own-live, explicit `grant select ... to authenticated` (new public tables are not exposed by default since the 2026-04-28 Data API change), no client write privilege. Detail functions; proposal kind `detail_create`; new versions of 11 shared action functions that keep each accepted #366 body and add marked `#370` lines. |
-| Rollback | `unify-front-end/supabase/rollbacks/20261028004902_companion_saved_details.down.sql`, mirrored | Run before the #366 rollback. Restores the #366 function bodies verbatim, archives details, detail receipts and detail drafts to `companion_rollback_archive_370`, drops the table. Re-application restores them (drafts need a new review). |
+| Migration | `unify-front-end/supabase/migrations/20261028004902_companion_saved_details.sql` (CLI-generated); web `supabase/migrations/` byte-identical | Additive. New table `companion_saved_details` (owner, `scope='companion'`, `body`, provenance `source`, `revision`, soft `removed_at`), RLS select-own-live, explicit `grant select ... to authenticated` (new public tables are not exposed by default since the 2026-04-28 Data API change), no client write privilege. Detail functions; proposal kind `detail_create`; new versions of 11 shared action functions that keep each accepted body (#365 for the seven #365 replaced, #366 for the other four) and add marked `#370` lines. Proposal kinds keep #365 `task_edit`. |
+| Rollback | `unify-front-end/supabase/rollbacks/20261028004902_companion_saved_details.down.sql`, mirrored | Run before the #365 rollback. Restores the accepted function bodies verbatim (#365, else #366) and the #365 proposal kinds, archives details, detail receipts and detail drafts to `companion_rollback_archive_370`, drops the table. Re-application restores them (drafts need a new review). |
 | Endpoint | web `supabase/functions/companion-actions` (`contract.ts`, `commands.ts`, `handler.ts`) | Registry entries `detail.create` (approved_proposal, direct_command), `detail.update` and `detail.remove` (ui_control, approved_proposal), `detail.restore` (approved_proposal only; Undo). `read` adds `details`; `interpret` resolves remember commands; profile facts refused 422 `profile_fact`; `409 detail_exists`. Same endpoint, gate, receipts, status and Undo. No model call. |
 | Profile facts | web `supabase/functions/rag-query/lib/context/profileFacts.ts` | Deterministic: places and arrival phrasings from the existing `placeNames.ts` (all app languages), short per-language status lists. Shared by the action service and rag-query. Not a general parser. |
 | Answer context | web `rag-query`: `lib/context/{appContext,companionContext,promptBlocks,registry,contract}.ts`, `index.ts` | New read `context.saved_details` (user JWT + RLS), only while the actions gate is on (read with the existing service-role client). Details go to the prompt as quoted data; their text is not in the client `context` object (so not saved into message history). |
@@ -35,9 +36,21 @@ sheet/drawer task list (no new screen or tab). No new visual primitive was intro
 existing sheet/drawer, card, confirm-box and button styles are reused. No `/design` pass was
 run: no design decision beyond the reviewed states and existing components was needed.
 
+### Composition with #365 (2026-10-28)
+
+The #365 migration (`20261028001530`) is earlier than this one and replaces seven of the
+same functions. Applied after it, the original #370 file would have replaced them with
+#366 bodies and dropped `task_edit` from the proposal kinds: task edits, edit drafts and
+waiting-reason receipts would stop working. The composed file keeps the #365 body of
+`companion_validate_operations`, `_check_authorization`, `_apply_one`,
+`_receipt_summary`, `_undo_action`, `_cancel_proposal` and `_conversation_actions` (a
+3-way merge with #366 as base) and adds the same marked #370 lines; its rollback restores
+those #365 bodies and kinds. Order: up #361, #363, #364, #366, #365, #370; down in reverse.
+Evidence: `evidence/365-370-composition-r1/README.md`.
+
 ### Shared-interface composition (for #364/#365 re-composition)
 
-| Shared function (#366 body) | What #370 adds |
+| Shared function (accepted body) | What #370 adds |
 | --- | --- |
 | `companion_validate_operations` | `detail.%` → `companion_detail_validate` |
 | `companion_check_authorization` | `detail.%` → `companion_detail_authorization` (first line) |
