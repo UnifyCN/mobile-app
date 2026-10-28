@@ -1,0 +1,166 @@
+{
+  "sharedFunctions": [
+    {
+      "function": "public.companion_validate_operations",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "5f222cd1739c8f618c0e4d7a350831bfe65a1e0bc8d3976558789b53dab7eb20",
+      "downSha256": "28647d0f82e98987baff711fba4f8e3203eead044c90b2bdf3b75afd84104c6d"
+    },
+    {
+      "function": "public.companion_check_authorization",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "796315f71e9bdaeb43f10a28aa075e1747c6dac440d50076e0ec8dd0532c578e",
+      "downSha256": "b7235934a0bfebca329f1b215f8c4d5ddf69dfdf57b962fdeb8f7c495670e3e1"
+    },
+    {
+      "function": "public.companion_apply_one",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "3140741625363655dc927b810438188c6edbb1b37588c60d98a7ad584ea58735",
+      "downSha256": "49d94a7e1c2107c59cda7c4e0d10f29668ccd07d09636c9f7a88065ce91eada5"
+    },
+    {
+      "function": "public.companion_receipt_summary",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "7f3ac4eb69189f07ea2c28e2a0d663166c51abcfe48dd4b6294f770f607a9a33",
+      "downSha256": "c0392740d19751ace56aa6a2795b5061da20a155e44ee0c77dfc9e4d26a28b41"
+    },
+    {
+      "function": "public.companion_undo_action",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "cd31d2bbc3df025606e469795fe66d5f40b77e6edeb0407b0d14f4b1365620e0",
+      "downSha256": "e0de0f7aedaa383db76d0f78b1089cfcb38a93a2c988f60de24016ed8ce04d50"
+    },
+    {
+      "function": "public.companion_prepare_proposal",
+      "restores": "366",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "c2181dd4101b71e8a41559ed10bd5f01cbbbd3a6e8bdfbb47ede6b69386ad68b",
+      "downSha256": "4584dd020bd002236d17be2b81d7910549c8ef8e2e4c7789cafb6c986f617a7f"
+    },
+    {
+      "function": "public.companion_revise_proposal",
+      "restores": "366",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "cb492c2bea4ff0a7f98aafbab50a55da7e43a89e2d34c23bebbffb2508c0b5fb",
+      "downSha256": "54a480ed2ed4bc9fbcd5013e2fc2f205ec7ece730f6d1e4a138ba23f01f685ad"
+    },
+    {
+      "function": "public.companion_cancel_proposal",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "e8f14ac23768f4f251b18d7f1aaba703899b7e17d1bfef9b308a36e4cc85a957",
+      "downSha256": "ec6064d79f7fa8b54e871504d6c25376976b76c41048c80f61aa1d71585cddbe"
+    },
+    {
+      "function": "public.companion_recheck_proposal",
+      "restores": "366",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "7215f18dba888f542ed41eeb6433118e54f63c7f2f60bfd1dacdcd542d6d5e5e",
+      "downSha256": "b857ac818ce72f637c7ff585ceab6889c000bb0980400d32f65badb92f18089f"
+    },
+    {
+      "function": "public.companion_conversation_actions",
+      "restores": "365",
+      "exactStatement": true,
+      "bodyExact": true,
+      "headerNote": null,
+      "upSha256": "a3704dcad1accbb0e64a714281ad77685ac3e654d1df6510ba6344834608b2cb",
+      "downSha256": "0f549afa6b23e054eecf7352723cb7e348265f7b555398ae1c5916642d5f41b0"
+    },
+    {
+      "function": "public.companion_proposal_context",
+      "restores": "366",
+      "exactStatement": false,
+      "bodyExact": true,
+      "headerNote": "create -> create or replace only",
+      "upSha256": "223cc2f923c5c147e4ba2ffb10baf53200a2eeea0b7dbe2cefe3775147b96ae7",
+      "downSha256": "ee9f7ace42bffa5da8fbb39a216f82e4df1a7816f7890574a7fdf83717187f8e"
+    }
+  ],
+  "mirrors": [
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261025235536_companion_task_actions.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261025235536_companion_task_actions.sql",
+      "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111"
+    },
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261026165156_companion_task_create.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261026165156_companion_task_create.sql",
+      "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808"
+    },
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+      "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d"
+    },
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261027183644_companion_task_steps.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261027183644_companion_task_steps.sql",
+      "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8"
+    },
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261028001530_companion_task_edit.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261028001530_companion_task_edit.sql",
+      "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6"
+    },
+    {
+      "mobile": "unify-front-end/supabase/migrations/20261028004902_companion_saved_details.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261028004902_companion_saved_details.sql",
+      "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+      "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+      "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+      "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+      "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+      "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539"
+    },
+    {
+      "mobile": "unify-front-end/supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+      "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+      "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6"
+    }
+  ],
+  "precheck": "First raw statement comparison failed for companion_proposal_context because the rollback uses create or replace for the existing function; the original #366 declaration uses create. No function body differs. The final comparison normalizes that first declaration only."
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npx",
+    "vitest",
+    "run",
+    "components/companion/tasks/SavedDetails.test.tsx",
+    "-t",
+    "a conflicting detail removal names"
+  ],
+  "exit": 1,
+  "seconds": 2.091
+}

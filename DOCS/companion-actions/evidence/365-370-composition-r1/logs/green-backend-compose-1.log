@@ -1,0 +1,159 @@
+COMMAND: run.sh compose_365_370_test.ts compose_rollback_test.ts (composed SQL sha 26772c27/a6b12f3d)
+running 4 tests from ./compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... FAILED (7s)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... FAILED (3s)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... ok (5s)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... ok (3s)
+
+ ERRORS 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+error: AssertionError: Values are not equal: a detail save edited later must not be undone directly
+
+
+    [Diff] Actual / Expected
+
+
+-   403
++   409
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:107:5)
+
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both => ./compose_365_370_test.ts:114:6
+error: AssertionError: Values are not equal: the plan changed
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      {
+        context: {
+          existing: [
+            {
+              available: true,
+              task_ref: "sanity:sin-number",
+            },
+            {
+              available: true,
+              task_ref: "sanity:bank-account",
+            },
+          ],
+          matches: {
+            n1: [],
+          },
+          profile: {
+            arrival_date: "2026-11-02T00:00:00+00:00",
+            city: "Vancouver",
+            province: "British Columbia",
+          },
+        },
+        created_at: "2026-10-28T06:12:25.905793+00:00",
+        goal: "Your first week in Vancouver",
+        items: [
+          {
+            exists: true,
+            label: "Get your SIN",
+            position: 1,
+            removed: false,
+            revision: 1,
+            source: "sanity",
+            state: "not_started",
+            task_ref: "sanity:sin-number",
+            waiting_reason: null,
+          },
+          {
+            exists: true,
+            label: "Open a bank account",
+            position: 2,
+            removed: false,
+            revision: 1,
+            source: "sanity",
+            state: "not_started",
+            task_ref: "sanity:bank-account",
+            waiting_reason: null,
+          },
+          {
+            exists: true,
+            position: 3,
+            removed: false,
+-           revision: 3,
++           revision: 1,
+            source: "custom",
+            state: "not_started",
+            task_ref: "custom:2",
+            title: "Set up phone service",
+            waiting_reason: null,
+          },
+        ],
+        plan_id: "616f5a68-531c-4552-be5e-f7f4c1bec4a3",
+        proposal_id: "b55a9b1e-1685-4959-a9bb-17a9ae865daa",
+        receipt: {
+          created_at: "2026-10-28T06:12:25.905793+00:00",
+          kind: "plan",
+          operation_id: "ec202a76-a8b3-4f51-9ee9-27e9683356f0",
+          plan_id: "616f5a68-531c-4552-be5e-f7f4c1bec4a3",
+          plan_proposal_id: null,
+          removal_count: 1,
+          results: [
+            {
+              kind: "existing",
+              label: "Get your SIN",
+              outcome: "reused",
+              task_ref: "sanity:sin-number",
+            },
+            {
+              kind: "existing",
+              label: "Open a bank account",
+              outcome: "reused",
+              task_ref: "sanity:bank-account",
+            },
+            {
+              after_revision: 1,
+              item_operation_id: "f106b846-3ce3-d87e-0c9c-9221462db215",
+              key: "n1",
+              kind: "new",
+              outcome: "created",
+              task_ref: "custom:2",
+              title: "Set up phone service",
+            },
+          ],
+          retry_of: null,
+          retryable: [],
+          status: "applied",
+          undo_of: null,
+          undoable: true,
+          undone_by: null,
+        },
+        removed: false,
+        review: null,
+        reviews: [],
+        revision: 1,
+        source: null,
+        updated_at: "2026-10-28T06:12:25.905793+00:00",
+      },
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:148:5)
+
+ FAILURES 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both => ./compose_365_370_test.ts:114:6
+
+FAILED | 2 passed | 2 failed (19s)
+
+error: Test failed
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (8s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... ok (12s)
+
+ok | 2 passed | 0 failed (21s)
+
+EXIT 1

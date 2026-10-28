@@ -1,0 +1,124 @@
+[0m[38;5;245mrunning 1 test from ./supabase/functions/rag-query/index_companion_context_test.ts[0m
+a suggested detail becomes one typed proposal and leaves the answer; profile facts, markup and two lines give none ...
+[0m[38;5;245m------- output -------[0m
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e864b984-be08-49a1-bdac-90c6c7206731","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e864b984-be08-49a1-bdac-90c6c7206731","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays. Where do I get a SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":1,"profile_ms":3,"classify_ms":0,"embedding_ms":1,"vector_search_ms":1,"generation_ms":0,"total_ms":57}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6f8dcbc4-4152-4774-8854-decdde7c8e10","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6f8dcbc4-4152-4774-8854-decdde7c8e10","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays. Where do I get a SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":1,"total_ms":5}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"958a6bee-2005-4673-9404-f974514d66e2","identity":"canonical"}
+{"event":"embedding_checked","call_id":"958a6bee-2005-4673-9404-f974514d66e2","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":3}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"773b8285-ddcd-47ff-b1c9-800375077a3d","identity":"canonical"}
+{"event":"embedding_checked","call_id":"773b8285-ddcd-47ff-b1c9-800375077a3d","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ab18bee2-3dd7-467d-8dce-2d3ef3fb6551","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ab18bee2-3dd7-467d-8dce-2d3ef3fb6551","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"b6aada29-2adf-48cf-9f86-dbc1f7eacb1a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"b6aada29-2adf-48cf-9f86-dbc1f7eacb1a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e8edb29f-21f6-45c5-8252-2551d90f325e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e8edb29f-21f6-45c5-8252-2551d90f325e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"50d94281-06b9-4dae-87bc-b3ee514b73cc","identity":"canonical"}
+{"event":"embedding_checked","call_id":"50d94281-06b9-4dae-87bc-b3ee514b73cc","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I can only do Fridays.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"582148ce-3b07-41ae-b3bb-1c3f2fa92c56","identity":"canonical"}
+{"event":"embedding_checked","call_id":"582148ce-3b07-41ae-b3bb-1c3f2fa92c56","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I need an interpreter.": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+[0m[38;5;245m----- output end -----[0m
+a suggested detail becomes one typed proposal and leaves the answer; profile facts, markup and two lines give none ... [0m[31mFAILED[0m [0m[38;5;245m(75ms)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+a suggested detail becomes one typed proposal and leaves the answer; profile facts, markup and two lines give none [0m[38;5;245m=> ./supabase/functions/rag-query/index_companion_context_test.ts:1556:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal.
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[32m[1m+   {[22m[39m
+[32m[1m+     text: "I need an interpreter for work permit appointments",[22m[39m
+[32m[1m+     type: "detail.create",[22m[39m
+[32m[1m+     version: 1,[22m[39m
+[32m[1m+   }[22m[39m
+[31m[1m-   undefined[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/[0m[0m[36msupabase/functions/rag-query/index_companion_context_test.ts[0m:[0m[33m1586[0m:[0m[33m5[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+a suggested detail becomes one typed proposal and leaves the answer; profile facts, markup and two lines give none [0m[38;5;245m=> ./supabase/functions/rag-query/index_companion_context_test.ts:1556:6[0m
+
+[0m[31mFAILED[0m | 0 passed | 1 failed | 36 filtered out [0m[38;5;245m(78ms)[0m
+
+[0m[1m[31merror[0m: Test failed

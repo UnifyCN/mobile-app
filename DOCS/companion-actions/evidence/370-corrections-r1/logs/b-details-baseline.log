@@ -1,0 +1,17 @@
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/details_test.ts']
+[0m[38;5;245mrunning 12 tests from ./supabase/tests/companion-actions/details_test.ts[0m
+a clear remember message saves exactly that detail once, with owner, scope, provenance and revision ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+interpret resolves the documented remember grammar in every supported language and writes nothing ... [0m[32mok[0m [0m[38;5;245m(866ms)[0m
+a profile fact is never saved as a detail: by command, approved draft or edit ... [0m[32mok[0m [0m[38;5;245m(241ms)[0m
+an inferred detail is a draft until the shown revision is approved; Not now saves nothing ... [0m[32mok[0m [0m[38;5;245m(565ms)[0m
+an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite ... [0m[32mok[0m [0m[38;5;245m(365ms)[0m
+every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once ... [0m[32mok[0m [0m[38;5;245m(509ms)[0m
+Undo after a newer edit keeps the newer text and offers a reviewed change ... [0m[32mok[0m [0m[38;5;245m(330ms)[0m
+another account can neither read, change, remove nor look up a detail ... [0m[32mok[0m [0m[38;5;245m(577ms)[0m
+a lost reply is looked up; the same id replays once; a held operation is pending ... [0m[32mok[0m [0m[38;5;245m(555ms)[0m
+a command and an approval of the same text, applied concurrently, save one detail ... [0m[32mok[0m [0m[38;5;245m(539ms)[0m
+with the feature gate off, saved details can be neither read nor changed through the action service ... [0m[32mok[0m [0m[38;5;245m(223ms)[0m
+malformed detail operations are refused before any write ... [0m[32mok[0m [0m[38;5;245m(478ms)[0m
+
+[0m[32mok[0m | 12 passed | 0 failed [0m[38;5;245m(6s)[0m
+

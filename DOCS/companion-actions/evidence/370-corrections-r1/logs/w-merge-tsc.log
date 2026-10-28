@@ -1,0 +1,135 @@
+build/s370c-stack/supabase/functions/companion-actions/commands.ts(13,27): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/commands.ts(14,54): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(7,37): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(8,106): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(9,59): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(10,31): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(110,13): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(111,10): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(134,13): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/s370c-stack/supabase/functions/companion-actions/handler.ts(135,10): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(5,30): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(6,53): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(8,28): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(8,59): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(12,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/companion-actions/index.ts(12,80): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/actions/proposals.ts(11,31): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/appContext.ts(16,30): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/context/appContext.ts(24,55): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/appContext.ts(25,35): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/appContext.ts(26,45): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/companionContext.ts(16,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/companionContext.ts(17,25): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/companionContext.ts(29,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/companionContext.ts(35,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/companionContext.ts(36,73): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/conversationDetails.ts(20,58): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/conversationDetails.ts(21,45): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/conversationDetails.ts(22,68): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/guidance.ts(16,33): error TS2307: Cannot find module '../../../_shared/ssrf.ts' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/context/placeNames_test.ts(4,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/context/placeNames_test.ts(5,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/placeNames_test.ts(7,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/context/placeNames_test.ts(19,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/context/placeNames_test.ts(26,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/context/profileFacts.ts(13,51): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/context/promptBlocks.ts(8,30): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(7,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(8,45): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(15,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(26,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(37,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/dates_test.ts(44,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile.ts(9,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/profile.ts(10,35): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(9,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(10,41): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(29,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(39,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(53,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(62,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(73,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(78,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(94,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(122,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(134,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(164,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(179,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(189,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(209,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(230,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(243,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(258,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/profile_test.ts(265,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(9,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(10,55): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(11,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(12,44): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(59,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(75,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(81,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(87,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/province_test.ts(99,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer.ts(8,58): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(8,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(9,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(10,44): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(33,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(46,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(51,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(57,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(65,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(83,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/provincePointer_test.ts(90,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval.ts(5,33): error TS2307: Cannot find module '../../_shared/embeddings.ts' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval.ts(6,35): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(8,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(9,36): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(17,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(27,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(59,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(78,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(86,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrieval_test.ts(99,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext.ts(7,46): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(10,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(11,39): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(41,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(61,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(72,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(81,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(88,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(100,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(108,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(115,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(125,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(151,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(170,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(178,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(186,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(207,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(214,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/retrievedContext_test.ts(223,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic.ts(18,36): error TS2307: Cannot find module '../../_shared/topics.ts' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/topic.ts(104,20): error TS7006: Parameter 't' implicitly has an 'any' type.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(6,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(14,8): error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(16,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(34,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(41,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(45,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(54,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(97,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(112,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(127,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(139,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(144,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(151,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(157,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(162,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(181,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(194,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(212,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(222,1): error TS2304: Cannot find name 'Deno'.
+build/s370c-stack/supabase/functions/rag-query/lib/topic_test.ts(233,1): error TS2304: Cannot find name 'Deno'.

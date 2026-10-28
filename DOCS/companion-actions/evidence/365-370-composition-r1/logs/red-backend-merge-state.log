@@ -1,0 +1,139 @@
+COMMAND: run.sh compose_365_370_test.ts compose_rollback_test.ts at web HEAD 9765446 + uncommitted new tests/support; mobile c53ab609 (SQL = merge state)
+[0m[33m╭[0m [0m[1m[33mWarning[0m
+[0m[33m│[0m
+[0m[33m│[0m  Ignored build scripts for packages:
+[0m[33m│[0m  [0m[3mnpm:sharp@0.34.5[0m
+[0m[33m│[0m  [0m[3mnpm:core-js@3.51.0[0m
+[0m[33m│[0m  [0m[3mnpm:fsevents@2.3.2[0m
+[0m[33m│[0m  [0m[3mnpm:unrs-resolver@1.12.2[0m
+[0m[33m│[0m  [0m[3mnpm:fsevents@2.3.3[0m
+[0m[33m│[0m  [0m[3mnpm:@sentry/cli@2.58.6[0m
+[0m[33m│[0m
+[0m[33m│[0m  Lifecycle scripts are only supported when using a `node_modules` directory.
+[0m[33m│[0m  Enable it in your deno config file:
+[0m[33m│[0m  [0m[1m"nodeModulesDir": "auto"[0m
+[0m[33m╰─[0m
+[0m[38;5;245mrunning 4 tests from ./compose_365_370_test.ts[0m
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... [0m[31mFAILED[0m [0m[38;5;245m(6s)[0m
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... [0m[31mFAILED[0m [0m[38;5;245m(246ms)[0m
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... [0m[31mFAILED[0m [0m[38;5;245m(351ms)[0m
+concurrent edit commands, remember commands, detail edits and retries each apply once ... [0m[31mFAILED[0m [0m[38;5;245m(328ms)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains [0m[38;5;245m=> ./compose_365_370_test.ts:30:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: prepare edit draft: {"error":"invalid_request","reason":"unsupported_operation","detail":{"type":"task.edit_details"}}
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   422[22m[39m
+[32m[1m+   200[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_365_370_test.ts[0m:[0m[33m46[0m:[0m[33m5[0m)
+
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both [0m[38;5;245m=> ./compose_365_370_test.ts:114:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: steps: {"error":"forbidden","reason":"invalid_authorization"}
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   403[22m[39m
+[32m[1m+   200[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_365_370_test.ts[0m:[0m[33m126[0m:[0m[33m5[0m)
+
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts [0m[38;5;245m=> ./compose_365_370_test.ts:153:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: {"error":"forbidden","reason":"invalid_authorization"}
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   403[22m[39m
+[32m[1m+   200[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_365_370_test.ts[0m:[0m[33m164[0m:[0m[33m5[0m)
+
+concurrent edit commands, remember commands, detail edits and retries each apply once [0m[38;5;245m=> ./compose_365_370_test.ts:187:6[0m
+[0m[1m[31merror[0m: AssertionError: {"error":"forbidden","reason":"invalid_authorization"}
+    throw new AssertionError(msg);
+[0m[31m          ^[0m
+    at [0m[1m[3massert[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/assert.ts[0m:[0m[33m22[0m:[0m[33m11[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_365_370_test.ts[0m:[0m[33m209[0m:[0m[33m30[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains [0m[38;5;245m=> ./compose_365_370_test.ts:30:6[0m
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both [0m[38;5;245m=> ./compose_365_370_test.ts:114:6[0m
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts [0m[38;5;245m=> ./compose_365_370_test.ts:153:6[0m
+concurrent edit commands, remember commands, detail edits and retries each apply once [0m[38;5;245m=> ./compose_365_370_test.ts:187:6[0m
+
+[0m[31mFAILED[0m | 0 passed | 4 failed [0m[38;5;245m(7s)[0m
+
+[0m[1m[31merror[0m: Test failed
+[0m[38;5;245mrunning 2 tests from ./compose_rollback_test.ts[0m
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... [0m[31mFAILED[0m [0m[38;5;245m(4s)[0m
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... [0m[31mFAILED[0m [0m[38;5;245m(1s)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly [0m[38;5;245m=> ./compose_rollback_test.ts:38:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the #370 rollback did not restore the #365 schema
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [[22m[39m
+[31m[1m-     "companion_apply_one(uuid,jsonb)",[22m[39m
+[31m[1m-     "companion_cancel_proposal(uuid,uuid,integer)",[22m[39m
+[31m[1m-     "companion_check_authorization(uuid,jsonb,jsonb)",[22m[39m
+[31m[1m-     "companion_conversation_actions(uuid,uuid)",[22m[39m
+[31m[1m-     "companion_receipt_summary(companion_action_receipts)",[22m[39m
+[31m[1m-     "companion_undo_action(uuid,uuid,integer,jsonb,uuid)",[22m[39m
+[31m[1m-     "companion_validate_operations(jsonb)",[22m[39m
+[31m[1m-     "constraint companion_proposals_kind_check",[22m[39m
+[31m[1m-   ][22m[39m
+[32m[1m+   [][22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_rollback_test.ts[0m:[0m[33m57[0m:[0m[33m5[0m)
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application [0m[38;5;245m=> ./compose_rollback_test.ts:64:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: {"error":"forbidden","reason":"invalid_authorization"}
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   403[22m[39m
+[32m[1m+   200[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/[0m[0m[36mcompose_rollback_test.ts[0m:[0m[33m82[0m:[0m[33m5[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly [0m[38;5;245m=> ./compose_rollback_test.ts:38:6[0m
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application [0m[38;5;245m=> ./compose_rollback_test.ts:64:6[0m
+
+[0m[31mFAILED[0m | 0 passed | 2 failed [0m[38;5;245m(5s)[0m
+
+[0m[1m[31merror[0m: Test failed
+EXIT 1

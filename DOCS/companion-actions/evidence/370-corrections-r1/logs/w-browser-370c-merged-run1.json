@@ -1,0 +1,1037 @@
+{
+  "results": [
+    {
+      "name": "the saved detail is shown",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "pointer: the editor opens with the shared entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 57,
+        "n": 87,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "matrix(1, 0, 0, 1, 0, -4)",
+            "v": "visible"
+          },
+          {
+            "t": 37,
+            "o": 0.764556,
+            "tr": "matrix(1, 0, 0, 1, 0, -1.19345)",
+            "v": "visible"
+          },
+          {
+            "t": 87,
+            "o": 0.976299,
+            "tr": "matrix(1, 0, 0, 1, 0, -0.164213)",
+            "v": "visible"
+          },
+          {
+            "t": 138,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 187,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 237,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 288,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 338,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 388,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 438,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 488,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 537,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 587,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 638,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "keyboard Enter: the editor opens without entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 5,
+        "n": 86,
+        "sample": [
+          {
+            "t": 0,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 49,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 100,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 149,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 199,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 249,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 299,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 349,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 399,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 449,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 499,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 549,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 599,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 649,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "keyboard Space: the editor opens without entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 2,
+        "n": 86,
+        "sample": [
+          {
+            "t": 0,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 49,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 99,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 150,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 198,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 249,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 299,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 350,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 398,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 449,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 499,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 549,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 599,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 649,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "saving: hidden before 300ms, then visible (loading delay)",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 8,
+        "n": 73,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 50,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 100,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 150,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 200,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 250,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 301,
+            "o": 0.0114684,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 350,
+            "o": 0.705872,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 400,
+            "o": 0.962053,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 451,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 500,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 550,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 600,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "keyboard edit saves once at the shown revision",
+      "ok": true,
+      "detail": [
+        {
+          "type": "detail.update",
+          "detail_id": "e58a5de2-1e8e-462c-96c6-db782d17ad2c",
+          "text": "I can attend appointments on Saturdays",
+          "expected_revision": 1
+        }
+      ]
+    },
+    {
+      "name": "a later answer reads the edited text",
+      "ok": true,
+      "detail": [
+        "I can attend appointments on Saturdays"
+      ]
+    },
+    {
+      "name": "checking: hidden before 300ms, then visible (loading delay)",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 947,
+        "n": 74,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 50,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 100,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 149,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 200,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 250,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 299,
+            "o": 0,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 349,
+            "o": 0.695888,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 400,
+            "o": 0.961303,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 450,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 500,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 551,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 600,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "a lost reply is looked up, never sent twice",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "pointer: the removal confirmation opens with the shared entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 28,
+        "n": 85,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "matrix(1, 0, 0, 1, 0, -4)",
+            "v": "visible"
+          },
+          {
+            "t": 50,
+            "o": 0.743659,
+            "tr": "matrix(1, 0, 0, 1, 0, -1.30119)",
+            "v": "visible"
+          },
+          {
+            "t": 100,
+            "o": 0.971744,
+            "tr": "matrix(1, 0, 0, 1, 0, -0.184521)",
+            "v": "visible"
+          },
+          {
+            "t": 150,
+            "o": 1,
+            "tr": "matrix(1, 0, 0, 1, 0, -3.57e-05)",
+            "v": "visible"
+          },
+          {
+            "t": 201,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 250,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 300,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 350,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 400,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 450,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 499,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 550,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 600,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 650,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "keyboard: the removal confirmation opens without entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 4,
+        "n": 86,
+        "sample": [
+          {
+            "t": 0,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 49,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 100,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 150,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 200,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 250,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 300,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 350,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 401,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 450,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 501,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 551,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 600,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 650,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cancel after Remove sends nothing",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "the confirmed removal carries the confirmation",
+      "ok": true,
+      "detail": {
+        "kind": "ui_control",
+        "removal_confirmed": true
+      }
+    },
+    {
+      "name": "a removed detail is no longer read by a later answer",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "Undo of the removal restores the detail for later answers",
+      "ok": true,
+      "detail": [
+        "I can attend appointments on Sundays"
+      ]
+    },
+    {
+      "name": "390px: no horizontal overflow",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "detail controls are at least 44px tall",
+      "ok": true,
+      "detail": [
+        {
+          "label": "Edit",
+          "w": 49,
+          "h": 44
+        },
+        {
+          "label": "Remove",
+          "w": 73,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "CSS 200 percent zoom has no horizontal overflow",
+      "ok": true,
+      "detail": {
+        "overflow": 0
+      }
+    },
+    {
+      "name": "another account reads none of it",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "pointer: the Undo-of-save confirmation opens with the shared entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 47,
+        "n": 87,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "matrix(1, 0, 0, 1, 0, -4)",
+            "v": "visible"
+          },
+          {
+            "t": 40,
+            "o": 0.827805,
+            "tr": "matrix(1, 0, 0, 1, 0, -0.873952)",
+            "v": "visible"
+          },
+          {
+            "t": 89,
+            "o": 0.988402,
+            "tr": "matrix(1, 0, 0, 1, 0, -0.0864643)",
+            "v": "visible"
+          },
+          {
+            "t": 140,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 191,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 241,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 290,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 340,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 390,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 440,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 490,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 540,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 590,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 640,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "keyboard: the Undo-of-save confirmation opens without entrance motion",
+      "ok": true,
+      "detail": {
+        "firstAfterAct": 1,
+        "n": 85,
+        "sample": [
+          {
+            "t": 0,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 49,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 99,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 149,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 200,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 249,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 300,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 350,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 399,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 449,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 500,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 550,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 599,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 650,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cancel of the Undo-of-save confirmation keeps the detail",
+      "ok": true,
+      "detail": [
+        "I can attend appointments on Fridays"
+      ]
+    },
+    {
+      "name": "Arabic: right to left, Arabic copy, no overflow",
+      "ok": true,
+      "detail": {
+        "dir": "rtl",
+        "overflow": 0
+      }
+    }
+  ],
+  "errors": [],
+  "info": [
+    {
+      "name": "reduced motion, pointer: editor frames",
+      "instant": false,
+      "detail": {
+        "firstAfterAct": 47,
+        "n": 87,
+        "sample": [
+          {
+            "t": 0,
+            "o": 0,
+            "tr": "matrix(1, 0, 0, 1, 0, -4)",
+            "v": "visible"
+          },
+          {
+            "t": 40,
+            "o": 0.788513,
+            "tr": "matrix(1, 0, 0, 1, 0, -1.08937)",
+            "v": "visible"
+          },
+          {
+            "t": 90,
+            "o": 0.981346,
+            "tr": "matrix(1, 0, 0, 1, 0, -0.129363)",
+            "v": "visible"
+          },
+          {
+            "t": 140,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 190,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 240,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 290,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 340,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 390,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 440,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 490,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 540,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 590,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          },
+          {
+            "t": 640,
+            "o": 1,
+            "tr": "none",
+            "v": "visible"
+          }
+        ]
+      }
+    }
+  ]
+}

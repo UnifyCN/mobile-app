@@ -1,0 +1,66 @@
+running 4 tests from ./compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... FAILED (545ms)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... ok (587ms)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... ok (631ms)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... ok (381ms)
+
+ ERRORS 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     undefined,
+-     undefined,
++     null,
++     "The store calls on Friday",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:69:5)
+
+ FAILURES 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+
+FAILED | 3 passed | 1 failed (2s)
+
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (4s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... FAILED (1s)
+
+ ERRORS 
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:64:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     undefined,
+-     undefined,
++     null,
++     "Letter from the bank",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_rollback_test.ts:95:5)
+
+ FAILURES 
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:64:6
+
+FAILED | 1 passed | 1 failed (6s)
+
+error: Test failed
+error: Test failed

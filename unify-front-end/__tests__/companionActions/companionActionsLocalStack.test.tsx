@@ -24,8 +24,12 @@ import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
 import { execFileSync } from 'child_process';
+import { randomUUID } from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
+import { createTaskActionClient } from '@/services/companionActions/client';
+import { verifiedCompensationDetail } from '@/services/companionActions/contract';
+import { TaskActionStore } from '@/services/companionActions/taskActionStore';
 
 const API_URL = process.env.ACTIONS_API_URL ?? '';
 const ANON_KEY = process.env.ACTIONS_ANON_KEY ?? '';
@@ -373,8 +377,8 @@ describeStack('Task progress against the real local stack (mobile)', () => {
       method: 'GET',
       key: SERVICE_KEY,
     });
-    // This repo's migration files, exactly as they ship, in order (#361, #363, #366, #365),
-    // each only when the stack does not have it yet.
+    // This repo's migration files, exactly as they ship, in timestamp order (#361, #363,
+    // #366, #365, #370), each only when the stack does not have it yet.
     const migration = (file: string) =>
       psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations', file), 'utf8'));
     const hasFunction = (signature: string) =>
@@ -391,6 +395,8 @@ describeStack('Task progress against the real local stack (mobile)', () => {
       migration('20261027183644_companion_task_steps.sql');
     if (!hasFunction('public.companion_prepare_edit(uuid,jsonb,jsonb,text)'))
       migration('20261028001530_companion_task_edit.sql');
+    if (!hasFunction('public.companion_read_details(uuid)'))
+      migration('20261028004902_companion_saved_details.sql');
     psql(`update public.companion_feature_gate set enabled = true, min_contract_version = 1,
             max_contract_version = 1, allowed_platforms = '{ios,android,web}';`);
     execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
@@ -765,6 +771,198 @@ describeStack('Task edits against the real local stack (mobile, #365)', () => {
     const theirs = await http(`/rest/v1/custom_checklist_tasks?select=id&id=eq.${task.json[0].id}`, { method: 'GET', jwt: stranger.jwt });
     expect(theirs.json).toEqual([]);
   }, 60_000);
+});
+
+// ------------------------------------------------------------------ #370 saved details
+// The same real stack with this repo's #370 migration applied. A detail is saved through
+// the real service from a real user message (the clear remember command), then viewed,
+// edited and removed through the real mobile sheet.
+const restAs = (jwt: string, pathname: string, init: RequestInit = {}) =>
+  http(pathname, { ...init, jwt, headers: { prefer: 'return=representation' } });
+
+async function rememberThroughService(account: { id: string; jwt: string }, text: string) {
+  const conversation = await restAs(account.jwt, '/rest/v1/conversations?select=id,conversation_identifier', {
+    method: 'POST',
+    body: JSON.stringify({ user_id: account.id, title: 't' }),
+  });
+  const message = await restAs(account.jwt, '/rest/v1/messages?select=id', {
+    method: 'POST',
+    body: JSON.stringify({ conversation_id: conversation.json[0].id, role: 'user', content: `Remember that ${text}` }),
+  });
+  const id = message.json[0].id as number;
+  const interpreted = await actions(account.jwt, { action: 'interpret', message_id: id });
+  expect(interpreted.json.command).toMatchObject({ kind: 'remember', operation: { type: 'detail.create', text } });
+  const saved = await actions(account.jwt, {
+    action: 'apply',
+    operation_id: randomUUID(),
+    authorization: { kind: 'direct_command', message_id: id },
+    operations: [interpreted.json.command.operation],
+  });
+  expect(saved.status).toBe(200);
+  return saved.json.receipt;
+}
+
+/** What a later Companion answer reads: the user's own JWT and RLS (rag-query's read). */
+const laterContext = async (jwt: string) =>
+  ((await restAs(jwt, '/rest/v1/companion_saved_details?select=body', { method: 'GET' })).json as any[]).map(
+    r => r.body
+  );
+
+describeStack('Saved details against the real local stack (mobile, #370)', () => {
+  beforeAll(async () => {
+    const probe = () =>
+      http('/rest/v1/rpc/companion_read_details', {
+        method: 'POST',
+        key: SERVICE_KEY,
+        body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+      });
+    if ((await probe()).status !== 200) {
+      // This repo's migration, exactly as it ships (after #361, #363 and #366 above).
+      psql(
+        fs.readFileSync(
+          path.resolve(__dirname, '../../supabase/migrations/20261028004902_companion_saved_details.sql'),
+          'utf8'
+        )
+      );
+      execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
+      for (let i = 0; i < 50; i++) {
+        if ((await probe()).status === 200) break;
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+    }
+  }, 60_000);
+
+  afterEach(() => {
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  it('a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none', async () => {
+    // Wrong if: the sheet does not show the saved detail, the edit or removal is not the
+    // real persisted change, an unconfirmed removal writes, a removed detail is still read
+    // as remembered context, or another account reads it.
+    const owner = await newAccount('details-owner');
+    const stranger = await newAccount('details-stranger');
+    await rememberThroughService(owner, 'I can attend appointments on Fridays');
+    mockUserId = owner.id;
+    mockCapture = jest.fn();
+
+    mount(<CompanionScreen />);
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: /Saved details/ }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    expect(await within(sheet).findByText('I can attend appointments on Fridays', {}, { timeout: 10_000 })).toBeTruthy();
+
+    const edit = await within(sheet).findByRole('button', { name: 'Edit saved detail: I can attend appointments on Fridays' });
+    await waitFor(() => expect(edit).not.toBeDisabled(), { timeout: 10_000 });
+    fireEvent.press(edit);
+    fireEvent.changeText(within(sheet).getByLabelText('Saved detail'), 'I can attend appointments on Saturdays');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Save change' }));
+    expect(
+      await within(sheet).findByText(
+        'Changed “I can attend appointments on Fridays” to “I can attend appointments on Saturdays”.',
+        {},
+        { timeout: 10_000 }
+      )
+    ).toBeTruthy();
+    expect(await laterContext(owner.jwt)).toEqual(['I can attend appointments on Saturdays']);
+
+    const remove = await within(sheet).findByRole('button', {
+      name: 'Remove saved detail: I can attend appointments on Saturdays',
+    });
+    await waitFor(() => expect(remove).not.toBeDisabled(), { timeout: 10_000 });
+    fireEvent.press(remove);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Cancel' }));
+    expect(await laterContext(owner.jwt)).toEqual(['I can attend appointments on Saturdays']);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Remove saved detail: I can attend appointments on Saturdays' }));
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Remove detail' }));
+    expect(
+      await within(sheet).findByText(
+        'Removed “I can attend appointments on Saturdays”. It will not be used in later conversations.',
+        {},
+        { timeout: 10_000 }
+      )
+    ).toBeTruthy();
+    expect(await laterContext(owner.jwt)).toEqual([]);
+    expect((await actions(owner.jwt, { action: 'read' })).json.details).toEqual([]);
+    expect((await actions(stranger.jwt, { action: 'read' })).json.details).toEqual([]);
+    expect(await laterContext(stranger.jwt)).toEqual([]);
+  }, 90_000);
+
+  it('S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review', async () => {
+    // Wrong if: the client drops the service's current_detail, the review names the
+    // historical text, an unconfirmed or stale approval removes anything, or the newly
+    // reviewed removal does not remove exactly the current revision.
+    const owner = await newAccount('details-undo-conflict');
+    const created = await rememberThroughService(owner, 'I can attend appointments on Fridays');
+    const detailId = created.detail.detail_id as string;
+    const editElsewhere = async (text: string, expected_revision: number) =>
+      expect(
+        (
+          await actions(owner.jwt, {
+            action: 'apply',
+            operation_id: randomUUID(),
+            authorization: { kind: 'ui_control' },
+            operations: [{ type: 'detail.update', detail_id: detailId, text, expected_revision }],
+          })
+        ).status
+      ).toBe(200);
+    // The real client and store; the transport is real HTTP with the owner's JWT.
+    const client = createTaskActionClient({
+      transport: async body => {
+        const reply = await actions(owner.jwt, body, 'ios');
+        return { status: reply.status, body: reply.json };
+      },
+      platform: 'ios',
+      appVersion: 'test',
+    });
+    const store = new TaskActionStore({ client, newOperationId: () => randomUUID(), onChanged: () => {} });
+    const key = `detail:${detailId}`;
+    const live = async () => {
+      const r = await client.read();
+      if (r.kind !== 'ok') throw new Error(`read ${r.kind}`);
+      return r.details;
+    };
+
+    await editElsewhere('I can attend appointments on Saturdays', 1);
+    await store.undo(key, created.operation_id, { removalConfirmed: true });
+    let p = store.get(key);
+    if (p.phase !== 'undo_review') throw new Error(`phase ${p.phase}`);
+    expect(p.currentDetail).toEqual({
+      detailId,
+      text: 'I can attend appointments on Saturdays',
+      revision: 2,
+      removed: false,
+    });
+    expect(p.proposal.operations).toEqual([{ type: 'detail.remove', detail_id: detailId, expected_revision: 2 }]);
+    expect(verifiedCompensationDetail(p.proposal.operations[0], p.currentDetail, await live())).toEqual(p.currentDetail);
+
+    // Without the removal confirmation nothing is sent.
+    await store.approveCompensation(key);
+    expect((await live()).map(d => [d.text, d.revision])).toEqual([['I can attend appointments on Saturdays', 2]]);
+
+    // A newer edit: the newer read withholds the review, and the service refuses it too.
+    await editElsewhere('I can attend appointments on Sundays', 2);
+    expect(verifiedCompensationDetail(p.proposal.operations[0], p.currentDetail, await live())).toBeNull();
+    await store.approveCompensation(key, { removalConfirmed: true });
+    expect(store.get(key).phase).toBe('conflict');
+    expect((await live()).map(d => [d.text, d.revision])).toEqual([['I can attend appointments on Sundays', 3]]);
+
+    // A new Undo reviews the current detail; its confirmed approval removes exactly revision 3.
+    await store.undo(key, created.operation_id, { removalConfirmed: true });
+    p = store.get(key);
+    if (p.phase !== 'undo_review') throw new Error(`phase ${p.phase}`);
+    expect(p.currentDetail).toMatchObject({ text: 'I can attend appointments on Sundays', revision: 3, removed: false });
+    await store.approveCompensation(key, { removalConfirmed: true });
+    const done = store.get(key);
+    if (done.phase !== 'saved') throw new Error(`phase ${done.phase}`);
+    expect([done.receipt.operationType, done.receipt.detail?.text]).toEqual([
+      'detail.remove',
+      'I can attend appointments on Sundays',
+    ]);
+    expect(await live()).toEqual([]);
+    expect(await laterContext(owner.jwt)).toEqual([]);
+  }, 90_000);
 });
 
 if (!enabled) {

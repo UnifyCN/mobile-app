@@ -1,0 +1,32 @@
+COMMAND ['npx', 'jest', '__tests__/companionActions/companionActionsLocalStack.test.tsx', '--runInBand', '--watchAll=false', '-t', 'S370']
+FAIL __tests__/companionActions/companionActionsLocalStack.test.tsx
+  Task progress against the real local stack (mobile)
+    ○ skipped a state and waiting reason saved in the mobile Checklist are the same record in Companion, on web and in the legacy table; another account sees nothing
+  Task steps against the real local stack (mobile, #366)
+    ○ skipped steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none
+    ○ skipped removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task
+  Saved details against the real local stack (mobile, #370)
+    ✕ S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review (269 ms)
+    ○ skipped a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none
+
+  ● Saved details against the real local stack (mobile, #370) › S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review
+
+    phase {"phase":"refused","reason":"error"}
+
+      838 |     await store.undo(key, created.operation_id, { removalConfirmed: true });
+      839 |     let p = store.get(key);
+    > 840 |     if (p.phase !== 'undo_review') throw new Error(`phase ${JSON.stringify(p)}`);
+          |                                          ^
+      841 |     expect(p.currentDetail).toEqual({
+      842 |       detailId,
+      843 |       text: 'I can attend appointments on Saturdays',
+
+      at Object.<anonymous> (__tests__/companionActions/companionActionsLocalStack.test.tsx:840:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 skipped, 5 total
+Snapshots:   0 total
+Time:        1.142 s, estimated 12 s
+Ran all test suites matching /__tests__\/companionActions\/companionActionsLocalStack.test.tsx/i with tests matching "S370".
