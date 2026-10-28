@@ -1,0 +1,381 @@
+Compiled from "PickDeviceInteractor.kt"
+public final class maestro.cli.device.PickDeviceInteractor {
+  public static final maestro.cli.device.PickDeviceInteractor INSTANCE;
+
+  private maestro.cli.device.PickDeviceInteractor();
+    Code:
+       0: aload_0
+       1: invokespecial #8                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public final maestro.device.Device$Connected pickDevice(java.lang.String, java.lang.Integer, maestro.device.Platform, java.lang.Integer);
+    Code:
+       0: aload_1
+       1: ifnull        101
+       4: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+       7: iconst_0
+       8: aconst_null
+       9: aconst_null
+      10: bipush        7
+      12: aconst_null
+      13: invokestatic  #24                 // Method maestro/device/DeviceService.listConnectedDevices$default:(Lmaestro/device/DeviceService;ZLjava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Ljava/util/List;
+      16: checkcast     #26                 // class java/lang/Iterable
+      19: astore        6
+      21: aload         6
+      23: invokeinterface #30,  1           // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+      28: astore        7
+      30: aload         7
+      32: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      37: ifeq          77
+      40: aload         7
+      42: invokeinterface #40,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      47: astore        8
+      49: aload         8
+      51: checkcast     #42                 // class maestro/device/Device$Connected
+      54: astore        9
+      56: iconst_0
+      57: istore        10
+      59: aload         9
+      61: invokevirtual #46                 // Method maestro/device/Device$Connected.getInstanceId:()Ljava/lang/String;
+      64: aload_1
+      65: iconst_1
+      66: invokestatic  #52                 // Method kotlin/text/StringsKt.equals:(Ljava/lang/String;Ljava/lang/String;Z)Z
+      69: ifeq          30
+      72: aload         8
+      74: goto          78
+      77: aconst_null
+      78: checkcast     #42                 // class maestro/device/Device$Connected
+      81: dup
+      82: ifnonnull     100
+      85: pop
+      86: new           #54                 // class maestro/cli/CliError
+      89: dup
+      90: aload_1
+      91: invokedynamic #66,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      96: invokespecial #69                 // Method maestro/cli/CliError."<init>":(Ljava/lang/String;)V
+      99: athrow
+     100: areturn
+     101: aload_0
+     102: aload_3
+     103: aload         4
+     105: invokespecial #73                 // Method pickDeviceInternal:(Lmaestro/device/Platform;Ljava/lang/Integer;)Lmaestro/device/Device;
+     108: astore        5
+     110: iconst_0
+     111: istore        6
+     113: aload         5
+     115: astore        7
+     117: aload         7
+     119: instanceof    #75                 // class maestro/device/Device$AvailableForLaunch
+     122: ifeq          363
+     125: aload         7
+     127: checkcast     #75                 // class maestro/device/Device$AvailableForLaunch
+     130: invokevirtual #79                 // Method maestro/device/Device$AvailableForLaunch.getDeviceSpec:()Lmaestro/device/DeviceSpec;
+     133: invokevirtual #85                 // Method maestro/device/DeviceSpec.getPlatform:()Lmaestro/device/Platform;
+     136: getstatic     #91                 // Field maestro/cli/device/PickDeviceInteractor$WhenMappings.$EnumSwitchMapping$0:[I
+     139: swap
+     140: invokevirtual #97                 // Method maestro/device/Platform.ordinal:()I
+     143: iaload
+     144: tableswitch   { // 1 to 3
+                     1: 172
+                     2: 183
+                     3: 194
+               default: 216
+          }
+     172: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+     175: ldc           #104                // String Launching Android emulator...
+     177: invokevirtual #107                // Method maestro/cli/util/PrintUtils.message:(Ljava/lang/String;)V
+     180: goto          224
+     183: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+     186: ldc           #109                // String Launching iOS simulator...
+     188: invokevirtual #107                // Method maestro/cli/util/PrintUtils.message:(Ljava/lang/String;)V
+     191: goto          224
+     194: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+     197: aload         7
+     199: checkcast     #75                 // class maestro/device/Device$AvailableForLaunch
+     202: invokevirtual #112                // Method maestro/device/Device$AvailableForLaunch.getDescription:()Ljava/lang/String;
+     205: invokedynamic #115,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     210: invokevirtual #107                // Method maestro/cli/util/PrintUtils.message:(Ljava/lang/String;)V
+     213: goto          224
+     216: new           #117                // class kotlin/NoWhenBranchMatchedException
+     219: dup
+     220: invokespecial #118                // Method kotlin/NoWhenBranchMatchedException."<init>":()V
+     223: athrow
+     224: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+     227: iconst_0
+     228: aconst_null
+     229: aconst_null
+     230: bipush        7
+     232: aconst_null
+     233: invokestatic  #24                 // Method maestro/device/DeviceService.listConnectedDevices$default:(Lmaestro/device/DeviceService;ZLjava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Ljava/util/List;
+     236: checkcast     #26                 // class java/lang/Iterable
+     239: astore        8
+     241: nop
+     242: iconst_0
+     243: istore        9
+     245: aload         8
+     247: astore        10
+     249: new           #120                // class java/util/ArrayList
+     252: dup
+     253: aload         8
+     255: bipush        10
+     257: invokestatic  #126                // Method kotlin/collections/CollectionsKt.collectionSizeOrDefault:(Ljava/lang/Iterable;I)I
+     260: invokespecial #129                // Method java/util/ArrayList."<init>":(I)V
+     263: checkcast     #131                // class java/util/Collection
+     266: astore        11
+     268: iconst_0
+     269: istore        12
+     271: aload         10
+     273: invokeinterface #30,  1           // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+     278: astore        13
+     280: aload         13
+     282: invokeinterface #36,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     287: ifeq          330
+     290: aload         13
+     292: invokeinterface #40,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     297: astore        14
+     299: aload         11
+     301: aload         14
+     303: checkcast     #42                 // class maestro/device/Device$Connected
+     306: astore        15
+     308: astore        16
+     310: iconst_0
+     311: istore        17
+     313: aload         15
+     315: invokevirtual #46                 // Method maestro/device/Device$Connected.getInstanceId:()Ljava/lang/String;
+     318: aload         16
+     320: swap
+     321: invokeinterface #135,  2          // InterfaceMethod java/util/Collection.add:(Ljava/lang/Object;)Z
+     326: pop
+     327: goto          280
+     330: aload         11
+     332: checkcast     #137                // class java/util/List
+     335: nop
+     336: checkcast     #26                 // class java/lang/Iterable
+     339: invokestatic  #141                // Method kotlin/collections/CollectionsKt.toSet:(Ljava/lang/Iterable;)Ljava/util/Set;
+     342: astore        18
+     344: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+     347: aload         7
+     349: checkcast     #75                 // class maestro/device/Device$AvailableForLaunch
+     352: aload_2
+     353: aload         18
+     355: invokevirtual #145                // Method maestro/device/DeviceService.startDevice:(Lmaestro/device/Device$AvailableForLaunch;Ljava/lang/Integer;Ljava/util/Set;)Lmaestro/device/Device$Connected;
+     358: checkcast     #147                // class maestro/device/Device
+     361: astore        7
+     363: aload         7
+     365: instanceof    #42                 // class maestro/device/Device$Connected
+     368: ifne          389
+     371: new           #149                // class java/lang/IllegalStateException
+     374: dup
+     375: aload         7
+     377: invokedynamic #154,  0            // InvokeDynamic #2:makeConcatWithConstants:(Lmaestro/device/Device;)Ljava/lang/String;
+     382: invokevirtual #157                // Method java/lang/Object.toString:()Ljava/lang/String;
+     385: invokespecial #158                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+     388: athrow
+     389: aload         7
+     391: checkcast     #42                 // class maestro/device/Device$Connected
+     394: nop
+     395: areturn
+
+  public static maestro.device.Device$Connected pickDevice$default(maestro.cli.device.PickDeviceInteractor, java.lang.String, java.lang.Integer, maestro.device.Platform, java.lang.Integer, int, java.lang.Object);
+    Code:
+       0: iload         5
+       2: iconst_1
+       3: iand
+       4: ifeq          9
+       7: aconst_null
+       8: astore_1
+       9: iload         5
+      11: iconst_2
+      12: iand
+      13: ifeq          18
+      16: aconst_null
+      17: astore_2
+      18: iload         5
+      20: iconst_4
+      21: iand
+      22: ifeq          27
+      25: aconst_null
+      26: astore_3
+      27: iload         5
+      29: bipush        8
+      31: iand
+      32: ifeq          38
+      35: aconst_null
+      36: astore        4
+      38: aload_0
+      39: aload_1
+      40: aload_2
+      41: aload_3
+      42: aload         4
+      44: invokevirtual #193                // Method pickDevice:(Ljava/lang/String;Ljava/lang/Integer;Lmaestro/device/Platform;Ljava/lang/Integer;)Lmaestro/device/Device$Connected;
+      47: areturn
+
+  private final maestro.device.Device pickDeviceInternal(maestro.device.Platform, java.lang.Integer);
+    Code:
+       0: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+       3: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+       6: iconst_0
+       7: aconst_null
+       8: aconst_null
+       9: bipush        7
+      11: aconst_null
+      12: invokestatic  #24                 // Method maestro/device/DeviceService.listConnectedDevices$default:(Lmaestro/device/DeviceService;ZLjava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Ljava/util/List;
+      15: aload_1
+      16: invokevirtual #197                // Method maestro/device/DeviceService.withPlatform:(Ljava/util/List;Lmaestro/device/Platform;)Ljava/util/List;
+      19: astore_3
+      20: aload_2
+      21: ifnull        28
+      24: aload_2
+      25: goto          46
+      28: aload_3
+      29: invokeinterface #200,  1          // InterfaceMethod java/util/List.size:()I
+      34: iconst_1
+      35: if_icmpne     45
+      38: iconst_0
+      39: invokestatic  #204                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      42: goto          46
+      45: aconst_null
+      46: astore        4
+      48: aload         4
+      50: ifnull        86
+      53: aload_3
+      54: aload         4
+      56: invokevirtual #207                // Method java/lang/Integer.intValue:()I
+      59: invokeinterface #211,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      64: checkcast     #42                 // class maestro/device/Device$Connected
+      67: astore        5
+      69: getstatic     #216                // Field maestro/cli/device/PickDeviceView.INSTANCE:Lmaestro/cli/device/PickDeviceView;
+      72: aload         5
+      74: checkcast     #147                // class maestro/device/Device
+      77: invokevirtual #220                // Method maestro/cli/device/PickDeviceView.showRunOnDevice:(Lmaestro/device/Device;)V
+      80: aload         5
+      82: checkcast     #147                // class maestro/device/Device
+      85: areturn
+      86: aload_3
+      87: invokeinterface #223,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+      92: ifeq          101
+      95: aload_0
+      96: aload_1
+      97: invokespecial #226                // Method startDevice:(Lmaestro/device/Platform;)Lmaestro/device/Device;
+     100: areturn
+     101: aload_0
+     102: aload_3
+     103: invokespecial #230                // Method pickRunningDevice:(Ljava/util/List;)Lmaestro/device/Device;
+     106: areturn
+
+  static maestro.device.Device pickDeviceInternal$default(maestro.cli.device.PickDeviceInteractor, maestro.device.Platform, java.lang.Integer, int, java.lang.Object);
+    Code:
+       0: iload_3
+       1: iconst_2
+       2: iand
+       3: ifeq          8
+       6: aconst_null
+       7: astore_2
+       8: aload_0
+       9: aload_1
+      10: aload_2
+      11: invokespecial #73                 // Method pickDeviceInternal:(Lmaestro/device/Platform;Ljava/lang/Integer;)Lmaestro/device/Device;
+      14: areturn
+
+  private final maestro.device.Device startDevice(maestro.device.Platform);
+    Code:
+       0: getstatic     #241                // Field maestro/cli/util/EnvUtils.INSTANCE:Lmaestro/cli/util/EnvUtils;
+       3: invokevirtual #244                // Method maestro/cli/util/EnvUtils.isWSL:()Z
+       6: ifeq          19
+       9: new           #54                 // class maestro/cli/CliError
+      12: dup
+      13: ldc           #246                // String No running emulator found. Start an emulator manually and try again.\nFor setup info checkout: https://maestro.mobile.dev/getting-started/installing-maestro/windows
+      15: invokespecial #69                 // Method maestro/cli/CliError."<init>":(Ljava/lang/String;)V
+      18: athrow
+      19: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+      22: ldc           #248                // String No running devices found. Launch a device manually or select a number from the options below:\n
+      24: invokevirtual #107                // Method maestro/cli/util/PrintUtils.message:(Ljava/lang/String;)V
+      27: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+      30: ldc           #250                // String [1] Start or create a Maestro recommended device\n[2] List existing devices\n[3] Quit
+      32: invokevirtual #107                // Method maestro/cli/util/PrintUtils.message:(Ljava/lang/String;)V
+      35: invokestatic  #255                // Method kotlin/io/ConsoleKt.readlnOrNull:()Ljava/lang/String;
+      38: dup
+      39: ifnull        71
+      42: getstatic     #261                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+      45: invokevirtual #265                // Method java/lang/String.toLowerCase:(Ljava/util/Locale;)Ljava/lang/String;
+      48: dup
+      49: ldc_w         #267                // String toLowerCase(...)
+      52: invokestatic  #273                // Method kotlin/jvm/internal/Intrinsics.checkNotNullExpressionValue:(Ljava/lang/Object;Ljava/lang/String;)V
+      55: dup
+      56: ifnull        71
+      59: checkcast     #275                // class java/lang/CharSequence
+      62: invokestatic  #279                // Method kotlin/text/StringsKt.trim:(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
+      65: invokevirtual #157                // Method java/lang/Object.toString:()Ljava/lang/String;
+      68: goto          73
+      71: pop
+      72: aconst_null
+      73: astore_2
+      74: aload_2
+      75: astore_3
+      76: aload_3
+      77: ldc_w         #281                // String 1
+      80: invokestatic  #285                // Method kotlin/jvm/internal/Intrinsics.areEqual:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      83: ifeq          117
+      86: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+      89: invokevirtual #288                // Method maestro/cli/util/PrintUtils.clearConsole:()V
+      92: getstatic     #216                // Field maestro/cli/device/PickDeviceView.INSTANCE:Lmaestro/cli/device/PickDeviceView;
+      95: aload_1
+      96: invokevirtual #292                // Method maestro/cli/device/PickDeviceView.requestDeviceOptions:(Lmaestro/device/Platform;)Lmaestro/device/DeviceSpec;
+      99: astore        4
+     101: getstatic     #297                // Field maestro/cli/device/DeviceCreateUtil.INSTANCE:Lmaestro/cli/device/DeviceCreateUtil;
+     104: aload         4
+     106: iconst_0
+     107: aconst_null
+     108: iconst_4
+     109: aconst_null
+     110: invokestatic  #301                // Method maestro/cli/device/DeviceCreateUtil.getOrCreateDevice$default:(Lmaestro/cli/device/DeviceCreateUtil;Lmaestro/device/DeviceSpec;ZLjava/lang/Integer;ILjava/lang/Object;)Lmaestro/device/Device$AvailableForLaunch;
+     113: checkcast     #147                // class maestro/device/Device
+     116: areturn
+     117: aload_3
+     118: ldc_w         #303                // String 2
+     121: invokestatic  #285                // Method kotlin/jvm/internal/Intrinsics.areEqual:(Ljava/lang/Object;Ljava/lang/Object;)Z
+     124: ifeq          181
+     127: getstatic     #102                // Field maestro/cli/util/PrintUtils.INSTANCE:Lmaestro/cli/util/PrintUtils;
+     130: invokevirtual #288                // Method maestro/cli/util/PrintUtils.clearConsole:()V
+     133: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+     136: getstatic     #20                 // Field maestro/device/DeviceService.INSTANCE:Lmaestro/device/DeviceService;
+     139: iconst_0
+     140: iconst_1
+     141: aconst_null
+     142: invokestatic  #307                // Method maestro/device/DeviceService.listAvailableForLaunchDevices$default:(Lmaestro/device/DeviceService;ZILjava/lang/Object;)Ljava/util/List;
+     145: aload_1
+     146: invokevirtual #197                // Method maestro/device/DeviceService.withPlatform:(Ljava/util/List;Lmaestro/device/Platform;)Ljava/util/List;
+     149: astore        4
+     151: aload         4
+     153: invokeinterface #223,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+     158: ifeq          172
+     161: new           #54                 // class maestro/cli/CliError
+     164: dup
+     165: ldc_w         #309                // String No devices available. To proceed, either install Android SDK or Xcode.
+     168: invokespecial #69                 // Method maestro/cli/CliError."<init>":(Ljava/lang/String;)V
+     171: athrow
+     172: getstatic     #216                // Field maestro/cli/device/PickDeviceView.INSTANCE:Lmaestro/cli/device/PickDeviceView;
+     175: aload         4
+     177: invokevirtual #312                // Method maestro/cli/device/PickDeviceView.pickDeviceToStart:(Ljava/util/List;)Lmaestro/device/Device;
+     180: areturn
+     181: new           #54                 // class maestro/cli/CliError
+     184: dup
+     185: ldc_w         #314                // String Please either start a device manually or via running maestro start-device to proceed running your flows
+     188: invokespecial #69                 // Method maestro/cli/CliError."<init>":(Ljava/lang/String;)V
+     191: athrow
+
+  private final maestro.device.Device pickRunningDevice(java.util.List<? extends maestro.device.Device>);
+    Code:
+       0: getstatic     #216                // Field maestro/cli/device/PickDeviceView.INSTANCE:Lmaestro/cli/device/PickDeviceView;
+       3: aload_1
+       4: invokevirtual #320                // Method maestro/cli/device/PickDeviceView.pickRunningDevice:(Ljava/util/List;)Lmaestro/device/Device;
+       7: areturn
+
+  static {};
+    Code:
+       0: new           #2                  // class maestro/cli/device/PickDeviceInteractor
+       3: dup
+       4: invokespecial #323                // Method "<init>":()V
+       7: putstatic     #325                // Field INSTANCE:Lmaestro/cli/device/PickDeviceInteractor;
+      10: return
+}

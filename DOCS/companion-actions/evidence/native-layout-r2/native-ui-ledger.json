@@ -1,0 +1,4247 @@
+[
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0f37j20",
+        "seq": 4,
+        "count": 141,
+        "targets": [
+          "e54|tap|button|Error loading lessons Please try again.||",
+          "e76|tap|button|Learn, tab, 2 of 6||",
+          "e78|tap|button|Checklist, tab, 3 of 6||",
+          "e80|tap|button|Companion, tab, 4 of 6||",
+          "e82|tap|button|Community, tab, 5 of 6||",
+          "e84|tap|button|Social, tab, 6 of 6||",
+          "e42|tap|button|Open profile menu||",
+          "e44|tap|button|Learn||",
+          "e45|tap|button|Resources||",
+          "e56|tap|button|All||",
+          "e57|tap|button|Started||",
+          "e131|tap|button|Dismiss (ESC)||redbox-dismiss",
+          "e133|tap|button|Reload (⌘R)||redbox-reload",
+          "e135|tap|button|Copy (⌥⌘C)||redbox-copy",
+          "e137|tap|button|Extra Info (⌘E)||redbox-extra"
+        ],
+        "scroll": [
+          "e47|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e96|text|text|console.error: Error fetching modules with submodules from Sanity: Error: Dataset not found - Dataset \"production\" not found for project ID \"placeholder\" (traceId: 52440107f4e627b725302c94d6260876)||redbox-error",
+          "e98|text|text|_construct||",
+          "e99|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5265:66||",
+          "e52|text|text|Practical lessons to help you prepare for life in Canada.||",
+          "e53|text|text|Practical lessons to help you prepare for life in Canada.||",
+          "e101|text|text|Wrapper||",
+          "e102|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5237:24||",
+          "e104|text|text|_callSuper||",
+          "e105|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:3807:109||",
+          "e58|text|text|Courses||",
+          "e59|text|text|Courses||",
+          "e107|text|text|SyntheticError||",
+          "e108|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5081:37||",
+          "e60|text|text|No modules available||",
+          "e61|text|text|No modules available||",
+          "e110|text|text|reactConsoleErrorHandler||",
+          "e111|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5191:32||",
+          "e113|text|text|?anon_0_||",
+          "e114|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:490352:21||",
+          "e116|text|text|asyncGeneratorStep||",
+          "e117|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:41502:18||",
+          "e119|text|text|_throw||",
+          "e120|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:41519:28||",
+          "e132|text|text|Dismiss (ESC)||",
+          "e134|text|text|Reload (⌘R)||",
+          "e136|text|text|Copy (⌥⌘C)||",
+          "e138|text|text|Extra Info (⌘E)||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e42\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e54\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e47\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e131",
+        "x": 50,
+        "y": 810
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0gxgqxj",
+        "seq": 5,
+        "count": 89,
+        "targets": [
+          "e53|tap|button|Error loading lessons Please try again.||",
+          "e75|tap|button|Learn, tab, 2 of 6||",
+          "e77|tap|button|Checklist, tab, 3 of 6||",
+          "e79|tap|button|Companion, tab, 4 of 6||",
+          "e81|tap|button|Community, tab, 5 of 6||",
+          "e83|tap|button|Social, tab, 6 of 6||",
+          "e41|tap|button|Open profile menu||",
+          "e43|tap|button|Learn||",
+          "e44|tap|button|Resources||",
+          "e55|tap|button|All||",
+          "e56|tap|button|Started||"
+        ],
+        "scroll": [
+          "e46|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e51|text|text|Practical lessons to help you prepare for life in Canada.||",
+          "e52|text|text|Practical lessons to help you prepare for life in Canada.||",
+          "e57|text|text|Courses||",
+          "e58|text|text|Courses||",
+          "e59|text|text|No modules available||",
+          "e60|text|text|No modules available||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e41\"},{\"action\":\"tap\",\"elementRef\":\"e43\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e53\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e46\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e79",
+        "x": 201,
+        "y": 807
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0qdb5u6",
+        "seq": 6,
+        "count": 107,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e93|tap|button|Learn, tab, 2 of 6||",
+          "e95|tap|button|Checklist, tab, 3 of 6||",
+          "e97|tap|button|Companion, tab, 4 of 6||",
+          "e99|tap|button|Community, tab, 5 of 6||",
+          "e101|tap|button|Social, tab, 6 of 6||",
+          "e79|typeText|text-field|Ask anything...||",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e44|swipe|scroll-view|||",
+          "e65|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e47|text|text|Ask me anything.||",
+          "e48|text|text|Ask me anything.||",
+          "e49|text|text|Fact-checked answers about anything in Canada.||",
+          "e50|text|text|Fact-checked answers about anything in Canada.||",
+          "e60|text|text|Try one of these||",
+          "e61|text|text|Try one of these||",
+          "e85|text|text|Companion can make mistakes. Verify important info.||",
+          "e86|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e65\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e34",
+        "x": 42,
+        "y": 84
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "02l6kiu",
+        "seq": 7,
+        "count": 79,
+        "targets": [
+          "e65|tap|button|Learn, tab, 2 of 6||",
+          "e67|tap|button|Checklist, tab, 3 of 6||",
+          "e69|tap|button|Companion, tab, 4 of 6||",
+          "e71|tap|button|Community, tab, 5 of 6||",
+          "e73|tap|button|Social, tab, 6 of 6||",
+          "e39|typeText|text-field||Search chats...|"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Chat History||",
+          "e36|text|text|Chat History||",
+          "e40|text|text|||",
+          "e41|text|text|||",
+          "e48|text|text|Yesterday||",
+          "e49|text|text|Yesterday||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e65\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "02l6kiu",
+        "seq": 8,
+        "count": 79,
+        "targets": [
+          "e65|tap|button|Learn, tab, 2 of 6||",
+          "e67|tap|button|Checklist, tab, 3 of 6||",
+          "e69|tap|button|Companion, tab, 4 of 6||",
+          "e71|tap|button|Community, tab, 5 of 6||",
+          "e73|tap|button|Social, tab, 6 of 6||",
+          "e39|typeText|text-field||Search chats...|"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Chat History||",
+          "e36|text|text|Chat History||",
+          "e40|text|text|||",
+          "e41|text|text|||",
+          "e48|text|text|Yesterday||",
+          "e49|text|text|Yesterday||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e65\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "162v75u",
+        "seq": 9,
+        "count": 110,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e96|tap|button|Learn, tab, 2 of 6||",
+          "e98|tap|button|Checklist, tab, 3 of 6||",
+          "e100|tap|button|Companion, tab, 4 of 6||",
+          "e102|tap|button|Community, tab, 5 of 6||",
+          "e104|tap|button|Social, tab, 6 of 6||",
+          "e82|typeText|text-field|Ask anything...||",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e88|text|text|Companion can make mistakes. Verify important info.||",
+          "e89|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e40",
+        "direction": "up",
+        "from": {
+          "x": 201,
+          "y": 557
+        },
+        "to": {
+          "x": 201,
+          "y": 306
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0jfyedk",
+        "seq": 10,
+        "count": 110,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e96|tap|button|Learn, tab, 2 of 6||",
+          "e98|tap|button|Checklist, tab, 3 of 6||",
+          "e100|tap|button|Companion, tab, 4 of 6||",
+          "e102|tap|button|Community, tab, 5 of 6||",
+          "e104|tap|button|Social, tab, 6 of 6||",
+          "e82|typeText|text-field|Ask anything...||",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e88|text|text|Companion can make mistakes. Verify important info.||",
+          "e89|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1q3jar0",
+        "seq": 11,
+        "count": 111,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e97|tap|button|Learn, tab, 2 of 6||",
+          "e99|tap|button|Checklist, tab, 3 of 6||",
+          "e101|tap|button|Companion, tab, 4 of 6||",
+          "e103|tap|button|Community, tab, 5 of 6||",
+          "e105|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field|Ask anything...||",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e89|text|text|Companion can make mistakes. Verify important info.||",
+          "e90|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "type-text",
+        "elementRef": "e83",
+        "textLength": 20
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0agnt8q",
+        "seq": 12,
+        "count": 177,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e104|tap|button|Learn, tab, 2 of 6||",
+          "e106|tap|button|Checklist, tab, 3 of 6||",
+          "e108|tap|button|Companion, tab, 4 of 6||",
+          "e110|tap|button|Community, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e96|text|text|Companion can make mistakes. Verify important info.||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e40",
+        "direction": "up",
+        "from": {
+          "x": 201,
+          "y": 521
+        },
+        "to": {
+          "x": 201,
+          "y": 342
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1k88x0g",
+        "seq": 13,
+        "count": 177,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e104|tap|button|Learn, tab, 2 of 6||",
+          "e106|tap|button|Checklist, tab, 3 of 6||",
+          "e108|tap|button|Companion, tab, 4 of 6||",
+          "e110|tap|button|Community, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e96|text|text|Companion can make mistakes. Verify important info.||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e38",
+        "x": 201,
+        "y": 139
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1perjx2",
+        "seq": 14,
+        "count": 145,
+        "targets": [
+          "e39|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e133|tap|button|Open a bank account, In progress||",
+          "e134|tap|button|Get a phone plan, Waiting||",
+          "e84|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Open history||",
+          "e36|tap|button|New chat||",
+          "e68|tap|button|Sources and context||",
+          "e126|tap|button|Close||"
+        ],
+        "scroll": [
+          "e41|swipe|scroll-view|||",
+          "e130|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e37|text|text|Companion||",
+          "e38|text|text|Companion||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e57|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e63|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e60|text|text|||",
+          "e61|text|text|||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e66|text|text|||",
+          "e67|text|text|||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||",
+          "e98|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e41\", direction: \"up\", distance: 0.5 })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e68\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e126",
+        "x": 372,
+        "y": 675
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1t937d5",
+        "seq": 15,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e104|tap|button|Learn, tab, 2 of 6||",
+          "e106|tap|button|Checklist, tab, 3 of 6||",
+          "e108|tap|button|Companion, tab, 4 of 6||",
+          "e110|tap|button|Community, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e96|text|text|Companion can make mistakes. Verify important info.||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e67",
+        "x": 110,
+        "y": 523
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1qybisb",
+        "seq": 16,
+        "count": 183,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e124|tap|button|Close sources and context||",
+          "e84|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e128|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e134|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e135|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e132|text|text|||",
+          "e133|text|text|||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e140|text|text|Government of Canada||",
+          "e141|text|text|Government of Canada||",
+          "e142|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e143|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e144|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e145|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e148|text|text|Government of British Columbia||",
+          "e149|text|text|Government of British Columbia||",
+          "e150|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e151|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e152|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e153|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||",
+          "e98|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e128\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1i2m5rj",
+        "seq": 17,
+        "count": 183,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e126|tap|button|Close sources and context||",
+          "e84|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e128|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e134|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e135|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e132|text|text|||",
+          "e133|text|text|||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e140|text|text|Government of Canada||",
+          "e141|text|text|Government of Canada||",
+          "e142|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e143|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e144|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e145|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e148|text|text|Government of British Columbia||",
+          "e149|text|text|Government of British Columbia||",
+          "e150|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e151|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||",
+          "e98|text|text|Companion can make mistakes. Verify important info.||",
+          "e152|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e153|text|text|Checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e128\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e126",
+        "x": 370,
+        "y": 192
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1hlvaut",
+        "seq": 18,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e104|tap|button|Learn, tab, 2 of 6||",
+          "e106|tap|button|Checklist, tab, 3 of 6||",
+          "e108|tap|button|Companion, tab, 4 of 6||",
+          "e110|tap|button|Community, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e96|text|text|Companion can make mistakes. Verify important info.||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e40",
+        "direction": "up",
+        "from": {
+          "x": 201,
+          "y": 543
+        },
+        "to": {
+          "x": 201,
+          "y": 289
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0w14q58",
+        "seq": 19,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e104|tap|button|Learn, tab, 2 of 6||",
+          "e106|tap|button|Checklist, tab, 3 of 6||",
+          "e108|tap|button|Companion, tab, 4 of 6||",
+          "e110|tap|button|Community, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||",
+          "e67|tap|button|Sources and context||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e61|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e96|text|text|Companion can make mistakes. Verify important info.||",
+          "e97|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0xsrozw",
+        "seq": 20,
+        "count": 119,
+        "targets": [
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e57|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e62|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e63|text|text|Your profile says Ontario, but in this conversation you said British Columbia. Your profile was not changed.||",
+          "e60|text|text|||",
+          "e61|text|text|||",
+          "e64|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||",
+          "e65|text|text|Official pages checked Oct 25, 2026 at 10:30 AM PDT||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e39",
+        "direction": "down",
+        "from": {
+          "x": 201,
+          "y": 208
+        },
+        "to": {
+          "x": 201,
+          "y": 557
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "diagnostics": {
+        "warnings": [
+          {
+            "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+          }
+        ],
+        "errors": []
+      },
+      "uiError": {
+        "code": "SNAPSHOT_CAPTURE_FAILED",
+        "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. runtime snapshot did not settle within 2500ms",
+        "recoveryHint": "Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+      }
+    },
+    "nextSteps": [
+      "Refresh after UI action: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "08qz0ts",
+        "seq": 21,
+        "count": 119,
+        "targets": [
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e57|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e39",
+        "direction": "down",
+        "from": {
+          "x": 201,
+          "y": 208
+        },
+        "to": {
+          "x": 201,
+          "y": 557
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0otxxyj",
+        "seq": 22,
+        "count": 119,
+        "targets": [
+          "e43|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e43\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e43",
+        "x": 201,
+        "y": 164
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1slxwlw",
+        "seq": 23,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, In progress||",
+          "e135|tap|button|Get a phone plan, Waiting||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1hpetv1",
+        "seq": 24,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, In progress||",
+          "e135|tap|button|Get a phone plan, Waiting||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "14jd7kn",
+        "seq": 25,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, In progress||",
+          "e135|tap|button|Get a phone plan, Waiting||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e135",
+        "x": 201,
+        "y": 787
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1eg63di",
+        "seq": 26,
+        "count": 178,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|New step|Add a step|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e127|tap|button|Back to tasks||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e135|text|text|Checklist task||",
+          "e136|text|text|Checklist task||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e141|text|text|Checking steps does not complete the task.||",
+          "e142|text|text|Checking steps does not complete the task.||",
+          "e143|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e144|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e154|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e155|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up",
+        "from": {
+          "x": 201,
+          "y": 649
+        },
+        "to": {
+          "x": 201,
+          "y": 331
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "15nlmpc",
+        "seq": 27,
+        "count": 178,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e159|typeText|text-field|What are you waiting for?|Waiting for my SIN letter|",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|New step|Add a step|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e127|tap|button|Back to tasks||",
+          "e167|tap|button|Open in Checklist||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e141|text|text|Checking steps does not complete the task.||",
+          "e142|text|text|Checking steps does not complete the task.||",
+          "e143|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e144|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e154|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e155|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e156|text|text|What are you waiting for?||",
+          "e157|text|text|What are you waiting for?||",
+          "e164|text|text|475 characters left||",
+          "e165|text|text|475 characters left||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "type-text",
+        "elementRef": "e159",
+        "textLength": 23
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0zblmnx",
+        "seq": 28,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e159|typeText|text-field|What are you waiting for?|R2 waiting for provider|",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|New step|Add a step|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e127|tap|button|Back to tasks||",
+          "e173|tap|button|Save waiting reason||",
+          "e174|tap|button|Open in Checklist||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e141|text|text|Checking steps does not complete the task.||",
+          "e142|text|text|Checking steps does not complete the task.||",
+          "e143|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e144|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e154|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e155|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e156|text|text|What are you waiting for?||",
+          "e157|text|text|What are you waiting for?||",
+          "e171|text|text|477 characters left||",
+          "e172|text|text|477 characters left||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0qv7xlr",
+        "seq": 29,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|New step|Add a step|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Back to tasks||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e135|text|text|Checklist task||",
+          "e136|text|text|Checklist task||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e141|text|text|Checking steps does not complete the task.||",
+          "e142|text|text|Checking steps does not complete the task.||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e143|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e144|text|text|No steps yet. Add the ones that help you prepare.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": true,
+    "error": "The runtime UI snapshot for this simulator has expired.",
+    "data": {
+      "summary": {
+        "status": "FAILED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "uiError": {
+        "code": "SNAPSHOT_EXPIRED",
+        "message": "The runtime UI snapshot for this simulator has expired.",
+        "recoveryHint": "Run snapshot_ui again and retry with a current elementRef.",
+        "snapshotAgeMs": 104411
+      }
+    }
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "19sbn7e",
+        "seq": 30,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|New step|Add a step|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Back to tasks||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e135|text|text|Checklist task||",
+          "e136|text|text|Checklist task||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e141|text|text|Checking steps does not complete the task.||",
+          "e142|text|text|Checking steps does not complete the task.||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e143|text|text|No steps yet. Add the ones that help you prepare.||",
+          "e144|text|text|No steps yet. Add the ones that help you prepare.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up",
+        "durationSeconds": 0.15,
+        "from": {
+          "x": 201,
+          "y": 734
+        },
+        "to": {
+          "x": 201,
+          "y": 374
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "diagnostics": {
+        "warnings": [
+          {
+            "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+          }
+        ],
+        "errors": []
+      },
+      "uiError": {
+        "code": "SNAPSHOT_CAPTURE_FAILED",
+        "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. runtime snapshot did not settle within 2500ms",
+        "recoveryHint": "Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+      }
+    },
+    "nextSteps": [
+      "Refresh after UI action: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1ss0712",
+        "seq": 31,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e106|tap|button|Learn, tab, 2 of 6||",
+          "e108|tap|button|Checklist, tab, 3 of 6||",
+          "e110|tap|button|Companion, tab, 4 of 6||",
+          "e112|tap|button|Community, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e159|typeText|text-field|What are you waiting for?|R2 waiting for provider continued|",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Open history||",
+          "e38|tap|button|New chat||",
+          "e129|tap|button|Back to tasks||",
+          "e130|tap|button|Close||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e154|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e155|text|text|Select Completed when the whole task is done. Your steps do not complete it.||",
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e156|text|text|What are you waiting for?||",
+          "e157|text|text|What are you waiting for?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e171|text|text|467 characters left||",
+          "e172|text|text|467 characters left||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e130",
+        "x": 372,
+        "y": 174
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1p3cea5",
+        "seq": 32,
+        "count": 119,
+        "targets": [
+          "e43|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e105|tap|button|Learn, tab, 2 of 6||",
+          "e107|tap|button|Checklist, tab, 3 of 6||",
+          "e109|tap|button|Companion, tab, 4 of 6||",
+          "e111|tap|button|Community, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Open history||",
+          "e37|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Companion||",
+          "e36|text|text|Companion||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e43\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0g7y2sl",
+        "seq": 33,
+        "count": 74,
+        "targets": [
+          "e39|tap|switch|Learning Reminders|0|",
+          "e44|tap|switch|Haptics|1|",
+          "e50|tap|button|Refer a Friend||"
+        ],
+        "scroll": [
+          "e25|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e22|text|text|Settings||",
+          "e23|text|text|Settings||",
+          "e31|text|text|native-1793167417616@layout359.invalid||",
+          "e32|text|text|native-1793167417616@layout359.invalid||",
+          "e33|text|text|PREFERENCES||",
+          "e34|text|text|PREFERENCES||",
+          "e35|text|text|||",
+          "e36|text|text|||",
+          "e37|text|text|Learning Reminders||",
+          "e38|text|text|Learning Reminders||",
+          "e40|text|text|||",
+          "e41|text|text|||",
+          "e42|text|text|Haptics||",
+          "e43|text|text|Haptics||",
+          "e48|text|text|COMMUNITY||",
+          "e49|text|text|COMMUNITY||",
+          "e52|text|text|LEGAL||",
+          "e53|text|text|LEGAL||",
+          "e58|text|text|ACCOUNT||",
+          "e59|text|text|ACCOUNT||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch visible switch toggles: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e39\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e50\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e25\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0ztmi5w",
+        "seq": 34,
+        "count": 74,
+        "targets": [
+          "e39|tap|switch|Rappels d'apprentissage|0|",
+          "e44|tap|switch|Retour haptique|1|",
+          "e50|tap|button|Parrainer un ami||"
+        ],
+        "scroll": [
+          "e25|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e22|text|text|Paramètres||",
+          "e23|text|text|Paramètres||",
+          "e31|text|text|native-1793167417616@layout359.invalid||",
+          "e32|text|text|native-1793167417616@layout359.invalid||",
+          "e33|text|text|PRÉFÉRENCES||",
+          "e34|text|text|PRÉFÉRENCES||",
+          "e35|text|text|||",
+          "e36|text|text|||",
+          "e37|text|text|Rappels d'apprentissage||",
+          "e38|text|text|Rappels d'apprentissage||",
+          "e40|text|text|||",
+          "e41|text|text|||",
+          "e42|text|text|Retour haptique||",
+          "e43|text|text|Retour haptique||",
+          "e48|text|text|COMMUNAUTÉ||",
+          "e49|text|text|COMMUNAUTÉ||",
+          "e52|text|text|MENTIONS LÉGALES||",
+          "e53|text|text|MENTIONS LÉGALES||",
+          "e58|text|text|COMPTE||",
+          "e59|text|text|COMPTE||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch visible switch toggles: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e39\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e50\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e25\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "02xpjx2",
+        "seq": 35,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e104|tap|button|Apprendre, tab, 2 of 6||",
+          "e106|tap|button|Liste, tab, 3 of 6||",
+          "e108|tap|button|Compagnon, tab, 4 of 6||",
+          "e110|tap|button|Communauté, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e35|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e44|text|text|What should I do in my first week in Vancouver?||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e96|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e97|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e61|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e62|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e59|text|text|||",
+          "e60|text|text|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e40",
+        "direction": "up",
+        "durationSeconds": 0.2,
+        "from": {
+          "x": 201,
+          "y": 579
+        },
+        "to": {
+          "x": 201,
+          "y": 266
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0ecgmi3",
+        "seq": 36,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e104|tap|button|Apprendre, tab, 2 of 6||",
+          "e106|tap|button|Liste, tab, 3 of 6||",
+          "e108|tap|button|Compagnon, tab, 4 of 6||",
+          "e110|tap|button|Communauté, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e35|tap|button|Nouvelle conversation||",
+          "e67|tap|button|Sources et contexte||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e62|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e63|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e64|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e96|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e97|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e67",
+        "x": 108,
+        "y": 505
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1voqtjr",
+        "seq": 37,
+        "count": 183,
+        "targets": [
+          "e38|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e124|tap|button|Fermer les sources et le contexte||",
+          "e84|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e35|tap|button|Nouvelle conversation||",
+          "e67|tap|button|Sources et contexte||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e128|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e134|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e135|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e132|text|text|||",
+          "e133|text|text|||",
+          "e61|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e62|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e140|text|text|Government of Canada||",
+          "e141|text|text|Government of Canada||",
+          "e63|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e64|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e142|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e143|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e144|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e145|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e148|text|text|Government of British Columbia||",
+          "e149|text|text|Government of British Columbia||",
+          "e150|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e151|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e152|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e153|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e97|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e98|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e128\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "08exgf1",
+        "seq": 38,
+        "count": 183,
+        "targets": [
+          "e38|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e126|tap|button|Fermer les sources et le contexte||",
+          "e84|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||",
+          "e67|tap|button|Sources et contexte||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e128|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e134|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e135|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e132|text|text|||",
+          "e133|text|text|||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e140|text|text|Government of Canada||",
+          "e141|text|text|Government of Canada||",
+          "e142|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e143|text|text|https://www.canada.ca/en/employment-social-development/services/sin.html||",
+          "e144|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e145|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e61|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e62|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e148|text|text|Government of British Columbia||",
+          "e149|text|text|Government of British Columbia||",
+          "e150|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e151|text|text|https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp||",
+          "e97|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e98|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e63|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e64|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e65|text|text|||",
+          "e66|text|text|||",
+          "e152|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||",
+          "e153|text|text|Vérifiée le 25 oct. 2026 à 10:30 HAP||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e128\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e126",
+        "x": 370,
+        "y": 192
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "01e6sqm",
+        "seq": 39,
+        "count": 118,
+        "targets": [
+          "e38|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e104|tap|button|Apprendre, tab, 2 of 6||",
+          "e106|tap|button|Liste, tab, 3 of 6||",
+          "e108|tap|button|Compagnon, tab, 4 of 6||",
+          "e110|tap|button|Communauté, tab, 5 of 6||",
+          "e112|tap|button|Social, tab, 6 of 6||",
+          "e83|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||",
+          "e67|tap|button|Sources et contexte||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e48|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e51|text|text|Which documents do I need for the bank?||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e55|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e61|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e62|text|text|Votre profil indique Ontario, mais dans cette conversation, vous avez dit British Columbia. Votre profil n'a pas été modifié.||",
+          "e59|text|text|||",
+          "e60|text|text|||",
+          "e96|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e97|text|text|Le Compagnon peut faire des erreurs. Vérifiez les informations importantes.||",
+          "e63|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e64|text|text|Pages officielles vérifiées le 25 oct. 2026 à 10:30 HAP||",
+          "e65|text|text|||",
+          "e66|text|text|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1t0tgjm",
+        "seq": 40,
+        "count": 119,
+        "targets": [
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e56|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||",
+          "e57|text|text|Most banks ask for two pieces of identification, such as your passport and your permanent resident card or confirmation, and proof of address.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e105\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e39",
+        "direction": "down",
+        "durationSeconds": 0.2,
+        "from": {
+          "x": 201,
+          "y": 208
+        },
+        "to": {
+          "x": 201,
+          "y": 557
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1lrsolo",
+        "seq": 41,
+        "count": 119,
+        "targets": [
+          "e43|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e43\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1lrsolo",
+        "seq": 42,
+        "count": 119,
+        "targets": [
+          "e43|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e49|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e52|text|text|Which documents do I need for the bank?||",
+          "e53|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e43\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e43",
+        "x": 201,
+        "y": 164
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "08wtd0z",
+        "seq": 43,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, En cours||",
+          "e135|tap|button|Get a phone plan, En attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e106\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e131\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0tegqje",
+        "seq": 44,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, En cours||",
+          "e135|tap|button|Get a phone plan, En attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e106\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e131\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "00ejob4",
+        "seq": 45,
+        "count": 146,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e134|tap|button|Open a bank account, En cours||",
+          "e135|tap|button|Get a phone plan, En attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e131|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e106\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e131\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e135",
+        "x": 201,
+        "y": 787
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1sqdzel",
+        "seq": 46,
+        "count": 185,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|Nouvelle étape|Ajouter une étape|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e135|text|text|Tâche de la liste||",
+          "e136|text|text|Tâche de la liste||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e141|text|text|Cocher les étapes ne termine pas la tâche.||",
+          "e142|text|text|Cocher les étapes ne termine pas la tâche.||",
+          "e143|text|text|Aucune étape pour l’instant. Ajoutez celles qui vous aident à vous préparer.||",
+          "e144|text|text|Aucune étape pour l’instant. Ajoutez celles qui vous aident à vous préparer.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up",
+        "durationSeconds": 0.2,
+        "from": {
+          "x": 201,
+          "y": 718
+        },
+        "to": {
+          "x": 201,
+          "y": 304
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0mwopnv",
+        "seq": 47,
+        "count": 185,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e173|tap|button|Enregistrer la raison de l’attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e159|typeText|text-field|Qu’attendez-vous?|R2 waiting for provider continued|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||",
+          "e174|tap|button|Ouvrir dans la liste||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e154|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e155|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e156|text|text|Qu’attendez-vous?||",
+          "e157|text|text|Qu’attendez-vous?||",
+          "e171|text|text|Il reste 467 caractères||",
+          "e172|text|text|Il reste 467 caractères||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0mwopnv",
+        "seq": 48,
+        "count": 185,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e173|tap|button|Enregistrer la raison de l’attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e159|typeText|text-field|Qu’attendez-vous?|R2 waiting for provider continued|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||",
+          "e174|tap|button|Ouvrir dans la liste||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e154|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e155|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e156|text|text|Qu’attendez-vous?||",
+          "e157|text|text|Qu’attendez-vous?||",
+          "e171|text|text|Il reste 467 caractères||",
+          "e172|text|text|Il reste 467 caractères||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "type-text",
+        "elementRef": "e159",
+        "textLength": 25
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1u2124s",
+        "seq": 49,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e173|tap|button|Enregistrer la raison de l’attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|Nouvelle étape|Ajouter une étape|",
+          "e159|typeText|text-field|Qu’attendez-vous?|R2 attempts du fournisseur|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||",
+          "e174|tap|button|Ouvrir dans la liste||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e154|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e155|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e50|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e51|text|text|Start with your SIN at a Service Canada office, then open a bank account. Bring your passport and your confirmation of permanent residence.||",
+          "e156|text|text|Qu’attendez-vous?||",
+          "e157|text|text|Qu’attendez-vous?||",
+          "e171|text|text|Il reste 474 caractères||",
+          "e172|text|text|Il reste 474 caractères||",
+          "e53|text|text|Which documents do I need for the bank?||",
+          "e54|text|text|Which documents do I need for the bank?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1htq7d1",
+        "seq": 50,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e146|typeText|text-field|Nouvelle étape|Ajouter une étape|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e141|text|text|Cocher les étapes ne termine pas la tâche.||",
+          "e142|text|text|Cocher les étapes ne termine pas la tâche.||",
+          "e143|text|text|Aucune étape pour l’instant. Ajoutez celles qui vous aident à vous préparer.||",
+          "e144|text|text|Aucune étape pour l’instant. Ajoutez celles qui vous aident à vous préparer.||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up",
+        "durationSeconds": 0.15,
+        "from": {
+          "x": 201,
+          "y": 750
+        },
+        "to": {
+          "x": 201,
+          "y": 444
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "diagnostics": {
+        "warnings": [
+          {
+            "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+          }
+        ],
+        "errors": []
+      },
+      "uiError": {
+        "code": "SNAPSHOT_CAPTURE_FAILED",
+        "message": "UI action succeeded, but the refreshed runtime snapshot did not settle before timeout. runtime snapshot did not settle within 2500ms",
+        "recoveryHint": "Run snapshot_ui again before reusing elementRefs from the previous snapshot."
+      }
+    },
+    "nextSteps": [
+      "Refresh after UI action: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0eeixu9",
+        "seq": 51,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e154|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e155|text|text|Choisissez Terminée lorsque toute la tâche est faite. Vos étapes ne la terminent pas.||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||",
+          "e156|text|text|Qu’attendez-vous?||",
+          "e157|text|text|Qu’attendez-vous?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "swipe",
+        "withinElementRef": "e132",
+        "direction": "up",
+        "durationSeconds": 0.15,
+        "from": {
+          "x": 201,
+          "y": 750
+        },
+        "to": {
+          "x": 201,
+          "y": 444
+        }
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0hvomuc",
+        "seq": 52,
+        "count": 244,
+        "targets": [
+          "e44|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e106|tap|button|Apprendre, tab, 2 of 6||",
+          "e108|tap|button|Liste, tab, 3 of 6||",
+          "e110|tap|button|Compagnon, tab, 4 of 6||",
+          "e112|tap|button|Communauté, tab, 5 of 6||",
+          "e114|tap|button|Social, tab, 6 of 6||",
+          "e173|tap|button|Enregistrer la raison de l’attente||",
+          "e87|typeText|text-field||R2 retained composer|",
+          "e159|typeText|text-field|Qu’attendez-vous?|R2 attempts du fournisseur suite|",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e129|tap|button|Retour aux tâches||",
+          "e130|tap|button|Fermer||",
+          "e174|tap|button|Ouvrir dans la liste||"
+        ],
+        "scroll": [
+          "e40|swipe|scroll-view|||",
+          "e124|swipe|other|||companion-task-sheet",
+          "e132|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e156|text|text|Qu’attendez-vous?||",
+          "e157|text|text|Qu’attendez-vous?||",
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e171|text|text|Il reste 468 caractères||",
+          "e172|text|text|Il reste 468 caractères||",
+          "e46|text|text|What should I do in my first week in Vancouver?||",
+          "e47|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e35\"},{\"action\":\"tap\",\"elementRef\":\"e38\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e44\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e40\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e130",
+        "x": 372,
+        "y": 217
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1d74gbc",
+        "seq": 53,
+        "count": 119,
+        "targets": [
+          "e43|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e105|tap|button|Apprendre, tab, 2 of 6||",
+          "e107|tap|button|Liste, tab, 3 of 6||",
+          "e109|tap|button|Compagnon, tab, 4 of 6||",
+          "e111|tap|button|Communauté, tab, 5 of 6||",
+          "e113|tap|button|Social, tab, 6 of 6||",
+          "e86|typeText|text-field||R2 retained composer|",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e39|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e45|text|text|What should I do in my first week in Vancouver?||",
+          "e46|text|text|What should I do in my first week in Vancouver?||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e43\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e39\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e37",
+        "x": 360,
+        "y": 84
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "08hbgxs",
+        "seq": 54,
+        "count": 106,
+        "targets": [
+          "e46|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e73|typeText|text-field|Posez n'importe quelle question…||",
+          "e92|tap|button|Apprendre, tab, 2 of 6||",
+          "e94|tap|button|Liste, tab, 3 of 6||",
+          "e96|tap|button|Compagnon, tab, 4 of 6||",
+          "e98|tap|button|Communauté, tab, 5 of 6||",
+          "e100|tap|button|Social, tab, 6 of 6||",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e47|text|text|Posez-moi n'importe quelle question.||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e46\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1qwp1p1",
+        "seq": 55,
+        "count": 68,
+        "targets": [
+          "e46|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e47|text|text|Posez-moi n'importe quelle question.||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e51|text|text|Essayez l'une de ces suggestions||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e46\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1nxw1or",
+        "seq": 56,
+        "count": 102,
+        "targets": [
+          "e31|tap|button|Apple Account, Sign in to access your iCloud data, the App Store, Apple services, and more.||com.apple.settings.primaryAppleAccount",
+          "e40|tap|button|Ready for Apple Intelligence||com.apple.settings.followUpItem.com.apple.icloud.gm",
+          "e70|tap|button|Apple Intelligence & Siri||com.apple.settings.siri",
+          "e97|typeText|text-field||Search|",
+          "e47|tap|button|General||com.apple.settings.general",
+          "e54|tap|button|Accessibility||com.apple.settings.accessibility",
+          "e62|tap|button|Action Button||com.apple.settings.actionButton",
+          "e78|tap|button|Camera||com.apple.settings.camera",
+          "e98|tap|button|Dictate||Dictate",
+          "e100|tap|button|Dictate||Dictate"
+        ],
+        "scroll": [
+          "e1|swipe|application|Settings||"
+        ],
+        "text": [
+          "e33|text|text|Apple Account||",
+          "e34|text|text|Sign in to access your iCloud data, the App Store, Apple services, and more.||",
+          "e41|text|text|Ready for Apple Intelligence||",
+          "e49|text|text|General||",
+          "e56|text|text|Accessibility||",
+          "e64|text|text|Action Button||",
+          "e72|text|text|Apple Intelligence & Siri||",
+          "e80|text|text|Camera||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e47\"},{\"action\":\"tap\",\"elementRef\":\"e54\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e31\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e54",
+        "x": 201,
+        "y": 621
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0hzb2vz",
+        "seq": 57,
+        "count": 127,
+        "targets": [
+          "e33|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+          "e36|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+          "e113|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+          "e116|tap|button|Hover Text, Off||HOVERTEXT_TITLE",
+          "e12|tap|button|Settings||BackButton",
+          "e44|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+          "e47|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+          "e54|tap|button|Motion||MOTION_TITLE",
+          "e57|tap|button|Motion||MOTION_TITLE",
+          "e64|tap|button|Spoken Content||SPEECH_TITLE",
+          "e67|tap|button|Spoken Content||SPEECH_TITLE",
+          "e83|tap|button|Spoken Content||SPEECH_TITLE",
+          "e86|tap|button|Spoken Content||SPEECH_TITLE",
+          "e93|tap|button|Motion||MOTION_TITLE",
+          "e96|tap|button|Motion||MOTION_TITLE",
+          "e103|tap|button|Display & Text Size||DISPLAY_AND_TEXT",
+          "e106|tap|button|Display & Text Size||DISPLAY_AND_TEXT"
+        ],
+        "scroll": [
+          "e18|swipe|other|||AccessibilitySettingsControllerView",
+          "e22|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e37|text|text|Hover Text||",
+          "e117|text|text|Hover Text||",
+          "e38|text|text|Off||",
+          "e118|text|text|Off||",
+          "e48|text|text|Display & Text Size||",
+          "e107|text|text|Display & Text Size||",
+          "e58|text|text|Motion||",
+          "e97|text|text|Motion||",
+          "e68|text|text|Spoken Content||",
+          "e87|text|text|Spoken Content||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e44\"},{\"action\":\"tap\",\"elementRef\":\"e47\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e33\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e22\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e54",
+        "x": 201,
+        "y": 779
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1gt4ola",
+        "seq": 58,
+        "count": 42,
+        "targets": [
+          "e12|tap|button|Accessibility||BackButton"
+        ],
+        "scroll": [
+          "e22|swipe|scroll-view|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e22\", direction: \"up\", distance: 0.5 })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e12\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1gt4ola",
+        "seq": 59,
+        "count": 42,
+        "targets": [
+          "e12|tap|button|Accessibility||BackButton"
+        ],
+        "scroll": [
+          "e22|swipe|scroll-view|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e22\", direction: \"up\", distance: 0.5 })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e12\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1dd4oxz",
+        "seq": 60,
+        "count": 77,
+        "targets": [
+          "e36|tap|button|Unify, http://127.0.0.1:8199||",
+          "e23|tap|button|user-icon||",
+          "e27|tap|button|INFO||",
+          "e30|tap|button|Enter URL manually||",
+          "e34|tap|button|RESET||",
+          "e53|tap|tab|Home|1|",
+          "e55|tap|tab|Updates|0|",
+          "e57|tap|tab|Settings|0|"
+        ],
+        "scroll": [
+          "e24|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e21|text|text|Unify||",
+          "e22|text|text|Development Build||",
+          "e26|text|text|DEVELOPMENT SERVERS||",
+          "e29|text|text|No development servers found||",
+          "e32|text|text|Enter URL manually||",
+          "e33|text|text|RECENTLY OPENED||",
+          "e37|text|text|Unify||",
+          "e38|text|text|http://127.0.0.1:8199||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e23\"},{\"action\":\"tap\",\"elementRef\":\"e27\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e36\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e24\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e36",
+        "x": 201,
+        "y": 477
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0qoycha",
+        "seq": 61,
+        "count": 141,
+        "targets": [
+          "e42|tap|button|Ouvrir le menu du profil||",
+          "e54|tap|button|Erreur de chargement des leçons Veuillez réessayer.||",
+          "e76|tap|button|Apprendre, tab, 2 of 6||",
+          "e78|tap|button|Liste, tab, 3 of 6||",
+          "e80|tap|button|Compagnon, tab, 4 of 6||",
+          "e82|tap|button|Communauté, tab, 5 of 6||",
+          "e84|tap|button|Social, tab, 6 of 6||",
+          "e44|tap|button|Apprendre||",
+          "e45|tap|button|Ressources||",
+          "e58|tap|button|Tous||",
+          "e59|tap|button|Commencés||",
+          "e131|tap|button|Dismiss (ESC)||redbox-dismiss",
+          "e133|tap|button|Reload (⌘R)||redbox-reload",
+          "e135|tap|button|Copy (⌥⌘C)||redbox-copy",
+          "e137|tap|button|Extra Info (⌘E)||redbox-extra"
+        ],
+        "scroll": [
+          "e47|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e96|text|text|console.error: Error fetching modules with submodules from Sanity: Error: Dataset not found - Dataset \"production\" not found for project ID \"placeholder\" (traceId: 5ceac3a68e51f7678df137b72cbc8c2d)||redbox-error",
+          "e98|text|text|_construct||",
+          "e99|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5265:66||",
+          "e101|text|text|Wrapper||",
+          "e102|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5237:24||",
+          "e104|text|text|_callSuper||",
+          "e105|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:3807:109||",
+          "e107|text|text|SyntheticError||",
+          "e108|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5081:37||",
+          "e110|text|text|reactConsoleErrorHandler||",
+          "e52|text|text|Des leçons pratiques pour vous préparer à la vie au Canada.||",
+          "e53|text|text|Des leçons pratiques pour vous préparer à la vie au Canada.||",
+          "e111|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:5191:32||",
+          "e113|text|text|?anon_0_||",
+          "e114|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:490352:21||",
+          "e116|text|text|asyncGeneratorStep||",
+          "e117|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:41502:18||",
+          "e119|text|text|_throw||",
+          "e120|text|text|&platform=ios&dev=false&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable:41519:28||",
+          "e55|text|text|Cours||",
+          "e56|text|text|Cours||",
+          "e60|text|text|Aucun module disponible||",
+          "e61|text|text|Aucun module disponible||",
+          "e132|text|text|Dismiss (ESC)||",
+          "e134|text|text|Reload (⌘R)||",
+          "e136|text|text|Copy (⌥⌘C)||",
+          "e138|text|text|Extra Info (⌘E)||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e44\"},{\"action\":\"tap\",\"elementRef\":\"e45\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e42\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e47\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e131",
+        "x": 50,
+        "y": 810
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1s1f3jq",
+        "seq": 62,
+        "count": 89,
+        "targets": [
+          "e41|tap|button|Ouvrir le menu du profil||",
+          "e53|tap|button|Erreur de chargement des leçons Veuillez réessayer.||",
+          "e75|tap|button|Apprendre, tab, 2 of 6||",
+          "e77|tap|button|Liste, tab, 3 of 6||",
+          "e79|tap|button|Compagnon, tab, 4 of 6||",
+          "e81|tap|button|Communauté, tab, 5 of 6||",
+          "e83|tap|button|Social, tab, 6 of 6||",
+          "e43|tap|button|Apprendre||",
+          "e44|tap|button|Ressources||",
+          "e57|tap|button|Tous||",
+          "e58|tap|button|Commencés||"
+        ],
+        "scroll": [
+          "e46|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e51|text|text|Des leçons pratiques pour vous préparer à la vie au Canada.||",
+          "e52|text|text|Des leçons pratiques pour vous préparer à la vie au Canada.||",
+          "e54|text|text|Cours||",
+          "e55|text|text|Cours||",
+          "e59|text|text|Aucun module disponible||",
+          "e60|text|text|Aucun module disponible||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e43\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e41\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e46\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e79",
+        "x": 201,
+        "y": 804
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "017mgb3",
+        "seq": 63,
+        "count": 99,
+        "targets": [
+          "e46|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e73|typeText|text-field|Posez n'importe quelle question…||",
+          "e85|tap|button|Apprendre, tab, 2 of 6||",
+          "e87|tap|button|Liste, tab, 3 of 6||",
+          "e89|tap|button|Compagnon, tab, 4 of 6||",
+          "e91|tap|button|Communauté, tab, 5 of 6||",
+          "e93|tap|button|Social, tab, 6 of 6||",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e47|text|text|Posez-moi n'importe quelle question.||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e51|text|text|Essayez l'une de ces suggestions||",
+          "e52|text|text|Essayez l'une de ces suggestions||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e46\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e46",
+        "x": 201,
+        "y": 154
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1xx1j0z",
+        "seq": 64,
+        "count": 126,
+        "targets": [
+          "e47|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e74|typeText|text-field|Posez n'importe quelle question…||",
+          "e86|tap|button|Apprendre, tab, 2 of 6||",
+          "e88|tap|button|Liste, tab, 3 of 6||",
+          "e90|tap|button|Compagnon, tab, 4 of 6||",
+          "e92|tap|button|Communauté, tab, 5 of 6||",
+          "e94|tap|button|Social, tab, 6 of 6||",
+          "e114|tap|button|Open a bank account, En cours||",
+          "e115|tap|button|Get a phone plan, En attente||",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e109|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e44|swipe|scroll-view|||",
+          "e111|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Posez-moi n'importe quelle question.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e51|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e52|text|text|Essayez l'une de ces suggestions||",
+          "e53|text|text|Essayez l'une de ces suggestions||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e86\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e111\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "1cry9kt",
+        "seq": 65,
+        "count": 126,
+        "targets": [
+          "e47|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e74|typeText|text-field|Posez n'importe quelle question…||",
+          "e86|tap|button|Apprendre, tab, 2 of 6||",
+          "e88|tap|button|Liste, tab, 3 of 6||",
+          "e90|tap|button|Compagnon, tab, 4 of 6||",
+          "e92|tap|button|Communauté, tab, 5 of 6||",
+          "e94|tap|button|Social, tab, 6 of 6||",
+          "e114|tap|button|Open a bank account, En cours||",
+          "e115|tap|button|Get a phone plan, En attente||",
+          "e35|tap|button|Ouvrir l'historique||",
+          "e38|tap|button|Nouvelle conversation||",
+          "e109|tap|button|Fermer||"
+        ],
+        "scroll": [
+          "e44|swipe|scroll-view|||",
+          "e111|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Compagnon||",
+          "e37|text|text|Compagnon||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Posez-moi n'importe quelle question.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e51|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e86\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e111\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.ui-action-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "action": {
+        "type": "tap",
+        "elementRef": "e109",
+        "x": 372,
+        "y": 218
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0bt2x2c",
+        "seq": 66,
+        "count": 99,
+        "targets": [
+          "e46|tap|button|Vos tâches, En cours : 1 · En attente : 1||",
+          "e73|typeText|text-field|Posez n'importe quelle question…||",
+          "e85|tap|button|Apprendre, tab, 2 of 6||",
+          "e87|tap|button|Liste, tab, 3 of 6||",
+          "e89|tap|button|Compagnon, tab, 4 of 6||",
+          "e91|tap|button|Communauté, tab, 5 of 6||",
+          "e93|tap|button|Social, tab, 6 of 6||",
+          "e34|tap|button|Ouvrir l'historique||",
+          "e37|tap|button|Nouvelle conversation||"
+        ],
+        "scroll": [
+          "e43|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e35|text|text|Compagnon||",
+          "e36|text|text|Compagnon||",
+          "e47|text|text|Posez-moi n'importe quelle question.||",
+          "e48|text|text|Posez-moi n'importe quelle question.||",
+          "e49|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||",
+          "e50|text|text|Des réponses vérifiées sur tout ce qui concerne le Canada.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e37\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e46\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e43\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "17jz39m",
+        "seq": 67,
+        "count": 41,
+        "targets": [
+          "e12|tap|button|Accessibility||BackButton"
+        ],
+        "scroll": [
+          "e22|swipe|scroll-view|||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e22\", direction: \"up\", distance: 0.5 })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e12\" })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "0ztmi5w",
+        "seq": 68,
+        "count": 74,
+        "targets": [
+          "e39|tap|switch|Rappels d'apprentissage|0|",
+          "e44|tap|switch|Retour haptique|1|",
+          "e50|tap|button|Parrainer un ami||"
+        ],
+        "scroll": [
+          "e25|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e22|text|text|Paramètres||",
+          "e23|text|text|Paramètres||",
+          "e31|text|text|native-1793167417616@layout359.invalid||",
+          "e32|text|text|native-1793167417616@layout359.invalid||",
+          "e33|text|text|PRÉFÉRENCES||",
+          "e34|text|text|PRÉFÉRENCES||",
+          "e35|text|text|||",
+          "e36|text|text|||",
+          "e37|text|text|Rappels d'apprentissage||",
+          "e38|text|text|Rappels d'apprentissage||",
+          "e40|text|text|||",
+          "e41|text|text|||",
+          "e42|text|text|Retour haptique||",
+          "e43|text|text|Retour haptique||",
+          "e48|text|text|COMMUNAUTÉ||",
+          "e49|text|text|COMMUNAUTÉ||",
+          "e52|text|text|MENTIONS LÉGALES||",
+          "e53|text|text|MENTIONS LÉGALES||",
+          "e58|text|text|COMPTE||",
+          "e59|text|text|COMPTE||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch visible switch toggles: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e39\"},{\"action\":\"tap\",\"elementRef\":\"e44\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e50\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e25\", direction: \"up\", distance: 0.5 })"
+    ]
+  },
+  {
+    "schema": "mobilebuildmcp.output.capture-result",
+    "schemaVersion": "2",
+    "didError": false,
+    "error": null,
+    "data": {
+      "summary": {
+        "status": "SUCCEEDED"
+      },
+      "artifacts": {
+        "simulatorId": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      },
+      "capture": {
+        "type": "runtime-snapshot",
+        "rs": "1",
+        "screenHash": "15wyqgj",
+        "seq": 69,
+        "count": 107,
+        "targets": [
+          "e38|tap|button|Your tasks, In progress: 1 · Waiting: 1||",
+          "e93|tap|button|Learn, tab, 2 of 6||",
+          "e95|tap|button|Checklist, tab, 3 of 6||",
+          "e97|tap|button|Companion, tab, 4 of 6||",
+          "e99|tap|button|Community, tab, 5 of 6||",
+          "e101|tap|button|Social, tab, 6 of 6||",
+          "e79|typeText|text-field|Ask anything...||",
+          "e34|tap|button|Open history||",
+          "e35|tap|button|New chat||"
+        ],
+        "scroll": [
+          "e44|swipe|scroll-view|||",
+          "e65|swipe|scroll-view|||"
+        ],
+        "text": [
+          "e36|text|text|Companion||",
+          "e37|text|text|Companion||",
+          "e47|text|text|Ask me anything.||",
+          "e48|text|text|Ask me anything.||",
+          "e49|text|text|Fact-checked answers about anything in Canada.||",
+          "e50|text|text|Fact-checked answers about anything in Canada.||",
+          "e60|text|text|Try one of these||",
+          "e61|text|text|Try one of these||",
+          "e85|text|text|Companion can make mistakes. Verify important info.||",
+          "e86|text|text|Companion can make mistakes. Verify important info.||"
+        ],
+        "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102"
+      }
+    },
+    "nextSteps": [
+      "Refresh after layout changes: snapshot_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\" })",
+      "Wait for UI to settle: wait_for_ui({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", predicate: \"settled\" })",
+      "Batch same-screen taps: batch({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", steps: [{\"action\":\"tap\",\"elementRef\":\"e34\"},{\"action\":\"tap\",\"elementRef\":\"e35\"}] })",
+      "Tap an elementRef: tap({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", elementRef: \"e38\" })",
+      "Scroll visible content: swipe({ simulatorId: \"A54D1945-3A80-4584-BBD0-AAD229FF3102\", withinElementRef: \"e65\", direction: \"up\", distance: 0.5 })"
+    ]
+  }
+]

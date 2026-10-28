@@ -1,0 +1,14 @@
+11:55:12.153 [ INFO] maestro.cli.report.TestDebugReporter.logSystemInfo: Debug output path: /Users/savargupta/.t3/worktrees/Unify/t3-12e53450/DOCS/companion-actions/evidence/native-layout-r2/a03-load-bounded-discovery-debug/.maestro/tests/2026-10-28_115512
+11:55:12.154 [ INFO] MAESTRO.logSystemInfo: ---- System Info ----
+11:55:12.154 [ INFO] MAESTRO.logSystemInfo: Maestro Version: 2.11.0
+11:55:12.154 [ INFO] MAESTRO.logSystemInfo: CI: Undefined
+11:55:12.155 [ INFO] MAESTRO.logSystemInfo: OS Name: Mac OS X
+11:55:12.155 [ INFO] MAESTRO.logSystemInfo: OS Version: 26.6.2
+11:55:12.155 [ INFO] MAESTRO.logSystemInfo: Architecture: aarch64
+11:55:12.155 [ INFO] MAESTRO.logSystemInfo: Java Version: 17
+11:55:12.206 [ INFO] MAESTRO.logSystemInfo: Xcode Version: 26.6
+11:55:12.209 [ INFO] MAESTRO.logSystemInfo: Flutter Version: Undefined
+11:55:12.211 [ INFO] MAESTRO.logSystemInfo: Flutter Channel: Undefined
+11:55:12.211 [ INFO] MAESTRO.logSystemInfo: ---------------------
+11:55:12.243 [DEBUG] io.micrometer.common.util.internal.logging.InternalLoggerFactory.newDefaultFactory: Using SLF4J as the default logging framework
+11:55:12.723 [ INFO] maestro.cli.command.TestCommand.runShardSuite: [shard 1] Selected device A54D1945-3A80-4584-BBD0-AAD229FF3102 using port 51900 with execution plan ExecutionPlan(flowsToRun=[/Users/savargupta/.t3/worktrees/Unify/t3-12e53450/DOCS/companion-actions/evidence/native-layout-r2/a03-load-bounded-discovery.yaml], sequence=FlowSequence(flows=[], continueOnFailure=true), workspaceConfig=WorkspaceConfig(flows=null, includeTags=null, excludeTags=null, executionOrder=null, baselineBranch=null, notifications=null, disableRetries=false, platform=PlatformConfiguration(android=AndroidConfiguration(disableAnimations=false), ios=IOSConfiguration(disableAnimations=false, snapshotKeyHonorModalViews=null)), testOutputDir=null))

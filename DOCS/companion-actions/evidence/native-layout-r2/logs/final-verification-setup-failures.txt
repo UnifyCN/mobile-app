@@ -1,0 +1,17 @@
+Retained tool-output excerpts. These are transcriptions of the failed calls.
+They are not new executions or native behavioral failures.
+
+1. Wrong read-only web checkout path during final inspection:
+fatal: cannot change to '/Users/savargupta/.t3/worktrees/Unify-Web-App/t3-21c9e1f0': No such file or directory
+The corrected check used the original brief's feat-companion-actions-359 path.
+It returned exit 0 for the bounded service-source diff.
+
+2. Exact-label cleanup attempt before the language modal:
+Warning: No accessibility element matched --label 'Langue'. Make sure the app is on the expected screen, then run `axe describe-ui --udid <SIMULATOR_UDID>` and prefer --id when available. No tap performed.
+Error: No accessibility element matched --label 'Langue'. Make sure the app is on the expected screen, then run `axe describe-ui --udid <SIMULATOR_UDID>` and prefer --id when available.
+The actual screenshot showed the language row. A physical tap opened it.
+
+3. First retained-observation verification used a wrong capture filename:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/savargupta/.t3/worktrees/Unify/t3-12e53450/DOCS/companion-actions/evidence/native-layout-r2/native/c15-french-retained-input.hierarchy.json'
+The saved capture is c15-french-waiting-draft-continued.hierarchy.json.
+The script was corrected and then passed without changing any capture.
