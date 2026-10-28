@@ -622,3 +622,29 @@ function scriptedServerWithDrop() {
   };
   return wrapped as unknown as ReturnType<typeof scriptedServer>;
 }
+
+
+it('a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt', async () => {
+  renderScreen();
+  await send(`Remember that ${FRIDAYS}`);
+  const card = await screen.findByTestId('detail-command-card');
+  const undo = await within(card).findByRole('button', { name: `Undo saving “${FRIDAYS}”` });
+  await waitFor(() => expect(enabled(undo)).toBe(true));
+  fireEvent.press(undo);
+  const current = 'I can attend appointments on Saturdays';
+  server.editDetailElsewhere(server.details()[0].detail_id, current);
+  fireEvent.press(within(card).getByRole('button', { name: 'Remove detail' }));
+  await within(card).findByText(en.savedDetails.undoConflict);
+  expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+  const review = within(card).getByRole('button', { name: /Remove “/ });
+  await waitFor(() => expect(enabled(review)).toBe(true));
+  fireEvent.press(review);
+  expect(within(card).getByText(`“${current}” will no longer be used in later conversations.`)).toBeTruthy();
+  fireEvent.press(within(card).getByRole('button', { name: 'Cancel' }));
+  expect(server.details()[0]).toMatchObject({ text: current, removed: false });
+  fireEvent.press(within(card).getByRole('button', { name: `Remove “${current}”` }));
+  fireEvent.press(within(card).getByRole('button', { name: 'Remove detail' }));
+  await within(card).findByText(`Removed “${current}”. It will not be used in later conversations.`);
+  expect(server.details()[0].removed).toBe(true);
+  expect(server.sent.filter(body => body.action === 'apply' && body.operations?.[0]?.type === 'detail.remove').at(-1)?.operations[0].expected_revision).toBe(2);
+});

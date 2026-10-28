@@ -773,6 +773,7 @@ export function scriptedServer(
           body: {
             error: 'undo_conflict',
             current: [],
+            current_detail: { detail_id: inv.detail_id, text: d.text, revision: d.revision, removed: d.removed },
             proposal: { proposal_id: id, proposal_revision: 1, operations: comp.operations },
           },
         };
