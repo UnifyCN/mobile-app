@@ -862,3 +862,88 @@ describeStack('Independent retained mobile Checklist completion',()=>{
   await waitFor(()=>expect(screen.queryByRole('button',{name:new RegExp(`Your plan, ${GOAL}, 1 of 3 done`)})).not.toBeNull(),{timeout:2000});
  },60_000);
 });
+
+// Composition of #364 and #366 (integration reconciliation): the same real stack and the
+// actual Companion screen, plan entry, task sheet and step controls. Added with the
+// integration. The step migration is applied after the plan migration when missing.
+describeStack('Plan and task steps together against the real local stack (mobile)', () => {
+  beforeAll(async () => {
+    if (psql(`select to_regprocedure('public.companion_read_steps(uuid)') is not null;`) !== 't') {
+      psql(fs.readFileSync(path.resolve(__dirname, '../../supabase/migrations/20261027183644_companion_task_steps.sql'), 'utf8'));
+      psql(`update public.companion_feature_gate set enabled = true, min_contract_version = 1,
+              max_contract_version = 1, allowed_platforms = '{ios,android,web}';`);
+      execFileSync('docker', ['kill', '--signal=SIGUSR1', REST_CONTAINER], { stdio: 'ignore' });
+    }
+    for (let i = 0; i < 50; i++) {
+      const ready = await http('/rest/v1/rpc/companion_read_steps', {
+        method: 'POST',
+        key: SERVICE_KEY,
+        body: JSON.stringify({ p_user_id: '00000000-0000-0000-0000-000000000000' }),
+      });
+      if (ready.status === 200) break;
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+  }, 60_000);
+  beforeEach(() => {
+    global.fetch = realFetch;
+    mockCapture = jest.fn();
+    mockStream.mockReset();
+    clearPlanStores(null);
+    clearTaskActionStores(null);
+  });
+  afterEach(() => {
+    global.fetch = realFetch;
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  it('a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step', async () => {
+    // Wrong if: the plan-added task has no step controls, checking its only step changes
+    // the task state or the plan count, or completion loses the step or the plan count.
+    const acc = await newAccount('plan-steps');
+    mockUserId = acc.id;
+    answersWithPlan();
+    mount();
+    await send('I arrive in Vancouver next week. Help me plan my first week.');
+    const card = await screen.findByTestId('plan-card', {}, { timeout: 10_000 });
+    fireEvent.press(within(card).getByRole('button', { name: `Review plan: ${GOAL}` }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+    await within(sheet).findByText('Added 1 task. Reused 2 tasks you already had.', {}, { timeout: 10_000 });
+    const plans = async () => (await actions(acc.jwt, { action: 'plans' })).json.plans;
+    const phoneRef = (await plans())[0].items[2].task_ref as string;
+    expect(phoneRef).toMatch(/^custom:/);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+
+    // Open the same task from the plan and add and check one step.
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, 0 of 3 done`) }, { timeout: 10_000 }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: `${PHONE}, Not started` }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.changeText(await within(sheet).findByLabelText('New step', {}, { timeout: 10_000 }), 'Compare phone plans');
+    fireEvent.press(await enabledButton(within(sheet), 'Add step'));
+    await within(sheet).findByRole('checkbox', { name: 'Compare phone plans' }, { timeout: 10_000 });
+    await waitFor(() => expect(isEnabled(within(sheet).getByRole('checkbox', { name: 'Compare phone plans' }))).toBe(true), { timeout: 10_000 });
+    fireEvent.press(within(sheet).getByRole('checkbox', { name: 'Compare phone plans' }));
+    await within(sheet).findByText('Checked step: Compare phone plans', {}, { timeout: 10_000 });
+    expect(await within(sheet).findByText('All steps are done. This task stays Not started until you mark it complete.')).toBeTruthy();
+    expect(within(sheet).getByRole('radio', { name: 'Not started' }).props.accessibilityState.checked).toBe(true);
+    let read = (await actions(acc.jwt, { action: 'read' })).json;
+    expect(read.tasks.find((t: { task_ref: string }) => t.task_ref === phoneRef).state).toBe('not_started');
+    expect(read.steps.filter((s: { task_ref: string }) => s.task_ref === phoneRef).map((s: { title: string; done: boolean }) => [s.title, s.done]))
+      .toEqual([['Compare phone plans', true]]);
+    expect((await plans())[0].items.map((i: { state: string }) => i.state)).toEqual(['not_started', 'not_started', 'not_started']);
+
+    // Only the explicit completion completes the task; the plan and step history follow.
+    fireEvent.press(await enabledButton(within(sheet), 'Mark task complete'));
+    expect(await within(sheet).findByText('Completed with 1 of 1 steps done.', {}, { timeout: 10_000 })).toBeTruthy();
+    read = (await actions(acc.jwt, { action: 'read' })).json;
+    expect(read.tasks.find((t: { task_ref: string }) => t.task_ref === phoneRef).state).toBe('completed');
+    expect(read.steps.filter((s: { task_ref: string }) => s.task_ref === phoneRef).map((s: { title: string; done: boolean }) => [s.title, s.done]))
+      .toEqual([['Compare phone plans', true]]);
+    expect((await plans())[0].items.map((i: { state: string }) => i.state)).toEqual(['not_started', 'not_started', 'completed']);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    expect(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}, 1 of 3 done`) }, { timeout: 10_000 })).toBeTruthy();
+  }, 90_000);
+});
