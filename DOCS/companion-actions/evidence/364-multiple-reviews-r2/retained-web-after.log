@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ✓ components/companion/plans/SpecReviewR2.test.tsx (9 tests) 5443ms
+   ✓ Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page  790ms
+   ✓ Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer  306ms
+   ✓ Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept  632ms
+   ✓ Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task  411ms
+   ✓ Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again  383ms
+   ✓ Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task  870ms
+   ✓ Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it  452ms
+   ✓ Independent round 2 checks > independent: late draft edit after account A to B to A cannot replace a newer revision  811ms
+   ✓ Independent round 2 checks > independent: both unfinished retry reviews remain reachable after a remount  786ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  16:14:09
+   Duration  6.28s (transform 173ms, setup 0ms, collect 402ms, tests 5.44s, environment 225ms, prepare 31ms)
+
+exit=0

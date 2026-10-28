@@ -64,6 +64,9 @@ import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasks
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
 import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
+import { PlanEntry, type PlanTarget } from '@/components/companion/plans/PlanEntry';
+import { PlanCards } from '@/components/companion/plans/PlanCards';
+import { useConversationPlans, usePlanStore } from '@/hooks/companion/usePlans';
 import {
   useConversationActions,
   useTaskActionStore,
@@ -161,6 +164,7 @@ export default function CompanionScreen() {
     | { kind: 'proposal'; proposalId: string }
     | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
+    | { kind: 'plan'; target: PlanTarget }
     | null
   >(null);
   // Local greeting message shown when user clicks "Ask Anything"
@@ -526,6 +530,13 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
   }, []);
+  // #364: the plan drafts of the open conversation, and the account's plan store.
+  const { data: conversationPlans } = useConversationPlans(currentConversationId);
+  const planStore = usePlanStore('companion');
+  const openPlan = useCallback((target: PlanTarget) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'plan', target });
+  }, []);
 
   const renderMessage = useCallback(
     ({ item, index }: { item: Message; index: number }) => {
@@ -567,6 +578,14 @@ export default function CompanionScreen() {
             onReviewSteps={openSteps}
             taskTitleOf={taskTitleOf}
           />
+          <PlanCards
+            messageId={
+              Number.isInteger(savedId) && savedId > 0 ? savedId : null
+            }
+            proposals={conversationPlans ?? []}
+            store={planStore}
+            onOpen={proposalId => openPlan({ proposalId })}
+          />
         </>
       );
     },
@@ -578,6 +597,9 @@ export default function CompanionScreen() {
       openTask,
       openSteps,
       taskTitleOf,
+      conversationPlans,
+      planStore,
+      openPlan,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -657,6 +679,7 @@ export default function CompanionScreen() {
             setSheet({ kind: 'tasks' });
           }}
         />
+        <PlanEntry onOpen={openPlan} />
 
         {/* Messages - takes up available space. The FlatList is intentionally
             NOT wrapped in a Pressable: wrapping a scrollable in a Pressable
@@ -794,6 +817,8 @@ export default function CompanionScreen() {
             ? { taskRef: sheet.taskRef, title: sheet.title }
             : null
         }
+        plan={sheet?.kind === 'plan' ? sheet.target : null}
+        onOpenTask={openTask}
       />
     </View>
   );

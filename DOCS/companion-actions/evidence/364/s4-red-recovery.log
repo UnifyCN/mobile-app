@@ -1,0 +1,73 @@
+# 2026-10-27T18:58:36Z s4 red: retries, races, lookup (plan_status missing)
+running 6 tests from ./plan_recovery_test.ts
+repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt ... ok (447ms)
+two approvals of one draft with different operation ids, released together from a held lock, save once ... FAILED (273ms)
+a reply lost after commit is found by lookup, and a retry with the same id replays it ... FAILED (272ms)
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once ... FAILED (270ms)
+an operation id reused with different items is refused and writes nothing ... ok (303ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+two approvals of one draft with different operation ids, released together from a held lock, save once => ./plan_recovery_test.ts:36:6
+error: AssertionError: Values are not equal: [{"plan":{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":false,"position":2,"revision":1,"task_ref":"sanity:bank-account","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:2","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":true}]},"plan_id":"861a1ae8-224a-4b76-8b50-2ea44e1bdca2","receipt":{"kind":"plan","status":"applied","plan_id":"861a1ae8-224a-4b76-8b50-2ea44e1bdca2","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:2","after_revision":1,"item_operation_id":"b6b40afc-b9a9-6009-c7a3-ffaa38d2f638"}],"created_at":"2026-10-27T18:59:07.069175+00:00","operation_id":"95772c27-ef60-4a95-87c6-3db096af03b1"},"removed":false,"revision":1,"created_at":"2026-10-27T18:59:07.069175+00:00","updated_at":"2026-10-27T18:59:07.069175+00:00","proposal_id":"82af7102-c27a-4cd6-a64f-3f4d92012fc0"},"status":"applied","receipt":{"kind":"plan","status":"applied","plan_id":"861a1ae8-224a-4b76-8b50-2ea44e1bdca2","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:2","after_revision":1,"item_operation_id":"b6b40afc-b9a9-6009-c7a3-ffaa38d2f638"}],"created_at":"2026-10-27T18:59:07.069175+00:00","operation_id":"95772c27-ef60-4a95-87c6-3db096af03b1"},"replayed":false,"operation_id":"95772c27-ef60-4a95-87c6-3db096af03b1"},{"error":"forbidden","reason":"invalid_authorization"}]
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      200,
+-     403,
++     409,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_recovery_test.ts:64:5)
+
+a reply lost after commit is found by lookup, and a retry with the same id replays it => ./plan_recovery_test.ts:73:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     undefined,
++     200,
++     "applied",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_recovery_test.ts:84:5)
+
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once => ./plan_recovery_test.ts:92:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   undefined
++   "pending"
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_recovery_test.ts:109:5)
+
+ FAILURES 
+
+two approvals of one draft with different operation ids, released together from a held lock, save once => ./plan_recovery_test.ts:36:6
+a reply lost after commit is found by lookup, and a retry with the same id replays it => ./plan_recovery_test.ts:73:6
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once => ./plan_recovery_test.ts:92:6
+
+FAILED | 3 passed | 3 failed (1s)
+
+error: Test failed
+exit=1

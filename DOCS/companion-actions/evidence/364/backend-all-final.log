@@ -1,0 +1,28 @@
+# 2026-10-27T20:16:59Z full companion-actions boundary suite at web e619a99 (final)
+running 4 tests from ./actions_test.ts
+ok | 4 passed | 0 failed (1s)
+running 11 tests from ./boundary_test.ts
+ok | 11 passed | 0 failed (7s)
+running 7 tests from ./command_test.ts
+ok | 7 passed | 0 failed (2s)
+running 3 tests from ./create_rollback_test.ts
+ok | 3 passed | 0 failed (3s)
+running 17 tests from ./create_test.ts
+ok | 17 passed | 0 failed (5s)
+running 6 tests from ./plan_access_test.ts
+ok | 6 passed | 0 failed (2s)
+running 8 tests from ./plan_recovery_test.ts
+ok | 8 passed | 0 failed (2s)
+running 3 tests from ./plan_rollback_test.ts
+ok | 3 passed | 0 failed (2s)
+running 8 tests from ./plan_test.ts
+ok | 8 passed | 0 failed (3s)
+running 6 tests from ./plan_undo_test.ts
+ok | 6 passed | 0 failed (1s)
+running 4 tests from ./receipt_history_test.ts
+ok | 4 passed | 0 failed (796ms)
+running 6 tests from ./rollback_test.ts
+ok | 6 passed | 0 failed (8s)
+running 8 tests from ./undo_test.ts
+ok | 8 passed | 0 failed (2s)
+exit=0

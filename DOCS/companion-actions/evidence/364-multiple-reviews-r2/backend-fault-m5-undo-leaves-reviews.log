@@ -1,0 +1,35 @@
+running 5 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... ok (620ms)
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review ... ok (377ms)
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review ... ok (472ms)
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task ... FAILED (661ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      "applied",
+-     "draft",
++     "cancelled",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:238:5)
+
+ FAILURES 
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+
+FAILED | 4 passed | 1 failed (2s)
+
+error: Test failed
+mf-m5-undo-leaves-reviews exit=1

@@ -1,0 +1,929 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ❯ components/companion/plans/PlanLocalStack.test.tsx (8 tests | 1 failed | 7 skipped) 1086ms
+   ↓ Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page
+   ↓ Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer
+   ↓ Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept
+   ↓ Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task
+   ↓ Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again
+   ↓ Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task
+   × Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer 1085ms
+     → Unable to find an accessible element with the role "region" and name "Review the remaining change: Set up phone service"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Your plan":
+  <h2
+    class="min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"
+    id="task-drawer-title"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Close":
+  <button
+    aria-label="Close"
+    class="press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    type="button"
+  />
+
+  --------------------------------------------------paragraph:
+
+  Name "":
+  <p
+    class="text-xs text-ink-muted"
+  />
+
+  Name "":
+  <p
+    class="rounded-lg border border-primary-subtle bg-primary-bg p-3 text-sm text-ink"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="rounded-lg border border-primary-subtle bg-primary-bg p-3 text-sm text-ink"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-xs text-ink-muted"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  --------------------------------------------------
+  heading:
+
+  Name "Your first week in Vancouver":
+  <h3
+    class="mt-1 break-words text-lg font-semibold text-ink"
+  />
+
+  Name "Review the remaining change":
+  <h4
+    class="text-sm font-semibold text-ink"
+    id="plan-review-e396074c-a38e-477d-8f25-c9aacb9af75f"
+  />
+
+  Name "Based on your profile":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "New tasks to add":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "Review the remaining change":
+  <h4
+    class="text-sm font-semibold text-ink"
+    id="plan-review-b2552b17-1347-4720-82f7-f0f20872c629"
+  />
+
+  Name "Based on your profile":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "New tasks to add":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  <li />
+
+  Name "":
+  <li />
+
+  Name "":
+  <li
+    class="space-y-2 py-2"
+  />
+
+  Name "":
+  <li
+    class="space-y-2 py-2"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Get your SIN, Not started":
+  <button
+    aria-disabled="false"
+    aria-label="Get your SIN, Not started"
+    class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+    type="button"
+  />
+
+  Name "Open a bank account, Not started":
+  <button
+    aria-disabled="false"
+    aria-label="Open a bank account, Not started"
+    class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+    type="button"
+  />
+
+  Name "Use the task I have":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Add as a new task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Approve and add 1 task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg bg-ink-secondary px-4 text-sm font-semibold text-white hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Not now":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Approve and add 1 task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg bg-ink-secondary px-4 text-sm font-semibold text-white hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Not now":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Undo plan change":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  <p
+    class="text-sm font-semibold text-ink"
+    data-drawer-focus=""
+    role="status"
+    tabindex="-1"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+    role="status"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+    role="status"
+  />
+
+  --------------------------------------------------
+  region:
+
+  Name "Review the remaining change":
+  <section
+    aria-labelledby="plan-review-e396074c-a38e-477d-8f25-c9aacb9af75f"
+    class="space-y-3 rounded-lg border border-primary-subtle bg-primary-bg p-3"
+  />
+
+  Name "Review the remaining change":
+  <section
+    aria-labelledby="plan-review-b2552b17-1347-4720-82f7-f0f20872c629"
+    class="space-y-3 rounded-lg border border-primary-subtle bg-primary-bg p-3"
+  />
+
+  --------------------------------------------------
+  checkbox:
+
+  Name "Add Set up phone service":
+  <input
+    aria-disabled="true"
+    aria-label="Add Set up phone service"
+    checked=""
+    class="h-5 w-5 shrink-0 accent-primary"
+    id="plan-e396074c-a38e-477d-8f25-c9aacb9af75f-n1"
+    type="checkbox"
+  />
+
+  Name "Add Get a library card":
+  <input
+    aria-disabled="true"
+    aria-label="Add Get a library card"
+    checked=""
+    class="h-5 w-5 shrink-0 accent-primary"
+    id="plan-b2552b17-1347-4720-82f7-f0f20872c629-n2"
+    type="checkbox"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<div
+  aria-labelledby="task-drawer-title"
+  aria-modal="true"
+  class="flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"
+  role="dialog"
+  style="opacity: 0; transform: translateY(8px) scale(0.97);"
+>
+  <div
+    class="flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"
+  >
+    <h2
+      class="min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"
+      id="task-drawer-title"
+      tabindex="-1"
+    >
+      Your plan
+    </h2>
+    <button
+      aria-label="Close"
+      class="press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-x h-5 w-5"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 6 6 18"
+        />
+        <path
+          d="m6 6 12 12"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"
+  >
+    <div
+      class="space-y-5"
+    >
+      <div>
+        <p
+          class="text-xs text-ink-muted"
+        >
+          Saved plan · uses your shared Checklist
+        </p>
+        <h3
+          class="mt-1 break-words text-lg font-semibold text-ink"
+        >
+          Your first week in Vancouver
+        </h3>
+      </div>
+      <ul
+        class="divide-y divide-border-card"
+      >
+        <li>
+          <button
+            aria-disabled="false"
+            aria-label="Get your SIN, Not started"
+            class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-circle h-5 w-5 shrink-0 text-primary"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+            </svg>
+            <span
+              class="min-w-0 flex-1"
+            >
+              <span
+                class="block break-words text-sm font-medium text-ink"
+              >
+                Get your SIN
+              </span>
+              <span
+                class="block text-xs text-ink-muted"
+              >
+                Not started
+              </span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button
+            aria-disabled="false"
+            aria-label="Open a bank account, Not started"
+            class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-circle h-5 w-5 shrink-0 text-primary"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+            </svg>
+            <span
+              class="min-w-0 flex-1"
+            >
+              <span
+                class="block break-words text-sm font-medium text-ink"
+              >
+                Open a bank account
+              </span>
+              <span
+                class="block text-xs text-ink-muted"
+              >
+                Not started
+              </span>
+            </span>
+          </button>
+        </li>
+      </ul>
+      <div
+        class="space-y-3"
+      >
+        <p
+          class="text-sm font-semibold text-ink"
+          data-drawer-focus=""
+          role...
+   ↓ Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer
+TestingLibraryElementError: Unable to find an accessible element with the role "region" and name "Review the remaining change: Set up phone service"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Your plan":
+  <h2
+    class="min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"
+    id="task-drawer-title"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Close":
+  <button
+    aria-label="Close"
+    class="press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    type="button"
+  />
+
+  --------------------------------------------------paragraph:
+
+  Name "":
+  <p
+    class="text-xs text-ink-muted"
+  />
+
+  Name "":
+  <p
+    class="rounded-lg border border-primary-subtle bg-primary-bg p-3 text-sm text-ink"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="rounded-lg border border-primary-subtle bg-primary-bg p-3 text-sm text-ink"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-xs text-ink-muted"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+  />
+
+  --------------------------------------------------
+  heading:
+
+  Name "Your first week in Vancouver":
+  <h3
+    class="mt-1 break-words text-lg font-semibold text-ink"
+  />
+
+  Name "Review the remaining change":
+  <h4
+    class="text-sm font-semibold text-ink"
+    id="plan-review-e396074c-a38e-477d-8f25-c9aacb9af75f"
+  />
+
+  Name "Based on your profile":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "New tasks to add":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "Review the remaining change":
+  <h4
+    class="text-sm font-semibold text-ink"
+    id="plan-review-b2552b17-1347-4720-82f7-f0f20872c629"
+  />
+
+  Name "Based on your profile":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  Name "New tasks to add":
+  <h4
+    class="text-xs font-semibold text-ink"
+  />
+
+  --------------------------------------------------
+  list:
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  Name "":
+  <ul
+    class="divide-y divide-border-card"
+  />
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  <li />
+
+  Name "":
+  <li />
+
+  Name "":
+  <li
+    class="space-y-2 py-2"
+  />
+
+  Name "":
+  <li
+    class="space-y-2 py-2"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Get your SIN, Not started":
+  <button
+    aria-disabled="false"
+    aria-label="Get your SIN, Not started"
+    class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+    type="button"
+  />
+
+  Name "Open a bank account, Not started":
+  <button
+    aria-disabled="false"
+    aria-label="Open a bank account, Not started"
+    class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+    type="button"
+  />
+
+  Name "Use the task I have":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Add as a new task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Approve and add 1 task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg bg-ink-secondary px-4 text-sm font-semibold text-white hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Not now":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Approve and add 1 task":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg bg-ink-secondary px-4 text-sm font-semibold text-white hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Not now":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  Name "Undo plan change":
+  <button
+    aria-disabled="true"
+    class="press inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border border-border-card bg-surface px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+    type="button"
+  />
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  <p
+    class="text-sm font-semibold text-ink"
+    data-drawer-focus=""
+    role="status"
+    tabindex="-1"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+    role="status"
+  />
+
+  Name "":
+  <p
+    class="text-sm text-ink-secondary"
+    role="status"
+  />
+
+  --------------------------------------------------
+  region:
+
+  Name "Review the remaining change":
+  <section
+    aria-labelledby="plan-review-e396074c-a38e-477d-8f25-c9aacb9af75f"
+    class="space-y-3 rounded-lg border border-primary-subtle bg-primary-bg p-3"
+  />
+
+  Name "Review the remaining change":
+  <section
+    aria-labelledby="plan-review-b2552b17-1347-4720-82f7-f0f20872c629"
+    class="space-y-3 rounded-lg border border-primary-subtle bg-primary-bg p-3"
+  />
+
+  --------------------------------------------------
+  checkbox:
+
+  Name "Add Set up phone service":
+  <input
+    aria-disabled="true"
+    aria-label="Add Set up phone service"
+    checked=""
+    class="h-5 w-5 shrink-0 accent-primary"
+    id="plan-e396074c-a38e-477d-8f25-c9aacb9af75f-n1"
+    type="checkbox"
+  />
+
+  Name "Add Get a library card":
+  <input
+    aria-disabled="true"
+    aria-label="Add Get a library card"
+    checked=""
+    class="h-5 w-5 shrink-0 accent-primary"
+    id="plan-b2552b17-1347-4720-82f7-f0f20872c629-n2"
+    type="checkbox"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<div
+  aria-labelledby="task-drawer-title"
+  aria-modal="true"
+  class="flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"
+  role="dialog"
+  style="opacity: 0; transform: translateY(8px) scale(0.97);"
+>
+  <div
+    class="flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"
+  >
+    <h2
+      class="min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"
+      id="task-drawer-title"
+      tabindex="-1"
+    >
+      Your plan
+    </h2>
+    <button
+      aria-label="Close"
+      class="press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-x h-5 w-5"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 6 6 18"
+        />
+        <path
+          d="m6 6 12 12"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"
+  >
+    <div
+      class="space-y-5"
+    >
+      <div>
+        <p
+          class="text-xs text-ink-muted"
+        >
+          Saved plan · uses your shared Checklist
+        </p>
+        <h3
+          class="mt-1 break-words text-lg font-semibold text-ink"
+        >
+          Your first week in Vancouver
+        </h3>
+      </div>
+      <ul
+        class="divide-y divide-border-card"
+      >
+        <li>
+          <button
+            aria-disabled="false"
+            aria-label="Get your SIN, Not started"
+            class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-circle h-5 w-5 shrink-0 text-primary"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+            </svg>
+            <span
+              class="min-w-0 flex-1"
+            >
+              <span
+                class="block break-words text-sm font-medium text-ink"
+              >
+                Get your SIN
+              </span>
+              <span
+                class="block text-xs text-ink-muted"
+              >
+                Not started
+              </span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button
+            aria-disabled="false"
+            aria-label="Open a bank account, Not started"
+            class="press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:cursor-not-allowed"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-circle h-5 w-5 shrink-0 text-primary"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+            </svg>
+            <span
+              class="min-w-0 flex-1"
+            >
+              <span
+                class="block break-words text-sm font-medium text-ink"
+              >
+                Open a bank account
+              </span>
+              <span
+                class="block text-xs text-ink-muted"
+              >
+                Not started
+              </span>
+            </span>
+          </button>
+        </li>
+      </ul>
+      <div
+        class="space-y-3"
+      >
+        <p
+          class="text-sm font-semibold text-ink"
+          data-drawer-focus=""
+          role...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:603:42
+    601|       expect(within(drawer).queryByRole("checkbox", { name: `Add ${PHO…
+    602|       expect(within(drawer).queryByRole("button", { name: /Try adding/…
+    603|       const phoneReview = within(drawer).getByRole("region", { name: `…
+       |                                          ^
+    604|       const libraryReview = within(drawer).getByRole("region", { name:…
+    605| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  16:12:04
+   Duration  1.79s (transform 186ms, setup 0ms, collect 395ms, tests 1.09s, environment 132ms, prepare 30ms)
+
+c2-unnamed exit=1

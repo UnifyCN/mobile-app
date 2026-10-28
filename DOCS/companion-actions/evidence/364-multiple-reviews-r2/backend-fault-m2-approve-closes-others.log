@@ -1,0 +1,86 @@
+running 5 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... FAILED (668ms)
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review ... ok (464ms)
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review ... FAILED (395ms)
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task ... FAILED (686ms)
+cleanup ... ok (5ms)
+
+ ERRORS 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+error: AssertionError: Values are not equal: approving one review changed the other
+
+
+    [Diff] Actual / Expected
+
+
++   [
++     [
++       "4b166ec6-fef0-41e0-8c12-cfdb22cb5b76",
++       1,
++       [
++         {
++           include: true,
++           key: "n3",
++           kind: "new",
++           priority: "Do soon",
++           title: "Get a library card",
++         },
++       ],
++     ],
++   ]
+-   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:116:5)
+
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review => ./plan_multiple_reviews_test.ts:161:6
+error: AssertionError: Values are not equal: [{"plan":{"goal":"Two remaining additions","items":[{"state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"state":"not_started","title":"Arrange transport","exists":true,"source":"custom","removed":false,"position":2,"revision":1,"task_ref":"custom:11","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:16","waiting_reason":null}],"review":{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}],"tasks":[],"source":null,"status":"cancelled","context":{"matches":{"n3":[]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":null,"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","created_at":"2026-10-27T23:03:13.143487+00:00","unresolved":[],"updated_at":"2026-10-27T23:03:13.143487+00:00","change_count":1,"review_reason":"context_changed","plan_proposal_id":"1b49bde1-bcc7-4552-a140-7a0f0f9380e3","previous_context":{"matches":{"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"proposal_revision":1},"source":null,"context":{"matches":{"n1":[],"n2":[],"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true}]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":{"kind":"plan","status":"partial","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"kind":"existing","outcome":"reused","task_ref":"sanity:sin-number"},{"key":"n1","kind":"new","title":"Arrange transport","outcome":"created","task_ref":"custom:11","after_revision":1,"item_operation_id":"ab764900-fcf8-9e2e-3d87-21ab2895b3be"},{"key":"n2","kind":"new","title":"Set up phone service","reason":"write_failed","outcome":"failed","item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"},{"key":"n3","kind":"new","title":"Get a library card","reason":"write_failed","outcome":"failed","item_operation_id":"592b3941-ddd0-a4f9-be25-f2eeb4a291c0"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":["n3"],"undone_by":null,"created_at":"2026-10-27T23:03:13.080262+00:00","operation_id":"04f04984-2434-496e-bad9-5e7040898057","removal_count":1,"plan_proposal_id":null},"removed":false,"reviews":[{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n2","kind":"new","title":"Set up phone service","include":true,"priority":"Do soon","confirm_new":true}],"tasks":[],"source":null,"status":"applied","context":{"matches":{"n2":[{"title":"Set up phone service","task_ref":"custom:14"}]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":{"kind":"plan_retry","status":"applied","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"key":"n2","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"}],"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:03:13.259658+00:00","operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced","removal_count":0,"plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54"},"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","created_at":"2026-10-27T23:03:13.116719+00:00","unresolved":[],"updated_at":"2026-10-27T23:03:13.259658+00:00","change_count":1,"review_reason":"edited","plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54","previous_context":null,"proposal_revision":3}],"revision":2,"created_at":"2026-10-27T23:03:13.080262+00:00","updated_at":"2026-10-27T23:03:13.259658+00:00","proposal_id":"18fefd72-3e07-460f-b63e-34e486bcc131"},"status":"applied","receipt":{"kind":"plan_retry","status":"applied","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"key":"n2","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"}],"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:03:13.259658+00:00","operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced","removal_count":0,"plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54"},"replayed":true,"operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced"},{"error":"forbidden","reason":"invalid_authorization"},{"plan":{"goal":"Two remaining additions","items":[{"state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"state":"not_started","title":"Arrange transport","exists":true,"source":"custom","removed":false,"position":2,"revision":1,"task_ref":"custom:11","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:16","waiting_reason":null}],"review":{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}],"tasks":[],"source":null,"status":"cancelled","context":{"matches":{"n3":[]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":null,"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","created_at":"2026-10-27T23:03:13.143487+00:00","unresolved":[],"updated_at":"2026-10-27T23:03:13.143487+00:00","change_count":1,"review_reason":"context_changed","plan_proposal_id":"1b49bde1-bcc7-4552-a140-7a0f0f9380e3","previous_context":{"matches":{"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"proposal_revision":1},"source":null,"context":{"matches":{"n1":[],"n2":[],"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true}]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":{"kind":"plan","status":"partial","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"kind":"existing","outcome":"reused","task_ref":"sanity:sin-number"},{"key":"n1","kind":"new","title":"Arrange transport","outcome":"created","task_ref":"custom:11","after_revision":1,"item_operation_id":"ab764900-fcf8-9e2e-3d87-21ab2895b3be"},{"key":"n2","kind":"new","title":"Set up phone service","reason":"write_failed","outcome":"failed","item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"},{"key":"n3","kind":"new","title":"Get a library card","reason":"write_failed","outcome":"failed","item_operation_id":"592b3941-ddd0-a4f9-be25-f2eeb4a291c0"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":["n3"],"undone_by":null,"created_at":"2026-10-27T23:03:13.080262+00:00","operation_id":"04f04984-2434-496e-bad9-5e7040898057","removal_count":1,"plan_proposal_id":null},"removed":false,"reviews":[{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n2","kind":"new","title":"Set up phone service","include":true,"priority":"Do soon","confirm_new":true}],"tasks":[],"source":null,"status":"applied","context":{"matches":{"n2":[{"title":"Set up phone service","task_ref":"custom:14"}]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","receipt":{"kind":"plan_retry","status":"applied","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"key":"n2","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"}],"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:03:13.259658+00:00","operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced","removal_count":0,"plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54"},"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","created_at":"2026-10-27T23:03:13.116719+00:00","unresolved":[],"updated_at":"2026-10-27T23:03:13.259658+00:00","change_count":1,"review_reason":"edited","plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54","previous_context":null,"proposal_revision":3}],"revision":2,"created_at":"2026-10-27T23:03:13.080262+00:00","updated_at":"2026-10-27T23:03:13.259658+00:00","proposal_id":"18fefd72-3e07-460f-b63e-34e486bcc131"},"status":"applied","receipt":{"kind":"plan_retry","status":"applied","plan_id":"ed1177a9-9032-4460-bee7-e52182a2f910","results":[{"key":"n2","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"8141972b-b333-0720-34a3-f72734e3d697"}],"undo_of":null,"retry_of":"04f04984-2434-496e-bad9-5e7040898057","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:03:13.259658+00:00","operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced","removal_count":0,"plan_proposal_id":"ce403954-0b16-4a30-a955-5442483c5d54"},"replayed":false,"operation_id":"86f073a1-fae0-483f-9992-89a0d8c31ced"},{"error":"forbidden","reason":"invalid_authorization"}]
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      200,
+-     403,
+      200,
+-     403,
++     200,
++     200,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:182:5)
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
++   [
++     "9c91b069-f0c7-46c6-b95d-8fe8f4f27702",
++   ]
+-   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:229:5)
+
+ FAILURES 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review => ./plan_multiple_reviews_test.ts:161:6
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+
+FAILED | 2 passed | 3 failed (2s)
+
+error: Test failed
+mf-m2-approve-closes-others exit=1

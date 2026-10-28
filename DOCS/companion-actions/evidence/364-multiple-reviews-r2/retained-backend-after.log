@@ -1,0 +1,16 @@
+running 3 tests from ./spec_r2_review_test.ts
+independent: reviewed remaining addition preserves an earlier saved addition, identity, receipt and exact Undo ...
+------- output -------
+{"preserved":"custom:1","itemOperation":"acdcf585-8b63-33b3-f49d-b80206273abe","reviewOperation":"660d5c18-361f-464e-94f5-2ac7f10b1bb4","concurrentStatuses":[200,200],"undo":200}
+----- output end -----
+independent: reviewed remaining addition preserves an earlier saved addition, identity, receipt and exact Undo ... ok (566ms)
+independent: a second retry review must not hide the first unfinished review ...
+------- output -------
+{"firstReview":"d610b6e4-da45-4a86-8443-7264f685655b","secondReview":"bc621010-f467-497c-b628-b25af2fe2c2a","reachable":["bc621010-f467-497c-b628-b25af2fe2c2a","d610b6e4-da45-4a86-8443-7264f685655b","bc621010-f467-497c-b628-b25af2fe2c2a"],"retryable":[],"openReviews":[{"id":"d610b6e4-da45-4a86-8443-7264f685655b","status":"draft","items":[{"key":"n2","kind":"new","title":"Set up phone service","include":true,"priority":"Do soon"}]},{"id":"bc621010-f467-497c-b628-b25af2fe2c2a","status":"draft","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}]}]}
+----- output end -----
+independent: a second retry review must not hide the first unfinished review ... ok (284ms)
+cleanup ... ok (3ms)
+
+ok | 3 passed | 0 failed (862ms)
+
+exit=0

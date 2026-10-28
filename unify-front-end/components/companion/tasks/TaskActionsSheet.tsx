@@ -36,6 +36,8 @@ import { TaskProposalPanel } from './TaskProposalPanel';
 import { StepProposalPanel } from './StepProposalPanel';
 import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import { useStepProposal } from '@/hooks/companion/useTaskActions';
+import { PlanPanel } from '../plans/PlanPanel';
+import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -57,6 +59,10 @@ interface TaskActionsSheetProps {
   initialTask?: { taskRef: string; title: string } | null;
   /** #366: open on the review of suggested steps for one task. */
   stepProposalId?: string | null;
+  /** Open on a settlement plan draft or saved plan (#364). */
+  plan?: PlanTarget | null;
+  /** A task row of the plan was opened (#364). */
+  onOpenTask?: (taskRef: string, title: string) => void;
 }
 
 /**
@@ -71,6 +77,8 @@ export function TaskActionsSheet({
   proposalId = null,
   initialTask = null,
   stepProposalId = null,
+  plan = null,
+  onOpenTask,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -96,7 +104,11 @@ export function TaskActionsSheet({
   const back = () => setSelectedRef(null);
   // Opened on a draft or one task: there is no list to go back to.
   const canGoBack =
-    Boolean(selectedRef) && !proposalId && !stepProposalId && !initialRef;
+    Boolean(selectedRef) &&
+    !proposalId &&
+    !stepProposalId &&
+    !initialRef &&
+    !plan;
 
   return (
     <Modal
@@ -150,6 +162,10 @@ export function TaskActionsSheet({
               <Text style={styles.heading} accessibilityRole='header'>
                 {stepProposalId
                   ? t('taskSteps.reviewTitle')
+                  : plan
+                  ? 'proposalId' in plan
+                    ? t('plans.reviewTitle')
+                    : t('plans.planTitle')
                   : proposalId
                   ? t('taskCreate.drawerTitle')
                   : selectedRef
@@ -167,6 +183,17 @@ export function TaskActionsSheet({
             </View>
             {visible && stepProposalId ? (
               <StepProposalBody proposalId={stepProposalId} />
+            ) : visible && plan ? (
+              <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps='handled'
+              >
+                <PlanPanel
+                  target={plan}
+                  onOpenTask={(taskRef, title) => onOpenTask?.(taskRef, title)}
+                />
+              </ScrollView>
             ) : visible && proposalId ? (
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (

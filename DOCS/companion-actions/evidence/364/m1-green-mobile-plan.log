@@ -1,0 +1,8 @@
+# 2026-10-27T19:44:31Z m1 green: mounted plan acceptance against the real local stack
+    ✓ a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task (1235 ms)
+    ✓ the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation (614 ms)
+    ✓ a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes (520 ms)
+    ✓ an account change hides the previous account's plan entry, cards and open plan before the next account renders (3542 ms)
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+exit=0

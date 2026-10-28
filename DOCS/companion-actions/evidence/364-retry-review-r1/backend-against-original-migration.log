@@ -1,0 +1,82 @@
+running 7 tests from ./plan_retry_review_test.ts
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task ... FAILED (387ms)
+concurrent retries open one review; replays, a second context change, competing and lost approvals add one task ... FAILED (265ms)
+an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review ... FAILED (335ms)
+a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none ... FAILED (279ms)
+Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review ... FAILED (273ms)
+another account cannot read, edit, approve, close or retry a revised review ... FAILED (401ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task => ./plan_retry_review_test.ts:19:6
+error: AssertionError: the needs-review result names no revised proposal
+    throw new AssertionError(msg);
+          ^
+    at assert (https://jsr.io/@std/assert/1.0.19/assert.ts:22:11)
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:36:5)
+
+concurrent retries open one review; replays, a second context change, competing and lost approvals add one task => ./plan_retry_review_test.ts:89:6
+error: AssertionError: Values are not equal: [{"plan":{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":false,"position":2,"revision":1,"task_ref":"sanity:bank-account","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":true}]},"plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","receipt":{"kind":"plan","status":"partial","plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","reason":"write_failed","outcome":"failed","item_operation_id":"87b79d2b-ed12-fd2f-d5be-71372cc4f0d1"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":["n1"],"undone_by":null,"created_at":"2026-10-27T21:44:46.948349+00:00","operation_id":"70572a72-476b-44c8-91f8-7d4e973e48f4","removal_count":0},"removed":false,"revision":3,"created_at":"2026-10-27T21:44:46.948349+00:00","updated_at":"2026-10-27T21:44:46.989395+00:00","proposal_id":"d27b536f-3ef9-4ea7-b4d6-8b13d3cda2e0"},"status":"partial","receipt":{"kind":"plan_retry","status":"partial","plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","results":[{"key":"n1","kind":"new","title":"Set up phone service","reason":"context_changed","outcome":"needs_review"}],"undo_of":null,"retry_of":"70572a72-476b-44c8-91f8-7d4e973e48f4","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T21:44:46.989395+00:00","operation_id":"5237c60a-2a70-4fbb-968f-74b32968b144","removal_count":0},"replayed":false,"operation_id":"5237c60a-2a70-4fbb-968f-74b32968b144"},{"plan":{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":false,"position":2,"revision":1,"task_ref":"sanity:bank-account","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":true}]},"plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","receipt":{"kind":"plan","status":"partial","plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","reason":"write_failed","outcome":"failed","item_operation_id":"87b79d2b-ed12-fd2f-d5be-71372cc4f0d1"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":["n1"],"undone_by":null,"created_at":"2026-10-27T21:44:46.948349+00:00","operation_id":"70572a72-476b-44c8-91f8-7d4e973e48f4","removal_count":0},"removed":false,"revision":2,"created_at":"2026-10-27T21:44:46.948349+00:00","updated_at":"2026-10-27T21:44:46.983397+00:00","proposal_id":"d27b536f-3ef9-4ea7-b4d6-8b13d3cda2e0"},"status":"partial","receipt":{"kind":"plan_retry","status":"partial","plan_id":"f3eaf73f-5b1c-43ea-837c-247cbf63accf","results":[{"key":"n1","kind":"new","title":"Set up phone service","reason":"context_changed","outcome":"needs_review"}],"undo_of":null,"retry_of":"70572a72-476b-44c8-91f8-7d4e973e48f4","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T21:44:46.983397+00:00","operation_id":"4d37b821-74cc-4bae-8257-94aae6a2a817","removal_count":0},"replayed":false,"operation_id":"4d37b821-74cc-4bae-8257-94aae6a2a817"}]
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      200,
+-     200,
++     422,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:100:5)
+
+an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review => ./plan_retry_review_test.ts:138:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   undefined
++   null
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:151:5)
+
+a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none => ./plan_retry_review_test.ts:157:6
+error: TypeError: Cannot read properties of undefined (reading 'unresolved')
+    assertEquals(review.unresolved, ['n1']);
+                        ^
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:169:25)
+
+Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review => ./plan_retry_review_test.ts:188:6
+error: TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+    const c = await planCancel(a, review.plan_proposal_id, review.proposal_revision);
+                                         ^
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:196:42)
+
+another account cannot read, edit, approve, close or retry a revised review => ./plan_retry_review_test.ts:224:6
+error: TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+    assertEquals((await planProposal(b, review.plan_proposal_id)).status, 404);
+                                               ^
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:231:48)
+
+ FAILURES 
+
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task => ./plan_retry_review_test.ts:19:6
+concurrent retries open one review; replays, a second context change, competing and lost approvals add one task => ./plan_retry_review_test.ts:89:6
+an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review => ./plan_retry_review_test.ts:138:6
+a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none => ./plan_retry_review_test.ts:157:6
+Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review => ./plan_retry_review_test.ts:188:6
+another account cannot read, edit, approve, close or retry a revised review => ./plan_retry_review_test.ts:224:6
+
+FAILED | 1 passed | 6 failed (1s)
+
+error: Test failed
+exit=1
