@@ -1,0 +1,17 @@
+PASS __tests__/companionActions/taskSteps.test.tsx
+  Task steps (mobile, stand-in network)
+    ✓ a step reply lost after commit is looked up, never resent; the step and its receipt appear once (317 ms)
+    ✓ pending and failed lookups stay unresolved and send nothing; confirmed not applied retries the same operation (389 ms)
+    ✓ the same step control stays mounted through its save and the re-read; a typed step survives close and reopen (267 ms)
+    ✓ offline: a failed read turns step controls off, sends nothing and keeps the typed step (214 ms)
+    ✓ a removal asks first and Keep sends nothing; removal and Undo keep their own receipts (281 ms)
+    ✓ an account change drops the previous account's steps and typed step before the next account renders (179 ms)
+    ✓ step results reach analytics as allowlisted categories only, never the step text (167 ms)
+    ✓ on Android the step controls are at least 48dp; iOS keeps 44pt (349 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        3.158 s
+Ran all test suites matching /__tests__\/companionActions\/taskSteps.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
 import type {
+  StepProposal,
   TaskProposal,
   TaskReceipt,
 } from '@/services/companionActions/contract';
@@ -34,16 +35,18 @@ interface CardsProps {
   canWrite: boolean;
   onReview: (proposalId: string, kind: TaskProposal['kind']) => void;
   onViewTask: (taskRef: string, title: string) => void;
-  /** The account's Checklist title of a task (#365 edits name existing tasks). */
-  titleFor?: (taskRef: string) => string | null;
+  /** #366: suggested-step drafts of the conversation, and how to open one. */
+  stepProposals?: StepProposal[];
+  onReviewSteps?: (proposalId: string) => void;
+  /** The current title of a Checklist task, or null when this account has no such task. */
+  taskTitleOf?: (taskRef: string) => string | null;
 }
 
 /**
- * Compact cards under a conversation message (direction B, mobile-app#363, #365): a
- * task draft or a task change the answer suggested, or the result of a clear command in
- * the user's own message. A draft card says it is not saved; it opens the bottom sheet
- * for review. A result card shows the saved change by its receipt, not by any
- * assistant text.
+ * Compact cards under a conversation message (direction B, mobile-app#363): a task
+ * draft the answer suggested, or the result of a clear command in the user's own
+ * message. A draft card says it is not saved; it opens the bottom sheet for review.
+ * A result card shows the saved task by its receipt, not by any assistant text.
  */
 export function TaskActionCards({
   messageId,
@@ -54,10 +57,13 @@ export function TaskActionCards({
   canWrite,
   onReview,
   onViewTask,
-  titleFor = () => null,
+  stepProposals = [],
+  onReviewSteps,
+  taskTitleOf,
 }: CardsProps) {
   if (messageId === null) return null;
   const mine = proposals.filter(p => p.source?.messageId === messageId);
+  const mySteps = stepProposals.filter(p => p.source?.messageId === messageId);
   const command = commands.find(c => c.messageId === messageId) ?? null;
   return (
     <>
@@ -67,11 +73,7 @@ export function TaskActionCards({
             key={p.proposalId}
             proposal={p}
             store={store}
-            title={
-              p.task?.title ??
-              titleFor(p.operation.task_ref) ??
-              null
-            }
+            title={p.task?.title ?? taskTitleOf?.(p.operation.task_ref) ?? null}
             onReview={() => onReview(p.proposalId, p.kind)}
           />
         ) : (
@@ -83,6 +85,15 @@ export function TaskActionCards({
           />
         )
       )}
+      {mySteps.map(p => (
+        <StepDraftCard
+          key={p.proposalId}
+          proposal={p}
+          store={store}
+          taskTitle={taskTitleOf?.(p.operation.task_ref) ?? null}
+          onReview={() => onReviewSteps?.(p.proposalId)}
+        />
+      ))}
       {isUser && (
         <CommandCard
           messageId={messageId}
@@ -90,7 +101,7 @@ export function TaskActionCards({
           store={store}
           canWrite={canWrite}
           onViewTask={onViewTask}
-          titleFor={titleFor}
+          taskTitleOf={taskTitleOf ?? (() => null)}
         />
       )}
     </>
@@ -174,6 +185,57 @@ function DraftCard({
         name={
           draft ? t('taskCreate.reviewA11y', { title }) : t('taskCreate.view')
         }
+        onPress={onReview}
+      />
+    </View>
+  );
+}
+
+/** #366: suggested steps for one task. Says it is not saved; opens the sheet for review. */
+function StepDraftCard({
+  proposal,
+  store,
+  taskTitle,
+  onReview,
+}: {
+  proposal: StepProposal;
+  store: TaskActionStore | null;
+  taskTitle: string | null;
+  onReview: () => void;
+}) {
+  const { t } = useTranslation();
+  const phase = useTaskActionPhase(store, `proposal:${proposal.proposalId}`);
+  const saved = phase.phase === 'saved' ? phase.receipt : proposal.receipt;
+  const draft = proposal.status === 'draft' && !saved;
+  const heading = taskTitle
+    ? t('taskSteps.cardTitle', { task: taskTitle })
+    : t('taskSteps.cardTitleUnknownTask');
+  const status = saved
+    ? t('taskSteps.added', { count: saved.steps?.length ?? 0 })
+    : proposal.status === 'cancelled'
+      ? t('taskSteps.closed')
+      : isUnresolved(phase)
+        ? t('taskActions.checking')
+        : t('taskSteps.draftBadge');
+  const task = taskTitle ?? t('taskSteps.cardTitleUnknownTask');
+  return (
+    <View testID='step-draft-card' style={[styles.card, draft && styles.cardDraft]}>
+      <CardIcon />
+      <View style={styles.text}>
+        <Text style={styles.eyebrow}>{t('taskSteps.cardEyebrow')}</Text>
+        <Text style={styles.title}>{heading}</Text>
+        {draft && (
+          <Text style={styles.status}>
+            {t('taskSteps.cardCount', { count: proposal.operation.titles.length })}
+          </Text>
+        )}
+        <Text style={styles.status} accessibilityLiveRegion='polite'>
+          {status}
+        </Text>
+      </View>
+      <CardButton
+        label={draft ? t('taskSteps.review') : t('taskSteps.view')}
+        name={draft ? t('taskSteps.reviewA11y', { task }) : t('taskSteps.view')}
         onPress={onReview}
       />
     </View>
@@ -283,14 +345,14 @@ function CommandCard({
   store,
   canWrite,
   onViewTask,
-  titleFor,
+  taskTitleOf,
 }: {
   messageId: number;
   saved: TaskReceipt | null;
   store: TaskActionStore | null;
   canWrite: boolean;
   onViewTask: (taskRef: string, title: string) => void;
-  titleFor: (taskRef: string) => string | null;
+  taskTitleOf: (taskRef: string) => string | null;
 }) {
   const { t } = useTranslation();
   const key = `command:${messageId}`;
@@ -303,7 +365,7 @@ function CommandCard({
   ) {
     // #365: a clear edit command's saved change, named field by field.
     const title =
-      receipt.title ?? titleFor(receipt.taskRef) ?? t('taskEdit.unknownTask');
+      receipt.title ?? taskTitleOf(receipt.taskRef) ?? t('taskEdit.unknownTask');
     return (
       <View testID='task-command-card' style={styles.card}>
         <CardIcon />
@@ -351,7 +413,7 @@ function CommandCard({
       </View>
     );
   }
-  const text = commandText(t as never, phase, titleFor);
+  const text = commandText(t as never, phase, taskTitleOf);
   if (!text) return null;
   return (
     <View testID='task-command-card' style={styles.card}>

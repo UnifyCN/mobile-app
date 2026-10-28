@@ -63,7 +63,7 @@ import { useToast } from '@/context/ToastContext';
 import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
-import { useTaskTitles } from '@/hooks/companion/useTaskTitles';
+import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import {
   useConversationActions,
   useTaskActionStore,
@@ -163,6 +163,7 @@ export default function CompanionScreen() {
         proposalId: string;
         proposalKind: 'task_create' | 'task_edit';
       }
+    | { kind: 'steps'; proposalId: string }
     | { kind: 'task'; taskRef: string; title: string }
     | null
   >(null);
@@ -518,8 +519,16 @@ export default function CompanionScreen() {
     },
     []
   );
-  // #365: names the task of an edit card or receipt from the account's Checklist.
-  const titleFor = useTaskTitles();
+  // #366: suggested steps for a task this account has; the card names it.
+  const taskTitles = useChecklistTaskTitles();
+  const taskTitleOf = useCallback(
+    (taskRef: string) => taskTitles.get(taskRef) ?? null,
+    [taskTitles]
+  );
+  const openSteps = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'steps', proposalId });
+  }, []);
   const openTask = useCallback((taskRef: string, title: string) => {
     Keyboard.dismiss();
     setSheet({ kind: 'task', taskRef, title });
@@ -561,7 +570,9 @@ export default function CompanionScreen() {
             canWrite={actionsWritable}
             onReview={openDraft}
             onViewTask={openTask}
-            titleFor={titleFor}
+            stepProposals={conversationActions?.stepProposals ?? []}
+            onReviewSteps={openSteps}
+            taskTitleOf={taskTitleOf}
           />
         </>
       );
@@ -572,7 +583,8 @@ export default function CompanionScreen() {
       actionsWritable,
       openDraft,
       openTask,
-      titleFor,
+      openSteps,
+      taskTitleOf,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -786,6 +798,7 @@ export default function CompanionScreen() {
         proposalKind={
           sheet?.kind === 'proposal' ? sheet.proposalKind : undefined
         }
+        stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
         initialTask={
           sheet?.kind === 'task'
             ? { taskRef: sheet.taskRef, title: sheet.title }

@@ -76,6 +76,7 @@ export function TaskEditProposalPanel({
   // A revised draft from a needs-review reply is newer than the last read.
   const proposal =
     phase.phase === 'needs_review' &&
+    'kind' in phase.proposal &&
     phase.proposal.kind === 'task_edit' &&
     phase.proposal.proposalRevision >= read.proposalRevision
       ? phase.proposal

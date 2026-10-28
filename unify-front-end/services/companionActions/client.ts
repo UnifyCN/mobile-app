@@ -1,5 +1,5 @@
 /**
- * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #365).
+ * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #365, #366).
  * Mirror of the web app's lib/companionActions/client.ts.
  * Each call names an outcome the interface can show truthfully:
  *   - a recorded result, or a definite refusal (nothing was written);
@@ -15,14 +15,19 @@ import {
   type CurrentTaskValue,
   type EditDraft,
   type Operation,
+  type StepCreateOperation,
+  type StepProposal,
   type TaskProgress,
   type TaskProposal,
   type TaskReceipt,
+  type TaskStep,
   TASK_ACTIONS_CONTRACT_VERSION,
   parseCommand,
   parseCurrent,
   parseProposal,
   parseReceipt,
+  parseStep,
+  parseStepProposal,
   parseTask,
   parseTaskProposal,
 } from './contract';
@@ -55,7 +60,8 @@ export type Unknown = { kind: 'unknown' };
 export type Unauthorized = { kind: 'unauthorized' };
 
 export type ReadResult =
-  | { kind: 'ok'; tasks: TaskProgress[] }
+  /** steps: #366, the live steps of every task ([] from a service without steps). */
+  | { kind: 'ok'; tasks: TaskProgress[]; steps: TaskStep[] }
   | Unavailable
   | Refused
   | Unknown
@@ -66,12 +72,14 @@ export type ApplyResult =
   | {
       kind: 'conflict';
       taskRef?: string;
+      /** #366: the step whose revision moved. */
+      stepId?: string;
       expected?: number;
       actual?: number | null;
     }
   | { kind: 'in_flight' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { kind: 'needs_review'; proposal: TaskProposal }
+  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal }
   /** #363: this command message already authorized a write. */
   | { kind: 'command_used' }
   /** #363: a live task already has this title; nothing was written. */
@@ -91,6 +99,15 @@ export type ProposalResult =
   | Unknown
   | Unauthorized;
 
+/** A step draft request (#366): the current draft, or a definite answer that nothing changed. */
+export type StepProposalResult =
+  | { kind: 'ok'; proposal: StepProposal }
+  | { kind: 'changed'; proposal: StepProposal }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
+
 export type InterpretResult =
   | { kind: 'ok'; command: CommandResult }
   | Unavailable
@@ -102,6 +119,8 @@ export type ConversationActionsResult =
   | {
       kind: 'ok';
       proposals: TaskProposal[];
+      /** #366: suggested-step drafts of this conversation. */
+      stepProposals: StepProposal[];
       commands: {
         messageId: number;
         operationId: string;
@@ -169,6 +188,21 @@ export interface TaskActionClient {
   conversationActions(
     conversationId: string
   ): Promise<ConversationActionsResult>;
+  /** #366: a server-owned draft of suggested steps for one task. Writes no step. */
+  prepareSteps(
+    operation: StepCreateOperation,
+    source: { conversationId: string; messageId?: number } | null
+  ): Promise<StepProposalResult>;
+  stepProposal(proposalId: string): Promise<StepProposalResult>;
+  reviseSteps(
+    proposalId: string,
+    proposalRevision: number,
+    operation: StepCreateOperation
+  ): Promise<StepProposalResult>;
+  cancelSteps(
+    proposalId: string,
+    proposalRevision: number
+  ): Promise<StepProposalResult>;
 }
 
 type Json = Record<string, unknown>;
@@ -222,19 +256,41 @@ export function createTaskActionClient(opts: {
     }
   }
 
-  async function proposalCall(body: Json): Promise<ProposalResult> {
+  async function draftCall<P>(
+    body: Json,
+    parse: (raw: unknown) => P
+  ): Promise<
+    | { kind: 'ok'; proposal: P }
+    | { kind: 'changed'; proposal: P }
+    | Unavailable
+    | Refused
+    | Unknown
+    | Unauthorized
+  > {
     const reply = await send(body);
     if (!reply) return { kind: 'unknown' };
     if (reply.status === 401) return { kind: 'unauthorized' };
     const off = unavailable(reply);
     if (off) return off;
     const parsed = asObject(reply.body);
-    if (reply.status === 200)
-      return { kind: 'ok', proposal: parseTaskProposal(parsed.proposal) };
+    if (reply.status === 200) return { kind: 'ok', proposal: parse(parsed.proposal) };
     if (reply.status === 409 && parsed.error === 'proposal_changed')
-      return { kind: 'changed', proposal: parseTaskProposal(parsed.proposal) };
+      return { kind: 'changed', proposal: parse(parsed.proposal) };
     return isUnknownStatus(reply.status) ? { kind: 'unknown' } : refused(reply);
   }
+  const proposalCall = (body: Json): Promise<ProposalResult> =>
+    draftCall(body, parseTaskProposal);
+  const stepDraftCall = (body: Json): Promise<StepProposalResult> =>
+    draftCall(body, parseStepProposal);
+  const sourceOf = (source: { conversationId: string; messageId?: number } | null) =>
+    source
+      ? {
+          source: {
+            conversation_id: source.conversationId,
+            ...(source.messageId !== undefined ? { message_id: source.messageId } : {}),
+          },
+        }
+      : {};
 
   const client: TaskActionClient = {
     async read() {
@@ -249,7 +305,12 @@ export function createTaskActionClient(opts: {
           : refused(reply);
       const tasks = asObject(reply.body).tasks;
       if (!Array.isArray(tasks)) return { kind: 'unknown' };
-      return { kind: 'ok', tasks: tasks.map(parseTask) };
+      const steps = asObject(reply.body).steps;
+      return {
+        kind: 'ok',
+        tasks: tasks.map(parseTask),
+        steps: Array.isArray(steps) ? steps.map(parseStep) : [],
+      };
     },
 
     async apply(
@@ -283,6 +344,8 @@ export function createTaskActionClient(opts: {
           kind: 'conflict',
           taskRef:
             typeof detail.task_ref === 'string' ? detail.task_ref : undefined,
+          stepId:
+            typeof detail.step_id === 'string' ? detail.step_id : undefined,
           expected:
             typeof detail.expected === 'number' ? detail.expected : undefined,
           actual: typeof detail.actual === 'number' ? detail.actual : null,
@@ -291,7 +354,10 @@ export function createTaskActionClient(opts: {
       if (reply.status === 409 && body.error === 'needs_review')
         return {
           kind: 'needs_review',
-          proposal: parseTaskProposal(body.proposal),
+          proposal:
+            asObject(body.proposal).kind === 'step_create'
+              ? parseStepProposal(body.proposal)
+              : parseTaskProposal(body.proposal),
         };
       if (reply.status === 409 && body.error === 'command_already_used')
         return { kind: 'command_used' };
@@ -411,9 +477,11 @@ export function createTaskActionClient(opts: {
       const body = asObject(reply.body);
       if (!Array.isArray(body.proposals) || !Array.isArray(body.commands))
         return { kind: 'unknown' };
+      const isSteps = (p: unknown) => asObject(p).kind === 'step_create';
       return {
         kind: 'ok',
-        proposals: body.proposals.map(parseTaskProposal),
+        proposals: body.proposals.filter(p => !isSteps(p)).map(parseTaskProposal),
+        stepProposals: body.proposals.filter(isSteps).map(parseStepProposal),
         commands: body.commands.map(c => {
           const o = asObject(c);
           if (
@@ -428,6 +496,31 @@ export function createTaskActionClient(opts: {
           };
         }),
       };
+    },
+
+    prepareSteps(operation, source) {
+      return stepDraftCall({ action: 'prepare', operation, ...sourceOf(source) });
+    },
+
+    stepProposal(proposalId) {
+      return stepDraftCall({ action: 'proposal', proposal_id: proposalId });
+    },
+
+    reviseSteps(proposalId, proposalRevision, operation) {
+      return stepDraftCall({
+        action: 'revise',
+        proposal_id: proposalId,
+        proposal_revision: proposalRevision,
+        operation,
+      });
+    },
+
+    cancelSteps(proposalId, proposalRevision) {
+      return stepDraftCall({
+        action: 'cancel',
+        proposal_id: proposalId,
+        proposal_revision: proposalRevision,
+      });
     },
 
     async status(operationId) {
@@ -468,6 +561,14 @@ export function createTaskActionClient(opts: {
       client
         .conversationActions(...args)
         .catch(() => ({ kind: 'unknown' }) as const),
+    prepareSteps: (...args) =>
+      client.prepareSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
+    stepProposal: (...args) =>
+      client.stepProposal(...args).catch(() => ({ kind: 'unknown' }) as const),
+    reviseSteps: (...args) =>
+      client.reviseSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
+    cancelSteps: (...args) =>
+      client.cancelSteps(...args).catch(() => ({ kind: 'unknown' }) as const),
     status: (...args) =>
       client.status(...args).catch(() => ({ kind: 'lookup_failed' }) as const),
   };

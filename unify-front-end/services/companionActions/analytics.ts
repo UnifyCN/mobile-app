@@ -1,4 +1,4 @@
-import { TASK_STATES, type TaskState } from './contract';
+import { TASK_STATES, type OperationType, type TaskState } from './contract';
 import type { TaskActionResultEvent } from './taskActionStore';
 
 /** Where the task controls were opened. */
@@ -6,7 +6,7 @@ export type TaskActionSurface = 'checklist' | 'companion';
 
 /** Properties of `companion_action_result` (mobile-app#361). Same as web. */
 export interface TaskActionResultProperties {
-  operation_type: (typeof OPERATION_TYPES)[number];
+  operation_type: OperationType;
   action: TaskActionResultEvent['action'];
   outcome: TaskActionResultEvent['outcome'];
   entry_surface: TaskActionSurface;
@@ -20,14 +20,22 @@ const ACTIONS = [
   'lookup',
   'approve_create',
   'command_create',
+  'step_change',
+  'approve_steps',
   'approve_edit',
   'command_edit',
 ] as const;
-const OPERATION_TYPES = [
-  'task.set_state',
-  'task.create_custom',
-  'task.edit_details',
-] as const;
+/** #366: step operation types, allowlisted. Never a step title or id. */
+/** #365: an edit names its registered type. */
+const EDIT_TYPES: readonly OperationType[] = ['task.edit_details'];
+const STEP_TYPES: readonly OperationType[] = [
+  'step.create',
+  'step.update',
+  'step.set_done',
+  'step.remove',
+  'step.restore',
+  'step.remove_created',
+];
 const OUTCOMES = [
   'applied',
   'replayed',
@@ -55,15 +63,14 @@ export function buildTaskActionResultProperties(
   if (!(ACTIONS as readonly string[]).includes(event.action)) return null;
   if (!(OUTCOMES as readonly string[]).includes(event.outcome)) return null;
   const props: TaskActionResultProperties = {
-    // Categorical only: never the task title, the message or a reference. An edit
-    // (#365) names its registered type; anything off the list is not sent.
+    // Categorical only: never the task title, the message or a reference.
     operation_type:
-      event.action === 'approve_create' || event.action === 'command_create'
-        ? 'task.create_custom'
-        : (OPERATION_TYPES as readonly string[]).includes(
-              event.operationType ?? ''
-            ) && event.operationType !== 'task.create_custom'
-          ? (event.operationType as TaskActionResultProperties['operation_type'])
+      event.operationType &&
+      (STEP_TYPES.includes(event.operationType) ||
+        EDIT_TYPES.includes(event.operationType))
+        ? event.operationType
+        : event.action === 'approve_create' || event.action === 'command_create'
+          ? 'task.create_custom'
           : 'task.set_state',
     action: event.action,
     outcome: event.outcome,

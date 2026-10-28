@@ -1,0 +1,503 @@
+FAIL __tests__/companionActions/companionActionsLocalStack.test.tsx (6.168 s)
+  Task progress against the real local stack (mobile)
+    ○ skipped a state and waiting reason saved in the mobile Checklist are the same record in Companion, on web and in the legacy table; another account sees nothing
+  Task steps against the real local stack (mobile, #366)
+    ✕ steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none (2003 ms)
+    ✕ removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task (1211 ms)
+
+  ● Task steps against the real local stack (mobile, #366) › steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none
+
+    Unable to find an element with accessibility label: New step
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mPersonalized Checklist[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAdd[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mInternational Student[0m
+            [0m - [0m
+            [0m0–3 months[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mDo now[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/1 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View />[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+              [33mtestID[39m=[32m"checklist-row-sanity:sin"[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGet a SIN[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityHint[39m=[32m"Long press and drag to change this item's order within the section"[39m
+            [33maccessibilityLabel[39m=[32m"Reorder Get a SIN"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mDo soon[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mExplore and connect[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mOptional / later[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mAdd your own item[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Modal>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{false}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33mpointerEvents[39m=[32m"box-none"[39m
+          [36m>[39m
+            [36m<View>[39m
+              [36m<View />[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Back to task details"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m/>[39m
+                  [36m<Text[39m
+                    [33maccessibilityRole[39m=[32m"header"[39m
+                  [36m>[39m
+                    [0mGet a SIN[0m
+                  [36m</Text>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Close"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m/>[39m
+                [36m</View>[39m
+                [36m<RCTScrollView>[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text[39m
+                        [33maccessibilityRole[39m=[32m"header"[39m
+                      [36m>[39m
+                        [0mTask state[0m
+                      [36m</Text>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Task state"[39m
+                        [33maccessibilityRole[39m=[32m"radiogroup"[39m
+                      [36m>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Not started"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": true,
+                              "disabled": false,
+                              "selected": true,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mNot started[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"In progress"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mIn progress[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Waiting"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mWaiting[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Completed"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mCompleted[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                      [36m<Text>[39m
+                        [0mSelect Completed when the whole task is done. Your steps do not complete it.[0m
+                      [36m</Text>[39m
+                      [36m<View />[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</RCTScrollView>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</Modal>[39m
+    [36m</View>[39m
+
+      516 |   fireEvent.press(await screen.findByText('Get a SIN'));
+      517 |   fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
+    > 518 |   const input = await screen.findByLabelText('New step');
+          |                              ^
+      519 |   await waitFor(() => expect(screen.getByRole('button', { name: 'Add step' })).toBeTruthy());
+      520 |   return input;
+      521 | }
+
+      at findByLabelText (__tests__/companionActions/companionActionsLocalStack.test.tsx:518:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Task steps against the real local stack (mobile, #366) › removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task
+
+    Unable to find an element with accessibility label: New step
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mPersonalized Checklist[0m
+            [36m</Text>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mAdd[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Text>[39m
+            [0mInternational Student[0m
+            [0m - [0m
+            [0m0–3 months[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mDo now[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/1 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View />[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": false,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{true}[39m
+              [33mtestID[39m=[32m"checklist-row-sanity:sin"[39m
+            [36m>[39m
+              [36m<Text>[39m
+                [0mGet a SIN[0m
+              [36m</Text>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityHint[39m=[32m"Long press and drag to change this item's order within the section"[39m
+            [33maccessibilityLabel[39m=[32m"Reorder Get a SIN"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mDo soon[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mExplore and connect[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mOptional / later[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0m0/0 complete[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mAdd your own item[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Modal>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View[39m
+              [33maccessible[39m=[32m{false}[39m
+            [36m/>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33mpointerEvents[39m=[32m"box-none"[39m
+          [36m>[39m
+            [36m<View>[39m
+              [36m<View />[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Back to task details"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m/>[39m
+                  [36m<Text[39m
+                    [33maccessibilityRole[39m=[32m"header"[39m
+                  [36m>[39m
+                    [0mGet a SIN[0m
+                  [36m</Text>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Close"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m/>[39m
+                [36m</View>[39m
+                [36m<RCTScrollView>[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text[39m
+                        [33maccessibilityRole[39m=[32m"header"[39m
+                      [36m>[39m
+                        [0mTask state[0m
+                      [36m</Text>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Task state"[39m
+                        [33maccessibilityRole[39m=[32m"radiogroup"[39m
+                      [36m>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Not started"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": true,
+                              "disabled": false,
+                              "selected": true,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mNot started[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"In progress"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mIn progress[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Waiting"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mWaiting[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Completed"[39m
+                          [33maccessibilityRole[39m=[32m"radio"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "checked": false,
+                              "disabled": false,
+                              "selected": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mCompleted[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                      [36m<Text>[39m
+                        [0mSelect Completed when the whole task is done. Your steps do not complete it.[0m
+                      [36m</Text>[39m
+                      [36m<View />[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</RCTScrollView>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</Modal>[39m
+    [36m</View>[39m
+
+      516 |   fireEvent.press(await screen.findByText('Get a SIN'));
+      517 |   fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
+    > 518 |   const input = await screen.findByLabelText('New step');
+          |                              ^
+      519 |   await waitFor(() => expect(screen.getByRole('button', { name: 'Add step' })).toBeTruthy());
+      520 |   return input;
+      521 | }
+
+      at findByLabelText (__tests__/companionActions/companionActionsLocalStack.test.tsx:518:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 1 skipped, 3 total
+Snapshots:   0 total
+Time:        6.432 s
+Ran all test suites matching /__tests__\/companionActions\/companionActionsLocalStack.test.tsx/i with tests matching "#366".
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

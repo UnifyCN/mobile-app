@@ -42,6 +42,7 @@ import {
   createTaskOperation,
   editDraftOf,
   parseSuggestedEdit,
+  parseSuggestedSteps,
   parseSuggestedTask,
   type CommandResult,
 } from '@/services/companionActions/contract';
@@ -402,6 +403,23 @@ export const useSendMessage = ({
           : actions.prepare(editDraft!, source, {
               language: normalizeSanityLanguage(i18n.language),
             }));
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+        });
+      }
+      // #366: suggested steps for one Checklist task become a server-owned draft too.
+      // The action service checks the task is this account's live task; nothing is saved.
+      const suggestedSteps = parseSuggestedSteps(completion.actionProposal);
+      if (suggestedSteps && savedAnswerId !== null) {
+        await actions.prepareSteps(
+          {
+            type: 'step.create',
+            task_ref: suggestedSteps.taskRef,
+            titles: suggestedSteps.titles,
+          },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId }
+        );
         ensureOwned();
         queryClient.invalidateQueries({
           queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),

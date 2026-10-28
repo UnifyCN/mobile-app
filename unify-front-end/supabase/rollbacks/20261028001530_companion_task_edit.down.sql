@@ -1,18 +1,18 @@
 -- Rollback of migrations/20261028001530_companion_task_edit.sql (mobile-app#365).
 -- Not a migration: an operator runs it by hand, in one transaction, after the feature
--- gate is off and action traffic has stopped, and before the #363 rollback script
--- (20261026165156_companion_task_create.down.sql) when both are rolled back. Mirrored
+-- gate is off and action traffic has stopped, and before the #366 rollback script
+-- (20261027183644_companion_task_steps.down.sql) when both are rolled back. Mirrored
 -- byte for byte in the web repo.
---   * The #363 action functions return. Task state controls, task creation, receipts and
---     their Undo, status lookup and the #361 reminder policy are unchanged.
+--   * The #366 action functions return. Task state controls, task creation, steps,
+--     receipts and their Undo, status lookup and the #361 reminder policy are unchanged.
 --   * Saved edits stay: a custom task's title, description and priority are its own
 --     legacy columns, and states are the #361 columns. Nothing is deleted from tasks.
 --   * Data only #365 understands is archived to companion_rollback_archive_365 (no other
 --     rollback script or migration touches that table) and comes back when the migration
---     is applied again: edit drafts (removed here, because the #363 proposal kinds do not
+--     is applied again: edit drafts (removed here, because the #366 proposal kinds do not
 --     include them) and the Undo of each edit. Until then an edit's Undo is refused as not
 --     undoable, and an edit (a draft, a command, a compensating change) is refused by the
---     #363 registry. Re-application marks every restored draft for a new review, as #363
+--     #366 registry. Re-application marks every restored draft for a new review, as #363
 --     does for its drafts.
 --   * Archive rows hold account data: drop the table by hand once the rollback window
 --     (longer than the client retry and Undo windows) is over.
@@ -42,7 +42,9 @@ update public.companion_action_receipts r set inverse = null
  where r.inverse is not null
    and exists (select 1 from jsonb_array_elements(r.inverse) i where i->>'type' = 'task.edit_details');
 
--- #363 versions, copied verbatim from 20261026165156_companion_task_create.sql.
+-- The versions this migration replaced, copied verbatim: #366 bodies from
+-- 20261027183644_companion_task_steps.sql, and companion_apply_actions from
+-- 20261026165156_companion_task_create.sql (#366 did not replace it).
 create or replace function public.companion_validate_operations(p_ops jsonb) returns void
 language plpgsql as $$
 declare
@@ -57,6 +59,11 @@ begin
       perform public.companion_fail('CA422', 'invalid_operations');
     end if;
     v_type := case when jsonb_typeof(v_op->'type') = 'string' then v_op->>'type' end;
+    -- #366: steps have their own registry check.
+    if v_type like 'step.%' then
+      perform public.companion_step_validate(v_op);
+      continue;
+    end if;
     if v_type is null or v_type not in ('task.set_state', 'task.create_custom', 'task.remove_created') then
       perform public.companion_fail('CA422', 'unsupported_operation', jsonb_build_object('type', v_type));
     end if;
@@ -129,6 +136,19 @@ declare
   v_prop uuid;
   v_undo_of uuid;
 begin
+  -- #366 steps. Every step removal needs the user's confirmation. A direct control adds
+  -- exactly the one step the user typed; restoring a step or removing an added set is
+  -- only the reviewed change of an Undo.
+  if exists (select 1 from jsonb_array_elements(p_ops) o where o->>'type' in ('step.remove', 'step.remove_created'))
+     and (jsonb_typeof(p_auth->'removal_confirmed') is distinct from 'boolean'
+          or (p_auth->>'removal_confirmed')::boolean is not true) then
+    perform public.companion_fail('CA403', 'removal_requires_confirmation');
+  end if;
+  if v_kind = 'ui_control' and exists (select 1 from jsonb_array_elements(p_ops) o
+       where o->>'type' in ('step.restore', 'step.remove_created')
+          or (o->>'type' = 'step.create' and jsonb_array_length(o->'titles') <> 1)) then
+    perform public.companion_fail('CA403', 'invalid_authorization');
+  end if;
   -- Every removal needs the user's explicit confirmation, and is only the reviewed
   -- compensating change of an Undo (below). A command never removes.
   if v_removes and (v_kind is distinct from 'approved_proposal'
@@ -183,6 +203,19 @@ begin
          and r.task_ref = p_ops->0->>'task_ref') then
       perform public.companion_fail('CA403', 'invalid_authorization');
     end if;
+    -- #366: removing an added set of steps is only the reviewed change of the Undo of
+    -- the receipt that added those steps.
+    if exists (select 1 from jsonb_array_elements(p_ops) o where o->>'type' = 'step.remove_created')
+       and not exists (
+         select 1 from public.companion_action_receipts r
+          where r.user_id = p_user and r.operation_id = v_undo_of
+            and r.outcome->'results'->0->>'type' = 'step.create'
+            and r.task_ref = p_ops->0->>'task_ref'
+            and not exists (select 1 from jsonb_array_elements(p_ops->0->'steps') s
+                             where not exists (select 1 from jsonb_array_elements(r.outcome->'results'->0->'steps') c
+                                                where c->>'step_id' = s->>'step_id'))) then
+      perform public.companion_fail('CA403', 'invalid_authorization');
+    end if;
     return v_undo_of;
   end if;
   perform public.companion_fail('CA403', 'invalid_authorization');
@@ -208,6 +241,10 @@ declare
   v_before_reason text;
   v_id bigint;
 begin
+  -- #366: a step operation is executed by the step domain.
+  if p_op->>'type' like 'step.%' then
+    return public.companion_apply_step(p_user, p_op);
+  end if;
   if p_op->>'type' = 'task.remove_created' then
     -- Soft removal (removed_at): hidden from every Checklist read, pending reminders
     -- stopped by the trigger in the same transaction, history kept.
@@ -306,7 +343,13 @@ begin
     'type', 'task.set_state', 'task_ref', v_ref,
     'before_state', v_before_state, 'state', v_state,
     'before_revision', v_before, 'after_revision', v_after,
-    'inverse', public.companion_set_state_op(v_ref, v_before_state, v_before_reason, v_after));
+    'inverse', public.companion_set_state_op(v_ref, v_before_state, v_before_reason, v_after))
+    -- #366: a completion records the steps as they were: how many were done of how many.
+    || case when v_state = 'completed' then (
+         select jsonb_build_object('steps_done', count(*) filter (where s.completed), 'steps_total', count(*))
+           from public.companion_task_steps s
+          where s.user_id = p_user and s.task_ref = v_ref and s.removed_at is null)
+       else '{}'::jsonb end;
 end $$;
 
 create or replace function public.companion_receipt_summary(p_receipt public.companion_action_receipts) returns jsonb
@@ -328,6 +371,15 @@ language sql stable security definer set search_path = public, pg_temp as $$
     'undoable', p_receipt.inverse is not null and u.operation_id is null)
     || case when r->>'type' in ('task.create_custom', 'task.remove_created') then
          jsonb_build_object('title', r->>'title')
+       else '{}'::jsonb end
+    -- #366: a completion names how many steps were done; a step receipt names its steps
+    -- as they were saved and is current while every one of them is unchanged.
+    || case when r ? 'steps_total' then
+         jsonb_build_object('steps_done', r->'steps_done', 'steps_total', r->'steps_total')
+       else '{}'::jsonb end
+    || case when r->>'type' like 'step.%' then
+         jsonb_build_object('steps', r->'steps',
+           'current', u.operation_id is null and public.companion_steps_current(p_receipt.user_id, r->'steps'))
        else '{}'::jsonb end
   from (select p_receipt.outcome->'results'->0 as r) x
   left join public.companion_action_receipts u
@@ -403,6 +455,10 @@ begin
   end if;
   if v_target.inverse is null then
     perform public.companion_fail('CA422', 'not_undoable');
+  end if;
+  -- #366: a step receipt is reversed by the step domain.
+  if v_target.outcome->'results'->0->>'type' like 'step.%' then
+    return public.companion_undo_step(p_user_id, p_operation_id, v_hash, p_contract_version, p_authorization, v_target);
   end if;
   v_removes := exists (select 1 from jsonb_array_elements(v_target.inverse) i where i->>'type' = 'task.remove_created');
   if v_removes and (jsonb_typeof(p_authorization->'removal_confirmed') is distinct from 'boolean'
@@ -497,7 +553,7 @@ begin
   return jsonb_build_object(
     'proposals', (select coalesce(jsonb_agg(public.companion_proposal_view(p) order by p.created_at), '[]'::jsonb)
                     from public.companion_proposals p
-                   where p.user_id = p_user_id and p.kind = 'task_create'
+                   where p.user_id = p_user_id and p.kind in ('task_create', 'step_create')
                      and p.source->>'conversation_id' = p_conversation_id::text),
     'commands', (select coalesce(jsonb_agg(jsonb_build_object(
                           'message_id', u.message_id, 'operation_id', u.operation_id,
@@ -514,7 +570,7 @@ declare
   v_prop public.companion_proposals%rowtype;
 begin
   select * into v_prop from public.companion_proposals
-   where id = p_proposal_id and user_id = p_user_id and kind = 'task_create' for update;
+   where id = p_proposal_id and user_id = p_user_id and kind in ('task_create', 'step_create') for update;
   if not found then
     perform public.companion_fail('CA404', 'proposal_not_found');
   end if;
@@ -534,4 +590,4 @@ drop function
 
 alter table public.companion_proposals drop constraint companion_proposals_kind_check;
 alter table public.companion_proposals add constraint companion_proposals_kind_check
-  check (kind is null or kind in ('compensation', 'task_create'));
+  check (kind is null or kind in ('compensation', 'task_create', 'step_create'));

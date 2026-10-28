@@ -1,0 +1,12 @@
+--- /Users/savargupta/.t3/worktrees/Unify/t3-8e4ba83b/unify-front-end/supabase/migrations/20261027183644_companion_task_steps.sql	2026-10-27 14:41:46
++++ /tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql	2026-10-27 14:42:28
+@@ -1070,9 +1070,6 @@
+   -- #366: suggested steps read their context after the parent lock, which every step
+   -- change of the task takes and which is held until the steps are inserted. A matching
+   -- step that committed while this approval waited is read here and needs a new review.
+-  if v_prop.kind = 'step_create' then
+-    perform public.companion_step_parent_lock(p_user, p_ops->0->>'task_ref');
+-  end if;
+   v_now := public.companion_proposal_context(p_user, p_ops);
+   if v_prop.context is not null and v_now = v_prop.context then
+     return null;

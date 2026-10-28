@@ -32,8 +32,10 @@ import type { TaskState } from '@/services/companionActions/contract';
 import { isUnresolved } from '@/services/companionActions/taskActionStore';
 import { getChecklistTaskOrderKey } from '@/utils/checklistOrder';
 import { minTarget, squareTarget } from '@/utils/touchTarget';
-import { useTaskTitles } from '@/hooks/companion/useTaskTitles';
+import { useChecklistTaskTitles } from '@/hooks/checklist/useChecklistTaskTitles';
 import { TaskProposalPanel } from './TaskProposalPanel';
+import { StepProposalPanel } from './StepProposalPanel';
+import { useStepProposal } from '@/hooks/companion/useTaskActions';
 import { TaskStatePanel } from './TaskStatePanel';
 
 const STATE_ORDER: TaskState[] = [
@@ -55,6 +57,8 @@ interface TaskActionsSheetProps {
   proposalKind?: 'task_create' | 'task_edit';
   /** Open straight on one task, e.g. one a command added (#363). */
   initialTask?: { taskRef: string; title: string } | null;
+  /** #366: open on the review of suggested steps for one task. */
+  stepProposalId?: string | null;
 }
 
 /**
@@ -69,6 +73,7 @@ export function TaskActionsSheet({
   proposalId = null,
   proposalKind = 'task_create',
   initialTask = null,
+  stepProposalId = null,
 }: TaskActionsSheetProps) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -93,7 +98,8 @@ export function TaskActionsSheet({
 
   const back = () => setSelectedRef(null);
   // Opened on a draft or one task: there is no list to go back to.
-  const canGoBack = Boolean(selectedRef) && !proposalId && !initialRef;
+  const canGoBack =
+    Boolean(selectedRef) && !proposalId && !stepProposalId && !initialRef;
 
   return (
     <Modal
@@ -145,7 +151,9 @@ export function TaskActionsSheet({
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {proposalId
+                {stepProposalId
+                  ? t('taskSteps.reviewTitle')
+                  : proposalId
                   ? proposalKind === 'task_edit'
                     ? t('taskEdit.drawerTitle')
                     : t('taskCreate.drawerTitle')
@@ -162,7 +170,9 @@ export function TaskActionsSheet({
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible && proposalId ? (
+            {visible && stepProposalId ? (
+              <StepProposalBody proposalId={stepProposalId} />
+            ) : visible && proposalId ? (
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (
               <SheetBody
@@ -186,7 +196,8 @@ export function TaskActionsSheet({
 function ProposalBody({ proposalId }: { proposalId: string }) {
   const view = useTaskProgress();
   const store = useTaskActionStore('companion');
-  const titleFor = useTaskTitles();
+  const titles = useChecklistTaskTitles();
+  const titleFor = (taskRef: string) => titles.get(taskRef) ?? null;
   return (
     <ScrollView
       style={styles.scroll}
@@ -198,6 +209,28 @@ function ProposalBody({ proposalId }: { proposalId: string }) {
         view={view}
         store={store}
         titleFor={titleFor}
+      />
+    </ScrollView>
+  );
+}
+
+function StepProposalBody({ proposalId }: { proposalId: string }) {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  const titles = useChecklistTaskTitles();
+  const draft = useStepProposal(proposalId);
+  const taskRef = draft.data?.operation.task_ref;
+  return (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps='handled'
+    >
+      <StepProposalPanel
+        proposalId={proposalId}
+        view={view}
+        store={store}
+        taskTitle={taskRef ? (titles.get(taskRef) ?? null) : null}
       />
     </ScrollView>
   );

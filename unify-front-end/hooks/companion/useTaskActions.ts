@@ -34,8 +34,10 @@ import type {
   TaskActionClient,
 } from '@/services/companionActions/client';
 import type {
+  StepProposal,
   TaskProgress,
   TaskProposal,
+  TaskStep,
 } from '@/services/companionActions/contract';
 import {
   clearTaskActionStores,
@@ -83,6 +85,8 @@ export interface TaskProgressView {
   status: TaskProgressStatus;
   /** Saved progress by task_ref. A content-backed task never written has no entry. */
   byRef: ReadonlyMap<string, TaskProgress>;
+  /** #366: live steps by task_ref, in order. */
+  stepsByRef: ReadonlyMap<string, readonly TaskStep[]>;
   /** True when the shown progress may be out of date (the last read failed). */
   stale: boolean;
   /** Writes are allowed only right after a successful read. */
@@ -136,6 +140,16 @@ export function useTaskProgress(): TaskProgressView {
       for (const t of result.tasks) map.set(t.taskRef, t);
     return map;
   }, [result]);
+  const stepsByRef = useMemo(() => {
+    const map = new Map<string, TaskStep[]>();
+    if (result?.kind === 'ok')
+      for (const step of result.steps) {
+        const list = map.get(step.taskRef) ?? [];
+        list.push(step);
+        map.set(step.taskRef, list);
+      }
+    return map;
+  }, [result]);
 
   let status: TaskProgressStatus;
   if (userId === null || result?.kind === 'unauthorized') status = 'signed_out';
@@ -149,6 +163,7 @@ export function useTaskProgress(): TaskProgressView {
   return {
     status,
     byRef,
+    stepsByRef,
     stale,
     // A refetch after a save may still carry the old revision: wait for it.
     canWrite: status === 'ready' && !stale && !query.isFetching,
@@ -180,6 +195,7 @@ function useTaskActionAccountScope(
       [CONVERSATION_MESSAGES_ROOT, 1],
       [TASK_PROPOSAL_ROOT, 1],
       [CONVERSATION_ACTIONS_ROOT, 1],
+      [STEP_PROPOSAL_ROOT, 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],
@@ -221,6 +237,10 @@ export function useTaskActionStore(
         });
         void queryClient.invalidateQueries({
           queryKey: [CONVERSATION_ACTIONS_ROOT, userId],
+        });
+        // #366: suggested-step drafts.
+        void queryClient.invalidateQueries({
+          queryKey: [STEP_PROPOSAL_ROOT, userId],
         });
       },
       onResult: event => {
@@ -267,6 +287,33 @@ export function useTaskProposal(proposalId: string | null) {
     staleTime: 0,
     retry: 1,
   });
+}
+
+/** #366: one suggested-steps draft, read from the action service as the signed-in account. */
+export const STEP_PROPOSAL_ROOT = 'companion-step-proposal' as const;
+export const stepProposalKey = (userId: string | null, proposalId: string | null) =>
+  [STEP_PROPOSAL_ROOT, userId, proposalId] as const;
+
+export function useStepProposal(proposalId: string | null) {
+  const userId = useTaskActionAccount() ?? null;
+  return useQuery({
+    queryKey: stepProposalKey(userId, proposalId),
+    enabled: Boolean(userId && proposalId),
+    queryFn: async (): Promise<StepProposal> => {
+      const owner = ownAccountWork();
+      if (owner.accountId !== userId) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(owner).stepProposal(proposalId as string);
+      if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
+      throw new ReadFailed(result.kind);
+    },
+    staleTime: 0,
+    retry: 1,
+  });
+}
+
+/** The live steps of one task, in order (#366). */
+export function stepsFor(taskRef: string, view: TaskProgressView): readonly TaskStep[] {
+  return view.stepsByRef.get(taskRef) ?? [];
 }
 
 /** The drafts and command results of one conversation, for its cards. */

@@ -1,0 +1,52 @@
+[
+  {
+    "name": "typecheck",
+    "args": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "i18n",
+    "args": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "args": [
+      "npx",
+      "eslint",
+      "components/companion/tasks/StepProposalPanel.tsx",
+      "__tests__/companionActions/taskStepSuggestions.test.tsx"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "test-ci",
+    "args": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "native-export",
+    "args": [
+      "npx",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "exit": 0
+  }
+]

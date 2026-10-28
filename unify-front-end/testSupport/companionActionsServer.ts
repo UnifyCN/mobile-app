@@ -1,4 +1,4 @@
-// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #365). It answers
+// Network stand-in for the mounted task-action tests (mobile-app#361, #363, #365, #366). It answers
 // the companion-actions request contract from a small in-memory record so the
 // rendered client can be driven through real controls. It is not evidence of the
 // server's behaviour: authorization, revisions, receipts and persistence are
@@ -83,6 +83,13 @@ export function scriptedServer(
   const details = new Map<string, { description: string; priority: string }>();
   const detailsOf = (ref: string) =>
     details.get(ref) ?? { description: '', priority: 'Do soon' };
+  // #366 stand-in state: steps by id, and suggested-step drafts.
+  const steps = new Map<
+    string,
+    { task_ref: string; title: string; done: boolean; revision: number; removed: boolean; position: number }
+  >();
+  const stepDrafts = new Map<string, Body>();
+  let nextStep = 1;
 
   const rowOf = (ref: string): Row =>
     rows.get(ref) ?? {
@@ -642,16 +649,222 @@ export function scriptedServer(
     return null;
   }
 
+  const stepView = (id: string) => {
+    const s = steps.get(id)!;
+    return {
+      step_id: id,
+      task_ref: s.task_ref,
+      title: s.title,
+      done: s.done,
+      position: s.position,
+      revision: s.revision,
+    };
+  };
+  const stepReceiptView = (r: Body): Body => ({
+    ...r,
+    current:
+      !r.undone_by &&
+      r.steps.every((x: Body) => steps.get(x.step_id)?.revision === x.after_revision),
+    undoable: !r.undone_by && r.inverse !== null && r.kind === 'change',
+  });
+  const stepDraftView = (d: Body): Body => ({
+    proposal_id: d.proposal_id,
+    proposal_revision: d.proposal_revision,
+    status: d.status,
+    kind: 'step_create',
+    operations: d.operations,
+    context: { task_ref: d.operations[0].task_ref, existing_steps: [] },
+    previous_context: null,
+    review_reason: d.review_reason ?? null,
+    source: d.source ?? null,
+    receipt: d.receipt_operation_id
+      ? stepReceiptView(byOperation.get(d.receipt_operation_id)!)
+      : null,
+  });
+
+  /** Applies one step operation; a receipt with each step as saved and the inverse. */
+  function applyStep(body: Body, op: Body, undoOf: Body | null): Reply {
+    const parent = rowOf(op.task_ref ?? steps.get(op.step_id)?.task_ref ?? '');
+    if (parent.state === 'completed')
+      return { status: 422, body: { error: 'invalid_request', reason: 'task_completed' } };
+    if (parent.removed)
+      return { status: 422, body: { error: 'invalid_request', reason: 'task_removed' } };
+    const saved: Body[] = [];
+    let inverse: Body | null = null;
+    if (op.type === 'step.create') {
+      const ids: Body[] = [];
+      for (const title of op.titles) {
+        const id = `00000000-0000-4000-8000-${String(nextStep++).padStart(12, '0')}`;
+        steps.set(id, { task_ref: op.task_ref, title, done: false, revision: 1, removed: false, position: nextStep });
+        saved.push({ step_id: id, title, before_title: null, before_done: false, done: false, after_revision: 1 });
+        ids.push({ step_id: id, expected_revision: 1 });
+      }
+      inverse = { type: 'step.remove_created', task_ref: op.task_ref, steps: ids };
+    } else if (op.type === 'step.remove_created') {
+      for (const x of op.steps) {
+        const s = steps.get(x.step_id)!;
+        s.removed = true;
+        s.revision += 1;
+        saved.push({ step_id: x.step_id, title: s.title, before_title: null, before_done: s.done, done: s.done, removed: true, after_revision: s.revision });
+      }
+    } else {
+      const s = steps.get(op.step_id);
+      if (!s) return { status: 404, body: { error: 'not_found', reason: 'step_not_found' } };
+      if (s.revision !== op.expected_revision)
+        return {
+          status: 409,
+          body: { error: 'revision_conflict', detail: { step_id: op.step_id, expected: op.expected_revision, actual: s.revision } },
+        };
+      const before = { ...s };
+      if (op.type === 'step.set_done') s.done = op.done;
+      if (op.type === 'step.update') s.title = op.title;
+      if (op.type === 'step.remove') s.removed = true;
+      if (op.type === 'step.restore') s.removed = false;
+      s.revision += 1;
+      saved.push({
+        step_id: op.step_id, title: s.title, before_title: before.title, before_done: before.done, done: s.done,
+        ...(op.type === 'step.remove' ? { removed: true } : {}), after_revision: s.revision,
+      });
+      inverse =
+        op.type === 'step.set_done' ? { type: 'step.set_done', step_id: op.step_id, done: before.done }
+        : op.type === 'step.update' ? { type: 'step.update', step_id: op.step_id, title: before.title }
+        : op.type === 'step.remove' ? { type: 'step.restore', step_id: op.step_id }
+        : null;
+    }
+    const receipt: Body = {
+      operation_id: body.operation_id,
+      created_at: '2026-10-27T18:00:00.000Z',
+      kind: undoOf ? 'undo' : 'change',
+      operation_type: op.type,
+      undo_of: undoOf?.operation_id ?? null,
+      task_ref: op.task_ref ?? steps.get(saved[0].step_id)!.task_ref,
+      before_state: parent.state,
+      after_state: parent.state,
+      before_revision: 0,
+      after_revision: 1,
+      undone_by: null,
+      steps: saved,
+      inverse: undoOf ? null : inverse,
+    };
+    if (undoOf) undoOf.undone_by = body.operation_id;
+    byOperation.set(body.operation_id, receipt);
+    return { status: 200, body: { status: 'applied', replayed: false, receipt: stepReceiptView(receipt) } };
+  }
+
+  function handleSteps(body: Body): Reply | null {
+    const op = body.operations?.[0] ?? body.operation;
+    if (body.action === 'apply' && op?.type?.startsWith('step.')) {
+      const replay = byOperation.get(body.operation_id);
+      if (replay)
+        return { status: 200, body: { status: 'applied', replayed: true, receipt: stepReceiptView(replay) } };
+      if ((op.type === 'step.remove' || op.type === 'step.remove_created') && body.authorization?.removal_confirmed !== true)
+        return { status: 403, body: { error: 'forbidden', reason: 'removal_requires_confirmation' } };
+      let undoOf: Body | null = null;
+      if (body.authorization?.kind === 'approved_proposal') {
+        const d = stepDrafts.get(body.authorization.proposal_id);
+        const p = proposals.get(body.authorization.proposal_id);
+        if (d) {
+          if (d.status !== 'draft' || d.proposal_revision !== body.authorization.proposal_revision ||
+              JSON.stringify(d.operations[0]) !== JSON.stringify(op))
+            return { status: 403, body: { error: 'forbidden', reason: 'invalid_authorization' } };
+          d.status = 'applied';
+          d.receipt_operation_id = body.operation_id;
+        } else if (p && !p.used) {
+          p.used = true;
+          undoOf = byOperation.get(p.undo_of) ?? null;
+        } else {
+          return { status: 403, body: { error: 'forbidden', reason: 'invalid_authorization' } };
+        }
+      }
+      return applyStep(body, op, undoOf);
+    }
+    if (body.action === 'undo') {
+      const target = byOperation.get(body.receipt_operation_id);
+      if (!target?.operation_type?.startsWith('step.')) return null;
+      const replay = byOperation.get(body.operation_id);
+      if (replay)
+        return { status: 200, body: { status: 'applied', replayed: true, receipt: stepReceiptView(replay) } };
+      if (target.undone_by) return { status: 409, body: { error: 'already_undone' } };
+      const inv = target.inverse;
+      if (!inv) return { status: 422, body: { error: 'invalid_request', reason: 'not_undoable' } };
+      const removes = inv.type === 'step.remove_created';
+      if (removes && body.authorization?.removal_confirmed !== true)
+        return { status: 403, body: { error: 'forbidden', reason: 'removal_requires_confirmation' } };
+      const stale = target.steps.some((x: Body) => steps.get(x.step_id)?.revision !== x.after_revision);
+      if (stale) {
+        const s = steps.get(target.steps[0].step_id)!;
+        const proposal = {
+          proposal_id: '7e1f1f6c-3666-4366-8366-000000000001',
+          proposal_revision: 1,
+          operations: [
+            removes
+              ? { type: 'step.remove_created', task_ref: inv.task_ref, steps: target.steps.map((x: Body) => ({ step_id: x.step_id, expected_revision: steps.get(x.step_id)!.revision })) }
+              : { ...inv, expected_revision: s.revision },
+          ],
+        };
+        proposals.set(proposal.proposal_id, { ...proposal, undo_of: target.operation_id });
+        return { status: 409, body: { error: 'undo_conflict', receipt_operation_id: target.operation_id, current: [], proposal } };
+      }
+      const op = removes
+        ? inv
+        : { ...inv, expected_revision: steps.get(inv.step_id)!.revision };
+      return applyStep(body, op, target);
+    }
+    if (body.action === 'status') {
+      const done = byOperation.get(body.operation_id);
+      if (done?.operation_type?.startsWith('step.'))
+        return { status: 200, body: { status: 'applied', receipt: stepReceiptView(done) } };
+      return null;
+    }
+    if (body.action === 'prepare' && op?.type === 'step.create') {
+      const d: Body = {
+        proposal_id: `5e1f1f6c-3666-4366-8366-${String(nextDraft++).padStart(12, '0')}`,
+        proposal_revision: 1,
+        status: 'draft',
+        operations: [op],
+        source: body.source ?? null,
+      };
+      stepDrafts.set(d.proposal_id, d);
+      return { status: 200, body: { proposal: stepDraftView(d) } };
+    }
+    if (['proposal', 'revise', 'cancel'].includes(body.action) && stepDrafts.has(body.proposal_id)) {
+      const d = stepDrafts.get(body.proposal_id)!;
+      if (body.action === 'proposal') return { status: 200, body: { proposal: stepDraftView(d) } };
+      if (d.status !== 'draft' || d.proposal_revision !== body.proposal_revision)
+        return { status: 409, body: { error: 'proposal_changed', proposal: stepDraftView(d) } };
+      if (body.action === 'cancel') d.status = 'cancelled';
+      else {
+        d.operations = [body.operation];
+        d.proposal_revision += 1;
+        d.review_reason = 'edited';
+      }
+      return { status: 200, body: { proposal: stepDraftView(d) } };
+    }
+    return null;
+  }
+
   function handle(body: Body): Reply {
     const edited = handleEdit(body);
     if (edited) return edited;
+    const stepReply = handleSteps(body);
+    if (stepReply) return stepReply;
     const created = handleCreate(body);
-    if (created) return created;
+    if (created) {
+      // #366: a conversation also lists its suggested-step drafts.
+      if (body.action === 'conversation_actions' && created.status === 200)
+        (created.body as Body).proposals.push(
+          ...[...stepDrafts.values()]
+            .filter(d => d.source?.conversation_id === body.conversation_id)
+            .map(stepDraftView)
+        );
+      return created;
+    }
     if (body.action === 'read') {
       return {
         status: 200,
         body: {
           contract_version: 1,
+          steps: [...steps.keys()].filter(id => !steps.get(id)!.removed).map(stepView),
           tasks: [...rows.entries()].map(([ref, row]) => ({
             task_ref: ref,
             source: ref.split(':')[0],
@@ -875,6 +1088,13 @@ export function scriptedServer(
       profile = next;
     },
     drafts: () => [...drafts.values()],
+    /** #366: every step the stand-in holds, removed ones included. */
+    steps: () => [...steps.entries()].map(([id, s]) => ({ step_id: id, ...s })),
+    stepDrafts: () => [...stepDrafts.values()],
+    /** #366: suggested steps prepared earlier for a conversation message. */
+    seedStepDraft(source: Body, op: Body) {
+      return (handle({ action: 'prepare', operation: op, source }).body as Body).proposal;
+    },
     /** Another platform changes the task: the revision moves on. */
     editElsewhere(ref: string, state: string) {
       const before = rowOf(ref);
