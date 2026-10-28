@@ -1,11 +1,13 @@
 package com.anonymous.unifyfrontend
 import expo.modules.splashscreen.SplashScreenManager
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
+import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
@@ -21,6 +23,17 @@ class MainActivity : ReactActivity() {
     SplashScreenManager.registerOnActivity(this)
     // @generated end expo-splashscreen
     super.onCreate(null)
+  }
+
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+
+    // DeviceInfo refreshes its cached font scale in onHostResume. A live
+    // configuration change keeps this activity resumed, so refresh that
+    // module without dispatching lifecycle events to the other modules.
+    val context = reactHost?.currentReactContext ?: return
+    val deviceInfo = context.getNativeModule("DeviceInfo") as? LifecycleEventListener
+    deviceInfo?.onHostResume()
   }
 
   /**
