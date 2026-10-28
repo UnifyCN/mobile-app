@@ -1,0 +1,36 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ❯ components/companion/tasks/TaskRemovalLocalStack.test.tsx (3 tests | 1 failed) 2633ms
+   ✓ Task removal against the real local stack (web, #367) > a removal request opens a review in the drawer; Cancel writes nothing and returns focus; the confirmed removal names the plan; Undo restores; the draft stays  1265ms
+   × Task removal against the real local stack (web, #367) > the Checklist delete control opens the reviewed removal; a change on another device before approval revises the review and removes nothing 299ms
+     → expected 409 to be 200 // Object.is equality
+   ✓ Task removal against the real local stack (web, #367) > an old removal request opened after another device removed the task offers nothing to remove; the card turns historical  647ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskRemovalLocalStack.test.tsx > Task removal against the real local stack (web, #367) > the Checklist delete control opens the reviewed removal; a change on another device before approval revises the review and removes nothing
+AssertionError: expected 409 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 409
+
+ ❯ components/companion/tasks/TaskRemovalLocalStack.test.tsx:430:26
+    428|       operations: [{ type: "task.set_state", task_ref: "sanity:sin-num…
+    429|     });
+    430|     expect(moved.status).toBe(200);
+       |                          ^
+    431|     fireEvent.click(await enabledButton(within(dialog()), "Remove task…
+    432|     expect(await within(dialog()).findByText("This task changed after …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  21:02:44
+   Duration  3.84s (transform 249ms, setup 0ms, collect 681ms, tests 2.63s, environment 250ms, prepare 35ms)
+
