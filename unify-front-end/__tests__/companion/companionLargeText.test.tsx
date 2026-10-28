@@ -475,6 +475,20 @@ describe('N2: bar chrome (screen title, tab labels) follows UIKit bar scaling', 
     expect(tab.props.accessibilityLargeContentTitle).toBe('Communauté');
   });
 
+  it('measures the tab label again after each live size change and keeps the tab mounted', () => {
+    const Icon = () => null;
+    render(<TabIcon IconComponent={Icon} title='Communauté' focused={false} />);
+    const tab = screen.getByTestId('tab-icon');
+    let label = screen.getByText('Communauté');
+    for (const scale of [AX_XXXL, AX_MEDIUM, DEFAULT]) {
+      setFontScale(scale);
+      expect(screen.getByTestId('tab-icon')).toBe(tab);
+      const nextLabel = screen.getByText('Communauté');
+      expect(nextLabel).not.toBe(label);
+      label = nextLabel;
+    }
+  });
+
   it('the tab bar grows with its label up to the bar maximum', () => {
     expect(getTabBarHeight(0, DEFAULT)).toBe(68);
     expect(getTabBarHeight(34, DEFAULT)).toBe(102);
