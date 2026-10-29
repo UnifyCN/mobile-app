@@ -1,3 +1,4 @@
+import { ReminderSection } from './ReminderSection';
 import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -85,7 +86,9 @@ export function TaskStatePanel({
   const { t } = useTranslation();
   const { fontScale } = useWindowDimensions();
   const phase = useTaskActionPhase(store, taskRef);
-  const entryReceipt = useRef(phase.phase === 'saved' ? phase.receipt.operationId : null);
+  const entryReceipt = useRef(
+    phase.phase === 'saved' ? phase.receipt.operationId : null
+  );
   const progress = progressFor(taskRef, view);
   const draft = useTaskActionDraft(store, taskRef);
   const reasonValue = draft ?? progress.waitingReason ?? '';
@@ -105,8 +108,7 @@ export function TaskStatePanel({
     Boolean(store) && view.canWrite && reconciled && !progress.removed;
   const canWrite = writable && !busy;
   // #367: the Undo of a removal restores a removed task, so it does not need a live task.
-  const canUndoRemoval =
-    Boolean(store) && view.canWrite && reconciled && !busy;
+  const canUndoRemoval = Boolean(store) && view.canWrite && reconciled && !busy;
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const reasonChanged = reasonValue.trim() !== (progress.waitingReason ?? '');
 
@@ -121,20 +123,25 @@ export function TaskStatePanel({
       const receipt = phase.receipt;
       // Android reads the focused result after layout. A simultaneous announcement
       // can be interrupted when the control it replaced loses accessibility focus.
-      if (Platform.OS === 'android' &&
-          (receipt.operationType === 'task.remove' || receipt.operationType === 'task.restore')) return;
+      if (
+        Platform.OS === 'android' &&
+        (receipt.operationType === 'task.remove' ||
+          receipt.operationType === 'task.restore')
+      )
+        return;
       const title = receipt.title ?? taskTitle;
-      const result = receipt.operationType === 'task.remove'
-        ? title
-          ? t('taskRemove.receiptRemoved', { title })
-          : t('taskRemove.receiptRemovedUnknown')
-        : receipt.operationType === 'task.restore'
+      const result =
+        receipt.operationType === 'task.remove'
           ? title
-            ? t('taskRemove.receiptRestored', { title })
-            : t('taskRemove.receiptRestoredUnknown')
-          : t('taskActions.savedAnnouncement', {
-              state: stateLabel(receipt.afterState),
-            });
+            ? t('taskRemove.receiptRemoved', { title })
+            : t('taskRemove.receiptRemovedUnknown')
+          : receipt.operationType === 'task.restore'
+            ? title
+              ? t('taskRemove.receiptRestored', { title })
+              : t('taskRemove.receiptRestoredUnknown')
+            : t('taskActions.savedAnnouncement', {
+                state: stateLabel(receipt.afterState),
+              });
       AccessibilityInfo.announceForAccessibility(result);
     }
   });
@@ -179,9 +186,12 @@ export function TaskStatePanel({
             progress.revision === phase.receipt.afterRevision,
         }
       : progress.lastReceipt;
-  const focusRemovalResult = Platform.OS === 'android' && phase.phase === 'saved' &&
+  const focusRemovalResult =
+    Platform.OS === 'android' &&
+    phase.phase === 'saved' &&
     phase.receipt.operationId !== entryReceipt.current &&
-    (phase.receipt.operationType === 'task.remove' || phase.receipt.operationType === 'task.restore');
+    (phase.receipt.operationType === 'task.remove' ||
+      phase.receipt.operationType === 'task.restore');
 
   return (
     <View style={styles.root}>
@@ -197,6 +207,7 @@ export function TaskStatePanel({
         </View>
       )}
 
+      <ReminderSection taskRef={taskRef} view={view} store={store} />
       <TaskStepsSection
         taskRef={taskRef}
         progress={progress}
@@ -302,7 +313,10 @@ export function TaskStatePanel({
         </View>
       )}
 
-      <View accessibilityLiveRegion={focusRemovalResult ? 'none' : 'polite'} style={styles.statusBlock}>
+      <View
+        accessibilityLiveRegion={focusRemovalResult ? 'none' : 'polite'}
+        style={styles.statusBlock}
+      >
         <PhaseMessage
           writable={writable}
           phase={phase}
@@ -318,7 +332,9 @@ export function TaskStatePanel({
             storeKey={taskRef}
             store={store}
             canWrite={
-              receipt.operationType === 'task.remove' ? canUndoRemoval : canWrite
+              receipt.operationType === 'task.remove'
+                ? canUndoRemoval
+                : canWrite
             }
             taskTitle={taskTitle}
             focusResult={focusRemovalResult}
@@ -446,18 +462,26 @@ export function PhaseMessage({
         // #366: Undo of a step change met a newer edit. Nothing changed; the offered
         // change needs approval, and a removal also its confirmation (this button).
         const removes = isRemoval(proposed);
-        const targets = proposed.type === 'step.remove_created'
-          ? proposed.steps
-          : proposed.type === 'step.remove'
-            ? [{ step_id: proposed.step_id, expected_revision: proposed.expected_revision }]
-            : [];
+        const targets =
+          proposed.type === 'step.remove_created'
+            ? proposed.steps
+            : proposed.type === 'step.remove'
+              ? [
+                  {
+                    step_id: proposed.step_id,
+                    expected_revision: proposed.expected_revision,
+                  },
+                ]
+              : [];
         const currentTargets = targets.map(target => ({
           ...target,
           current: steps.find(step => step.stepId === target.step_id),
         }));
-        const detailsMatch = currentTargets.length > 0 && currentTargets.every(
-          target => target.current?.revision === target.expected_revision
-        );
+        const detailsMatch =
+          currentTargets.length > 0 &&
+          currentTargets.every(
+            target => target.current?.revision === target.expected_revision
+          );
         const canApprove = writable && (!removes || detailsMatch);
         return (
           <View style={styles.review}>
@@ -473,14 +497,20 @@ export function PhaseMessage({
             )}
             {removes && (
               <View>
-                {currentTargets.map(target => target.current && (
-                  <Text key={target.step_id} style={styles.statusText}>
-                    {target.current.title}
-                  </Text>
-                ))}
+                {currentTargets.map(
+                  target =>
+                    target.current && (
+                      <Text key={target.step_id} style={styles.statusText}>
+                        {target.current.title}
+                      </Text>
+                    )
+                )}
                 {!detailsMatch && (
                   <Text style={[styles.statusText, styles.statusError]}>
-                    {t('taskSteps.removalNeedsRefresh', { keep: t('taskActions.keepCurrent'), undo: t('taskSteps.undo') })}
+                    {t('taskSteps.removalNeedsRefresh', {
+                      keep: t('taskActions.keepCurrent'),
+                      undo: t('taskSteps.undo'),
+                    })}
                   </Text>
                 )}
               </View>
@@ -614,14 +644,18 @@ export function PhaseMessage({
         // restoring it keeps that edit and is a reviewed change.
         return (
           <View style={styles.review}>
-            <Text style={styles.statusText}>{t('taskRemove.restoreConflict')}</Text>
+            <Text style={styles.statusText}>
+              {t('taskRemove.restoreConflict')}
+            </Text>
             <View style={styles.reviewActions}>
               <Pressable
                 accessibilityRole='button'
                 accessibilityLabel={t('taskRemove.restoreTask')}
                 disabled={!canRestore}
                 accessibilityState={{ disabled: !canRestore }}
-                onPress={() => canRestore && void store?.approveCompensation(taskRef)}
+                onPress={() =>
+                  canRestore && void store?.approveCompensation(taskRef)
+                }
                 style={({ pressed }) => [
                   styles.primaryButton,
                   { minHeight: minTarget() },
@@ -629,9 +663,13 @@ export function PhaseMessage({
                   pressed && canRestore && styles.stateOptionPressed,
                 ]}
               >
-                <Text style={styles.primaryButtonText}>{t('taskRemove.restoreTask')}</Text>
+                <Text style={styles.primaryButtonText}>
+                  {t('taskRemove.restoreTask')}
+                </Text>
               </Pressable>
-              {action(t('taskRemove.keepRemoved'), () => store?.dismiss(taskRef))}
+              {action(t('taskRemove.keepRemoved'), () =>
+                store?.dismiss(taskRef)
+              )}
             </View>
           </View>
         );

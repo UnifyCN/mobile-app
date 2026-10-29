@@ -1,3 +1,8 @@
+import { ReceiptBlock } from './ReceiptBlock';
+import {
+  reminderLabel,
+  type ReminderProposal,
+} from '@/services/companionActions/reminders';
 import { LiveText as Text } from '@/components/common/LiveText';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -37,6 +42,7 @@ const ACCENT_STRONG = '#9A4A00';
 const ACCENT_BG = '#FFF4E8';
 
 interface CardsProps {
+  reminderProposals?: ReminderProposal[];
   /** The saved message id the cards belong to; null for an unsaved message. */
   messageId: number | null;
   isUser: boolean;
@@ -71,6 +77,7 @@ interface CardsProps {
  * A result card shows the saved task by its receipt, not by any assistant text.
  */
 export function TaskActionCards({
+  reminderProposals = [],
   messageId,
   isUser,
   proposals,
@@ -90,17 +97,66 @@ export function TaskActionCards({
   onReviewRemoval,
   isRemovedNow,
 }: CardsProps) {
+  const { t, i18n } = useTranslation();
   if (messageId === null) return null;
   const mine = proposals.filter(p => p.source?.messageId === messageId);
   const mySteps = stepProposals.filter(p => p.source?.messageId === messageId);
-  const myRemovals = removalProposals.filter(p => p.source?.messageId === messageId);
-  const myDetails = detailProposals.filter(p => p.source?.messageId === messageId);
+  const myRemovals = removalProposals.filter(
+    p => p.source?.messageId === messageId
+  );
+  const myDetails = detailProposals.filter(
+    p => p.source?.messageId === messageId
+  );
   const command =
     commands.find(c => c.messageId === messageId) ??
     detailCommands.find(c => c.messageId === messageId) ??
     null;
   return (
     <>
+      {reminderProposals
+        .filter(p => p.source?.messageId === messageId)
+        .map(p => (
+          <View key={p.proposalId} style={styles.card}>
+            <View style={styles.text}>
+              <Text style={styles.title}>{t('reminders.title')}</Text>
+              <Text>
+                {p.operation.type === 'reminder.schedule'
+                  ? reminderLabel(
+                      {
+                        remindAt: p.operation.remind_at,
+                        timeZone: p.operation.time_zone,
+                      },
+                      i18n.language
+                    )
+                  : t('reminders.stopped')}
+              </Text>
+              <Text>
+                {t(
+                  p.status === 'draft'
+                    ? 'taskCreate.draftBadge'
+                    : p.status === 'applied'
+                      ? 'reminders.saved'
+                      : 'reminders.stopped'
+                )}
+              </Text>
+            </View>
+            <CardButton
+              label={t('reminders.review')}
+              name={t('reminders.review')}
+              onPress={() => {
+                store?.setDraft(
+                  `reminder-review:${p.operation.task_ref}`,
+                  p.proposalId
+                );
+                onViewTask(
+                  p.operation.task_ref,
+                  taskTitleOf?.(p.operation.task_ref) ??
+                    t('taskActions.existingTask')
+                );
+              }}
+            />
+          </View>
+        ))}
       {mine.map(p =>
         p.kind === 'task_edit' ? (
           <EditDraftCard
@@ -273,14 +329,19 @@ function StepDraftCard({
         : t('taskSteps.draftBadge');
   const task = taskTitle ?? t('taskSteps.cardTitleUnknownTask');
   return (
-    <View testID='step-draft-card' style={[styles.card, draft && styles.cardDraft]}>
+    <View
+      testID='step-draft-card'
+      style={[styles.card, draft && styles.cardDraft]}
+    >
       <CardIcon />
       <View style={styles.text}>
         <Text style={styles.eyebrow}>{t('taskSteps.cardEyebrow')}</Text>
         <Text style={styles.title}>{heading}</Text>
         {draft && (
           <Text style={styles.status}>
-            {t('taskSteps.cardCount', { count: proposal.operation.titles.length })}
+            {t('taskSteps.cardCount', {
+              count: proposal.operation.titles.length,
+            })}
           </Text>
         )}
         <Text style={styles.status} accessibilityLiveRegion='polite'>
@@ -340,9 +401,7 @@ function EditDraftCard({
       <CardButton
         label={draft ? t('taskEdit.review') : t('taskEdit.view')}
         name={
-          draft
-            ? t('taskEdit.reviewA11y', { title: name })
-            : t('taskEdit.view')
+          draft ? t('taskEdit.reviewA11y', { title: name }) : t('taskEdit.view')
         }
         onPress={onReview}
       />
@@ -373,7 +432,10 @@ function DetailDraftCard({
         ? t('taskActions.checking')
         : t('savedDetails.draftBadge');
   return (
-    <View testID='detail-draft-card' style={[styles.card, draft && styles.cardDraft]}>
+    <View
+      testID='detail-draft-card'
+      style={[styles.card, draft && styles.cardDraft]}
+    >
       <CardIcon />
       <View style={styles.text}>
         <Text style={styles.eyebrow}>{t('savedDetails.draftEyebrow')}</Text>
@@ -384,7 +446,11 @@ function DetailDraftCard({
       </View>
       <CardButton
         label={draft ? t('savedDetails.review') : t('taskCreate.view')}
-        name={draft ? t('savedDetails.reviewA11y', { text }) : t('savedDetails.view')}
+        name={
+          draft
+            ? t('savedDetails.reviewA11y', { text })
+            : t('savedDetails.view')
+        }
         onPress={onReview}
       />
     </View>
@@ -410,11 +476,20 @@ function DetailCommandResult({
       <View style={styles.cardRow}>
         <CardIcon />
         <View style={styles.text}>
-          <DetailReceipt receipt={receipt} storeKey={storeKey} store={store} view={view} />
+          <DetailReceipt
+            receipt={receipt}
+            storeKey={storeKey}
+            store={store}
+            view={view}
+          />
         </View>
       </View>
       {onViewDetails ? (
-        <CardButton label={t('savedDetails.view')} name={t('savedDetails.view')} onPress={onViewDetails} />
+        <CardButton
+          label={t('savedDetails.view')}
+          name={t('savedDetails.view')}
+          onPress={onViewDetails}
+        />
       ) : null}
     </View>
   );
@@ -488,19 +563,44 @@ function CommandCard({
   const { t } = useTranslation();
   const key = `command:${messageId}`;
   const phase = useTaskActionPhase(store, key);
-  const receipt = phase.phase === 'saved'
-    ? saved?.operationId === phase.receipt.operationId
-      ? {
-          ...phase.receipt,
-          current: saved.current,
-          undoable: saved.undoable,
-          undoneBy: saved.undoneBy,
-        }
-      : phase.receipt
-    : saved;
+  const receipt =
+    phase.phase === 'saved'
+      ? saved?.operationId === phase.receipt.operationId
+        ? {
+            ...phase.receipt,
+            current: saved.current,
+            undoable: saved.undoable,
+            undoneBy: saved.undoneBy,
+          }
+        : phase.receipt
+      : saved;
+  if (receipt?.reminder)
+    return (
+      <View style={[styles.card, styles.cardColumn]}>
+        <ReceiptBlock
+          receipt={receipt}
+          storeKey={key}
+          store={store}
+          canWrite={canWrite}
+        />
+        <CardButton
+          label={t('reminders.openTask')}
+          name={t('reminders.openTask')}
+          onPress={() =>
+            onViewTask(
+              receipt.taskRef,
+              taskTitleOf(receipt.taskRef) ?? t('taskActions.existingTask')
+            )
+          }
+        />
+      </View>
+    );
   // #370: a remember command's receipt (and its Undo) is a saved-detail receipt.
-  const detailReceipt =
-    receipt?.detail ? receipt : phase.phase === 'undo_review' || phase.phase === 'already_undone' ? saved : null;
+  const detailReceipt = receipt?.detail
+    ? receipt
+    : phase.phase === 'undo_review' || phase.phase === 'already_undone'
+      ? saved
+      : null;
   if (detailReceipt?.detail) {
     return (
       <DetailCommandResult
@@ -518,7 +618,9 @@ function CommandCard({
   ) {
     // #365: a clear edit command's saved change, named field by field.
     const title =
-      receipt.title ?? taskTitleOf(receipt.taskRef) ?? t('taskEdit.unknownTask');
+      receipt.title ??
+      taskTitleOf(receipt.taskRef) ??
+      t('taskEdit.unknownTask');
     return (
       <View testID='task-command-card' style={styles.card}>
         <CardIcon />
@@ -679,7 +781,10 @@ function RemovalCard({
         ? t('taskActions.checking')
         : t('taskRemove.cardDraft');
   return (
-    <View testID='task-removal-card' style={[styles.card, open && styles.cardDraft]}>
+    <View
+      testID='task-removal-card'
+      style={[styles.card, open && styles.cardDraft]}
+    >
       <View style={styles.icon}>
         <MaterialIcons name='delete-outline' size={18} color={ACCENT_STRONG} />
       </View>
@@ -698,7 +803,7 @@ function RemovalCard({
               ? t('taskRemove.cardReviewA11y', { title: name })
               : t('taskCreate.view')
           }
-          onPress={() => open ? onReview(name) : onView(name)}
+          onPress={() => (open ? onReview(name) : onView(name))}
         />
       )}
     </View>

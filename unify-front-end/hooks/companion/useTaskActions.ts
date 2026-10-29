@@ -1,9 +1,5 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useSyncExternalStore,
-} from 'react';
+import type { ReminderRead } from '@/services/companionActions/reminders';
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 import {
   useQuery,
@@ -90,6 +86,7 @@ export type TaskProgressStatus =
 
 export interface TaskProgressView {
   status: TaskProgressStatus;
+  reminders?: ReminderRead;
   /** Saved progress by task_ref. A content-backed task never written has no entry. */
   byRef: ReadonlyMap<string, TaskProgress>;
   /** #366: live steps by task_ref, in order. */
@@ -131,7 +128,12 @@ export function useTaskProgress(): TaskProgressView {
     },
     staleTime: 0,
     retry: false,
-    refetchInterval: q => (q.state.status === 'error' ? 5_000 : false),
+    refetchInterval: q =>
+      q.state.status === 'error' ||
+      (q.state.data?.kind === 'ok' &&
+        q.state.data.reminders?.items.some(r => r.status === 'pending'))
+        ? 5_000
+        : false,
   });
 
   const refetch = query.refetch;
@@ -179,6 +181,7 @@ export function useTaskProgress(): TaskProgressView {
     byRef,
     stepsByRef,
     details,
+    reminders: result?.kind === 'ok' ? result.reminders : undefined,
     stale,
     // A refetch after a save may still carry the old revision: wait for it.
     canWrite: status === 'ready' && !stale && !query.isFetching,
@@ -201,8 +204,9 @@ function useTaskActionAccountScope(
   useEffect(() => {
     if (userId === undefined) return;
     clearTaskActionStores(userId);
-    const otherAccount = (index: number) => (q: { queryKey: readonly unknown[] }) =>
-      q.queryKey[index] !== userId;
+    const otherAccount =
+      (index: number) => (q: { queryKey: readonly unknown[] }) =>
+        q.queryKey[index] !== userId;
     for (const [root, index] of [
       [TASK_PROGRESS_ROOT, 1],
       [CHECKLIST_TASKS_QUERY_ROOT, 1],
@@ -263,7 +267,11 @@ export function useTaskActionStore(
           queryKey: [DETAIL_PROPOSAL_ROOT, userId],
         });
         // Plans join current shared progress and must refresh after a task save.
-        for (const root of [PLANS_ROOT, PLAN_PROPOSAL_ROOT, CONVERSATION_PLANS_ROOT]) {
+        for (const root of [
+          PLANS_ROOT,
+          PLAN_PROPOSAL_ROOT,
+          CONVERSATION_PLANS_ROOT,
+        ]) {
           void queryClient.invalidateQueries({ queryKey: [root, userId] });
         }
       },
@@ -315,8 +323,10 @@ export function useTaskProposal(proposalId: string | null) {
 
 /** #366: one suggested-steps draft, read from the action service as the signed-in account. */
 export const STEP_PROPOSAL_ROOT = 'companion-step-proposal' as const;
-export const stepProposalKey = (userId: string | null, proposalId: string | null) =>
-  [STEP_PROPOSAL_ROOT, userId, proposalId] as const;
+export const stepProposalKey = (
+  userId: string | null,
+  proposalId: string | null
+) => [STEP_PROPOSAL_ROOT, userId, proposalId] as const;
 
 export function useStepProposal(proposalId: string | null) {
   const userId = useTaskActionAccount() ?? null;
@@ -326,8 +336,11 @@ export function useStepProposal(proposalId: string | null) {
     queryFn: async (): Promise<StepProposal> => {
       const owner = ownAccountWork();
       if (owner.accountId !== userId) throw new ReadFailed('account changed');
-      const result = await createMobileTaskActionClient(owner).stepProposal(proposalId as string);
-      if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
+      const result = await createMobileTaskActionClient(owner).stepProposal(
+        proposalId as string
+      );
+      if (result.kind === 'ok' || result.kind === 'changed')
+        return result.proposal;
       throw new ReadFailed(result.kind);
     },
     staleTime: 0,
@@ -337,8 +350,10 @@ export function useStepProposal(proposalId: string | null) {
 
 /** #370: one suggested-detail draft, read from the action service as the signed-in account. */
 export const DETAIL_PROPOSAL_ROOT = 'companion-detail-proposal' as const;
-export const detailProposalKey = (userId: string | null, proposalId: string | null) =>
-  [DETAIL_PROPOSAL_ROOT, userId, proposalId] as const;
+export const detailProposalKey = (
+  userId: string | null,
+  proposalId: string | null
+) => [DETAIL_PROPOSAL_ROOT, userId, proposalId] as const;
 
 export function useDetailProposal(proposalId: string | null) {
   const userId = useTaskActionAccount() ?? null;
@@ -348,8 +363,11 @@ export function useDetailProposal(proposalId: string | null) {
     queryFn: async (): Promise<DetailProposal> => {
       const owner = ownAccountWork();
       if (owner.accountId !== userId) throw new ReadFailed('account changed');
-      const result = await createMobileTaskActionClient(owner).detailProposal(proposalId as string);
-      if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
+      const result = await createMobileTaskActionClient(owner).detailProposal(
+        proposalId as string
+      );
+      if (result.kind === 'ok' || result.kind === 'changed')
+        return result.proposal;
       throw new ReadFailed(result.kind);
     },
     staleTime: 0,
@@ -358,7 +376,10 @@ export function useDetailProposal(proposalId: string | null) {
 }
 
 /** The live steps of one task, in order (#366). */
-export function stepsFor(taskRef: string, view: TaskProgressView): readonly TaskStep[] {
+export function stepsFor(
+  taskRef: string,
+  view: TaskProgressView
+): readonly TaskStep[] {
   return view.stepsByRef.get(taskRef) ?? [];
 }
 

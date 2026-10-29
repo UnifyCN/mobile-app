@@ -1268,7 +1268,10 @@
           "serviceArea": "Canadá y todo el mundo",
           "howToStart": "Pide una cotización en línea con un socio asegurador de TuGo, o llama al 1-855-929-8846.",
           "hours": "Lun–Vie 6:00am–5:00pm PST · Sáb 7:00am–4:00pm PST · Dom cerrado",
-          "languages": ["Inglés", "Francés"],
+          "languages": [
+            "Inglés",
+            "Francés"
+          ],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Seguro Visitors to Canada",
@@ -1306,7 +1309,10 @@
           "eligibility": "La oferta de cuenta para recién llegados es para personas de 25 años o más que sean residentes permanentes, o residentes temporales con un permiso de trabajo válido por más de 8 meses, que hayan vivido en Canadá 3 años o menos y que no sean ya miembros de Desjardins. Hay ofertas aparte para las personas de 18 a 24 años y para los estudiantes de tiempo completo de 25 a 30 años.",
           "howToStart": "Abre una cuenta en línea en unos 15 minutos, o solicítala desde el extranjero y confirma tu identidad en un punto de servicio al llegar.",
           "hours": "Asistencia legal: apertura de expediente 24/7 · asesores Lun–Vie 9:00am–8:00pm, Sáb 9:00am–5:00pm",
-          "languages": ["Inglés", "Francés"],
+          "languages": [
+            "Inglés",
+            "Francés"
+          ],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Cuenta corriente para recién llegados (plan Unlimited)",
@@ -2867,5 +2873,32 @@
     "commandFailed": "No pude abrir la revisión para quitar «{{title}}». No se quitó nada.",
     "clarifyMissingTitle": "¿Qué tarea quieres quitar? Escríbela así: Quita la tarea: Contratar un plan de teléfono",
     "clarifyMultiple": "Pide quitar una sola tarea a la vez. No se quitó nada."
+  },
+  "reminders": {
+    "title": "Recordatorios",
+    "instant": "Fecha y hora con desfase UTC",
+    "zone": "Zona horaria",
+    "timeHelp": "Introduce la fecha, la hora, el desfase UTC y el nombre de la zona horaria. Revisa todos los valores antes de guardar.",
+    "invalidTime": "Introduce una hora futura válida y su desfase UTC. Una hora repetida requiere un desfase explícito.",
+    "readFailed": "No se pudieron actualizar los recordatorios. Comprueba la conexión antes de hacer cambios.",
+    "review": "Revisar recordatorio",
+    "save": "Guardar recordatorio",
+    "cancel": "Cancelar recordatorio",
+    "cancelConfirm": "¿Detener este recordatorio? La tarea y su progreso seguirán guardados.",
+    "confirmCancel": "Confirmar cancelación",
+    "keepEditing": "Seguir editando",
+    "keep": "Conservar recordatorio",
+    "saved": "Recordatorio guardado.",
+    "stopped": "Recordatorio detenido",
+    "scheduled": "Programado",
+    "due": "Es la hora",
+    "schedulerUnavailable": "El recordatorio está guardado. La programación no está disponible ahora.",
+    "interruption": "La programación se detuvo durante una interrupción del servicio. Elige y revisa una nueva hora para empezar de nuevo.",
+    "openTask": "Abrir tarea",
+    "undoHelp": "Deshacer no reactiva los recordatorios detenidos. Para iniciar otro, revisa una nueva hora.",
+    "undoConfirm": "¿Detener el recordatorio guardado por este cambio? Los recordatorios posteriores no cambiarán.",
+    "confirmUndo": "Confirmar deshacer",
+    "reviewAgain": "El recordatorio cambió. Actualiza y revisa los valores actuales antes de guardar.",
+    "history": "Este cambio forma parte del historial. Los recordatorios actuales aparecen arriba."
   }
 }

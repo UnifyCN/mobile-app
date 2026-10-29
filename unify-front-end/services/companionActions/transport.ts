@@ -69,6 +69,7 @@ export const mobileTransportFor =
       } catch {
         parsed = null;
       }
+      if (!stillOwned(owner)) throw new AccountChangedError();
       return { status: res.status, body: parsed };
     } finally {
       clearTimeout(timer);

@@ -1,6 +1,13 @@
+import { reminderLabel } from '@/services/companionActions/reminders';
 import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useRef, useState } from 'react';
-import { AccessibilityInfo, Pressable, StyleSheet, type Text as NativeText, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  Pressable,
+  StyleSheet,
+  type Text as NativeText,
+  View,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
@@ -10,11 +17,7 @@ import type {
 } from '@/services/companionActions/contract';
 import type { TaskActionStore } from '@/services/companionActions/taskActionStore';
 import { minTarget } from '@/utils/touchTarget';
-import {
-  editReceiptText,
-  receiptChanges,
-  receiptChangeText,
-} from './editText';
+import { editReceiptText, receiptChanges, receiptChangeText } from './editText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -89,33 +92,49 @@ export function ReceiptBlock({
   };
   // A reason-only save keeps the state: name what changed instead of
   // "Waiting to Waiting".
-  const text = isStep
-    ? stepText()
-    : removal
-      ? title
-        ? t('taskRemove.receiptRemoved', { title })
-        : t('taskRemove.receiptRemovedUnknown')
-      : restore
+  const text = receipt.reminder
+    ? t(receipt.reminder.stopped ? 'reminders.stopped' : 'reminders.saved') +
+      (receipt.reminder.remindAt && receipt.reminder.timeZone
+        ? ' ' +
+          reminderLabel(
+            {
+              remindAt: receipt.reminder.remindAt,
+              timeZone: receipt.reminder.timeZone,
+            },
+            i18n.language
+          )
+        : '')
+    : isStep
+      ? stepText()
+      : removal
         ? title
-          ? t('taskRemove.receiptRestored', { title })
-          : t('taskRemove.receiptRestoredUnknown')
-    : receipt.operationType === 'task.edit_details'
-      ? editReceiptText(t as never, receipt, receipt.title ?? taskTitle ?? '')
-      : receipt.operationType === 'task.create_custom'
-      ? t('taskCreate.added', { title })
-      : receipt.operationType === 'task.remove_created'
-        ? t('taskCreate.removed', { title })
-        : receipt.kind === 'undo'
-          ? t('taskActions.receiptUndo', {
-              state: stateLabel(receipt.afterState),
-            })
-          : receipt.beforeState === 'waiting' &&
-              receipt.afterState === 'waiting'
-            ? t('taskActions.receiptReason')
-            : t('taskActions.receiptChange', {
-                from: stateLabel(receipt.beforeState),
-                to: stateLabel(receipt.afterState),
-              });
+          ? t('taskRemove.receiptRemoved', { title })
+          : t('taskRemove.receiptRemovedUnknown')
+        : restore
+          ? title
+            ? t('taskRemove.receiptRestored', { title })
+            : t('taskRemove.receiptRestoredUnknown')
+          : receipt.operationType === 'task.edit_details'
+            ? editReceiptText(
+                t as never,
+                receipt,
+                receipt.title ?? taskTitle ?? ''
+              )
+            : receipt.operationType === 'task.create_custom'
+              ? t('taskCreate.added', { title })
+              : receipt.operationType === 'task.remove_created'
+                ? t('taskCreate.removed', { title })
+                : receipt.kind === 'undo'
+                  ? t('taskActions.receiptUndo', {
+                      state: stateLabel(receipt.afterState),
+                    })
+                  : receipt.beforeState === 'waiting' &&
+                      receipt.afterState === 'waiting'
+                    ? t('taskActions.receiptReason')
+                    : t('taskActions.receiptChange', {
+                        from: stateLabel(receipt.beforeState),
+                        to: stateLabel(receipt.afterState),
+                      });
   const time = new Intl.DateTimeFormat(i18n.language, {
     month: 'short',
     day: 'numeric',
@@ -124,13 +143,16 @@ export function ReceiptBlock({
   }).format(new Date(receipt.createdAt));
   // Undo of an added task or added steps removes them: it asks first.
   const removes =
+    receipt.operationType === 'reminder.schedule' ||
     receipt.operationType === 'task.create_custom' ||
     receipt.operationType === 'step.create';
-  const confirmTitle = isStep
-    ? steps.length === 1
-      ? t('taskSteps.confirmRemove', { title: first?.title ?? '' })
-      : t('taskSteps.confirmRemoveMany', { count: steps.length })
-    : t('taskCreate.confirmRemove', { title });
+  const confirmTitle = receipt.reminder
+    ? t('reminders.undoConfirm')
+    : isStep
+      ? steps.length === 1
+        ? t('taskSteps.confirmRemove', { title: first?.title ?? '' })
+        : t('taskSteps.confirmRemoveMany', { count: steps.length })
+      : t('taskCreate.confirmRemove', { title });
 
   function undo() {
     if (!canWrite || !store) return;
@@ -149,11 +171,18 @@ export function ReceiptBlock({
         accessible
         style={styles.receiptText}
         onLayout={() => {
-          if (!focusResult || focusedOperation.current === receipt.operationId || !resultRef.current) return;
+          if (
+            !focusResult ||
+            focusedOperation.current === receipt.operationId ||
+            !resultRef.current
+          )
+            return;
           focusedOperation.current = receipt.operationId;
           AccessibilityInfo.sendAccessibilityEvent(resultRef.current, 'focus');
         }}
-      >{text}</Text>
+      >
+        {text}
+      </Text>
       {receiptChanges(receipt).map(change => (
         <Text key={change.field} style={styles.receiptText}>
           {receiptChangeText(t as never, change)}
@@ -187,10 +216,10 @@ export function ReceiptBlock({
             removal
               ? t('taskRemove.undoRemovalA11y', { change: text })
               : isStep
-              ? t('taskSteps.undoA11y', { change: text })
-              : removes
-                ? t('taskCreate.undoA11y', { title })
-                : t('taskActions.undo')
+                ? t('taskSteps.undoA11y', { change: text })
+                : removes
+                  ? t('taskCreate.undoA11y', { title })
+                  : t('taskActions.undo')
           }
           disabled={!canWrite}
           accessibilityState={{ disabled: !canWrite }}
@@ -207,10 +236,10 @@ export function ReceiptBlock({
             {removal
               ? t('taskRemove.undoRemoval')
               : isStep
-              ? t('taskSteps.undo')
-              : removes
-                ? t('taskCreate.undo')
-                : t('taskActions.undo')}
+                ? t('taskSteps.undo')
+                : removes
+                  ? t('taskCreate.undo')
+                  : t('taskActions.undo')}
           </Text>
         </Pressable>
       )}
@@ -218,9 +247,11 @@ export function ReceiptBlock({
         <View style={styles.confirm}>
           <Text style={styles.confirmTitle}>{confirmTitle}</Text>
           <Text style={styles.confirmBody}>
-            {isStep
-              ? t('taskSteps.confirmRemoveBody')
-              : t('taskCreate.confirmRemoveBody')}
+            {receipt.reminder
+              ? t('reminders.undoConfirm')
+              : isStep
+                ? t('taskSteps.confirmRemoveBody')
+                : t('taskCreate.confirmRemoveBody')}
           </Text>
           <View style={styles.actions}>
             <Pressable

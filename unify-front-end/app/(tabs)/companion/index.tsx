@@ -67,7 +67,10 @@ import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasks
 import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
 import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
 import { useChecklistTaskTitlesState } from '@/hooks/checklist/useChecklistTaskTitles';
-import { PlanEntry, type PlanTarget } from '@/components/companion/plans/PlanEntry';
+import {
+  PlanEntry,
+  type PlanTarget,
+} from '@/components/companion/plans/PlanEntry';
 import { PlanCards } from '@/components/companion/plans/PlanCards';
 import { useConversationPlans, usePlanStore } from '@/hooks/companion/usePlans';
 import {
@@ -78,10 +81,7 @@ import {
 } from '@/hooks/companion/useTaskActions';
 import type { RemovalProposal } from '@/services/companionActions/contract';
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
-import {
-  ownAccountWork,
-  stillOwned,
-} from '@/services/account/accountSession';
+import { ownAccountWork, stillOwned } from '@/services/account/accountSession';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
 // the rag-query edge function (source of truth: UnifyCN/web-app,
@@ -284,7 +284,8 @@ export default function CompanionScreen() {
   const isPremium = currentUser?.isPremium ?? false;
   // Titles of the account's live Checklist tasks: suggestions name their task (#366) and a
   // removal request names the task to review (#367).
-  const { titles: taskTitles, ready: taskTitlesReady } = useChecklistTaskTitlesState();
+  const { titles: taskTitles, ready: taskTitlesReady } =
+    useChecklistTaskTitlesState();
   const {
     sendMessage,
     isLoading,
@@ -570,18 +571,24 @@ export default function CompanionScreen() {
   const openRemoval = useCallback(
     (proposal: RemovalProposal, title: string) => {
       if (proposal.status === 'draft')
-        actionStore?.requestRemoval(proposal.operation.task_ref, proposal.proposalId);
+        actionStore?.requestRemoval(
+          proposal.operation.task_ref,
+          proposal.proposalId
+        );
       openTask(proposal.operation.task_ref, title);
     },
     [actionStore, openTask]
   );
   const isRemovedNow = useCallback(
     (taskRef: string) =>
-      taskProgress.status === 'ready' && progressFor(taskRef, taskProgress).removed,
+      taskProgress.status === 'ready' &&
+      progressFor(taskRef, taskProgress).removed,
     [taskProgress]
   );
   // #364: the plan drafts of the open conversation, and the account's plan store.
-  const { data: conversationPlans } = useConversationPlans(currentConversationId);
+  const { data: conversationPlans } = useConversationPlans(
+    currentConversationId
+  );
   const planStore = usePlanStore('companion');
   const openPlan = useCallback((target: PlanTarget) => {
     Keyboard.dismiss();
@@ -614,6 +621,7 @@ export default function CompanionScreen() {
             onSuggestionPress={handleSuggestionClick}
           />
           <TaskActionCards
+            reminderProposals={conversationActions?.reminderProposals ?? []}
             messageId={
               Number.isInteger(savedId) && savedId > 0 ? savedId : null
             }

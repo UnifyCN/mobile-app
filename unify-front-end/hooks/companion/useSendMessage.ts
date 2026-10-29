@@ -1,3 +1,4 @@
+import { parseSuggestedReminder } from '@/services/companionActions/reminders';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -92,7 +93,13 @@ function clarifyQuestion(
  */
 function commandReply(
   t: (key: string, options?: Record<string, unknown>) => string,
-  command: Exclude<CommandResult, { kind: 'none' } | { kind: 'edit' } | { kind: 'remove' }>
+  command: Exclude<
+    CommandResult,
+    | { kind: 'none' }
+    | { kind: 'edit' }
+    | { kind: 'remove' }
+    | { kind: 'reminder' }
+  >
 ): string {
   switch (command.kind) {
     case 'create':
@@ -297,15 +304,23 @@ export const useSendMessage = ({
               ([, title]) => titleKey(title) === key
             );
             if (titles === null) {
-              removalReply = t('taskRemove.commandFailed', { title: command.title });
+              removalReply = t('taskRemove.commandFailed', {
+                title: command.title,
+              });
             } else if (matches.length === 1) {
               const prepared = await actions.prepareRemoval(
-                { type: 'task.remove', task_ref: matches[0][0], expected_revision: 0 },
+                {
+                  type: 'task.remove',
+                  task_ref: matches[0][0],
+                  expected_revision: 0,
+                },
                 { conversationId: conversationIdToUse, messageId: savedUserId }
               );
               ensureOwned();
               if (prepared.kind !== 'ok' && prepared.kind !== 'changed')
-                removalReply = t('taskRemove.commandFailed', { title: command.title });
+                removalReply = t('taskRemove.commandFailed', {
+                  title: command.title,
+                });
             } else {
               removalReply = t(
                 matches.length === 0
@@ -328,6 +343,7 @@ export const useSendMessage = ({
             (command.kind === 'create' &&
               command.sameTitleTasks.length === 0) ||
             command.kind === 'edit' ||
+            command.kind === 'reminder' ||
             (command.kind === 'remember' &&
               command.sameTextDetails.length === 0)
           ) {
@@ -433,8 +449,7 @@ export const useSendMessage = ({
           },
           owner
         ).catch(err => {
-          streamFailure =
-            err instanceof Error ? err : new Error(String(err));
+          streamFailure = err instanceof Error ? err : new Error(String(err));
           finishOnce();
         });
       });
@@ -501,15 +516,21 @@ export const useSendMessage = ({
       const suggestedPlan = parseSuggestedPlan(completion.actionProposal);
       ensureOwned();
       if (suggestedPlan && savedAnswerId !== null) {
-        await createMobilePlanClient(owner).prepare(suggestedPlan.goal, suggestedPlan.items, {
-          conversationId: conversationIdToUse,
-          messageId: savedAnswerId,
-        });
+        await createMobilePlanClient(owner).prepare(
+          suggestedPlan.goal,
+          suggestedPlan.items,
+          {
+            conversationId: conversationIdToUse,
+            messageId: savedAnswerId,
+          }
+        );
         ensureOwned();
         queryClient.invalidateQueries({
           queryKey: conversationPlansKey(owner.accountId, conversationIdToUse),
         });
-        queryClient.invalidateQueries({ queryKey: plansKey(owner.accountId ?? null) });
+        queryClient.invalidateQueries({
+          queryKey: plansKey(owner.accountId ?? null),
+        });
       }
 
       // #363: a suggested task becomes a server-owned draft for review, tied to this
@@ -531,7 +552,10 @@ export const useSendMessage = ({
             }));
         ensureOwned();
         queryClient.invalidateQueries({
-          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
         });
       }
       // #366: suggested steps for one Checklist task become a server-owned draft too.
@@ -548,7 +572,10 @@ export const useSendMessage = ({
         );
         ensureOwned();
         queryClient.invalidateQueries({
-          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
         });
       }
 
@@ -562,7 +589,27 @@ export const useSendMessage = ({
         );
         ensureOwned();
         queryClient.invalidateQueries({
-          queryKey: conversationActionsKey(owner.accountId, conversationIdToUse),
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
+        });
+      }
+
+      const suggestedReminder = parseSuggestedReminder(
+        completion.actionProposal
+      );
+      if (suggestedReminder && actions.prepareReminder) {
+        await actions.prepareReminder(suggestedReminder, {
+          conversationId: conversationIdToUse,
+          ...(savedAnswerId === null ? {} : { messageId: savedAnswerId }),
+        });
+        ensureOwned();
+        void queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
         });
       }
 

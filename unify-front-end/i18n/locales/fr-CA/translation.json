@@ -1268,7 +1268,10 @@
           "serviceArea": "Canada et partout dans le monde",
           "howToStart": "Demandez une soumission en ligne auprès d'un partenaire assureur de TuGo, ou composez le 1-855-929-8846.",
           "hours": "lun.-ven. 6 h à 17 h HNP · sam. 7 h à 16 h HNP · dim. fermé",
-          "languages": ["Anglais", "Français"],
+          "languages": [
+            "Anglais",
+            "Français"
+          ],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Assurance Visitors to Canada",
@@ -1306,7 +1309,10 @@
           "eligibility": "L'offre de compte pour nouveaux arrivants s'adresse aux personnes de 25 ans et plus qui sont résidentes permanentes, ou résidentes temporaires avec un permis de travail valide pour plus de 8 mois, qui habitent le Canada depuis 3 ans ou moins et qui ne sont pas déjà membres de Desjardins. Des offres distinctes visent les 18 à 24 ans et les étudiants à temps plein de 25 à 30 ans.",
           "howToStart": "Ouvrez un compte en ligne en environ 15 minutes, ou faites une demande depuis l'étranger et confirmez votre identité dans un point de service à votre arrivée.",
           "hours": "Assistance juridique : ouverture de dossier 24 h sur 24, 7 jours sur 7 · conseillers lun.-ven. 9 h à 20 h, sam. 9 h à 17 h",
-          "languages": ["Anglais", "Français"],
+          "languages": [
+            "Anglais",
+            "Français"
+          ],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Compte chèques pour nouveaux arrivants (forfait Illimité)",
@@ -2867,5 +2873,32 @@
     "commandFailed": "Impossible d’ouvrir la vérification du retrait de « {{title}} ». Rien n’a été retiré.",
     "clarifyMissingTitle": "Quelle tâche voulez-vous retirer? Écrivez-la ainsi : Retire la tâche : Obtenir un forfait cellulaire",
     "clarifyMultiple": "Demandez de retirer une seule tâche à la fois. Rien n’a été retiré."
+  },
+  "reminders": {
+    "title": "Rappels",
+    "instant": "Date et heure avec décalage UTC",
+    "zone": "Fuseau horaire",
+    "timeHelp": "Entrez la date, l’heure, le décalage UTC et le nom du fuseau horaire. Vérifiez chaque valeur avant d’enregistrer.",
+    "invalidTime": "Entrez une heure future valide et le décalage UTC correspondant. Une heure répétée exige un décalage explicite.",
+    "readFailed": "Impossible d’actualiser les rappels. Vérifiez la connexion avant de modifier un rappel.",
+    "review": "Vérifier le rappel",
+    "save": "Enregistrer le rappel",
+    "cancel": "Annuler le rappel",
+    "cancelConfirm": "Arrêter ce rappel? La tâche et sa progression resteront enregistrées.",
+    "confirmCancel": "Confirmer l’annulation",
+    "keepEditing": "Continuer la modification",
+    "keep": "Conserver le rappel",
+    "saved": "Rappel enregistré.",
+    "stopped": "Rappel arrêté",
+    "scheduled": "Planifié",
+    "due": "À faire maintenant",
+    "schedulerUnavailable": "Le rappel est enregistré. La planification est indisponible pour le moment.",
+    "interruption": "La planification a été arrêtée lors d’une interruption de service. Choisissez et vérifiez une nouvelle heure pour recommencer.",
+    "openTask": "Ouvrir la tâche",
+    "undoHelp": "Annuler une modification ne réactive pas les rappels arrêtés. Vérifiez une nouvelle heure pour relancer un rappel.",
+    "undoConfirm": "Arrêter le rappel enregistré par cette modification? Les rappels plus récents resteront inchangés.",
+    "confirmUndo": "Confirmer l’annulation de la modification",
+    "reviewAgain": "Le rappel a changé. Actualisez et vérifiez les valeurs actuelles avant d’enregistrer.",
+    "history": "Cette modification est un historique. Les rappels actuels sont affichés ci-dessus."
   }
 }

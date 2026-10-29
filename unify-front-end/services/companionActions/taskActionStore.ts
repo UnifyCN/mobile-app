@@ -69,7 +69,10 @@ export type TaskActionPhase =
   /** #367: Undo of a removal changed nothing: the task is back already, or removed again later. */
   | { phase: 'undo_blocked'; reason: 'not_removed' | 'removed_again' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { phase: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal | RemovalProposal }
+  | {
+      phase: 'needs_review';
+      proposal: TaskProposal | StepProposal | DetailProposal | RemovalProposal;
+    }
   /** #370: a live saved detail already says this; nothing was written. */
   | { phase: 'detail_exists' }
   /** #363: this command already added its task, or a task with that title exists. */
@@ -99,7 +102,8 @@ export interface TaskActionResultEvent {
     | 'approve_detail'
     | 'command_detail'
     /** #367: an approved removal review. */
-    | 'approve_removal';
+    | 'approve_removal'
+    | 'reminder_change';
   outcome:
     | 'applied'
     | 'replayed'
@@ -306,12 +310,15 @@ export class TaskActionStore {
   /** Keys with a shown state that start with `prefix` (#370: receipts of removed details). */
   keysWith(prefix: string): string[] {
     return [...this.phases.entries()]
-      .filter(([key, phase]) => key.startsWith(prefix) && phase.phase !== 'idle')
+      .filter(
+        ([key, phase]) => key.startsWith(prefix) && phase.phase !== 'idle'
+      )
       .map(([key]) => key);
   }
 
   private actionOf(write: PendingWrite): TaskActionResultEvent['action'] {
     if (write.kind === 'undo') return 'undo';
+    if (write.operation?.type.startsWith('reminder.')) return 'reminder_change';
     if (write.operation?.type.startsWith('detail.'))
       return write.authorization?.kind === 'direct_command'
         ? 'command_detail'

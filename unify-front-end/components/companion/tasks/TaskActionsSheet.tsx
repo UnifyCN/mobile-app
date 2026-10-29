@@ -1,3 +1,4 @@
+import { ReminderList } from './ReminderSection';
 import { LiveText as Text } from '@/components/common/LiveText';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -182,20 +183,20 @@ export function TaskActionsSheet({
                 {showDetails
                   ? t('savedDetails.title')
                   : detailProposalId
-                  ? t('savedDetails.reviewTitle')
-                  : stepProposalId
-                  ? t('taskSteps.reviewTitle')
-                  : plan
-                  ? 'proposalId' in plan
-                    ? t('plans.reviewTitle')
-                    : t('plans.planTitle')
-                  : proposalId
-                  ? proposalKind === 'task_edit'
-                    ? t('taskEdit.drawerTitle')
-                    : t('taskCreate.drawerTitle')
-                  : selectedRef
-                    ? t('taskActions.drawerTitle')
-                    : t('taskActions.listTitle')}
+                    ? t('savedDetails.reviewTitle')
+                    : stepProposalId
+                      ? t('taskSteps.reviewTitle')
+                      : plan
+                        ? 'proposalId' in plan
+                          ? t('plans.reviewTitle')
+                          : t('plans.planTitle')
+                        : proposalId
+                          ? proposalKind === 'task_edit'
+                            ? t('taskEdit.drawerTitle')
+                            : t('taskCreate.drawerTitle')
+                          : selectedRef
+                            ? t('taskActions.drawerTitle')
+                            : t('taskActions.listTitle')}
               </Text>
               <Pressable
                 onPress={onClose}
@@ -390,12 +391,17 @@ function SheetBody({
   const selected = tasks.find(
     task => getChecklistTaskOrderKey(task) === selectedRef
   );
-  if (selected && selectedRef) seenTitles.current.set(selectedRef, selected.task.task_name);
+  if (selected && selectedRef)
+    seenTitles.current.set(selectedRef, selected.task.task_name);
   const phase = useTaskActionPhase(store, selectedRef);
   const selectedTitle =
     selected?.task.task_name ??
     (selectedRef ? seenTitles.current.get(selectedRef) : undefined) ??
-    fallbackTitle;
+    fallbackTitle ??
+    view.reminders?.items.find(r => r.taskRef === selectedRef)?.title ??
+    (view.reminders?.items.some(r => r.taskRef === selectedRef)
+      ? t('taskActions.existingTask')
+      : null);
 
   if (
     view.status === 'loading' ||
@@ -517,6 +523,7 @@ function TaskList({
   if (rows.length === 0) {
     return (
       <View style={styles.listContent}>
+        <ReminderList view={view} onOpen={ref => onSelect(ref)} />
         {detailsRow}
         <Text style={styles.message}>{t('taskActions.noTasks')}</Text>
       </View>
@@ -527,6 +534,7 @@ function TaskList({
       style={styles.scroll}
       contentContainerStyle={styles.listContent}
     >
+      <ReminderList view={view} onOpen={ref => onSelect(ref)} />
       {detailsRow}
       {view.stale ? (
         <Text style={styles.message}>{t('taskActions.offline')}</Text>

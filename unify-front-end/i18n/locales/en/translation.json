@@ -1268,7 +1268,10 @@
           "serviceArea": "Canada and worldwide",
           "howToStart": "Start a quote online through a TuGo insurance partner, or call 1-855-929-8846.",
           "hours": "Mon–Fri 6:00am–5:00pm PST · Sat 7:00am–4:00pm PST · Sun closed",
-          "languages": ["English", "French"],
+          "languages": [
+            "English",
+            "French"
+          ],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Visitors to Canada Insurance",
@@ -1306,7 +1309,10 @@
           "eligibility": "The newcomer account offer is for people aged 25 and over who are permanent residents, or temporary residents with a work permit valid for more than 8 months, who have lived in Canada 3 years or less and are not already Desjardins members. Separate offers cover ages 18–24 and full-time students aged 25–30.",
           "howToStart": "Open an account online in about 15 minutes, or apply from abroad and confirm your identity at a service location on arrival.",
           "hours": "Legal assistance: file opening 24/7 · advisors Mon–Fri 9:00am–8:00pm, Sat 9:00am–5:00pm",
-          "languages": ["English", "French"],
+          "languages": [
+            "English",
+            "French"
+          ],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Newcomers chequing account (Unlimited plan)",
@@ -2857,5 +2863,32 @@
     "commandFailed": "I couldn't open the removal review for “{{title}}”. Nothing was removed.",
     "clarifyMissingTitle": "Which task should I remove? Send it like this: Remove task: Get a phone plan",
     "clarifyMultiple": "Please ask to remove one task at a time. Nothing was removed."
+  },
+  "reminders": {
+    "title": "Reminders",
+    "instant": "Date and time with UTC offset",
+    "zone": "Time zone",
+    "timeHelp": "Enter the date, time, UTC offset and named time zone. Check all values before you save.",
+    "invalidTime": "Enter a valid future time and matching UTC offset. A repeated clock time needs an explicit offset.",
+    "readFailed": "Reminders could not refresh. Check the connection before you make a change.",
+    "review": "Review reminder",
+    "save": "Save reminder",
+    "cancel": "Cancel reminder",
+    "cancelConfirm": "Stop this reminder? The task and its progress will stay saved.",
+    "confirmCancel": "Confirm cancellation",
+    "keepEditing": "Keep editing",
+    "keep": "Keep reminder",
+    "saved": "Reminder saved.",
+    "stopped": "Reminder stopped",
+    "scheduled": "Scheduled",
+    "due": "Due now",
+    "schedulerUnavailable": "The reminder is saved. Scheduling is not available right now.",
+    "interruption": "Scheduling stopped during a service interruption. Choose and review a new time to start again.",
+    "openTask": "Open task",
+    "undoHelp": "Undo leaves stopped reminders stopped. Starting a reminder again requires a new time review.",
+    "undoConfirm": "Stop the schedule saved by this change? Later schedules will stay unchanged.",
+    "confirmUndo": "Confirm Undo",
+    "reviewAgain": "The reminder changed. Refresh and review the current values before you save.",
+    "history": "This saved change is history. The current reminders are shown above."
   }
 }

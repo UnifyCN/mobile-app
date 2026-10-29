@@ -32,6 +32,7 @@ const ACTIONS = [
   'approve_detail',
   'command_detail',
   'approve_removal',
+  'reminder_change',
 ] as const;
 /** #367: removal operation types, allowlisted. Never a task title or reference. */
 const REMOVAL_TYPES: readonly OperationType[] = ['task.remove', 'task.restore'];
@@ -39,6 +40,8 @@ const REMOVAL_TYPES: readonly OperationType[] = ['task.remove', 'task.restore'];
 /** #365: an edit names its registered type. */
 const EDIT_TYPES: readonly OperationType[] = ['task.edit_details'];
 const STEP_TYPES: readonly OperationType[] = [
+  'reminder.schedule',
+  'reminder.cancel',
   'step.create',
   'step.update',
   'step.set_done',
@@ -88,7 +91,8 @@ export function buildTaskActionResultProperties(
         ? event.operationType
         : event.action === 'approve_create' || event.action === 'command_create'
           ? 'task.create_custom'
-          : event.action === 'approve_detail' || event.action === 'command_detail'
+          : event.action === 'approve_detail' ||
+              event.action === 'command_detail'
             ? 'detail.create'
             : 'task.set_state',
     action: event.action,
@@ -104,7 +108,13 @@ export function buildTaskActionResultProperties(
   return props;
 }
 
-const PLAN_ACTIONS = ['approve_plan', 'retry_plan', 'undo_plan', 'approve_plan_compensation', 'lookup'] as const;
+const PLAN_ACTIONS = [
+  'approve_plan',
+  'retry_plan',
+  'undo_plan',
+  'approve_plan_compensation',
+  'lookup',
+] as const;
 const PLAN_OUTCOMES = [
   'applied',
   'partial',
@@ -126,14 +136,19 @@ export function buildPlanResultProperties(
   surface: TaskActionSurface
 ): TaskActionResultProperties | null {
   if (!(PLAN_ACTIONS as readonly string[]).includes(event.action)) return null;
-  if (!(PLAN_OUTCOMES as readonly string[]).includes(event.outcome)) return null;
+  if (!(PLAN_OUTCOMES as readonly string[]).includes(event.outcome))
+    return null;
   const props: TaskActionResultProperties = {
     operation_type: 'plan.save',
     action: event.action,
     outcome: event.outcome,
     entry_surface: surface === 'companion' ? 'companion' : 'checklist',
   };
-  if (Number.isInteger(event.changeCount) && event.changeCount! >= 0 && event.changeCount! <= 12)
+  if (
+    Number.isInteger(event.changeCount) &&
+    event.changeCount! >= 0 &&
+    event.changeCount! <= 12
+  )
     props.change_count = event.changeCount;
   return props;
 }

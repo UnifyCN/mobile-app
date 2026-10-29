@@ -364,6 +364,8 @@ describe('Companion task entry and sheet (mobile)', () => {
     fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
     const inProgress = await within(sheet).findByRole('radio', { name: 'In progress' });
     await waitFor(() => expect(inProgress).toBeSelected());
+    expect(within(sheet).getByLabelText(en.reminders.instant)).toBeTruthy();
+    expect(within(sheet).getByRole('button', {name:en.reminders.review})).toBeEnabled();
     fireEvent.press(within(sheet).getByRole('radio', { name: 'Completed' }));
     expect(
       await within(sheet).findByText('Changed from In progress to Completed')

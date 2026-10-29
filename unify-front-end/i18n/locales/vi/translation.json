@@ -1268,7 +1268,10 @@
           "serviceArea": "Canada và toàn thế giới",
           "howToStart": "Hãy lấy báo giá trực tuyến qua một đối tác bảo hiểm của TuGo, hoặc gọi 1-855-929-8846.",
           "hours": "Thứ 2–Thứ 6 6:00am–5:00pm PST · Thứ 7 7:00am–4:00pm PST · Chủ Nhật nghỉ",
-          "languages": ["Tiếng Anh", "Tiếng Pháp"],
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Pháp"
+          ],
           "programs": {
             "visitors-to-canada-insurance": {
               "name": "Bảo hiểm Visitors to Canada",
@@ -1306,7 +1309,10 @@
           "eligibility": "Ưu đãi tài khoản cho người mới đến dành cho người từ 25 tuổi trở lên là thường trú nhân, hoặc là cư dân tạm trú có giấy phép lao động còn hiệu lực trên 8 tháng, đã sống tại Canada 3 năm trở xuống và chưa là thành viên Desjardins. Có ưu đãi riêng cho người 18–24 tuổi và sinh viên toàn thời gian 25–30 tuổi.",
           "howToStart": "Hãy mở tài khoản trực tuyến trong khoảng 15 phút, hoặc nộp đơn từ nước ngoài rồi xác nhận danh tính tại một điểm giao dịch khi bạn đến nơi.",
           "hours": "Trợ giúp pháp lý: mở hồ sơ 24/7 · chuyên viên tư vấn Thứ 2–Thứ 6 9:00am–8:00pm, Thứ 7 9:00am–5:00pm",
-          "languages": ["Tiếng Anh", "Tiếng Pháp"],
+          "languages": [
+            "Tiếng Anh",
+            "Tiếng Pháp"
+          ],
           "programs": {
             "newcomers-chequing-account-unlimited-plan": {
               "name": "Tài khoản chi tiêu cho người mới đến (gói Unlimited)",
@@ -2847,5 +2853,32 @@
     "commandFailed": "Tôi không mở được phần xem lại để xóa “{{title}}”. Chưa có gì bị xóa.",
     "clarifyMissingTitle": "Bạn muốn xóa việc nào? Hãy gửi như sau: Xóa việc: Đăng ký gói điện thoại",
     "clarifyMultiple": "Hãy yêu cầu xóa từng việc một. Chưa có gì bị xóa."
+  },
+  "reminders": {
+    "title": "Lời nhắc",
+    "instant": "Ngày giờ kèm độ lệch UTC",
+    "zone": "Múi giờ",
+    "timeHelp": "Nhập ngày, giờ, độ lệch UTC và tên múi giờ. Kiểm tra mọi giá trị trước khi lưu.",
+    "invalidTime": "Nhập thời điểm hợp lệ trong tương lai và độ lệch UTC tương ứng. Giờ lặp lại cần độ lệch cụ thể.",
+    "readFailed": "Không thể làm mới lời nhắc. Kiểm tra kết nối trước khi thay đổi.",
+    "review": "Xem lại lời nhắc",
+    "save": "Lưu lời nhắc",
+    "cancel": "Hủy lời nhắc",
+    "cancelConfirm": "Dừng lời nhắc này? Công việc và tiến độ vẫn được lưu.",
+    "confirmCancel": "Xác nhận hủy",
+    "keepEditing": "Tiếp tục sửa",
+    "keep": "Giữ lời nhắc",
+    "saved": "Đã lưu lời nhắc.",
+    "stopped": "Đã dừng lời nhắc",
+    "scheduled": "Đã lên lịch",
+    "due": "Đã đến giờ",
+    "schedulerUnavailable": "Đã lưu lời nhắc. Hiện không thể lập lịch.",
+    "interruption": "Lịch nhắc đã dừng khi dịch vụ bị gián đoạn. Chọn và xem lại giờ mới để bắt đầu lại.",
+    "openTask": "Mở công việc",
+    "undoHelp": "Hoàn tác không khởi động lại lời nhắc đã dừng. Muốn bắt đầu lại, hãy xem lại giờ mới.",
+    "undoConfirm": "Dừng lịch nhắc đã lưu bằng thay đổi này? Các lịch nhắc mới hơn sẽ giữ nguyên.",
+    "confirmUndo": "Xác nhận hoàn tác",
+    "reviewAgain": "Lời nhắc đã thay đổi. Làm mới và kiểm tra các giá trị hiện tại trước khi lưu.",
+    "history": "Thay đổi này thuộc lịch sử. Các lời nhắc hiện tại được hiển thị ở trên."
   }
 }

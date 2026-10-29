@@ -1,3 +1,10 @@
+import {
+  parseReminders,
+  parseReminderProposal,
+  type ReminderRead,
+  type ReminderOperation,
+  type ReminderProposal,
+} from './reminders';
 /**
  * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #365, #366, #370, #367).
  * Mirror of the web app's lib/companionActions/client.ts.
@@ -72,7 +79,13 @@ export type Unauthorized = { kind: 'unauthorized' };
 export type ReadResult =
   /** steps: #366, the live steps of every task ([] from a service without steps). */
   /** details: #370, the live saved details ([] from a service without them). */
-  | { kind: 'ok'; tasks: TaskProgress[]; steps: TaskStep[]; details: SavedDetail[] }
+  | {
+      kind: 'ok';
+      tasks: TaskProgress[];
+      reminders?: ReminderRead;
+      steps: TaskStep[];
+      details: SavedDetail[];
+    }
   | Unavailable
   | Refused
   | Unknown
@@ -90,7 +103,10 @@ export type ApplyResult =
     }
   | { kind: 'in_flight' }
   /** #363: the draft's relevant context changed; nothing was written. Review this revision. */
-  | { kind: 'needs_review'; proposal: TaskProposal | StepProposal | DetailProposal | RemovalProposal }
+  | {
+      kind: 'needs_review';
+      proposal: TaskProposal | StepProposal | DetailProposal | RemovalProposal;
+    }
   /** #370: a live saved detail already says this; nothing was written. */
   | { kind: 'detail_exists' }
   /** #363: this command message already authorized a write. */
@@ -115,7 +131,10 @@ export type ProposalResult =
 export type RemovalProposalResult =
   | { kind: 'ok'; proposal: RemovalProposal }
   | { kind: 'changed'; proposal: RemovalProposal }
-  | Unavailable | Refused | Unknown | Unauthorized;
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
 
 /** A detail draft request (#370): the current draft, or a definite answer that nothing changed. */
 export type DetailProposalResult =
@@ -146,6 +165,7 @@ export type ConversationActionsResult =
   | {
       kind: 'ok';
       proposals: TaskProposal[];
+      reminderProposals?: ReminderProposal[];
       /** #366: suggested-step drafts of this conversation. */
       stepProposals: StepProposal[];
       /** #367: removal reviews a removal request in this conversation opened. */
@@ -157,7 +177,11 @@ export type ConversationActionsResult =
       }[];
       /** #370: suggested-detail drafts and remember results of this conversation. */
       detailProposals: DetailProposal[];
-      detailCommands: { messageId: number; operationId: string; receipt: TaskReceipt }[];
+      detailCommands: {
+        messageId: number;
+        operationId: string;
+        receipt: TaskReceipt;
+      }[];
     }
   | Unavailable
   | Refused
@@ -193,7 +217,19 @@ export type StatusResult =
   | Unavailable
   | Unauthorized;
 
+export type ReminderProposalResult =
+  | { kind: 'ok' | 'changed'; proposal: ReminderProposal }
+  | Unavailable
+  | Refused
+  | Unknown
+  | Unauthorized;
 export interface TaskActionClient {
+  prepareReminder?(
+    operation: ReminderOperation,
+    source: { conversationId: string; messageId?: number } | null
+  ): Promise<ReminderProposalResult>;
+  reminderProposal?(proposalId: string): Promise<ReminderProposalResult>;
+
   read(): Promise<ReadResult>;
   apply(
     operationId: string,
@@ -328,7 +364,8 @@ export function createTaskActionClient(opts: {
     const off = unavailable(reply);
     if (off) return off;
     const parsed = asObject(reply.body);
-    if (reply.status === 200) return { kind: 'ok', proposal: parse(parsed.proposal) };
+    if (reply.status === 200)
+      return { kind: 'ok', proposal: parse(parsed.proposal) };
     if (reply.status === 409 && parsed.error === 'proposal_changed')
       return { kind: 'changed', proposal: parse(parsed.proposal) };
     return isUnknownStatus(reply.status) ? { kind: 'unknown' } : refused(reply);
@@ -341,17 +378,33 @@ export function createTaskActionClient(opts: {
     draftCall(body, parseDetailProposal);
   const removalCall = (body: Json): Promise<RemovalProposalResult> =>
     draftCall(body, parseRemovalProposal);
-  const sourceOf = (source: { conversationId: string; messageId?: number } | null) =>
+  const sourceOf = (
+    source: { conversationId: string; messageId?: number } | null
+  ) =>
     source
       ? {
           source: {
             conversation_id: source.conversationId,
-            ...(source.messageId !== undefined ? { message_id: source.messageId } : {}),
+            ...(source.messageId !== undefined
+              ? { message_id: source.messageId }
+              : {}),
           },
         }
       : {};
 
   const client: TaskActionClient = {
+    prepareReminder(operation, source) {
+      return draftCall(
+        { action: 'prepare', operation, ...sourceOf(source) },
+        parseReminderProposal
+      );
+    },
+    reminderProposal(proposalId) {
+      return draftCall(
+        { action: 'proposal', proposal_id: proposalId },
+        parseReminderProposal
+      );
+    },
     async read() {
       const reply = await send({ action: 'read' });
       if (!reply) return { kind: 'unknown' };
@@ -369,6 +422,7 @@ export function createTaskActionClient(opts: {
       return {
         kind: 'ok',
         tasks: tasks.map(parseTask),
+        reminders: parseReminders(asObject(reply.body).reminders),
         steps: Array.isArray(steps) ? steps.map(parseStep) : [],
         details: Array.isArray(details) ? details.map(parseSavedDetail) : [],
       };
@@ -414,6 +468,7 @@ export function createTaskActionClient(opts: {
       }
       if (reply.status === 409 && body.error === 'needs_review') {
         const draftKind = asObject(body.proposal).kind;
+        if (draftKind === 'reminder') return { kind: 'conflict' };
         return {
           kind: 'needs_review',
           proposal:
@@ -571,9 +626,16 @@ export function createTaskActionClient(opts: {
       };
       return {
         kind: 'ok',
-        proposals: body.proposals.filter(p => !isSteps(p) && kindOf(p) !== 'task_remove').map(parseTaskProposal),
+        reminderProposals: Array.isArray(body.reminder_proposals)
+          ? body.reminder_proposals.map(parseReminderProposal)
+          : [],
+        proposals: body.proposals
+          .filter(p => !isSteps(p) && kindOf(p) !== 'task_remove')
+          .map(parseTaskProposal),
         stepProposals: body.proposals.filter(isSteps).map(parseStepProposal),
-        removalProposals: body.proposals.filter(p => kindOf(p) === 'task_remove').map(parseRemovalProposal),
+        removalProposals: body.proposals
+          .filter(p => kindOf(p) === 'task_remove')
+          .map(parseRemovalProposal),
         commands: body.commands.map(commandEntry),
         // #370: absent from a service without saved details.
         detailProposals: Array.isArray(body.detail_proposals)
@@ -586,7 +648,11 @@ export function createTaskActionClient(opts: {
     },
 
     prepareSteps(operation, source) {
-      return stepDraftCall({ action: 'prepare', operation, ...sourceOf(source) });
+      return stepDraftCall({
+        action: 'prepare',
+        operation,
+        ...sourceOf(source),
+      });
     },
 
     stepProposal(proposalId) {
@@ -611,7 +677,11 @@ export function createTaskActionClient(opts: {
     },
 
     prepareDetail(operation, source) {
-      return detailDraftCall({ action: 'prepare', operation, ...sourceOf(source) });
+      return detailDraftCall({
+        action: 'prepare',
+        operation,
+        ...sourceOf(source),
+      });
     },
 
     detailProposal(proposalId) {
@@ -653,6 +723,14 @@ export function createTaskActionClient(opts: {
   // A reply that does not match the contract is never shown as a result: a write may
   // have committed, so it is an unknown outcome (or a failed lookup) and is looked up again.
   return {
+    prepareReminder: (...args) =>
+      client.prepareReminder!(...args).catch(
+        () => ({ kind: 'unknown' }) as const
+      ),
+    reminderProposal: (...args) =>
+      client.reminderProposal!(...args).catch(
+        () => ({ kind: 'unknown' }) as const
+      ),
     read: () => client.read().catch(() => ({ kind: 'unknown' }) as const),
     apply: (...args) =>
       client.apply(...args).catch(() => ({ kind: 'unknown' }) as const),
@@ -683,13 +761,19 @@ export function createTaskActionClient(opts: {
     prepareDetail: (...args) =>
       client.prepareDetail(...args).catch(() => ({ kind: 'unknown' }) as const),
     detailProposal: (...args) =>
-      client.detailProposal(...args).catch(() => ({ kind: 'unknown' }) as const),
+      client
+        .detailProposal(...args)
+        .catch(() => ({ kind: 'unknown' }) as const),
     cancelDetail: (...args) =>
       client.cancelDetail(...args).catch(() => ({ kind: 'unknown' }) as const),
     prepareRemoval: (...args) =>
-      client.prepareRemoval(...args).catch(() => ({ kind: 'unknown' }) as const),
+      client
+        .prepareRemoval(...args)
+        .catch(() => ({ kind: 'unknown' }) as const),
     removalProposal: (...args) =>
-      client.removalProposal(...args).catch(() => ({ kind: 'unknown' }) as const),
+      client
+        .removalProposal(...args)
+        .catch(() => ({ kind: 'unknown' }) as const),
     status: (...args) =>
       client.status(...args).catch(() => ({ kind: 'lookup_failed' }) as const),
   };

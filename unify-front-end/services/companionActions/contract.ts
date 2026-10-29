@@ -1,3 +1,4 @@
+import { parseReminderOperation, type ReminderOperation } from './reminders';
 /**
  * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366, #370, #367).
  * The server is supabase/functions/companion-actions in the web repo. Responses are
@@ -22,6 +23,8 @@ export const TITLE_MAX = 200;
 export const DESCRIPTION_MAX = 2000;
 
 export type OperationType =
+  | 'reminder.schedule'
+  | 'reminder.cancel'
   | 'task.set_state'
   | 'task.create_custom'
   | 'task.remove_created'
@@ -138,6 +141,12 @@ export interface ReceiptStep {
 
 /** Durable record of one saved change. Historical once `current` is false. */
 export interface TaskReceipt {
+  reminder?: {
+    reminderId: string;
+    remindAt: string | null;
+    timeZone: string | null;
+    stopped: boolean;
+  };
   operationId: string;
   createdAt: string;
   kind: 'change' | 'undo';
@@ -302,6 +311,7 @@ export interface TaskRestoreOperation {
 }
 
 export type Operation =
+  | ReminderOperation
   | SetStateOperation
   | CreateTaskOperation
   | RemoveCreatedOperation
@@ -318,6 +328,7 @@ export type EditDraft =
 
 /** The reviewed change offered when an Undo meets a newer edit. */
 export type CompensatingOperation =
+  | ReminderOperation
   | SetStateOperation
   | RemoveCreatedOperation
   | EditDetailsOperation
@@ -333,6 +344,7 @@ export interface CompensatingProposal {
 
 /** An operation that removes something: it is sent only after the user confirmed. */
 export const isRemoval = (op: Operation): boolean =>
+  op.type === 'reminder.cancel' ||
   op.type === 'task.remove' ||
   op.type === 'task.remove_created' ||
   op.type === 'step.remove' ||
@@ -428,6 +440,11 @@ export type ClarifyReason =
 
 export type CommandResult =
   | {
+      kind: 'reminder';
+      operation: ReminderOperation;
+      target: { taskRef: string; title: string };
+    }
+  | {
       kind: 'create';
       operation: CreateTaskOperation;
       sameTitleTasks: { taskRef: string; title: string }[];
@@ -503,6 +520,8 @@ const state = (o: Json, k: string): TaskState => {
 };
 
 const OPERATION_TYPES: readonly OperationType[] = [
+  'reminder.schedule',
+  'reminder.cancel',
   'task.set_state',
   'task.create_custom',
   'task.remove_created',
@@ -616,6 +635,16 @@ export function parseReceipt(raw: unknown): TaskReceipt {
     createdAt: str(raw, 'created_at'),
     kind,
     operationType: operationType as OperationType,
+    ...(isObject(raw.reminder)
+      ? {
+          reminder: {
+            reminderId: str(raw.reminder, 'reminder_id'),
+            remindAt: strOrNull(raw.reminder, 'remind_at'),
+            timeZone: strOrNull(raw.reminder, 'time_zone'),
+            stopped: raw.reminder.scheduling === 'stopped',
+          },
+        }
+      : {}),
     title: strOrNull(raw, 'title'),
     changes: parseChanges(raw.changes),
     undoOf: strOrNull(raw, 'undo_of'),
@@ -700,15 +729,28 @@ export function parseEditOperation(raw: unknown): EditDetailsOperation {
 }
 
 export function parseOperation(raw: unknown): CompensatingOperation {
+  if (
+    isObject(raw) &&
+    (raw.type === 'reminder.schedule' || raw.type === 'reminder.cancel')
+  )
+    return parseReminderOperation(raw);
   if (isObject(raw) && raw.type === 'task.edit_details') {
     return parseEditOperation(raw);
   }
-  if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('detail.')) {
+  if (
+    isObject(raw) &&
+    typeof raw.type === 'string' &&
+    raw.type.startsWith('detail.')
+  ) {
     const op = parseDetailOperation(raw);
     if (op.type === 'detail.create') throw new ContractError('operation');
     return op;
   }
-  if (isObject(raw) && typeof raw.type === 'string' && raw.type.startsWith('step.')) {
+  if (
+    isObject(raw) &&
+    typeof raw.type === 'string' &&
+    raw.type.startsWith('step.')
+  ) {
     return parseStepOperation(raw) as CompensatingOperation;
   }
   if (isObject(raw) && raw.type === 'task.restore') {
@@ -743,9 +785,16 @@ export function parseOperation(raw: unknown): CompensatingOperation {
 function parseStepOperation(raw: Json): StepOperation {
   switch (raw.type) {
     case 'step.create':
-      if (!Array.isArray(raw.titles) || raw.titles.some(t => typeof t !== 'string'))
+      if (
+        !Array.isArray(raw.titles) ||
+        raw.titles.some(t => typeof t !== 'string')
+      )
         throw new ContractError('titles');
-      return { type: 'step.create', task_ref: str(raw, 'task_ref'), titles: raw.titles as string[] };
+      return {
+        type: 'step.create',
+        task_ref: str(raw, 'task_ref'),
+        titles: raw.titles as string[],
+      };
     case 'step.update':
       return {
         type: 'step.update',
@@ -774,7 +823,10 @@ function parseStepOperation(raw: Json): StepOperation {
         task_ref: str(raw, 'task_ref'),
         steps: raw.steps.map(s => {
           if (!isObject(s)) throw new ContractError('steps');
-          return { step_id: str(s, 'step_id'), expected_revision: int(s, 'expected_revision') };
+          return {
+            step_id: str(s, 'step_id'),
+            expected_revision: int(s, 'expected_revision'),
+          };
         }),
       };
     default:
@@ -925,9 +977,10 @@ export function parseTaskProposal(raw: unknown): TaskProposal {
     return {
       ...base,
       kind: 'task_edit',
-      operation: isObject(op) && op.type === 'task.edit_details'
-        ? parseEditOperation(op)
-        : (parseOperation(op) as SetStateOperation),
+      operation:
+        isObject(op) && op.type === 'task.edit_details'
+          ? parseEditOperation(op)
+          : (parseOperation(op) as SetStateOperation),
       task: parseSnapshot(isObject(raw.context) ? raw.context.task : null),
       previousTask: parseSnapshot(
         isObject(raw.previous_context) ? raw.previous_context.task : null
@@ -972,11 +1025,14 @@ export interface StepProposal {
 
 export const isStepProposal = (
   p: TaskProposal | StepProposal | DetailProposal | RemovalProposal
-): p is StepProposal =>
-  'existingSteps' in p;
+): p is StepProposal => 'existingSteps' in p;
 
 export function parseStepProposal(raw: unknown): StepProposal {
-  if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'step_create') {
+  if (
+    !isObject(raw) ||
+    !Array.isArray(raw.operations) ||
+    raw.kind !== 'step_create'
+  ) {
     throw new ContractError('step proposal');
   }
   const status = raw.status;
@@ -984,13 +1040,21 @@ export function parseStepProposal(raw: unknown): StepProposal {
     throw new ContractError('proposal.status');
   }
   const reason = raw.review_reason ?? null;
-  if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason)) {
+  if (
+    reason !== null &&
+    !(REVIEW_REASONS as readonly unknown[]).includes(reason)
+  ) {
     throw new ContractError('proposal.review_reason');
   }
-  const op = isObject(raw.operations[0]) ? parseStepOperation(raw.operations[0]) : null;
-  if (!op || op.type !== 'step.create') throw new ContractError('step proposal operation');
+  const op = isObject(raw.operations[0])
+    ? parseStepOperation(raw.operations[0])
+    : null;
+  if (!op || op.type !== 'step.create')
+    throw new ContractError('step proposal operation');
   const context = isObject(raw.context) ? raw.context : {};
-  const existing = Array.isArray(context.existing_steps) ? context.existing_steps : [];
+  const existing = Array.isArray(context.existing_steps)
+    ? context.existing_steps
+    : [];
   return {
     proposalId: str(raw, 'proposal_id'),
     proposalRevision: int(raw, 'proposal_revision'),
@@ -1005,28 +1069,41 @@ export function parseStepProposal(raw: unknown): StepProposal {
       ? {
           conversationId: str(raw.source, 'conversation_id'),
           messageId:
-            raw.source.message_id === undefined || raw.source.message_id === null
+            raw.source.message_id === undefined ||
+            raw.source.message_id === null
               ? null
               : int(raw.source, 'message_id'),
         }
       : null,
-    receipt: raw.receipt === null || raw.receipt === undefined ? null : parseReceipt(raw.receipt),
+    receipt:
+      raw.receipt === null || raw.receipt === undefined
+        ? null
+        : parseReceipt(raw.receipt),
   };
 }
 
 /** The exact operations the explicit step controls send (#366). */
-export const stepCreateOperation = (taskRef: string, title: string): StepCreateOperation => ({
+export const stepCreateOperation = (
+  taskRef: string,
+  title: string
+): StepCreateOperation => ({
   type: 'step.create',
   task_ref: taskRef,
   titles: [title.trim()],
 });
-export const stepUpdateOperation = (step: TaskStep, title: string): StepUpdateOperation => ({
+export const stepUpdateOperation = (
+  step: TaskStep,
+  title: string
+): StepUpdateOperation => ({
   type: 'step.update',
   step_id: step.stepId,
   title: title.trim(),
   expected_revision: step.revision,
 });
-export const stepDoneOperation = (step: TaskStep, done: boolean): StepSetDoneOperation => ({
+export const stepDoneOperation = (
+  step: TaskStep,
+  done: boolean
+): StepSetDoneOperation => ({
   type: 'step.set_done',
   step_id: step.stepId,
   done,
@@ -1045,9 +1122,18 @@ export const stepRemoveOperation = (step: TaskStep): StepRemoveOperation => ({
 export function parseSuggestedSteps(
   raw: unknown
 ): { type: 'step.create'; taskRef: string; titles: string[] } | null {
-  if (!isObject(raw) || raw.type !== 'step.create' || raw.version !== 1) return null;
-  if (typeof raw.task_ref !== 'string' || !/^(sanity|custom):/.test(raw.task_ref)) return null;
-  if (!Array.isArray(raw.titles) || raw.titles.length < 1 || raw.titles.length > STEP_SUGGESTION_MAX)
+  if (!isObject(raw) || raw.type !== 'step.create' || raw.version !== 1)
+    return null;
+  if (
+    typeof raw.task_ref !== 'string' ||
+    !/^(sanity|custom):/.test(raw.task_ref)
+  )
+    return null;
+  if (
+    !Array.isArray(raw.titles) ||
+    raw.titles.length < 1 ||
+    raw.titles.length > STEP_SUGGESTION_MAX
+  )
     return null;
   const titles: string[] = [];
   for (const t of raw.titles) {
@@ -1061,6 +1147,14 @@ export function parseSuggestedSteps(
 
 export function parseCommand(raw: unknown): CommandResult {
   if (!isObject(raw)) throw new ContractError('command');
+  if (raw.kind === 'reminder') {
+    const target = raw.target as Record<string, unknown>;
+    return {
+      kind: 'reminder',
+      operation: parseReminderOperation(raw.operation),
+      target: { taskRef: str(target, 'task_ref'), title: str(target, 'title') },
+    };
+  }
   if (raw.kind === 'none') return { kind: 'none' };
   if (raw.kind === 'clarify') {
     const reason = raw.reason;
@@ -1074,7 +1168,12 @@ export function parseCommand(raw: unknown): CommandResult {
         })
       : [];
     return raw.intent === 'remove'
-      ? { kind: 'clarify', reason: reason as ClarifyReason, candidates, intent: 'remove' }
+      ? {
+          kind: 'clarify',
+          reason: reason as ClarifyReason,
+          candidates,
+          intent: 'remove',
+        }
       : { kind: 'clarify', reason: reason as ClarifyReason, candidates };
   }
   if (raw.kind === 'edit') {
@@ -1092,7 +1191,8 @@ export function parseCommand(raw: unknown): CommandResult {
       },
     };
   }
-  if (raw.kind === 'remove') return { kind: 'remove', title: str(raw, 'title') };
+  if (raw.kind === 'remove')
+    return { kind: 'remove', title: str(raw, 'title') };
   if (raw.kind === 'create') {
     return {
       kind: 'create',
@@ -1101,9 +1201,16 @@ export function parseCommand(raw: unknown): CommandResult {
     };
   }
   if (raw.kind === 'remember') {
-    const op = isObject(raw.operation) ? parseDetailOperation(raw.operation) : null;
-    if (!op || op.type !== 'detail.create') throw new ContractError('command.operation');
-    return { kind: 'remember', operation: op, sameTextDetails: sameText(raw.same_text_details) };
+    const op = isObject(raw.operation)
+      ? parseDetailOperation(raw.operation)
+      : null;
+    if (!op || op.type !== 'detail.create')
+      throw new ContractError('command.operation');
+    return {
+      kind: 'remember',
+      operation: op,
+      sameTextDetails: sameText(raw.same_text_details),
+    };
   }
   if (raw.kind === 'remember_clarify') {
     const reason = raw.reason;
@@ -1175,7 +1282,8 @@ export function parseSuggestedEdit(raw: unknown): SuggestedEdit | null {
     return null;
   if (typeof raw.task_ref !== 'string' || typeof raw.value !== 'string')
     return null;
-  if (!(SUGGESTED_FIELDS as readonly unknown[]).includes(raw.field)) return null;
+  if (!(SUGGESTED_FIELDS as readonly unknown[]).includes(raw.field))
+    return null;
   const value = raw.value.trim();
   if (raw.field !== 'description' && !value) return null;
   return {
@@ -1190,7 +1298,11 @@ export function parseSuggestedEdit(raw: unknown): SuggestedEdit | null {
 export function editDraftOf(s: SuggestedEdit): EditDraft | null {
   if (s.field === 'state') {
     return (TASK_STATES as readonly string[]).includes(s.value)
-      ? { type: 'task.set_state', task_ref: s.taskRef, state: s.value as TaskState }
+      ? {
+          type: 'task.set_state',
+          task_ref: s.taskRef,
+          state: s.value as TaskState,
+        }
       : null;
   }
   if (s.field === 'waiting') {
@@ -1203,7 +1315,11 @@ export function editDraftOf(s: SuggestedEdit): EditDraft | null {
   }
   if (s.field === 'priority') {
     return (PRIORITIES as readonly string[]).includes(s.value)
-      ? { type: 'task.edit_details', task_ref: s.taskRef, priority: s.value as Priority }
+      ? {
+          type: 'task.edit_details',
+          task_ref: s.taskRef,
+          priority: s.value as Priority,
+        }
       : null;
   }
   return { type: 'task.edit_details', task_ref: s.taskRef, [s.field]: s.value };
@@ -1249,8 +1365,12 @@ export function parseSavedDetail(raw: unknown): SavedDetail {
     text: str(raw, 'text'),
     revision: int(raw, 'revision'),
     source: {
-      kind: kind === 'direct_command' || kind === 'approved_proposal' ? kind : null,
-      conversationId: typeof source.conversation_id === 'string' ? source.conversation_id : null,
+      kind:
+        kind === 'direct_command' || kind === 'approved_proposal' ? kind : null,
+      conversationId:
+        typeof source.conversation_id === 'string'
+          ? source.conversation_id
+          : null,
     },
     createdAt: str(raw, 'created_at'),
   };
@@ -1294,7 +1414,11 @@ export function verifiedCompensationDetail(
   current: CurrentDetailValue | null,
   live?: readonly SavedDetail[]
 ): CurrentDetailValue | null {
-  if (op.type !== 'detail.update' && op.type !== 'detail.remove' && op.type !== 'detail.restore')
+  if (
+    op.type !== 'detail.update' &&
+    op.type !== 'detail.remove' &&
+    op.type !== 'detail.restore'
+  )
     return null;
   if (
     !current ||
@@ -1334,7 +1458,11 @@ export interface DetailProposal {
 }
 
 export function parseDetailProposal(raw: unknown): DetailProposal {
-  if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'detail_create') {
+  if (
+    !isObject(raw) ||
+    !Array.isArray(raw.operations) ||
+    raw.kind !== 'detail_create'
+  ) {
     throw new ContractError('detail proposal');
   }
   const status = raw.status;
@@ -1342,11 +1470,17 @@ export function parseDetailProposal(raw: unknown): DetailProposal {
     throw new ContractError('proposal.status');
   }
   const reason = raw.review_reason ?? null;
-  if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason)) {
+  if (
+    reason !== null &&
+    !(REVIEW_REASONS as readonly unknown[]).includes(reason)
+  ) {
     throw new ContractError('proposal.review_reason');
   }
-  const op = isObject(raw.operations[0]) ? parseDetailOperation(raw.operations[0]) : null;
-  if (!op || op.type !== 'detail.create') throw new ContractError('detail proposal operation');
+  const op = isObject(raw.operations[0])
+    ? parseDetailOperation(raw.operations[0])
+    : null;
+  if (!op || op.type !== 'detail.create')
+    throw new ContractError('detail proposal operation');
   const context = isObject(raw.context) ? raw.context : {};
   return {
     proposalId: str(raw, 'proposal_id'),
@@ -1359,12 +1493,16 @@ export function parseDetailProposal(raw: unknown): DetailProposal {
       ? {
           conversationId: str(raw.source, 'conversation_id'),
           messageId:
-            raw.source.message_id === undefined || raw.source.message_id === null
+            raw.source.message_id === undefined ||
+            raw.source.message_id === null
               ? null
               : int(raw.source, 'message_id'),
         }
       : null,
-    receipt: raw.receipt === null || raw.receipt === undefined ? null : parseReceipt(raw.receipt),
+    receipt:
+      raw.receipt === null || raw.receipt === undefined
+        ? null
+        : parseReceipt(raw.receipt),
   };
 }
 
@@ -1373,13 +1511,18 @@ export const isDetailProposal = (
 ): p is DetailProposal => 'sameTextDetails' in p;
 
 /** The exact operations the saved-detail controls send (#370). */
-export const detailUpdateOperation = (detail: SavedDetail, text: string): DetailUpdateOperation => ({
+export const detailUpdateOperation = (
+  detail: SavedDetail,
+  text: string
+): DetailUpdateOperation => ({
   type: 'detail.update',
   detail_id: detail.detailId,
   text: text.trim(),
   expected_revision: detail.revision,
 });
-export const detailRemoveOperation = (detail: SavedDetail): DetailRemoveOperation => ({
+export const detailRemoveOperation = (
+  detail: SavedDetail
+): DetailRemoveOperation => ({
   type: 'detail.remove',
   detail_id: detail.detailId,
   expected_revision: detail.revision,
@@ -1389,11 +1532,16 @@ export const detailRemoveOperation = (detail: SavedDetail): DetailRemoveOperatio
  * The detail an answer suggests saving (rag-query `actionProposal`, #370), allowlisted
  * fields only. A suggestion is not authorization: the action service prepares the draft.
  */
-export function parseSuggestedDetail(raw: unknown): { type: 'detail.create'; text: string } | null {
-  if (!isObject(raw) || raw.type !== 'detail.create' || raw.version !== 1) return null;
+export function parseSuggestedDetail(
+  raw: unknown
+): { type: 'detail.create'; text: string } | null {
+  if (!isObject(raw) || raw.type !== 'detail.create' || raw.version !== 1)
+    return null;
   if (typeof raw.text !== 'string') return null;
   const text = raw.text.trim();
-  return text && text.length <= DETAIL_TEXT_MAX ? { type: 'detail.create', text } : null;
+  return text && text.length <= DETAIL_TEXT_MAX
+    ? { type: 'detail.create', text }
+    : null;
 }
 
 /** #367: what removing a task affects, read by the action service when the review was prepared. */
@@ -1442,7 +1590,11 @@ function parseEffects(raw: unknown): RemovalEffects {
 }
 
 export function parseRemovalProposal(raw: unknown): RemovalProposal {
-  if (!isObject(raw) || !Array.isArray(raw.operations) || raw.kind !== 'task_remove') {
+  if (
+    !isObject(raw) ||
+    !Array.isArray(raw.operations) ||
+    raw.kind !== 'task_remove'
+  ) {
     throw new ContractError('removal proposal');
   }
   const status = raw.status;
@@ -1450,11 +1602,15 @@ export function parseRemovalProposal(raw: unknown): RemovalProposal {
     throw new ContractError('proposal.status');
   }
   const reason = raw.review_reason ?? null;
-  if (reason !== null && !(REVIEW_REASONS as readonly unknown[]).includes(reason)) {
+  if (
+    reason !== null &&
+    !(REVIEW_REASONS as readonly unknown[]).includes(reason)
+  ) {
     throw new ContractError('proposal.review_reason');
   }
   const op = raw.operations[0];
-  if (!isObject(op) || op.type !== 'task.remove') throw new ContractError('removal operation');
+  if (!isObject(op) || op.type !== 'task.remove')
+    throw new ContractError('removal operation');
   return {
     proposalId: str(raw, 'proposal_id'),
     proposalRevision: int(raw, 'proposal_revision'),
@@ -1474,12 +1630,16 @@ export function parseRemovalProposal(raw: unknown): RemovalProposal {
       ? {
           conversationId: str(raw.source, 'conversation_id'),
           messageId:
-            raw.source.message_id === undefined || raw.source.message_id === null
+            raw.source.message_id === undefined ||
+            raw.source.message_id === null
               ? null
               : int(raw.source, 'message_id'),
         }
       : null,
-    receipt: raw.receipt === null || raw.receipt === undefined ? null : parseReceipt(raw.receipt),
+    receipt:
+      raw.receipt === null || raw.receipt === undefined
+        ? null
+        : parseReceipt(raw.receipt),
   };
 }
 
@@ -1495,3 +1655,20 @@ export const taskRemoveOperation = (
 /** How task titles are compared when a removal request names one (server: companion_title_key). */
 export const titleKey = (title: string): string =>
   title.trim().replace(/\s+/gu, ' ').toLowerCase();
+
+/** A missing content progress row is Not started. A missing custom row is removed. */
+export function taskProgressFor(
+  taskRef: string,
+  view: { byRef: ReadonlyMap<string, TaskProgress>; status: string }
+): TaskProgress {
+  return (
+    view.byRef.get(taskRef) ?? {
+      taskRef,
+      state: 'not_started',
+      waitingReason: null,
+      revision: 0,
+      removed: taskRef.startsWith('custom:') && view.status === 'ready',
+      lastReceipt: null,
+    }
+  );
+}
