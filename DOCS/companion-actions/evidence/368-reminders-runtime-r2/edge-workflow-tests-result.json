@@ -1,0 +1,11 @@
+{
+  "command": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=auto",
+    "supabase/functions/"
+  ],
+  "exit": 0,
+  "seconds": 27.50233258300068
+}

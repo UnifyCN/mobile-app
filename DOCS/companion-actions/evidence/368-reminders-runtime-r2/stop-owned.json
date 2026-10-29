@@ -1,0 +1,13 @@
+{
+  "command": [
+    "supabase",
+    "stop",
+    "--workdir",
+    "DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions",
+    "--no-backup"
+  ],
+  "timeout": 30,
+  "stdout": "",
+  "stderr": "",
+  "seconds": 30.00658066699907
+}
