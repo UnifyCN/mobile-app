@@ -1,0 +1,420 @@
+// Mounted acceptance: the real Companion screen with its compact task entry and the
+// task bottom sheet (direction B, mobile-app#361), driven through user controls.
+// The network is the scripted contract stand-in in testSupport/companionActionsServer.ts.
+import React from 'react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
+import { createInstance } from 'i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { Platform, StyleSheet } from 'react-native';
+import en from '@/i18n/locales/en/translation.json';
+import { scriptedServer } from '@/testSupport/companionActionsServer';
+
+// The scripted fetch answers every request; nothing leaves the process.
+process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:59371';
+process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
+
+let mockUserId = 'user-1';
+let mockCapture: jest.Mock;
+const mockAuthListeners = new Set<(event: string, session: unknown) => void>();
+
+const mockPush = jest.fn();
+jest.mock('expo-router', () => ({
+  useRouter: () => ({ push: mockPush, replace: jest.fn() }),
+  useLocalSearchParams: () => ({}),
+}));
+jest.mock('@react-navigation/native', () => {
+  const React = require('react');
+  return {
+    useFocusEffect: (callback: () => void) => {
+      React.useEffect(() => {
+        const cleanup = callback();
+        return typeof cleanup === 'function' ? cleanup : undefined;
+      }, [callback]);
+    },
+    useIsFocused: () => true,
+  };
+});
+jest.mock('@react-navigation/bottom-tabs', () => ({
+  useBottomTabBarHeight: () => 0,
+}));
+jest.mock('react-native-reanimated', () => {
+  const { View } = require('react-native');
+  const identity = (value: unknown) => value;
+  return {
+    __esModule: true,
+    default: { View },
+    useSharedValue: (value: unknown) => ({ value }),
+    useAnimatedStyle: () => ({}),
+    withTiming: identity,
+    Easing: { out: identity, in: identity, cubic: identity },
+    runOnJS: identity,
+    interpolate: identity,
+    Extrapolate: { CLAMP: 'clamp' },
+  };
+});
+jest.mock('react-native-gesture-handler', () => {
+  const { View, TouchableOpacity } = require('react-native');
+  const gesture: any = {
+    onUpdate: () => gesture,
+    onEnd: () => gesture,
+    enabled: () => gesture,
+  };
+  return {
+    Gesture: { Pan: () => gesture },
+    GestureDetector: ({ children }: { children: React.ReactNode }) => children,
+    GestureHandlerRootView: View,
+    TouchableOpacity,
+  };
+});
+jest.mock('react-native-keyboard-controller', () => {
+  const { View } = require('react-native');
+  return {
+    KeyboardAvoidingView: View,
+    useReanimatedKeyboardAnimation: () => ({
+      height: { value: 0 },
+      progress: { value: 0 },
+    }),
+  };
+});
+jest.mock('react-native-draggable-flatlist', () => ({
+  __esModule: true,
+  default: ({ data, renderItem, ListHeaderComponent, ListFooterComponent }: any) =>
+    require('react').createElement(
+      require('react-native').View,
+      null,
+      ListHeaderComponent,
+      data.map((item: any, index: number) =>
+        require('react').createElement(
+          require('react').Fragment,
+          { key: item.key },
+          renderItem({ item, drag: () => {}, isActive: false, getIndex: () => index })
+        )
+      ),
+      ListFooterComponent
+    ),
+  ScaleDecorator: ({ children }: any) => children,
+}));
+jest.mock('react-native-confetti-cannon', () => () => null);
+jest.mock('expo-haptics', () => ({
+  impactAsync: jest.fn(),
+  ImpactFeedbackStyle: { Medium: 'medium' },
+}));
+jest.mock('@expo/vector-icons/MaterialIcons', () => () => null);
+jest.mock('expo-constants', () => ({
+  __esModule: true,
+  default: { expoConfig: { version: '9.9.9', extra: {} } },
+}));
+// One client object, as the real provider gives: a new object per render would
+// change every analytics callback and re-run the screen's focus effect forever.
+const mockPostHog = {
+  capture: (...args: unknown[]) => mockCapture(...args),
+  screen: () => {},
+};
+jest.mock('posthog-react-native', () => ({
+  usePostHog: () => mockPostHog,
+}));
+jest.mock('@/context/HapticsContext', () => ({
+  useHapticsPreference: () => ({ hapticsEnabled: false }),
+}));
+// Stable functions, as the real hook returns: a new function on every render
+// would re-run the screen's effects without end.
+const mockRefreshStage = jest.fn().mockResolvedValue(undefined);
+const mockApplyConfirmedArrival = jest.fn();
+jest.mock('@/hooks/onboarding/useUserStage', () => ({
+  useUserStage: () => ({
+    currentStage: 1,
+    stageChanged: false,
+    arrivalDate: null,
+    userId: mockUserId,
+    refreshStage: mockRefreshStage,
+    applyConfirmedArrival: mockApplyConfirmedArrival,
+    isLoading: false,
+  }),
+}));
+jest.mock('@/hooks/checklist/useRefreshingToday', () => ({
+  useRefreshingToday: () => new Date(2026, 9, 23, 12, 0, 0),
+}));
+const mockRefreshUser = jest.fn();
+jest.mock('@/context/UserContext', () => ({
+  useCurrentUser: () => ({
+    currentUser: { id: mockUserId, isPremium: false },
+    refreshUser: mockRefreshUser,
+  }),
+}));
+// Conversation, generation and allowance hooks are not under test here.
+let mockMessageCount = 0;
+jest.mock('@/hooks/companion/useConversationMessages', () => ({
+  useConversationMessages: () => ({ data: [], isLoading: false }),
+}));
+jest.mock('@/hooks/companion/useChatbotUsage', () => ({
+  useChatbotUsage: () => ({ data: { message_count: mockMessageCount } }),
+}));
+jest.mock('@/hooks/companion/useCompanionReviewPrompt', () => ({
+  useCompanionReviewPrompt: () => {},
+}));
+jest.mock('@/hooks/companion/usePersonalizedStarters', () => ({
+  usePersonalizedStarters: () => ({ data: undefined }),
+}));
+const mockSendMessage = jest.fn();
+jest.mock('@/hooks/companion/useSendMessage', () => ({
+  useSendMessage: () => ({
+    sendMessage: mockSendMessage,
+    isLoading: false,
+    isWaitingForBot: false,
+    lastSuggestedNextSteps: [],
+    lastVerified: null,
+    streamingBotMessage: null,
+  }),
+}));
+jest.mock('@/utils/gemini', () => ({
+  AICompanionBusyError: class extends Error {},
+  AICompanionLimitError: class extends Error {},
+}));
+jest.mock('@/context/ToastContext', () => ({
+  useToast: () => ({ showToast: jest.fn() }),
+}));
+jest.mock('@/components/companion/AnimatedDottedBackground', () => ({
+  AnimatedDottedBackground: () => null,
+}));
+jest.mock('@/components/companion/StarterPrompts', () => ({
+  StarterPrompts: () => null,
+}));
+jest.mock('@/components/companion/PartnerSpotlightBanner', () => () => null);
+jest.mock('@/components/icons/SendIcon.svg', () => () => null);
+jest.mock('lucide-react-native', () => ({ History: () => null, Plus: () => null }));
+jest.mock('@/components/common/BottomSheet', () => ({
+  __esModule: true,
+  default: () => null,
+}));
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
+}));
+jest.mock('@/hooks/sanity/useSanityLanguage', () => ({
+  useSanityLanguage: () => 'en',
+}));
+jest.mock('@/lib/supabase', () => ({
+  supabase: {
+    auth: {
+      getUser: async () => ({ data: { user: { id: mockUserId } } }),
+      getSession: async () => ({
+        data: {
+          session: { user: { id: mockUserId }, access_token: `jwt-${mockUserId}` },
+        },
+      }),
+      onAuthStateChange: (listener: (event: string, session: unknown) => void) => {
+        mockAuthListeners.add(listener);
+        return {
+          data: { subscription: { unsubscribe: () => mockAuthListeners.delete(listener) } },
+        };
+      },
+    },
+  },
+}));
+jest.mock('@/services/onboarding/getOnboardingProfile', () => ({
+  getOnboardingProfile: jest.fn(async () => ({
+    persona: 'international_student',
+    province: 'British Columbia',
+  })),
+}));
+jest.mock('@/sanity-custom', () => ({
+  sanityClient: {
+    fetch: jest.fn(async () => [
+      {
+        _id: 'sin',
+        _type: 'checklist',
+        title: 'Get a SIN',
+        class: 'do_now',
+        class_order: 1,
+      },
+    ]),
+  },
+}));
+jest.mock('@/services/checklist/getUserTasks', () => ({
+  getUserTasks: jest.fn().mockResolvedValue([]),
+}));
+jest.mock('@/services/checklist/customChecklistTasks', () => ({
+  getCustomChecklistTasks: jest.fn().mockResolvedValue([]),
+  deleteCustomChecklistTask: jest.fn(),
+  setCustomChecklistTaskCompletion: jest.fn(),
+}));
+jest.mock('@/services/checklist/checklistTaskOrder', () => ({
+  getChecklistTaskOrders: jest.fn().mockResolvedValue([]),
+  upsertChecklistTaskOrder: jest.fn(),
+}));
+jest.mock('@/services/checklist/setChecklistItemCompletion', () => ({
+  setChecklistItemCompletion: jest.fn(),
+}));
+jest.mock('@/services/checklist/setChecklistItemDismissed', () => ({
+  setChecklistItemDismissed: jest.fn(),
+}));
+jest.mock('@/components/home/HomeHeader', () => () => null);
+jest.mock('@/components/LoadingScreen', () => () => null);
+jest.mock('@/components/partners/SpotlightRow', () => () => null);
+
+import CompanionScreen from '@/app/(tabs)/companion/index';
+
+function testI18n() {
+  const i18n = createInstance();
+  void i18n.use(initReactI18next).init({
+    lng: 'en',
+    resources: { en: { translation: en } },
+    interpolation: { escapeValue: false },
+    initImmediate: false,
+  });
+  return i18n;
+}
+
+const clients: QueryClient[] = [];
+function renderScreen() {
+  // gcTime Infinity: no garbage-collection timer outlives the test.
+  const client = createTestQueryClient({
+    defaultOptions: { queries: { retry: false, gcTime: Infinity } },
+  });
+  clients.push(client);
+  return render(
+    <QueryClientProvider client={client}>
+      <I18nextProvider i18n={testI18n()}>
+        <CompanionScreen />
+      </I18nextProvider>
+    </QueryClientProvider>
+  );
+}
+
+let server: ReturnType<typeof scriptedServer>;
+const realFetch = global.fetch;
+let userCounter = 0;
+
+beforeEach(() => {
+  mockUserId = `companion-user-${++userCounter}`;
+  mockCapture = jest.fn();
+  mockPush.mockReset();
+  mockMessageCount = 0;
+  server = scriptedServer({
+    'sanity:sin': { state: 'in_progress', revision: 2 },
+  });
+  global.fetch = server.fetch as unknown as typeof fetch;
+});
+afterEach(() => {
+  global.fetch = realFetch;
+  clients.splice(0).forEach(client => client.clear());
+});
+
+// Corrections from the #361 Spec review round 2 (F1 on mobile).
+describe('review r2 corrections (mobile sheet)', () => {
+  const customTasks = () =>
+    require('@/services/checklist/customChecklistTasks')
+      .getCustomChecklistTasks as jest.Mock;
+  const privateRow = (userId: string) => ({
+    id: 98765,
+    user_id: userId,
+    priority: 'Do now',
+    title: 'Private health appointment for A',
+    description: 'Private description A',
+    completed: false,
+    completed_at: null,
+    created_at: '2026-10-25T00:00:00Z',
+  });
+  /** supabase-js reports a session change to every listener. */
+  async function signIn(userId: string, event = 'SIGNED_IN') {
+    mockUserId = userId;
+    await act(async () => {
+      for (const listener of [...mockAuthListeners])
+        listener(event, { user: { id: userId }, access_token: `jwt-${userId}` });
+    });
+  }
+  const readAs = (userId: string) =>
+    server.fetch.mock.calls.some(
+      call =>
+        (call[1] as unknown as { headers: Record<string, string> }).headers
+          .authorization === `Bearer jwt-${userId}`
+    );
+  afterEach(() => customTasks().mockReset().mockResolvedValue([]));
+
+  it('F1: another account signing in clears the unsent message; the same account keeps it', async () => {
+    renderScreen();
+    const composer = await screen.findByPlaceholderText('Ask anything...');
+    fireEvent.changeText(composer, 'Private unsent question of A');
+    await screen.findByRole('button', { name: /Your tasks/ });
+
+    // A token refresh of the same account keeps the draft.
+    await signIn(mockUserId, 'TOKEN_REFRESHED');
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe(
+      'Private unsent question of A'
+    );
+
+    await signIn('account-b');
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await waitFor(() =>
+      expect(
+        within(screen.getByRole('button', { name: /Your tasks/ })).getByText(
+          'In progress: 1 · Waiting: 0'
+        )
+      ).toBeTruthy()
+    );
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+  });
+
+  it("368: a reminder opened in the task list removes the prior account title after account change", async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) =>
+      userId === a ? [privateRow(a)] : []
+    );
+    const baseFetch = server.fetch;
+    global.fetch = (async (url: unknown, init: any) => {
+      const response = await baseFetch(url as any, init);
+      const body = JSON.parse(init.body);
+      if (body.action !== 'read') return response;
+      const data = await response.json();
+      data.reminders = {scheduler:'ready',items: mockUserId === a ? [{
+        reminder_id:'12345678-1234-1234-1234-123456789012',task_ref:'custom:98765',
+        title:'Private health appointment for A',remind_at:'2027-11-07T05:30:00Z',
+        time_zone:'America/New_York',wall_time:'2027-11-07T01:30:00',revision:1,
+        status:'pending',due:true,due_at:'2027-11-07T05:30:01Z',cancelled_reason:null,history:[]
+      }] : []};
+      return {...response, json:async()=>data};
+    }) as typeof fetch;
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button',{name:'Open task'}));
+    await within(sheet).findByLabelText(en.reminders.instant);
+    expect(within(sheet).getByRole('header',{name:'Private health appointment for A'})).toBeTruthy();
+
+    await signIn('account-b');
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await waitFor(() => expect(customTasks()).toHaveBeenCalledWith('account-b'));
+    await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+    console.log(JSON.stringify({probe:'368-account-replacement',account:mockUserId,fetching:clients[0].isFetching(),priorTitleStillVisible:Boolean(screen.queryByText('Private health appointment for A')),newAccountCustomTasks:await customTasks()('account-b')}));
+    expect(screen.queryByText('Private health appointment for A')).toBeNull();
+  });
+
+  it("F1: A's Checklist read that ends after B signed in never shows A's task", async () => {
+    const a = mockUserId;
+    let releaseA: () => void = () => {};
+    customTasks().mockImplementation(async (userId: string) => {
+      if (userId !== a) return [];
+      await new Promise<void>(resolve => (releaseA = resolve));
+      return [privateRow(a)];
+    });
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    await waitFor(() => expect(customTasks()).toHaveBeenCalledWith(a));
+
+    await signIn('account-b');
+    await within(sheet).findByText('Get a SIN');
+    await act(async () => releaseA());
+    await act(async () => {});
+    expect(screen.queryByText('Private health appointment for A')).toBeNull();
+  });
+});

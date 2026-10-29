@@ -1,0 +1,54 @@
+{
+  "all_bytes_restored_and_verified": true,
+  "logs": [
+    {
+      "original_name": "account-without-epoch.log",
+      "archive": "account-without-epoch.log.gz",
+      "bytes": 168314,
+      "sha256": "7917d63efbaa008a20556b2516238099f7168a2cbf9f849463ed91540659654e",
+      "compressed_bytes": 4780
+    },
+    {
+      "original_name": "ci.log",
+      "archive": "ci.log.gz",
+      "bytes": 1696985,
+      "sha256": "e9a702766fc3fff8b18db079e59d7b08b7ba8a4e8e5938ddf1f87958d5d3258b",
+      "compressed_bytes": 32188
+    },
+    {
+      "original_name": "no-owner-key.log",
+      "archive": "no-owner-key.log.gz",
+      "bytes": 170792,
+      "sha256": "c8ffa9b819b5906afe4e1894677223b027f12c0d2a7bcfa557d9c8ff30c59ba2",
+      "compressed_bytes": 4837
+    },
+    {
+      "original_name": "permanent-red.log",
+      "archive": "permanent-red.log.gz",
+      "bytes": 170793,
+      "sha256": "3f99e5495d87b0b62e20a35ebfdf2177a315fa84cc2d4f9b3748d28d78d4ac59",
+      "compressed_bytes": 4850
+    },
+    {
+      "original_name": "sheet-green.log",
+      "archive": "sheet-green.log.gz",
+      "bytes": 361163,
+      "sha256": "a91555f7e9cef1452dd20095bf814a3a13a22d7e37d70b3420c83deb47829d86",
+      "compressed_bytes": 6861
+    },
+    {
+      "original_name": "sheet-helper-failures.log",
+      "archive": "sheet-helper-failures.log.gz",
+      "bytes": 373627,
+      "sha256": "d37f25d5e7e9636d402830b216f98013b7d6d2f654b6c4b16703ded46d086a32",
+      "compressed_bytes": 7924
+    },
+    {
+      "original_name": "targeted-green.log",
+      "archive": "targeted-green.log.gz",
+      "bytes": 205769,
+      "sha256": "e31d1c3202c8b856efc563fb62c58937dc79d08899c6e3abc46c4e1e1513e32a",
+      "compressed_bytes": 4357
+    }
+  ]
+}

@@ -444,6 +444,113 @@ describe('review r2 corrections (mobile sheet)', () => {
     );
   afterEach(() => customTasks().mockReset().mockResolvedValue([]));
 
+  function showPrivateReminder(account: string) {
+    const baseFetch = server.fetch;
+    global.fetch = (async (url: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
+      if (typeof url !== 'string' || typeof init?.body !== 'string')
+        throw new Error('Expected an action URL and JSON body');
+      const response = await baseFetch(url, { ...init, body: init.body });
+      const body = JSON.parse(String(init?.body ?? '{}')) as { action?: string };
+      if (body.action !== 'read') return response;
+      const data = await response.json() as Record<string, unknown>;
+      const owner = (init?.headers as Record<string, string>)?.authorization;
+      data.reminders = {
+        scheduler: 'ready',
+        items: owner === `Bearer jwt-${account}` ? [{
+          reminder_id: '12345678-1234-1234-1234-123456789012',
+          task_ref: 'custom:98765', title: privateRow(account).title,
+          remind_at: '2027-11-07T05:30:00Z', time_zone: 'America/New_York',
+          wall_time: '2027-11-07T01:30:00', revision: 1, status: 'pending',
+          due: true, due_at: '2027-11-07T05:30:01Z', cancelled_reason: null, history: [],
+        }] : [],
+      };
+      return { ...response, json: async () => data };
+    }) as unknown as typeof fetch;
+  }
+
+  async function openPrivateReminder() {
+    renderScreen();
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: en.reminders.openTask }));
+    await within(sheet).findByLabelText(en.reminders.instant);
+    expect(within(sheet).getByRole('header', { name: privateRow(mockUserId).title })).toBeTruthy();
+  }
+
+  it('R368: a reminder title is removed when another account signs in', async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
+    showPrivateReminder(a);
+    await openPrivateReminder();
+    await signIn('account-b');
+    expect(screen.queryByText(privateRow(a).title)).toBeNull();
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await waitFor(() => expect(customTasks()).toHaveBeenCalledWith('account-b'));
+    await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+    expect(screen.queryByText(privateRow(a).title)).toBeNull();
+    expect(screen.getByTestId('companion-task-sheet')).toBeTruthy();
+  });
+
+  it('R368: a sign-out and sign-in in one batch clears the previous selected reminder', async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
+    showPrivateReminder(a);
+    await openPrivateReminder();
+    await act(async () => {
+      for (const listener of [...mockAuthListeners]) listener('SIGNED_OUT', null);
+      for (const listener of [...mockAuthListeners])
+        listener('SIGNED_IN', { user: { id: a }, access_token: `jwt-${a}` });
+    });
+    await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+    expect(screen.queryByRole('header', { name: privateRow(a).title })).toBeNull();
+    expect(screen.queryByLabelText(en.reminders.instant)).toBeNull();
+    expect(await screen.findByRole('button', { name: en.reminders.openTask })).toBeTruthy();
+  });
+
+  it('R368: a return to the first account does not restore its old selected reminder', async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
+    showPrivateReminder(a);
+    await openPrivateReminder();
+    await signIn('account-b');
+    await waitFor(() => expect(readAs('account-b')).toBe(true));
+    await signIn(a);
+    await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+    expect(screen.queryByRole('header', { name: privateRow(a).title })).toBeNull();
+    expect(screen.queryByLabelText(en.reminders.instant)).toBeNull();
+  });
+
+  it('R368: the same task id in another account needs a fresh selection', async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) => [{
+      ...privateRow(userId), title: userId === a ? privateRow(a).title : 'Private task of B',
+    }]);
+    showPrivateReminder(a);
+    await openPrivateReminder();
+    await signIn('account-b');
+    await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+    expect(screen.queryByText(privateRow(a).title)).toBeNull();
+    expect(screen.queryByRole('header', { name: 'Private task of B' })).toBeNull();
+    expect(await screen.findByRole('button', { name: /Private task of B/ })).toBeTruthy();
+  });
+
+  it('R368: a same-account token refresh keeps the selected reminder and typed drafts', async () => {
+    const a = mockUserId;
+    customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
+    showPrivateReminder(a);
+    await openPrivateReminder();
+    const composer = screen.getByPlaceholderText('Ask anything...');
+    fireEvent.changeText(composer, 'Unsent question for this account');
+    fireEvent.changeText(screen.getByLabelText(en.reminders.instant), '2027-11-07T01:30-04:00');
+    fireEvent.changeText(screen.getByLabelText(en.reminders.zone), 'America/New_York');
+    await signIn(a, 'TOKEN_REFRESHED');
+    expect(screen.getByRole('header', { name: privateRow(a).title })).toBeTruthy();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Unsent question for this account');
+    expect(screen.getByLabelText(en.reminders.instant).props.value).toBe('2027-11-07T01:30-04:00');
+    expect(screen.getByLabelText(en.reminders.zone).props.value).toBe('America/New_York');
+    expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
   it('F1: another account signing in clears the unsent message; the same account keeps it', async () => {
     renderScreen();
     const composer = await screen.findByPlaceholderText('Ask anything...');
@@ -480,7 +587,7 @@ describe('review r2 corrections (mobile sheet)', () => {
 
     await signIn('account-b');
     await waitFor(() => expect(readAs('account-b')).toBe(true));
-    await within(sheet).findByText('Get a SIN');
+    await within(screen.getByTestId('companion-task-sheet')).findByText('Get a SIN');
     expect(screen.queryByText('Private health appointment for A')).toBeNull();
   });
 
@@ -494,11 +601,11 @@ describe('review r2 corrections (mobile sheet)', () => {
     });
     renderScreen();
     fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
-    const sheet = await screen.findByTestId('companion-task-sheet');
+    await screen.findByTestId('companion-task-sheet');
     await waitFor(() => expect(customTasks()).toHaveBeenCalledWith(a));
 
     await signIn('account-b');
-    await within(sheet).findByText('Get a SIN');
+    await within(screen.getByTestId('companion-task-sheet')).findByText('Get a SIN');
     await act(async () => releaseA());
     await act(async () => {});
     expect(screen.queryByText('Private health appointment for A')).toBeNull();

@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "name": "no-owner-key",
+      "exit": 1,
+      "assertion_kill": true,
+      "log_sha256": "c8ffa9b819b5906afe4e1894677223b027f12c0d2a7bcfa557d9c8ff30c59ba2"
+    },
+    {
+      "name": "account-without-epoch",
+      "exit": 1,
+      "assertion_kill": true,
+      "log_sha256": "7917d63efbaa008a20556b2516238099f7168a2cbf9f849463ed91540659654e"
+    }
+  ],
+  "source_restored": true,
+  "source_sha256": "9f40b0641b8a3519501304eeef9e0ccfdb29473ff68c64f7ba5a82f6596c7a4b"
+}

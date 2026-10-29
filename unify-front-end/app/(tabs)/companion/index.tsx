@@ -934,6 +934,8 @@ export default function CompanionScreen() {
       </Animated.View>
 
       <TaskActionsSheet
+        // The sheet's selection and title cache belong to this account session.
+        key={`${accountId ?? 'unknown'}:${accountEpoch}`}
         visible={sheet !== null}
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
