@@ -322,10 +322,8 @@ export default function OnboardingQuiz({
 
       // Persist first_name on public.users (separate from user_onboarding_profiles).
       // Non-blocking failure: the user can re-enter their name from Account Settings.
-      // Runs BEFORE the profile save: that save opens the AuthWrapper gate, which
-      // mounts AppContent, and useOtaUpdates can reload the bundle seconds later.
-      // Nothing may await after the save, or the reload cuts it off (and with it
-      // the onboarding_completed event).
+      // Must run BEFORE the profile save: the save opens the AuthWrapper gate, and
+      // useOtaUpdates in AppContent can then reload the bundle and cut off any await.
       try {
         const firstNameResult = await updateFirstName(firstName);
         if (!firstNameResult.success) {
