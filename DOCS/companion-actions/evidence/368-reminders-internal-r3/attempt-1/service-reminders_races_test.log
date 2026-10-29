@@ -1,0 +1,39 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 11 tests from ./reminders_races_test.ts
+reminders race: complete, claim commits first ... FAILED (15s)
+reminders race: complete, stop commits first ... FAILED (6s)
+reminders race: remove, claim commits first ... FAILED (15s)
+reminders race: remove, stop commits first ... FAILED (6s)
+reminders race: cancel, claim commits first ...
+SIGINT The following tests were pending:
+
+reminders race: cancel, claim commits first => ./reminders_races_test.ts:111:10
+
+Traceback (most recent call last):
+  File "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/run.py", line 25, in <module>
+    raise SystemExit(subprocess.call(command,env=env,cwd=STACK))
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 398, in call
+    return p.wait(timeout=timeout)
+           ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2084, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2042, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

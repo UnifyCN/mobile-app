@@ -1,0 +1,80 @@
+{
+  "owned": {
+    "containers": [],
+    "volumes": [],
+    "networks": []
+  },
+  "owned_jobs": [],
+  "ports": [
+    {
+      "host": "127.0.0.1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "host": "127.0.0.1",
+      "port": 3390,
+      "free": true
+    },
+    {
+      "host": "::1",
+      "port": 3390,
+      "free": true
+    }
+  ],
+  "protected_containers_unchanged": 33,
+  "protected_mount_set_comparison": "sorted complete mount objects; raw order can differ",
+  "protected_volumes_present": 18,
+  "internal_source_preserved": true,
+  "useful_caches_preserved": [
+    "internal .runtime/deno-cache",
+    "internal .cache",
+    "primary unify-front-end/node_modules",
+    "existing web dependencies"
+  ]
+}

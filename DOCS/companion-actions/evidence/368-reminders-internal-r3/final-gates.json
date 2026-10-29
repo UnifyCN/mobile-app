@@ -1,0 +1,24 @@
+{
+  "branch": "t3/internal-runtime-service-checks-368",
+  "staged_files": 156,
+  "unstaged_files": 0,
+  "web_clean": true,
+  "source_changes": "two committed web test corrections only; primary documentation and evidence only",
+  "service": {
+    "fresh_files": 37,
+    "fresh_passes": 244,
+    "fresh_failures": 0,
+    "supplied_file_passes": 10,
+    "supplied_assertion_mutations": 3
+  },
+  "race_orders": 10,
+  "mobile_live_exit": 0,
+  "browser_live_exit": 0,
+  "normal_service_types": {
+    "exit": 1,
+    "errors": 6,
+    "unchanged_older_test_files": 3
+  },
+  "focused_corrected_test_types": "pass",
+  "acceptance": false
+}

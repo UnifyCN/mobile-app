@@ -1,0 +1,31 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 15 tests from ./steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... ok (289ms)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... ok (241ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... ok (374ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... ok (296ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... ok (324ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... ok (266ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... ok (587ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... ok (289ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... ok (291ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... ok (452ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... ok (401ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... ok (418ms)
+another account cannot read, change, look up or undo my steps ... ok (444ms)
+step controls, lookup and Undo never touch the AI allowance ... ok (250ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... ok (250ms)
+
+ok | 15 passed | 0 failed (5s)
+

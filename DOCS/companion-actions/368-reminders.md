@@ -1,8 +1,8 @@
 # Ticket 368 reminders
 
-Status: HOLD for service verification. This implementation is committed for review. It does not accept ticket 368, tickets 367 or 370, native criterion 8, or a release.
+Status: HOLD for independent review and the remaining native and hosted checks. The local service and rendered-client checks have finished. This implementation does not accept ticket 368, tickets 367 or 370, native criterion 8, or a release.
 
-The service run is blocked by the local Docker state. The first authenticated test reached an assertion RED before implementation. The first GREEN attempt did not reach an assertion. Docker then reported an owned Edge process as a zombie. Removal of that exact container succeeded. A fresh owned database container remained in Created state. The owned project was stopped and removed. Docker still holds ports 63081 and 63082 without a matching container, volume or network. A Docker Desktop restart is outside this task's authorization. See the evidence handoff for the exact proof limits.
+The root restored the local test boundary with an internal-disk source copy. The R3 continuation used that running service. It made no product change. The earlier failed attempts remain in their original evidence directories. See [the R3 handoff](evidence/368-reminders-internal-r3/HANDOFF.md) for source pins, results, limits and cleanup.
 
 ## Ownership and composition
 
@@ -60,10 +60,14 @@ Analytics use the existing categorical action event with reminder_change and the
 
 ## Validation and qualification
 
-See evidence/368-reminders-r1/report.md, checks.json and mirror-hashes.json. The final report separates fresh results, setup failures, historical probe evidence and unexecuted tests.
+The R3 continuation ran the remaining 37 service files: 244 passed, zero final failures. The root supplied the unchanged reminders_test.ts result: 10 passed and three assertion-level mutations. The combined service set has 254 passes across 38 files. The continuation did not repeat the root-passed file. The handoff retains the complete file distribution and every failed attempt.
 
-The new service tests cover concurrent duplicate waits, unknown-result lookup, account isolation, both task sources, explicit confirmation, changed proposal review, immutable schedule changes, receipt-specific Undo, gaps/folds, worker/read outages, bounded scans, cancellation orders, legacy writers, mutations and full rollback/reapply. They typecheck. Their product assertions remain unexecuted because the owned stack could not restart. They must not be reported as passes or mutation kills.
+All ten cancellation orders passed with actual Cron workers, observed lock waits, intermediate committed reads and final public reads. The supplied reminder file covers duplicate retry, unknown results, owner isolation, content parents, revisions, schedule changes, Undo, clock boundaries, worker/read failures, bounded scans and rollback/reapply. The older regression files retain their existing foundation and migration fixtures. They do not each exercise the full reminder schema.
 
-The mobile_live.py and browser_live.py runners prepare the real local client checks. They require a passing owned-stack preflight. Their preflights are blocked, so neither live path has run. The browser script defaults to scripted mode; REMINDER_BROWSER_MODE=live selects real Auth/JWT/actions and Cron.
+The mobile rendered test and the English 390-pixel Chromium path each passed against real local Auth, JWT, actions and Cron. The browser record includes persisted readbacks and HTTP status, size and timing. These checks establish rendered controls and local persistence. They do not establish a native workflow, the actual Next.js shell, observed delivery or screen-reader behavior.
 
-Required follow-up: restore an authorized healthy local Docker runtime, execute the full sequential service suite and mounted local clients, and run the headless live path against that real service. Then request fresh independent SPEC and STANDARDS review. Hosted Cron/grants/cache/deployment checks and observed iOS/Android keyboard, text scale, focus, VoiceOver and TalkBack checks remain open. Native exports and rendered fixtures do not replace them.
+Both corrected service test files pass normal Deno checks. A broader normal check of all 37 files fails with six errors in three unchanged older tests. Those test and support inputs match the accepted integration. No suppression or unrelated fix was made. The exact-source client gates and complete 277-test, 19-file Edge fixture result remain supplied evidence.
+
+The assigned service, data volumes and network were removed. All six reserved ports are free on IPv4 and IPv6. The internal source and useful caches remain. The 33 protected container identities and mount sets and all 18 protected volume names remain unchanged.
+
+Required follow-up: fresh independent SPEC and STANDARDS review, review of the recorded normal-type failure, hosted Cron/grants/cache/deployment checks, and observed iOS/Android keyboard, text scale, focus, VoiceOver and TalkBack checks. Native exports and rendered fixtures do not replace these checks.

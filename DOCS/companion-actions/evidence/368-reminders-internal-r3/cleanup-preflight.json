@@ -1,0 +1,97 @@
+{
+  "project": "unify-reminders-368-r1",
+  "workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions",
+  "containers": [
+    {
+      "id": "28e5f6a9e8490767d62feba7743ffb847b54b437396bb8a3a352757fd4eed6e3",
+      "name": "/supabase_db_unify-reminders-368-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-reminders-368-r1",
+        "com.supabase.cli.project": "unify-reminders-368-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+      },
+      "mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_unify-reminders-368-r1",
+          "Source": "/var/lib/docker/volumes/supabase_db_unify-reminders-368-r1/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ]
+    },
+    {
+      "id": "2d68a4787447425a5ab36bd23c18149d04c50991826ddb61c87f931e74dc9e91",
+      "name": "/supabase_auth_unify-reminders-368-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-reminders-368-r1",
+        "com.supabase.cli.project": "unify-reminders-368-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+      },
+      "mounts": []
+    },
+    {
+      "id": "1c95b0eb7838a03a173127880a244108b163f8b788907c5cf1bc07f11feb1e61",
+      "name": "/supabase_rest_unify-reminders-368-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-reminders-368-r1",
+        "com.supabase.cli.project": "unify-reminders-368-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+      },
+      "mounts": []
+    },
+    {
+      "id": "5e9cc497095a3d71e08e3bb2144e415fdb6a54093cf9cb8d45734581701f47e3",
+      "name": "/supabase_kong_unify-reminders-368-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-reminders-368-r1",
+        "com.supabase.cli.project": "unify-reminders-368-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "mounts": []
+    },
+    {
+      "id": "fb1f55a969fa7b4eff5c937baa1fcbe14c6a1f4b8e70e172b9836588117bb852",
+      "name": "/supabase_edge_runtime_unify-reminders-368-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-reminders-368-r1",
+        "com.supabase.cli.project": "unify-reminders-368-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+      },
+      "mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-reminders-368-r1",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-reminders-368-r1/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions",
+          "Destination": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    "supabase_db_unify-reminders-368-r1",
+    "supabase_edge_runtime_unify-reminders-368-r1"
+  ],
+  "networks": [
+    "supabase_network_unify-reminders-368-r1"
+  ],
+  "owned_jobs": [],
+  "protected_disjoint": true,
+  "job_match": "exact internal driver path with any Python executable"
+}

@@ -1,0 +1,12 @@
+{"schedules" : [{"task_ref":"custom:1","status":"pending","last_error":"42702","attempt_count":2}, 
+ {"task_ref":"custom:4","status":"pending","last_error":"42702","attempt_count":1}, 
+ {"task_ref":"custom:5","status":"pending","last_error":"42702","attempt_count":1}, 
+ {"task_ref":"custom:2","status":"pending","last_error":"42702","attempt_count":2}, 
+ {"task_ref":"custom:3","status":"pending","last_error":"42702","attempt_count":2}], "cron" : [{"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}, 
+ {"status":"succeeded","return_message":"1 row"}]}

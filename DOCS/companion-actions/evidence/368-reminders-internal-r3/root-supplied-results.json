@@ -1,0 +1,26 @@
+{
+  "file": "reminders_test.ts",
+  "exit": 0,
+  "passed": 10,
+  "failed": 0,
+  "includes_cleanup": true,
+  "mutations": [
+    {
+      "name": "owner",
+      "verdict": "assertion RED"
+    },
+    {
+      "name": "cancelled due",
+      "verdict": "assertion RED"
+    },
+    {
+      "name": "due time",
+      "verdict": "assertion RED"
+    }
+  ],
+  "log_sha256": "d640c8227fd3aa1f0a3cf7a16a82bfd9113e10fd261065c93edb6789e2d90e8e",
+  "source_mobile": "e9955ca7aebfa8728473198b8c4240712882aefa",
+  "source_web": "941e8cabb86ae11e4523854d9c8e7320c171663f",
+  "remaining_service_files_unexecuted": 37,
+  "native_workflows_run": 0
+}
