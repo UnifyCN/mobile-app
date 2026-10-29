@@ -1,0 +1,225 @@
+{
+  "status": "HOLD: required real service verification blocked",
+  "mobile_main": {
+    "passed": 1516,
+    "skipped": 24,
+    "total": 1540,
+    "natural_exit": true
+  },
+  "mobile_dst": {
+    "passed": 13,
+    "natural_exit": true
+  },
+  "web": {
+    "passed": 720,
+    "skipped": 13,
+    "total": 733
+  },
+  "edge_workflow": {
+    "passed": 157,
+    "failed": 0,
+    "network": "fixtures; loopback only permitted"
+  },
+  "browser": [
+    {
+      "lang": "en",
+      "width": 390,
+      "proof": "scripted rendered browser only",
+      "saved": true,
+      "stableRef": "sanity:1",
+      "focusInside": true,
+      "composerPreserved": true,
+      "overflow": false,
+      "targets": [
+        {
+          "text": "",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Open task",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Review reminder",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Undo this change",
+          "height": 44,
+          "layoutHeight": 44
+        }
+      ],
+      "dir": "ltr"
+    },
+    {
+      "lang": "en",
+      "width": 1280,
+      "proof": "scripted rendered browser only",
+      "saved": true,
+      "stableRef": "sanity:1",
+      "focusInside": true,
+      "composerPreserved": true,
+      "overflow": false,
+      "targets": [
+        {
+          "text": "",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Open task",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Review reminder",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "Undo this change",
+          "height": 44,
+          "layoutHeight": 44
+        }
+      ],
+      "dir": "ltr"
+    },
+    {
+      "lang": "ar",
+      "width": 390,
+      "proof": "scripted rendered browser only",
+      "saved": true,
+      "stableRef": "sanity:1",
+      "focusInside": true,
+      "composerPreserved": true,
+      "overflow": false,
+      "targets": [
+        {
+          "text": "",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0641\u062a\u062d \u0627\u0644\u0645\u0647\u0645\u0629",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u0630\u0643\u064a\u0631",
+          "height": 44,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0639\u0646 \u0647\u0630\u0627 \u0627\u0644\u062a\u063a\u064a\u064a\u0631",
+          "height": 44,
+          "layoutHeight": 44
+        }
+      ],
+      "dir": "rtl"
+    },
+    {
+      "lang": "ar",
+      "width": 1280,
+      "proof": "scripted rendered browser only",
+      "saved": true,
+      "stableRef": "sanity:1",
+      "focusInside": true,
+      "composerPreserved": true,
+      "overflow": false,
+      "targets": [
+        {
+          "text": "",
+          "height": 43.48499298095703,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0641\u062a\u062d \u0627\u0644\u0645\u0647\u0645\u0629",
+          "height": 43.4849853515625,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u0630\u0643\u064a\u0631",
+          "height": 43.4849853515625,
+          "layoutHeight": 44
+        },
+        {
+          "text": "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0639\u0646 \u0647\u0630\u0627 \u0627\u0644\u062a\u063a\u064a\u064a\u0631",
+          "height": 43.4849853515625,
+          "layoutHeight": 44
+        }
+      ],
+      "dir": "rtl"
+    }
+  ],
+  "changed_lint": {
+    "mobile": {
+      "exit": 0,
+      "files": 18,
+      "warnings": 11
+    },
+    "web": {
+      "exit": 0,
+      "files": 28,
+      "warnings": 5,
+      "warning_class": "five ignored service source files; covered by Deno checks"
+    }
+  },
+  "web_full_lint": {
+    "errors": 12,
+    "class": "accepted baseline"
+  },
+  "service_red": {
+    "assertion_failed": 1,
+    "reason": "unsupported_operation before implementation"
+  },
+  "service_green": {
+    "status": "setup blocked before assertion",
+    "new_feature_passes": 0
+  },
+  "service_mutations": {
+    "status": "written and typechecked; not executed",
+    "killed": null,
+    "survived": null
+  },
+  "required_open": [
+    "full sequential real service suite",
+    "actual final Cron worker execution and lock/cancellation proofs",
+    "service fault and binding mutation results",
+    "full rollback/reapply with the new migration",
+    "mounted clients on the real owned service",
+    "headless web flow on real persistence",
+    "observed native keyboard/text size/focus/VoiceOver/TalkBack",
+    "hosted migration/grants/Cron/cache/deployment qualification"
+  ],
+  "cleanup": {
+    "project": "unify-reminders-368-r1",
+    "containers": [],
+    "volumes": [],
+    "networks": [],
+    "ports": {
+      "63081": "Docker backend listener remains; no owned project resource",
+      "63082": "Docker backend listener remains; no owned project resource",
+      "63083": "free",
+      "63084": "free",
+      "3385": "free",
+      "3390": "free"
+    }
+  },
+  "native_exports": {
+    "ios": true,
+    "android": true,
+    "proof": "Hermes bundles only"
+  },
+  "normal_types": {
+    "mobile": true,
+    "web": true,
+    "edge_and_new_service_tests": true
+  },
+  "guarded_live_runners": {
+    "mobile": "preflight blocked before Auth",
+    "browser": "preflight blocked before Auth"
+  }
+}

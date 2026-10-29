@@ -1,0 +1,49 @@
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/unify-front-end/__tests__/companionActions/reminders.test.tsx
+  39:5  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  45:5  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/unify-front-end/components/companion/tasks/ReminderSection.tsx
+   60:21  error  disallow literal string: placeholder='2027-11-07T01:30-04:00'                                                                                i18next/no-literal-string
+  161:36  error  disallow literal string: e.setConfirm('undo')                                                                                                i18next/no-literal-string
+  175:9   error  disallow literal string: [
+        'saving',
+        'checking',
+        'pending',
+        'lookup_failed',
+        'not_applied',
+      ]  i18next/no-literal-string
+  176:9   error  disallow literal string: [
+        'saving',
+        'checking',
+        'pending',
+        'lookup_failed',
+        'not_applied',
+      ]  i18next/no-literal-string
+  177:9   error  disallow literal string: [
+        'saving',
+        'checking',
+        'pending',
+        'lookup_failed',
+        'not_applied',
+      ]  i18next/no-literal-string
+  178:9   error  disallow literal string: [
+        'saving',
+        'checking',
+        'pending',
+        'lookup_failed',
+        'not_applied',
+      ]  i18next/no-literal-string
+  179:9   error  disallow literal string: [
+        'saving',
+        'checking',
+        'pending',
+        'lookup_failed',
+        'not_applied',
+      ]  i18next/no-literal-string
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/unify-front-end/hooks/companion/useSendMessage.ts
+  193:17  warning  'usage' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 10 problems (7 errors, 3 warnings)
+

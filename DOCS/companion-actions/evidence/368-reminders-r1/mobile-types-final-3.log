@@ -1,0 +1,6 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/reminders.test.tsx(4,7): error TS2451: Cannot redeclare block-scoped variable 'mockReact'.
+__tests__/companionActions/reminders.test.tsx(26,7): error TS2451: Cannot redeclare block-scoped variable 'mockReact'.

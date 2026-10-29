@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/run.py", line 7, in <module>
+    raw=subprocess.check_output(['supabase','status','--workdir',str(STACK),'-o','env'],stderr=subprocess.DEVNULL,text=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['supabase', 'status', '--workdir', '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/.runtime/supabase/tests/companion-actions', '-o', 'env']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/mobile_live.py", line 7, in <module>
+    subprocess.run([sys.executable,str(HERE/'run.py'),'--preflight'],check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/opt/homebrew/opt/python@3.14/bin/python3.14', '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/run.py', '--preflight']' returned non-zero exit status 1.

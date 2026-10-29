@@ -1,0 +1,28 @@
+
+> web-app@0.1.0 lint
+> eslint
+
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/scripts/verify-companion-reminders.mjs
+  5:10  warning  'resolve' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/probes/companion-context-362/context_rls_test.ts
+   59:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  246:78  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  249:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  369:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/rollback_test.ts
+  77:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/support.ts
+   85:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  387:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  390:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 13 problems (12 errors, 1 warning)
+
