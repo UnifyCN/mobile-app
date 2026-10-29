@@ -212,7 +212,8 @@ afterAll(async () => {
       );
       expect(c.Config.Labels['com.supabase.cli.workdir']).toBe(
         realpathSync(
-          '/Users/savargupta/.t3/worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/.runtime/supabase/tests/companion-actions'
+          process.env.ACTIONS_STACK_WORKDIR ??
+            '/Users/savargupta/.t3/worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/.runtime/supabase/tests/companion-actions'
         )
       );
       expect(c.State.Running).toBe(true);
