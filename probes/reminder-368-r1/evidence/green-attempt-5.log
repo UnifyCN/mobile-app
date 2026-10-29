@@ -1,0 +1,68 @@
+------- pre-test output -------
+{"name":"versions-clock","data":{"version":"PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit","zone":"UTC","cron":"1.6.4"}}
+----- pre-test output end -----
+running 11 tests from ./probe_test.ts
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ...
+------- output -------
+{"name":"duplicate-intermediate","data":{"reminders":0,"locks":[{"pid":272,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]},{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230,272]}]}}
+{"name":"duplicate-due-owner","data":{"statuses":[200,200],"replays":[false,true],"reminders":1,"events":1,"ownerPerPlatform":1,"foreignPerPlatform":0,"taskState":"not_started"}}
+----- output end -----
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ... ok (6s)
+02 persistence, stopped scheduler, scheduler error and read error stay separate ...
+------- output -------
+{"name":"failure-boundaries","data":{"invalidPersistence":422,"persistedWhileCronOff":true,"dueWhileCronOff":false,"cronFailedRun":true,"readFailure":500,"recoveredReadCount":1,"taskCompleted":false}}
+----- output end -----
+02 persistence, stopped scheduler, scheduler error and read error stay separate ... ok (4s)
+03 race complete, claim commits first, Undo does not restart ...
+------- output -------
+{"name":"race-complete-claim-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"transactionid","blockers":[542]},{"pid":542,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]}]}}
+{"name":"race-complete-claim-final","data":{"reminderStatus":"cancelled","reason":"task_completed","claimed":true,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race complete, claim commits first, Undo does not restart ... ok (3s)
+03 race complete, stop commits first, Undo does not restart ...
+------- output -------
+{"name":"race-complete-stop-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[286]},{"pid":632,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"transactionid","blockers":[304]}]}}
+{"name":"race-complete-stop-final","data":{"reminderStatus":"cancelled","reason":"task_completed","claimed":false,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race complete, stop commits first, Undo does not restart ... ok (3s)
+03 race remove, claim commits first, Undo does not restart ...
+------- output -------
+{"name":"race-remove-claim-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[705]},{"pid":705,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]}]}}
+{"name":"race-remove-claim-final","data":{"reminderStatus":"cancelled","reason":"task_removed","claimed":true,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race remove, claim commits first, Undo does not restart ... ok (3s)
+03 race remove, stop commits first, Undo does not restart ...
+------- output -------
+{"name":"race-remove-stop-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[286]},{"pid":798,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[304]}]}}
+{"name":"race-remove-stop-final","data":{"reminderStatus":"cancelled","reason":"task_removed","claimed":false,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race remove, stop commits first, Undo does not restart ... ok (2s)
+04 explicit cancel after claim, old retry, reopen and new explicit schedule ...
+------- output -------
+{"name":"explicit-cancel-reopen","data":{"oldReplay":true,"oldStatus":"cancelled","newExplicitEvent":1}}
+----- output end -----
+04 explicit cancel after claim, old retry, reopen and new explicit schedule ... ok (4s)
+05 UTC persistence, named zone, DST gap and both fold instants ...
+------- output -------
+{"name":"clock-zone","data":{"databaseClock":"real UTC wall clock, no clock override","gapStatus":422,"foldWithoutOffset":422,"foldEpochs":[1825565400,1825569000],"foldDifferenceSeconds":3600,"zoneAfterSessionChange":"America/New_York"}}
+----- output end -----
+05 UTC persistence, named zone, DST gap and both fold instants ... ok (204ms)
+06 binding SQL mutations return assertion RED, setup faults are unresolved ...
+------- output -------
+{"name":"mutation-owner","data":{"verdict":"RED","class":"assertion","assertion":"Values are not equal: owner boundary must return no foreign events"}}
+{"name":"mutation-cancel-and-task-filter","data":{"verdict":"RED","class":"assertion","assertion":"Values are not equal: stopped event must stay hidden"}}
+{"name":"mutation-due-time","data":{"verdict":"RED","class":"assertion","assertion":"Values are not equal: future reminder must not be delivered"}}
+----- output end -----
+06 binding SQL mutations return assertion RED, setup faults are unresolved ... ok (3s)
+07 final actual scheduler evidence, no model quota call, permission denials ...
+------- output -------
+{"name":"actual-cron-final","data":{"jobs":[{"jobname":"probe368-due","schedule":"1 second","command":"select probe368.tick()","active":true,"username":"postgres"}],"runs":[{"status":"failed","count":1},{"status":"succeeded","count":27}],"workerRuns":[{"actor":"postgres","inserted":0,"n":19},{"actor":"postgres","inserted":1,"n":7},{"actor":"postgres","inserted":3,"n":1}],"directDueRpcDenied":true,"modelQuotaCalls":0,"survivingMutations":0}}
+----- output end -----
+07 final actual scheduler evidence, no model quota call, permission denials ... ok (4ms)
+08 full merged rollback stops pending schedules and reapply cannot restart them ...
+------- output -------
+{"name":"schema-rollback","data":{"archivedStatus":"cancelled","reason":"schema_rollback","replayedOldReceipt":true,"restartedSchedules":0,"workerUnscheduleBeforeDown":true}}
+----- output end -----
+08 full merged rollback stops pending schedules and reapply cannot restart them ... ok (5s)
+
+ok | 11 passed | 0 failed (37s)
