@@ -4,7 +4,7 @@ import {
   findNodeHandle,
   Pressable,
   StyleSheet,
-  Text,
+  type Text as NativeText,
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +26,7 @@ import {
   useTaskActionPhase,
 } from '@/hooks/companion/useTaskActions';
 import { minTarget } from '@/utils/touchTarget';
+import { LiveText as Text } from '@/components/common/LiveText';
 
 const INK = '#0F172A';
 const INK_SECONDARY = '#475569';
@@ -71,7 +72,7 @@ export function TaskRemovalSection({
   const [review, setReview] = useState<Review>({ status: 'idle' });
   const busy = isUnresolved(phase);
   const removeRef = useRef<View>(null);
-  const headingRef = useRef<Text>(null);
+  const headingRef = useRef<NativeText>(null);
   const focusTarget = useRef<'heading' | 'remove' | null>(null);
 
   const requested = useSyncExternalStore(

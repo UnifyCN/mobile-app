@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
   TextInput,
   Pressable,
   TouchableOpacity,
@@ -29,6 +28,7 @@ import { useConversationMessages } from '@/hooks/companion/useConversationMessag
 import { useChatbotUsage } from '@/hooks/companion/useChatbotUsage';
 import { useCompanionReviewPrompt } from '@/hooks/companion/useCompanionReviewPrompt';
 import { useSendMessage } from '@/hooks/companion/useSendMessage';
+import { useComposerDraft } from '@/hooks/companion/useComposerDraft';
 import { useCurrentUser } from '@/context/UserContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
@@ -38,6 +38,7 @@ import {
   Message,
 } from '@/helpers/companion/messageHelpers';
 import { MessageWithSources } from '@/components/companion/MessageWithSources';
+import { LiveText as Text } from '@/components/common/LiveText';
 import { TypingIndicator } from '@/components/companion/TypingIndicator';
 import { StarterPrompts } from '@/components/companion/StarterPrompts';
 import PartnerSpotlightBanner from '@/components/companion/PartnerSpotlightBanner';
@@ -54,7 +55,6 @@ import { useAnalytics } from '@/utils/analytics';
 import {
   buildCompanionStarterPromptProperties,
   buildCompanionSuggestionClickedProperties,
-  CompanionInputOrigin,
   CompanionInputSource,
   CompanionStarterRef,
   isConversationHistoryLoaded,
@@ -167,7 +167,7 @@ export default function CompanionScreen() {
     string | null
   >(null);
 
-  const [inputText, setInputText] = useState('');
+  const { text: inputText, origin: inputOrigin, setDraft } = useComposerDraft();
   // Direction B (mobile-app#361, #363): task progress, a task draft or one task
   // opens in a bottom sheet over the conversation, so the conversation and the
   // typed message stay mounted.
@@ -201,7 +201,6 @@ export default function CompanionScreen() {
   const [composerEpoch, setComposerEpoch] = useState(accountEpoch);
   if (accountEpoch !== composerEpoch) {
     setComposerEpoch(accountEpoch);
-    setInputText('');
     setCurrentConversationId(null);
     setGreetingMessage(null);
     setOptimisticMessages([]);
@@ -339,15 +338,9 @@ export default function CompanionScreen() {
     spotlightClosed
   );
 
-  // Text the app put in the input box (fact-check prefill, or a failed send
-  // restored for retry) and its source. Labels the next send from the input.
-  const inputOriginRef = useRef<CompanionInputOrigin | null>(null);
-
-  const resetDraftState = useCallback(() => {
-    inputOriginRef.current = null;
+  const resetConversationState = useCallback(() => {
     setOptimisticMessages([]);
     setGreetingMessage(null);
-    setInputText('');
     immigrationAnswerIdsRef.current = new Set();
     setImmigrationAnswerCount(0);
     setSpotlightClosed(false);
@@ -361,10 +354,10 @@ export default function CompanionScreen() {
       // Clear conversation ID when starting a new conversation (no conversationId param)
       setCurrentConversationId(null);
     }
-    resetDraftState();
+    resetConversationState();
     previousMessageCountRef.current = 0;
     isNearBottomRef.current = true;
-  }, [conversationId, resetDraftState]);
+  }, [conversationId, resetConversationState]);
 
   // Scroll to end only when new messages are added (not when sources expand/collapse).
   // Skip while the user has scrolled up to read earlier messages, and use a
@@ -404,8 +397,7 @@ export default function CompanionScreen() {
       const textToSend = messageText || inputText.trim();
       if (!textToSend || isLoading || !canSend || !accountKnown) return;
       const inputSource =
-        source ?? resolveTypedInputSource(textToSend, inputOriginRef.current);
-      inputOriginRef.current = null;
+        source ?? resolveTypedInputSource(textToSend, inputOrigin);
 
       // Results of this send are written only while its account is signed in.
       const owner = ownAccountWork();
@@ -422,7 +414,7 @@ export default function CompanionScreen() {
         setOptimisticMessages(current => [...current, optimisticMessage]);
       }
 
-      setInputText('');
+      const clearedDraft = setDraft('', null);
 
       try {
         await sendMessage(
@@ -443,8 +435,13 @@ export default function CompanionScreen() {
           !(error instanceof Error) ||
           !(error as Error & { messagePersisted?: boolean }).messagePersisted
         ) {
-          setInputText(textToSend);
-          inputOriginRef.current = { text: textToSend, source: inputSource };
+          if (clearedDraft) {
+            setDraft(
+              textToSend,
+              { text: textToSend, source: inputSource },
+              clearedDraft
+            );
+          }
         }
         if (
           error instanceof AICompanionBusyError ||
@@ -456,6 +453,8 @@ export default function CompanionScreen() {
     },
     [
       inputText,
+      inputOrigin,
+      setDraft,
       isLoading,
       canSend,
       accountKnown,
@@ -508,8 +507,7 @@ export default function CompanionScreen() {
 
     // For fact check, pre-fill the input so user can complete the sentence
     if (mode === 'fact_check') {
-      inputOriginRef.current = { text: prompt, source: 'starter_prompt' };
-      setInputText(prompt);
+      setDraft(prompt, { text: prompt, source: 'starter_prompt' });
       // Focus input after setting text so user can type immediately
       setTimeout(() => inputRef.current?.focus(), 50);
       return;
@@ -669,9 +667,7 @@ export default function CompanionScreen() {
     ]
   );
 
-  const disclaimer = (
-    <Disclaimer key={scaleKey} text={t('companion.disclaimer')} />
-  );
+  const disclaimer = <Disclaimer text={t('companion.disclaimer')} />;
 
   const renderLoadingIndicator = useCallback(
     () => (
@@ -681,24 +677,24 @@ export default function CompanionScreen() {
         {/* At large text the disclaimer follows the messages (see the pinned section). */}
         {largeText && (
           <View style={styles.listEntries}>
-            <Disclaimer key={scaleKey} text={t('companion.disclaimer')} />
+            <Disclaimer text={t('companion.disclaimer')} />
           </View>
         )}
       </>
     ),
-    [isWaitingForBot, largeText, scaleKey, t]
+    [isWaitingForBot, largeText, t]
   );
 
   const keyExtractor = useCallback((item: Message) => item.id, []);
 
   const handleNewChatPress = useCallback(() => {
     setCurrentConversationId(null);
-    resetDraftState();
+    resetConversationState();
     previousMessageCountRef.current = 0;
     isNearBottomRef.current = true;
     Keyboard.dismiss();
     router.replace('/(tabs)/companion' as any);
-  }, [resetDraftState, router]);
+  }, [resetConversationState, router]);
 
   const entries = (
     <>
@@ -715,7 +711,7 @@ export default function CompanionScreen() {
 
   const starters = (
     <>
-      <Text key={scaleKey} style={styles.startersLabel}>
+      <Text style={styles.startersLabel}>
         {t('companion.tryOneOfThese')}
       </Text>
       <StarterPrompts
@@ -815,7 +811,7 @@ export default function CompanionScreen() {
               keyboardDismissMode='interactive'
             >
               {largeText && entries}
-              <View key={scaleKey} style={styles.emptyState}>
+              <View style={styles.emptyState}>
                 {/* A title grows like iOS Title 1, not by the body multiplier,
                     so a long word still fits the width at accessibility sizes. */}
                 <Text style={styles.welcomeTitle} dynamicTypeRamp='title1'>
@@ -888,7 +884,7 @@ export default function CompanionScreen() {
                 !canSend && styles.disabledInput,
               ]}
               value={inputText}
-              onChangeText={setInputText}
+              onChangeText={text => setDraft(text)}
               placeholder={
                 canSend
                   ? t('companion.inputPlaceholder')
