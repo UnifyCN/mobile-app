@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "node_modules/jest/bin/jest.js",
+    "__tests__/companionActions/removalReceiptEntry.test.tsx",
+    "--runInBand",
+    "--watchAll=false"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-64fec96b/unify-front-end",
+  "started": 1793292868.828987,
+  "cleared_env_names": [],
+  "falsifier": "Unexpected nonzero exit, assertion failure, changed input, forced exit, or missing required output.",
+  "pid": 66039,
+  "exit": 1,
+  "seconds": 5.3693952560424805,
+  "natural_exit": true
+}

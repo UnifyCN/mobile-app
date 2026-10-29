@@ -144,6 +144,7 @@ export function TaskActionCards({
           title={p.effects.title ?? taskTitleOf?.(p.operation.task_ref) ?? null}
           removedNow={isRemovedNow?.(p.operation.task_ref) ?? false}
           onReview={title => onReviewRemoval?.(p, title)}
+          onView={title => onViewTask(p.operation.task_ref, title)}
         />
       ))}
       {isUser && (
@@ -644,7 +645,7 @@ const styles = StyleSheet.create({
 /**
  * #367: a removal request in the user's own message. It only opened a review; the card
  * says nothing is removed until the user confirms in the sheet. A task removed elsewhere
- * turns the card historical, with no control that could act on it.
+ * turns the card historical. Its task view still exposes the current receipt.
  */
 function RemovalCard({
   proposal,
@@ -652,12 +653,14 @@ function RemovalCard({
   title,
   removedNow,
   onReview,
+  onView,
 }: {
   proposal: RemovalProposal;
   store: TaskActionStore | null;
   title: string | null;
   removedNow: boolean;
   onReview: (title: string) => void;
+  onView: (title: string) => void;
 }) {
   const { t } = useTranslation();
   const taskRef = proposal.operation.task_ref;
@@ -687,7 +690,7 @@ function RemovalCard({
           {status}
         </Text>
       </View>
-      {(open || saved) && (
+      {(open || saved || removedNow) && (
         <CardButton
           label={open ? t('taskRemove.cardReview') : t('taskCreate.view')}
           name={
@@ -695,7 +698,7 @@ function RemovalCard({
               ? t('taskRemove.cardReviewA11y', { title: name })
               : t('taskCreate.view')
           }
-          onPress={() => onReview(name)}
+          onPress={() => open ? onReview(name) : onView(name)}
         />
       )}
     </View>
