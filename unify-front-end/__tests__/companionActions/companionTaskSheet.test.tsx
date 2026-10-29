@@ -14,22 +14,25 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Platform, StyleSheet } from 'react-native';
+import * as ReactNative from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 
+const { Platform, StyleSheet, TouchableOpacity } = ReactNative;
 // The scripted fetch answers every request; nothing leaves the process.
 process.env.EXPO_PUBLIC_SUPABASE_URL = 'http://127.0.0.1:59371';
 process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
 
 let mockUserId = 'user-1';
 let mockCapture: jest.Mock;
+const mockGetSession = jest.fn();
 const mockAuthListeners = new Set<(event: string, session: unknown) => void>();
 
 const mockPush = jest.fn();
+let mockRouteParams: { conversationId?: string } = {};
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: mockPush, replace: jest.fn() }),
-  useLocalSearchParams: () => ({}),
+  useLocalSearchParams: () => mockRouteParams,
 }));
 jest.mock('@react-navigation/native', () => {
   const React = require('react');
@@ -205,11 +208,7 @@ jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
       getUser: async () => ({ data: { user: { id: mockUserId } } }),
-      getSession: async () => ({
-        data: {
-          session: { user: { id: mockUserId }, access_token: `jwt-${mockUserId}` },
-        },
-      }),
+      getSession: () => mockGetSession(),
       onAuthStateChange: (listener: (event: string, session: unknown) => void) => {
         mockAuthListeners.add(listener);
         return {
@@ -280,13 +279,22 @@ function renderScreen() {
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
   });
   clients.push(client);
-  return render(
+  const i18n = testI18n();
+  const tree = () => (
     <QueryClientProvider client={client}>
-      <I18nextProvider i18n={testI18n()}>
+      <I18nextProvider i18n={i18n}>
         <CompanionScreen />
       </I18nextProvider>
     </QueryClientProvider>
   );
+  const mounted = render(tree());
+  return {
+    ...mounted,
+    rerenderRoute(params: { conversationId?: string }) {
+      mockRouteParams = params;
+      mounted.rerender(tree());
+    },
+  };
 }
 
 let server: ReturnType<typeof scriptedServer>;
@@ -294,14 +302,145 @@ const realFetch = global.fetch;
 let userCounter = 0;
 
 beforeEach(() => {
+  mockRouteParams = {};
   mockUserId = `companion-user-${++userCounter}`;
   mockCapture = jest.fn();
   mockPush.mockReset();
+  mockSendMessage.mockReset().mockResolvedValue(undefined);
+  mockGetSession.mockReset().mockImplementation(async () => ({
+    data: { session: { user: { id: mockUserId }, access_token: `jwt-${mockUserId}` } },
+  }));
   mockMessageCount = 0;
   server = scriptedServer({
     'sanity:sin': { state: 'in_progress', revision: 2 },
   });
   global.fetch = server.fetch as unknown as typeof fetch;
+});
+
+describe('native R5 draft and live-text findings', () => {
+  async function ready() {
+    const app = renderScreen();
+    await screen.findByPlaceholderText('Ask anything...');
+    await waitFor(() => expect(server.fetch).toHaveBeenCalled());
+    return app;
+  }
+
+  it('N02: history selection and return keep the current account draft', async () => {
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Question kept through history');
+    app.rerenderRoute({ conversationId: 'saved-history-a' });
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Question kept through history');
+    app.rerenderRoute({ conversationId: 'saved-history-b' });
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Question kept through history');
+    app.rerenderRoute({});
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Question kept through history');
+    expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
+  it('N02: a same-account remount keeps the unsent message', async () => {
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Draft before leaving the screen');
+    app.unmount();
+    await ready();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Draft before leaving the screen');
+  });
+
+  it('N02: New conversation navigates without silently clearing a typed draft', async () => {
+    const app = await ready();
+    app.rerenderRoute({ conversationId: 'saved-history-a' });
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Draft before New conversation');
+    fireEvent.press(screen.getByLabelText(en.companion.newChat));
+    app.rerenderRoute({});
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Draft before New conversation');
+    expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
+  const sendButton = () => {
+    const button = screen.UNSAFE_getAllByType(TouchableOpacity).find(
+      node => StyleSheet.flatten(node.props.style)?.borderRadius === 20
+    );
+    if (!button) throw new Error('Send control is missing');
+    return button;
+  };
+
+  it('N02: sending clears the stored draft across a same-account remount', async () => {
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Question sent once');
+    fireEvent.press(sendButton());
+    await waitFor(() => expect(mockSendMessage).toHaveBeenCalledTimes(1));
+    app.unmount();
+    await ready();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+  });
+
+  it('N02: a late send failure keeps the newer draft typed after navigation', async () => {
+    let rejectSend: (error: Error) => void = () => {};
+    mockSendMessage.mockImplementationOnce(() => new Promise((_resolve, reject) => {
+      rejectSend = reject;
+    }));
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'First question being sent');
+    fireEvent.press(sendButton());
+    app.rerenderRoute({ conversationId: 'saved-history-b' });
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'New question after navigation');
+    await act(async () => rejectSend(new Error('Save failed')));
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('New question after navigation');
+  });
+
+  it('N02: a failed send restores its question when no newer draft exists', async () => {
+    mockSendMessage.mockRejectedValueOnce(new Error('Save failed'));
+    await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Question to retry');
+    fireEvent.press(sendButton());
+    await waitFor(() => expect(mockSendMessage).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Question to retry'));
+  });
+
+  it('N02: an unresolved session hides the stored draft, then restores it only for its owner', async () => {
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Private draft before session restart');
+    app.unmount();
+    let resolveSession: (value: unknown) => void = () => {};
+    mockGetSession.mockImplementation(() => new Promise(resolve => { resolveSession = resolve; }));
+    renderScreen();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+    await act(async () => resolveSession({
+      data: { session: { user: { id: mockUserId }, access_token: `jwt-${mockUserId}` } },
+    }));
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Private draft before session restart');
+  });
+
+  it('N02: an account change while away clears the previous draft permanently', async () => {
+    const a = mockUserId;
+    const app = await ready();
+    fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Private draft of A while away');
+    app.unmount();
+    mockUserId = 'native-draft-b';
+    const b = await ready();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+    b.unmount();
+    mockUserId = a;
+    await ready();
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('');
+  });
+
+  it('N03: large and live text sizes do not create duplicate sibling keys', async () => {
+    const dimensions = jest.spyOn(ReactNative, 'useWindowDimensions');
+    const errors = jest.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      dimensions.mockReturnValue({ width: 402, height: 874, scale: 3, fontScale: 1.786 });
+      const app = await ready();
+      fireEvent.changeText(screen.getByPlaceholderText('Ask anything...'), 'Draft at large text');
+      dimensions.mockReturnValue({ width: 402, height: 874, scale: 3, fontScale: 2.143 });
+      app.rerenderRoute({});
+      expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Draft at large text');
+      const duplicates = errors.mock.calls.filter(args => args.map(String).join(' ').includes('same key'));
+      expect(duplicates).toEqual([]);
+    } finally {
+      dimensions.mockRestore();
+      errors.mockRestore();
+    }
+  });
 });
 afterEach(() => {
   global.fetch = realFetch;

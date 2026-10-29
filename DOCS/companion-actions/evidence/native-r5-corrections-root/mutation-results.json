@@ -1,0 +1,20 @@
+{
+  "mutations": [
+    {
+      "name": "retains-prior-account",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "name": "drops-draft-on-unmount",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "name": "late-failure-overwrites-new-draft",
+      "exit": 1,
+      "assertion_failure": true
+    }
+  ],
+  "source_restored_sha256": "2da39e872ddf4f8fdc0497db3e1fb4450adeb691b276790aadce57c3026d1456"
+}
