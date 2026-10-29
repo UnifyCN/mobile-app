@@ -320,6 +320,23 @@ export default function OnboardingQuiz({
             }
           : undefined;
 
+      // Persist first_name on public.users (separate from user_onboarding_profiles).
+      // Non-blocking failure: the user can re-enter their name from Account Settings.
+      // Must run BEFORE the profile save: the save opens the AuthWrapper gate, and
+      // useOtaUpdates in AppContent can then reload the bundle and cut off any await.
+      try {
+        const firstNameResult = await updateFirstName(firstName);
+        if (!firstNameResult.success) {
+          console.warn(
+            '[onboarding] updateFirstName failed:',
+            firstNameResult.code,
+            firstNameResult.message
+          );
+        }
+      } catch (err) {
+        console.warn('[onboarding] updateFirstName threw:', err);
+      }
+
       const result = await saveMutation.mutateAsync({
         userId: user.id,
         data: {
@@ -340,22 +357,6 @@ export default function OnboardingQuiz({
         },
         extras: inviteExtras,
       });
-
-      // Persist first_name on public.users (separate from user_onboarding_profiles).
-      // Non-blocking failure: if this fails after profile save succeeded, the user
-      // is already onboarded; they can re-enter their name from Account Settings.
-      try {
-        const firstNameResult = await updateFirstName(firstName);
-        if (!firstNameResult.success) {
-          console.warn(
-            '[onboarding] updateFirstName failed but profile saved:',
-            firstNameResult.code,
-            firstNameResult.message
-          );
-        }
-      } catch (err) {
-        console.warn('[onboarding] updateFirstName threw:', err);
-      }
 
       trackOnboardingCompleted(persona);
 
