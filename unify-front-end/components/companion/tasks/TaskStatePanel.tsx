@@ -85,6 +85,7 @@ export function TaskStatePanel({
   const { t } = useTranslation();
   const { fontScale } = useWindowDimensions();
   const phase = useTaskActionPhase(store, taskRef);
+  const entryReceipt = useRef(phase.phase === 'saved' ? phase.receipt.operationId : null);
   const progress = progressFor(taskRef, view);
   const draft = useTaskActionDraft(store, taskRef);
   const reasonValue = draft ?? progress.waitingReason ?? '';
@@ -118,6 +119,10 @@ export function TaskStatePanel({
     ) {
       announced.current = phase.receipt.operationId;
       const receipt = phase.receipt;
+      // Android reads the focused result after layout. A simultaneous announcement
+      // can be interrupted when the control it replaced loses accessibility focus.
+      if (Platform.OS === 'android' &&
+          (receipt.operationType === 'task.remove' || receipt.operationType === 'task.restore')) return;
       const title = receipt.title ?? taskTitle;
       const result = receipt.operationType === 'task.remove'
         ? title
@@ -174,6 +179,9 @@ export function TaskStatePanel({
             progress.revision === phase.receipt.afterRevision,
         }
       : progress.lastReceipt;
+  const focusRemovalResult = Platform.OS === 'android' && phase.phase === 'saved' &&
+    phase.receipt.operationId !== entryReceipt.current &&
+    (phase.receipt.operationType === 'task.remove' || phase.receipt.operationType === 'task.restore');
 
   return (
     <View style={styles.root}>
@@ -294,7 +302,7 @@ export function TaskStatePanel({
         </View>
       )}
 
-      <View accessibilityLiveRegion='polite' style={styles.statusBlock}>
+      <View accessibilityLiveRegion={focusRemovalResult ? 'none' : 'polite'} style={styles.statusBlock}>
         <PhaseMessage
           writable={writable}
           phase={phase}
@@ -313,6 +321,7 @@ export function TaskStatePanel({
               receipt.operationType === 'task.remove' ? canUndoRemoval : canWrite
             }
             taskTitle={taskTitle}
+            focusResult={focusRemovalResult}
           />
         )}
       </View>

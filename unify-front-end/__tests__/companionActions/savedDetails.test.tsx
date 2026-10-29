@@ -16,7 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { AppState, StyleSheet, TouchableOpacity } from 'react-native';
+import { AccessibilityInfo, AppState, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
 import { scriptedServer } from '@/testSupport/companionActionsServer';
 import { clearTaskActionStores } from '@/services/companionActions/taskActionStore';
@@ -332,7 +332,7 @@ function testI18n() {
 }
 
 const clients: QueryClient[] = [];
-function renderScreen() {
+function renderScreen(nativeRefs = false) {
   // gcTime Infinity: no garbage-collection timer outlives the test.
   const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
@@ -343,7 +343,8 @@ function renderScreen() {
       <I18nextProvider i18n={testI18n()}>
         <CompanionScreen />
       </I18nextProvider>
-    </QueryClientProvider>
+    </QueryClientProvider>,
+    nativeRefs ? { createNodeMock: () => ({}) } : undefined
   );
 }
 
@@ -389,6 +390,70 @@ afterEach(() => {
 
 
 const FRIDAYS = 'I can attend appointments on Fridays';
+describe('native detail regression controls (#359 N1 and N3)', () => {
+  it('refreshes visible detail text after live scaling without replacing controls or the edit draft', async () => {
+    const dimensions = (fontScale: number) => {
+      const window = { width: 393, height: 852, scale: 3, fontScale };
+      act(() => Dimensions.set({ window, screen: window }));
+    };
+    dimensions(1);
+    try {
+      renderScreen();
+      const { sheet } = await rememberAndOpen();
+      const detail = within(sheet).getByText(FRIDAYS);
+      const caption = within(sheet).getByText('Saved from your message');
+      const edit = within(sheet).getByRole('button', { name: `Edit saved detail: ${FRIDAYS}` });
+      const remove = within(sheet).getByRole('button', { name: `Remove saved detail: ${FRIDAYS}` });
+      const editLabel = within(edit).getByText('Edit');
+      dimensions(2);
+      expect(within(sheet).getByText(FRIDAYS)).not.toBe(detail);
+      expect(within(sheet).getByText('Saved from your message')).not.toBe(caption);
+      expect(within(edit).getByText('Edit')).not.toBe(editLabel);
+      expect(within(sheet).getByRole('button', { name: `Edit saved detail: ${FRIDAYS}` })).toBe(edit);
+      expect(within(sheet).getByRole('button', { name: `Remove saved detail: ${FRIDAYS}` })).toBe(remove);
+      await waitFor(() => expect(enabled(edit)).toBe(true));
+      fireEvent.press(edit);
+      const input = await within(sheet).findByLabelText('Saved detail');
+      fireEvent.changeText(input, 'Retained native edit draft');
+      const cancel = within(sheet).getByRole('button', { name: 'Cancel' });
+      const cancelLabel = within(cancel).getByText('Cancel');
+      dimensions(1);
+      expect(within(sheet).getByLabelText('Saved detail')).toBe(input);
+      expect(input.props.value).toBe('Retained native edit draft');
+      expect(within(sheet).getByRole('button', { name: 'Cancel' })).toBe(cancel);
+      expect(within(cancel).getByText('Cancel')).not.toBe(cancelLabel);
+      expect(detailWrites()).toHaveLength(1);
+    } finally {
+      dimensions(1);
+    }
+  });
+
+  it('returns Cancel focus to the current Remove control after its native layout, once per cancellation', async () => {
+    const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent').mockImplementation(() => {});
+    try {
+      renderScreen(true);
+      const { sheet } = await rememberAndOpen();
+      const before = detailWrites().length;
+      focus.mockClear();
+      for (let cycle = 0; cycle < 2; cycle++) {
+        fireEvent.press(within(sheet).getByRole('button', { name: `Remove saved detail: ${FRIDAYS}` }));
+        fireEvent.press(within(sheet).getByRole('button', { name: 'Cancel' }));
+        expect(focus).toHaveBeenCalledTimes(cycle);
+        const opener = within(sheet).getByRole('button', { name: `Remove saved detail: ${FRIDAYS}` });
+        const layout = { nativeEvent: { layout: { x: 0, y: 0, width: 180, height: 48 } } };
+        fireEvent(opener, 'layout', layout);
+        expect(focus).toHaveBeenCalledTimes(cycle + 1);
+        expect(focus).toHaveBeenLastCalledWith(expect.anything(), 'focus');
+        fireEvent(opener, 'layout', layout);
+        expect(focus).toHaveBeenCalledTimes(cycle + 1);
+      }
+      expect(detailWrites()).toHaveLength(before);
+      expect(server.details()[0].removed).toBe(false);
+    } finally {
+      focus.mockRestore();
+    }
+  });
+});
 /** The model answers; `detail` is the one detail it suggests saving, or none. */
 function answersDetail(text: string, detail: string | null) {
   mockStream.mockImplementation(

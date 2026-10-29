@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { LiveText as Text } from '@/components/common/LiveText';
+import React, { useRef, useState } from 'react';
+import { AccessibilityInfo, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { typography } from '@/constants/Typography';
 import {
@@ -40,21 +41,40 @@ const editDraftKey = (detailId: string) => `detail-edit:${detailId}`;
 
 type T = (key: string, options?: Record<string, unknown>) => string;
 
+/** The confirmation replaces its opener. Restore focus after the opener has a native layout. */
+function useConfirmationFocus() {
+  const ref = useRef<View>(null);
+  const pending = useRef(false);
+  return {
+    ref,
+    request: () => { pending.current = true; },
+    onLayout: () => {
+      if (!pending.current || !ref.current) return;
+      pending.current = false;
+      AccessibilityInfo.sendAccessibilityEvent(ref.current, 'focus');
+    },
+  };
+}
+
 function Button({
   label,
   name,
   onPress,
   disabled = false,
   primary = false,
+  confirmationFocus,
 }: {
   label: string;
   name?: string;
   onPress: () => void;
   disabled?: boolean;
   primary?: boolean;
+  confirmationFocus?: ReturnType<typeof useConfirmationFocus>;
 }) {
   return (
     <Pressable
+      ref={confirmationFocus?.ref}
+      onLayout={confirmationFocus?.onLayout}
       accessibilityRole='button'
       accessibilityLabel={name ?? label}
       disabled={disabled}
@@ -107,6 +127,7 @@ export function DetailReceipt({
 }) {
   const { t } = useTranslation();
   const [confirming, setConfirming] = useState(false);
+  const undoFocus = useConfirmationFocus();
   const phase = useTaskActionPhase(store, storeKey);
   const shown = phase.phase === 'saved' ? phase.receipt : receipt;
   const d = shown.detail;
@@ -138,6 +159,7 @@ export function DetailReceipt({
       ) : null}
       {canUndo && !confirming ? (
         <Button
+          confirmationFocus={undoFocus}
           label={t('taskActions.undo')}
           name={undoName}
           onPress={() => (undoRemoves ? setConfirming(true) : undo(false))}
@@ -149,7 +171,10 @@ export function DetailReceipt({
           <Text style={styles.confirmBody}>{t('savedDetails.undoSaveConfirm', { text: d.text })}</Text>
           <View style={styles.actions}>
             <Button primary label={t('savedDetails.confirmRemove')} onPress={() => undo(true)} disabled={!view.canWrite} />
-            <Button label={t('savedDetails.cancel')} onPress={() => setConfirming(false)} />
+            <Button label={t('savedDetails.cancel')} onPress={() => {
+              undoFocus.request();
+              setConfirming(false);
+            }} />
           </View>
         </View>
       ) : null}
@@ -174,6 +199,7 @@ export function DetailPhase({
 }) {
   const { t } = useTranslation();
   const [confirming, setConfirming] = useState(false);
+  const reviewFocus = useConfirmationFocus();
   const line = (value: string, error = false) => (
     <Text style={[styles.status, error && styles.statusError]} accessibilityLiveRegion='polite'>
       {value}
@@ -259,12 +285,16 @@ export function DetailPhase({
                     void store?.approveCompensation(storeKey, { removalConfirmed: true });
                   }}
                 />
-                <Button label={t('savedDetails.cancel')} onPress={() => setConfirming(false)} />
+                <Button label={t('savedDetails.cancel')} onPress={() => {
+                  reviewFocus.request();
+                  setConfirming(false);
+                }} />
               </View>
             </View>
           ) : (
             <View style={styles.actions}>
               <Button
+                confirmationFocus={reviewFocus}
                 label={label}
                 disabled={!view.canWrite}
                 onPress={() => (removes ? setConfirming(true) : void store?.approveCompensation(storeKey))}
@@ -294,6 +324,7 @@ function DetailRow({
   const phase = useTaskActionPhase(store, key);
   const edit = useTaskActionDraft(store, editDraftKey(detail.detailId));
   const [confirming, setConfirming] = useState(false);
+  const removeFocus = useConfirmationFocus();
   const busy = isUnresolved(phase);
   const canWrite = view.canWrite && !busy;
   const editing = edit !== undefined;
@@ -339,6 +370,7 @@ function DetailRow({
             onPress={() => store?.setDraft(editDraftKey(detail.detailId), detail.text)}
           />
           <Button
+            confirmationFocus={removeFocus}
             label={t('savedDetails.remove')}
             name={t('savedDetails.removeA11y', { text: detail.text })}
             disabled={!canWrite}
@@ -372,7 +404,10 @@ function DetailRow({
           <Text style={styles.confirmBody}>{t('savedDetails.confirmBody', { text: detail.text })}</Text>
           <View style={styles.actions}>
             <Button primary label={t('savedDetails.confirmRemove')} disabled={!canWrite} onPress={remove} />
-            <Button label={t('savedDetails.cancel')} onPress={() => setConfirming(false)} />
+            <Button label={t('savedDetails.cancel')} onPress={() => {
+              removeFocus.request();
+              setConfirming(false);
+            }} />
           </View>
         </View>
       ) : null}

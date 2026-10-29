@@ -1,6 +1,6 @@
 import { LiveText as Text } from '@/components/common/LiveText';
-import React, { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { AccessibilityInfo, Pressable, StyleSheet, type Text as NativeText, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
@@ -33,6 +33,8 @@ interface ReceiptBlockProps {
   canWrite: boolean;
   /** The task's title, for a receipt that does not record one (#365, #367). */
   taskTitle?: string | null;
+  /** Focus a newly saved removal result after native layout, rather than a displaced control. */
+  focusResult?: boolean;
 }
 
 /**
@@ -46,9 +48,12 @@ export function ReceiptBlock({
   store,
   canWrite,
   taskTitle = null,
+  focusResult = false,
 }: ReceiptBlockProps) {
   const { t, i18n } = useTranslation();
   const [confirming, setConfirming] = useState(false);
+  const resultRef = useRef<NativeText>(null);
+  const focusedOperation = useRef<string | null>(null);
   const stateLabel = (s: TaskState) => t(`taskActions.state.${s}`);
   const title = receipt.title ?? taskTitle ?? '';
   // #367: a removal and its restore name the task (a custom title, else the Checklist one).
@@ -138,7 +143,17 @@ export function ReceiptBlock({
 
   return (
     <View style={styles.receipt}>
-      <Text style={styles.receiptText}>{text}</Text>
+      <Text
+        key={receipt.operationId}
+        ref={resultRef}
+        accessible
+        style={styles.receiptText}
+        onLayout={() => {
+          if (!focusResult || focusedOperation.current === receipt.operationId || !resultRef.current) return;
+          focusedOperation.current = receipt.operationId;
+          AccessibilityInfo.sendAccessibilityEvent(resultRef.current, 'focus');
+        }}
+      >{text}</Text>
       {receiptChanges(receipt).map(change => (
         <Text key={change.field} style={styles.receiptText}>
           {receiptChangeText(t as never, change)}
