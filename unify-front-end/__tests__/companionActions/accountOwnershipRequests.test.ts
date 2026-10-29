@@ -217,6 +217,7 @@ describe('task action requests belong to the account of their store', () => {
     const server = scriptedServer({ 'sanity:sin': { revision: 1 } });
     global.fetch = server.fetch as unknown as typeof fetch;
     const store = taskActionStoreFor(a, {
+      sessionEpoch: ownAccountWork().epoch,
       client: createMobileTaskActionClient(ownAccountWork()),
       newOperationId: () => `op-${accountCounter}`,
       onChanged: () => {},
@@ -249,6 +250,7 @@ describe('task action requests belong to the account of their store', () => {
     );
     global.fetch = held as unknown as typeof fetch;
     const store = taskActionStoreFor(a, {
+      sessionEpoch: ownAccountWork().epoch,
       client: createMobileTaskActionClient(ownAccountWork()),
       newOperationId: () => `op-${accountCounter}`,
       onChanged: () => {},
@@ -283,6 +285,7 @@ describe('task action requests belong to the account of their store', () => {
     );
     global.fetch = held as unknown as typeof fetch;
     const store = taskActionStoreFor(a, {
+      sessionEpoch: ownAccountWork().epoch,
       client: createMobileTaskActionClient(ownAccountWork()),
       newOperationId: () => `op-${accountCounter}`,
       onChanged: () => {},

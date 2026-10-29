@@ -495,21 +495,24 @@ export class TaskActionStore {
   }
 }
 
-const stores = new Map<string, TaskActionStore>();
+const stores = new Map<
+  string,
+  { sessionEpoch: number; store: TaskActionStore }
+>();
 
-/** The store of one signed-in account. Another account never sees it. */
+/** A new account session replaces its private drafts, requests and results. */
 export function taskActionStoreFor(
   accountId: string,
-  deps: TaskActionStoreDeps
+  deps: TaskActionStoreDeps & { sessionEpoch: number }
 ): TaskActionStore {
-  let store = stores.get(accountId);
-  if (!store) {
-    store = new TaskActionStore(deps);
-    stores.set(accountId, store);
+  let entry = stores.get(accountId);
+  if (!entry || entry.sessionEpoch !== deps.sessionEpoch) {
+    entry = { sessionEpoch: deps.sessionEpoch, store: new TaskActionStore(deps) };
+    stores.set(accountId, entry);
   } else {
-    store.setDeps(deps);
+    entry.store.setDeps(deps);
   }
-  return store;
+  return entry.store;
 }
 
 /** Drop every account's unresolved writes and messages except `keepAccountId`. */

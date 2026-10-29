@@ -507,6 +507,38 @@ describe('review r2 corrections (mobile sheet)', () => {
     expect(await screen.findByRole('button', { name: en.reminders.openTask })).toBeTruthy();
   });
 
+  it.each(['sign-out/sign-in', 'A/B/A'])(
+    'R368-SPEC-2: a batched %s session reset removes the stored reminder draft',
+    async transition => {
+      const a = mockUserId;
+      customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
+      showPrivateReminder(a);
+      await openPrivateReminder();
+      const defaultZone = screen.getByLabelText(en.reminders.zone).props.value;
+      const typedZone = defaultZone === 'Asia/Tokyo' ? 'Europe/London' : 'Asia/Tokyo';
+      fireEvent.changeText(screen.getByLabelText(en.reminders.instant), '2027-11-07T01:30-04:00');
+      fireEvent.changeText(screen.getByLabelText(en.reminders.zone), typedZone);
+      await act(async () => {
+        for (const listener of [...mockAuthListeners]) {
+          listener(
+            transition === 'A/B/A' ? 'SIGNED_IN' : 'SIGNED_OUT',
+            transition === 'A/B/A'
+              ? { user: { id: 'batched-b' }, access_token: 'jwt-batched-b' }
+              : null
+          );
+        }
+        for (const listener of [...mockAuthListeners])
+          listener('SIGNED_IN', { user: { id: a }, access_token: `jwt-${a}` });
+      });
+      await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+      expect(screen.queryByLabelText(en.reminders.instant)).toBeNull();
+      fireEvent.press(await screen.findByRole('button', { name: en.reminders.openTask }));
+      expect((await screen.findByLabelText(en.reminders.instant)).props.value).toBe('');
+      expect(screen.getByLabelText(en.reminders.zone).props.value).toBe(defaultZone);
+      expect(server.writes()).toHaveLength(0);
+    }
+  );
+
   it('R368: a return to the first account does not restore its old selected reminder', async () => {
     const a = mockUserId;
     customTasks().mockImplementation(async (userId: string) => userId === a ? [privateRow(a)] : []);
