@@ -82,6 +82,19 @@ language sql stable set search_path=public,pg_temp as $$
  select jsonb_build_object('installation_id',n.installation_id,'revision',n.revision,'generation',n.generation,
  'enabled',n.enabled,'revoked',n.revoked_at is not null,'locale',n.locale)
 $$;
+create or replace function companion_push_private.require_enrollment_authority(p_user uuid,p_session uuid) returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+begin
+ -- Match Auth deletion order before taking the enrollment/token row locks.
+ -- These shared locks keep sign-out, bans and policy/gate changes ordered through commit.
+ perform 1 from auth.users where id=p_user for share;
+ perform 1 from auth.sessions where id=p_session and user_id=p_user for share;
+ perform 1 from companion_push_private.settings where singleton for share;
+ if not exists(select 1 from companion_push_private.settings where enrollment_enabled) then
+  perform public.companion_fail('CA503','push_disabled');end if;
+ if p_user is null or not companion_push_private.session_authorized(p_session,p_user) then
+  perform public.companion_fail('CA403','active_session_required');end if;
+end $$;
 create function public.companion_push_apply(p_user uuid,p_session uuid,p_operation_id uuid,p_version integer,p_platform text,p_operation jsonb) returns jsonb
 language plpgsql security definer set search_path=public,pg_temp as $$
 declare n companion_push_private.enrollments%rowtype; tid uuid; prior boolean; result jsonb; receipt public.companion_action_receipts%rowtype;
@@ -109,12 +122,15 @@ begin
  -- Global installation lock orders competing account claims. No reclaim without proof.
  perform set_config('lock_timeout','2s',true);
  perform pg_advisory_xact_lock(hashtextextended(installation::text,369));
+  perform companion_push_private.require_enrollment_authority(p_user,p_session);
  select * into n from companion_push_private.enrollments where installation_id=installation for update;
  prior:=found;
  if prior and n.credential_hash<>extensions.digest(secret,'sha256') then perform public.companion_fail('CA403','installation_proof_required');end if;
  -- The hash binds the entire exact request but contains no plaintext credential/token.
  h:=public.companion_ops_hash(jsonb_build_object('push',p_operation,'platform',p_platform));
  replay:=public.companion_replay(p_user,p_operation_id,h);
+  -- Recheck clock-based policy/session expiry after the common operation lock wait.
+  perform companion_push_private.require_enrollment_authority(p_user,p_session);
  if replay is not null then return replay;end if;
  if prior and n.revoked_at is not null then perform public.companion_fail('CA403','installation_revoked');end if;
  if prior and n.user_id<>p_user and exists(select 1 from auth.sessions where id=n.session_id) then
@@ -129,6 +145,8 @@ begin
  else
   perform pg_advisory_xact_lock(hashtextextended(p_operation->>'token',369));
   select id into tid from public.push_tokens where token=p_operation->>'token' for update;
+   -- No token or enrollment write may precede this final expiry check.
+   perform companion_push_private.require_enrollment_authority(p_user,p_session);
   if tid is not null and exists(select 1 from companion_push_private.enrollments where token_id=tid and installation_id<>installation) then
    perform public.companion_fail('CA409','token_in_use');end if;
   if tid is not null and exists(select 1 from public.push_tokens where id=tid and user_id<>p_user) then
