@@ -1,0 +1,25 @@
+[2026-10-30T20:05:23.259997000Z][com.docker.backend.idle] starting VM
+[2026-10-30T20:05:23.260602000Z][com.docker.backend.engines] engine start requested
+[2026-10-30T20:05:23.272731000Z][com.docker.backend.idle] idle -> busy (was idle for 8m9.238201208s; reason: [1 calls to /v1.55/images/public.ecr.aws/supabase/kong:2.8.1/json from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T20:05:23.275151000Z][com.docker.backend.engines] starting engine linux/virtualization-framework
+[2026-10-30T20:05:23.275559000Z][com.docker.backend.engines] starting engine linux/virtualization-framework
+[2026-10-30T20:05:23.275645000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state stopped -> starting
+[2026-10-30T20:05:23.286970000Z][com.docker.backend.engines] engine linux/virtualization-framework log stream ready after 0s
+[2026-10-30T20:05:23.287246000Z][com.docker.backend.idle] event handler 8ab73e65-b190-47cf-9ac0-9e951211423b: event streamer: error: EOF
+[2026-10-30T20:05:24.297033000Z][com.docker.backend.engines] engine linux/virtualization-framework hypervisor process up after 1.01s
+[2026-10-30T20:05:24.866541000Z][com.docker.backend.engines] engine linux/virtualization-framework docker daemon ready after 1.58s
+[2026-10-30T20:05:24.866595000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state starting -> running
+[2026-10-30T20:05:24.867534000Z][com.docker.backend.engines] engine linux/virtualization-framework is running after 1.581s
+[2026-10-30T20:05:24.881248000Z][com.docker.backend.engines] engine start complete
+[2026-10-30T20:05:24.881285000Z][com.docker.backend.idle] VM started
+[2026-10-30T20:05:24.891988000Z][com.docker.backend.resyncer] Resyncer: de-registering possibly-leaked resource d6fd44aecf2b57e4e012ccc3fe835ac4d77aad0a59dff9b8aef2e34e13a0bfaa
+[2026-10-30T20:05:24.892299000Z][com.docker.backend.resyncer] Resyncer: re-registering possibly-missed resource aeeac4149d13c4e42066717f5f4cee0f743f693b605c2e05c3a84942ddceb902
+[2026-10-30T20:05:24.975185000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T20:05:24.975241000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T20:05:25.023201000Z][com.docker.backend.idle] idle -> busy (was idle for 47.960375ms; reason: [1 calls to /v1.55/networks/create from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T20:05:25.034747000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T20:05:25.034805000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T20:05:25.050329000Z][com.docker.backend.idle] idle -> busy (was idle for 15.523958ms; reason: [1 calls to /v1.55/volumes/create from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T20:05:25.052328000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T20:05:25.052375000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T20:05:25.057504000Z][com.docker.backend.idle] idle -> busy (was idle for 5.127375ms; reason: [timed activities: map[dial//run/guest-services/volume-contents.sock:59999975333]])

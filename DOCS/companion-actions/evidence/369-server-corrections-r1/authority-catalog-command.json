@@ -1,0 +1,20 @@
+{
+  "cmd": [
+    "docker",
+    "exec",
+    "-i",
+    "supabase_db_unify-push-369-correction-r1",
+    "psql",
+    "-U",
+    "postgres",
+    "-d",
+    "postgres",
+    "-At",
+    "-v",
+    "ON_ERROR_STOP=1"
+  ],
+  "query": "select jsonb_build_object(\n  'definition',pg_get_functiondef('companion_push_private.require_enrollment_authority(uuid,uuid)'::regprocedure),\n  'roles',(select jsonb_agg(jsonb_build_object('role',r,'execute',has_function_privilege(r,\n    'companion_push_private.require_enrollment_authority(uuid,uuid)','execute')))\n    from unnest(array['anon','authenticated','service_role']) r));",
+  "exit": 0,
+  "seconds": 0.06385326385498047,
+  "stderr": ""
+}

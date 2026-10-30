@@ -1,0 +1,12 @@
+{
+  "cmd": [
+    "npx",
+    "eslint",
+    "supabase/tests/companion-actions/push_authority_races_test.ts",
+    "supabase/tests/companion-actions/push_isolation_test.ts",
+    "supabase/workers/companion-push/worker.ts"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+  "exit": 0,
+  "seconds": 1.5297441482543945
+}

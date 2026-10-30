@@ -1,0 +1,31 @@
+[
+  {
+    "label": "raw",
+    "cmd": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 2,
+    "stdout": "DOCS/companion-actions/evidence/369-server-corrections-r1/authority-orders.log:62: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/base-worker-deno-lint.log:3: trailing whitespace.\n+  | \nDOCS/companion-actions/evidence/369-server-corrections-r1/base-worker-deno-lint.log:13: trailing whitespace.\n+   | \nDOCS/companion-actions/evidence/369-server-corrections-r1/changed-deno-lint.log:3: trailing whitespace.\n+  | \nDOCS/companion-actions/evidence/369-server-corrections-r1/changed-deno-lint.log:13: trailing whitespace.\n+  | \nDOCS/companion-actions/evidence/369-server-corrections-r1/changed-deno-lint.log:23: trailing whitespace.\n+  | \nDOCS/companion-actions/evidence/369-server-corrections-r1/changed-deno-lint.log:33: trailing whitespace.\n+   | \nDOCS/companion-actions/evidence/369-server-corrections-r1/changed-repo-eslint.log:6: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-expiry.log:61: trailing whitespace.\n+ ERRORS \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-expiry.log:93: trailing whitespace.\n+ FAILURES \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-expiry.sql:52: trailing whitespace.\n+ \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-locks.log:58: trailing whitespace.\n+ ERRORS \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-locks.log:105: trailing whitespace.\n+ FAILURES \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-token.log:9: trailing whitespace.\n+ ERRORS \nDOCS/companion-actions/evidence/369-server-corrections-r1/fault-token.log:26: trailing whitespace.\n+ FAILURES \nDOCS/companion-actions/evidence/369-server-corrections-r1/full-correction-a.log:395: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/full-correction-b.log:395: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/green-authority-races.log:32: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/green-token-isolation.log:10: new blank line at EOF.\nDOCS/companion-actions/evidence/369-server-corrections-r1/red-authority-races.log:31: trailing whitespace.\n+ ERRORS \nDOCS/companion-actions/evidence/369-server-corrections-r1/red-authority-races.log:69: trailing whitespace.\n+ FAILURES \nDOCS/companion-actions/evidence/369-server-corrections-r1/red-token-isolation.log:81: trailing whitespace.\n+ ERRORS \nDOCS/companion-actions/evidence/369-server-corrections-r1/red-token-isolation.log:98: trailing whitespace.\n+ FAILURES \n",
+    "stderr": ""
+  },
+  {
+    "label": "authored",
+    "cmd": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "*.md",
+      "*.py",
+      "*.json",
+      "*.ts"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]
