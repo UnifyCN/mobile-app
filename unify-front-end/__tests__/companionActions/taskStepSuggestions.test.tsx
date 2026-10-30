@@ -392,7 +392,21 @@ const sendButton = () => {
   return button;
 };
 async function send(text: string) {
-  fireEvent.changeText(await screen.findByPlaceholderText(/Ask anything|limit/i), text);
+  await waitFor(() =>
+    expect(
+      screen.getByPlaceholderText(/Ask anything|limit/i).props.editable
+    ).toBe(true)
+  );
+  fireEvent.changeText(
+    screen.getByPlaceholderText(/Ask anything|limit/i),
+    text
+  );
+  await waitFor(() =>
+    expect(screen.getByPlaceholderText(/Ask anything|limit/i).props.value).toBe(
+      text
+    )
+  );
+  await waitFor(() => expect(sendButton().props.disabled).toBe(false));
   fireEvent.press(sendButton());
 }
 const creates = () =>
