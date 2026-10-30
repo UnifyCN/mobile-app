@@ -1,0 +1,53 @@
+[
+  {
+    "Id": "7faf65cdc1b9bcf4b877ef19a4fb88267b4b5e53d3dad267d658987819c6901b",
+    "Name": "/supabase_edge_runtime_unify-push-369-client-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-client-r1",
+      "com.supabase.cli.project": "unify-push-369-client-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/private/stack"
+    }
+  },
+  {
+    "Id": "14536c0d72bb8619144fcf564a126c76c62948557927d12c99498a98dec74521",
+    "Name": "/supabase_rest_unify-push-369-client-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-client-r1",
+      "com.supabase.cli.project": "unify-push-369-client-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/private/stack"
+    }
+  },
+  {
+    "Id": "cc978fb9b1c2c4cc5baae8dfa9d8856196aabb661aa0d2bfc902b162e2030d3d",
+    "Name": "/supabase_auth_unify-push-369-client-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-client-r1",
+      "com.supabase.cli.project": "unify-push-369-client-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/private/stack"
+    }
+  },
+  {
+    "Id": "f221744a044578f692463f8289a6af97a26067bb6f7dc1b5b3f8631681b71924",
+    "Name": "/supabase_kong_unify-push-369-client-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-client-r1",
+      "com.supabase.cli.project": "unify-push-369-client-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/private/stack",
+      "maintainer": "Kong <support@konghq.com>"
+    }
+  },
+  {
+    "Id": "21d179cb3e9262a8555b6578d7ba5fd0cdbd70a609180fbae090bb9c05c33348",
+    "Name": "/supabase_db_unify-push-369-client-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-client-r1",
+      "com.supabase.cli.project": "unify-push-369-client-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/private/stack"
+    }
+  }
+]

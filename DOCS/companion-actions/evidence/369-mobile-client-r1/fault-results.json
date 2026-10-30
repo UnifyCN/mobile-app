@@ -1,0 +1,34 @@
+[
+  {
+    "fault": "ownership",
+    "file": "services/companionActions/pushDevice.ts",
+    "unfaulted_sha256": "70bdc797f843e32917a11527669565af33bd47259ba051b909080d93e2f0ffa7",
+    "mutated_sha256": "c1e89a546025a4c95110b5756b2a3d302140ad9871b7cc6b023da455c42e5964",
+    "exit": 1,
+    "binding_assertion_failure": true
+  },
+  {
+    "fault": "persist",
+    "file": "services/companionActions/pushDevice.ts",
+    "unfaulted_sha256": "70bdc797f843e32917a11527669565af33bd47259ba051b909080d93e2f0ffa7",
+    "mutated_sha256": "e9e48ba16197565855bdb19a52e4c339332fb07ef280fa006b08ff876560ac0a",
+    "exit": 1,
+    "binding_assertion_failure": true
+  },
+  {
+    "fault": "secure-options",
+    "file": "services/companionActions/pushNative.ts",
+    "unfaulted_sha256": "b52420f912ad3ecfc4db0dcba1a250e17edcb6e3d83c7643e7c82a192631fe76",
+    "mutated_sha256": "9cb9065e60695100ebbac13abc5fca096809c4bd69ff41caa66db4750853b80f",
+    "exit": 1,
+    "binding_assertion_failure": true
+  },
+  {
+    "fault": "dedup",
+    "file": "services/companionActions/pushIntents.ts",
+    "unfaulted_sha256": "37e6b64a365515c50fde29b9d4bb18de88338a5041cb6f26cfeeb0ca3478def3",
+    "mutated_sha256": "47bb1eb7588814313fb3c7b2698912c1e3593857206f457a3fc0a16a227c6d4a",
+    "exit": 1,
+    "binding_assertion_failure": true
+  }
+]

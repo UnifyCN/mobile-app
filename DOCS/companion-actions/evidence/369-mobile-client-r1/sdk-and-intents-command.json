@@ -1,0 +1,14 @@
+{
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/pushNative.test.ts",
+    "__tests__/companionActions/pushIntents.test.ts",
+    "__tests__/companionActions/pushNavigation.test.tsx",
+    "--runInBand",
+    "--watchAll=false"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 0,
+  "seconds": 3.4314379692077637
+}

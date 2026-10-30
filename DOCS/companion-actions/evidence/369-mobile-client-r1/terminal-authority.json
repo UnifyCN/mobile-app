@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "sources": {
+    "mobile": {
+      "path": "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac",
+      "physical_path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac",
+      "branch": "t3/companion-reminder-service-369",
+      "head": "3b03a675a1287e1f212e77fe956863f5db8e2132",
+      "tree": "ff68e12229b653a47f3863036b6862571ac77877",
+      "status": ""
+    },
+    "web": {
+      "path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "physical_path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "branch": "fix/reminder-standards-368-r1-root",
+      "head": "8f3720af36c50768ff05d25804a69d28d36fd5c4",
+      "tree": "c05d364f28618edf949e7bbdf404fb99d1b2394e",
+      "status": ""
+    },
+    "mobile_integration": {
+      "path": "/Users/savargupta/.t3/worktrees/Unify/feat-companion-actions-359",
+      "branch": "feat/companion-actions-359",
+      "head": "19c2d0d6ea9d7b90d1bb0b10ae345cf6f2cbe83c",
+      "clean": true
+    },
+    "web_integration": {
+      "path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359",
+      "branch": "feat/companion-actions-359",
+      "head": "623179cee615057de2c20c8c6216e192891dab4b",
+      "clean": true
+    }
+  },
+  "authority_hashes": {
+    "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-server-corrections-r1/HANDOFF.md": "5ff4ac7d6fee8dd6d67da1b51954e48c3b534a2ee85bc28ab8f581c110efbb0a",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-server-corrections-r1/README.md": "a7dfcb8d3dfca16c76d318e74adb67ff82c340fe66c6a31cdd4200981a0db7dd",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-server-corrections-r1/summary.json": "5402bc7c37a3bb9481ac7d3a638a6efa5606ee311cb22a5d4f61c04e321722e0",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-server-corrections-r1/type-record-exception.md": "0a41c477272c90349ae5da1b7042ef7986da4afa1c924a0143605c3ad7d88550",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-server-corrections-r1/cleanup-verification.json": "f0428cb147f9fd54eb4384a19e7d7e91c74c12820eb25304ce6797281f47f139",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-08e5e03a/DOCS/companion-actions/evidence/review-369-service-corrections-r2/report.md": "1661c5b17848cd4a5d387df88bfce1fb2c34b4fcb1bf1ec1164999d575fa0f34",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-08e5e03a/DOCS/companion-actions/evidence/review-369-service-corrections-r2/appendix.md": "24b5a94e6582e52cc40f224e5d7597f0cc4957672b224bd2167f3f0e36b0745d"
+  },
+  "unchanged_inputs": {
+    "unify-front-end/package.json": "cfcbc66eaed49ee981b9faedca02947b3330254b2fbc8a3a6ef6fcf156f9c2d7",
+    "unify-front-end/package-lock.json": "3abc45f933d88b6df9d53919e36e70c5eb23816c81eca7ecb1106185f563b1ac",
+    "unify-front-end/services/companionActions/pushContract.ts": "19a5e235d870ccf16a955fae51bc51e55caa3cc6c766363e7094d837ae856aa6",
+    "unify-front-end/app.config.js": "38e287587043f8f63170a375030681ab694211b0b947c4f305fcfe616f75afa8"
+  },
+  "impeccable_version": "3.9.1",
+  "impeccable_sha256": "c06283d40a4dd7680001488be3d9481c6f047c99e0f3084d060f3a084b3c66fa",
+  "primary_path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158",
+  "primary_branch": "t3/mobile-client-implementation"
+}

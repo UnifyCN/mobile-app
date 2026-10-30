@@ -1,0 +1,30 @@
+FAIL __tests__/companionActions/pushNavigation.test.tsx
+  ✕ warm and held cold duplicate open one current task over the retained composer and reminder draft (279 ms)
+  ✓ retains a signed-out cold launch through normal sign-in before resolving (38 ms)
+  ✓ shows unavailable without the cached task title when current resolution refuses access (15 ms)
+  ✓ preserves social and learn warm routes (13 ms)
+
+  ● warm and held cold duplicate open one current task over the retained composer and reminder draft
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 2
+
+      364 |  await tap();await screen.findByText('Get a SIN');
+      365 |  await act(async()=>cold(notification()));
+    > 366 |  expect(mockPush).toHaveBeenCalledTimes(1);expect(mockPush).toHaveBeenCalledWith('/(tabs)/companion');
+          |                   ^
+      367 |  expect(mockClear).toHaveBeenCalledTimes(1);
+      368 |  expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Retained conversation question');
+      369 |  expect(screen.getByLabelText(en.reminders.instant).props.value).toBe('2027-12-01T14:00-08:00');
+
+      at Object.toHaveBeenCalledTimes (__tests__/companionActions/pushNavigation.test.tsx:366:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        1.297 s
+Ran all test suites matching /__tests__\/companionActions\/pushNavigation.test.tsx/i.

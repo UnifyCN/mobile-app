@@ -1,0 +1,13 @@
+{
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/pushRootLifecycle.test.ts",
+    "--runInBand",
+    "--watchAll=false"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 0,
+  "seconds": 1.654205322265625
+}

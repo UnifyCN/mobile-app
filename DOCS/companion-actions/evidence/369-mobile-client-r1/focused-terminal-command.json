@@ -1,0 +1,16 @@
+{
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/push",
+    "--runInBand",
+    "--watchAll=false",
+    "--json",
+    "--outputFile",
+    "../DOCS/companion-actions/evidence/369-mobile-client-r1/focused-terminal-results.json"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 0,
+  "seconds": 6.572330951690674
+}

@@ -1,0 +1,10 @@
+PASS __tests__/companionActions/pushRootLifecycle.test.ts
+  ✓ fetches an Expo token after native-token rotation and uses the current revision; foreground permission changes stop local eligibility (10 ms)
+  ✓ drops an authenticated cold response that arrives after account replacement (2 ms)
+  ✓ keeps same-session token refresh as the cold-response positive control (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.361 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushRootLifecycle.test.ts/i.

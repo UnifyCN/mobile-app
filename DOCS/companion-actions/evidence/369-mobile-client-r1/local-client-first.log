@@ -1,0 +1,36 @@
+  console.log
+    FALSIFIER: wrong project identity, duplicate revision on lost reply, foreign access, failed persisted disable or obsolete target resolution.
+
+      at Object.log (__tests__/companionActions/pushLocal.test.ts:31:10)
+
+ERROR:  relation "public.companion_task_progress" does not exist
+LINE 1: insert into public.companion_task_progress(user_id,task_ref,...
+                    ^
+FAIL __tests__/companionActions/pushLocal.test.ts
+  ✕ client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access (2042 ms)
+
+  ● client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access
+
+    Command failed: docker exec -i supabase_db_unify-push-369-client-r1 psql -U postgres -d postgres -At -v ON_ERROR_STOP=1
+    ERROR:  relation "public.companion_task_progress" does not exist
+    LINE 1: insert into public.companion_task_progress(user_id,task_ref,...
+                        ^
+
+      25 | }
+      26 | function sign(session:any){mockSession=session;for(const cb of mockListeners)cb(session?'SIGNED_IN':'SIGNED_OUT',session);}
+    > 27 | function sql(statement:string){return execFileSync('docker',['exec','-i','supabase_db_unify-push-369-client-r1','psql','-U','postgres','-d','postgres','-At','-v','ON_ERROR_STOP=1'],{input:statement,encoding:'utf8'}).trim();}
+         |                                                   ^
+      28 | let stop:()=>void=()=>{};let originalFetch=global.fetch;
+      29 | afterAll(async()=>{stop();global.fetch=originalFetch;if(enabled)for(const id of users)expect([200,204]).toContain((await http('/auth/v1/admin/users/'+id,undefined,SERVICE,SERVICE,'DELETE')).status);});
+      30 | (enabled?it:it.skip)('client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access',async()=>{
+
+      at sql (__tests__/companionActions/pushLocal.test.ts:27:51)
+      at Object.sql (__tests__/companionActions/pushLocal.test.ts:56:2)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        2.6 s
+Ran all test suites matching /__tests__\/companionActions\/pushLocal.test.ts/i.
