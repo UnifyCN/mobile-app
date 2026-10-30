@@ -1,0 +1,32 @@
+running 1 test from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/generation/supabase/tests/companion-actions/push_worker_test.ts
+push worker: late receipt preserves a newer token generation ...
+------- output -------
+FALSIFIER: late DeviceNotRegistered disables a rotated token
+----- output end -----
+push worker: late receipt preserves a newer token generation ... FAILED (1s)
+
+ ERRORS 
+
+push worker: late receipt preserves a newer token generation => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/generation/supabase/tests/companion-actions/push_worker_test.ts:15:70
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   false
++   true
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/generation/supabase/tests/companion-actions/push_worker_test.ts:47:2
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/generation/supabase/tests/companion-actions/push_worker_test.ts:15:160)
+
+ FAILURES 
+
+push worker: late receipt preserves a newer token generation => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/generation/supabase/tests/companion-actions/push_worker_test.ts:15:70
+
+FAILED | 0 passed | 1 failed | 34 filtered out (1s)
+
+error: Test failed

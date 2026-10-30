@@ -1,0 +1,7 @@
+running 3 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/plan_rollback_test.ts
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans ... ok (2s)
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing ... ok (6s)
+cleanup ... ok (8ms)
+
+ok | 3 passed | 0 failed (8s)
+

@@ -1,0 +1,9 @@
+{
+  "path": "supabase/workers/companion-push/worker.ts",
+  "old": "where installation_id=${d.installation_id}::uuid and user_id=${d.user_id}::uuid and generation=${d.generation}::uuid and token_id=${d.token_id}::uuid",
+  "new": "where installation_id=${d.installation_id}::uuid and user_id=${d.user_id}::uuid",
+  "occurrences": 2,
+  "base_sha256": "17e8ed651f3ba69d27e13337719bb3afe6821f509c6a26f7e691ef43a33201c0",
+  "fault_sha256": "06352c07b63532a51fd16fe49bb61c9ad501e7c557c4fe43550f65a1d1466337",
+  "filter": "late receipt preserves"
+}

@@ -1,0 +1,44 @@
+running 1 test from ./supabase/tests/companion-actions/push_account_delete_test.ts
+push account deletion: new attempt history does not block Auth account deletion ...
+------- output -------
+FALSIFIER: retained attempt foreign keys prevent deletion of the synthetic Auth account
+{"kind":"provider_fixture_distribution","total":1,"modes":{"ok":1}}
+----- output end -----
+push account deletion: new attempt history does not block Auth account deletion ... FAILED (1s)
+
+ ERRORS 
+
+push account deletion: new attempt history does not block Auth account deletion => ./supabase/tests/companion-actions/push_account_delete_test.ts:5:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   AuthRetryableFetchError: Database error deleting user
+-       at handleError (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/@supabase/auth-js/2.118.0/dist/main/lib/fetch.js:53:15)
+-       at async _handleRequest (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/@supabase/auth-js/2.118.0/dist/main/lib/fetch.js:133:9)
+-       at async _request (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/@supabase/auth-js/2.118.0/dist/main/lib/fetch.js:113:18)
+-       at async GoTrueAdminApi.deleteUser (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/@supabase/auth-js/2.118.0/dist/main/GoTrueAdminApi.js:737:20)
+-       at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_account_delete_test.ts:11:17)
+-       at async innerWrapped (ext:cli/40_test.js:230:5)
+-       at async exitSanitizer (ext:cli/40_test.js:146:27)
+-       at async outerWrapped (ext:cli/40_test.js:173:14) {
+-     __isAuthError: true,
+-     code: undefined,
+-     status: 500,
+-   }
++   null
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_account_delete_test.ts:11:59)
+
+ FAILURES 
+
+push account deletion: new attempt history does not block Auth account deletion => ./supabase/tests/companion-actions/push_account_delete_test.ts:5:6
+
+FAILED | 0 passed | 1 failed (1s)
+
+error: Test failed

@@ -1,0 +1,33 @@
+{
+  "cmd": [
+    "deno",
+    "check",
+    "--frozen",
+    "--node-modules-dir=auto",
+    "--lock=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/edge.lock",
+    "functions/companion-actions/index.ts",
+    "functions/cover-letter-chat/index.ts",
+    "functions/events-crawler/index.ts",
+    "functions/explain-term/index.ts",
+    "functions/get-daily-tip/index.ts",
+    "functions/news-crawler/index.ts",
+    "functions/practice-feedback/index.ts",
+    "functions/rag-query/index.ts",
+    "functions/resume-chat/index.ts",
+    "functions/translate-content/index.ts",
+    "functions/_shared/embeddings.ts",
+    "functions/_shared/fetchWithRetry.ts",
+    "functions/_shared/openrouter.ts",
+    "functions/_shared/pexels.ts",
+    "functions/_shared/platform.ts",
+    "functions/_shared/platform_test.ts",
+    "functions/_shared/posthogCapture.ts",
+    "functions/_shared/ssrf.ts",
+    "functions/_shared/testEmbeddingFixtures.ts",
+    "functions/_shared/testHarness.ts",
+    "functions/_shared/topics.ts"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/edge-gate",
+  "exit": 0,
+  "seconds": 0.021916866302490234
+}

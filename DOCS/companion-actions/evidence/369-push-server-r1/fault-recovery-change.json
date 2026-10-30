@@ -1,0 +1,9 @@
+{
+  "path": "supabase/workers/companion-push/worker.ts",
+  "old": "set state='unknown' where",
+  "new": "set state='queued' where",
+  "occurrences": 2,
+  "base_sha256": "17e8ed651f3ba69d27e13337719bb3afe6821f509c6a26f7e691ef43a33201c0",
+  "fault_sha256": "cffd1164506638bb6575ec00a748c62242094078456a4716dd79e0583c02910a",
+  "filter": "kill after durable intent"
+}

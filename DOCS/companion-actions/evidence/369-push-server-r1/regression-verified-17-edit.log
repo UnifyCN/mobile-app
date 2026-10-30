@@ -1,0 +1,13 @@
+running 9 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_test.ts
+a suggested edit is a draft until approved, and approval applies exactly the reviewed change once ... ok (463ms)
+a renamed or re-described task keeps its identity, and the old receipt keeps the old title ... ok (296ms)
+a suggested state change shows the state it changes from and applies only that state and reason ... ok (341ms)
+a draft that changes nothing, names a removed task or another account's task, or carries a revision is refused ... ok (568ms)
+an edit of a task's details needs a reviewed proposal or a clear command, never a control or a model flag ... ok (250ms)
+a newer edit of the field a proposal changes gives a revised proposal and writes nothing ... ok (273ms)
+a change to another field of the same task does not need a new approval ... ok (255ms)
+a newer state change elsewhere gives a state proposal a new review ... ok (266ms)
+two approvals of one edit released together from a held task lock apply once ... ok (281ms)
+
+ok | 9 passed | 0 failed (3s)
+

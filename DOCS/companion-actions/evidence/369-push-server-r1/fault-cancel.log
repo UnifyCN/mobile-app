@@ -1,0 +1,56 @@
+running 2 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts
+push worker: complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"action-first","intermediate":"pending","graph":[{"pid":7264,"blockers":[7238]},{"pid":7305,"blockers":[7264]}]}
+----- output end -----
+push worker: complete action-first ... FAILED (1s)
+push worker: content-complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"action-first","intermediate":"pending","graph":[{"pid":7238,"blockers":[7264]},{"pid":7264,"blockers":[7305]}]}
+----- output end -----
+push worker: content-complete action-first ... FAILED (1s)
+
+ ERRORS 
+
+push worker: complete action-first => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:70
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   1
++   0
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:106:64
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:160)
+
+push worker: content-complete action-first => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:70
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   1
++   0
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:106:64
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:160)
+
+ FAILURES 
+
+push worker: complete action-first => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:70
+push worker: content-complete action-first => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/cancel/supabase/tests/companion-actions/push_worker_test.ts:15:70
+
+FAILED | 0 passed | 2 failed | 33 filtered out (3s)
+
+error: Test failed

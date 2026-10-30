@@ -1,0 +1,65 @@
+running 11 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/reminders_races_test.ts
+reminders race: complete, claim commits first ...
+------- output -------
+{"name":"complete-claim-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"transactionid","blockers":[283]},{"pid":283,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]}]}}
+{"name":"complete-claim-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":true}}
+----- output end -----
+reminders race: complete, claim commits first ... ok (3s)
+reminders race: complete, stop commits first ...
+------- output -------
+{"name":"complete-stop-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]},{"pid":353,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"transactionid","blockers":[269]}]}}
+{"name":"complete-stop-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":false}}
+----- output end -----
+reminders race: complete, stop commits first ... ok (2s)
+reminders race: remove, claim commits first ...
+------- output -------
+{"name":"remove-claim-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[407]},{"pid":407,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]}]}}
+{"name":"remove-claim-final","data":{"status":"cancelled","cancelled_reason":"task_removed","claimed":true}}
+----- output end -----
+reminders race: remove, claim commits first ... ok (3s)
+reminders race: remove, stop commits first ...
+------- output -------
+{"name":"remove-stop-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]},{"pid":480,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[269]}]}}
+{"name":"remove-stop-final","data":{"status":"cancelled","cancelled_reason":"task_removed","claimed":false}}
+----- output end -----
+reminders race: remove, stop commits first ... ok (2s)
+reminders race: cancel, claim commits first ...
+------- output -------
+{"name":"cancel-claim-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[523]},{"pid":523,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]}]}}
+{"name":"cancel-claim-final","data":{"status":"cancelled","cancelled_reason":"user_cancelled","claimed":true}}
+----- output end -----
+reminders race: cancel, claim commits first ... ok (3s)
+reminders race: cancel, stop commits first ...
+------- output -------
+{"name":"cancel-stop-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]},{"pid":583,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[269]}]}}
+{"name":"cancel-stop-final","data":{"status":"cancelled","cancelled_reason":"user_cancelled","claimed":false}}
+----- output end -----
+reminders race: cancel, stop commits first ... ok (3s)
+reminders race: legacy, claim commits first ...
+------- output -------
+{"name":"legacy-claim-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"transactionid","blockers":[616]},{"pid":616,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]}]}}
+{"name":"legacy-claim-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":true}}
+----- output end -----
+reminders race: legacy, claim commits first ... ok (3s)
+reminders race: legacy, stop commits first ...
+------- output -------
+{"name":"legacy-stop-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]},{"pid":649,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"transactionid","blockers":[269]}]}}
+{"name":"legacy-stop-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":false}}
+----- output end -----
+reminders race: legacy, stop commits first ... ok (3s)
+reminders race: content_complete, claim commits first ...
+------- output -------
+{"name":"content_complete-claim-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[680]},{"pid":680,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]}]}}
+{"name":"content_complete-claim-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":true}}
+----- output end -----
+reminders race: content_complete, claim commits first ... ok (3s)
+reminders race: content_complete, stop commits first ...
+------- output -------
+{"name":"content_complete-stop-intermediate","data":{"snapshot":{"status":"pending","cancelled_reason":null,"claimed":false},"graph":[{"pid":269,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[231]},{"pid":703,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[269]}]}}
+{"name":"content_complete-stop-final","data":{"status":"cancelled","cancelled_reason":"task_completed","claimed":false}}
+----- output end -----
+reminders race: content_complete, stop commits first ... ok (3s)
+reminder races: cleanup barriers and connections ... ok (4ms)
+
+ok | 11 passed | 0 failed (30s)
+

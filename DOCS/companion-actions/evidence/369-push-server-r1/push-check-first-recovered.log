@@ -1,0 +1,19 @@
+Check supabase/tests/companion-actions/pushHarness.ts
+Check supabase/tests/companion-actions/pushSupport.ts
+Check supabase/tests/companion-actions/push_delivery_test.ts
+Check supabase/tests/companion-actions/push_enrollment_test.ts
+Check supabase/tests/companion-actions/push_process_test.ts
+Check supabase/tests/companion-actions/push_published_test.ts
+Check supabase/tests/companion-actions/push_recovery_test.ts
+Check supabase/tests/companion-actions/push_worker_test.ts
+Check supabase/workers/companion-push/supervisor.ts
+TS2322 [ERROR]: Type 'import("file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/@supabase/supabase-js/2.118.0/dist/index.d.mts").SupabaseClient<any, "public", "public", any, any>' is not assignable to type 'import("https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts").default<any, "public", "public", any, any>'.
+  Property 'supabaseUrl' is protected but type 'SupabaseClient<Database, SchemaNameOrClientOptions, SchemaName, Schema, ClientOptions>' is not a class derived from 'SupabaseClient<Database, SchemaNameOrClientOptions, SchemaName, Schema, ClientOptions>'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_published_test.ts:22:31
+
+    The expected type comes from property 'admin' which is declared here on type 'HandlerDeps'
+      admin: SupabaseClient;
+      ~~~~~
+        at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/functions/companion-actions/handler.ts:26:3
+
+error: Type checking failed.

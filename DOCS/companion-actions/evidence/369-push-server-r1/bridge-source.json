@@ -1,0 +1,280 @@
+{
+  "url": "https://raw.githubusercontent.com/moby/moby/3d80467/daemon/daemon_unix.go",
+  "sha256": "2f09ff2d0b64ece13f61b6a3d28c73ccdceb2b1449b412005b3c4953e6d48af6",
+  "server": {
+    "Platform": {
+      "Name": "Docker Desktop 4.83.0 (234302)"
+    },
+    "Version": "29.6.2",
+    "ApiVersion": "1.55",
+    "MinAPIVersion": "1.40",
+    "Os": "linux",
+    "Arch": "arm64",
+    "Components": [
+      {
+        "Name": "Engine",
+        "Version": "29.6.2",
+        "Details": {
+          "ApiVersion": "1.55",
+          "Arch": "arm64",
+          "BuildTime": "Thu Jul 16 16:13:03 2026",
+          "Experimental": "false",
+          "GitCommit": "3d80467",
+          "GoVersion": "go1.26.5",
+          "KernelVersion": "6.12.76-linuxkit",
+          "MinAPIVersion": "1.40",
+          "Module": "github.com/moby/moby/v2",
+          "ModuleVersion": "v2.0.0+unknown",
+          "Os": "linux"
+        }
+      },
+      {
+        "Name": "containerd",
+        "Version": "v2.2.5",
+        "Details": {
+          "GitCommit": "e53c7c1516c3b2bff98eb76f1f4117477e6f4e66"
+        }
+      },
+      {
+        "Name": "runc",
+        "Version": "1.3.6",
+        "Details": {
+          "GitCommit": "v1.3.6-0-g491b69ba"
+        }
+      },
+      {
+        "Name": "docker-init",
+        "Version": "0.19.0",
+        "Details": {
+          "GitCommit": "de40ad0"
+        }
+      }
+    ],
+    "GitCommit": "3d80467",
+    "GoVersion": "go1.26.5",
+    "KernelVersion": "6.12.76-linuxkit",
+    "BuildTime": "2026-07-16T16:13:03.000000000+00:00"
+  },
+  "selected": [
+    {
+      "line": 831,
+      "text": "\t}"
+    },
+    {
+      "line": 832,
+      "text": ""
+    },
+    {
+      "line": 833,
+      "text": "\tctx := baggage.ContextWithBaggage(context.TODO(), otelutil.MustNewBaggage("
+    },
+    {
+      "line": 834,
+      "text": "\t\totelutil.MustNewMemberRaw(otelutil.TriggerKey, \"daemon.initNetworkController\"),"
+    },
+    {
+      "line": 835,
+      "text": "\t))"
+    },
+    {
+      "line": 836,
+      "text": "\tdaemon.netController, err = libnetwork.New(ctx, netOptions...)"
+    },
+    {
+      "line": 837,
+      "text": "\tif err != nil {"
+    },
+    {
+      "line": 838,
+      "text": "\t\treturn fmt.Errorf(\"error obtaining controller instance: %v\", err)"
+    },
+    {
+      "line": 839,
+      "text": "\t}"
+    },
+    {
+      "line": 840,
+      "text": ""
+    },
+    {
+      "line": 841,
+      "text": "\tif len(activeSandboxes) > 0 {"
+    },
+    {
+      "line": 842,
+      "text": "\t\tlog.G(ctx).Info(\"there are running containers, updated network configuration will not take affect\")"
+    },
+    {
+      "line": 843,
+      "text": "\t} else if err := daemon.runInNetNS(func() error {"
+    },
+    {
+      "line": 844,
+      "text": "\t\treturn configureNetworking(ctx, daemon.netController, cfg)"
+    },
+    {
+      "line": 845,
+      "text": "\t}); err != nil {"
+    },
+    {
+      "line": 846,
+      "text": "\t\treturn err"
+    },
+    {
+      "line": 847,
+      "text": "\t}"
+    },
+    {
+      "line": 848,
+      "text": ""
+    },
+    {
+      "line": 849,
+      "text": "\t// Set HostGatewayIP to the default bridge's IP if it is empty"
+    },
+    {
+      "line": 850,
+      "text": "\tsetHostGatewayIP(daemon.netController, cfg)"
+    },
+    {
+      "line": 851,
+      "text": "\treturn nil"
+    },
+    {
+      "line": 852,
+      "text": "}"
+    },
+    {
+      "line": 853,
+      "text": ""
+    },
+    {
+      "line": 854,
+      "text": "func configureNetworking(ctx context.Context, controller *libnetwork.Controller, conf *config.Config) error {"
+    },
+    {
+      "line": 855,
+      "text": "\t// Create predefined network \"none\""
+    },
+    {
+      "line": 856,
+      "text": "\tif n, _ := controller.NetworkByName(network.NetworkNone); n == nil {"
+    },
+    {
+      "line": 857,
+      "text": "\t\tif _, err := controller.NewNetwork(ctx, \"null\", network.NetworkNone, \"\", libnetwork.NetworkOptionPersist(true)); err != nil {"
+    },
+    {
+      "line": 858,
+      "text": "\t\t\treturn errors.Wrapf(err, `error creating default %q network`, network.NetworkNone)"
+    },
+    {
+      "line": 859,
+      "text": "\t\t}"
+    },
+    {
+      "line": 860,
+      "text": "\t}"
+    },
+    {
+      "line": 861,
+      "text": ""
+    },
+    {
+      "line": 862,
+      "text": "\t// Create predefined network \"host\""
+    },
+    {
+      "line": 863,
+      "text": "\tif n, _ := controller.NetworkByName(network.NetworkHost); n == nil {"
+    },
+    {
+      "line": 864,
+      "text": "\t\tif _, err := controller.NewNetwork(ctx, \"host\", network.NetworkHost, \"\", libnetwork.NetworkOptionPersist(true)); err != nil {"
+    },
+    {
+      "line": 865,
+      "text": "\t\t\treturn errors.Wrapf(err, `error creating default %q network`, network.NetworkHost)"
+    },
+    {
+      "line": 866,
+      "text": "\t\t}"
+    },
+    {
+      "line": 867,
+      "text": "\t}"
+    },
+    {
+      "line": 868,
+      "text": ""
+    },
+    {
+      "line": 869,
+      "text": "\t// Clear stale bridge network"
+    },
+    {
+      "line": 870,
+      "text": "\tif n, err := controller.NetworkByName(network.NetworkBridge); err == nil {"
+    },
+    {
+      "line": 871,
+      "text": "\t\tif err = n.Delete(); err != nil {"
+    },
+    {
+      "line": 872,
+      "text": "\t\t\treturn errors.Wrapf(err, `could not delete the default %q network`, network.NetworkBridge)"
+    },
+    {
+      "line": 873,
+      "text": "\t\t}"
+    },
+    {
+      "line": 874,
+      "text": "\t\tif len(conf.NetworkConfig.DefaultAddressPools.Value()) > 0 && !conf.LiveRestoreEnabled {"
+    },
+    {
+      "line": 875,
+      "text": "\t\t\tremoveDefaultBridgeInterface()"
+    },
+    {
+      "line": 876,
+      "text": "\t\t}"
+    },
+    {
+      "line": 877,
+      "text": "\t}"
+    },
+    {
+      "line": 878,
+      "text": ""
+    },
+    {
+      "line": 879,
+      "text": "\tif !conf.DisableBridge {"
+    },
+    {
+      "line": 880,
+      "text": "\t\t// Initialize default driver \"bridge\""
+    },
+    {
+      "line": 881,
+      "text": "\t\tif err := initBridgeDriver(ctx, controller, conf.BridgeConfig); err != nil {"
+    },
+    {
+      "line": 882,
+      "text": "\t\t\treturn err"
+    },
+    {
+      "line": 883,
+      "text": "\t\t}"
+    },
+    {
+      "line": 884,
+      "text": "\t} else {"
+    },
+    {
+      "line": 885,
+      "text": "\t\tremoveDefaultBridgeInterface()"
+    }
+  ]
+}

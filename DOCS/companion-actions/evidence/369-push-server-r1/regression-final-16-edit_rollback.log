@@ -1,0 +1,6 @@
+running 2 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/edit_rollback_test.ts
+rolling back only #365 keeps saved edits and #361/#363 controls, refuses edit work, and re-application restores it ... ok (1s)
+a full rollback and re-application keeps saved edits and restores the edit receipts ... ok (5s)
+
+ok | 2 passed | 0 failed (6s)
+

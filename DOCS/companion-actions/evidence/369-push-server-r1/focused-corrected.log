@@ -1,0 +1,235 @@
+running 9 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts
+push enrollment: disabled server retains no enrollment or token ...
+------- output -------
+FALSIFIER: disabled enrollment writes or does not return push_disabled
+----- output end -----
+push enrollment: disabled server retains no enrollment or token ... ok (304ms)
+push enrollment: authenticated save replays one revision and a content-free receipt ...
+------- output -------
+FALSIFIER: enabled save fails, duplicate requests rotate twice, or proof/token enters receipt
+----- output end -----
+push enrollment: authenticated save replays one revision and a content-free receipt ... ok (72ms)
+push enrollment: known installation requires proof even for the current account ...
+------- output -------
+FALSIFIER: missing or wrong proof mutates a known installation
+----- output end -----
+push enrollment: known installation requires proof even for the current account ... ok (314ms)
+push enrollment: transfer needs possession and removal of the earlier server session ...
+------- output -------
+FALSIFIER: active-session transfer succeeds, or signed-out known id is reclaimed without proof
+----- output end -----
+push enrollment: transfer needs possession and removal of the earlier server session ... ok (638ms)
+push enrollment: different-token transfer preserves the earlier social and learn token ...
+------- output -------
+FALSIFIER: verified transfer deletes or reassigns an unrelated old shared token
+----- output end -----
+push enrollment: different-token transfer preserves the earlier social and learn token ... ok (673ms)
+push enrollment: token collision is atomic for same-account and cross-account races ...
+------- output -------
+FALSIFIER: a collision creates two bindings or an orphan token mutation
+----- output end -----
+push enrollment: token collision is atomic for same-account and cross-account races ... ok (769ms)
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ...
+------- output -------
+FALSIFIER: retry rotates twice, stale revision changes state, or revoked credentials can enroll
+----- output end -----
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ... ok (471ms)
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ...
+------- output -------
+FALSIFIER: an old JWT creates enrollment after session authorization expires
+----- output end -----
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ... ok (1s)
+push enrollment: RLS grants and the common operation namespace reject bypass ...
+------- output -------
+FALSIFIER: a normal JWT calls the privileged RPC, reads private storage, or reuses another action identity
+----- output end -----
+push enrollment: RLS grants and the common operation namespace reject bypass ... ok (384ms)
+running 1 test from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_published_test.ts
+push target: owner first, same published task across accounts, current profile access and removal ...
+------- post-test output -------
+FALSIFIER: B resolves A delivery for the same published id, or a removed/inaccessible target is returned
+----- post-test output end -----
+push target: owner first, same published task across accounts, current profile access and removal ... ok (679ms)
+running 4 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_process_test.ts
+push process: kill after durable intent retains unknown identity without resend ...
+------- post-test output -------
+FALSIFIER: killing the sender after intent loses the attempt or a restart sends it
+----- post-test output end -----
+push process: kill after durable intent retains unknown identity without resend ... ok (2s)
+push process: forced database close is recovered in an independent connection ...
+------- post-test output -------
+FALSIFIER: driver close prevents process exit/recovery or permits another provider request
+{"forced_close_exit":0,"ms":2303.9828749999997,"stderr_bytes":0}
+----- post-test output end -----
+push process: forced database close is recovered in an independent connection ... ok (4s)
+push process: stopped sender loses database locks before the action lock limit ...
+------- post-test output -------
+FALSIFIER: a stopped event loop retains locks for three seconds or its retained intent resends
+{"stopped_process_cancel_ms":2503.4053750000003}
+----- post-test output end -----
+push process: stopped sender loses database locks before the action lock limit ... ok (4s)
+push process: cleanup ... ok (1ms)
+running 30 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts
+push worker: unknown transport and response parsing never resend ...
+------- post-test output -------
+FALSIFIER: unknown outcome becomes retryable or changes in-app state
+----- post-test output end -----
+push worker: unknown transport and response parsing never resend ... ok (2s)
+push worker: ticket, missing receipt, provider acceptance and display remain separate ...
+------- post-test output -------
+FALSIFIER: receipt polling sends again or claims device display
+----- post-test output end -----
+push worker: ticket, missing receipt, provider acceptance and display remain separate ... ok (1s)
+push worker: definite reject backoff and cap ...
+------- post-test output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- post-test output end -----
+push worker: definite reject backoff and cap ... ok (2s)
+push worker: definite rate backoff and cap ...
+------- post-test output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- post-test output end -----
+push worker: definite rate backoff and cap ... ok (2s)
+push worker: permanent error disables the original enrollment ...
+------- post-test output -------
+FALSIFIER: invalid token still enables the same tuple
+----- post-test output end -----
+push worker: permanent error disables the original enrollment ... ok (1s)
+push worker: late receipt preserves a newer token generation ...
+------- post-test output -------
+FALSIFIER: late DeviceNotRegistered disables a rotated token
+----- post-test output end -----
+push worker: late receipt preserves a newer token generation ... ok (2s)
+push worker: disabled installation stays suppressed after enablement ...
+------- post-test output -------
+FALSIFIER: renewal creates delivery for an already consumed event
+----- post-test output end -----
+push worker: disabled installation stays suppressed after enablement ... ok (2s)
+push worker: closed-app age does not create a foreground lease ...
+------- post-test output -------
+FALSIFIER: 90-day enrollment age alone prevents an authorized send
+----- post-test output end -----
+push worker: closed-app age does not create a foreground lease ... ok (1s)
+push worker: final session authorization ...
+------- post-test output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- post-test output end -----
+push worker: final session authorization ... ok (2s)
+push worker: final permission authorization ...
+------- post-test output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- post-test output end -----
+push worker: final permission authorization ... ok (2s)
+push worker: final generation authorization ...
+------- post-test output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- post-test output end -----
+push worker: final generation authorization ... ok (2s)
+push worker: final credential authorization ...
+------- post-test output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- post-test output end -----
+push worker: final credential authorization ... ok (2s)
+push worker: final policy authorization ...
+------- post-test output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- post-test output end -----
+push worker: final policy authorization ... ok (1s)
+push worker: provider budget fails closed and includes reserved existing senders ...
+------- post-test output -------
+FALSIFIER: missing aggregate verification or exhausted shared capacity permits a send
+----- post-test output end -----
+push worker: provider budget fails closed and includes reserved existing senders ... ok (2s)
+push worker: owned current task resolver rejects another account and removed task ...
+------- post-test output -------
+FALSIFIER: a shared task identifier authorizes another account
+----- post-test output end -----
+push worker: owned current task resolver rejects another account and removed task ... ok (2s)
+push worker: complete action-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"action-first","intermediate":"pending","graph":[{"pid":5759,"blockers":[4877]},{"pid":4877,"blockers":[4851]}]}
+----- post-test output end -----
+push worker: complete action-first ... ok (2s)
+push worker: remove action-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"action-first","intermediate":"pending","graph":[{"pid":5748,"blockers":[4877]},{"pid":4877,"blockers":[5759]}]}
+----- post-test output end -----
+push worker: remove action-first ... ok (3s)
+push worker: cancel action-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"action-first","intermediate":"pending","graph":[{"pid":5771,"blockers":[5748]},{"pid":4851,"blockers":[5771]}]}
+----- post-test output end -----
+push worker: cancel action-first ... ok (3s)
+push worker: legacy action-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"legacy","order":"action-first","intermediate":"pending","graph":[{"pid":5748,"blockers":[4877]},{"pid":4877,"blockers":[5759]}]}
+----- post-test output end -----
+push worker: legacy action-first ... ok (2s)
+push worker: content-complete action-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"action-first","intermediate":"pending","graph":[{"pid":4851,"blockers":[4877]},{"pid":4877,"blockers":[5759]}]}
+----- post-test output end -----
+push worker: content-complete action-first ... ok (2s)
+push worker: complete worker-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"worker-first","intermediate":"pending","graph":[{"pid":4877,"blockers":[5748]}],"provider_calls":1}
+----- post-test output end -----
+push worker: complete worker-first ... ok (2s)
+push worker: remove worker-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"worker-first","intermediate":"pending","graph":[{"pid":4877,"blockers":[5759]}],"provider_calls":1}
+----- post-test output end -----
+push worker: remove worker-first ... ok (2s)
+push worker: cancel worker-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"worker-first","intermediate":"pending","graph":[{"pid":5771,"blockers":[4851]}],"provider_calls":1}
+----- post-test output end -----
+push worker: cancel worker-first ... ok (2s)
+push worker: legacy worker-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"legacy","order":"worker-first","intermediate":"pending","graph":[{"pid":4877,"blockers":[4851]}],"provider_calls":1}
+----- post-test output end -----
+push worker: legacy worker-first ... ok (2s)
+push worker: content-complete worker-first ...
+------- post-test output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"worker-first","intermediate":"pending","graph":[{"pid":4877,"blockers":[5748]}],"provider_calls":1}
+----- post-test output end -----
+push worker: content-complete worker-first ... ok (1s)
+push worker: content headers total deadline ...
+------- post-test output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-headers","ms":2272.651291999995,"graph":[{"pid":4877,"blockers":[4851]}]}
+----- post-test output end -----
+push worker: content headers total deadline ... ok (4s)
+push worker: content body total deadline ...
+------- post-test output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-body","ms":2221.902915999999,"graph":[{"pid":5771,"blockers":[5748]}]}
+----- post-test output end -----
+push worker: content body total deadline ... ok (3s)
+push worker: provider hold total deadline ...
+------- post-test output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-hold","ms":2231.789333000008,"graph":[{"pid":5771,"blockers":[5759]}]}
+----- post-test output end -----
+push worker: provider hold total deadline ... ok (4s)
+push worker: provider body total deadline ...
+------- post-test output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-body","ms":2217.9774590000015,"graph":[{"pid":5771,"blockers":[5759]}]}
+----- post-test output end -----
+push worker: provider body total deadline ... ok (3s)
+push worker: fixture cleanup ... ok (5ms)
+
+ok | 44 passed | 0 failed (1m30s)
+

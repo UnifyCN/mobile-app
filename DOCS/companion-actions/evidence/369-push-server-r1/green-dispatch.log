@@ -1,0 +1,32 @@
+Download https://jsr.io/@supabase/supabase-js/meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0_meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/constants.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/fetch.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/helpers.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/SupabaseAuthClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/rpc.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/version.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/tracingRegistry.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/create-extractor.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/parse.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/validate.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/defaults.ts
+running 2 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_delivery_test.ts
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ...
+------- output -------
+FALSIFIER: a disabled due event is not durably suppressed, or task/reminder state changes
+----- output end -----
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ... ok (1s)
+push delivery: enabled competing workers commit one intent and one provider request ...
+------- output -------
+FALSIFIER: two sends, no durable intent before I/O, or ticket claims device display
+----- output end -----
+push delivery: enabled competing workers commit one intent and one provider request ... ok (2s)
+
+ok | 2 passed | 0 failed (3s)
+

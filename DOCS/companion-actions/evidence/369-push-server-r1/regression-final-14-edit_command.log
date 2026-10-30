@@ -1,0 +1,14 @@
+running 10 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/edit_command_test.ts
+a clear rename command changes exactly the task it names, once ... ok (767ms)
+the documented command examples in every supported language make exactly their change ... ok (4s)
+an unclear target or meaning gets a question and writes nothing ... ok (910ms)
+a command line with more quoted text than one change uses asks one change at a time and writes nothing ... ok (826ms)
+a command never names a task it cannot see: published tasks unread, another account, an assistant message ... ok (452ms)
+naming Waiting keeps the reason a waiting task has, and a change in between is a conflict ... ok (621ms)
+a waiting reason change names both reasons in its receipt, kept after a later edit and through lookup, replay and Undo ... ok (545ms)
+a retry of a committed rename command replays its result instead of refusing or writing again ... ok (341ms)
+every priority label the mobile or web Checklist shows, in every language, names that priority ... ok (1s)
+the database refuses a second write under one command message even at the current revision ... ok (176ms)
+
+ok | 10 passed | 0 failed (10s)
+

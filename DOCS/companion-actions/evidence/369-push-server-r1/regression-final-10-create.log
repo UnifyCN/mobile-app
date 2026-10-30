@@ -1,0 +1,21 @@
+running 17 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (605ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (262ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (287ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (265ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (292ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (314ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (279ms)
+unrelated changes since review do not ask for approval again ... ok (231ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (263ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (356ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (348ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... ok (455ms)
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (1s)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (344ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (256ms)
+reopening a conversation reads its drafts and command results with their current state ... ok (475ms)
+cleanup ... ok (4ms)
+
+ok | 17 passed | 0 failed (6s)
+

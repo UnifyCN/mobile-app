@@ -1,0 +1,814 @@
+[
+  {
+    "path": "supabase/functions/_shared/embeddings.ts",
+    "sha256": "1671e2f7cc819c9b17d136549506db30de06e1877dc37b4aa9d7fb54eed06f2a"
+  },
+  {
+    "path": "supabase/functions/_shared/fetchWithRetry.ts",
+    "sha256": "82e38394e3ab2ecf896b215b6446c459aefab6133d0f220b21ecf1250f10eba7"
+  },
+  {
+    "path": "supabase/functions/_shared/openrouter.ts",
+    "sha256": "f1f6ef3d2483faa1025e0de2e40e866d813b0fb7037649fa16278145e9281be6"
+  },
+  {
+    "path": "supabase/functions/_shared/pexels.ts",
+    "sha256": "93b1900bdd7bfcdb9e8d7852bdcf5010dea8385a841216d63b08389593f9f8d9"
+  },
+  {
+    "path": "supabase/functions/_shared/platform.ts",
+    "sha256": "a5b200b9f59dd06acf8028f786944cdd42b90c48df2f6af4212b517f6f4de722"
+  },
+  {
+    "path": "supabase/functions/_shared/platform_test.ts",
+    "sha256": "e8b206c5bf80b1d76c0f652ac3b1ec4e6a73d818d312d7dfff02c7029324b73d"
+  },
+  {
+    "path": "supabase/functions/_shared/posthogCapture.ts",
+    "sha256": "37663df86ab5b34f7c61db9376e27e53438f1d2d04951518a370679523c4ca75"
+  },
+  {
+    "path": "supabase/functions/_shared/ssrf.ts",
+    "sha256": "67ce414bdf8735d134ca4c73342ca0fd176b688c5515e25d3f50502fb7d9caf7"
+  },
+  {
+    "path": "supabase/functions/_shared/testEmbeddingFixtures.ts",
+    "sha256": "ad077c9b392bf9b61161e93244f9978908c413fefa9ecdd8462870d7fec75a44"
+  },
+  {
+    "path": "supabase/functions/_shared/testHarness.ts",
+    "sha256": "011e16b7ff49b15e0f7fe6276bb6e4e720a6ed8c6d0be5349fc0b1adc7fa4767"
+  },
+  {
+    "path": "supabase/functions/_shared/topics.ts",
+    "sha256": "c024efc96b69243a276db36e6e25d9908853cd86f1d8dfd58ae3f305823a9f28"
+  },
+  {
+    "path": "supabase/functions/companion-actions/commands.ts",
+    "sha256": "b7bd17ba25f6eafdd22c35004c86588cb046d1453274e00a966330b5fa853a72"
+  },
+  {
+    "path": "supabase/functions/companion-actions/contract.ts",
+    "sha256": "d986530a867e1c4d09f434c0120713af23fa0bd30d1d04cbca782c4f54e6f912"
+  },
+  {
+    "path": "supabase/functions/companion-actions/handler.ts",
+    "sha256": "74c32c9c24618e9ac4c63d0cc9756e6c6c828df33c1437613a74755c747ec684"
+  },
+  {
+    "path": "supabase/functions/companion-actions/index.ts",
+    "sha256": "7fdbcf5ddc8ce3513cb393e4b93d5421fb6dd9f51baff1297c3c60efac51fa82"
+  },
+  {
+    "path": "supabase/functions/companion-actions/planHandler.ts",
+    "sha256": "a41ebc53ca2ec0e1cba47f6e615bf992cc456fc0861273634a5af786a792970d"
+  },
+  {
+    "path": "supabase/functions/companion-actions/plans.ts",
+    "sha256": "ae0ebb1ba1266e5c20babe955d6e929cf77b00ee04f5e1631fafa7832f275939"
+  },
+  {
+    "path": "supabase/functions/companion-actions/push.ts",
+    "sha256": "23ec7c35f1df3699c13852454e57caa44577ce1c9c861576802f56ee551655ab"
+  },
+  {
+    "path": "supabase/functions/companion-actions/reminders.ts",
+    "sha256": "516b423c217267185bc964b28db1f426f0f86c53d5dbf6d60a6622511bba7183"
+  },
+  {
+    "path": "supabase/functions/companion-actions/targets.ts",
+    "sha256": "1e5031c2234499fdcfd3220ac9f70c2b547b35a301b49dc1401e9a15c13a878b"
+  },
+  {
+    "path": "supabase/functions/cover-letter-chat/index.ts",
+    "sha256": "072bb60d2af5b86932c0e44e334f51acde266e3388d00503ca1e02e7106b3d27"
+  },
+  {
+    "path": "supabase/functions/cover-letter-chat/index_test.ts",
+    "sha256": "beb7ca45fc254fde5c5b1965af8a06dba9fdc5f61ce9abcb69411b64c4bb7ef8"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/bibliocommons.ts",
+    "sha256": "f7192adb1a1bfa9d1203e0a77c4ed2c279138f8b3b7d519b007db29c7394f432"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/capilano.ts",
+    "sha256": "7b65af27997773e1f2a807b7f27596093824f355c87c138626bf73c071832b1b"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/communico.ts",
+    "sha256": "375a1908951dbd6dc783dc4390aff700958ce45a7b93758174fd4f671141b1a4"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/livewhale.ts",
+    "sha256": "a6a558a1b2799498a13d1644fffabf5da1e426209af80d3c1729dc1bf399e6bd"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/nvcl.ts",
+    "sha256": "1dde3ac9161d97647bda5d1d9ff8a986dbdada53bf2b68b357a92bc19ce8c0ee"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/surrey.ts",
+    "sha256": "5cefc65067a0125060afd0cea4ebc10ad55a8ab3167bdbbc4622b6dd86a9efa7"
+  },
+  {
+    "path": "supabase/functions/events-crawler/adapters/tribe.ts",
+    "sha256": "b1b45b5a5d06bd3285a3abd959e05a790cd198214b633983eda3d19d5668cb92"
+  },
+  {
+    "path": "supabase/functions/events-crawler/dryrun.ts",
+    "sha256": "790059490a1ba22256d1b8679255e3393781fa8605f526964a1372f8393dc6ee"
+  },
+  {
+    "path": "supabase/functions/events-crawler/index.ts",
+    "sha256": "bcee0a477f5a7daebb22733851f36fd93db214f2d2391f28bd0efcd5249adb8a"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/constants.ts",
+    "sha256": "90662e5c384958d3f6152137e34662184e76eebb0a91462beda6fe984530c2a1"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/dates.ts",
+    "sha256": "2a86eeb13b94b00fc98db474c8bb88018580688d501dbe48f99c1d794c330a9c"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/genre.ts",
+    "sha256": "d5d7ceec2a24db349178f174f8960bbbb793878ed096aa76db0c9507f8dfdc7f"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/images.ts",
+    "sha256": "ecf5cf7fbd57641b90949a563bc1b49cdbb4aa9fa2aa283c0ed1a7311f494cd1"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/relevance.ts",
+    "sha256": "9f233573a76fea701af2a72394f341b455b0ae3bc434a93db1c3e561de778f8f"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/relevance_test.ts",
+    "sha256": "b223977a2455d24f94b664da3282c9bb461d6b73e1a250a787fa158bfd953d75"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/sources.ts",
+    "sha256": "786bba5ea15d308266479d519503f8fdb99fb44fb5ea56ef8e85af9937172bae"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/text.ts",
+    "sha256": "b2b50308805918a6e2a32836cb7f2be6753ca2b32030307b9032ab315e4ed337"
+  },
+  {
+    "path": "supabase/functions/events-crawler/lib/types.ts",
+    "sha256": "bc7bfbe0584f17b66db1319da9b098fbcd4a1b7aa7d57241d90d8398ab542fad"
+  },
+  {
+    "path": "supabase/functions/explain-term/index.ts",
+    "sha256": "b212effe35235ff3364bdc4a09c3c7bc8c870d92d8c7e056f31a2c52ecb7f58f"
+  },
+  {
+    "path": "supabase/functions/get-daily-tip/index.ts",
+    "sha256": "aa2ea8931de894af4e1da647fe05d3f91ff98224f2f664853b0185db6a964dd8"
+  },
+  {
+    "path": "supabase/functions/news-crawler/index.ts",
+    "sha256": "1c854eb60d428b911a76bf5766828d0ebd9cc0191dc612b0d09968d66f4f9959"
+  },
+  {
+    "path": "supabase/functions/practice-feedback/index.ts",
+    "sha256": "95bc2c9717c99616c03ab48acb3d28ecebf8f5b858f2e1c25b9b899b05ec9e45"
+  },
+  {
+    "path": "supabase/functions/rag-query/index.ts",
+    "sha256": "d715af6411a45a77abf8081cee67f68373352168e5e3d902b1708c268bc0f68e"
+  },
+  {
+    "path": "supabase/functions/rag-query/index_companion_context_test.ts",
+    "sha256": "642aea57e94b1c5f10743d795773eb79c413912053b2b232d3185f31dfa26064"
+  },
+  {
+    "path": "supabase/functions/rag-query/index_concurrent_test.ts",
+    "sha256": "b330675622fa25e7acb4b41782daf9af87efc1ec8650f03ddddbce157638755f"
+  },
+  {
+    "path": "supabase/functions/rag-query/index_context_test.ts",
+    "sha256": "18dcccd24d325fa5d03ccd78d0c5e392691dce4d262e2e1090b07358fe224b2a"
+  },
+  {
+    "path": "supabase/functions/rag-query/index_embedding_test.ts",
+    "sha256": "6cd4c4408013a9862ecac38b029af076ecf9dd24d6df485ed601677e02ba2068"
+  },
+  {
+    "path": "supabase/functions/rag-query/index_test.ts",
+    "sha256": "95547be3a2c939b0759aa57efb142813fa14c66d103d762e2bb26cf084303e1e"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/actions/proposals.ts",
+    "sha256": "3f11958a29ad1fb24bf0f3a88b3c3da459205e6c3f320cc19e5f9afdbddf6a9c"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/appContext.ts",
+    "sha256": "e6a3f2378b2c758946faa413e5e9a272f492006d0cb70537af736fe412f77a99"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/companionContext.ts",
+    "sha256": "41ac1ebed1ce19f3a63c662cfd2fe1d4ccb3904960e9d118ab03a585a142b9d7"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/contract.ts",
+    "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/conversationDetails.ts",
+    "sha256": "bb2ad98f401fe7bc3b52e3d392b08a6d9542aa0f01f741ad4d8c9e3c2849d1d9"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/guidance.ts",
+    "sha256": "7d275c07d59e3173626232e08f6a72e2664b1751976d6be02dcda50c10c2d03b"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/placeNames.ts",
+    "sha256": "1dd7be7d830e45b0fef628b16184eedd08e50176013fd41d4af3bd6033031389"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/placeNames_test.ts",
+    "sha256": "661e6e018232c4e882ec85348f4f93400260f16f62ce3357b2fe089a58905099"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/profileFacts.ts",
+    "sha256": "2f8c9d19f0d3a37329b14fbc7508e9278627034580ab33423bfcb58ed77dedab"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/promptBlocks.ts",
+    "sha256": "c3f23734328eded09a55d0b06ee029097072d8eda87a3867be2d10c6e32b3bec"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/context/registry.ts",
+    "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/currentFacts.ts",
+    "sha256": "c250ece6a91d67fddb196a7ea39ff912f6254b9b3b35fe7c454359369130c1a5"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/dates.ts",
+    "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/dates_test.ts",
+    "sha256": "08763692934a86d3df62aac201f1b4b3bf09bf93d96af26ecc5244d9dcefa212"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/profile.ts",
+    "sha256": "86c22b063591c0e6651bd25a317d4bdf5d6a37561a05a6fbab1d083e2ba69af2"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/profile_test.ts",
+    "sha256": "13adfbb2dee07e88a977a82d00327e83748ecb142cd74e3fcfc5feff64bff35e"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/province.ts",
+    "sha256": "feb5503282f5b9bedadfe70b35bf100ba334cf67c416ff6a5e55d4d72acddcc8"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/provincePointer.ts",
+    "sha256": "3a9e7b1be98b3c39c0d1920c3fc61a3c73fb79eae97197d6b58fdd0b02e8b121"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/provincePointer_test.ts",
+    "sha256": "8c528e08d9e782e10a9db911f77c26cd7129d4185fdeb7278c53a99382910f27"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/province_test.ts",
+    "sha256": "31d82889fc3568755d5374694d3b39a9e42a942cfd718fa0c2a20d66c669e13e"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/retrieval.ts",
+    "sha256": "0f71f72c3ddd3da0b2ad50873c1f46442828deda65369984ad6c35d410caccd1"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/retrieval_test.ts",
+    "sha256": "ebe2631a178301b4a5fd873514819d4ef2a43937f3ef570413d012a844381c44"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/retrievedContext.ts",
+    "sha256": "d4899bb11cb8f2aa871e936067f7f4628e8fc891ac4114c3e3c416b49e439843"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/retrievedContext_test.ts",
+    "sha256": "0104c8db31c4a86b8ce6ec5dcee9ef29f73fb27e91f044746287618b489609fb"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/topic.ts",
+    "sha256": "1c3436e8009477c57c8a3a909dd93104cf60bd0d66203df152fa23c777307dca"
+  },
+  {
+    "path": "supabase/functions/rag-query/lib/topic_test.ts",
+    "sha256": "e9b198b0dfd9088e97fefce89d6dcc6b20b90bfa8e6c883f8bca7b87f392155a"
+  },
+  {
+    "path": "supabase/functions/resume-chat/index.ts",
+    "sha256": "f59d7a21c000943711e2a26c3631d5d313ab775fcac02988609da51d0be19f3e"
+  },
+  {
+    "path": "supabase/functions/resume-chat/index_test.ts",
+    "sha256": "800d43eceedca578bff452f192933a242a69b77502017b9031a56b4f379fc34e"
+  },
+  {
+    "path": "supabase/functions/translate-content/index.ts",
+    "sha256": "8a02de2ea2d73383fa1c054d90fa30baa4b856c13a9238326e5f08b86fb0414a"
+  },
+  {
+    "path": "supabase/functions/translate-content/index_test.ts",
+    "sha256": "bede1e788d4e4eb819234283453cd02b714dba88159e06159b13b595f0984db2"
+  },
+  {
+    "path": "supabase/functions/translate-content/lib/contentTypes.ts",
+    "sha256": "b427d66e1fbd2983ddccce976ffaebc3bf083e50dfb60ab3489cd92ed5a39486"
+  },
+  {
+    "path": "supabase/functions/translate-content/lib/contentTypes_test.ts",
+    "sha256": "ee0a7bb989f8359055462e00464214efb8db524cfe682136145cca136f77d6d0"
+  },
+  {
+    "path": "supabase/tests/companion-actions/actions_test.ts",
+    "sha256": "88f071e838ee2283f43c4cec356dde136125d5d931539b1778928581f873afb7"
+  },
+  {
+    "path": "supabase/tests/companion-actions/boundary_test.ts",
+    "sha256": "0d6ab675281fbe510163f5654579c3d020a553f9895215a7ad3b96a7b8180da5"
+  },
+  {
+    "path": "supabase/tests/companion-actions/command_test.ts",
+    "sha256": "43c91da07e58ec6a976e37643e59b07d2a85be700ec7271dc40cdd504fcb49de"
+  },
+  {
+    "path": "supabase/tests/companion-actions/compose_365_370_test.ts",
+    "sha256": "39c276d82eb9242e8d097e357b12103ea3978592769234c557861463924984d1"
+  },
+  {
+    "path": "supabase/tests/companion-actions/compose_367_370_recovery_test.ts",
+    "sha256": "c97c1a6a8afc0940c8ceafc0cf1c553a7b6652582418df59d437a1fcf7cb7fb2"
+  },
+  {
+    "path": "supabase/tests/companion-actions/compose_367_370_rollback_test.ts",
+    "sha256": "d2909bdc7df43eb54286e19ac717bf103b8dae8f3c233b42c2d2174bc62af9a5"
+  },
+  {
+    "path": "supabase/tests/companion-actions/compose_367_370_test.ts",
+    "sha256": "5a529382c223574d6e1db06535a5fedadf08f28cab6ae3637f164bb122ef54e7"
+  },
+  {
+    "path": "supabase/tests/companion-actions/compose_rollback_test.ts",
+    "sha256": "1b073284910a0c71afc77fded2e582f42ca61c4000dab3598da29b76c0a893e6"
+  },
+  {
+    "path": "supabase/tests/companion-actions/create_rollback_test.ts",
+    "sha256": "cc7343cdb1d553f288c18146d5bfa93abc2eb6d80a56543dee96987e1751c886"
+  },
+  {
+    "path": "supabase/tests/companion-actions/create_test.ts",
+    "sha256": "5cf1e10e2e9f03825d01da6f5d16873a7628ca0d13ef6049cee2cee7367e3cbb"
+  },
+  {
+    "path": "supabase/tests/companion-actions/details_language_test.ts",
+    "sha256": "a5a7693098d7bd839a620ee94e0ac71da00338b2143cb8d5f0208af9928f36f4"
+  },
+  {
+    "path": "supabase/tests/companion-actions/details_rollback_test.ts",
+    "sha256": "580657f95996c081439504a01addcf9985468711a46e46ee1c0e7c9bc86bb3bc"
+  },
+  {
+    "path": "supabase/tests/companion-actions/details_test.ts",
+    "sha256": "358a3ceb14c3c5f009f3a28569cad297b1f1f799b0a7dafbfad7fe8b3731ffd4"
+  },
+  {
+    "path": "supabase/tests/companion-actions/edit_command_test.ts",
+    "sha256": "d8d3030ce3b5ede752d325fdcb54f29d0f835b162df518fe7695b2565fdc96f0"
+  },
+  {
+    "path": "supabase/tests/companion-actions/edit_published_test.ts",
+    "sha256": "f7817ba52824f919428da121cd5790664ce2748409b2943c9791ca080a944cd0"
+  },
+  {
+    "path": "supabase/tests/companion-actions/edit_rollback_test.ts",
+    "sha256": "80c3f5be3969136eeefcbb6c41fb9b9b902331fc2c7273970cfc18295fc84d95"
+  },
+  {
+    "path": "supabase/tests/companion-actions/edit_test.ts",
+    "sha256": "86a1edd31c566d18b4da6a25ed467828d9cdabdfcde5b2013a14206f378603da"
+  },
+  {
+    "path": "supabase/tests/companion-actions/edit_undo_test.ts",
+    "sha256": "c287a50e64c15a6d22a77934ffe1fbde24d08416d0b202da42fc73d1d8b0b3af"
+  },
+  {
+    "path": "supabase/tests/companion-actions/planSupport.ts",
+    "sha256": "e3ebb6944d36e4fbc210fc61d233913eacb8b009542f96597ee0034adcdab616"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_access_test.ts",
+    "sha256": "be1228f01eaaf628b620dffaccbf58aab2c12428c98667c05a5810d336e3aae7"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_multiple_reviews_test.ts",
+    "sha256": "8f3122f5d8b11c847f3596217506de170453e6faf3900c9b2fe0bd8e62dde1c4"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_recovery_test.ts",
+    "sha256": "6709f6c1cc83e6e66c686be9450e84afad107fbca28a8aa7fbc1506c53c1a4f7"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_retry_review_test.ts",
+    "sha256": "a27a55a3cd70746b88718d9f067f0f88eb38cf223a6c0b6d14097af3ef3480da"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_rollback_test.ts",
+    "sha256": "3978e755e85f27a88a2d358454003aa3377e653421c167a53e3e07b661d86640"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_test.ts",
+    "sha256": "65538167991498a9a9594c4a0c1723311bac8983dd79123cdc09ca56d3bf1fb0"
+  },
+  {
+    "path": "supabase/tests/companion-actions/plan_undo_test.ts",
+    "sha256": "225af82560c5c1e1c184a241483b9ad308ff3a56cf38f994c3d6d3c6a202404a"
+  },
+  {
+    "path": "supabase/tests/companion-actions/pushSupport.ts",
+    "sha256": "e1856a34f7d134c04c0e7e8bef6f56c399ac489828abb5fa4dcc7d71384c5b4f"
+  },
+  {
+    "path": "supabase/tests/companion-actions/push_delivery_test.ts",
+    "sha256": "190b01bea54fffa5a2b116cb080f00d09b45716867a997666a4eb359c8f61a6f"
+  },
+  {
+    "path": "supabase/tests/companion-actions/push_enrollment_test.ts",
+    "sha256": "43fea8d6e57c9f5fd4711d888c5b66813fa2036dd8b9644c74547e873d914c9c"
+  },
+  {
+    "path": "supabase/tests/companion-actions/push_recovery_test.ts",
+    "sha256": "13f6c87b116df0ddf6de7ef237ac73bf41b54292b19085557e920d0d088b3adf"
+  },
+  {
+    "path": "supabase/tests/companion-actions/receipt_history_test.ts",
+    "sha256": "90e71dbfe9406b1d0de38c4b35ab3385d5218ceec90f4d94a12a1cf5d27c4cfb"
+  },
+  {
+    "path": "supabase/tests/companion-actions/reminders_commands_test.ts",
+    "sha256": "bc469be0cb47b238edbf4ff040d63614e95edf3cd3744a01ac3afc5bb8e04df0"
+  },
+  {
+    "path": "supabase/tests/companion-actions/reminders_races_test.ts",
+    "sha256": "f9f4f1f0a7fc055182e52d85f5773f30bf5cafffc5763652aec1751de9294c97"
+  },
+  {
+    "path": "supabase/tests/companion-actions/reminders_test.ts",
+    "sha256": "e72d80df0b168b0ecedfd2eef30daba6fa203437b96990b329ad45b9c38ceb9f"
+  },
+  {
+    "path": "supabase/tests/companion-actions/remove_plan_race_test.ts",
+    "sha256": "59f3c230369c358c2ee9aaca2a96acb6df765b0f745de16f2c1477c08caf652c"
+  },
+  {
+    "path": "supabase/tests/companion-actions/remove_rollback_test.ts",
+    "sha256": "0bb9741becbf5f30736850dc0940f0394d5760aa36428bfc1fd48e14f0ecd230"
+  },
+  {
+    "path": "supabase/tests/companion-actions/remove_test.ts",
+    "sha256": "ac2fe2694677151d8ad0c3d71678c827e8f5548b223637a75d9cc2317cedab11"
+  },
+  {
+    "path": "supabase/tests/companion-actions/rollback_test.ts",
+    "sha256": "398b254f7e37b96123e908b75549836d4697f80806589740082256858d6bdc4a"
+  },
+  {
+    "path": "supabase/tests/companion-actions/steps_context_race_test.ts",
+    "sha256": "5ac5876ea968bd4e675cf5b3cba461d52a931bd2f318b8cfe17cec7feead5205"
+  },
+  {
+    "path": "supabase/tests/companion-actions/steps_parent_race_test.ts",
+    "sha256": "86eb673fb915b2ab125a14960a2ebf6adfd1a576a5c3a49331022ed86e1a6271"
+  },
+  {
+    "path": "supabase/tests/companion-actions/steps_rollback_test.ts",
+    "sha256": "8c28785e9f1316793a099ee00abf814d56f3b6e0086f040371772fffcfaef24a"
+  },
+  {
+    "path": "supabase/tests/companion-actions/steps_test.ts",
+    "sha256": "1d8f2eb230b25cee0f302f625220698c17c3ce1d557fd0990f5ff6e2bb43697a"
+  },
+  {
+    "path": "supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+    "sha256": "071b5a982342b0f08b97f4eddc1fea6ecc2fde9457b5eacc0a195533567b567b"
+  },
+  {
+    "path": "supabase/tests/companion-actions/supabase/migrations/20260101000001_generation_quota_tripwire.sql",
+    "sha256": "41d96ef29f95fbb2a1b926c64417931cb29850c09fcf78bfa0796fd902605126"
+  },
+  {
+    "path": "supabase/tests/companion-actions/support.ts",
+    "sha256": "d61674fc8173631bf7c7c9936f797f28a3c8f487924febbd4fc820f5afe40e9c"
+  },
+  {
+    "path": "supabase/tests/companion-actions/undo_test.ts",
+    "sha256": "538ab0793cb5bfa4583b0a1d01adbbaddfd4669f21785133d22d6066e7661999"
+  },
+  {
+    "path": "supabase/migrations/20260518100000_users.sql",
+    "sha256": "1afdf208e15b9007d92bf1908ceba8b5d489d40c4a4ff6ff6840d5d8fff6a51a"
+  },
+  {
+    "path": "supabase/migrations/20260518100100_groups.sql",
+    "sha256": "7bf5492d87464fe6094e3a41f5c198e8a7cf3632673c8ab1bb7ee5eebc59780c"
+  },
+  {
+    "path": "supabase/migrations/20260518100200_posts.sql",
+    "sha256": "9fc9dcc2c5fb544789c0f717f5e1f38f58141d738d7be289db6979b9dc30b7bf"
+  },
+  {
+    "path": "supabase/migrations/20260518100300_companion.sql",
+    "sha256": "e94237f2fb1f1974fd66f072b808ef9c7ea62e89934be905b360e60596024cff"
+  },
+  {
+    "path": "supabase/migrations/20260518100400_checklist.sql",
+    "sha256": "f2f0a18793885ec4831926fd0256a8175b5f01eff4e48f205764dec62f063189"
+  },
+  {
+    "path": "supabase/migrations/20260518100500_community.sql",
+    "sha256": "6632f49c62a6412ba5c885db01dfe9724fb33fd30c86ac8aef0f55cba20a7013"
+  },
+  {
+    "path": "supabase/migrations/20260518100600_learn.sql",
+    "sha256": "352a43bf05b75fa7e380c903537f17b00bb8c767e70f5fb61dad66a3fad38845"
+  },
+  {
+    "path": "supabase/migrations/20260518100700_rpcs.sql",
+    "sha256": "422540b4d5f7b01d346583269ec47582815e597198177f221286a7b86229f813"
+  },
+  {
+    "path": "supabase/migrations/20260518100800_grants.sql",
+    "sha256": "4d710b4fbf08a28daf6641938358ec67ae4b091ecd38ca974164f0c77e739d88"
+  },
+  {
+    "path": "supabase/migrations/20260528120000_learn_favourites.sql",
+    "sha256": "002447010373377412304ad9982be9e1e44a36f60d367af266e36d48dacae8a6"
+  },
+  {
+    "path": "supabase/migrations/20260529120000_circles.sql",
+    "sha256": "14c86cd5485f7aa86866cdd8dc5d47819d76da29cb55fd59c03cc6f08149490a"
+  },
+  {
+    "path": "supabase/migrations/20260529130000_circles_rls_fix.sql",
+    "sha256": "b310bbf331c534d65ef1b48b8536c81094b9fcf07385d2ce096439bb50d84547"
+  },
+  {
+    "path": "supabase/migrations/20260529140000_circles_waitlist_insert_guard.sql",
+    "sha256": "1f642d91ffc0bf2718e47b2cbfc014cae7377490e09a412d8ccdc3bf074382cb"
+  },
+  {
+    "path": "supabase/migrations/20260530120000_rag_knowledge_base.sql",
+    "sha256": "f548159d14555f504ce458cb4f81b4356e4c3091f07bd0e416d0d81075015b48"
+  },
+  {
+    "path": "supabase/migrations/20260531120000_user_practice_progress.sql",
+    "sha256": "d652aa6309892c9fdbfcdbe004fa70201151329c9c5da6541ff3c98290510478"
+  },
+  {
+    "path": "supabase/migrations/20260601120000_user_lesson_quiz_progress.sql",
+    "sha256": "77055ae27e66f070013e911f9e07274aa374df060201285d8418a0b7dd59aa7f"
+  },
+  {
+    "path": "supabase/migrations/20260601130000_seed_community_news.sql",
+    "sha256": "bda4e702ed03265105fb06893fec935266825a2e7e3250fd946505077e3beec3"
+  },
+  {
+    "path": "supabase/migrations/20260603120000_post_images_storage.sql",
+    "sha256": "a07bb6ff1f9e5065ecba893419431018125930754962261ec51fb1e606935490"
+  },
+  {
+    "path": "supabase/migrations/20260603130000_seed_community_groups.sql",
+    "sha256": "6b799c3ed73b84f6941e1edeabb708f779af9aaf4162e81ed437742c047566ce"
+  },
+  {
+    "path": "supabase/migrations/20260604120000_comment_likes.sql",
+    "sha256": "9da4f739ca0b354c6efb339a2eb174dc81f5dbb8c1480537af71cfea6ac42bef"
+  },
+  {
+    "path": "supabase/migrations/20260605063600_backfill_kb_source_urls.sql",
+    "sha256": "548531d49076eaa031d03b8608b2f671bd449442db7f47ece948dc2015b98bb2"
+  },
+  {
+    "path": "supabase/migrations/20260605111144_messages_suggested_next_steps.sql",
+    "sha256": "51344e6bafdacc81fc0947dd0f14356eb2b7e1aa1eeb858ba249a2ed440466f0"
+  },
+  {
+    "path": "supabase/migrations/20260605120000_onboarding_extra_fields.sql",
+    "sha256": "42856b81d093f45a8c197a3f32256bb95277da97c6712abe91cb521971242023"
+  },
+  {
+    "path": "supabase/migrations/20260606120000_daily_tips.sql",
+    "sha256": "dea7db9a185665b8cbc2852b97555ecfb3d4c3d726aeb1b2fd5f7aa890a75fe2"
+  },
+  {
+    "path": "supabase/migrations/20260606130000_daily_tips_stage_constraint.sql",
+    "sha256": "9c6c9ffb4a8884c8e009ae629c1fe0f626d7ba4a9304ee0e0636d8d43fe166c8"
+  },
+  {
+    "path": "supabase/migrations/20260606140000_avatars_storage.sql",
+    "sha256": "00cd3d62aa998ec0da12d148f06ad88717c9749f56b94d389d07d19166c5c930"
+  },
+  {
+    "path": "supabase/migrations/20260606150000_security_hardening.sql",
+    "sha256": "7507e6f1e8cc638701d602c49aba04eac5360bcdc9268d749b1ed17d851051a2"
+  },
+  {
+    "path": "supabase/migrations/20260607120000_lesson_highlights_mobile_parity.sql",
+    "sha256": "2ebc862fd09fbebfd1793486d83098558c175437ccaa44d69e88628148672e5d"
+  },
+  {
+    "path": "supabase/migrations/20260615000000_web_mobile_shared_db.sql",
+    "sha256": "af054d92206505a69813cc087c56fe217cd4bb99decb3f88419cc8b7fa243ac0"
+  },
+  {
+    "path": "supabase/migrations/20260615000001_progress_table_constraints.sql",
+    "sha256": "d380f773147f1ff68b7aea0b4372bbc3473141021acbf715be06ffe71de2ee88"
+  },
+  {
+    "path": "supabase/migrations/20260615000002_progress_table_constraints_fix.sql",
+    "sha256": "e336e210782d02bb3133e7d2fcbf310c8daa7849d86c53b29c0c14bc2d153e9c"
+  },
+  {
+    "path": "supabase/migrations/20260617160000_post_report_unique_reporter_post.sql",
+    "sha256": "3dc61640b0c8c78c77eb93062cd4dcbcd69d76641d136f8027939a94f0053277"
+  },
+  {
+    "path": "supabase/migrations/20260617_kb_source_url_backfill.sql",
+    "sha256": "4a48d78e1fff4c14aa0ac8b91c4a73012c8099081cbcda302be15edda9992a63"
+  },
+  {
+    "path": "supabase/migrations/20260618130000_kb_source_url_backfill_sin.sql",
+    "sha256": "5c593400f6a78d04356e6ce025868076868fbc8f281a4a95c3357496edcc1a4e"
+  },
+  {
+    "path": "supabase/migrations/20260618140000_kb_source_url_backfill_msp_tfsa.sql",
+    "sha256": "0a75b54d624a60a04435baf62b16f4894f1e4e9daacab2962c088b68907e8389"
+  },
+  {
+    "path": "supabase/migrations/20260619120000_group_covers_unsplash.sql",
+    "sha256": "9df07a26e36bcfef8f91d1f7f372bed71e98afd2895b1b73d4826b91d701ecc3"
+  },
+  {
+    "path": "supabase/migrations/20260619130000_news_details_crawler.sql",
+    "sha256": "e16e7b2307b64d2a3ac69ff53b0b2169a141a8d46699aba57d237fbcce460b2d"
+  },
+  {
+    "path": "supabase/migrations/20260701120000_add_signup_source.sql",
+    "sha256": "d5e8f4e4b8f1e6376b3b841c040f2fbe8d2135d58d9aaf3b76a9c2174e66dc1d"
+  },
+  {
+    "path": "supabase/migrations/20260705190000_conversations_source_tag.sql",
+    "sha256": "531d969b2903bd14c722875d2ff8121f854583d6eae9e8b40a2981512cb3fc3e"
+  },
+  {
+    "path": "supabase/migrations/20260708000000_lesson_quiz_answers.sql",
+    "sha256": "1694e3b751516765df8c5c060b49e5229d33bd5e00460a259b0f4e1af27ec06d"
+  },
+  {
+    "path": "supabase/migrations/20260709120000_content_translations.sql",
+    "sha256": "6f878172b6da32b47a2236feb4ad9d271a2f0ef7392d12b1df8e4431ff9e09b5"
+  },
+  {
+    "path": "supabase/migrations/20260711120000_discussion_translations.sql",
+    "sha256": "bb1b141b058885682f96ec966736c934c66d64def7c2b7eea62ab78c8f94335f"
+  },
+  {
+    "path": "supabase/migrations/20260722120000_events_crawler.sql",
+    "sha256": "8fe3811e0220d02bea5c9e7ad14ec73ea1264d926a569ece6458c6fc6b4791b3"
+  },
+  {
+    "path": "supabase/migrations/20260724120000_events_crawler_cron.sql",
+    "sha256": "b336aa2fb24c1fbe89caa16ec63c7aa5658ef33dc89ba84d212e9d22f4a233d8"
+  },
+  {
+    "path": "supabase/migrations/20260724130000_events_external_link_unique.sql",
+    "sha256": "5422fb45f0a5917e2caf13062cd1cfff82d6a2a7781a5e99fc6bf948277e2b26"
+  },
+  {
+    "path": "supabase/migrations/20260825120000_resume_persistence.sql",
+    "sha256": "23142c3b03da25390a56ae4851f59c99cf9d7ea311d0617e0f7399870024764e"
+  },
+  {
+    "path": "supabase/migrations/20260904120000_cover_letters.sql",
+    "sha256": "94cbbe380ecacb58ff5ba3599f44a1d80b8f8ddf23827d20b82a59cca9076aac"
+  },
+  {
+    "path": "supabase/migrations/20260920120000_event_group_tip_translations.sql",
+    "sha256": "686cf4a70d97cdd04f3f085a275ff285f77657748f148d1f3a5a21c6478ca68f"
+  },
+  {
+    "path": "supabase/migrations/20260925120000_events_featured_partner.sql",
+    "sha256": "9b08a4c96e66f60cb691ffc471b2426ca392d4649c93f287039bfa9e91452471"
+  },
+  {
+    "path": "supabase/migrations/20260926120000_events_admin.sql",
+    "sha256": "3a01f8eccc4f4ee6015f50d9eb88e345526a2914b7112ac1508a1bcb950a5d8a"
+  },
+  {
+    "path": "supabase/migrations/20261006120000_groups_i18n_columns.sql",
+    "sha256": "1b1c4e99f40c42710e2098defd7f19f68d896d2a2e3d7152f803efb5fee9adaa"
+  },
+  {
+    "path": "supabase/migrations/20261012192046_checklist_task_dismissals.sql",
+    "sha256": "366aabc3e39aee34f5303d1401dd8b9e2d752ffb4bc4f2c5711398146c55cfd4"
+  },
+  {
+    "path": "supabase/migrations/20261023175450_fix_companion_credential_source_url.sql",
+    "sha256": "619354d92dbe8f2fce7e71d1b289d9a51eceb664c6193e7340b377bc9abb7a99"
+  },
+  {
+    "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+    "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111"
+  },
+  {
+    "path": "supabase/migrations/20261026120000_messages_companion_context.sql",
+    "sha256": "8f2a3bba1ef32bf5d84427a06890625404ed259a92c33c8ee51345f1f7224246"
+  },
+  {
+    "path": "supabase/migrations/20261026165156_companion_task_create.sql",
+    "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808"
+  },
+  {
+    "path": "supabase/migrations/20261027183338_companion_settlement_plan.sql",
+    "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d"
+  },
+  {
+    "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+    "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8"
+  },
+  {
+    "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+    "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6"
+  },
+  {
+    "path": "supabase/migrations/20261028004902_companion_saved_details.sql",
+    "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374"
+  },
+  {
+    "path": "supabase/migrations/20261028025026_companion_task_remove.sql",
+    "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b"
+  },
+  {
+    "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+    "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7"
+  },
+  {
+    "path": "supabase/migrations/20261030181040_companion_reminder_push.sql",
+    "sha256": "ee7ac370a923befbaa320c904feed9f3bebd0350fe7d4e66359b835bb1ffa180"
+  },
+  {
+    "path": "supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+    "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001"
+  },
+  {
+    "path": "supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+    "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332"
+  },
+  {
+    "path": "supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+    "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91"
+  },
+  {
+    "path": "supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+    "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967"
+  },
+  {
+    "path": "supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+    "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539"
+  },
+  {
+    "path": "supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+    "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6"
+  },
+  {
+    "path": "supabase/rollbacks/20261028025026_companion_task_remove.down.sql",
+    "sha256": "821398d146159a42cd31fb12acccd83e95899e6ea47ef1fae23d8e0a9208c6de"
+  },
+  {
+    "path": "supabase/rollbacks/20261029175439_companion_task_reminders.down.sql",
+    "sha256": "9282bc6a64bc4fa5a74c4e702e588191412a97934e00ca76caf2317b670d3049"
+  },
+  {
+    "path": "supabase/workers/companion-push/copy.ts",
+    "sha256": "a6647887d3e4d561e925a305b57043515fb09036d67c6cdf209a509ae7d15f03"
+  },
+  {
+    "path": "supabase/workers/companion-push/process.ts",
+    "sha256": "fce9a97fa7d9223c825682a3e316f961a37db3a3a9bd85802c41f8fea4fab16f"
+  },
+  {
+    "path": "supabase/workers/companion-push/supervisor.ts",
+    "sha256": "454830ad2c12501e79472af3ca2db2e485b0716f36a3f1d1362c30c472480e12"
+  },
+  {
+    "path": "supabase/workers/companion-push/worker.ts",
+    "sha256": "15effae02437fe22ee1ce46c8244e2581a3baa9c2826f0bf0090766698f0a4d7"
+  }
+]
