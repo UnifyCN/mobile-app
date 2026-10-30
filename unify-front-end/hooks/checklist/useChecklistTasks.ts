@@ -229,6 +229,8 @@ export const useChecklistTasks = ({
     tasks,
     isLoading,
     error: query.error ? String(query.error) : null,
+    // An owned notification needs a completed read of this exact query.
+    revalidateCurrent: query.refetch,
     refetch,
     setTasks,
   };

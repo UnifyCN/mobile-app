@@ -80,12 +80,11 @@ export function CompanionPushControl() {
                 t('companionPush.disable'),
                 () => void device.disable(locale)
               )
-            : !['unsupported', 'revoked', 'sessionEnded', 'busy'].includes(
-                  view.phase
-                )
+            : !['unsupported', 'revoked', 'busy'].includes(view.phase)
               ? button(
                   t('companionPush.enable'),
-                  () => void device.enable(locale)
+                  () =>
+                    void device.enable(locale, view.phase === 'sessionEnded')
                 )
               : null}
       {button(t('companionPush.refresh'), () => void device.refresh(locale))}

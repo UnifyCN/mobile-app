@@ -41,6 +41,8 @@ import { PlanPanel } from '../plans/PlanPanel';
 import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
 import { DetailProposalPanel, SavedDetailsPanel } from './SavedDetails';
+import { ownAccountWork, stillOwned } from '@/services/account/accountSession';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 
 const STATE_ORDER: TaskState[] = [
   'in_progress',
@@ -53,6 +55,8 @@ const INK_MUTED = '#64748B';
 const BORDER = '#E2E8F0';
 
 interface TaskActionsSheetProps {
+  notificationId?: string | null;
+  onNotificationReady?: (id: string) => void;
   notificationResult?: 'task' | 'unavailable' | 'failed';
   onRetryNotification?: () => void;
   visible: boolean;
@@ -85,6 +89,8 @@ export function TaskActionsSheet({
   visible,
   onClose,
   notificationResult,
+  notificationId = null,
+  onNotificationReady,
   onRetryNotification,
   proposalId = null,
   proposalKind = 'task_create',
@@ -107,8 +113,12 @@ export function TaskActionsSheet({
     if (visible) setSelectedRef(initialRef);
   }, [visible, initialRef]);
   useEffect(() => {
-    if (visible) setShowDetails(openDetails);
-  }, [visible, openDetails]);
+    if (visible) setShowDetails(notificationId ? false : openDetails);
+  }, [visible, openDetails, notificationId]);
+  useEffect(() => {
+    if (visible && notificationId && notificationResult !== 'task')
+      onNotificationReady?.(notificationId);
+  }, [visible, notificationId, notificationResult, onNotificationReady]);
   useEffect(() => {
     let cancelled = false;
     AccessibilityInfo.isReduceMotionEnabled()
@@ -234,7 +244,7 @@ export function TaskActionsSheet({
                   </Pressable>
                 ) : null}
               </View>
-            ) : visible && showDetails ? (
+            ) : visible && showDetails && !notificationId ? (
               <DetailsBody />
             ) : visible && detailProposalId ? (
               <DetailProposalBody
@@ -258,8 +268,10 @@ export function TaskActionsSheet({
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (
               <SheetBody
+                notificationId={notificationId}
+                onNotificationReady={onNotificationReady}
                 requireCurrentAccess={notificationResult === 'task'}
-                selectedRef={selectedRef}
+                selectedRef={notificationId ? initialRef : selectedRef}
                 fallbackTitle={
                   initialTask && initialTask.taskRef === selectedRef
                     ? initialTask.title
@@ -372,6 +384,8 @@ function StepProposalBody({ proposalId }: { proposalId: string }) {
 }
 
 function SheetBody({
+  notificationId = null,
+  onNotificationReady,
   requireCurrentAccess = false,
   selectedRef,
   fallbackTitle,
@@ -379,6 +393,8 @@ function SheetBody({
   onOpenDetails,
   onOpenChecklist,
 }: {
+  notificationId?: string | null;
+  onNotificationReady?: (id: string) => void;
   selectedRef: string | null;
   requireCurrentAccess?: boolean;
   /** The title to show when the Checklist read does not have the task yet. */
@@ -390,6 +406,7 @@ function SheetBody({
   const { t } = useTranslation();
   const router = useRouter();
   const view = useTaskProgress();
+  const account = useAccountSnapshot();
   const store = useTaskActionStore('companion');
   const today = useRefreshingToday();
   const {
@@ -407,6 +424,7 @@ function SheetBody({
     tasks,
     isLoading: tasksLoading,
     error: tasksError,
+    revalidateCurrent,
   } = useChecklistTasks({
     currentStage,
     stageChanged,
@@ -414,6 +432,62 @@ function SheetBody({
     isStageLoading: stageLoading,
     province,
   });
+  const [verification, setVerification] = useState<{
+    id: string;
+    status: 'ready' | 'failed';
+  } | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    if (
+      !notificationId ||
+      !selectedRef ||
+      stageLoading ||
+      profileLoading ||
+      tasksLoading ||
+      !account.accountId
+    )
+      return;
+    const owner = ownAccountWork();
+    let active = true;
+    setVerification(null);
+    void revalidateCurrent()
+      .then(result => {
+        if (active && stillOwned(owner))
+          setVerification({
+            id: notificationId,
+            status: result.isError ? 'failed' : 'ready',
+          });
+      })
+      .catch(() => {
+        if (active && stillOwned(owner))
+          setVerification({ id: notificationId, status: 'failed' });
+      });
+    return () => {
+      active = false;
+    };
+  }, [
+    notificationId,
+    selectedRef,
+    stageLoading,
+    profileLoading,
+    tasksLoading,
+    revalidateCurrent,
+    account.accountId,
+    account.epoch,
+    attempt,
+  ]);
+  const verifying = Boolean(
+    notificationId && verification?.id !== notificationId
+  );
+  const waiting =
+    view.status === 'loading' ||
+    stageLoading ||
+    profileLoading ||
+    tasksLoading ||
+    verifying;
+  useEffect(() => {
+    if (notificationId && !waiting) onNotificationReady?.(notificationId);
+  }, [notificationId, waiting, onNotificationReady]);
 
   const active = useMemo(
     () => tasks.filter(task => !task.dismissed_at),
@@ -437,12 +511,7 @@ function SheetBody({
       ? t('taskActions.existingTask')
       : null);
 
-  if (
-    view.status === 'loading' ||
-    stageLoading ||
-    profileLoading ||
-    tasksLoading
-  ) {
+  if (waiting) {
     return (
       <Text style={styles.message} accessibilityLiveRegion='polite'>
         {t('taskActions.loading')}
@@ -454,6 +523,22 @@ function SheetBody({
   }
   if (view.status === 'unavailable') {
     return <Text style={styles.message}>{t('taskActions.unavailable')}</Text>;
+  }
+  if (notificationId && verification?.status === 'failed') {
+    return (
+      <View style={styles.scrollContent}>
+        <Text accessible accessibilityRole='alert'>
+          {t('companionPush.targetFailed')}
+        </Text>
+        <Pressable
+          accessibilityRole='button'
+          onPress={() => setAttempt(n => n + 1)}
+          style={[styles.link, { minHeight: minTarget() }]}
+        >
+          <Text style={styles.linkText}>{t('companionPush.check')}</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   if (

@@ -53,6 +53,12 @@ interface RecordValue extends Proof {
   pending: PushApplyRequest | null;
   retired: boolean;
   receiptId?: string | null;
+  knownRevision?: number;
+  cleanup?: {
+    accountId: string;
+    sessionId: string;
+    pending: PushApplyRequest;
+  }[];
 }
 export interface PushDeviceDependencies {
   read(owner?: AccountSnapshot): Promise<string | null>;
@@ -84,6 +90,7 @@ function stored(raw: string): RecordValue {
     typeof v.sessionId !== 'string' ||
     !v.sessionId ||
     typeof v.retired !== 'boolean' ||
+    !(v.knownRevision === undefined || pushRevision(v.knownRevision)) ||
     !(v.token === null || pushToken(v.token))
   )
     throw new Error('storage');
@@ -140,6 +147,27 @@ function stored(raw: string): RecordValue {
       throw new Error('storage');
     pending = p as unknown as PushApplyRequest;
   }
+  const cleanup = v.cleanup === undefined ? [] : v.cleanup;
+  if (!Array.isArray(cleanup)) throw new Error('storage');
+  const retained = cleanup.map(raw => {
+    const item = pushObject(raw);
+    // Apply the same proof and envelope checks. Archives are never dispatched.
+    const parsed = stored(
+      JSON.stringify({
+        ...v,
+        accountId: item.accountId,
+        sessionId: item.sessionId,
+        pending: item.pending,
+        cleanup: undefined,
+      })
+    );
+    if (!parsed.pending) throw new Error('storage');
+    return {
+      accountId: parsed.accountId,
+      sessionId: parsed.sessionId,
+      pending: parsed.pending,
+    };
+  });
   return {
     version: 1,
     installation_id: v.installation_id,
@@ -151,6 +179,8 @@ function stored(raw: string): RecordValue {
     pending,
     retired: v.retired,
     receiptId: v.receiptId as string | null | undefined,
+    knownRevision: v.knownRevision as number | undefined,
+    cleanup: retained,
   };
 }
 /** One serialized secure record per installation. No task state, model or analytics access. */
@@ -260,14 +290,20 @@ export class CompanionPushDevice {
     assertOwned(owner);
     this.record = value;
   }
-  private async load(owner: AccountSnapshot): Promise<RecordValue | null> {
+  private async load(
+    owner: AccountSnapshot,
+    freshConsent = false
+  ): Promise<RecordValue | null> {
     assertOwned(owner);
     const raw = await this.deps.read(owner);
     assertOwned(owner);
     const value = raw === null ? null : stored(raw);
     if (value && (value.accountId !== owner.accountId || value.retired)) {
-      this.show(owner, 'sessionEnded');
-      return null;
+      if (!freshConsent) {
+        this.show(owner, 'sessionEnded');
+        return null;
+      }
+      return value;
     }
     this.record = value;
     this.receiptSaved = Boolean(value?.receiptId);
@@ -363,11 +399,22 @@ export class CompanionPushDevice {
           : 'off'
     );
   }
-  enable = (locale: PushLocale) =>
+  enable = (locale: PushLocale, freshConsent = false) =>
     this.run(async (owner, client) => {
-      const existing = await this.load(owner);
+      const existing = await this.load(owner, freshConsent);
       if (this.view.phase === 'sessionEnded') return;
-      if (existing?.pending) {
+      const recovering = Boolean(
+        existing &&
+        freshConsent &&
+        (existing.retired ||
+          existing.accountId !== owner.accountId ||
+          existing.sessionId !== this.deps.session())
+      );
+      if (recovering) {
+        this.record = null;
+        this.receiptSaved = false;
+      }
+      if (existing?.pending && !recovering) {
         this.show(owner, 'unknown');
         return;
       }
@@ -405,17 +452,46 @@ export class CompanionPushDevice {
         retired: false,
       };
       if (existing) {
-        const current = await this.current(owner, client, existing);
-        if (!current) return;
-        value = { ...current, sessionId };
+        // Read only this account's current enrollment. A transfer can return null;
+        // its last known revision is checked atomically by the service apply.
+        const read = await client.read(this.proofOf(existing));
+        assertOwned(owner);
+        if (read.kind !== 'ok') {
+          this.show(owner, read.kind);
+          return;
+        }
+        const enrollment = read.value.enrollment;
+        value = {
+          ...existing,
+          accountId: owner.accountId!,
+          sessionId,
+          retired: false,
+          pending: null,
+          enrollment,
+          knownRevision:
+            enrollment?.revision ??
+            existing.enrollment?.revision ??
+            existing.knownRevision ??
+            0,
+          cleanup: [
+            ...(existing.cleanup ?? []),
+            ...(recovering && existing.pending
+              ? [
+                  {
+                    accountId: existing.accountId,
+                    sessionId: existing.sessionId,
+                    pending: existing.pending,
+                  },
+                ]
+              : []),
+          ],
+          ...(recovering ? { receiptId: null } : {}),
+        };
         if (
-          (existing.enrollment && !current.enrollment) ||
-          current.enrollment?.revoked
+          (!recovering && existing.enrollment && !enrollment) ||
+          enrollment?.revoked
         ) {
-          this.show(
-            owner,
-            current.enrollment?.revoked ? 'revoked' : 'unavailable'
-          );
+          this.show(owner, enrollment?.revoked ? 'revoked' : 'unavailable');
           return;
         }
       }
@@ -427,7 +503,8 @@ export class CompanionPushDevice {
       const operation: PushOperation = {
         type: 'push.enroll',
         ...this.proofOf(value),
-        expected_revision: value.enrollment?.revision ?? 0,
+        expected_revision:
+          value.enrollment?.revision ?? value.knownRevision ?? 0,
         token,
         enabled: true,
         locale,

@@ -219,6 +219,9 @@ export default function CompanionScreen() {
   }
 
   const pushSelection = useCompanionPushSelection();
+  const onPushSelectionReady = useCallback((id: string) => {
+    companionPushIntents.complete(id);
+  }, []);
   useEffect(() => {
     if (!pushSelection || !stillOwned(pushSelection.owner)) return;
     setSheet({
@@ -227,14 +230,6 @@ export default function CompanionScreen() {
       target: pushSelection.target,
     });
   }, [pushSelection]);
-  useEffect(() => {
-    if (
-      sheet?.kind === 'push' &&
-      pushSelection?.deliveryId === sheet.deliveryId &&
-      stillOwned(pushSelection.owner)
-    )
-      companionPushIntents.complete(sheet.deliveryId);
-  }, [sheet, pushSelection]);
 
   // Fetch messages for the current conversation
   const { data: dbMessages, isLoading: isLoadingMessages } =
@@ -955,6 +950,8 @@ export default function CompanionScreen() {
       <TaskActionsSheet
         // The sheet's selection and title cache belong to this account session.
         key={`${accountId ?? 'unknown'}:${accountEpoch}`}
+        notificationId={sheet?.kind === 'push' ? sheet.deliveryId : null}
+        onNotificationReady={onPushSelectionReady}
         notificationResult={
           sheet?.kind === 'push'
             ? sheet.target.target === 'available'
