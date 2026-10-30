@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "method": "normal simctl console, current locally built app, kernel guard before initialization",
+  "method_label_is_not_proof": true,
+  "load_order_gate_passed": false,
+  "observed_outcome": "Reached the development launcher. Guard READY line 561 follows the first bundled framework initializer at line 404. It precedes the first Unify.debug initializer at line 562. Required strict order fails."
+}

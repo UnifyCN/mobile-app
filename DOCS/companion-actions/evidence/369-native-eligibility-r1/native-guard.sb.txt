@@ -1,0 +1,1 @@
+(version 1)(allow default)(deny network-outbound)(allow network-outbound (remote ip "localhost:63710") (remote ip "localhost:8371") (remote ip "localhost:3396") (remote ip "localhost:3397"))

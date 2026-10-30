@@ -1,0 +1,18 @@
+{
+  "taskRef": "custom:1",
+  "deliveryIds": [
+    "fab0953a-7b82-44c5-86ea-a620ffd3a3d2",
+    "1bb86de0-a827-4025-b4f7-5168075acd36",
+    "f4b2e1e5-144c-4664-954d-2a0cb444ebd7",
+    "97ceb7cd-3fdc-4226-8577-74cfe8f61f4c"
+  ],
+  "directFixtureOnly": true,
+  "nativeEnrollment": false,
+  "providerDelivery": false,
+  "taskInsert": {
+    "status": 201,
+    "bytes": 431,
+    "seconds": 0.03609199999482371
+  },
+  "dispatcherState": "INSERT 0 1\nINSERT 0 1\nINSERT 0 1\nINSERT 0 1\n dispatch_enabled | provider_attempts \n------------------+-------------------\n f                |                 0\n(1 row)\n\n"
+}

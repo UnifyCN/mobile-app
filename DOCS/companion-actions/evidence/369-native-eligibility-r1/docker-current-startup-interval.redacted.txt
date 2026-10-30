@@ -1,0 +1,179 @@
+REDACTED LOG. Only the bounded current engine startup interval is retained.
+[2026-10-30T22:53:02.518695000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.519621000Z][com.docker.backend.apicache] 404 << GET /v1.55/containers/supabase_db_unify-push-369-native-r1/json
+[2026-10-30T22:53:02.546100000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.546272000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.546768000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.547000000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.547316000Z][com.docker.backend.idle] starting VM
+[2026-10-30T22:53:02.547864000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T22:53:02.548046000Z][com.docker.backend.engines] engine start requested
+[2026-10-30T22:53:02.552717000Z][com.docker.backend.idle] idle -> busy (was idle for 34m31.893023083s; reason: [1 calls to /v1.55/images/public.ecr.aws/supabase/edge-runtime:v1.76.2/json from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T22:53:02.555749000Z][com.docker.backend.engines] starting engine linux/virtualization-framework
+[2026-10-30T22:53:02.556145000Z][com.docker.backend.engines] starting engine linux/virtualization-framework
+[2026-10-30T22:53:02.556275000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state stopped -> starting
+[2026-10-30T22:53:02.556677000Z][com.docker.backend.events] adding server timestamp to event (engines): 1793400782556345000 docker: starting
+[2026-10-30T22:53:02.557262000Z][com.docker.backend.state] backend state changed to starting
+[2026-10-30T22:53:02.557587000Z][com.docker.backend.state] sending desktop state:EngineStartingState
+[2026-10-30T22:53:02.558413000Z][com.docker.backend.statehandler] sending to Dashboard: starting
+[2026-10-30T22:53:02.558608000Z][com.docker.backend.ipcstream] 64924325-BackendAPI /engine/state --> 2026-10-30T15:53:02.556345000-07:00 (789a9f73) engine starting:
+[2026-10-30T22:53:02.560727000Z][com.docker.backend.analytics.tracker] sending event: desktopState e58a13c4-4fad-4171-bc18-1fde4b321aa7
+[2026-10-30T22:53:02.560773000Z][com.docker.backend.analytics.tracker] sending event: desktopState e58a13c4-4fad-4171-bc18-1fde4b321aa7
+[2026-10-30T22:53:02.561408000Z][com.docker.backend.enginedependencies] resetting socket forwarder
+[2026-10-30T22:53:02.562228000Z][com.docker.backend.socketforwarder] closing previous connections
+[2026-10-30T22:53:02.563110000Z][com.docker.backend.socketforwarder] stop
+[2026-10-30T22:53:02.563210000Z][com.docker.backend.socketforwarder] start
+[2026-10-30T22:53:02.563854000Z][com.docker.backend.enginedependencies] closing all network connections
+[2026-10-30T22:53:02.564831000Z][com.docker.backend.gvisor] gvisor: context context canceled so closing ethernet connection
+[2026-10-30T22:53:02.568304000Z][com.docker.backend.socketforward] listening on virtual address: memlogd
+[2026-10-30T22:53:02.568371000Z][com.docker.backend.engines] engine linux/virtualization-framework log stream ready after 0s
+[2026-10-30T22:53:02.570032000Z][com.docker.backend.idle] event handler 8ab73e65-b190-47cf-9ac0-9e951211423b: event streamer: error: EOF
+[2026-10-30T22:53:02.570756000Z][com.docker.backend.engines.unix] VM will connect to host using connect://2/1999
+[2026-10-30T22:53:02.583020000Z][com.docker.backend] VM has started: /Applications/Docker.app/Contents/MacOS/com.docker.virtualization --kernel /Applications/Docker.app/Contents/Resources/linuxkit/kernel --cmdline init=/initd loglevel=1 root=/dev/vdb rootfstype=erofs ro vsyscall=emulate panic=0 eth0.dhcp eth1.dhcp linuxkit.unified_cgroup_hierarchy=1 console=hvc0   virtio_net.disable_csum=1 slub_min_order=2 page_reporting.page_reporting_order=2 vpnkit.connect=connect://2/1999 --boot /Applications/Docker.app/Contents/Resources/linuxkit/desktop.img --disk <HOME>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw --networkType gvisor --cpus 12 --memoryMiB 8192 --console-log <HOME>/Library/Containers/com.docker.docker/Data/log/vm/console.log --watchdog --virtiofs /Users --virtiofs /Volumes --virtiofs /private --virtiofs /tmp --virtiofs /var/folders --rosetta
+[2026-10-30T22:53:02.635776000Z][com.docker.backend] [2026-10-30T22:53:02.633903000Z][com.docker.virtualization] starting with pid 19328
+[2026-10-30T22:53:02.635882000Z][com.docker.backend] [2026-10-30T22:53:02.635730000Z][com.docker.virtualization] initialising paths
+[2026-10-30T22:53:02.636303000Z][com.docker.backend] [2026-10-30T22:53:02.636270000Z][com.docker.virtualization] registered signal handlers
+[2026-10-30T22:53:02.637418000Z][com.docker.backend] [2026-10-30T22:53:02.636865000Z][com.docker.virtualization] runtime.NumCPU = 12
+[2026-10-30T22:53:02.637496000Z][com.docker.backend] [2026-10-30T22:53:02.637409000Z][com.docker.virtualization] console log = <HOME>/Library/Containers/com.docker.docker/Data/log/vm/console.log
+[2026-10-30T22:53:02.637594000Z][com.docker.backend] [2026-10-30T22:53:02.636871000Z][com.docker.virtualization] starting watchdog
+[2026-10-30T22:53:02.637653000Z][com.docker.backend] [2026-10-30T22:53:02.637512000Z][com.docker.virtualization.watchdog] watchdog monitoring parent process
+[2026-10-30T22:53:02.639513000Z][com.docker.backend] [2026-10-30T22:53:02.639424000Z][com.docker.virtualization] running VM
+[2026-10-30T22:53:02.639947000Z][com.docker.backend] [2026-10-30T22:53:02.639894000Z][com.docker.virtualization.ipc] run 33bef9aa-VirtualizationAPI for component com.docker.virtualization on <HOME>/Library/Containers/com.docker.docker/Data/virtualization.sock
+[2026-10-30T22:53:02.641612000Z][com.docker.backend] [2026-10-30T22:53:02.641564000Z][com.docker.virtualization] will use 8192 MiB of memory (out of a maximum 24576 mib)
+[2026-10-30T22:53:02.641950000Z][com.docker.backend] [2026-10-30T22:53:02.641920000Z][com.docker.virtualization] will use 12 (out of a maximum 64) CPUs
+[2026-10-30T22:53:02.642042000Z][com.docker.backend] [2026-10-30T22:53:02.641967000Z][com.docker.virtualization] exposing Rosetta for Linux using virtiofs tag ROSETTA
+[2026-10-30T22:53:02.666870000Z][com.docker.backend] add_rosetta_share: added with tag ROSETTA[2026-10-30T22:53:02.666812000Z][com.docker.virtualization] Configuration is valid
+[2026-10-30T22:53:02.666990000Z][com.docker.backend] [2026-10-30T22:53:02.666855000Z][com.docker.virtualization] Disk 0 (<HOME>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw) caching is enabled
+[2026-10-30T22:53:02.667105000Z][com.docker.backend] [2026-10-30T22:53:02.666886000Z][com.docker.virtualization] Disk 1 (/Applications/Docker.app/Contents/Resources/linuxkit/desktop.img) caching is enabled
+[2026-10-30T22:53:02.680893000Z][com.docker.backend] add_rosetta_share: added with tag ROSETTA[2026-10-30T22:53:02.680755000Z][com.docker.virtualization] VM has started
+[2026-10-30T22:53:02.681402000Z][com.docker.backend] [2026-10-30T22:53:02.681279000Z][com.docker.virtualization] sending file descriptor 19 to <HOME>/Library/Containers/com.docker.docker/Data/ethernet-fd.sock
+[2026-10-30T22:53:02.681533000Z][com.docker.backend] [2026-10-30T22:53:02.681407000Z][com.docker.virtualization] file descriptor 19 sent successfully
+[2026-10-30T22:53:03.189016000Z][com.docker.backend] [2026-10-30T22:53:03.188715000Z][com.docker.virtualization] accepted connection on AF_VSOCK, forwarding fd to <HOME>/Library/Containers/com.docker.docker/Data/vpnkit-bridge-fd.sock
+[2026-10-30T22:53:03.189349000Z][com.docker.backend] [2026-10-30T22:53:03.188862000Z][com.docker.virtualization] sending file descriptor 21 to <HOME>/Library/Containers/com.docker.docker/Data/vpnkit-bridge-fd.sock
+[2026-10-30T22:53:03.189668000Z][com.docker.backend] [2026-10-30T22:53:03.189116000Z][com.docker.virtualization] file descriptor 21 sent successfully
+[2026-10-30T22:53:03.190747000Z][com.docker.backend.socketforward] starting to forward dials
+[2026-10-30T22:53:03.247786000Z][com.docker.backend.ipc] fd7cf354-PauseHDL /pause/events <-- 2026-10-30T15:53:02.776095083-07:00 (d8ff3bf1) ipc ready:
+[2026-10-30T22:53:03.248087000Z][com.docker.backend.procd] received state {Docker:starting DockerAPI:running HasNoVirtualization:false Idle:shutdown IsPaused:false Mode:linux PauseError: PauseText:Docker Desktop is running SessionID:c43ce5c4-30b8-400c-bbf9-1f0e07b1d3a0 State:starting WslUpdateRequired:false}
+[2026-10-30T22:53:03.283282000Z][com.docker.backend.stats][W] fetching disk stats: no such file or directory
+[2026-10-30T22:53:03.284710000Z][com.docker.backend.ipc] (6d6a3aa7-0) 64924325-BackendAPI S<-C f0051c4b-metadata GET /app/settings/flat
+[2026-10-30T22:53:03.284835000Z][com.docker.backend.ipc] (480451a1-0) 64924325-BackendAPI S<-C 7bfad38a-metadata GET /certificates
+[2026-10-30T22:53:03.284892000Z][com.docker.backend.ipc] (687bc2eb-0) 64924325-BackendAPI S<-C 6ff7cf76-init GET /system/info
+[2026-10-30T22:53:03.284952000Z][com.docker.backend.ipc] (dfbf57d9-0) 64924325-BackendAPI S<-C 06d4fb66-time GET /time
+[2026-10-30T22:53:03.284961000Z][com.docker.backend.ipc] (6f70d4bf-0) 64924325-BackendAPI S<-C ef519a9b-dns-forwarder GET /registry/access
+[2026-10-30T22:53:03.286078000Z][com.docker.backend.stats][W] fetching disk stats: no such file or directory
+[2026-10-30T22:53:03.286144000Z][com.docker.backend.ipc] (687bc2eb-0) 64924325-BackendAPI S->C 6ff7cf76-init GET /system/info (1.236125ms): {"goos":"darwin","osMajorVersion":"26"}
+[2026-10-30T22:53:03.286489000Z][com.docker.backend.ipc] (dfbf57d9-0) 64924325-BackendAPI S->C 06d4fb66-time GET /time (1.125125ms): 2026-10-30 15:53:03.285339 -0700 PDT m=+52854.285791543
+[2026-10-30T22:53:03.287828000Z][com.docker.backend.ipc] (6f70d4bf-0) 64924325-BackendAPI S->C ef519a9b-dns-forwarder GET /registry/access (2.8675ms)
+[2026-10-30T22:53:03.288902000Z][com.docker.backend.ipc] (6d6a3aa7-0) 64924325-BackendAPI S->C f0051c4b-metadata GET /app/settings/flat (4.192667ms)
+[2026-10-30T22:53:03.292779000Z][com.docker.backend.certs] looking for registries certs in <HOME>/.docker/certs.d
+[2026-10-30T22:53:03.293536000Z][com.docker.backend.ipc] (480451a1-0) 64924325-BackendAPI S->C 7bfad38a-metadata GET /certificates (8.365625ms): {"authorities":"...","client":{}}
+[2026-10-30T22:53:03.295217000Z][com.docker.backend.ipc] (687bc2eb-13) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.295487000Z][com.docker.backend.ipc] (687bc2eb-2) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.295571000Z][com.docker.backend.ipc] (687bc2eb-1) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296109000Z][com.docker.backend.ipc] (687bc2eb-7) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296380000Z][com.docker.backend.ipc] (687bc2eb-11) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296545000Z][com.docker.backend.ipc] (687bc2eb-4) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296495000Z][com.docker.backend.ipc] (687bc2eb-3) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296872000Z][com.docker.backend.ipc] (687bc2eb-10) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296637000Z][com.docker.backend.ipc] (687bc2eb-9) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296647000Z][com.docker.backend.ipc] (687bc2eb-12) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.296214000Z][com.docker.backend.ipc] (c71e9dfb-0) 64924325-BackendAPI S<-C bef75aa1-host-networking DELETE /forwards/flush-volatile
+[2026-10-30T22:53:03.297395000Z][com.docker.backend.ipc] (687bc2eb-8) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.297561000Z][com.docker.backend.ipc] (c71e9dfb-0) 64924325-BackendAPI S->C bef75aa1-host-networking DELETE /forwards/flush-volatile (1.346334ms): OK
+[2026-10-30T22:53:03.297711000Z][com.docker.backend.ipc] (687bc2eb-5) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.298184000Z][com.docker.backend.ipc] (687bc2eb-11) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (1.810542ms)
+[2026-10-30T22:53:03.298250000Z][com.docker.backend.ipc] (687bc2eb-7) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.142125ms)
+[2026-10-30T22:53:03.298356000Z][com.docker.backend.ipc] (687bc2eb-2) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.87125ms)
+[2026-10-30T22:53:03.298382000Z][com.docker.backend.ipc] (687bc2eb-10) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (1.509542ms)
+[2026-10-30T22:53:03.298679000Z][com.docker.backend.ipc] (687bc2eb-9) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.039042ms)
+[2026-10-30T22:53:03.298681000Z][com.docker.backend.ipc] (687bc2eb-6) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.298685000Z][com.docker.backend.ipc] (687bc2eb-1) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (3.11425ms)
+[2026-10-30T22:53:03.298596000Z][com.docker.backend.ipc] (687bc2eb-8) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (1.201375ms)
+[2026-10-30T22:53:03.298729000Z][com.docker.backend.ipc] (687bc2eb-13) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (3.510958ms)
+[2026-10-30T22:53:03.298792000Z][com.docker.backend.ipc] (687bc2eb-4) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.252833ms)
+[2026-10-30T22:53:03.298889000Z][com.docker.backend.ipc] (687bc2eb-3) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.392458ms)
+[2026-10-30T22:53:03.298908000Z][com.docker.backend.ipc] (687bc2eb-5) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (1.195ms)
+[2026-10-30T22:53:03.298989000Z][com.docker.backend.ipc] (687bc2eb-12) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (2.340459ms)
+[2026-10-30T22:53:03.299500000Z][com.docker.backend.ipc] (687bc2eb-6) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (819.541µs)
+[2026-10-30T22:53:03.316646000Z][com.docker.backend.vpnkitcontrol.multiplex] accepted data connection on vpnkit-data
+[2026-10-30T22:53:03.324125000Z][com.docker.backend.vpnkitcontrol.multiplex] established connection to vpnkit-forwarder
+[2026-10-30T22:53:03.341637000Z][com.docker.backend.ipc] (687bc2eb-14) 64924325-BackendAPI S<-C 6ff7cf76-init GET /system/info
+[2026-10-30T22:53:03.341743000Z][com.docker.backend.ipc] (687bc2eb-14) 64924325-BackendAPI S->C 6ff7cf76-init GET /system/info (91.166µs): {"goos":"darwin","osMajorVersion":"26"}
+[2026-10-30T22:53:03.382834000Z][com.docker.backend.ipc] (8f44d6da-0) 64924325-BackendAPI S<-C 055cd72b-metadata GET /engine/daemon.json
+[2026-10-30T22:53:03.383543000Z][com.docker.backend.ipc] (8f44d6da-0) 64924325-BackendAPI S->C 055cd72b-metadata GET /engine/daemon.json (702.958µs): {"builder":{"gc":{"defaultKeepStorage":"20GB","enabled":true}},"experimental":false}
+[2026-10-30T22:53:03.441136000Z][com.docker.backend.ipc] (687bc2eb-15) 64924325-BackendAPI S<-C 6ff7cf76-init GET /features
+[2026-10-30T22:53:03.441410000Z][com.docker.backend.ipc] (687bc2eb-15) 64924325-BackendAPI S->C 6ff7cf76-init GET /features (275.292µs)
+[2026-10-30T22:53:03.585212000Z][com.docker.backend.engines] engine linux/virtualization-framework hypervisor process up after 1.017s
+[2026-10-30T22:53:03.585332000Z][com.docker.backend.enginedependencies] waiting for docker daemon to be ready
+[2026-10-30T22:53:03.585404000Z][com.docker.backend.ipc] (390dafec-15) 4c184224-engines C->S dockerd HEAD /_ping
+[2026-10-30T22:53:03.585361000Z][com.docker.backend] com.docker.virtualization: Waiting for &exec.Cmd{Path:"/Applications/Docker.app/Contents/MacOS/com.docker.virtualization", Args:[]string{"/Applications/Docker.app/Contents/MacOS/com.docker.virtualization", "--kernel", "/Applications/Docker.app/Contents/Resources/linuxkit/kernel", "--cmdline", "init=/initd loglevel=1 root=/dev/vdb rootfstype=erofs ro vsyscall=emulate panic=0 eth0.dhcp eth1.dhcp linuxkit.unified_cgroup_hierarchy=1 console=hvc0   virtio_net.disable_csum=1 slub_min_order=2 page_reporting.page_reporting_order=2 vpnkit.connect=connect://2/1999", "--boot", "/Applications/Docker.app/Contents/Resources/linuxkit/desktop.img", "--disk", "<HOME>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw", "--networkType", "gvisor", "--cpus", "12", "--memoryMiB", "8192", "--console-log", "<HOME>/Library/Containers/com.docker.docker/Data/log/vm/console.log", "--watchdog", "--virtiofs", "/Users", "--virtiofs", "/Volumes", "--virtiofs", "/private", "--virtiofs", "/tmp", "--virtiofs", "/var/folders", "--rosetta"}, Env:[]string(nil), Dir:"", Stdin:(*os.File)(0x7e3fe8852670), Stdout:(*io.PipeWriter)(0x7e3febfaa4e0), Stderr:(*io.PipeWriter)(0x7e3febfaa540), ExtraFiles:[]*os.File(nil), SysProcAttr:(*syscall.SysProcAttr)(nil), Process:(*os.Process)(0x7e3fe9d8a780), ProcessState:(*os.ProcessState)(nil), ctx:(*context.valueCtx)(0x7e3fe37ee780), Err:error(nil), Cancel:(func() error)(0x1025bd880), WaitDelay:0, childIOFiles:[]io.Closer(nil), parentIOPipes:[]io.Closer{(*os.File)(0x7e3fe8852680), (*os.File)(0x7e3fe8852698)}, goroutine:[]func() error(nil), goroutineErr:(<-chan error)(0x7e3fe1a92310), ctxResult:(<-chan exec.ctxResult)(0x7e3fdee11c00), createdByStack:[]uint8(nil), lookPathErr:error(nil), cachedLookExtensions:struct { in string; out string }{in:"", out:""}, startCalled:1}
+[2026-10-30T22:53:04.199182000Z][com.docker.backend.ipc] (390dafec-15) 4c184224-engines C<-S UnknownServer HEAD /_ping (613.780084ms): OK
+[2026-10-30T22:53:04.199374000Z][com.docker.backend.enginedependencies] docker daemon is ready after 614ms
+[2026-10-30T22:53:04.199458000Z][com.docker.backend.engines] engine linux/virtualization-framework docker daemon ready after 1.631s
+[2026-10-30T22:53:04.199616000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state starting -> running
+[2026-10-30T22:53:04.199802000Z][com.docker.backend.events] adding server timestamp to event (engines): 1793400784199796000 docker: running
+[2026-10-30T22:53:04.199938000Z][com.docker.backend.apiproxy] engine is running, clearing any previous engine error
+[2026-10-30T22:53:04.200069000Z][com.docker.backend.statehandler] sending to Dashboard: running
+[2026-10-30T22:53:04.200084000Z][com.docker.backend.state] backend state changed to running
+[2026-10-30T22:53:04.200086000Z][com.docker.backend.ipcstream] 64924325-BackendAPI /engine/state --> 2026-10-30T15:53:04.199796000-07:00 (cbd8d52d) engine running:
+[2026-10-30T22:53:04.200283000Z][com.docker.backend.state] sending desktop state:EngineRunningState
+[2026-10-30T22:53:04.200759000Z][com.docker.backend.analytics.tracker] sending event: desktopState 73da2f7d-232a-484a-bf90-498799af173c
+[2026-10-30T22:53:04.200917000Z][com.docker.backend.analytics.tracker] sending event: desktopState 73da2f7d-232a-484a-bf90-498799af173c
+[2026-10-30T22:53:04.201566000Z][com.docker.backend.enginedependencies] starting forwarding dials
+[2026-10-30T22:53:04.201605000Z][com.docker.backend.engines] engine linux/virtualization-framework is running after 1.633s
+[2026-10-30T22:53:04.201747000Z][com.docker.backend.enginedependencies] starting metrics port exposure
+[2026-10-30T22:53:04.201769000Z][com.docker.backend.enginedependencies] no metrics-addr in daemon.json: not exposing a metrics port
+[2026-10-30T22:53:04.202933000Z][com.docker.backend.kubernetes] cluster is disabled by config - not starting
+[2026-10-30T22:53:04.218047000Z][com.docker.backend.clicontext] updated docker cli context desktop-linux
+[2026-10-30T22:53:04.218197000Z][com.docker.backend.engines] engine start complete
+[2026-10-30T22:53:04.218232000Z][com.docker.backend.idle] VM started
+[2026-10-30T22:53:04.218245000Z][com.docker.backend.apicache] invalidating the Docker API cache
+[2026-10-30T22:53:04.218292000Z][com.docker.backend.apicache] invalidated Docker API cache
+[2026-10-30T22:53:04.220899000Z][com.docker.backend.ipc] (6a4287ac-843) 42eda7c4-volume C->S socketforward GET /list
+[2026-10-30T22:53:04.227420000Z][com.docker.backend.ipc] (6a4287ac-843) 42eda7c4-volume C<-S 27861dec-socketforwarder GET /list (6.52475ms): &[]
+[2026-10-30T22:53:04.236357000Z][com.docker.backend.resyncer] Resyncer: de-registering possibly-leaked resource 7f1c2b98dffc51d67daa777401732f3512cf03dae8723cdcd723f3b493f01140
+[2026-10-30T22:53:04.236544000Z][com.docker.backend.gvisor] deleting route 172.17.0.0/16 via 192.168.65.3
+[2026-10-30T22:53:04.236592000Z][com.docker.backend.resyncer] Resyncer: re-registering possibly-missed resource 28e6805207ba42516ea6b03c04033c4a4df26e4a8cfe68621b927b6fee7dd871
+[2026-10-30T22:53:04.238278000Z][com.docker.backend.gvisor] adding route 172.17.0.0/16 via 192.168.65.3
+[2026-10-30T22:53:04.247308000Z][com.docker.backend.processes] parsing 19329   0:02.38       00:02 com.apple.Virtualization.VirtualMachine
+[2026-10-30T22:53:04.247536000Z][com.docker.backend.processes] parsing 0:02.38
+[2026-10-30T22:53:04.247566000Z][com.docker.backend.processes] mins:seconds.centis 0 2 38
+[2026-10-30T22:53:04.247592000Z][com.docker.backend.processes] parsing 00:02
+[2026-10-30T22:53:04.247611000Z][com.docker.backend.processes] mins:seconds.centis 0 2 0
+[2026-10-30T22:53:04.247634000Z][com.docker.backend.processes] parsed { 19329 2.38s 2s }
+[2026-10-30T22:53:04.289106000Z][com.docker.backend.idlemetrics] Compute time at run 2.38s / 2s added to 1h36m54.41s / 6h17m50s total 1h36m56.79s / 6h17m52s
+[2026-10-30T22:53:04.289808000Z][com.docker.backend.events] adding server timestamp to event (): 1793400784289804000 idle: running
+[2026-10-30T22:53:04.289903000Z][com.docker.backend.analytics.tracker] sending event: idle 6f4e360f-e837-40c2-91e3-40330f9da97d
+[2026-10-30T22:53:04.289969000Z][com.docker.backend.analytics.tracker] sending event: idle 6f4e360f-e837-40c2-91e3-40330f9da97d
+[2026-10-30T22:53:04.289907000Z][com.docker.backend.statehandler] sending to Dashboard: running
+[2026-10-30T22:53:04.342014000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T22:53:04.342092000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T22:53:04.390438000Z][com.docker.backend.idle] idle -> busy (was idle for 48.345333ms; reason: [1 calls to /v1.55/networks/create from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T22:53:04.401872000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T22:53:04.401947000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T22:53:04.402681000Z][com.docker.backend.gvisor] adding route 172.21.0.0/16 via 192.168.65.3
+[2026-10-30T22:53:04.418437000Z][com.docker.backend.idle] idle -> busy (was idle for 16.485583ms; reason: [1 calls to /v1.55/volumes/create from Docker-Client/29.6.2 (darwin)])
+[2026-10-30T22:53:04.420407000Z][com.docker.backend.idle] busy -> idle
+[2026-10-30T22:53:04.420458000Z][com.docker.backend.idle] timer started (5m0s)
+[2026-10-30T22:53:04.426325000Z][com.docker.backend.idle] idle -> busy (was idle for 5.868334ms; reason: [timed activities: map[dial//run/guest-services/volume-contents.sock:59999936459]])
+[2026-10-30T22:53:04.439408000Z][com.docker.backend.apiproxy] usage ContainerCreateCliLinux + 1
+[2026-10-30T22:53:04.440687000Z][com.docker.backend.analytics.tracker] sending event: eventPortBinding ee37248e-30ad-4e30-909e-1e06456d1f80
+[2026-10-30T22:53:04.440776000Z][com.docker.backend.analytics.tracker] sending event: eventPortBinding ee37248e-30ad-4e30-909e-1e06456d1f80
+[2026-10-30T22:53:04.574798000Z][com.docker.backend.apiproxy] usage ContainerStartCliLinux + 1
+[2026-10-30T22:53:04.578411000Z][com.docker.backend.apiproxy] usage ExposePortCountCliLinux + 1
+[2026-10-30T22:53:04.580416000Z][com.docker.backend.volumesharer] grpcfuseClient.VolumeApprove([host=,VM=supabase_db_unify-push-369-native-r1,dst=/var/lib/postgresql/data,option=])
+[2026-10-30T22:53:04.580494000Z][com.docker.backend.analytics.tracker] sending event: eventImageRegistry f0c473d1-950a-4c89-96e6-8ecf8c4336e1
+[2026-10-30T22:53:04.580648000Z][com.docker.backend.ports] exposer.Approve(cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc, /supabase_db_unify-push-369-native-r1, [TCP 0.0.0.0:63711])
+[2026-10-30T22:53:04.580615000Z][com.docker.backend.analytics.tracker] sending event: eventImageRegistry f0c473d1-950a-4c89-96e6-8ecf8c4336e1
+[2026-10-30T22:53:04.581020000Z][com.docker.backend.ports] exposer.Add(cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc, /supabase_db_unify-push-369-native-r1, [TCP 0.0.0.0:63711 -> 127.0.0.1:0])
+[2026-10-30T22:53:04.581328000Z][com.docker.backend.vpnkitcontrol] adding docker-proxy-port-approver/cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc tcp forward from 0.0.0.0:63711 to 127.0.0.1:0
+[2026-10-30T22:53:04.581589000Z][com.docker.backend.ports] exposer.Remove(cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc)
+[2026-10-30T22:53:04.581682000Z][com.docker.backend.vpnkitcontrol] removing docker-proxy-port-approver/cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc tcp forward from 0.0.0.0:63711 to 127.0.0.1:0
+[2026-10-30T22:53:04.581729000Z][com.docker.backend.volumesharer] com.docker.backend: registering container cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc name /supabase_db_unify-push-369-native-r1 with volumes [host=,VM=supabase_db_unify-push-369-native-r1,dst=/var/lib/postgresql/data,option=]
+[2026-10-30T22:53:04.715682000Z][com.docker.backend.ipc] (c3abb6c7-0) 64924325-BackendAPI S<-C 59475280-init PUT /forwards/expose-container
+[2026-10-30T22:53:04.715940000Z][com.docker.backend.ipc] (c3abb6c7-0) 64924325-BackendAPI S<-C 59475280-init bind: {"containerId":"..."}
+[2026-10-30T22:53:04.721495000Z][com.docker.backend.ports] exposer.Add(cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc, /supabase_db_unify-push-369-native-r1, [TCP 0.0.0.0:63711 -> 172.21.0.2:5432])
+[2026-10-30T22:53:04.721850000Z][com.docker.backend.gvisor] 0.0.0.0:63711->172.21.0.2:5432 started
+[2026-10-30T22:53:04.722237000Z][com.docker.backend.ipc] (c3abb6c7-0) 64924325-BackendAPI S->C 59475280-init PUT /forwards/expose-container (6.555041ms): OK
+[2026-10-30T22:53:04.729233000Z][com.docker.backend.volumesharer] com.docker.backend: registering container cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc name /supabase_db_unify-push-369-native-r1 with volumes [host=,VM=supabase_db_unify-push-369-native-r1,dst=/var/lib/postgresql/data,option=]
+[2026-10-30T22:53:04.742072000Z][com.docker.backend.volumesharer] com.docker.backend: registering container cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc name /supabase_db_unify-push-369-native-r1 with volumes [host=,VM=supabase_db_unify-push-369-native-r1,dst=/var/lib/postgresql/data,option=]

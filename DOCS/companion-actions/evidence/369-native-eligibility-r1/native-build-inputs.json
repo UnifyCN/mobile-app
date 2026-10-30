@@ -1,0 +1,32 @@
+{
+  "native_inputs": [
+    {
+      "path": "package.json",
+      "equal": true,
+      "sha256": "cfcbc66eaed49ee981b9faedca02947b3330254b2fbc8a3a6ef6fcf156f9c2d7"
+    },
+    {
+      "path": "package-lock.json",
+      "equal": true,
+      "sha256": "3abc45f933d88b6df9d53919e36e70c5eb23816c81eca7ecb1106185f563b1ac"
+    },
+    {
+      "path": "app.config.js",
+      "equal": true,
+      "sha256": "38e287587043f8f63170a375030681ab694211b0b947c4f305fcfe616f75afa8"
+    },
+    {
+      "path": "GoogleService_ios.plist",
+      "equal": true,
+      "sha256": "99e95944eeaa7f65d21f13154a455312d2c1c54a3947bf050ce601ac8828ff78"
+    }
+  ],
+  "versions": {
+    "expo": "55.0.17",
+    "expo-notifications": "55.0.20",
+    "expo-device": "55.0.15",
+    "expo-secure-store": "55.0.13",
+    "expo-dev-client": "55.0.28",
+    "react-native": "0.83.6"
+  }
+}

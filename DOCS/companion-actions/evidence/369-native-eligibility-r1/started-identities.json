@@ -1,0 +1,84 @@
+[
+  {
+    "Id": "cad22f7336d89edd0acda4b291dbc9e3611c088dddd082331763a53dc41ab5bc",
+    "Name": "/supabase_db_unify-push-369-native-r1",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-native-r1",
+      "com.supabase.cli.project": "unify-push-369-native-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack"
+    },
+    "Mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_db_unify-push-369-native-r1",
+        "Source": "/var/lib/docker/volumes/supabase_db_unify-push-369-native-r1/_data",
+        "Destination": "/var/lib/postgresql/data",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+      }
+    ]
+  },
+  {
+    "Id": "65c38a1145bff934c1003a3ad724a1709c9c91a79ba250e8f22e86577ab54251",
+    "Name": "/supabase_rest_unify-push-369-native-r1",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-native-r1",
+      "com.supabase.cli.project": "unify-push-369-native-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack"
+    },
+    "Mounts": []
+  },
+  {
+    "Id": "737a2ded8f351496133894eee0fe75e7b0f9c00339ef106592dc938f4272f21d",
+    "Name": "/supabase_edge_runtime_unify-push-369-native-r1",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-native-r1",
+      "com.supabase.cli.project": "unify-push-369-native-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack"
+    },
+    "Mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_edge_runtime_unify-push-369-native-r1",
+        "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-push-369-native-r1/_data",
+        "Destination": "/root/.cache/deno",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      },
+      {
+        "Type": "bind",
+        "Source": "/host_mnt/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack/supabase/functions",
+        "Destination": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack/supabase/functions",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "content_url": "http://host.docker.internal:3396/content"
+  },
+  {
+    "Id": "fe7a6536a75ec380dcbe42dab1b9be7f178a199b66280434f682873e3794a1cb",
+    "Name": "/supabase_auth_unify-push-369-native-r1",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-native-r1",
+      "com.supabase.cli.project": "unify-push-369-native-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack"
+    },
+    "Mounts": []
+  },
+  {
+    "Id": "f82aae7cde7653322a7fd98f3348ee1a98768efcf58ef05784c7a96fbe789f97",
+    "Name": "/supabase_kong_unify-push-369-native-r1",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-native-r1",
+      "com.supabase.cli.project": "unify-push-369-native-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/stack",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "Mounts": []
+  }
+]

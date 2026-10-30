@@ -1,0 +1,25 @@
+{
+  "exit": 102,
+  "passed": false,
+  "guard_sha256": "37d40ee61f2a164960e5a0db8199178c3dd04631a4bc09e9d41e655ca723c201",
+  "policy_sha256": "0f395c011fd9da7ca46316513a334d6a4f609a046b9e512cf8a5700451804c2b",
+  "probe_sha256": "94e24dfd4fac36b9c28dd84ebce038f5bed636e67d303604a6eb2a337a85a26e",
+  "allowed_ports": [
+    63710,
+    8371,
+    3396,
+    3397
+  ],
+  "expo_registration_allowed": false,
+  "reason": "No verified provider credentials. No actual provider-send test is enabled.",
+  "endpoints": [
+    "local-ipv4",
+    "local-ipv6",
+    "hosted-supabase",
+    "posthog",
+    "openai",
+    "openrouter",
+    "nonlocal-ipv4",
+    "nonlocal-ipv6"
+  ]
+}

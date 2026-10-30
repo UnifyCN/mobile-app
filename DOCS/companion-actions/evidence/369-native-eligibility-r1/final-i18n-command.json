@@ -1,0 +1,14 @@
+{
+  "source_head": "d545c7fd78b43c66e950dfa491cbad446318634b",
+  "source_tree": "157c6d67bd168c2e49919c92049571b43b61a042",
+  "product_dirty": "M unify-front-end/__tests__/companionActions/pushNative.test.ts\n M unify-front-end/services/companionActions/pushNative.ts",
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "npm",
+    "run",
+    "check-i18n"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end",
+  "exit": 0,
+  "seconds": 0.15778589248657227
+}

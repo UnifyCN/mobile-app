@@ -1,0 +1,13 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "terminate",
+    "OWNED_SIMULATOR",
+    "com.anonymous.unifyfrontend"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "reason": "Second setup attempt fails required pre-framework-initializer guard order. No further launch authorized by bounded task."
+}

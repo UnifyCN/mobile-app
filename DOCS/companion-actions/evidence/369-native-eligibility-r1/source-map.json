@@ -1,0 +1,2824 @@
+{
+  "status": 200,
+  "bytes": 43148177,
+  "seconds": 1.693137125010253,
+  "sha256": "ea837be98823f4ee2c3d33181d625214ee099c4578ba1079251037afa433f21a",
+  "rows": [
+    {
+      "path": "app/(tabs)/Checklist/_layout.tsx",
+      "equal": true,
+      "sha256": "9f546ed84b9d85c668ba3238d2c022b6b804b856d1a1672ac50581440f626410"
+    },
+    {
+      "path": "app/(tabs)/Checklist/create-custom-item.tsx",
+      "equal": true,
+      "sha256": "e9623fa9f74be5ca07707de0ad6c2c77c40abca1113037fbaef5b6b6b4234ec6"
+    },
+    {
+      "path": "constants/Typography.ts",
+      "equal": true,
+      "sha256": "8763f3d25b6c4ee69e8a42e52694677d922f6fc3df58c372dd74398bb97ffc45"
+    },
+    {
+      "path": "constants/Layout.ts",
+      "equal": true,
+      "sha256": "ba8bc1d3d2dac7bf85d902add25119c51e35081db59c20746006cc6a2f81d13f"
+    },
+    {
+      "path": "lib/supabase.ts",
+      "equal": true,
+      "sha256": "1f5aaef8fc03f312bf28ac18278cca0538f80d0922f77999ddb537856f564269"
+    },
+    {
+      "path": "services/checklist/customChecklistTasks.ts",
+      "equal": true,
+      "sha256": "216e5efd4ea6017834a9beb61c954daac444774e7b2d34ee15ddc50081dcb129"
+    },
+    {
+      "path": "lib/queryClient.ts",
+      "equal": true,
+      "sha256": "3a32db0296f2eed4d8cc719901bcbf189948b5a047bc66edb01bd1067c60c7f3"
+    },
+    {
+      "path": "hooks/checklist/checklistQueryKeys.ts",
+      "equal": true,
+      "sha256": "0f46eee7bf2f91319cc1b2e5e4142389cdc008c1132b02812f87ede5e6e11fbd"
+    },
+    {
+      "path": "utils/checklistProvince.ts",
+      "equal": true,
+      "sha256": "7df1663c5cb3af1368db0bad3e54fe1774d3b17f7b79bcba403650d920213380"
+    },
+    {
+      "path": "constants/LocationData.ts",
+      "equal": true,
+      "sha256": "238901d60913ee64ee447349451d6f91ed24cd5b5ab3bfb47e84799ab42ef056"
+    },
+    {
+      "path": "supabase/functions/_shared/province.ts",
+      "equal": true,
+      "sha256": "1e5353d768fc6a92ee50a0fb9bb1c29e04788373b938f3ec4ed61e7ea0dbcaea"
+    },
+    {
+      "path": "constants/ChecklistPriority.ts",
+      "equal": true,
+      "sha256": "79ae69e18775efea6cbb8625fe4443e14e418e7e1aa30daeee33df2b6a1c6f39"
+    },
+    {
+      "path": "app/(tabs)/Checklist/index.tsx",
+      "equal": true,
+      "sha256": "59a788cb36a2c897ca2eaab3f20c6341f50495a2acfc0a424d6410d5c0cd0a76"
+    },
+    {
+      "path": "hooks/companion/planQueryKeys.ts",
+      "equal": true,
+      "sha256": "11e4665d0317e080f5bd84ccdb6c622a7c36bbd985c6dbf61e5038f52225b593"
+    },
+    {
+      "path": "utils/analytics.ts",
+      "equal": true,
+      "sha256": "79c681fc602bf4524487e6406bc4546eedd2f2c5ba65b9ae0dbfe65fc43d1ec3"
+    },
+    {
+      "path": "hooks/onboarding/useUserStage.ts",
+      "equal": true,
+      "sha256": "0f008d478c0f42408e6dd67c60699ff2d66b3531f3ed88a73e277a3a39129834"
+    },
+    {
+      "path": "services/onboarding/getOnboardingProfile.ts",
+      "equal": true,
+      "sha256": "c320a0379fa26e99fa707e7bb69a787c798afb838797841cfa84599469bd9440"
+    },
+    {
+      "path": "supabase/functions/_shared/arrivalStage.ts",
+      "equal": true,
+      "sha256": "6f18dce36bfc745bd598ee6563be53e74418efb3b2ccb2e842361f1f0c602935"
+    },
+    {
+      "path": "services/onboarding/syncStageCache.ts",
+      "equal": true,
+      "sha256": "15425fb7add83d2d913f67245474d6d2b04a5ca77827a9edc45732661cf5f40e"
+    },
+    {
+      "path": "services/onboarding/updateUserStage.ts",
+      "equal": true,
+      "sha256": "7dfec859d5fe4fbfb7678127cdcaa8ff1263c7f6f47a05272b5ccd0afa982e9d"
+    },
+    {
+      "path": "services/onboarding/arrivalReconciliation.ts",
+      "equal": true,
+      "sha256": "9b4637545ca3a1cc2b5a0a314fabbc537e5c5f2ab4f875adaa47b57933d54ce0"
+    },
+    {
+      "path": "helpers/arrivalDate.ts",
+      "equal": true,
+      "sha256": "0cf3dcf2dd9a43de1f6ecbbbe6c40f64089fe8d247524cb7b268e1755ef68e35"
+    },
+    {
+      "path": "hooks/checklist/useChecklistTasks.ts",
+      "equal": true,
+      "sha256": "4a3d6833ad8f39f3b6782fc24db67dd8fabd28b80a59b024b1755c60705e872c"
+    },
+    {
+      "path": "hooks/auth/useSessionAccountId.ts",
+      "equal": true,
+      "sha256": "63c0119680cca6085122f21d079b738d5203457e353e685804ef43711c4aee36"
+    },
+    {
+      "path": "services/account/accountSession.ts",
+      "equal": true,
+      "sha256": "606da018721d2b135537a9509afbeb965240e444aa45a7a0c4f98c507e9f88d1"
+    },
+    {
+      "path": "services/checklist/getChecklistWithUserProgress.ts",
+      "equal": true,
+      "sha256": "b81b9eded507f3ceb6ac3acd3b9081b03da2ce47b6bef149094a9a65aca780b9"
+    },
+    {
+      "path": "types/checklist.ts",
+      "equal": true,
+      "sha256": "06c3c5c1d85d512cae090834f66e2df006cecd066b885d052264b63d015c1b7b"
+    },
+    {
+      "path": "utils/checklistOrder.ts",
+      "equal": true,
+      "sha256": "707e9014ba1dc94fad6bea94c4e4c4e9af44cef321467f7b82d6e040992bc50b"
+    },
+    {
+      "path": "services/sanity/checklist.ts",
+      "equal": true,
+      "sha256": "d63a9759e3dfa4b4c64826248ac230d5d6a42e3e98cab931a1a24f7aa12868ac"
+    },
+    {
+      "path": "sanity-custom.ts",
+      "equal": true,
+      "sha256": "af21c3540a678c0973b2d53544c40293f4314606fb7b5c71056d2089739eaef0"
+    },
+    {
+      "path": "sanity-config.ts",
+      "equal": true,
+      "sha256": "261787aa9c74e84736fcf98550966c66341a67eefd9a2233427aa6308d226254"
+    },
+    {
+      "path": "services/sanity/i18n.ts",
+      "equal": true,
+      "sha256": "1fa628b7dcbb64375919eaf47f606b35d01b0d2b5994db565d081bda1fe180f8"
+    },
+    {
+      "path": "services/checklist/getUserTasks.ts",
+      "equal": true,
+      "sha256": "75afdcb9646ecfaefa751dd4b090479d337bfb4ab34587d3ffbeda30afccf47c"
+    },
+    {
+      "path": "services/checklist/checklistTaskOrder.ts",
+      "equal": true,
+      "sha256": "23d06b805169432fe30da8dee985926111586be7c0e1bc386ee234d6176f7c1e"
+    },
+    {
+      "path": "utils/checklistTaskCache.ts",
+      "equal": true,
+      "sha256": "b761d23f08737631a5065f5f9554292513bd71948828f732637c382060d9b93b"
+    },
+    {
+      "path": "helpers/dateHelpers.ts",
+      "equal": true,
+      "sha256": "ac719770ce47a380140705608611701a3bc39813e0814c5218bc41916d4e5972"
+    },
+    {
+      "path": "i18n/index.ts",
+      "equal": true,
+      "sha256": "f3213ae12b922207ac03b243572f7333d3e06df3993ca175db397ff445fa067b"
+    },
+    {
+      "path": "i18n/locales/en/translation.json",
+      "equal": true,
+      "sha256": "34c74c467684dcb226a334130fbe7961968a103e40e385222d6c504221e60dc4"
+    },
+    {
+      "path": "i18n/locales/vi/translation.json",
+      "equal": true,
+      "sha256": "1472e46acc3e2a2e9ea7cf4d36e8554d6ab3718bbe300f6e3d74e9f1c0ee9c13"
+    },
+    {
+      "path": "i18n/locales/es/translation.json",
+      "equal": true,
+      "sha256": "3b975e3473a6391e7e72380d07253811f1806cda49fabb458532a6ff915552a7"
+    },
+    {
+      "path": "i18n/locales/hi/translation.json",
+      "equal": true,
+      "sha256": "072a863390b24f40b83a7c8f8f11e20c8dbe2f388a0fad516c76f445115b37dd"
+    },
+    {
+      "path": "i18n/locales/ar/translation.json",
+      "equal": true,
+      "sha256": "21ce880043246407fe7c53c91e8009bbe4b45423bfddfa98914ef7ab1feef3ac"
+    },
+    {
+      "path": "i18n/locales/fr-CA/translation.json",
+      "equal": true,
+      "sha256": "98b74608348bf77d3348fd41855422ec80e1df4136750e8eaa8d11183be688a1"
+    },
+    {
+      "path": "i18n/locales/pa/translation.json",
+      "equal": true,
+      "sha256": "f07c35d877ef0ed986ac6d6730168cfdf2fd435671015d7e5bfbafc3754189bc"
+    },
+    {
+      "path": "i18n/direction.ts",
+      "equal": true,
+      "sha256": "a751c9071091cb48211a88f3e5cc57c5cf90596995021524a28454708bcef575"
+    },
+    {
+      "path": "hooks/sanity/useSanityLanguage.ts",
+      "equal": true,
+      "sha256": "4a5a3a40fc76cb7a35e5f0987a761fb66339b8a9cbad348d4859888908d231b2"
+    },
+    {
+      "path": "hooks/checklist/useRefreshingToday.ts",
+      "equal": true,
+      "sha256": "7ef925f2ff4a5c09bc0c06e95056394f2a7035a987069bafe76052af9ef2dc96"
+    },
+    {
+      "path": "hooks/checklist/useChecklistProfile.ts",
+      "equal": true,
+      "sha256": "b3eec92645a7b14d7afca277468fd0fbcc5024d1f8fc664f5a3feba72e0094de"
+    },
+    {
+      "path": "services/checklist/setChecklistItemCompletion.ts",
+      "equal": true,
+      "sha256": "e072057981957ce9aff131197d55bf48290613c841cc9a17400529af2eb4d41e"
+    },
+    {
+      "path": "services/checklist/setChecklistItemDismissed.ts",
+      "equal": true,
+      "sha256": "aefecd629efcaa52151ef212626b964f447ccb6b9e062a15c47a01c5b08e3c2d"
+    },
+    {
+      "path": "components/checklist/ChecklistItem.tsx",
+      "equal": true,
+      "sha256": "0c4449c981267fe88bd97ecb5a4925876875b38bf3d86e7c35f1eaf103071d17"
+    },
+    {
+      "path": "components/ThemedText.tsx",
+      "equal": true,
+      "sha256": "d8e37d7b84e8ee3bbda91913612fea543986d5ee40555eafcb970b3488e126f7"
+    },
+    {
+      "path": "hooks/useThemeColor.ts",
+      "equal": true,
+      "sha256": "3f424c665a144528f4d1db4cfc56b339f5790b43c0e027d474155a616719927f"
+    },
+    {
+      "path": "constants/Colors.ts",
+      "equal": true,
+      "sha256": "3f1c5c32c6eaa9f43e65e4e9eb4712a39898fb34c251efd371db5c37a032a9b8"
+    },
+    {
+      "path": "components/partners/SpotlightRow.tsx",
+      "equal": true,
+      "sha256": "f27f411709122006218ba11d33c56082abcf240d8ca5e9aa4436357b58129410"
+    },
+    {
+      "path": "constants/Partners.ts",
+      "equal": true,
+      "sha256": "d125ecb1e17d38cdd44343323d9714d8bf0ac03915a211a07efaca468ccedb0a"
+    },
+    {
+      "path": "types/partner.ts",
+      "equal": true,
+      "sha256": "71e791a4687115f003ead7766d59275439e716458c272e93b73b8a134b63d930"
+    },
+    {
+      "path": "constants/ResourceTheme.ts",
+      "equal": true,
+      "sha256": "6368fb624d01f58a2ff232c9d4577e0429d278aa5af0ec40b2ffa52480794a40"
+    },
+    {
+      "path": "components/learn/Resources/Monogram.tsx",
+      "equal": true,
+      "sha256": "7942d18711e76b955fe8e874a97da7d2a0ca47caf86d263d58c2df51aadc36f3"
+    },
+    {
+      "path": "utils/initials.ts",
+      "equal": true,
+      "sha256": "33470953df9d1960ba4a9fafe604efded8060384324444209e47c079a0b5f5d8"
+    },
+    {
+      "path": "utils/partners.ts",
+      "equal": true,
+      "sha256": "e1f67d086175496b6d863645b40a36762d3b5819cc9bf82f3e5a4256ca59a327"
+    },
+    {
+      "path": "components/checklist/ChecklistSectionHeader.tsx",
+      "equal": true,
+      "sha256": "957e6b9ab57170b2d543872b02b7961bf1b3e40d1e4cdddf50b2ad82cbcabfe1"
+    },
+    {
+      "path": "components/checklist/TaskDetailModal.tsx",
+      "equal": true,
+      "sha256": "fdcdb32362758bb30d5d3c9416361c893b79b4aa9607dd31c98bb3946de76f60"
+    },
+    {
+      "path": "utils/touchTarget.ts",
+      "equal": true,
+      "sha256": "1dd7305a76a6b366aaa0796017ca801fc16bd49d1462d1c7ea07b375ef997a4a"
+    },
+    {
+      "path": "components/checklist/LinkedDescription.tsx",
+      "equal": true,
+      "sha256": "8aecf259bc91ac310b47e968ceafbfd737b23293615c546b8618a201359b1b35"
+    },
+    {
+      "path": "utils/descriptionLinks.ts",
+      "equal": true,
+      "sha256": "89ae25806d3d03a9edb7d14611cbe9112028f3f63f89b7effd881a59a126e8e0"
+    },
+    {
+      "path": "components/common/KeyboardAvoidingView.tsx",
+      "equal": true,
+      "sha256": "d3bc5318c342eaa2ab10b25ab9d190c42f8d510b9a58cd145f64386130d2d7b4"
+    },
+    {
+      "path": "components/checklist/ArrivalCountdownSection.tsx",
+      "equal": true,
+      "sha256": "acef30f80e1a9c518c4d39bb7fc264c70b5c39330b43688f00c755c7ebe6c498"
+    },
+    {
+      "path": "components/checklist/ArrivalCountdownCard.tsx",
+      "equal": true,
+      "sha256": "cbb0d6ce0444abe2760f62b87897dc443cfff3b4417fc0fadfc0b716ba0cc18c"
+    },
+    {
+      "path": "helpers/pluralKey.ts",
+      "equal": true,
+      "sha256": "f9973985c53e00d0f74f98febab7aa1bb7c852c2bfc767cbf35590d7ff6aaaa1"
+    },
+    {
+      "path": "components/checklist/ArrivalDateSheet.tsx",
+      "equal": true,
+      "sha256": "61d20c461a213e4d7fe86d595d3c382c65ec8142b5358fe3ddf99699227f9b1a"
+    },
+    {
+      "path": "components/common/BottomSheet.tsx",
+      "equal": true,
+      "sha256": "99dc380fc661d5518fdba724d25661de9a3a33e423dacbe2187d90d73fb64b81"
+    },
+    {
+      "path": "constants/Theme.ts",
+      "equal": true,
+      "sha256": "b7ed82159d38bbb05cda106e7d30ef308c8a6e8a7f31271695831e1daf08b5a7"
+    },
+    {
+      "path": "components/checklist/ArrivalDatePicker.tsx",
+      "equal": true,
+      "sha256": "79656df54012f86c8e76a326ff0eabd63496f32e2736cf0c28820308f84fa262"
+    },
+    {
+      "path": "helpers/arrivalDatePicker.ts",
+      "equal": true,
+      "sha256": "980ea5474e83784e759964847272ba0a6544b7078d601ba8a7474eb1b63672d6"
+    },
+    {
+      "path": "utils/safeAreaSpacing.ts",
+      "equal": true,
+      "sha256": "e01af163fab5cd5aef54cd3b50d027b0fd49affc88f1c06f80e4814055be079e"
+    },
+    {
+      "path": "hooks/checklist/useArrivalDateEditor.ts",
+      "equal": true,
+      "sha256": "b8ebc5565e4d2d7d0a5bad704e5d1521e37125eeb44760301df7b4d5de5f0650"
+    },
+    {
+      "path": "services/onboarding/arrivalCache.ts",
+      "equal": true,
+      "sha256": "f7fd1355fd9bea84d0812516dd15aa11476038ec966b932a6a2e38d20f33c468"
+    },
+    {
+      "path": "hooks/companion/personalizedStartersQueryKey.ts",
+      "equal": true,
+      "sha256": "e5c48528a309563603eeb748c9e74b998ff15594281cd6af117ab24babb4dd69"
+    },
+    {
+      "path": "services/onboarding/updateArrivalDate.ts",
+      "equal": true,
+      "sha256": "50b0f5131cec7d205dce1e8d00ed260bf14ba03f328c7fb84ba27910da1ce78b"
+    },
+    {
+      "path": "utils/arrivalCountdownShown.ts",
+      "equal": true,
+      "sha256": "e8bf3563dbbc07b9e2d13116d967058906cf7ec31ea6bc1b8fe3090250df99d9"
+    },
+    {
+      "path": "constants/PartnerSpotlight.ts",
+      "equal": true,
+      "sha256": "54a1572f5e3aaebb17db33966a06290a04490893a87e850be3297bb49e3ebb59"
+    },
+    {
+      "path": "context/HapticsContext.tsx",
+      "equal": true,
+      "sha256": "0094413ff24ffbe2db88a247d1a10e693dacaa9669f29fb3f62926bc66e45ec6"
+    },
+    {
+      "path": "context/UserContext.tsx",
+      "equal": true,
+      "sha256": "b428ffe0e8d8759915989a036dc3ca1c765a4eb402cd46c0957d8d348062c389"
+    },
+    {
+      "path": "hooks/users/useUserInfo.ts",
+      "equal": true,
+      "sha256": "d5ff2c74f732fad4258b14527d47677636048c23015944c74c95d94f6f46c678"
+    },
+    {
+      "path": "services/users/getUserInfo.ts",
+      "equal": true,
+      "sha256": "08d82253a31b037673c19f9ec73b997c45ff518b174761cea27a02a04e994c1d"
+    },
+    {
+      "path": "types/permissions.ts",
+      "equal": true,
+      "sha256": "dcc2d9ce4bd81bb6fcfbeb23ec26dd0f3bfafb6ff9aa28db18d53664f27a0dc1"
+    },
+    {
+      "path": "services/onboarding/getPublicOnboardingProfile.ts",
+      "equal": true,
+      "sha256": "9affcbe16b755678bdfb9db3f2637d1cd8b39a5b7ed57c8772a91e58d671f43b"
+    },
+    {
+      "path": "components/home/HomeHeader.tsx",
+      "equal": true,
+      "sha256": "b9934ebac30dcc30a20603941b252d1d19f1780d3b457e6aa64cc7b26ca254d9"
+    },
+    {
+      "path": "components/Avatar.tsx",
+      "equal": true,
+      "sha256": "f23bf9c90fb0873f198a80d9780c7954bf1bd01ba9be88570de288414b3b20c9"
+    },
+    {
+      "path": "hooks/useResolvedAvatarUrl.ts",
+      "equal": true,
+      "sha256": "3ee15d0a3ab3aca903701463b56265d504e9269be061ea2b830a52ca1a54d9e4"
+    },
+    {
+      "path": "services/s3/avatarUrlCache.ts",
+      "equal": true,
+      "sha256": "eac696f06dc43c46815af60daa2870b9c68546c4a74d8c37ffb34b8956bf7a17"
+    },
+    {
+      "path": "services/s3/uploadProfilePicture.ts",
+      "equal": true,
+      "sha256": "eca88f0bfe036aff63749893e9b6913587a6ba61a688ea7aff0337804af60c82"
+    },
+    {
+      "path": "components/home/ProfileModal.tsx",
+      "equal": true,
+      "sha256": "1cab53c94c488445956ed6d93a4ddd6013f06ff19f961477089b5075f8d86fc4"
+    },
+    {
+      "path": "hooks/useCommunityNotifications.ts",
+      "equal": true,
+      "sha256": "4e1c4cb0c1eaeb15096964ffb8887cfab399c3aeee3d3ed6f16ffb867cd5851e"
+    },
+    {
+      "path": "services/notifications/notifications.ts",
+      "equal": true,
+      "sha256": "2e04d3e9042454c8b855462dd55c670bad6beba8700b55abca31361a01f381e1"
+    },
+    {
+      "path": "constants/Features.ts",
+      "equal": true,
+      "sha256": "8700c077b5706c4f89926baceff3843a1e02cdf23b77b7249fad1aefa00a3c16"
+    },
+    {
+      "path": "constants/TabHeader.ts",
+      "equal": true,
+      "sha256": "2b6d0b56fb144965328ffff188490de05d677e905ed83274f8e88f4a18a1ea98"
+    },
+    {
+      "path": "utils/formatNumber.ts",
+      "equal": true,
+      "sha256": "287a243e999929cdb1dc908b60e9fd237f362318ffb5f0c1016028b773d84081"
+    },
+    {
+      "path": "components/companion/tasks/TaskStatePanel.tsx",
+      "equal": true,
+      "sha256": "ffdb36ce21d1bfbb9e3d0ad6c7deb3539bbe7864d2a7f40b866b27a42655c216"
+    },
+    {
+      "path": "components/companion/tasks/ReminderSection.tsx",
+      "equal": true,
+      "sha256": "7341348b0a10682eb0731ae31f857c35eccb4d9220a3f06e3780a1e0e8634c4d"
+    },
+    {
+      "path": "components/companion/tasks/CompanionPushControl.tsx",
+      "equal": true,
+      "sha256": "eb2fb572ceec9fa0bdb97ec07a4badcb6f0d992cda9237da976c990881c12025"
+    },
+    {
+      "path": "components/common/LiveText.tsx",
+      "equal": true,
+      "sha256": "bfe13ffb03fa6758ad0a4b784e09ad8af8eb489f2ca5a2eb556fb85d97e08f65"
+    },
+    {
+      "path": "utils/textScale.ts",
+      "equal": true,
+      "sha256": "d9831e9060a39120f0f254bc32a67800bfd5a0afe9f2ae8e33d3d465b3f727c8"
+    },
+    {
+      "path": "hooks/companion/useCompanionPush.ts",
+      "equal": true,
+      "sha256": "f26b1e215de4926538907f374e5999b6de92920cd4ac1ddac86830a96038aae5"
+    },
+    {
+      "path": "services/companionActions/pushNative.ts",
+      "equal": true,
+      "sha256": "a12cf0579a0f61635834f3f96cc35d92f02c462db996f6433438f7c09273cc59"
+    },
+    {
+      "path": "services/companionActions/transport.ts",
+      "equal": true,
+      "sha256": "8ac0b73fb33cc016b5467f4c61487176d96bb8af4bce0231c2870fcd84b29ccd"
+    },
+    {
+      "path": "services/companionActions/client.ts",
+      "equal": true,
+      "sha256": "b132f23517f8a1b37606ce96073a635a76f993512dd82b9927454cb6001b4953"
+    },
+    {
+      "path": "services/companionActions/reminders.ts",
+      "equal": true,
+      "sha256": "2de70cb8ede339801c843db3c2fc9aab11852044bfd1201682ee8b3d9abd06ca"
+    },
+    {
+      "path": "services/companionActions/contract.ts",
+      "equal": true,
+      "sha256": "c127a695497691716043b080dac1bd5949bf344ed125569ef74e87a93467a653"
+    },
+    {
+      "path": "services/push/pushNotifications.ts",
+      "equal": true,
+      "sha256": "93fc88d26738d3bea17a3ce400a27bda3cd62413231adbfd4fd7a7be0ae9f673"
+    },
+    {
+      "path": "services/companionActions/pushClient.ts",
+      "equal": true,
+      "sha256": "308229e55fd59793d943c59455d153848b7f5aa533327b31675ad797867dac95"
+    },
+    {
+      "path": "services/companionActions/pushParsing.ts",
+      "equal": true,
+      "sha256": "81acaa0bf47b22b68702698936946932f489b0b06972011b39d006d0a2dfc00e"
+    },
+    {
+      "path": "services/companionActions/pushDevice.ts",
+      "equal": true,
+      "sha256": "eec6d00c04a0e5a4b070740741c69e9dab89f576b55a7db4c32df6e53c670b70"
+    },
+    {
+      "path": "services/companionActions/pushIntents.ts",
+      "equal": true,
+      "sha256": "37e6b64a365515c50fde29b9d4bb18de88338a5041cb6f26cfeeb0ca3478def3"
+    },
+    {
+      "path": "hooks/companion/useReminderEditor.ts",
+      "equal": true,
+      "sha256": "ecab1284e1bb686a264085b58e76f92c2fc04c5032be71d26ffe8b8a2e2d26ec"
+    },
+    {
+      "path": "hooks/companion/useTaskActions.ts",
+      "equal": true,
+      "sha256": "6b6c4b7810fd469334285f53c8b7a3fbba26eb0892fb19c01e9299ae7809c323"
+    },
+    {
+      "path": "hooks/companion/conversationKeys.ts",
+      "equal": true,
+      "sha256": "e3abc87239b1d2c1df6c4fdab76ca7c4df2ff0faf3b5572c80db0a7c3831744e"
+    },
+    {
+      "path": "services/companionActions/analytics.ts",
+      "equal": true,
+      "sha256": "01e6f69ff2af8b4cd13e000c38721021f0cb16fdf32e32dd370edc96ad77a6eb"
+    },
+    {
+      "path": "services/companionActions/taskActionStore.ts",
+      "equal": true,
+      "sha256": "d44b19ed2a26e35f93b4d0d4bd3d83ee3b00e676a62bad8c180c0bb06d3a4e3c"
+    },
+    {
+      "path": "services/companionActions/operationId.ts",
+      "equal": true,
+      "sha256": "9fd31dd68d26076356e9871858909ff1617e23bdd7521799e826f449503c4272"
+    },
+    {
+      "path": "components/companion/tasks/editText.ts",
+      "equal": true,
+      "sha256": "4d403819dde0143d4f465d3340a2d53612feaac668857ead8ed62b7bdbc3d208"
+    },
+    {
+      "path": "components/companion/tasks/ReceiptBlock.tsx",
+      "equal": true,
+      "sha256": "25e70056e33d7e9126cd4e72b6020fc4e742fd28292d8af5166c9d054510d650"
+    },
+    {
+      "path": "components/companion/tasks/TaskRemovalSection.tsx",
+      "equal": true,
+      "sha256": "465432d609b1369ae4e83ede13ca932f8503ef0bc18df4e3b8599cf829d0a54e"
+    },
+    {
+      "path": "components/companion/tasks/TaskStepsSection.tsx",
+      "equal": true,
+      "sha256": "59ac419d296290bdf93d268b739e64949cb0811ed0c2757e20da4be392d376d2"
+    },
+    {
+      "path": "components/LoadingScreen.tsx",
+      "equal": true,
+      "sha256": "7fd3a071963b79ab1ca68368174c3aca39f39ba8c614381d8b40a9183b15be4d"
+    },
+    {
+      "path": "app/(tabs)/Gather/GroupDetailScreen.tsx",
+      "equal": true,
+      "sha256": "41f804a29894aacaa1c9c85f67ccdb99e6da02484bc6ca715a2237f1dbaebba9"
+    },
+    {
+      "path": "services/groups/getGroupByName.ts",
+      "equal": true,
+      "sha256": "b5916f099e42287b1212b1026943b031580aa14a0a1371c0e5a145680dbea838"
+    },
+    {
+      "path": "components/home/PostItem.tsx",
+      "equal": true,
+      "sha256": "9e1a6d5d7566e4097bcfc74b2b9154a55b59e99b4018b391f7b21cfcc454f1c6"
+    },
+    {
+      "path": "components/home/DoubleTapHeart.tsx",
+      "equal": true,
+      "sha256": "a83f88b838b5e247de0c9903fa88903fa211fc2276321ae42730af026c61eba5"
+    },
+    {
+      "path": "hooks/posts/useMutateLikePost.ts",
+      "equal": true,
+      "sha256": "7eeac93e1a85f0226a140c988a1168f1cb31098169a69815796d7f5e391f2367"
+    },
+    {
+      "path": "services/posts/likePost.ts",
+      "equal": true,
+      "sha256": "8c25eef1365406b4396d3c4c608fe831a57822a7f3e3f33194de806e1d58d1c6"
+    },
+    {
+      "path": "services/notifications/createPostLikeNotification.ts",
+      "equal": true,
+      "sha256": "78f457c702c7021fc1bcaa7011733a3531596c8e91861565c05dd3b1c0e712d5"
+    },
+    {
+      "path": "utils/notificationText.ts",
+      "equal": true,
+      "sha256": "364e71f21a02a5d0bdc1f66c22a320083552a1260bb24aeb9df2ba41b6e446d3"
+    },
+    {
+      "path": "utils/updatePostCaches.ts",
+      "equal": true,
+      "sha256": "9726ebd19f782e68d899f4ee74ef1bce105ee3d50d7e2966892a5692f05fc747"
+    },
+    {
+      "path": "hooks/posts/useMutateSavePost.ts",
+      "equal": true,
+      "sha256": "76fa66ead1771210b993c9f1ee4cd97122103a55c9e310e04a98b4f8ca381b02"
+    },
+    {
+      "path": "services/posts/savePost.ts",
+      "equal": true,
+      "sha256": "9b144738c0bff8114b3b80e6892c1cda1023ad8b2ae43031c042fab468317003"
+    },
+    {
+      "path": "hooks/posts/useMutateDeletePost.ts",
+      "equal": true,
+      "sha256": "e5d8315d9611c2d9fe1c565099384bfa92488f89d67a2b10aa5f4726937734dc"
+    },
+    {
+      "path": "services/posts/deletePost.ts",
+      "equal": true,
+      "sha256": "ff74cb3bb94e73ea75a4e7bf3f99160c6ec2a6d0e1698a829156914a188b7b3b"
+    },
+    {
+      "path": "hooks/usePostMetadata.ts",
+      "equal": true,
+      "sha256": "75bba9711d441a169c567a5050a3d54bcb0719d7fa39a3c3f29d22bc4e416b53"
+    },
+    {
+      "path": "services/posts/postMetadata.ts",
+      "equal": true,
+      "sha256": "862d0fb387c8c816bb869fa41c71c82003882bdc5c6cd88840e966b83a15edc1"
+    },
+    {
+      "path": "hooks/posts/useMutatePinPost.ts",
+      "equal": true,
+      "sha256": "0c909f1ec7a8d41fa8a34db3f3a36e73d46c33701ede55b9e311f3a4a8ed62fa"
+    },
+    {
+      "path": "services/posts/pinPost.ts",
+      "equal": true,
+      "sha256": "c343e90ba6622a2f96624c30e2dc65ddeedb521ec9b03d5366e3001da957dcf6"
+    },
+    {
+      "path": "services/posts/unpinPost.ts",
+      "equal": true,
+      "sha256": "3268468fa860a355775cdc4cebacf53eae4233abef2a675e5b98298fab58a80f"
+    },
+    {
+      "path": "utils/dateUtils.ts",
+      "equal": true,
+      "sha256": "245030cccc87340eaaf8572cf3a8423a534f303ef91521c14564e319f3f5c71f"
+    },
+    {
+      "path": "components/icons/PostHeaderIcon.tsx",
+      "equal": true,
+      "sha256": "ccbb303eeeb839877ddec69d487a4a4a607b709823604a51547d871d076c689d"
+    },
+    {
+      "path": "components/SkeletonLoader.tsx",
+      "equal": true,
+      "sha256": "8e1e896fe9a285cf8c7360cb96502448efbc358ac00f5e74a8028d772dcedfdd"
+    },
+    {
+      "path": "components/home/TranslateButton.tsx",
+      "equal": true,
+      "sha256": "927c9c6d317608919fa17d8d5a9b92f48042c0991f00d3d5b625f54e26ab9b34"
+    },
+    {
+      "path": "hooks/posts/useTranslateContent.ts",
+      "equal": true,
+      "sha256": "85ad879fdf724881b149183a26d376c6a57c02c3664aed644fd3885ee72bc5ec"
+    },
+    {
+      "path": "services/posts/translateContent.ts",
+      "equal": true,
+      "sha256": "f61908b95cd96455108445f26b40269455b7c65317b9ff55eb8dea9e66f79a94"
+    },
+    {
+      "path": "utils/appPlatform.ts",
+      "equal": true,
+      "sha256": "d3635323a98445fbc1d079a9064ae43f80655ba3eca3b66597457b5571c7354e"
+    },
+    {
+      "path": "context/ToastContext.tsx",
+      "equal": true,
+      "sha256": "5853f2c19b2ca1d1745058e101cbd0a36de9ade9c0975a939ea71724318442da"
+    },
+    {
+      "path": "services/s3/postImageUrlCache.ts",
+      "equal": true,
+      "sha256": "e1dceaed69ccd46c55ccf93c42fc5068a7610a535ae6fb26d174b6004fa6050e"
+    },
+    {
+      "path": "components/home/ImageViewerModal.tsx",
+      "equal": true,
+      "sha256": "ee94b10901b70abc7ba26715b8adc16b4ad3e6ddf15bd0734cd5173ad680a554"
+    },
+    {
+      "path": "components/posts/CreatePostButton.tsx",
+      "equal": true,
+      "sha256": "a868c481c645d00e00f70efb31693a1e04451c37bc64ec10466ee0d45a576e93"
+    },
+    {
+      "path": "hooks/feeds/useGroupPosts.ts",
+      "equal": true,
+      "sha256": "b375915be50cb8903d1fcf78dcb761de199f3473bc74b9b63587fb6cd6abab19"
+    },
+    {
+      "path": "services/posts/getPostsByGroup.ts",
+      "equal": true,
+      "sha256": "d1171e80c8f9fbdd6b13d793e509e3b5dfe98dc84cb900aa6d2371feddd55ab4"
+    },
+    {
+      "path": "hooks/feeds/useFeedFactory.ts",
+      "equal": true,
+      "sha256": "bfb01662b69983735fd6eb4a4df999cd1d24c15661d50f977df39fa87594b432"
+    },
+    {
+      "path": "services/groups/joinGroup.ts",
+      "equal": true,
+      "sha256": "fc0511abcc1044514bfee91f9c4096feaaaad05ca6822e64d0864b7b0edf0c69"
+    },
+    {
+      "path": "services/groups/leaveGroup.ts",
+      "equal": true,
+      "sha256": "ab0780f85c6582629a31889ad160b20e2c50cd34351b742b3e50804e3d37a77b"
+    },
+    {
+      "path": "services/groups/checkUserGroupMembership.ts",
+      "equal": true,
+      "sha256": "1b786a3f2c0786cf73bd6f9ba4d5efe7702953fb33afebcee6b098548b4f2bbc"
+    },
+    {
+      "path": "components/SkeletonLoaderPostItem.tsx",
+      "equal": true,
+      "sha256": "6a6bcf6590abad449536033513548fc480001a2e9dc0bdde96660a017e4bf471"
+    },
+    {
+      "path": "components/profile/EmptyFeedMessage.tsx",
+      "equal": true,
+      "sha256": "52eb2292875d2b32e3dc5bf53258f553999217e6356bd4382a108ea2c9854525"
+    },
+    {
+      "path": "app/(tabs)/Gather/PostCommentItem.tsx",
+      "equal": true,
+      "sha256": "8e8af5a90e4a71d1ca5dc021196c1c5aee34b88adbf5124f9cdbe0bf783416cb"
+    },
+    {
+      "path": "hooks/posts/useMutateLikeComment.ts",
+      "equal": true,
+      "sha256": "61f68823f1ecc5cd472a51141f21a79a26dcc1e0f0d6c4b1c97a4a2eefe69ce9"
+    },
+    {
+      "path": "services/posts/likeComment.ts",
+      "equal": true,
+      "sha256": "deab94e4f7c50668da015e2a62c5a54ae69a61d2e37e6272e7b6cab3c60ba620"
+    },
+    {
+      "path": "services/notifications/createCommentLikeNotification.ts",
+      "equal": true,
+      "sha256": "83679ffba50898776defd479babad5f0fd930363c2b9442f2efebff64c397999"
+    },
+    {
+      "path": "hooks/posts/useMutateDeleteComment.ts",
+      "equal": true,
+      "sha256": "c864205aada48850a8a4a2473216ce1f201167d9ced7540bec9c05350d87bdd9"
+    },
+    {
+      "path": "services/posts/deleteComment.ts",
+      "equal": true,
+      "sha256": "f73afc9b73e48c6c881c58ff4e957798709a734ed3d41a52124430167fff970c"
+    },
+    {
+      "path": "app/(tabs)/Gather/Profile/_layout.tsx",
+      "equal": true,
+      "sha256": "d107ea66a89324e86397ab9f6bce7f4997f82f73e551557fec646c02fee36a84"
+    },
+    {
+      "path": "app/(tabs)/Gather/Profile/profile.tsx",
+      "equal": true,
+      "sha256": "4ed783fadd5c2e5bf861fd66492df2c9ecc07857ab3127c1d4e305f76d61b27d"
+    },
+    {
+      "path": "components/profile/ProfilePageWrapper.tsx",
+      "equal": true,
+      "sha256": "b0262d3ad63842b11261fec401af6b2026294fa6db132b6736aef97e61c0cc49"
+    },
+    {
+      "path": "components/profile/Profile.tsx",
+      "equal": true,
+      "sha256": "0a8eb5758914afeb40190b6111240769c158c30a2dbd99824e7b8fb8f7b78de9"
+    },
+    {
+      "path": "components/profile/ProfileHeader.tsx",
+      "equal": true,
+      "sha256": "198d7340dae853acc0ad0d3da2c9f2744c27104c7123fc45e9a56b1cab04d905"
+    },
+    {
+      "path": "components/profile/ProfilePictureUpload.tsx",
+      "equal": true,
+      "sha256": "173649358043d0e109022118c6b56c90ab53e3f3b176c07721d7fe9bac8b71f2"
+    },
+    {
+      "path": "services/users/updateProfilePicture.ts",
+      "equal": true,
+      "sha256": "768ca44b6864642d77fee6ca2419fcadedd32ecd8a509fc46c91d433c4719a67"
+    },
+    {
+      "path": "components/common/InfoBadge.tsx",
+      "equal": true,
+      "sha256": "869b59fb791f0790073cd02751cc4abb278be4cac53edf0e366b9b88b33d94f9"
+    },
+    {
+      "path": "utils/onboardingBadges.ts",
+      "equal": true,
+      "sha256": "2b2420a59088b3abf44074294f4156169ab04b540648359b6efd4b2670305bd4"
+    },
+    {
+      "path": "matching/pools.ts",
+      "equal": true,
+      "sha256": "426ee0c20d3a7b558253b665b857a39239d286c4f5aa124f69a7b1113552a515"
+    },
+    {
+      "path": "hooks/groups/useUserJoinedGroups.ts",
+      "equal": true,
+      "sha256": "707d129355017d00dbb95a91c1e20a839d5289cc41e14c3e1981db9512164e03"
+    },
+    {
+      "path": "services/groups/getUserJoinedGroups.ts",
+      "equal": true,
+      "sha256": "5faee9390f47c655e1ad20da73187babb2f0583338f87227782686971a04e23c"
+    },
+    {
+      "path": "components/FeedWithHook.tsx",
+      "equal": true,
+      "sha256": "20927806afa577d3e2735b0f765bd9b5d745b9a66cd16f0a9b2741aa3b85676e"
+    },
+    {
+      "path": "components/home/Feed.tsx",
+      "equal": true,
+      "sha256": "2d364509df35abf413b23383d9c2654b066b4d8efe0de4d0bb7804913c3fb182"
+    },
+    {
+      "path": "components/BackHeader.tsx",
+      "equal": true,
+      "sha256": "d26e37401064c6d0f2f80af9dd2d9a9b7dee967df68c970317188961d506385f"
+    },
+    {
+      "path": "components/profile/FollowButton.tsx",
+      "equal": true,
+      "sha256": "d38fc2723408ed2f547f5fa7d4f417d1f2f1dad59836d7389a2c32b1a514a874"
+    },
+    {
+      "path": "hooks/users/useFollowUser.ts",
+      "equal": true,
+      "sha256": "0b24ceaa80380dbb3ada8051b02d5f3435c7000f6e991af057b5470a2d864f20"
+    },
+    {
+      "path": "services/users/followUser.ts",
+      "equal": true,
+      "sha256": "f619523259d8c04c8f801bd2872a47d952c1fc3265b898fa1f3dd582942a38ed"
+    },
+    {
+      "path": "services/notifications/createFollowNotification.ts",
+      "equal": true,
+      "sha256": "210021865648f9b6582d2baddad8a815c4b67a86df8093cbb0934742331cdac9"
+    },
+    {
+      "path": "hooks/users/useFollowStatus.ts",
+      "equal": true,
+      "sha256": "f48148105ac005113d8e1542c8c12bf8cfc1fbfe62fdca22c0c06843c6950765"
+    },
+    {
+      "path": "services/users/getFollowStatus.ts",
+      "equal": true,
+      "sha256": "6e202832727d455251ea9f1e1ea73b15e9387aecd90003365c3f73b391ab4c5f"
+    },
+    {
+      "path": "hooks/posts/useUserPosts.ts",
+      "equal": true,
+      "sha256": "fabe1c3a5fc6fe2b959933387dcc6d91c33d5d7d1b8f34636fdafe6c358cec4f"
+    },
+    {
+      "path": "services/posts/getUserPosts.ts",
+      "equal": true,
+      "sha256": "b281bfce3bbb814334e51e12e575cebea7df06b9bb4eefdf197e13583d28be4e"
+    },
+    {
+      "path": "hooks/feeds/useCommentedOnFeed.ts",
+      "equal": true,
+      "sha256": "c9fe5e6c776a203cefb399736d84cecd5a48cceee5c01a58ccb19f640e35726c"
+    },
+    {
+      "path": "services/feeds/getCommentedOnFeed.ts",
+      "equal": true,
+      "sha256": "53f78b6cdd2653054cbf165d9ab27b62f2c75e983f1e858c08da045c77cee9a7"
+    },
+    {
+      "path": "utils/postTransform.ts",
+      "equal": true,
+      "sha256": "d27e50fc8a44898f0fbb8c31ca0464f850c173ec48d20791c429dde401b2fa12"
+    },
+    {
+      "path": "services/users/getBlockedUserIds.ts",
+      "equal": true,
+      "sha256": "485db3baece477170d17ce8259d260fca2618ae3292fc0135f680e1d808d4947"
+    },
+    {
+      "path": "hooks/users/useUserReportStatus.ts",
+      "equal": true,
+      "sha256": "bdcf813363aac5e1c31e4127251f694979e80da94c60cef67db9a85b1e13a373"
+    },
+    {
+      "path": "hooks/users/useUserBlockStatus.ts",
+      "equal": true,
+      "sha256": "fc23d3773e34cf3f0bc2f21202fa45d90e1a08419855ac69ca0817e85b643e01"
+    },
+    {
+      "path": "hooks/users/useMutateBlockUser.ts",
+      "equal": true,
+      "sha256": "c51a5512e30c49fee85888937bf4c68ef707576e15a94132d86cbf7bffd89765"
+    },
+    {
+      "path": "services/users/blockUser.ts",
+      "equal": true,
+      "sha256": "6920b89778fa0bb348650b89a81cbf330c4afb3846a7ae36744d5f6e31aae7ee"
+    },
+    {
+      "path": "services/users/unblockUser.ts",
+      "equal": true,
+      "sha256": "c28de4ac2a45b6300c883a6d1b2d01ccb28322c81dbea509f082487fbbc66c96"
+    },
+    {
+      "path": "app/(tabs)/Gather/_layout.tsx",
+      "equal": true,
+      "sha256": "a39ad6bd08f000a790ae523b5239ee395f0fd69f0b61774b19a530249da0c7a3"
+    },
+    {
+      "path": "app/(tabs)/Gather/gather.tsx",
+      "equal": true,
+      "sha256": "d3ae70c546fdc3b8dc9440e841eaa9e202277b3fd8287e13db4a97818b38a22c"
+    },
+    {
+      "path": "components/EventsCarousel.tsx",
+      "equal": true,
+      "sha256": "b0931e9c810ec0c48ad7ef0f8629365d4034561f94dc1dceea1214e780504f35"
+    },
+    {
+      "path": "hooks/events/useEvents.ts",
+      "equal": true,
+      "sha256": "a71608723781b7e33e6f2d7e07928cc775ee975bda79c711a0fdd2eb2537d702"
+    },
+    {
+      "path": "services/events/getAllEvents.ts",
+      "equal": true,
+      "sha256": "d3acd5434a07cd800261290f176f2b30bf8b71996ade2308ff876e6b30df7721"
+    },
+    {
+      "path": "services/events/eventContract.ts",
+      "equal": true,
+      "sha256": "3f66ba0b767b6442869bf5205dc1a1162d87395eb1b52130d5e59057b9e7ae29"
+    },
+    {
+      "path": "types/events.ts",
+      "equal": true,
+      "sha256": "abb2ff279feafeebb994bfd05e983983ab0cdef51bd6b949852d7bb3c8e7942d"
+    },
+    {
+      "path": "components/events/EventCard.tsx",
+      "equal": true,
+      "sha256": "c11b8a4230c28c902ef1d42988eff0b58ccaa8099bd70416ac13873d64dffe65"
+    },
+    {
+      "path": "constants/EventCard.ts",
+      "equal": true,
+      "sha256": "968750f93e8f85cb56a8cd4a0d4abe4581c037d0b2fc7f08446625edcb0cbf33"
+    },
+    {
+      "path": "components/HorizontalCarousel.tsx",
+      "equal": true,
+      "sha256": "9e9cc8de3353d1b57d56d34d79eb67cd1821e5d3ad813cbebc9fae7088e24e33"
+    },
+    {
+      "path": "helpers/eventHelpers.ts",
+      "equal": true,
+      "sha256": "6c5c866da020d6af23aa07f4103298b6b9c55db797cab5132500561d95a77e83"
+    },
+    {
+      "path": "services/groups/getAvailableGroups.ts",
+      "equal": true,
+      "sha256": "c35fafbacbb7c5ed41e0d3cad2dd3c731c386eda1038adcf085a636252445cca"
+    },
+    {
+      "path": "components/news/NewsCarousel.tsx",
+      "equal": true,
+      "sha256": "b95ba63dde2fd1ac07e362fee4fbd2ad7b782c734a9ce9438e7ef7cdfcf84dbd"
+    },
+    {
+      "path": "components/home/NewsCard.tsx",
+      "equal": true,
+      "sha256": "89aaf2567ce8d8485af7ec1e98d670ec76170eaec1cb18d2c3553000a3b151cc"
+    },
+    {
+      "path": "hooks/news/useNews.ts",
+      "equal": true,
+      "sha256": "a633cee2239d00d82c4ca85f7993e47b7ae0fa076ccf54a855d77e0fe385b37f"
+    },
+    {
+      "path": "services/news/getAllNews.ts",
+      "equal": true,
+      "sha256": "1ebf6c437eef7f005b4f0922ceff3a505d42e49962c4eb1ac3385054bd60bdb1"
+    },
+    {
+      "path": "components/news/NewsCardSkeletonLoader.tsx",
+      "equal": true,
+      "sha256": "96ca9f75486582ab837c6f63f1421249b7743d8cd0018bf69e1d00931b361478"
+    },
+    {
+      "path": "components/tips/DailyTipCard.tsx",
+      "equal": true,
+      "sha256": "3bcec4bd09a6653324ca12ce1b10f5a4d878d9f51c497125ebeeaf88e4620732"
+    },
+    {
+      "path": "components/tips/DailyTipCardSkeletonLoader.tsx",
+      "equal": true,
+      "sha256": "78912d3656d0a54a452318815e71473b668ae05cf97e9e5a2c1951faac9a0b7a"
+    },
+    {
+      "path": "hooks/tips/useDailyTip.ts",
+      "equal": true,
+      "sha256": "63e518d785652e859fe06078751ee7665d7dee899a5d2c07919db76044cdcfa6"
+    },
+    {
+      "path": "services/tips/getDailyTip.ts",
+      "equal": true,
+      "sha256": "432b58ba6c5e961110691ea5bce4f5939a783482074dfd869e265b323ad8f931"
+    },
+    {
+      "path": "helpers/localDateHeader.ts",
+      "equal": true,
+      "sha256": "2dd62a37b71ca1fecab5bb683de73b1404db3f21f86971f1b05764138fc920a9"
+    },
+    {
+      "path": "supabase/functions/_shared/requestToday.ts",
+      "equal": true,
+      "sha256": "4a39a00633c8f3b66fcfac686f85621ce14c76267efa705bb11bd8d6c4f6af9e"
+    },
+    {
+      "path": "ui/communityMatching/EntryCard.tsx",
+      "equal": true,
+      "sha256": "6df637041fb84ce58843069d72e87ffd016a97194d60744cee54090e492cfa9c"
+    },
+    {
+      "path": "services/matching/waitlist.ts",
+      "equal": true,
+      "sha256": "c52dcbed90722051cab399690a857731a56478667da403f6d83c5c0fdfc896d3"
+    },
+    {
+      "path": "services/matching/circles.ts",
+      "equal": true,
+      "sha256": "38d8ef7888da2e07a76f0e4882e2b8f812614706c4df373c2e4ef2d9ba119d5f"
+    },
+    {
+      "path": "components/groups/RequestGroupModal.tsx",
+      "equal": true,
+      "sha256": "8b79275c47854e50bd98ef711e2c305e40e47c926eac3852c410f88a3c622816"
+    },
+    {
+      "path": "services/groups/sendGroupRequestEmail.ts",
+      "equal": true,
+      "sha256": "456a0dbd6fdcdb3e6effa9818fda2b872287730f878b7def6fd342e0d3d8c2a3"
+    },
+    {
+      "path": "app/(tabs)/Gather/index.tsx",
+      "equal": true,
+      "sha256": "2cbac0db8d07a3ed4427e63dafebc6f8021f468fc0cab88b7161520340182b8b"
+    },
+    {
+      "path": "app/(tabs)/Learn/_layout.tsx",
+      "equal": true,
+      "sha256": "41a33abe26fb8ad1065e80164f275cac9b249c78a8a18a296d2f712f93d37cb3"
+    },
+    {
+      "path": "hooks/learn/useModuleAccess.ts",
+      "equal": true,
+      "sha256": "38fcebf1ca8bb6599c0c5c90799eb26e599447e2940a481865d8db50d103fe86"
+    },
+    {
+      "path": "services/sanity/modules.ts",
+      "equal": true,
+      "sha256": "293b273f9071f3b518d04836dde4a203ec8324051bb4e8961ccd0da658af27c9"
+    },
+    {
+      "path": "hooks/learn/useLearnProvince.ts",
+      "equal": true,
+      "sha256": "190fa98b92eac6f8c1630e6059998ba06d43522f2f2c09c0193df928a1b80cd5"
+    },
+    {
+      "path": "app/(tabs)/Learn/index.tsx",
+      "equal": true,
+      "sha256": "09ba6b12f092b99aee9c7a06c01c0070a1e1f37f71d755718ae1a8928a92a58f"
+    },
+    {
+      "path": "hooks/learn/useLearnEvents.ts",
+      "equal": true,
+      "sha256": "b0c4b7ee545a48c9542d287d1bac5dee89ac0a2829f8ff9bd3ad67ba2bf1d11c"
+    },
+    {
+      "path": "utils/learnEventGate.ts",
+      "equal": true,
+      "sha256": "7732f5973f39487f12c0bcbba0a46a5eadee6e3ea8b32124165987dbcc0a0e9b"
+    },
+    {
+      "path": "hooks/learn/usePersonalizedModules.ts",
+      "equal": true,
+      "sha256": "1a37a59be8cbbe577eee108f3761e8ff953f70bac50f255ef8e9975d3d3e31bb"
+    },
+    {
+      "path": "utils/progressEventEmitter.ts",
+      "equal": true,
+      "sha256": "5a75a2f1cae30b7d29dfaeaff1dea1c7e7d4bd755c2b7bc54882d203fa0d3739"
+    },
+    {
+      "path": "hooks/sanity/sanityQueryKeys.ts",
+      "equal": true,
+      "sha256": "a46117c69544460ed14ed3d332a594a67898f21d850a4be01ef1b967544102cc"
+    },
+    {
+      "path": "hooks/progress/useInProgressLessons.ts",
+      "equal": true,
+      "sha256": "f810e7f14558f83d6017769f749e73fdf41737e42503af4b94b0d113601cb2e0"
+    },
+    {
+      "path": "utils/lessonResume.ts",
+      "equal": true,
+      "sha256": "3477ea7af0e3b88e8049da6fc42bd7bb8820f3ca30a81897346952b046f72311"
+    },
+    {
+      "path": "services/progress/progressClient.ts",
+      "equal": true,
+      "sha256": "851da2ff756d070aac452a5f4e894b2aa07f4982077f90ad27414ba27f521972"
+    },
+    {
+      "path": "utils/submoduleProgress.ts",
+      "equal": true,
+      "sha256": "7242327cfd8bb9b6736ac882586defe16f11061505f9bfa320d38be29340c76f"
+    },
+    {
+      "path": "hooks/progress/useProgressCache.ts",
+      "equal": true,
+      "sha256": "cb108d2878894d81087cf0535f1f468dfeea5bbeebbe91832093dcb96be9049d"
+    },
+    {
+      "path": "services/progress/cachedProgressService.ts",
+      "equal": true,
+      "sha256": "3a21c98be424190e956a88a23cfcfa028e6b4f5954eb6e0a46b603782b47c08d"
+    },
+    {
+      "path": "components/common/AnnouncementModal.tsx",
+      "equal": true,
+      "sha256": "a0a993a2383b5a3a4f9512a8858de83cb3dafe034d776beb529e8ef3129a4d84"
+    },
+    {
+      "path": "components/learn/Resources/SegmentedControl.tsx",
+      "equal": true,
+      "sha256": "b855eec5884dd336c37b18abe006cedbf70d8379d851935afbdcb09832786868"
+    },
+    {
+      "path": "components/learn/Resources/ResourcesView.tsx",
+      "equal": true,
+      "sha256": "e301e736dd31bf15cdea757a19a5000f07d8c96a283585b52c2c813f2cf3cd43"
+    },
+    {
+      "path": "utils/localizePartner.ts",
+      "equal": true,
+      "sha256": "9b988d1ef0f056f9bff9a57660b60538f0c6f4f9c37857246c219c998d95a66b"
+    },
+    {
+      "path": "utils/searchPartners.ts",
+      "equal": true,
+      "sha256": "913a582aa248b88251e5d57a706b3c84c075f02a877a6c0e40eebcac8ff06704"
+    },
+    {
+      "path": "components/learn/Resources/CategoryTile.tsx",
+      "equal": true,
+      "sha256": "ee6f648b41a0c63eb35f0cce4e87b4c30c033e72dc4d6916e6fb50bfe948aeea"
+    },
+    {
+      "path": "components/learn/Resources/CategoryIcon.tsx",
+      "equal": true,
+      "sha256": "486ef96a2d964c3a337a826fdefbaa5d7281e7fd9fe692f24e74430dc1676396"
+    },
+    {
+      "path": "components/learn/Resources/CategoryDetail.tsx",
+      "equal": true,
+      "sha256": "5b425fe1932f5ee7b8d5b2c766aa9bb84c9c45bbcb4485c87ac1880cc825a8fe"
+    },
+    {
+      "path": "components/learn/Resources/MorePartnersNote.tsx",
+      "equal": true,
+      "sha256": "5cb13dcde0a5f4f48d8323c1f3470c2b923629eabc0c4461dca5bc04f430af29"
+    },
+    {
+      "path": "utils/morePartnersNote.ts",
+      "equal": true,
+      "sha256": "06f880211497095bc46246c9f983be79b4aea0ae7c59743cc95ac6360a203804"
+    },
+    {
+      "path": "components/learn/Resources/PartnerRow.tsx",
+      "equal": true,
+      "sha256": "d070eb1a35d7fea76fd0d0b599f7f447ff2f3f849bb1787e4e71a844d2e516d6"
+    },
+    {
+      "path": "components/learn/Resources/HowWeChooseSheet.tsx",
+      "equal": true,
+      "sha256": "a37958e52219c6c5505b200bb34fbe4a8890602074610cdf70033d392d49ebf8"
+    },
+    {
+      "path": "components/learn/Resources/ResourcesSearchBar.tsx",
+      "equal": true,
+      "sha256": "90d15a8db86b36cbb060c7bc79a34566ddabcf75b1a0fa5e1c014e81e0549712"
+    },
+    {
+      "path": "components/giveaway/GiveawayBanner.tsx",
+      "equal": true,
+      "sha256": "30c08e9608737ec642f97363ca27d9ad00db2c1efee3c9954c070e63b6d92f70"
+    },
+    {
+      "path": "hooks/giveaway/useGiveawayCountdown.ts",
+      "equal": true,
+      "sha256": "4543eefbd31f7f6e15ce5e5d8a9d79b7da70c382f9a63d605eaa9495c7e6131e"
+    },
+    {
+      "path": "constants/Giveaway.ts",
+      "equal": true,
+      "sha256": "9058189fb98dca06555f9e05c1ba296990d788eaec9370a3fa3f6ba0709dfed7"
+    },
+    {
+      "path": "hooks/giveaway/useGiveawayEntry.ts",
+      "equal": true,
+      "sha256": "f346ede34d3312754ba7343f5fa210f17d59fa74631fec3ff2fecc1c93dde56a"
+    },
+    {
+      "path": "services/giveaway/getUserEntry.ts",
+      "equal": true,
+      "sha256": "41e2a8153becc88b95e424dd16ff6533b7550891c1cc74cd1e73a0bcd3a67e8c"
+    },
+    {
+      "path": "components/giveaway/GiftBoxIcon.tsx",
+      "equal": true,
+      "sha256": "294782b380dad088cf03a6c41b835d28362614110acb7965858ae832b0d21a6b"
+    },
+    {
+      "path": "components/learn/CategorySymbol.tsx",
+      "equal": true,
+      "sha256": "0b97677c515c0144f4374f0ce4845e1d5244298aebf9f920494bb6ec6dec692a"
+    },
+    {
+      "path": "components/learn/LearnPrimitives.tsx",
+      "equal": true,
+      "sha256": "a9c66a993ea938d6760263c7a6d36e8059dd93e80b97996085650e5ec18bcf12"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/index.tsx",
+      "equal": true,
+      "sha256": "0fb2ffbc4f29a2fe4afaaf45bd0c32fac27e0909cf5ff3e85728d9a13653d268"
+    },
+    {
+      "path": "components/learn/LearnRetry.tsx",
+      "equal": true,
+      "sha256": "c7c3a97fffccf06a42444893d1f3b1e3740d56ed8a119ed6858d5fa40ac9d41e"
+    },
+    {
+      "path": "hooks/progress/useLessonStatuses.ts",
+      "equal": true,
+      "sha256": "9a86189be26772ef2fade6c6fde8434736bb0edf3e1ede870ec2b88e7741bb70"
+    },
+    {
+      "path": "hooks/sanity/useSanitySubmodules.ts",
+      "equal": true,
+      "sha256": "2cb0058a1e66f346709acecbb1a7e2901cf36e0f6cecdac79e55fe5700838cd8"
+    },
+    {
+      "path": "services/sanity/submodules.ts",
+      "equal": true,
+      "sha256": "f90c0dce89e2be1950416b8cfa864732f1ab9626f403e54874b18037d35d0856"
+    },
+    {
+      "path": "hooks/sanity/useSanityModules.ts",
+      "equal": true,
+      "sha256": "dd030a0f4e9ef7ecabc3575c1adfc65be24c60dbce49e0d53fd270a83ab58dfd"
+    },
+    {
+      "path": "hooks/progress/usePracticeProgress.ts",
+      "equal": true,
+      "sha256": "c92307c7b855c6e0076ab60d9183782a50f797cdf9b0fd98bf8137dfbecbd201"
+    },
+    {
+      "path": "services/progress/practiceProgressService.ts",
+      "equal": true,
+      "sha256": "3a60d78d024e3ff3080f7275032b07e4c94ed3b1ef073ea9ffd18ff3369cb085"
+    },
+    {
+      "path": "hooks/progress/useTaskProgress.ts",
+      "equal": true,
+      "sha256": "4cf05a946b0f4417959d9b303296b4d6b48122b455286be1d14307c17955a89b"
+    },
+    {
+      "path": "services/progress/taskProgressService.ts",
+      "equal": true,
+      "sha256": "70385473d41302fc0eaa1d7286b7a31964067177050bf24801d7144bbe362379"
+    },
+    {
+      "path": "hooks/sanity/useSanityPractices.ts",
+      "equal": true,
+      "sha256": "6db7daaa429a97c71ee7e28d477f01e1924273f86fb583d7fda806b034088586"
+    },
+    {
+      "path": "services/sanity/practices.ts",
+      "equal": true,
+      "sha256": "775df5216a06deb9579caa864a113e141ab687952f00c8a237d4bea81c714f7a"
+    },
+    {
+      "path": "hooks/sanity/useSanityTasks.ts",
+      "equal": true,
+      "sha256": "3253ddbd9fb68d18c190db5f31944ee5ba84731fd8724f9948262f85e32d0ef6"
+    },
+    {
+      "path": "services/sanity/tasks.ts",
+      "equal": true,
+      "sha256": "0b1a489580d13e21316884e9459dd3cec0b9f38a9f7fe58caf345d51f6d41f47"
+    },
+    {
+      "path": "utils/learnHref.ts",
+      "equal": true,
+      "sha256": "68732197e6898c5c3dd86c0b125a8188686b29084fd9997b8f32c9c92caa0be1"
+    },
+    {
+      "path": "utils/learnCompletionNavigation.ts",
+      "equal": true,
+      "sha256": "a474c91252a1808b83848121606733740d56ef2cca5e9c08bfb9218eba4ff6b5"
+    },
+    {
+      "path": "utils/learnOriginNavigation.ts",
+      "equal": true,
+      "sha256": "a520fa21b3edfeb75f3cc2c069c39918ec238b8c6b98e06c501bfeddb581f8e8"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/intro/[pageNum].tsx",
+      "equal": true,
+      "sha256": "c6a8bc33e28e2e566310f7b1e79c4ffe9ecf8e7f29231299953e7db1029ddd3b"
+    },
+    {
+      "path": "components/learn/StructuredLesson.tsx",
+      "equal": true,
+      "sha256": "61c742b9ad85577b8f47c0339982c1073e1a41c076053a9ff127fba459a12928"
+    },
+    {
+      "path": "utils/lessonPresentation.ts",
+      "equal": true,
+      "sha256": "93053530b84ef123ae6ad232a52921af32dd2be225fdf4de3c626954bfd5d8e1"
+    },
+    {
+      "path": "components/sanity/RichTextRenderer.tsx",
+      "equal": true,
+      "sha256": "84a81ce7a1ef7fad758bfabf5ba15778d66b8f44b7a868103c6da77d68ab4fe3"
+    },
+    {
+      "path": "components/sanity/ImageViewerModal.tsx",
+      "equal": true,
+      "sha256": "ab2a042b722dd5402db2e929fd2b28d5fe0ba04092fd7a73792cd5568016d295"
+    },
+    {
+      "path": "components/sanity/DropdownBlock.tsx",
+      "equal": true,
+      "sha256": "ab3b230dcdc5e654e30d061ccffa1af91c84eb6f463068f6eeb77eec5cb62e98"
+    },
+    {
+      "path": "components/learn/DropdownAccordion.tsx",
+      "equal": true,
+      "sha256": "9bc2479276350291f3ffd30388f489bac04bc867586fcbfeca10e552b22a41ab"
+    },
+    {
+      "path": "components/sanity/ChecklistCheckboxBlock.tsx",
+      "equal": true,
+      "sha256": "1c070fc949cf1f88a5da3375cb9ec9625d2d9a68934d9f38dcb5553f393325c2"
+    },
+    {
+      "path": "components/learn/SelectableText.tsx",
+      "equal": true,
+      "sha256": "de7aa82cc8040fc82909a904db0998691d1aa365cdcc7279fc1ea2f0fa8614c4"
+    },
+    {
+      "path": "utils/highlightRange.ts",
+      "equal": true,
+      "sha256": "a6eb859aa5e6ba221384be5bb0a562f2e557307074e02c74bd9d46654f7ec812"
+    },
+    {
+      "path": "context/SelectionContext.tsx",
+      "equal": true,
+      "sha256": "350317d8ca536a431d6817a38f587d8c7bd9c67947d25419df05778327678ea2"
+    },
+    {
+      "path": "components/learn/SubmoduleProgressBar.tsx",
+      "equal": true,
+      "sha256": "3d90e280c4a812a3e921f90add046010e9b85e8c53cc3b8e62898062a954e1fe"
+    },
+    {
+      "path": "hooks/progress/useLessonProgress.ts",
+      "equal": true,
+      "sha256": "176a1bb4573adb447d4f2aa2d1ba4209fdc012bb1acdbb0d185020dc4745c58d"
+    },
+    {
+      "path": "services/progress/progressService.ts",
+      "equal": true,
+      "sha256": "bb381268228128d321e46e5e80a5a8f84ede68d81467574eb848fbfc069f5d56"
+    },
+    {
+      "path": "services/learn/moduleProgressService.ts",
+      "equal": true,
+      "sha256": "3e8455e68b2b9313d1646b3c44cebe3f75c3115c3497750ba8de9c64583e23e1"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/activities/[pageNum].tsx",
+      "equal": true,
+      "sha256": "f754ebf79a689864e7559497b153f8a0468f8301bd1997986949117191e39cd2"
+    },
+    {
+      "path": "hooks/sanity/useSanityLessons.ts",
+      "equal": true,
+      "sha256": "f294840ee816d3f9503940c9eacf2e73cad7fb01d25ebeae2ea8a48303c9f94b"
+    },
+    {
+      "path": "services/sanity/lessons.ts",
+      "equal": true,
+      "sha256": "3f1345a0a5058845d7829eb8a17a1e04ac7289cfb624c3516f0217cc3b3c8594"
+    },
+    {
+      "path": "utils/lessonContentBlocks.ts",
+      "equal": true,
+      "sha256": "24fe7e30e661335c558a7755192288b44fdc68af38895d6afd9c24fa001dcbad"
+    },
+    {
+      "path": "hooks/sanity/useSanityQuizzes.ts",
+      "equal": true,
+      "sha256": "80e4c8e0c338bac3dfea78b22651ea8a8b8e95562dce8657c673b554315417a5"
+    },
+    {
+      "path": "services/sanity/quizzes.ts",
+      "equal": true,
+      "sha256": "35c02fb6abf5f654b9c995d41e0365fadbbf4fb49a091632ed5a181c6fa627d4"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum].tsx",
+      "equal": true,
+      "sha256": "015c66b9d24b0b1c5292d6c3bfa167614c370b1eb1439420dc95d11e4c48257f"
+    },
+    {
+      "path": "services/learn/lessonReviews.ts",
+      "equal": true,
+      "sha256": "bd54ce1fddbb0c8bf0d5428cec4f367c40fc80c598851302e2c73da8db4df280"
+    },
+    {
+      "path": "components/StarFilled.tsx",
+      "equal": true,
+      "sha256": "b03929116b5b82ad8749caa249b5e8ca686cd04f7bbc906dd29e744de3f3bc9e"
+    },
+    {
+      "path": "components/StarOutline.tsx",
+      "equal": true,
+      "sha256": "b042b576c984c3c8776df694b1539e6ee0d0ecb52744c3fa9ef7d94705637b61"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/index.tsx",
+      "equal": true,
+      "sha256": "ca92e76f4a01899ac8a405728027b12837be887d44e9bda8ea1c15eff07212a6"
+    },
+    {
+      "path": "components/learn/lesson-page-skeleton-loader/LessonPageSkeletonLoader.tsx",
+      "equal": true,
+      "sha256": "507cc846f6641182a0271a6e7f232728089d4548de08b5c5abd9b91672651bce"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/pages/[pageNum].tsx",
+      "equal": true,
+      "sha256": "64e5effa21361f67f2ce09b9fb9f838570a6ef6666d2d05a701af18a3c391012"
+    },
+    {
+      "path": "components/learn/LessonBlockActivity.tsx",
+      "equal": true,
+      "sha256": "232a1a60d5f23f9d5c6c5a64f422301aee5c0ea3c893cde10275ce2281c22689"
+    },
+    {
+      "path": "utils/lessonActivity.ts",
+      "equal": true,
+      "sha256": "64e3a50347ec6fb0c43c1be34451b9d4623e25cf96a7b263f022fcebeb9198d0"
+    },
+    {
+      "path": "hooks/highlights/useHighlights.ts",
+      "equal": true,
+      "sha256": "debd5125480f39d9c8837a224c31694d2b97f7d1e6bd01970d2e473191464d55"
+    },
+    {
+      "path": "services/highlights/highlightService.ts",
+      "equal": true,
+      "sha256": "62420d30f9eff82a8bbd3901d28abda1a6e420805e60fea39829ddbad4f062a3"
+    },
+    {
+      "path": "components/learn/SelectionActionBubble.tsx",
+      "equal": true,
+      "sha256": "7445954576e56102f57afdee8745d1d111f0c00cae8c098c4355b27266b46223"
+    },
+    {
+      "path": "components/learn/ExplainTermModal.tsx",
+      "equal": true,
+      "sha256": "078dbace7f37c061921f5b9c4010a10c89591c87ba8d536833aa58ca6440de0d"
+    },
+    {
+      "path": "services/highlights/explainTerm.ts",
+      "equal": true,
+      "sha256": "9d499bd27e50eb5dc65ddb48d5822ffeba88a8f0e847ec9e88142a01d4fb06b5"
+    },
+    {
+      "path": "utils/aiLanguage.ts",
+      "equal": true,
+      "sha256": "61429289ca1f676d0e008ae6cf9d73c8cd893b5d994756be87ab39a8ff8aa1cf"
+    },
+    {
+      "path": "hooks/learn/useLessonPageSaved.ts",
+      "equal": true,
+      "sha256": "f198e212395acf89901888f01227b4796049b227ee1277339e6cbac01ee166d9"
+    },
+    {
+      "path": "services/learn/lessonPageSaves.ts",
+      "equal": true,
+      "sha256": "b17029beca4e0f736cf911e5fc0becdd98ed193a777d2f15d3e9c3cd7cc14aa9"
+    },
+    {
+      "path": "hooks/learn/useMutateSaveLessonPage.ts",
+      "equal": true,
+      "sha256": "26074c924b5441bf7af8d6522673f9826a0d6daffc94e8e705e3ba274547afc4"
+    },
+    {
+      "path": "hooks/learn/useSavedLessonPages.ts",
+      "equal": true,
+      "sha256": "7a16c85a6e124bbab82335c813b4f6d987575120a7370a9769eefb25d7eb0fbe"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId].tsx",
+      "equal": true,
+      "sha256": "cdac57cdcbd51172cf4fd5547935d70c081b51c1c0aba186e81d124fc1935ec2"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId]/pages/[questionNum].tsx",
+      "equal": true,
+      "sha256": "e7f9ccf2b1f4e9d482f3fed5defd2d4bc6028f4b71779c33ed656953b975906a"
+    },
+    {
+      "path": "utils/gradeQuizAnswer.ts",
+      "equal": true,
+      "sha256": "53d97d0fbec47f734d3c1a7d8358bf068641c6a9e62a881e96a0cbdd2c15e711"
+    },
+    {
+      "path": "utils/quizAnswer.ts",
+      "equal": true,
+      "sha256": "8bef36e64952e4a559fb3b97e99288bcc2dc4b3d98a3d401b14c616d466daec6"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/index.tsx",
+      "equal": true,
+      "sha256": "e79983ec9d7d65b9c06a1bb0a298805fb2ae449fe39c05ffd3d99e1a3906c6d4"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/map.tsx",
+      "equal": true,
+      "sha256": "07670de314a6ac220e689e737e10a421ff6a313b35aeeae71856fe857e55362e"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/[practiceId]/activity/[pageNum].tsx",
+      "equal": true,
+      "sha256": "83e77de34af30f26edfb12ac3470b988f71210d2880781b5540a0b3fd9aefdbf"
+    },
+    {
+      "path": "components/learn/PracticeFeedbackModal.tsx",
+      "equal": true,
+      "sha256": "52a4a2e6b275a22d0fa6833e49f90958e14c92317d2981db740127551bf9ac93"
+    },
+    {
+      "path": "services/practice/getPracticeFeedback.ts",
+      "equal": true,
+      "sha256": "0720c8dbb5073ef3bbe479b8688c93510963548cf3c176fdb26e57fe5398ebf0"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/[practiceId]/index.tsx",
+      "equal": true,
+      "sha256": "155dc1df00cc96239fc0cb2706c2856f8c680f943235de69f14768e3ab763ed4"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/[practiceId]/pages/[questionNum].tsx",
+      "equal": true,
+      "sha256": "4cd53c59adb449ee26ce92964f2341aa593624e27a8fd8e84b4cfcf9045d719c"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/index.tsx",
+      "equal": true,
+      "sha256": "b15fc4072055f4a7e3b43fda8d6723bb6fa85d5b8d7e4cccbb8acd4d34480799"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/tasks/[taskId]/index.tsx",
+      "equal": true,
+      "sha256": "e2bb780bf1ca2ef906f79e1baa7f1453859be73add1e0903c0878c7b70901a04"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/tasks/index.tsx",
+      "equal": true,
+      "sha256": "40468c094425827de641019f8c58a39df94829ed55f77ba52348c70bb6f0ee92"
+    },
+    {
+      "path": "app/(tabs)/Learn/modules/[moduleId]/index.tsx",
+      "equal": true,
+      "sha256": "c87b02fe1202b8bef1f75348406a6d226a3a5d88f1f5fb377e0d0f53dc22d422"
+    },
+    {
+      "path": "components/learn/module-index-skeleton-loader/index.ts",
+      "equal": true,
+      "sha256": "d97fee4cbbfefe32a897c6a64e87025950f9d429ff6afd990f57e7b10a24744a"
+    },
+    {
+      "path": "components/learn/module-index-skeleton-loader/ModuleIndexSkeletonLoader.tsx",
+      "equal": true,
+      "sha256": "04fc696cff150fbbc33dbeb1c93640b76a9ae5b761c3fbc34d6decb8928775f3"
+    },
+    {
+      "path": "app/(tabs)/Learn/resources/[slug].tsx",
+      "equal": true,
+      "sha256": "1ce1f17ad6331729f4f8cb33e3804b8400ea5989a94bf71e2ae35082dcd825c1"
+    },
+    {
+      "path": "utils/openResourceLink.ts",
+      "equal": true,
+      "sha256": "fa5dc8b52c1920f89830e4f65b70a14e6aadbe9d00671a8a4c1418b2cc1142a1"
+    },
+    {
+      "path": "app/(tabs)/Social.tsx",
+      "equal": true,
+      "sha256": "e750b48177d8af3663f30294f1df03211c793a6a264a02f6a128fbce60dd38e1"
+    },
+    {
+      "path": "hooks/feeds/useForYouFeed.ts",
+      "equal": true,
+      "sha256": "1172466becb331c0e15e2615675d809bff238c1f26af8afe5c5bee46259e8146"
+    },
+    {
+      "path": "services/feeds/getForYouFeed.ts",
+      "equal": true,
+      "sha256": "37e8d4d0eaaf4fbd606c46fd0bbd5dee8fccbaa8c1eacbea5775a31f13443331"
+    },
+    {
+      "path": "hooks/feeds/useFollowingFeed.ts",
+      "equal": true,
+      "sha256": "bec7b44e0a1805852fb697302a7a7cb47abd75d65024e9657e568ef131d32923"
+    },
+    {
+      "path": "services/feeds/getFollowingFeed.ts",
+      "equal": true,
+      "sha256": "b3d32b4c772b22abdf354f3c63fd6513f12d2c78ff745231f32470d547389ac1"
+    },
+    {
+      "path": "hooks/feeds/useGroupsFeed.ts",
+      "equal": true,
+      "sha256": "f885756e0109b3a5a1c987b10f9bb9212ab4a363b6f98c60c4d8c6ce12909e64"
+    },
+    {
+      "path": "services/feeds/getPostsFromJoinedGroups.ts",
+      "equal": true,
+      "sha256": "144e91bb5725685e500b6e6b554c2150823a419777e2fa526164c972bb65b6aa"
+    },
+    {
+      "path": "app/(tabs)/_layout.tsx",
+      "equal": true,
+      "sha256": "679fe88d16591bc9877726b127a68a09855b0dae45ec0861a5b951f78ba9601f"
+    },
+    {
+      "path": "constants/Routes.ts",
+      "equal": true,
+      "sha256": "dff3375fc406ee5cef50ccd6d040536d017f3c5a7171ed4850d69a57627e4fa8"
+    },
+    {
+      "path": "hooks/useColorScheme.ts",
+      "equal": true,
+      "sha256": "33beb965500ae5fdfe5c8699805a6be94c8c126a751fbe2ed7bcae87df394882"
+    },
+    {
+      "path": "components/navigation/TabIcon.tsx",
+      "equal": true,
+      "sha256": "8814303072553658488036a21dbf2564fc5e13b8b21f2c58001b2ad014976b0d"
+    },
+    {
+      "path": "components/icons/LearnPageIcon.tsx",
+      "equal": true,
+      "sha256": "bde502269043f9089cc2aaa9201ce467484748df456ebd8918cf87db2e2e37c6"
+    },
+    {
+      "path": "components/icons/CommunityIcon.tsx",
+      "equal": true,
+      "sha256": "70fd77056761a6f4d1ad5344d47d5e24cc3ff0ac960c9fbfd1dc8c2f2e3c8012"
+    },
+    {
+      "path": "components/icons/CompanionIcon.tsx",
+      "equal": true,
+      "sha256": "bb2448bf93956ecfa7fe59638aa94705ca2a5ef821065892697bcb66b12d554e"
+    },
+    {
+      "path": "components/icons/SocialIcon.tsx",
+      "equal": true,
+      "sha256": "f1739db11dc01e78ce6e8cf9a49a13f5a5d96fff1a9be954e3a35f0fda264dd4"
+    },
+    {
+      "path": "components/icons/ChecklistIcon.tsx",
+      "equal": true,
+      "sha256": "4ac36521f40ba909200e8efca0600af45f2dd0fc5f5a46327db0ac2d3200a58a"
+    },
+    {
+      "path": "app/(tabs)/companion/_layout.tsx",
+      "equal": true,
+      "sha256": "9f546ed84b9d85c668ba3238d2c022b6b804b856d1a1672ac50581440f626410"
+    },
+    {
+      "path": "app/(tabs)/companion/history.tsx",
+      "equal": true,
+      "sha256": "f05d9acbed77372e6b54e6bd7a96e8732c5ace5aa4f5b5cca8dc90b9bb7b4f77"
+    },
+    {
+      "path": "hooks/companion/useConversations.ts",
+      "equal": true,
+      "sha256": "a0eb39ee7c142e7f762356a334aa2324d3492fb70ac148aa40fea22a93a09e56"
+    },
+    {
+      "path": "services/companion/getConversations.ts",
+      "equal": true,
+      "sha256": "2f0ddf4969d0c41d4e5149661ac15310077e26b0002fbf457db24beb30b5702a"
+    },
+    {
+      "path": "helpers/companion/conversationHelpers.ts",
+      "equal": true,
+      "sha256": "04be827adf4f3f30a558391e33bf036ce01259d73da40207d1d980d856382488"
+    },
+    {
+      "path": "app/(tabs)/companion/index.tsx",
+      "equal": true,
+      "sha256": "4a4b4c795510de98073cb5375fb01cb9f27a5f1fd37dbc0ed5710e47c15d36fc"
+    },
+    {
+      "path": "hooks/companion/useConversationMessages.ts",
+      "equal": true,
+      "sha256": "1a3915b3b9870f496ce3c30df9cf59c83fa6bbd3276f11f5a5400a222c44107c"
+    },
+    {
+      "path": "services/companion/getConversationMessages.ts",
+      "equal": true,
+      "sha256": "4009aff833b863db74f350837f6a3cad9cc7a6766c277bc0aacad7e1f5741d8e"
+    },
+    {
+      "path": "hooks/companion/useChatbotUsage.ts",
+      "equal": true,
+      "sha256": "e7b9047f3807777ad09fe09a6c2d328bbca6df9bfd82ae91316578b6b8cda434"
+    },
+    {
+      "path": "services/companion/getChatbotUsage.ts",
+      "equal": true,
+      "sha256": "02b2d54202286e88e427a4081f8385d45ad4b88c0f3008660c3f10d41ed86d50"
+    },
+    {
+      "path": "hooks/companion/useCompanionReviewPrompt.ts",
+      "equal": true,
+      "sha256": "2306365aaece76356200d0fe659c7f65b3c8f7559c172052ee676a9dcbe2d377"
+    },
+    {
+      "path": "utils/storeReview.ts",
+      "equal": true,
+      "sha256": "3e9039d14315b526227523da1cc8f61b33d3a4ada7f79f04c8f01d6438040b40"
+    },
+    {
+      "path": "hooks/companion/useSendMessage.ts",
+      "equal": true,
+      "sha256": "967ad6905d35d84fc7b80806fb8b191db04e36b44956666b1a42d49fc695a500"
+    },
+    {
+      "path": "utils/gemini.ts",
+      "equal": true,
+      "sha256": "789c67e3d4244603286a552c57ed894148aeb14cc5557b752e5f2bcf9f098314"
+    },
+    {
+      "path": "utils/sseParser.ts",
+      "equal": true,
+      "sha256": "3fc32876f25c7d89fc93cfbc4efa19e6fdca767174ee3388be799e31bd67d6c2"
+    },
+    {
+      "path": "helpers/companion/ragQueryErrors.ts",
+      "equal": true,
+      "sha256": "4e29230b865999363a47bd2be8d4a839d5747c44b3c213ba9a3a07e8b0ed7607"
+    },
+    {
+      "path": "hooks/companion/useCreateConversation.ts",
+      "equal": true,
+      "sha256": "ba7aff4d535eebcc6021e1beda7b711a973f6af8c0d13f6f349f3f14c9542ad3"
+    },
+    {
+      "path": "services/companion/createConversation.ts",
+      "equal": true,
+      "sha256": "c3280fe13a7572c94fe265d23498a3f2f237841b04ec4678833f82d5ccbcd53b"
+    },
+    {
+      "path": "hooks/companion/useSaveMessage.ts",
+      "equal": true,
+      "sha256": "ab1933af6a37bf5bfeb3fe55031f4aa4a043c706e678e6d2e019055d484bcdf7"
+    },
+    {
+      "path": "services/companion/saveMessage.ts",
+      "equal": true,
+      "sha256": "795d4e6e222617b76a3c1ebf9456af6b5e272befaaa03cd5d54240a9ae60b136"
+    },
+    {
+      "path": "helpers/companion/messageHelpers.ts",
+      "equal": true,
+      "sha256": "50a5ff81516daa93573daa9534b0f011e768f1e376be89868fa4a4a67f8be74a"
+    },
+    {
+      "path": "helpers/companion/companionContext.ts",
+      "equal": true,
+      "sha256": "19ecce76c3417b7ccedd525879434260863327c8f6dc5ecd5c5bdf2bae608659"
+    },
+    {
+      "path": "helpers/companion/companionAnalytics.ts",
+      "equal": true,
+      "sha256": "3745c394e99ef1765f035f122dd3d7feb47c3ca884b7c3d8925b2cf35bdff8a0"
+    },
+    {
+      "path": "services/companionActions/planContract.ts",
+      "equal": true,
+      "sha256": "379c5d2da9f515945e52eeae2ff5cbeefb2d18ca4cfdc8bf3be92b5cd159d730"
+    },
+    {
+      "path": "hooks/companion/usePlans.ts",
+      "equal": true,
+      "sha256": "a9793fc7834165f4941eb920c9f96f840703cd71b1df3606faa0f8ef1f007e8a"
+    },
+    {
+      "path": "services/companionActions/planClient.ts",
+      "equal": true,
+      "sha256": "dc2959a52bb4122cd8cb02263c08b313c02b70580275413074d385eea301278b"
+    },
+    {
+      "path": "services/companionActions/planStore.ts",
+      "equal": true,
+      "sha256": "d487191fe37971a1a2f1b782d56ab9b178639ac9e584934ee9a5d2a31e4dd275"
+    },
+    {
+      "path": "hooks/companion/useComposerDraft.ts",
+      "equal": true,
+      "sha256": "2da39e872ddf4f8fdc0497db3e1fb4450adeb691b276790aadce57c3026d1456"
+    },
+    {
+      "path": "components/companion/MessageWithSources.tsx",
+      "equal": true,
+      "sha256": "b00dd627bd4d0fe436a301f78528b65473d4872be1d77df573d68f1bbfb071c4"
+    },
+    {
+      "path": "components/companion/SourceViewer.tsx",
+      "equal": true,
+      "sha256": "8c6e1b5a42eedf2fb47b2647f02578b366187d3aa68402439e83a6cc6b668eef"
+    },
+    {
+      "path": "components/companion/MarkdownText.tsx",
+      "equal": true,
+      "sha256": "10293c74023fe271597a370b0ed38bd2d982ce77721812885828bb1b993ddd5e"
+    },
+    {
+      "path": "components/companion/ContextSummary.tsx",
+      "equal": true,
+      "sha256": "9d019d5abe018e256f8659cda27fc06128abfd064a5a03fe4874c8d19a1bc0e9"
+    },
+    {
+      "path": "components/companion/contextLabels.ts",
+      "equal": true,
+      "sha256": "e410d7746872ea72998b045ca5048003976b8d2c36c2ae3a04157bc145d696f7"
+    },
+    {
+      "path": "components/companion/CompanionContextSheet.tsx",
+      "equal": true,
+      "sha256": "d919d87c3fa50497d05627c45afab2954cd3700fb9a3bce91568c71963d6bdb0"
+    },
+    {
+      "path": "components/companion/TypingIndicator.tsx",
+      "equal": true,
+      "sha256": "6049a077ebe21808190529340ea8162da936b612bbccc1c759739281c82f41da"
+    },
+    {
+      "path": "components/companion/StarterPrompts.tsx",
+      "equal": true,
+      "sha256": "41382c625634752c25061c72b309f1d1d5f18e3d8f4044b6a9cbba97ef125b28"
+    },
+    {
+      "path": "utils/companionStarterHistory.ts",
+      "equal": true,
+      "sha256": "6eabb365109c25ec61964117b199c51d64174264b7993bd0faa0ff95b02e3f3f"
+    },
+    {
+      "path": "utils/pressIntent.ts",
+      "equal": true,
+      "sha256": "d69b93a8ef6f966b79edb7726906a8c99d799225104665575882fc566cf49f6e"
+    },
+    {
+      "path": "components/companion/PartnerSpotlightBanner.tsx",
+      "equal": true,
+      "sha256": "7c7345b53ee4df8042be8a73dde348aef429e8cb84685e47b6e97e209d78450b"
+    },
+    {
+      "path": "components/companion/AnimatedDottedBackground.tsx",
+      "equal": true,
+      "sha256": "ee34af9d04326b964de440da184d829313d7d3649b1632ae410a128165d313ea"
+    },
+    {
+      "path": "components/CompanionHeader.tsx",
+      "equal": true,
+      "sha256": "6e115decd398e352ec4aa6ee0ca2d8187bc0807dbd1a82761dbbdc1f7c09d314"
+    },
+    {
+      "path": "hooks/companion/usePersonalizedStarters.ts",
+      "equal": true,
+      "sha256": "a44e46b48bb727946158b4c3241e01ce26e7c0e50f45a4ba3722b4ebf2672f91"
+    },
+    {
+      "path": "components/companion/tasks/CompanionTasksEntry.tsx",
+      "equal": true,
+      "sha256": "b8292c00f2adbc535e9b842dbce6738cca5fe3941043b10f1b3124b7753f798a"
+    },
+    {
+      "path": "components/companion/tasks/TaskActionsSheet.tsx",
+      "equal": true,
+      "sha256": "692f9b2c6e41eac188ca8905b37cebc461541281d9b84c03576a94249837baeb"
+    },
+    {
+      "path": "hooks/checklist/useChecklistTaskTitles.ts",
+      "equal": true,
+      "sha256": "8e7fddab6e42b4d2af84d99a5207baec8a045a8a9499d6ec1a3c9caa887b5ad3"
+    },
+    {
+      "path": "components/companion/tasks/TaskProposalPanel.tsx",
+      "equal": true,
+      "sha256": "6ee70b9ee8c684971513571099c4a16b28f60dd31820cc60d9f8a984cf7d0f78"
+    },
+    {
+      "path": "components/companion/tasks/TaskEditProposalPanel.tsx",
+      "equal": true,
+      "sha256": "a567e751802ce02f9a8b99b19b9cedf75dcdbab74fb1c4ce0960a8a6fe3b8824"
+    },
+    {
+      "path": "components/companion/tasks/StepProposalPanel.tsx",
+      "equal": true,
+      "sha256": "0fff6ecac463f68ee13026d728feaee8116d27f5d077b4d599fec5d13677adbb"
+    },
+    {
+      "path": "components/companion/plans/PlanPanel.tsx",
+      "equal": true,
+      "sha256": "6c784fc395833392346c871c89d86a3128c525e0aa2584f6a4c0b119278b62cb"
+    },
+    {
+      "path": "components/companion/plans/planText.ts",
+      "equal": true,
+      "sha256": "bae30a2de844e0b2c2d6ba72d1b871a406359d9dc4b2f78b6a789d285ba9992d"
+    },
+    {
+      "path": "components/companion/tasks/SavedDetails.tsx",
+      "equal": true,
+      "sha256": "43ea57c5b01245f7bf5bd070e44fd11891bc66800caaf7ca6760b2798d0fc4cb"
+    },
+    {
+      "path": "components/companion/tasks/TaskActionCards.tsx",
+      "equal": true,
+      "sha256": "dd506131b8b4670f7ebaf5f601738166f25d2eadc7000e3b2c428baf3f538d46"
+    },
+    {
+      "path": "components/companion/plans/PlanEntry.tsx",
+      "equal": true,
+      "sha256": "d80fcf32362701292b010a61d5b77d969eff392ca8a6b10c2d877efe66d4ca3d"
+    },
+    {
+      "path": "components/companion/plans/PlanCards.tsx",
+      "equal": true,
+      "sha256": "bcf91368ee75b631ae9b12acd902a007890836307d41f2a6c6f03bd8d069ece9"
+    },
+    {
+      "path": "app/(tabs)/index.tsx",
+      "equal": true,
+      "sha256": "e1990ae9cbf012a90446824fe9a65cca191a0178b267589bca965b4b08e1a47f"
+    },
+    {
+      "path": "app/+not-found.tsx",
+      "equal": true,
+      "sha256": "9734321e84714399628300361449e2973f25c0771e45aee490c948da635dd17a"
+    },
+    {
+      "path": "components/ThemedView.tsx",
+      "equal": true,
+      "sha256": "2220ddee0a6f82e7a9df1e9e59d964ac734af9d6e26a17b7127f77f149845c51"
+    },
+    {
+      "path": "app/ReportScreen.tsx",
+      "equal": true,
+      "sha256": "12bb7339a38edbf0333ed6717ff997839f82716f51e7d47fb1fac38c9b98814d"
+    },
+    {
+      "path": "hooks/posts/useMutateReport.ts",
+      "equal": true,
+      "sha256": "cd584ed1528756bc21a3f0a12c7e5d363d88088fbe14ac32377849fc94421c43"
+    },
+    {
+      "path": "services/posts/reportPost.ts",
+      "equal": true,
+      "sha256": "88d030be7ffc9c388cf382bcb4564df33d01a204c2620725ddb592705e71d4fd"
+    },
+    {
+      "path": "services/users/reportUser.ts",
+      "equal": true,
+      "sha256": "7d9034c1321ad616599a7ae72daebbf51fdfb7b54793e5e11ce45dd88d197601"
+    },
+    {
+      "path": "app/_layout.tsx",
+      "equal": true,
+      "sha256": "3ed453ec49764684bd6587fb19a6729ae7dc2840d8eea67b40f3d1659a2d1b1d"
+    },
+    {
+      "path": "context/ScrollContext.tsx",
+      "equal": true,
+      "sha256": "7a4b6afe9d6add4f58fec5ac657fbce063e4038e3720c8b4ee7f46f0784a9a77"
+    },
+    {
+      "path": "i18n/restart.ts",
+      "equal": true,
+      "sha256": "33a3f4ba8fd2598f92480ee5350a0d75942366d689bbfdd9f5af3fc62ab48b4e"
+    },
+    {
+      "path": "hooks/onboarding/useOnboardingProfile.ts",
+      "equal": true,
+      "sha256": "f0388b83e065a833b0f6ffb86f9dadca72a65be43dc7577784adc04202b34913"
+    },
+    {
+      "path": "components/AuthComponents/AuthWrapper.tsx",
+      "equal": true,
+      "sha256": "04b69b3a4fe774dc5f65f500c16d412ebf6a9f103ce6cef2ec508d56cfb7a48d"
+    },
+    {
+      "path": "components/AuthComponents/SignIn.tsx",
+      "equal": true,
+      "sha256": "45edbe41df0fe7b32da82ba788d152221a5a15ac3d63bcad72d492fe5e957dfc"
+    },
+    {
+      "path": "utils/isExpoGo.ts",
+      "equal": true,
+      "sha256": "6ff16610c1a46d9203e7ffbc849200c311ad228a7bcf88dbed72476b8c83e07c"
+    },
+    {
+      "path": "components/AuthComponents/ForgotPassword.tsx",
+      "equal": true,
+      "sha256": "3e8f01904058422f6095a07d8eb7c57862d427c83be64f9042b31feb86f68b8f"
+    },
+    {
+      "path": "components/AuthComponents/Components.tsx",
+      "equal": true,
+      "sha256": "dbddcfe22b27bf7c2bc73374142d636fbd9b5157b52995574fba5557ce52b07e"
+    },
+    {
+      "path": "utils/createUserIfNotExists.ts",
+      "equal": true,
+      "sha256": "a3f63b8ae5dae7cb73ca867f1fcadabf10e4dd9deb9e389a4b9abbc293f59369"
+    },
+    {
+      "path": "utils/sanitizeFirstName.ts",
+      "equal": true,
+      "sha256": "58dc31eca1deab3e346bc895a9aaaaa443526364d0406e7525d491962da82596"
+    },
+    {
+      "path": "utils/usernameGenerator.ts",
+      "equal": true,
+      "sha256": "4d46c39f36492ba0a764a64fca8fbdd15ababf214699d731843ba8c00adda3c0"
+    },
+    {
+      "path": "components/AuthComponents/OTPPasswordReset.tsx",
+      "equal": true,
+      "sha256": "44c0da74633e59af1e4af8c0343200bafc01346e4546f6f6227b4b67f01df3a4"
+    },
+    {
+      "path": "utils/legalUrls.ts",
+      "equal": true,
+      "sha256": "25dd902f35b12f8dfcd8cb29e257351cb7582dacedf182ce037b9ae111193da1"
+    },
+    {
+      "path": "components/AuthComponents/SignUp.tsx",
+      "equal": true,
+      "sha256": "90e548bc06ccf09f0e9032f40254784b2cd1cfd7df200c2f35449f62a683c71d"
+    },
+    {
+      "path": "utils/signUpProviderError.ts",
+      "equal": true,
+      "sha256": "13e40961ffa6e404e740214218a6c59429b73782b78c6af26d09eb6e25b219a1"
+    },
+    {
+      "path": "utils/signUpValidation.ts",
+      "equal": true,
+      "sha256": "6589df74c92a1e1453aecbd70760ff3c91aba8798b806799eecfab8dfe1847ff"
+    },
+    {
+      "path": "components/LegalWebView.tsx",
+      "equal": true,
+      "sha256": "79e9efb300886f91a033f75a79023e113c4c27b6af96bb253df1200eed8e24f3"
+    },
+    {
+      "path": "components/AuthComponents/WelcomeScreen.tsx",
+      "equal": true,
+      "sha256": "d2173603f66f8db54f5695d51a5e75c3fded7b79ef44ca545f3e36d439f4a760"
+    },
+    {
+      "path": "components/AuthComponents/OTPConfirmation.tsx",
+      "equal": true,
+      "sha256": "5fd6a7c801c33410643eebe541af29315051b80314fd2d2c45b1aa3349d0381d"
+    },
+    {
+      "path": "components/onboarding/OnboardingQuiz.tsx",
+      "equal": true,
+      "sha256": "873cf3e57572a0a060e87d15d03d0ef38271ef2789ce8921f5568f8035a7379f"
+    },
+    {
+      "path": "components/onboarding/OnboardingProgress.tsx",
+      "equal": true,
+      "sha256": "bcc4a2f2f893b2ac361cfd5fcc0dfc704c8b3ec580db82268fd3ea798e8cab3e"
+    },
+    {
+      "path": "components/onboarding/WelcomeStep.tsx",
+      "equal": true,
+      "sha256": "568565b3ab7754670ff4c25219f02e9343191941913fbe686f3d0428ed383ebe"
+    },
+    {
+      "path": "components/onboarding/SingleSelectQuestion.tsx",
+      "equal": true,
+      "sha256": "27eef7fc52b7dc7129fce8f86fea20d136dc91c75a2ccddf1d9521afcf9eeaf5"
+    },
+    {
+      "path": "components/onboarding/FloatingTagSelect.tsx",
+      "equal": true,
+      "sha256": "305faacc235cb41f696e98899c145129cac25f9b6b3b8b0aa754ab8aa7d9a090"
+    },
+    {
+      "path": "components/onboarding/OutcomesStep.tsx",
+      "equal": true,
+      "sha256": "09ac44c44e25b48042b22c17bf33bcbdeaaece4901ef8e487838fb0191ba60a9"
+    },
+    {
+      "path": "components/onboarding/ThankYouStep.tsx",
+      "equal": true,
+      "sha256": "2c1f621e2b603167a4c7ba4a8d096d1153e6986e5ff8f4ab60d5e36bc028b286"
+    },
+    {
+      "path": "components/onboarding/LocationStep.tsx",
+      "equal": true,
+      "sha256": "cecc2df03c2014671ba57241c7cc597e11660a565f0538510febd3d416bbf658"
+    },
+    {
+      "path": "hooks/onboarding/useSaveOnboardingProfile.ts",
+      "equal": true,
+      "sha256": "3b8992bb55d35c3b1bd753d22fd033b61b460a1c435668fc228346d47113b103"
+    },
+    {
+      "path": "services/onboarding/saveOnboardingProfile.ts",
+      "equal": true,
+      "sha256": "19b21b9ade72eeb088e39664dea1fc6b26ba9ae272f6eaa636d891635e123338"
+    },
+    {
+      "path": "services/referrals/redeemReferral.ts",
+      "equal": true,
+      "sha256": "93c8d7fffec0056bc0cb2b0726ffdc5a9fe8054516855251ea39f20abf203b1a"
+    },
+    {
+      "path": "components/onboarding/MonthPicker.tsx",
+      "equal": true,
+      "sha256": "ed072731f42472d6cf61b48f87a2a5acd266e4281bb33f87a658504c10644e72"
+    },
+    {
+      "path": "context/InviteCodeContext.tsx",
+      "equal": true,
+      "sha256": "0ce87cd2647aca2987aea79bbcce9fa7f2d36beaa5815b3e87444a033e837d0d"
+    },
+    {
+      "path": "components/referrals/InviteCodeField.tsx",
+      "equal": true,
+      "sha256": "7ddce12e34203af1ea27c4d4538e1d575e28fb6281217132ccaf84cabad8b5c5"
+    },
+    {
+      "path": "utils/inviteLink.ts",
+      "equal": true,
+      "sha256": "2e6b49d67f66ed2f5a69f39a4c269bf722da44a7bcba99c84f3f825582cd9f91"
+    },
+    {
+      "path": "constants/appStore.ts",
+      "equal": true,
+      "sha256": "36f51294c3c1ba3758ec18a3a3c8c273229dab521c95bd4e5e72b2b411e2ae3d"
+    },
+    {
+      "path": "services/users/updateFirstName.ts",
+      "equal": true,
+      "sha256": "df77eaa440bf8578e48809b45f0a1c6909dd64c9ec1e9d3a39a4a8ef7b3eab45"
+    },
+    {
+      "path": "components/AuthComponents/LegalConsentModal.tsx",
+      "equal": true,
+      "sha256": "356c179cad7c3fd7648e311ac854bb6ec0561bd152ffdd4480b643b116051a98"
+    },
+    {
+      "path": "utils/posthogOptions.ts",
+      "equal": true,
+      "sha256": "616ba50c9a77a34396e29035c17a58e2952a922698007813c907ed5a8b25a3a2"
+    },
+    {
+      "path": "components/onboarding/PreLoginOnboarding.tsx",
+      "equal": true,
+      "sha256": "35186a33fc62caf024624f93f2d5df89a1f5b8517c138db022b7929be458535f"
+    },
+    {
+      "path": "components/onboarding/OnboardingPagination.tsx",
+      "equal": true,
+      "sha256": "96ecde6674c0e67762c013be3798997a264b4ce1cf72b3083dcf1c5b0a29e7ef"
+    },
+    {
+      "path": "components/onboarding/screens/BelongingScreen.tsx",
+      "equal": true,
+      "sha256": "6aacc2c28084c2cd9c03ec204de63f6efcd431e24efd5ef4c1ad14ff64f183f3"
+    },
+    {
+      "path": "components/onboarding/cards/EventCard.tsx",
+      "equal": true,
+      "sha256": "69a5f1f98678b1c3c7927539f19ec6910f8c4b4ed19547e20f24bdb3fbf1d45c"
+    },
+    {
+      "path": "components/onboarding/cards/GroupCard.tsx",
+      "equal": true,
+      "sha256": "74dcbe01772213c15e2acf8c9f120230a571977000766a94f858d3d1f02202a1"
+    },
+    {
+      "path": "components/onboarding/cards/CirclesCard.tsx",
+      "equal": true,
+      "sha256": "a57566c6998e935215a72f7bb0d9c0c4faa4a9fd267fc328ec6a0bd75db9d848"
+    },
+    {
+      "path": "components/onboarding/screens/ChecklistScreen.tsx",
+      "equal": true,
+      "sha256": "133fc2678e486a8630b7c38d91b4056679df4184f0aec3483492d2399a30a2f1"
+    },
+    {
+      "path": "components/onboarding/cards/ChecklistCard.tsx",
+      "equal": true,
+      "sha256": "a15b69571bc73ac4c5439d0289c586e495161520b570714e3b37d1ad3a914e67"
+    },
+    {
+      "path": "components/onboarding/cards/ChecklistModalCard.tsx",
+      "equal": true,
+      "sha256": "0b4a0dc8f9fe05395fa777dca93b82cf928dbbff4ce0f7efc9420a466a37c1f9"
+    },
+    {
+      "path": "components/onboarding/screens/CompanionScreen.tsx",
+      "equal": true,
+      "sha256": "59550197afad9c814ca2a7e12a065361e2f29dd67e6f84d864b0f80e7ec39a63"
+    },
+    {
+      "path": "components/onboarding/screens/LearnScreen.tsx",
+      "equal": true,
+      "sha256": "9f2d4db791cb64bb03461d85218ec017a42d3a89e26137ba4c08dc8f0a50db1b"
+    },
+    {
+      "path": "hooks/useLanguage.ts",
+      "equal": true,
+      "sha256": "0998c7b97425e2c76427d7b3152541c54bf51c8e1c707c4f8fdac1baf33e74fd"
+    },
+    {
+      "path": "hooks/usePushNotifications.ts",
+      "equal": true,
+      "sha256": "a8626ccea3407c34a73808fcab20c6856a69a639fc37b95cf71b84dc1e3a9e1c"
+    },
+    {
+      "path": "hooks/useOtaUpdates.ts",
+      "equal": true,
+      "sha256": "9f8ab21c34450321bc5354882b31a593477d7ab4befe0198a78992ad63dd8e0b"
+    },
+    {
+      "path": "components/referrals/ClipboardListener.tsx",
+      "equal": true,
+      "sha256": "29836b847ad9e4084a3e59b7d14512f2a1630c0a2ed22c9d3412cb2f4a78b955"
+    },
+    {
+      "path": "hooks/referrals/useClipboardOnFirstLaunch.ts",
+      "equal": true,
+      "sha256": "efdee2c9c8f298c7807c9437f798b05f8652bcd8cb0d5bc51c0f78d53ead788e"
+    },
+    {
+      "path": "components/AnimatedSplash.tsx",
+      "equal": true,
+      "sha256": "ac913b26499c4d1e19dff7bd9a4de7ca89546b424d368b060c3c0f8919a0ae2b"
+    },
+    {
+      "path": "app/account-settings.tsx",
+      "equal": true,
+      "sha256": "55bd687f211cb48f3fd8a052da695060725cd12bbad2aed95afaa9c8211b08a2"
+    },
+    {
+      "path": "services/onboarding/updateWantsReminders.ts",
+      "equal": true,
+      "sha256": "857fc9d8600f06c720c0e93d2640db1cb6a0326564f5224a719cd9b13450bf03"
+    },
+    {
+      "path": "app/community-matching/_layout.tsx",
+      "equal": true,
+      "sha256": "52b605ad078244fb2575e2b24cfa8eb48fed92f66d7a7badbc2d036df2c3acd1"
+    },
+    {
+      "path": "app/community-matching/circle/[circleId]/chat.tsx",
+      "equal": true,
+      "sha256": "74ec22fe6be137150478bb335acdf8585d934f79fa889cfc491c6717d8779a76"
+    },
+    {
+      "path": "services/matching/messages.ts",
+      "equal": true,
+      "sha256": "7a235cf4e170e41f5e3c4480513aeca87eb1b43f8c7a13c59d57b7b5b1a42f0e"
+    },
+    {
+      "path": "ui/communityMatching/CircleMessageBubble.tsx",
+      "equal": true,
+      "sha256": "c0d75d2322f2593d0b4fe1b825e26109aa94f9aa64349ec0c59229d350c80948"
+    },
+    {
+      "path": "app/community-matching/circle/[circleId]/index.tsx",
+      "equal": true,
+      "sha256": "e43c0888d07500f0a26add8934e5eeef7fa30255e756f2125b2b80cb0963365c"
+    },
+    {
+      "path": "components/community-matching/CircleHeader.tsx",
+      "equal": true,
+      "sha256": "ad692bd3102cfe6c42f328414efca01f552d532f1ba68a6e209f2b4b0b9382b7"
+    },
+    {
+      "path": "app/community-matching/complete-onboarding.tsx",
+      "equal": true,
+      "sha256": "a508eec2f76010a757c6603fbf55bafe2c62a79ba6d315460679614eccb474f1"
+    },
+    {
+      "path": "app/community-matching/index.tsx",
+      "equal": true,
+      "sha256": "1c923724ccca1dc069a5cfb1d4daf113f6c9dd26578975a1557049ed1a787d43"
+    },
+    {
+      "path": "app/community-matching/onboarding.tsx",
+      "equal": true,
+      "sha256": "cd6078836cfc918a9c5d08863fe6dde1da61e59ad1cb6f41a319cf77d8e7f812"
+    },
+    {
+      "path": "ui/communityMatching/MatchingOnboardingQuiz.tsx",
+      "equal": true,
+      "sha256": "561f5449ed7c4bad2174b720cd867d6ab1d0d521bfc716c309a3914b73de0f59"
+    },
+    {
+      "path": "app/community-matching/waiting-room.tsx",
+      "equal": true,
+      "sha256": "5d93cfd7f2e56be7bb6980a5d0546215b1536b68e786609de06893e88638cd1b"
+    },
+    {
+      "path": "app/create-post.tsx",
+      "equal": true,
+      "sha256": "1048b688de76a016218288c28bc3f424fe68a5868bfa4d1ca1aee2c2c25a61c5"
+    },
+    {
+      "path": "components/posts/CreatePostForm.tsx",
+      "equal": true,
+      "sha256": "fad2f594c9aa02bb5a0f85609937f9b1e56f6966bf47fda7f21fa4e59e0cea42"
+    },
+    {
+      "path": "hooks/posts/useCreatePost.ts",
+      "equal": true,
+      "sha256": "5133c87954aa224d4d6291a632bba5ae9794e13ee93d09d1b217af5390776688"
+    },
+    {
+      "path": "services/posts/createPost.ts",
+      "equal": true,
+      "sha256": "5bc854bf21ddc5deb84d1a4dd0d7c470cec352b1c8877919789e2cc01c86e807"
+    },
+    {
+      "path": "components/posts/GroupSelectionSheet.tsx",
+      "equal": true,
+      "sha256": "2c3bdb4059df49afe5ea91bf72e0b4e927cf6145b08a8905bf425b5cbd00d99e"
+    },
+    {
+      "path": "components/posts/DestinationToggle.tsx",
+      "equal": true,
+      "sha256": "8bab23483e0843f74a727ad031f96e5fe3ef8758ee3c23f8c3dff6736001d63e"
+    },
+    {
+      "path": "services/s3/uploadPostImage.ts",
+      "equal": true,
+      "sha256": "0dca11c20d44c1f8fc1eaf475cf2b5973d62ba529a966fa670aa538c49a0dbd0"
+    },
+    {
+      "path": "utils/contentFilter.ts",
+      "equal": true,
+      "sha256": "222b77de6e230ccdb7f3690c4042aa3d49ec2196a6ae72e6e9d816afd13daebc"
+    },
+    {
+      "path": "app/edit-name.tsx",
+      "equal": true,
+      "sha256": "313227309b3322a56d79c33e0a1ba452b1a6ee8620b05a4b03d79aac514da0e8"
+    },
+    {
+      "path": "services/users/updateUsername.ts",
+      "equal": true,
+      "sha256": "01fb0df1c2fe50206b427bde345319792ba09781b543acdb9e835ae243f78b5d"
+    },
+    {
+      "path": "app/event-detail.tsx",
+      "equal": true,
+      "sha256": "d3c0826ec6b5304892f407e42f2fb82022b6ccf923c7826f850deeb779c615f5"
+    },
+    {
+      "path": "app/events.tsx",
+      "equal": true,
+      "sha256": "a892c777c81320ae7c0c778b722dfc5a04bd0661c7586358781360e3e64c20f8"
+    },
+    {
+      "path": "app/followers-following.tsx",
+      "equal": true,
+      "sha256": "79fe91b36bc21f80961810c963ddbac929658017f9d59fe217efaf0ab6b27f17"
+    },
+    {
+      "path": "hooks/users/useFollowers.ts",
+      "equal": true,
+      "sha256": "2855ce60c4cc896a278fab2d403dbab34a16ec552c07d24d374d063f19bbe1fa"
+    },
+    {
+      "path": "services/users/getFollowers.ts",
+      "equal": true,
+      "sha256": "4ab5cde29be2bcdec55cd813b9b7192b47ef2476e3f683a3a729a6536d64dc80"
+    },
+    {
+      "path": "hooks/users/useFollowing.ts",
+      "equal": true,
+      "sha256": "2c0c13232e55d8c0a594cf87bab328e9339f892f0ccc725c503de9fac9f375fb"
+    },
+    {
+      "path": "services/users/getFollowing.ts",
+      "equal": true,
+      "sha256": "edfb75571d75eaaadf394b61c8b016b2bd770a84bd0cb2cf33b6f1bcb6541e16"
+    },
+    {
+      "path": "app/giveaway.tsx",
+      "equal": true,
+      "sha256": "e78f0e96940704409f52df1ec286f2b591b3d5387412d595ad9a8625df337f86"
+    },
+    {
+      "path": "components/giveaway/SuccessCelebration.tsx",
+      "equal": true,
+      "sha256": "04ed31c5bda0136a7fcc751cd996da7b0a951cfba7b103c52a47a950a9d99dcf"
+    },
+    {
+      "path": "services/giveaway/submitGiveawayEntry.ts",
+      "equal": true,
+      "sha256": "16a9fdaef937956c8f8543129176a2c9a082e8fc3495d5871d2253aeb00ff788"
+    },
+    {
+      "path": "components/giveaway/LiveCountdown.tsx",
+      "equal": true,
+      "sha256": "1953b21333b08068784a48c2f5ce4c6f33e92f18b1cde2686008fc2342ab7111"
+    },
+    {
+      "path": "hooks/giveaway/useGiveawayCountdownPrecise.ts",
+      "equal": true,
+      "sha256": "b2f7651dd298d65b069f4da5efe3772534782f26fd3ba7603947ce496f0c1ed7"
+    },
+    {
+      "path": "app/group-detail.tsx",
+      "equal": true,
+      "sha256": "ba475d1ca470855fbc186cc75cb8bc97aadf6927d7de0e98b0de3da263a3e4a3"
+    },
+    {
+      "path": "hooks/groups/useGroupMembers.ts",
+      "equal": true,
+      "sha256": "23b2695dd64bb85a8a477f81bc0bb0ad0192f322a6c9b57452baf4db170b8162"
+    },
+    {
+      "path": "services/groups/getGroupMembers.ts",
+      "equal": true,
+      "sha256": "23514a31a5bd790b3466774005c60017178448dc5b69ee169d198255275d5b22"
+    },
+    {
+      "path": "components/groups/GroupMemberAvatarStack.tsx",
+      "equal": true,
+      "sha256": "2b11607c4a56002ed593ed1cf56cef5600becd87c2fcc02f7bae1614363a2033"
+    },
+    {
+      "path": "components/groups/GroupMembersSheet.tsx",
+      "equal": true,
+      "sha256": "d0264b311ebb94e512f4178794c7abc090840faccaafb74ea4d07a2b24b87212"
+    },
+    {
+      "path": "components/groups/GroupMemberRow.tsx",
+      "equal": true,
+      "sha256": "7276110afd8233c184c984b46fc430b6e26fe2bfb322552e5ac9e174e4c924f8"
+    },
+    {
+      "path": "app/learn-design-preview.tsx",
+      "equal": true,
+      "sha256": "bbe272f4291a9a09031a0c483e61af5ed4d0dde0910a91ada1d3d798e3ab2e9d"
+    },
+    {
+      "path": "examples/learn/NativePreview.tsx",
+      "equal": true,
+      "sha256": "0aa95eabe521dc9d0c7c228b79995b3198eec97ed0abb1a0429db0bcc4819508"
+    },
+    {
+      "path": "app/legal-document.tsx",
+      "equal": true,
+      "sha256": "1162247686b17202e75b59db0f64da2120863c6a071f429e2b979f4455c779d4"
+    },
+    {
+      "path": "app/news-detail.tsx",
+      "equal": true,
+      "sha256": "7035a1f14e050bc51acf04b5216ffdcb88c934e7173ef3f5126119ef19bd7dfa"
+    },
+    {
+      "path": "app/news-tips.tsx",
+      "equal": true,
+      "sha256": "3ca457198de1af877e2fcdcba1bbe71262be99087ca72307c0af1bc0e772f210"
+    },
+    {
+      "path": "app/notifications.tsx",
+      "equal": true,
+      "sha256": "eeee82b12201b9eb27c5de46ee2f8b656e379cf0b3bf622c98bd1341c9ab4e1d"
+    },
+    {
+      "path": "app/past-tips.tsx",
+      "equal": true,
+      "sha256": "6ed0b42653305ab60708e1a3f56f4090b4432101a96642ef36e58d9a8f5bd970"
+    },
+    {
+      "path": "hooks/tips/usePastTips.ts",
+      "equal": true,
+      "sha256": "4b93cde509805d8c306e2597c9f1c1ee7145aba2043c1b5bde4038e8eefcf86f"
+    },
+    {
+      "path": "services/tips/getPastTips.ts",
+      "equal": true,
+      "sha256": "332371cd57e8d05c713412cd27d912e5afc99129d0ea987c5ef78f493bb3d814"
+    },
+    {
+      "path": "app/post-details.tsx",
+      "equal": true,
+      "sha256": "1e9a0737b4bf2ebfa0d3dadd6905cb82dd8bd3cad15044645635f26c999818f5"
+    },
+    {
+      "path": "components/home/PostDetails.tsx",
+      "equal": true,
+      "sha256": "baafd6feaa1577b5e0297662ee4f4828c474705b65d3f8fadf27371b445d7170"
+    },
+    {
+      "path": "services/posts/getPostById.ts",
+      "equal": true,
+      "sha256": "5eee1b11e27a9b65b0f37b23bbddfa7b229a86a159f4eec31c38329ddd32d7f1"
+    },
+    {
+      "path": "hooks/posts/useMutateCreateComment.ts",
+      "equal": true,
+      "sha256": "acc2893422e3b608455427331829c79558f3ed1b61be878ed0a13ca5a52ba808"
+    },
+    {
+      "path": "services/posts/createComment.ts",
+      "equal": true,
+      "sha256": "d6ede8e8673b517f207bb8aafc527566d357520ffa9490527d384d202f09151b"
+    },
+    {
+      "path": "services/notifications/createCommentNotification.ts",
+      "equal": true,
+      "sha256": "83e56412aa04a1ac245d7fabce786dd4eebdaddb70b7f60010dfd60ef111dd1b"
+    },
+    {
+      "path": "services/notifications/createCommentReplyNotification.ts",
+      "equal": true,
+      "sha256": "a6101ed1872e7bb5990cfed2c9242606f7752606ee42dfff49036f070edc7fcb"
+    },
+    {
+      "path": "hooks/useCommentMetadata.ts",
+      "equal": true,
+      "sha256": "6dfc5e46b93629eafc5ab87be1093bc717a0edf69a99982262ceaa952cebaf70"
+    },
+    {
+      "path": "hooks/posts/useGetPostComments.ts",
+      "equal": true,
+      "sha256": "efab024f6db7691bdd008869cd7a184b027d7168ee1d9be3231352070a3de3cb"
+    },
+    {
+      "path": "services/posts/getPostComments.ts",
+      "equal": true,
+      "sha256": "08d0c5f2fcbd9c3128812258f4044d78b5c48671796564603fdab6e8fda68065"
+    },
+    {
+      "path": "app/profile.tsx",
+      "equal": true,
+      "sha256": "5af73a325cd8f575dbe64988f0d7da2231bc54663b191afbd95f7e7fe57f9141"
+    },
+    {
+      "path": "app/redo-onboarding.tsx",
+      "equal": true,
+      "sha256": "9075471265e5881d8ff9d54a03e3b1d8424069757d058a3f2223cf48b8a46a34"
+    },
+    {
+      "path": "app/refer-a-friend.tsx",
+      "equal": true,
+      "sha256": "34fe52699ee80bc36b6d698f55b3e185115fb72dba7c0ef332ae902cc63e02ab"
+    },
+    {
+      "path": "hooks/referrals/useInvite.ts",
+      "equal": true,
+      "sha256": "0b84fe1f40d5a064f38edd06c36a00d9b27a6e44795e88275ac1274b42815971"
+    },
+    {
+      "path": "components/referrals/ReferralCounter.tsx",
+      "equal": true,
+      "sha256": "c22f42c08edffde4b89214dff71f93b72101f13ceeebacb5beb4e7146dea0f3d"
+    },
+    {
+      "path": "hooks/referrals/useReferralCounter.ts",
+      "equal": true,
+      "sha256": "ab0f9444aae67dc9665dd2840541aad2ddf3954f6131a84fb3abdab8016c6fa7"
+    },
+    {
+      "path": "app/reset-password.tsx",
+      "equal": true,
+      "sha256": "eca3a2fe91a1f3357e80d5b99e72ac5502648b36639668079125f5395f89f635"
+    },
+    {
+      "path": "app/saved-lessons.tsx",
+      "equal": true,
+      "sha256": "7fda95cb296bdbb627c2fd322b7978c733ee2c0433a69c055acc6ff180d63170"
+    },
+    {
+      "path": "app/saved.tsx",
+      "equal": true,
+      "sha256": "792f26dc579bddff01d658d8d62dfd6bd05e898b47f225ec5e3e7bc4cb01e188"
+    },
+    {
+      "path": "hooks/posts/useGetSavedPosts.ts",
+      "equal": true,
+      "sha256": "06420feb3a06ef9ae225049d5f5db5e92f4425a421eec600982c921e8f2d8ce1"
+    },
+    {
+      "path": "services/posts/getSavedPosts.ts",
+      "equal": true,
+      "sha256": "768ccedd71876e5ccd2f09b4f292992e3471056b179269ecfd329999161f1984"
+    },
+    {
+      "path": "app/search.tsx",
+      "equal": true,
+      "sha256": "46f4ca3616ce5848bda7102ae2f24c1188a1ff07f66c787233b2246af71d793a"
+    },
+    {
+      "path": "hooks/groups/useSearchGroups.ts",
+      "equal": true,
+      "sha256": "a05788ef1e30ddf8f8eede7b68fef831d2387731c922c18a0a176e362766876f"
+    },
+    {
+      "path": "services/groups/searchGroups.ts",
+      "equal": true,
+      "sha256": "5fd05dee1dd7451e9aeb108c2d925f807972e25df0ac4bb18356df1efdf539b4"
+    },
+    {
+      "path": "hooks/users/useSearchUsers.ts",
+      "equal": true,
+      "sha256": "bf4235ea6e40c3cb07b2295b50ccf31bb421e12ae973e38668cab3203e6a45ab"
+    },
+    {
+      "path": "services/users/searchUsers.ts",
+      "equal": true,
+      "sha256": "38e9516af1a32a52d69d4b1f463c2f74e1df0bd950d2f4ce07ac9f7712408a51"
+    },
+    {
+      "path": "components/groups/GroupCard.tsx",
+      "equal": true,
+      "sha256": "d6a66aa40ba366fdbae37f718d7dff48561f4d1496592ed8ff86d8ab1f91454e"
+    },
+    {
+      "path": "services/posts/getAllPosts.ts",
+      "equal": true,
+      "sha256": "02fef58db64ec61cca17e33e9b01dedb61684a78f4d9ac1acd484c5368c91f6f"
+    },
+    {
+      "path": "services/users/recentSearches.ts",
+      "equal": true,
+      "sha256": "7fc629775e82944a07d325bff4480fc24a4ca515822b763b9344903b024a4175"
+    },
+    {
+      "path": "services/users/recentGroups.ts",
+      "equal": true,
+      "sha256": "d23eccea96687e67627a8328ad6c0c5e2bdec930dcf252f99873ac7e443e928c"
+    },
+    {
+      "path": "app/see-more-groups.tsx",
+      "equal": true,
+      "sha256": "3722f5257641615ed7ab22e93c8248e72d445792428c43dcccaf2d102ee78b5e"
+    },
+    {
+      "path": "app/see-more-posts.tsx",
+      "equal": true,
+      "sha256": "ccb76d6f435951001f87e72fbb70a70531dc2a33b2b6f5856014e565df44d012"
+    },
+    {
+      "path": "app/see-more-users.tsx",
+      "equal": true,
+      "sha256": "f533c8d583045a7786b21a2de31523c2e75e6ee80ef51a381020403079f1ba0c"
+    },
+    {
+      "path": "app/tip-detail.tsx",
+      "equal": true,
+      "sha256": "509cdfc19cc81a1c8aecfcf7b3024c2a09e80d532a5f367147aeeeddfb7dfa62"
+    },
+    {
+      "path": "app/welcome-from-inviter.tsx",
+      "equal": true,
+      "sha256": "1e321d9f8bf01fce6cdd2349cd7e7a04a02312efcf1cc0537d69a1bb08e18901"
+    },
+    {
+      "path": "hooks/referrals/useReferralLookup.ts",
+      "equal": true,
+      "sha256": "ca5497d9c2b15b0ce908ec63cb9a09ce30cd5806ee880e396d40943864b02562"
+    },
+    {
+      "path": "components/referrals/GroupCarryoverList.tsx",
+      "equal": true,
+      "sha256": "8b67f13af6e15585c9c80385e2126c55e951c7e61e0778393f062835208eec2e"
+    }
+  ],
+  "passed": true
+}
