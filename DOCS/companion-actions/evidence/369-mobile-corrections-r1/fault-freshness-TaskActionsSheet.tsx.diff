@@ -1,0 +1,11 @@
+--- fixed/TaskActionsSheet.tsx
++++ fault/TaskActionsSheet.tsx
+@@ -450,7 +450,7 @@
+     const owner = ownAccountWork();
+     let active = true;
+     setVerification(null);
+-    void revalidateCurrent()
++    void Promise.resolve({ isError: false })
+       .then(result => {
+         if (active && stillOwned(owner))
+           setVerification({

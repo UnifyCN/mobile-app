@@ -1,0 +1,14 @@
+{
+  "file": "local-start.log",
+  "redacted_successful_startup": true,
+  "before_sha256": "d8e2dc4c86f993e11360abd1e893b22a4b264ca8407dc632925664dda1783bb8",
+  "after_sha256": "45a617fe850f183e0037dcd7c70838b7e24740ab964f388113dfc57cbbf2794d",
+  "replacement_counts": {
+    "ANON_KEY": 1,
+    "JWT_SECRET": 1,
+    "PUBLISHABLE_KEY": 1,
+    "SECRET_KEY": 1,
+    "SERVICE_ROLE_KEY": 1
+  },
+  "raw_credentials_retained": false
+}

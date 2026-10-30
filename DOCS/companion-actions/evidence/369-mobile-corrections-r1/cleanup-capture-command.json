@@ -1,0 +1,14 @@
+{
+  "source_head": "1cc35ab83e4f90a3630afc8c95f15dd7cd1d0a73",
+  "source_tree": "5d04d63ee3185931353e7067c8e65d653507bef7",
+  "product_dirty": "",
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "python3",
+    "../DOCS/companion-actions/evidence/369-mobile-corrections-r1/resources.py",
+    "cleanup"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 1,
+  "seconds": 0.28174495697021484
+}

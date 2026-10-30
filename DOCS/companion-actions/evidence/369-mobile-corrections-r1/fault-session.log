@@ -1,0 +1,132 @@
+  console.log
+    FALSIFIER: wrong project identity, duplicate revision on lost reply, foreign access, failed persisted disable or obsolete target resolution.
+
+      at Object.log (__tests__/companionActions/pushSessionLocal.test.tsx:146:13)
+
+  console.log
+    Persisted readbacks: revision 1 after lost reply+status+replay; revision 3 disabled; completed available; foreign and removed unavailable. No provider call.
+
+      at Object.log (__tests__/companionActions/pushSessionLocal.test.tsx:336:13)
+
+FAIL __tests__/companionActions/pushSessionLocal.test.tsx
+  ✓ client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access (1267 ms)
+  ✕ review: explicit normal enable remains available after online sign-out and return to same account (438 ms)
+  ✕ review: explicit normal enable remains available after online sign-out and return to another account (479 ms)
+
+  ● review: explicit normal enable remains available after online sign-out and return to same account
+
+    Unable to find an element with role: button, name: Enable on this device
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mCompanion push reminders[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mSystem permission: allowed[0m
+      [36m</Text>[39m
+      [36m<Text[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [0mA previous sign-in owns this installation or its pending change. Push cannot be renewed here. In-app reminders still work.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mRefresh status[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      404 |   // The actual rendered action supplies new consent; old cleanup is not replayed.
+      405 |   const before=JSON.stringify(retired.pending);
+    > 406 |   await act(async()=>fireEvent.press(screen.getByRole('button',{name:en.companionPush.enable})));
+          |                                             ^
+      407 |   await screen.findByText(en.companionPush.state.on);
+      408 |   const nextRecord=JSON.parse(mockSecure!);
+      409 |   expect(nextRecord.pending).toBeNull();
+
+      at getByRole (__tests__/companionActions/pushSessionLocal.test.tsx:406:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at __tests__/companionActions/pushSessionLocal.test.tsx:406:12
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● review: explicit normal enable remains available after online sign-out and return to another account
+
+    Unable to find an element with role: button, name: Enable on this device
+
+    [36m<View>[39m
+      [36m<Text>[39m
+        [0mCompanion push reminders[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mSystem permission: allowed[0m
+      [36m</Text>[39m
+      [36m<Text[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [0mA previous sign-in owns this installation or its pending change. Push cannot be renewed here. In-app reminders still work.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "busy": false,
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mRefresh status[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      404 |   // The actual rendered action supplies new consent; old cleanup is not replayed.
+      405 |   const before=JSON.stringify(retired.pending);
+    > 406 |   await act(async()=>fireEvent.press(screen.getByRole('button',{name:en.companionPush.enable})));
+          |                                             ^
+      407 |   await screen.findByText(en.companionPush.state.on);
+      408 |   const nextRecord=JSON.parse(mockSecure!);
+      409 |   expect(nextRecord.pending).toBeNull();
+
+      at getByRole (__tests__/companionActions/pushSessionLocal.test.tsx:406:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at callback (node_modules/@testing-library/react-native/src/act.ts:31:24)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:814:22)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at __tests__/companionActions/pushSessionLocal.test.tsx:406:12
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 1 passed, 3 total
+Snapshots:   0 total
+Time:        2.844 s, estimated 4 s
+Ran all test suites matching /__tests__\/companionActions\/pushSessionLocal.test.tsx/i.

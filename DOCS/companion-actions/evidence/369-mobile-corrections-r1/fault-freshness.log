@@ -1,0 +1,409 @@
+  console.log
+    CHECKLIST READS before=12 after=12
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:497:11)
+
+FAIL __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ✓ review control: approved current target opens through the root hook and actual sheet (215 ms)
+  ✓ review control: unavailable resolution replaces an open task with a generic result (92 ms)
+  ✓ review: a new notification preserves the open task edit draft (172 ms)
+  ✓ review: a notification selects its task while saved details are open inside the sheet (99 ms)
+  ✕ review: fresh available notification revalidates an already open cached checklist (428 ms)
+  ✕ does not acknowledge a notification before the fresh checklist finishes (103 ms)
+
+  ● review: fresh available notification revalidates an already open cached checklist
+
+    expect(received).toBeNull()
+
+    Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1793397828856, "alternate": [FiberNode], "child": [FiberNode], "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "Text", "flags": 4, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 262144, "tag": 5, "treeBaseDuration": 0, "type": "Text", "updateQueue": null}}
+
+      496 |   await waitFor(()=>expect(within(sheet).queryByText(en.taskActions.loading)).toBeNull());
+      497 |   console.log('CHECKLIST READS before='+before+' after='+sanity.mock.calls.length);
+    > 498 |   expect(within(sheet).queryByText(en.companionPush.targetUnavailable)).toBeNull();
+          |                                                                         ^
+      499 |   expect(within(sheet).getByText('New accessible task')).toBeTruthy();
+      500 | });
+      501 |
+
+      at Object.toBeNull (__tests__/companionActions/pushSelectionRecovery.test.tsx:498:73)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● does not acknowledge a notification before the fresh checklist finishes
+
+    Unable to find an element with text: Loading task progress…
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33mpointerEvents[39m=[32m"none"[39m
+          [36m>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+          [36m<RCTScrollView>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 1 · Waiting: 0"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m>[39m
+                [36m<View />[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mYour tasks[0m
+                  [36m</Text>[39m
+                  [36m<Text>[39m
+                    [0mIn progress: 1 · Waiting: 0[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mAsk me anything.[0m
+                [36m</Text>[39m
+                [36m<Text>[39m
+                  [0mFact-checked answers about anything in Canada.[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+              [36m<Text>[39m
+                [0mTry one of these[0m
+              [36m</Text>[39m
+              [36m<View>[39m
+                [36m<Text>[39m
+                  [0mCompanion can make mistakes. Verify important info.[0m
+                [36m</Text>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</RCTScrollView>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Modal>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessible[39m=[32m{false}[39m
+          [36m>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33mpointerEvents[39m=[32m"box-none"[39m
+          [36m>[39m
+            [36m<View[39m
+              [33maccessibilityViewIsModal[39m=[32m{true}[39m
+              [33mtestID[39m=[32m"companion-task-sheet"[39m
+            [36m>[39m
+              [36m<View />[39m
+              [36m<View>[39m
+                [36m<View />[39m
+                [36m<Text[39m
+                  [33maccessibilityRole[39m=[32m"header"[39m
+                [36m>[39m
+                  [0mTask progress[0m
+                [36m</Text>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"Close"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m/>[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mChecklist task[0m
+                  [36m</Text>[39m
+                  [36m<Text[39m
+                    [33maccessibilityRole[39m=[32m"header"[39m
+                  [36m>[39m
+                    [0mGet a SIN[0m
+                  [36m</Text>[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text[39m
+                        [33maccessibilityRole[39m=[32m"header"[39m
+                      [36m>[39m
+                        [0mReminders[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mCompanion push reminders[0m
+                        [36m</Text>[39m
+                        [36m<Text>[39m
+                          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+                        [36m</Text>[39m
+                        [36m<Text>[39m
+                          [0mSystem permission: denied[0m
+                        [36m</Text>[39m
+                        [36m<Text[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [0mSecure device access is unavailable. No push change is confirmed. Refresh after unlocking. Lost credentials need a separate recovery process.[0m
+                        [36m</Text>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Enable on this device"[39m
+                          [33maccessibilityRole[39m=[32m"button"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "busy": false,
+                              "disabled": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mEnable on this device[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+                          [33maccessibilityRole[39m=[32m"button"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "busy": false,
+                              "disabled": false,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mRefresh status[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                      [36m<Text>[39m
+                        [0mDate and time with UTC offset[0m
+                      [36m</Text>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+                        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+                        [33mvalue[39m=[32m""[39m
+                      [36m/>[39m
+                      [36m<Text>[39m
+                        [0mTime zone[0m
+                      [36m</Text>[39m
+                      [36m<TextInput[39m
+                        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+                        [33mvalue[39m=[32m"America/Vancouver"[39m
+                      [36m/>[39m
+                      [36m<Text>[39m
+                        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+                      [36m</Text>[39m
+                      [36m<View[39m
+                        [33maccessibilityRole[39m=[32m"button"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "disabled": false,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mReview reminder[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                    [36m<View>[39m
+                      [36m<View>[39m
+                        [36m<Text[39m
+                          [33maccessibilityRole[39m=[32m"header"[39m
+                        [36m>[39m
+                          [0mSteps[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                      [36m<Text>[39m
+                        [0mChecking steps does not complete the task.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mNo steps yet. Add the ones that help you prepare.[0m
+                      [36m</Text>[39m
+                      [36m<View[39m
+                        [33maccessibilityRole[39m=[32m"list"[39m
+                      [36m/>[39m
+                      [36m<View>[39m
+                        [36m<TextInput[39m
+                          [33maccessibilityLabel[39m=[32m"New step"[39m
+                          [33meditable[39m=[32m{true}[39m
+                          [33mplaceholder[39m=[32m"Add a step"[39m
+                          [33mvalue[39m=[32m""[39m
+                        [36m/>[39m
+                        [36m<View[39m
+                          [33maccessibilityLabel[39m=[32m"Add step"[39m
+                          [33maccessibilityRole[39m=[32m"button"[39m
+                          [33maccessibilityState[39m=[32m{
+                            {
+                              "disabled": true,
+                            }
+                          }[39m
+                          [33maccessible[39m=[32m{true}[39m
+                        [36m>[39m
+                          [36m<Text>[39m
+                            [0mAdd step[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                      [36m<View />[39m
+                    [36m</View>[39m
+                    [36m<Text[39m
+                      [33maccessibilityRole[39m=[32m"header"[39m
+                    [36m>[39m
+                      [0mTask state[0m
+                    [36m</Text>[39m
+                    [36m<View[39m
+                      [33maccessibilityLabel[39m=[32m"Task state"[39m
+                      [33maccessibilityRole[39m=[32m"radiogroup"[39m
+                    [36m>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Not started"[39m
+                        [33maccessibilityRole[39m=[32m"radio"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "checked": false,
+                            "disabled": false,
+                            "selected": false,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mNot started[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"In progress"[39m
+                        [33maccessibilityRole[39m=[32m"radio"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "checked": true,
+                            "disabled": false,
+                            "selected": true,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mIn progress[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Waiting"[39m
+                        [33maccessibilityRole[39m=[32m"radio"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "checked": false,
+                            "disabled": false,
+                            "selected": false,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mWaiting[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Completed"[39m
+                        [33maccessibilityRole[39m=[32m"radio"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "checked": false,
+                            "disabled": false,
+                            "selected": false,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mCompleted[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                    [36m<Text>[39m
+                      [0mSelect Completed when the whole task is done. Your steps do not complete it.[0m
+                    [36m</Text>[39m
+                    [36m<View />[39m
+                    [36m<View>[39m
+                      [36m<View[39m
+                        [33maccessibilityLabel[39m=[32m"Remove task: Get a SIN"[39m
+                        [33maccessibilityRole[39m=[32m"button"[39m
+                        [33maccessibilityState[39m=[32m{
+                          {
+                            "disabled": false,
+                          }
+                        }[39m
+                        [33maccessible[39m=[32m{true}[39m
+                      [36m>[39m
+                        [36m<Text>[39m
+                          [0mRemove task[0m
+                        [36m</Text>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Open in Checklist"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<Text>[39m
+                      [0mOpen in Checklist[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</Modal>[39m
+    [36m</View>[39m
+
+      511 |   await tap();
+      512 |   const sheet = screen.getByTestId('companion-task-sheet');
+    > 513 |   expect(within(sheet).getByText(en.taskActions.loading)).toBeTruthy();
+          |                        ^
+      514 |   expect(mockClear).not.toHaveBeenCalled();
+      515 |   await act(async () => release([{ _id: 'sin', _type: 'checklist', title: 'Get a SIN', class: 'do_now', class_order: 1 }]));
+      516 |   await waitFor(() => expect(mockClear).toHaveBeenCalledTimes(1));
+
+      at Object.getByText (__tests__/companionActions/pushSelectionRecovery.test.tsx:513:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 4 passed, 6 total
+Snapshots:   0 total
+Time:        2.223 s
+Ran all test suites matching /__tests__\/companionActions\/pushSelectionRecovery.test.tsx/i.
