@@ -38,10 +38,12 @@ function endpoint(): { url: string; anonKey: string } | null {
 export const mobileTransportFor =
   (owner: AccountSnapshot): Transport =>
   async body => {
+    if (!stillOwned(owner)) throw new AccountChangedError();
     const target = endpoint();
     const {
       data: { session },
     } = await supabase.auth.getSession();
+    if (!stillOwned(owner)) throw new AccountChangedError();
     // No session: the server would answer 401, so answer it here without a request.
     if (!session?.access_token)
       return { status: 401, body: { error: 'unauthorized' } };

@@ -1,6 +1,5 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import * as Application from 'expo-application';
 import { Platform } from 'react-native';
 import { supabase } from '@/lib/supabase';
 import { CIRCLES_ENABLED, isCircleNotification } from '@/constants/Features';
@@ -18,6 +17,13 @@ Notifications.setNotificationHandler({
     };
   },
 });
+
+/** Token facility only. Companion supplies captured ownership checks around this wait. */
+export function getExpoPushToken() {
+  return Notifications.getExpoPushTokenAsync({
+    projectId: '3772d4d9-79dd-4848-9691-bae1b19eefb8',
+  });
+}
 
 export interface PushRegistrationResult {
   token: string | null;
@@ -96,12 +102,10 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
 
   try {
     // Get Expo push token
-    const tokenData = await Notifications.getExpoPushTokenAsync({
-      projectId: '3772d4d9-79dd-4848-9691-bae1b19eefb8', // From app.json eas.projectId
-    });
+    const tokenData = await getExpoPushToken();
 
     const token = tokenData.data;
-    console.log('[Push] Token obtained:', token);
+    // A raw push token must never enter logs.
 
     // Store token in Supabase
     const {
@@ -144,7 +148,7 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
         .eq('id', existing.id);
       console.log('[Push] Token unchanged, updated timestamp');
     } else if (existing) {
-      // Token changed — delete old and insert new
+      // Token changed - delete old and insert new
       await supabase.from('push_tokens').delete().eq('id', existing.id);
       const { error } = await supabase.from('push_tokens').insert({
         user_id: user.id,
@@ -155,15 +159,13 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
       if (error) {
         console.error(
           '[Push] Failed to store updated token:',
-          error.message,
-          error.code,
-          error.details
+          'Storage request failed'
         );
       } else {
         console.log('[Push] Token updated successfully');
       }
     } else {
-      // No existing token — insert new
+      // No existing token - insert new
       const { error } = await supabase.from('push_tokens').insert({
         user_id: user.id,
         token,
@@ -173,9 +175,7 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
       if (error) {
         console.error(
           '[Push] Failed to store new token:',
-          error.message,
-          error.code,
-          error.details
+          'Storage request failed'
         );
       } else {
         console.log('[Push] Token registered successfully');
@@ -188,8 +188,8 @@ export async function registerForPushNotifications(): Promise<PushRegistrationRe
       permission: finalStatus,
       prompted,
     };
-  } catch (error) {
-    console.error('[Push] Registration failed:', error);
+  } catch {
+    console.error('[Push] Registration failed');
     return {
       token: null,
       previousPermission: existingStatus,
@@ -210,9 +210,7 @@ export async function unregisterPushToken(): Promise<void> {
   if (!user) return;
 
   try {
-    const tokenData = await Notifications.getExpoPushTokenAsync({
-      projectId: '3772d4d9-79dd-4848-9691-bae1b19eefb8',
-    });
+    const tokenData = await getExpoPushToken();
 
     await supabase
       .from('push_tokens')
@@ -221,8 +219,8 @@ export async function unregisterPushToken(): Promise<void> {
       .eq('token', tokenData.data);
 
     console.log('Push token unregistered');
-  } catch (error) {
-    console.error('Failed to unregister push token', error);
+  } catch {
+    console.error('Failed to unregister push token');
   }
 }
 

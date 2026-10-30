@@ -53,6 +53,8 @@ const INK_MUTED = '#64748B';
 const BORDER = '#E2E8F0';
 
 interface TaskActionsSheetProps {
+  notificationResult?: 'task' | 'unavailable' | 'failed';
+  onRetryNotification?: () => void;
   visible: boolean;
   onClose: () => void;
   /** Open on the review of one task draft (#363) instead of the task list. */
@@ -82,6 +84,8 @@ interface TaskActionsSheetProps {
 export function TaskActionsSheet({
   visible,
   onClose,
+  notificationResult,
+  onRetryNotification,
   proposalId = null,
   proposalKind = 'task_create',
   initialTask = null,
@@ -207,7 +211,30 @@ export function TaskActionsSheet({
                 <MaterialIcons name='close' size={22} color={INK} />
               </Pressable>
             </View>
-            {visible && showDetails ? (
+            {visible &&
+            (notificationResult === 'unavailable' ||
+              notificationResult === 'failed') ? (
+              <View style={styles.scrollContent}>
+                <Text accessible accessibilityRole='alert'>
+                  {t(
+                    notificationResult === 'failed'
+                      ? 'companionPush.targetFailed'
+                      : 'companionPush.targetUnavailable'
+                  )}
+                </Text>
+                {notificationResult === 'failed' ? (
+                  <Pressable
+                    accessibilityRole='button'
+                    onPress={onRetryNotification}
+                    style={[styles.link, { minHeight: minTarget() }]}
+                  >
+                    <Text style={styles.linkText}>
+                      {t('companionPush.check')}
+                    </Text>
+                  </Pressable>
+                ) : null}
+              </View>
+            ) : visible && showDetails ? (
               <DetailsBody />
             ) : visible && detailProposalId ? (
               <DetailProposalBody
@@ -231,6 +258,7 @@ export function TaskActionsSheet({
               <ProposalBody proposalId={proposalId} />
             ) : visible ? (
               <SheetBody
+                requireCurrentAccess={notificationResult === 'task'}
                 selectedRef={selectedRef}
                 fallbackTitle={
                   initialTask && initialTask.taskRef === selectedRef
@@ -344,6 +372,7 @@ function StepProposalBody({ proposalId }: { proposalId: string }) {
 }
 
 function SheetBody({
+  requireCurrentAccess = false,
   selectedRef,
   fallbackTitle,
   onSelect,
@@ -351,6 +380,7 @@ function SheetBody({
   onOpenChecklist,
 }: {
   selectedRef: string | null;
+  requireCurrentAccess?: boolean;
   /** The title to show when the Checklist read does not have the task yet. */
   fallbackTitle: string | null;
   onSelect: (taskRef: string) => void;
@@ -373,7 +403,11 @@ function SheetBody({
     isLoading: profileLoading,
   } = useChecklistProfile();
   // The same query and cache as the Checklist screen: one task identity.
-  const { tasks, isLoading: tasksLoading } = useChecklistTasks({
+  const {
+    tasks,
+    isLoading: tasksLoading,
+    error: tasksError,
+  } = useChecklistTasks({
     currentStage,
     stageChanged,
     persona,
@@ -420,6 +454,22 @@ function SheetBody({
   }
   if (view.status === 'unavailable') {
     return <Text style={styles.message}>{t('taskActions.unavailable')}</Text>;
+  }
+
+  if (
+    requireCurrentAccess &&
+    selectedRef &&
+    (view.stale ||
+      tasksError ||
+      !selected ||
+      selected.dismissed_at ||
+      view.byRef.get(selectedRef)?.removed)
+  ) {
+    return (
+      <Text accessible accessibilityRole='alert' style={styles.message}>
+        {t('companionPush.targetUnavailable')}
+      </Text>
+    );
   }
 
   if (selectedRef && selectedTitle !== null) {

@@ -2890,5 +2890,46 @@
     "confirmUndo": "Confirm Undo",
     "reviewAgain": "The reminder changed. Refresh and review the current values before you save.",
     "history": "This saved change is history. The current reminders are shown above."
+  },
+  "companionPush": {
+    "title": "Companion push reminders",
+    "scope": "Applies to Companion reminders on this device, across all tasks. In-app reminders work separately.",
+    "enable": "Enable on this device",
+    "disable": "Turn off on this device",
+    "refresh": "Refresh status",
+    "check": "Check result",
+    "retry": "Retry the same change",
+    "disconnect": "Disconnect this device",
+    "disconnectHelp": "Disconnecting ends this installation's push access. In-app reminders stay saved.",
+    "confirmDisconnect": "Confirm disconnect",
+    "keep": "Keep connected",
+    "receipt": "The change was saved. The status above comes from the current enrollment check.",
+    "targetUnavailable": "This task is no longer available. Your conversation and draft are preserved.",
+    "targetFailed": "The task could not be checked. Your conversation and draft are preserved. Try again.",
+    "permission": {
+      "granted": "System permission: allowed",
+      "denied": "System permission: denied",
+      "undetermined": "System permission: not requested",
+      "unsupported": "Push is not supported on this device.",
+      "unknown": "System permission has not been checked."
+    },
+    "state": {
+      "off": "Push is off on this device.",
+      "on": "Push is enabled for this device. Delivery is not guaranteed.",
+      "busy": "Checking this device…",
+      "denied": "System permission blocks push. In-app reminders still work.",
+      "unsupported": "Push is not supported here. In-app reminders still work.",
+      "unavailable": "Secure device access is unavailable. No push change is confirmed. Refresh after unlocking. Lost credentials need a separate recovery process.",
+      "unknown": "The save result is unknown. Check the result before retrying.",
+      "not_applied": "The change was not applied. The same change can be retried after current checks.",
+      "sessionEnded": "A previous sign-in owns this installation or its pending change. Push cannot be renewed here. In-app reminders still work.",
+      "unauthorized": "Sign in again to check this device. No revocation is confirmed.",
+      "forbidden": "This session cannot change the installation. No revocation is confirmed.",
+      "revoked": "This installation was disconnected. Its credentials cannot be reused.",
+      "collision": "This push token belongs to another installation. No change was saved.",
+      "conflict": "The registration changed. Refresh and review a new change.",
+      "invalid": "This request is not supported. No change is confirmed.",
+      "serviceDisabled": "The push service is unavailable or disabled. In-app reminders still work."
+    }
   }
 }

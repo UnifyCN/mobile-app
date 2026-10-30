@@ -1,3 +1,5 @@
+// The dedicated pushNavigation tests cover the independent Companion root listener.
+jest.mock('@/hooks/companion/useCompanionPush', () => ({ useCompanionPushNotifications: () => {} }));
 import { createElement } from 'react';
 import { render, renderHook } from '@testing-library/react-native';
 import {

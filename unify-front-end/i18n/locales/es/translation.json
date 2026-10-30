@@ -2900,5 +2900,46 @@
     "confirmUndo": "Confirmar deshacer",
     "reviewAgain": "El recordatorio cambió. Actualiza y revisa los valores actuales antes de guardar.",
     "history": "Este cambio forma parte del historial. Los recordatorios actuales aparecen arriba."
+  },
+  "companionPush": {
+    "title": "Recordatorios de Companion por notificación",
+    "scope": "Se aplica a los recordatorios de Companion en este dispositivo para todas las tareas. Los recordatorios dentro de la aplicación funcionan por separado.",
+    "enable": "Activar en este dispositivo",
+    "disable": "Desactivar en este dispositivo",
+    "refresh": "Actualizar estado",
+    "check": "Consultar resultado",
+    "retry": "Reintentar el mismo cambio",
+    "disconnect": "Desconectar este dispositivo",
+    "disconnectHelp": "La desconexión termina el acceso de esta instalación a las notificaciones. Los recordatorios dentro de la aplicación quedan guardados.",
+    "confirmDisconnect": "Confirmar desconexión",
+    "keep": "Mantener conectado",
+    "receipt": "El cambio se guardó. El estado anterior procede de la consulta del registro actual.",
+    "targetUnavailable": "Esta tarea ya no está disponible. Se conservan tu conversación y tu borrador.",
+    "targetFailed": "No se pudo consultar la tarea. Se conservan tu conversación y tu borrador. Inténtalo de nuevo.",
+    "permission": {
+      "granted": "Permiso del sistema: concedido",
+      "denied": "Permiso del sistema: denegado",
+      "undetermined": "Permiso del sistema: no solicitado",
+      "unsupported": "Este dispositivo no admite notificaciones push.",
+      "unknown": "No se ha consultado el permiso del sistema."
+    },
+    "state": {
+      "off": "Las notificaciones push están desactivadas en este dispositivo.",
+      "on": "Las notificaciones push están activadas para este dispositivo. No se garantiza la entrega.",
+      "busy": "Consultando este dispositivo…",
+      "denied": "El permiso del sistema bloquea las notificaciones push. Los recordatorios dentro de la aplicación siguen funcionando.",
+      "unsupported": "Aquí no se admiten notificaciones push. Los recordatorios dentro de la aplicación siguen funcionando.",
+      "unavailable": "El acceso seguro al dispositivo no está disponible. No se confirma ningún cambio. Actualiza después de desbloquearlo. La pérdida de credenciales requiere un proceso de recuperación separado.",
+      "unknown": "El resultado del guardado es desconocido. Consúltalo antes de reintentar.",
+      "not_applied": "El cambio no se aplicó. Se puede reintentar el mismo cambio tras consultar el estado actual.",
+      "sessionEnded": "Un inicio de sesión anterior posee esta instalación o su cambio pendiente. No se pueden renovar las notificaciones aquí. Los recordatorios dentro de la aplicación siguen funcionando.",
+      "unauthorized": "Vuelve a iniciar sesión para consultar este dispositivo. No se confirma ninguna revocación.",
+      "forbidden": "Esta sesión no puede cambiar la instalación. No se confirma ninguna revocación.",
+      "revoked": "Esta instalación se desconectó. Sus credenciales no se pueden reutilizar.",
+      "collision": "Este token pertenece a otra instalación. No se guardó ningún cambio.",
+      "conflict": "El registro cambió. Actualiza el estado y revisa un cambio nuevo.",
+      "invalid": "Esta solicitud no es compatible. No se confirma ningún cambio.",
+      "serviceDisabled": "El servicio de notificaciones no está disponible o está desactivado. Los recordatorios dentro de la aplicación siguen funcionando."
+    }
   }
 }

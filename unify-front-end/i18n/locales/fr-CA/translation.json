@@ -2900,5 +2900,46 @@
     "confirmUndo": "Confirmer l’annulation de la modification",
     "reviewAgain": "Le rappel a changé. Actualisez et vérifiez les valeurs actuelles avant d’enregistrer.",
     "history": "Cette modification est un historique. Les rappels actuels sont affichés ci-dessus."
+  },
+  "companionPush": {
+    "title": "Rappels Companion par notification",
+    "scope": "S’applique aux rappels Companion sur cet appareil, pour toutes les tâches. Les rappels dans l’application fonctionnent séparément.",
+    "enable": "Activer sur cet appareil",
+    "disable": "Désactiver sur cet appareil",
+    "refresh": "Actualiser l’état",
+    "check": "Vérifier le résultat",
+    "retry": "Réessayer le même changement",
+    "disconnect": "Déconnecter cet appareil",
+    "disconnectHelp": "La déconnexion met fin à l’accès aux notifications de cette installation. Les rappels dans l’application restent enregistrés.",
+    "confirmDisconnect": "Confirmer la déconnexion",
+    "keep": "Garder la connexion",
+    "receipt": "Le changement a été enregistré. L’état ci-dessus provient de la vérification de l’inscription actuelle.",
+    "targetUnavailable": "Cette tâche n’est plus accessible. Votre conversation et votre brouillon sont conservés.",
+    "targetFailed": "Impossible de vérifier la tâche. Votre conversation et votre brouillon sont conservés. Réessayez.",
+    "permission": {
+      "granted": "Permission du système : accordée",
+      "denied": "Permission du système : refusée",
+      "undetermined": "Permission du système : non demandée",
+      "unsupported": "Cet appareil ne prend pas en charge les notifications poussées.",
+      "unknown": "La permission du système n’a pas été vérifiée."
+    },
+    "state": {
+      "off": "Les notifications poussées sont désactivées sur cet appareil.",
+      "on": "Les notifications poussées sont activées pour cet appareil. La livraison n’est pas garantie.",
+      "busy": "Vérification de cet appareil…",
+      "denied": "La permission du système bloque les notifications. Les rappels dans l’application fonctionnent toujours.",
+      "unsupported": "Les notifications poussées ne sont pas prises en charge ici. Les rappels dans l’application fonctionnent toujours.",
+      "unavailable": "L’accès sécurisé à l’appareil est indisponible. Aucun changement n’est confirmé. Actualisez après le déverrouillage. La perte des identifiants nécessite une procédure de récupération distincte.",
+      "unknown": "Le résultat de l’enregistrement est inconnu. Vérifiez-le avant de réessayer.",
+      "not_applied": "Le changement n’a pas été appliqué. Le même changement peut être réessayé après vérification de l’état actuel.",
+      "sessionEnded": "Une connexion précédente possède cette installation ou son changement en attente. Les notifications ne peuvent pas être renouvelées ici. Les rappels dans l’application fonctionnent toujours.",
+      "unauthorized": "Reconnectez-vous pour vérifier cet appareil. Aucune révocation n’est confirmée.",
+      "forbidden": "Cette session ne peut pas modifier l’installation. Aucune révocation n’est confirmée.",
+      "revoked": "Cette installation a été déconnectée. Ses identifiants ne peuvent pas être réutilisés.",
+      "collision": "Ce jeton appartient à une autre installation. Aucun changement n’a été enregistré.",
+      "conflict": "L’inscription a changé. Actualisez et examinez un nouveau changement.",
+      "invalid": "Cette demande n’est pas prise en charge. Aucun changement n’est confirmé.",
+      "serviceDisabled": "Le service de notifications est indisponible ou désactivé. Les rappels dans l’application fonctionnent toujours."
+    }
   }
 }

@@ -6,8 +6,8 @@ import { supabase } from '@/lib/supabase';
  * account together, and work that started for one account can check that it
  * still belongs to the signed-in one before it writes a result.
  *
- * `epoch` changes only when the known account changes (another account, sign-out
- * or sign-in). A token refresh of the same account keeps it.
+ * `epoch` changes when the known account or Auth session changes. A token
+ * refresh of the same session keeps it.
  */
 export interface AccountSnapshot {
   /** Undefined until the session is known. */
@@ -18,17 +18,40 @@ export interface AccountSnapshot {
 type Listener = () => void;
 
 let snapshot: AccountSnapshot = { accountId: undefined, epoch: 0 };
-// The last known account survives a restart, so reading the same account again
-// is not an account change.
+// Retain the last identity across subscription restarts. A new Auth session invalidates old work.
 let lastKnown: string | null | undefined;
 const listeners = new Set<Listener>();
 let stop: (() => void) | null = null;
+let sessionIdentity: string | null = null;
+// This value only prevents local cross-session replay. The server validates authority.
+function localSessionIdentity(token?: string): string | null {
+  try {
+    const value = JSON.parse(
+      atob((token ?? '').split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))
+    ).session_id;
+    return typeof value === 'string' && /^[0-9a-f-]{36}$/.test(value)
+      ? value
+      : null;
+  } catch {
+    return null;
+  }
+}
+export const accountSessionIdentity = () =>
+  snapshot.accountId === undefined ? null : sessionIdentity;
 
-function publish(accountId: string | null) {
-  if (accountId === snapshot.accountId) return;
-  const changed = lastKnown !== undefined && lastKnown !== accountId;
+function publish(accountId: string | null, token?: string) {
+  const nextSession = localSessionIdentity(token);
+  if (accountId === snapshot.accountId && nextSession === sessionIdentity)
+    return;
+  const changed =
+    (lastKnown !== undefined && lastKnown !== accountId) ||
+    (sessionIdentity !== null && nextSession !== sessionIdentity);
+  sessionIdentity = nextSession;
   lastKnown = accountId;
-  snapshot = { accountId, epoch: changed ? snapshot.epoch + 1 : snapshot.epoch };
+  snapshot = {
+    accountId,
+    epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+  };
   for (const l of listeners) l();
 }
 
@@ -41,15 +64,16 @@ function start() {
     data: { subscription },
   } = supabase.auth.onAuthStateChange((_event, session) => {
     eventSeen = true;
-    if (active) publish(session?.user.id ?? null);
+    if (active) publish(session?.user.id ?? null, session?.access_token);
   });
   supabase.auth
     .getSession()
     .then(({ data }) => {
-      if (active && !eventSeen) publish(data.session?.user.id ?? null);
+      if (active && !eventSeen)
+        publish(data.session?.user.id ?? null, data.session?.access_token);
     })
-    .catch(error => {
-      console.warn('[accountSession] Failed to read the session:', error);
+    .catch(() => {
+      console.warn('[accountSession] Failed to read the session');
       if (active && !eventSeen) publish(null);
     });
   stop = () => {

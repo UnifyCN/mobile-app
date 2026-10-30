@@ -2880,5 +2880,46 @@
     "confirmUndo": "Xác nhận hoàn tác",
     "reviewAgain": "Lời nhắc đã thay đổi. Làm mới và kiểm tra các giá trị hiện tại trước khi lưu.",
     "history": "Thay đổi này thuộc lịch sử. Các lời nhắc hiện tại được hiển thị ở trên."
+  },
+  "companionPush": {
+    "title": "Nhắc việc Companion qua thông báo đẩy",
+    "scope": "Áp dụng cho lời nhắc Companion trên thiết bị này ở mọi công việc. Lời nhắc trong ứng dụng hoạt động riêng.",
+    "enable": "Bật trên thiết bị này",
+    "disable": "Tắt trên thiết bị này",
+    "refresh": "Cập nhật trạng thái",
+    "check": "Kiểm tra kết quả",
+    "retry": "Thử lại cùng thay đổi",
+    "disconnect": "Ngắt kết nối thiết bị này",
+    "disconnectHelp": "Ngắt kết nối sẽ chấm dứt quyền nhận thông báo đẩy của bản cài đặt này. Lời nhắc trong ứng dụng vẫn được lưu.",
+    "confirmDisconnect": "Xác nhận ngắt kết nối",
+    "keep": "Giữ kết nối",
+    "receipt": "Đã lưu thay đổi. Trạng thái ở trên lấy từ lần kiểm tra đăng ký hiện tại.",
+    "targetUnavailable": "Công việc này không còn khả dụng. Cuộc trò chuyện và bản nháp của bạn vẫn được giữ.",
+    "targetFailed": "Không thể kiểm tra công việc. Cuộc trò chuyện và bản nháp của bạn vẫn được giữ. Hãy thử lại.",
+    "permission": {
+      "granted": "Quyền hệ thống: đã cho phép",
+      "denied": "Quyền hệ thống: đã từ chối",
+      "undetermined": "Quyền hệ thống: chưa yêu cầu",
+      "unsupported": "Thiết bị này không hỗ trợ thông báo đẩy.",
+      "unknown": "Chưa kiểm tra quyền hệ thống."
+    },
+    "state": {
+      "off": "Thông báo đẩy đang tắt trên thiết bị này.",
+      "on": "Đã bật thông báo đẩy cho thiết bị này. Không bảo đảm việc gửi đến thiết bị.",
+      "busy": "Đang kiểm tra thiết bị này…",
+      "denied": "Quyền hệ thống chặn thông báo đẩy. Lời nhắc trong ứng dụng vẫn hoạt động.",
+      "unsupported": "Thông báo đẩy không được hỗ trợ ở đây. Lời nhắc trong ứng dụng vẫn hoạt động.",
+      "unavailable": "Không thể truy cập bảo mật trên thiết bị. Chưa xác nhận thay đổi nào. Cập nhật sau khi mở khóa. Nếu mất thông tin xác thực, cần một quy trình khôi phục riêng.",
+      "unknown": "Chưa rõ kết quả lưu. Hãy kiểm tra kết quả trước khi thử lại.",
+      "not_applied": "Chưa áp dụng thay đổi. Có thể thử lại cùng thay đổi sau khi kiểm tra trạng thái hiện tại.",
+      "sessionEnded": "Lần đăng nhập trước sở hữu bản cài đặt này hoặc thay đổi đang chờ. Không thể gia hạn thông báo đẩy ở đây. Lời nhắc trong ứng dụng vẫn hoạt động.",
+      "unauthorized": "Đăng nhập lại để kiểm tra thiết bị. Chưa xác nhận việc thu hồi.",
+      "forbidden": "Phiên này không thể thay đổi bản cài đặt. Chưa xác nhận việc thu hồi.",
+      "revoked": "Đã ngắt kết nối bản cài đặt này. Không thể dùng lại thông tin xác thực của nó.",
+      "collision": "Mã thông báo đẩy này thuộc bản cài đặt khác. Không lưu thay đổi nào.",
+      "conflict": "Đăng ký đã thay đổi. Cập nhật và xem lại một thay đổi mới.",
+      "invalid": "Yêu cầu này không được hỗ trợ. Chưa xác nhận thay đổi nào.",
+      "serviceDisabled": "Dịch vụ thông báo đẩy không khả dụng hoặc đã tắt. Lời nhắc trong ứng dụng vẫn hoạt động."
+    }
   }
 }

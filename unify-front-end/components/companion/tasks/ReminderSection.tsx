@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { CompanionPushControl } from './CompanionPushControl';
 import {
   View,
   Pressable,
@@ -62,6 +63,7 @@ export function ReminderSection({
       <Text accessibilityRole='header' style={styles.title}>
         {t('reminders.title')}
       </Text>
+      <CompanionPushControl />
       <ReminderList view={view} taskRef={taskRef} />
       <Text>{t('reminders.instant')}</Text>
       <TextInput

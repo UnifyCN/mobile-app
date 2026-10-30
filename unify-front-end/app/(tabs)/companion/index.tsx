@@ -1,4 +1,10 @@
 import { typography } from '@/constants/Typography';
+import {
+  companionPushIntents,
+  useCompanionPushSelection,
+} from '@/hooks/companion/useCompanionPush';
+import { currentPushLocale } from '@/services/companionActions/pushNative';
+import type { PushSelection } from '@/services/companionActions/pushIntents';
 import React, {
   useState,
   useRef,
@@ -116,7 +122,7 @@ const isSendButtonDisabled = (
 };
 
 export default function CompanionScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { currentUser } = useCurrentUser();
   const { data: personalization } = usePersonalizedStarters(currentUser?.id);
   const { conversationId } = useLocalSearchParams<{
@@ -172,6 +178,7 @@ export default function CompanionScreen() {
   // opens in a bottom sheet over the conversation, so the conversation and the
   // typed message stay mounted.
   const [sheet, setSheet] = useState<
+    | { kind: 'push'; deliveryId: string; target: PushSelection['target'] }
     | { kind: 'tasks' }
     | {
         kind: 'proposal';
@@ -210,6 +217,24 @@ export default function CompanionScreen() {
       current?.kind === 'tasks' || current?.kind === 'details' ? current : null
     );
   }
+
+  const pushSelection = useCompanionPushSelection();
+  useEffect(() => {
+    if (!pushSelection || !stillOwned(pushSelection.owner)) return;
+    setSheet({
+      kind: 'push',
+      deliveryId: pushSelection.deliveryId,
+      target: pushSelection.target,
+    });
+  }, [pushSelection]);
+  useEffect(() => {
+    if (
+      sheet?.kind === 'push' &&
+      pushSelection?.deliveryId === sheet.deliveryId &&
+      stillOwned(pushSelection.owner)
+    )
+      companionPushIntents.complete(sheet.deliveryId);
+  }, [sheet, pushSelection]);
 
   // Fetch messages for the current conversation
   const { data: dbMessages, isLoading: isLoadingMessages } =
@@ -719,9 +744,7 @@ export default function CompanionScreen() {
 
   const starters = (
     <>
-      <Text style={styles.startersLabel}>
-        {t('companion.tryOneOfThese')}
-      </Text>
+      <Text style={styles.startersLabel}>{t('companion.tryOneOfThese')}</Text>
       <StarterPrompts
         textKey={scaleKey}
         onPromptSelect={handleStarterPromptSelect}
@@ -932,6 +955,16 @@ export default function CompanionScreen() {
       <TaskActionsSheet
         // The sheet's selection and title cache belong to this account session.
         key={`${accountId ?? 'unknown'}:${accountEpoch}`}
+        notificationResult={
+          sheet?.kind === 'push'
+            ? sheet.target.target === 'available'
+              ? 'task'
+              : sheet.target.target
+            : undefined
+        }
+        onRetryNotification={() =>
+          void companionPushIntents.process(currentPushLocale(i18n.language))
+        }
         visible={sheet !== null}
         onClose={() => setSheet(null)}
         proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
@@ -942,9 +975,11 @@ export default function CompanionScreen() {
         detailProposalId={sheet?.kind === 'detail' ? sheet.proposalId : null}
         openDetails={sheet?.kind === 'details'}
         initialTask={
-          sheet?.kind === 'task'
-            ? { taskRef: sheet.taskRef, title: sheet.title }
-            : null
+          sheet?.kind === 'push' && sheet.target.target === 'available'
+            ? { taskRef: sheet.target.task_ref, title: '' }
+            : sheet?.kind === 'task'
+              ? { taskRef: sheet.taskRef, title: sheet.title }
+              : null
         }
         plan={sheet?.kind === 'plan' ? sheet.target : null}
         onOpenTask={openTask}

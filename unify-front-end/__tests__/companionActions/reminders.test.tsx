@@ -1,3 +1,5 @@
+// Push SDK setup is outside these retained in-app reminder assertions.
+jest.mock('@/components/companion/tasks/CompanionPushControl', () => ({ CompanionPushControl: () => null }));
 // Rendered React Native controls. No device or screen-reader proof.
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';

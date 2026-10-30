@@ -1,3 +1,5 @@
+// Push SDK setup is outside these retained in-app reminder assertions.
+jest.mock('@/components/companion/tasks/CompanionPushControl', () => ({ CompanionPushControl: () => null }));
 // Rendered reminder controls and real local Auth/JWT/action persistence.
 // This is RNTL evidence, not native device or screen-reader evidence.
 import React, { useEffect, useState } from 'react';

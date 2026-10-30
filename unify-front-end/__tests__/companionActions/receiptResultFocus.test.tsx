@@ -1,3 +1,5 @@
+// Push SDK setup is outside these retained in-app reminder assertions.
+jest.mock('@/components/companion/tasks/CompanionPushControl', () => ({ CompanionPushControl: () => null }));
 // This checks the rendered native-event boundary. Real TalkBack speech needs a native run.
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
