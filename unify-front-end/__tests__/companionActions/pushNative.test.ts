@@ -1,5 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { companionPushDevice } from '@/services/companionActions/pushNative';
 import { subscribeAccount } from '@/services/account/accountSession';
@@ -68,9 +70,16 @@ const random = jest.fn((bytes: Uint8Array) => {
 });
 let stop: () => void;
 const original = global.fetch;
+const originalPlatform = Platform.OS;
 beforeEach(async () => {
   await AsyncStorage.clear();
   jest.clearAllMocks();
+  jest.replaceProperty(Platform, 'OS', originalPlatform);
+  jest.replaceProperty(Device, 'isDevice', true);
+  (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({
+    status: 'granted',
+    canAskAgain: true,
+  });
   Object.defineProperty(globalThis, 'crypto', {
     configurable: true,
     value: { getRandomValues: random },
@@ -88,7 +97,119 @@ beforeEach(async () => {
 afterEach(() => {
   stop();
   global.fetch = original;
+  jest.restoreAllMocks();
 });
+it.each(['ios', 'android'] as const)(
+  'lets the native SDK determine push availability on a virtual %s installation',
+  async platform => {
+    jest.replaceProperty(Platform, 'OS', platform);
+    jest.replaceProperty(Device, 'isDevice', false);
+    (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValueOnce({
+      status: 'undetermined',
+      canAskAgain: true,
+    });
+    (Notifications.requestPermissionsAsync as jest.Mock).mockResolvedValueOnce({
+      status: 'granted',
+    });
+
+    await companionPushDevice.enable('en');
+
+    expect(Notifications.getPermissionsAsync).toHaveBeenCalledTimes(1);
+    expect(Notifications.requestPermissionsAsync).toHaveBeenCalledTimes(1);
+    expect(Notifications.getExpoPushTokenAsync).toHaveBeenCalledTimes(1);
+    expect(Notifications.getExpoPushTokenAsync).toHaveBeenCalledWith({
+      projectId: '3772d4d9-79dd-4848-9691-bae1b19eefb8',
+    });
+    if (platform === 'android') {
+      expect(Notifications.setNotificationChannelAsync).toHaveBeenCalledWith(
+        'companion',
+        { name: 'Companion', importance: 3 }
+      );
+      expect(
+        (Notifications.setNotificationChannelAsync as jest.Mock).mock
+          .invocationCallOrder[0]
+      ).toBeLessThan(
+        (Notifications.getPermissionsAsync as jest.Mock).mock
+          .invocationCallOrder[0]
+      );
+    } else {
+      expect(Notifications.setNotificationChannelAsync).not.toHaveBeenCalled();
+    }
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    const [url, request] = (global.fetch as jest.Mock).mock.calls[0];
+    expect(url).toBe('http://127.0.0.1:63610/functions/v1/companion-actions');
+    expect(request.headers.authorization).toBe(
+      `Bearer ${mockSession.access_token}`
+    );
+    expect(JSON.parse(request.body)).toMatchObject({
+      action: 'push_apply',
+      client: { platform },
+      operation: { type: 'push.enroll', expected_revision: 0, enabled: true },
+    });
+    const record = JSON.parse(
+      (SecureStore.setItemAsync as jest.Mock).mock.calls[0][1]
+    );
+    expect(record.accountId).toBe(mockSession.user.id);
+    expect(record.sessionId).toBe('11111111-1111-4111-8111-111111111111');
+    expect(companionPushDevice.snapshot().phase).toBe('serviceDisabled');
+  }
+);
+it('rejects a nonnative platform before any native permission or token request', async () => {
+  jest.replaceProperty(Platform, 'OS', 'web');
+  await companionPushDevice.enable('en');
+  expect(companionPushDevice.snapshot().phase).toBe('unsupported');
+  expect(Notifications.getPermissionsAsync).not.toHaveBeenCalled();
+  expect(Notifications.getExpoPushTokenAsync).not.toHaveBeenCalled();
+  expect(SecureStore.setItemAsync).not.toHaveBeenCalled();
+  expect(global.fetch).not.toHaveBeenCalled();
+});
+it.each(['ios', 'android'] as const)(
+  'keeps denied native %s permission from enrolling',
+  async platform => {
+    jest.replaceProperty(Platform, 'OS', platform);
+    jest.replaceProperty(Device, 'isDevice', false);
+    (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValueOnce({
+      status: 'denied',
+      canAskAgain: false,
+    });
+    await companionPushDevice.enable('en');
+    expect(companionPushDevice.snapshot().phase).toBe('denied');
+    expect(Notifications.requestPermissionsAsync).not.toHaveBeenCalled();
+    expect(Notifications.getExpoPushTokenAsync).not.toHaveBeenCalled();
+    expect(SecureStore.setItemAsync).not.toHaveBeenCalled();
+    expect(global.fetch).not.toHaveBeenCalled();
+  }
+);
+it.each(['permission', 'token'] as const)(
+  'stops after account loss during a native %s wait',
+  async stage => {
+    jest.replaceProperty(Device, 'isDevice', false);
+    let release!: (value: any) => void;
+    let entered!: () => void;
+    const waiting = new Promise<void>(resolve => (entered = resolve));
+    const api =
+      stage === 'permission'
+        ? Notifications.getPermissionsAsync
+        : Notifications.getExpoPushTokenAsync;
+    (api as jest.Mock).mockImplementationOnce(() => {
+      entered();
+      return new Promise(resolve => (release = resolve));
+    });
+    const job = companionPushDevice.enable('en');
+    await waiting;
+    for (const cb of mockListeners) cb('SIGNED_OUT', null);
+    release(
+      stage === 'permission'
+        ? { status: 'granted', canAskAgain: true }
+        : { data: 'ExpoPushToken[synthetic369-native-adapter]' }
+    );
+    await job;
+    expect(SecureStore.setItemAsync).not.toHaveBeenCalled();
+    expect(global.fetch).not.toHaveBeenCalled();
+    if (stage === 'permission')
+      expect(Notifications.getExpoPushTokenAsync).not.toHaveBeenCalled();
+  }
+);
 it('generates independent UUID and 32-byte proof and saves the exact intent with device-only options before dispatch', async () => {
   await companionPushDevice.enable('en');
   expect(random.mock.calls.map(c => c[0].length)).toEqual([16, 32, 16]);

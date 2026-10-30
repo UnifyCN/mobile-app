@@ -2,7 +2,6 @@ import 'react-native-get-random-values';
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import {
@@ -63,10 +62,7 @@ export const companionPushDevice = new CompanionPushDevice({
   async permission(ask) {
     const owner = ownAccountWork();
     assertOwned(owner);
-    if (
-      !Device.isDevice ||
-      (Platform.OS !== 'ios' && Platform.OS !== 'android')
-    )
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android')
       return 'unsupported';
     // Android 13 needs a channel before the permission/token flow.
     if (ask && Platform.OS === 'android') {
