@@ -53,6 +53,7 @@ const STEP_TYPES: readonly OperationType[] = [
   'detail.update',
   'detail.remove',
   'detail.restore',
+  'profile.update',
 ];
 const OUTCOMES = [
   'applied',

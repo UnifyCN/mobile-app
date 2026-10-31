@@ -26,6 +26,8 @@ import {
   useTaskProgress,
 } from '@/hooks/companion/useTaskActions';
 import { DetailReceipt, detailReceiptText } from './SavedDetails';
+import { ProfileReceipt } from './ProfileResults';
+import type { ProfileProposal } from '@/services/companionActions/profile';
 import { minTarget } from '@/utils/touchTarget';
 import {
   changeLines,
@@ -42,6 +44,8 @@ const ACCENT_STRONG = '#9A4A00';
 const ACCENT_BG = '#FFF4E8';
 
 interface CardsProps {
+  profileProposals?: ProfileProposal[];
+  onReviewProfile?: (proposalId: string) => void;
   reminderProposals?: ReminderProposal[];
   /** The saved message id the cards belong to; null for an unsaved message. */
   messageId: number | null;
@@ -77,6 +81,8 @@ interface CardsProps {
  * A result card shows the saved task by its receipt, not by any assistant text.
  */
 export function TaskActionCards({
+  profileProposals = [],
+  onReviewProfile,
   reminderProposals = [],
   messageId,
   isUser,
@@ -113,6 +119,12 @@ export function TaskActionCards({
     null;
   return (
     <>
+      {profileProposals.filter(p => p.source?.messageId === messageId).map(p => <View key={p.proposalId} style={styles.card}>
+        <View style={styles.text}><Text style={styles.title}>{t('profileActions.review')}</Text>
+          <Text>{t('profileActions.proposed', { value: p.operation.value ?? t('profileActions.notSet') })}</Text>
+          <Text>{t(p.status === 'draft' ? 'taskCreate.draftBadge' : 'profileActions.title')}</Text></View>
+        <CardButton label={t('profileActions.review')} name={t('profileActions.review')} onPress={() => onReviewProfile?.(p.proposalId)} />
+      </View>)}
       {reminderProposals
         .filter(p => p.source?.messageId === messageId)
         .map(p => (
@@ -503,6 +515,7 @@ function commandText(
     case 'saving':
     case 'checking': {
       const op = phase.write.operation;
+      if (op?.type === 'profile.update') return t('taskActions.saving');
       if (op?.type === 'detail.create')
         return t('savedDetails.commandSaving', { text: op.text });
       if (op && op.type !== 'task.create_custom') {
@@ -562,6 +575,7 @@ function CommandCard({
 }) {
   const { t } = useTranslation();
   const key = `command:${messageId}`;
+  const view = useTaskProgress();
   const phase = useTaskActionPhase(store, key);
   const receipt =
     phase.phase === 'saved'
@@ -601,6 +615,8 @@ function CommandCard({
     : phase.phase === 'undo_review' || phase.phase === 'already_undone'
       ? saved
       : null;
+  const profileReceipt = receipt?.profile ? receipt : phase.phase === 'saved' && phase.receipt.profile ? phase.receipt : null;
+  if (profileReceipt) return <ProfileReceipt receipt={profileReceipt} storeKey={`command:${messageId}`} store={store} view={view} />;
   if (detailReceipt?.detail) {
     return (
       <DetailCommandResult

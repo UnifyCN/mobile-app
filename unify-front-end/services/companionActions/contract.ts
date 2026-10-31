@@ -1,4 +1,5 @@
 import { parseReminderOperation, type ReminderOperation } from './reminders';
+import { parseProfileOperation, type ProfileOperation, type ProfileField } from './profile';
 /**
  * Client side of the Companion actions contract, version 1 (mobile-app#361, #363, #365, #366, #370, #367).
  * The server is supabase/functions/companion-actions in the web repo. Responses are
@@ -23,6 +24,7 @@ export const TITLE_MAX = 200;
 export const DESCRIPTION_MAX = 2000;
 
 export type OperationType =
+  | 'profile.update'
   | 'reminder.schedule'
   | 'reminder.cancel'
   | 'task.set_state'
@@ -141,6 +143,7 @@ export interface ReceiptStep {
 
 /** Durable record of one saved change. Historical once `current` is false. */
 export interface TaskReceipt {
+  profile?: { field: ProfileField; before: string | null; after: string | null };
   reminder?: {
     reminderId: string;
     remindAt: string | null;
@@ -319,7 +322,8 @@ export type Operation =
   | TaskRemoveOperation
   | TaskRestoreOperation
   | StepOperation
-  | DetailOperation;
+  | DetailOperation
+  | ProfileOperation;
 
 /** An edit for review: the action service binds it to the task's current revision (#365). */
 export type EditDraft =
@@ -439,6 +443,8 @@ export type ClarifyReason =
   | 'multiple_changes';
 
 export type CommandResult =
+  | { kind: 'profile'; operation: ProfileOperation; before: string | null }
+  | { kind: 'profile_clarify' }
   | {
       kind: 'reminder';
       operation: ReminderOperation;
@@ -520,6 +526,7 @@ const state = (o: Json, k: string): TaskState => {
 };
 
 const OPERATION_TYPES: readonly OperationType[] = [
+  'profile.update',
   'reminder.schedule',
   'reminder.cancel',
   'task.set_state',
@@ -597,6 +604,17 @@ export function parseReceipt(raw: unknown): TaskReceipt {
     raw.operation_type === undefined ? 'task.set_state' : raw.operation_type;
   if (!(OPERATION_TYPES as readonly unknown[]).includes(operationType)) {
     throw new ContractError('receipt.operation_type');
+  }
+  if (operationType === 'profile.update') {
+    if (!isObject(raw.profile) || (raw.profile.field !== 'province' && raw.profile.field !== 'arrival_date')) throw new ContractError('receipt.profile');
+    return {
+      operationId: str(raw, 'operation_id'), createdAt: str(raw, 'created_at'), kind, operationType,
+      undoOf: strOrNull(raw, 'undo_of'), taskRef: '', title: null, changes: [],
+      beforeState: 'not_started', afterState: 'not_started', afterRevision: int(raw, 'after_revision'),
+      undoneBy: strOrNull(raw, 'undone_by'), current: bool(raw, 'current'), undoable: bool(raw, 'undoable'),
+      steps: null, stepsDone: null, stepsTotal: null, waitingReasons: null, plans: null, stepsKept: null, remindersStopped: null, detail: null,
+      profile: { field: raw.profile.field, before: strOrNull(raw.profile, 'before'), after: strOrNull(raw.profile, 'after') },
+    };
   }
   if (String(operationType).startsWith('detail.')) {
     if (!isObject(raw.detail)) throw new ContractError('receipt.detail');
@@ -1147,6 +1165,8 @@ export function parseSuggestedSteps(
 
 export function parseCommand(raw: unknown): CommandResult {
   if (!isObject(raw)) throw new ContractError('command');
+  if (raw.kind === 'profile') return { kind: 'profile', operation: parseProfileOperation(raw.operation), before: strOrNull(raw, 'before') };
+  if (raw.kind === 'profile_clarify') return { kind: 'profile_clarify' };
   if (raw.kind === 'reminder') {
     const target = raw.target as Record<string, unknown>;
     return {

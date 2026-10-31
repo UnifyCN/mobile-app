@@ -1,4 +1,5 @@
 import { parseSuggestedReminder } from '@/services/companionActions/reminders';
+import { parseSuggestedProfile } from '@/services/companionActions/profile';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -99,9 +100,12 @@ function commandReply(
     | { kind: 'edit' }
     | { kind: 'remove' }
     | { kind: 'reminder' }
+    | { kind: 'profile' }
   >
 ): string {
   switch (command.kind) {
+    case 'profile_clarify':
+      return t('profileActions.clarify');
     case 'create':
       return t('taskCreate.clarifyDuplicate', {
         title: command.sameTitleTasks[0]?.title ?? command.operation.title,
@@ -343,6 +347,7 @@ export const useSendMessage = ({
             (command.kind === 'create' &&
               command.sameTitleTasks.length === 0) ||
             command.kind === 'edit' ||
+            command.kind === 'profile' ||
             command.kind === 'reminder' ||
             (command.kind === 'remember' &&
               command.sameTextDetails.length === 0)
@@ -611,6 +616,14 @@ export const useSendMessage = ({
             conversationIdToUse
           ),
         });
+      }
+
+      const suggestedProfile = parseSuggestedProfile(completion.actionProposal);
+      if (suggestedProfile && savedAnswerId !== null && actions.prepareProfile) {
+        await actions.prepareProfile({ ...suggestedProfile, expected_revision: 0 },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId });
+        ensureOwned();
+        void queryClient.invalidateQueries({ queryKey: conversationActionsKey(owner.accountId, conversationIdToUse) });
       }
 
       // The persisted (or RQ-optimistic) bot message now owns this bubble —

@@ -2931,5 +2931,33 @@
       "invalid": "This request is not supported. No change is confirmed.",
       "serviceDisabled": "The push service is unavailable or disabled. In-app reminders still work."
     }
+  },
+  "profileActions": {
+    "title": "Profile",
+    "entryHint": "Province and arrival date",
+    "explanation": "You can discuss another province or date without changing your profile. Review a change to save it.",
+    "notSet": "Not set",
+    "review": "Review profile change",
+    "save": "Save profile change",
+    "current": "Current: {{value}}",
+    "proposed": "Proposed: {{value}}",
+    "changedReview": "The profile changed. Review the current values before you approve again.",
+    "saved": "Changed {{field}} from {{before}} to {{after}}",
+    "invalid": "Enter a Canadian province or a valid date in YYYY-MM-DD format.",
+    "dateHint": "Use YYYY-MM-DD. Choose a date from 5 years ago to 3 years from today.",
+    "refresh": "Read the current profile before trying again.",
+    "clarify": "Name one profile field and an exact value. For example: Update my profile province to Alberta. For an arrival date, use YYYY-MM-DD. Nothing was saved.",
+    "field": {
+      "province": "province",
+      "arrival_date": "arrival date"
+    },
+    "input": {
+      "province": "Province",
+      "arrival_date": "Arrival date"
+    },
+    "edit": {
+      "province": "Edit province",
+      "arrival_date": "Edit arrival date"
+    }
   }
 }

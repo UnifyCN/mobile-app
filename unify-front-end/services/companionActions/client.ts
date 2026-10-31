@@ -5,6 +5,7 @@ import {
   type ReminderOperation,
   type ReminderProposal,
 } from './reminders';
+import { parseActionProfile, parseProfileProposal, type ActionProfile, type ProfileOperation, type ProfileProposal } from './profile';
 /**
  * Versioned client for the Companion task actions endpoint (mobile-app#361, #363, #365, #366, #370, #367).
  * Mirror of the web app's lib/companionActions/client.ts.
@@ -85,6 +86,7 @@ export type ReadResult =
       reminders?: ReminderRead;
       steps: TaskStep[];
       details: SavedDetail[];
+      profile?: ActionProfile | null;
     }
   | Unavailable
   | Refused
@@ -92,6 +94,7 @@ export type ReadResult =
   | Unauthorized;
 
 export type ApplyResult =
+  | { kind: 'profile_review'; proposal: ProfileProposal }
   | { kind: 'applied'; replayed: boolean; receipt: TaskReceipt }
   | {
       kind: 'conflict';
@@ -165,6 +168,8 @@ export type ConversationActionsResult =
   | {
       kind: 'ok';
       proposals: TaskProposal[];
+      profileProposals?: ProfileProposal[];
+      profileCommands?: { messageId: number; operationId: string; receipt: TaskReceipt }[];
       reminderProposals?: ReminderProposal[];
       /** #366: suggested-step drafts of this conversation. */
       stepProposals: StepProposal[];
@@ -189,6 +194,7 @@ export type ConversationActionsResult =
   | Unauthorized;
 
 export type UndoResult =
+  | { kind: 'profile_review'; proposal: ProfileProposal }
   | { kind: 'applied'; replayed: boolean; receipt: TaskReceipt }
   | {
       kind: 'undo_conflict';
@@ -223,7 +229,13 @@ export type ReminderProposalResult =
   | Refused
   | Unknown
   | Unauthorized;
+export type ProfileProposalResult =
+  | { kind: 'ok' | 'changed'; proposal: ProfileProposal }
+  | Unavailable | Refused | Unknown | Unauthorized;
 export interface TaskActionClient {
+  prepareProfile?(operation: ProfileOperation, source: { conversationId: string; messageId?: number } | null): Promise<ProfileProposalResult>;
+  profileProposal?(proposalId: string): Promise<ProfileProposalResult>;
+  cancelProfile?(proposalId: string, revision: number): Promise<ProfileProposalResult>;
   prepareReminder?(
     operation: ReminderOperation,
     source: { conversationId: string; messageId?: number } | null
@@ -393,6 +405,15 @@ export function createTaskActionClient(opts: {
       : {};
 
   const client: TaskActionClient = {
+    prepareProfile(operation, source) {
+      return draftCall({ action: 'prepare', operation, ...sourceOf(source) }, parseProfileProposal);
+    },
+    profileProposal(proposalId) {
+      return draftCall({ action: 'proposal', proposal_id: proposalId }, parseProfileProposal);
+    },
+    cancelProfile(proposalId, revision) {
+      return draftCall({ action: 'cancel', proposal_id: proposalId, proposal_revision: revision }, parseProfileProposal);
+    },
     prepareReminder(operation, source) {
       return draftCall(
         { action: 'prepare', operation, ...sourceOf(source) },
@@ -422,6 +443,7 @@ export function createTaskActionClient(opts: {
       return {
         kind: 'ok',
         tasks: tasks.map(parseTask),
+        profile: parseActionProfile(asObject(reply.body).profile),
         reminders: parseReminders(asObject(reply.body).reminders),
         steps: Array.isArray(steps) ? steps.map(parseStep) : [],
         details: Array.isArray(details) ? details.map(parseSavedDetail) : [],
@@ -468,6 +490,7 @@ export function createTaskActionClient(opts: {
       }
       if (reply.status === 409 && body.error === 'needs_review') {
         const draftKind = asObject(body.proposal).kind;
+        if (draftKind === 'profile_update') return { kind: 'profile_review', proposal: parseProfileProposal(body.proposal) };
         if (draftKind === 'reminder') return { kind: 'conflict' };
         return {
           kind: 'needs_review',
@@ -520,6 +543,7 @@ export function createTaskActionClient(opts: {
       )
         return { kind: 'undo_blocked', reason: body.reason };
       if (reply.status === 409 && body.error === 'undo_conflict') {
+        if (asObject(body.proposal).kind === 'profile_update') return { kind: 'profile_review', proposal: parseProfileProposal(body.proposal) };
         const current = Array.isArray(body.current)
           ? body.current.map(parseCurrent)
           : [];
@@ -629,6 +653,8 @@ export function createTaskActionClient(opts: {
         reminderProposals: Array.isArray(body.reminder_proposals)
           ? body.reminder_proposals.map(parseReminderProposal)
           : [],
+        profileProposals: Array.isArray(body.profile_proposals) ? body.profile_proposals.map(parseProfileProposal) : [],
+        profileCommands: Array.isArray(body.profile_commands) ? body.profile_commands.map(commandEntry) : [],
         proposals: body.proposals
           .filter(p => !isSteps(p) && kindOf(p) !== 'task_remove')
           .map(parseTaskProposal),
@@ -723,6 +749,9 @@ export function createTaskActionClient(opts: {
   // A reply that does not match the contract is never shown as a result: a write may
   // have committed, so it is an unknown outcome (or a failed lookup) and is looked up again.
   return {
+    prepareProfile: (...args) => client.prepareProfile!(...args).catch(() => ({ kind: 'unknown' }) as const),
+    profileProposal: (...args) => client.profileProposal!(...args).catch(() => ({ kind: 'unknown' }) as const),
+    cancelProfile: (...args) => client.cancelProfile!(...args).catch(() => ({ kind: 'unknown' }) as const),
     prepareReminder: (...args) =>
       client.prepareReminder!(...args).catch(
         () => ({ kind: 'unknown' }) as const

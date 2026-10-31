@@ -2941,5 +2941,33 @@
       "invalid": "Esta solicitud no es compatible. No se confirma ningún cambio.",
       "serviceDisabled": "El servicio de notificaciones no está disponible o está desactivado. Los recordatorios dentro de la aplicación siguen funcionando."
     }
+  },
+  "profileActions": {
+    "title": "Perfil",
+    "entryHint": "Provincia y fecha de llegada",
+    "explanation": "Puedes hablar de otra provincia o fecha sin cambiar tu perfil. Revisa un cambio para guardarlo.",
+    "notSet": "Sin definir",
+    "review": "Revisar cambio del perfil",
+    "save": "Guardar cambio del perfil",
+    "current": "Actual: {{value}}",
+    "proposed": "Propuesto: {{value}}",
+    "changedReview": "El perfil cambió. Revisa los valores actuales antes de volver a aprobar.",
+    "saved": "Se cambió {{field}} de {{before}} a {{after}}",
+    "invalid": "Escribe una provincia canadiense o una fecha válida con el formato AAAA-MM-DD.",
+    "dateHint": "Usa AAAA-MM-DD. Elige una fecha entre hace 5 años y dentro de 3 años.",
+    "refresh": "Consulta el perfil actual antes de intentarlo de nuevo.",
+    "clarify": "Indica un campo del perfil y un valor exacto. Por ejemplo: Actualiza la provincia de mi perfil a Alberta. Para una fecha de llegada, usa AAAA-MM-DD. No se guardó nada.",
+    "field": {
+      "province": "provincia",
+      "arrival_date": "fecha de llegada"
+    },
+    "input": {
+      "province": "Provincia",
+      "arrival_date": "Fecha de llegada"
+    },
+    "edit": {
+      "province": "Editar provincia",
+      "arrival_date": "Editar fecha de llegada"
+    }
   }
 }

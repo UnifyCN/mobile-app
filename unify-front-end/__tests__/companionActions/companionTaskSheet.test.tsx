@@ -448,6 +448,54 @@ afterEach(() => {
 });
 
 describe('Companion task entry and sheet (mobile)', () => {
+  it('371: reviews old and proposed profile values, refreshes saved values, and keeps the composer draft', async () => {
+    // Wrong if the review hides its old value, saves before approval, or erases the composer.
+    let province = 'British Columbia';
+    let revision = 1;
+    let proposal: Record<string, unknown> | null = null;
+    server = scriptedServer({}, { override: body => {
+      if (body.action === 'read') return { status: 200, body: { tasks: [], details: [], steps: [], profile: {
+        province, arrival_date: '2026-11-07', city: 'Vancouver', revisions: { province: revision, arrival_date: 1, city: 1 },
+      } } };
+      if (body.action === 'prepare' && body.operation.type === 'profile.update') {
+        proposal = { proposal_id: 'profile-review-371', proposal_revision: 1, kind: 'profile_update', status: 'draft',
+          operations: [body.operation], context: { field: 'province', value: province, revision }, source: null,
+          previous_context: null, review_reason: null, receipt: null };
+        return { status: 200, body: { proposal } };
+      }
+      if (body.action === 'proposal' && body.proposal_id === 'profile-review-371') return { status: 200, body: { proposal } };
+      if (body.action === 'apply' && body.operations[0].type === 'profile.update') {
+        const before = province;
+        province = body.operations[0].value;
+        revision++;
+        return { status: 200, body: { replayed: false, receipt: { operation_id: body.operation_id,
+          operation_type: 'profile.update', created_at: '2026-10-31T06:00:00Z', kind: 'change', undo_of: null,
+          task_ref: null, before_revision: revision - 1, after_revision: revision, undone_by: null,
+          current: true, undoable: true, profile: { field: 'province', before, after: province } } } };
+      }
+      return undefined;
+    } });
+    global.fetch = server.fetch as unknown as typeof fetch;
+    renderScreen();
+    const composer = await screen.findByPlaceholderText('Ask anything...');
+    fireEvent.changeText(composer, 'Keep this settlement question');
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: 'Profile' }));
+    expect(await within(sheet).findByText('British Columbia')).toBeTruthy();
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Edit province' }));
+    fireEvent.changeText(within(sheet).getByLabelText('Province'), 'Ontario');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Review profile change' }));
+    expect(await within(sheet).findByText('Current: British Columbia')).toBeTruthy();
+    expect(within(sheet).getByText('Proposed: Ontario')).toBeTruthy();
+    expect(province).toBe('British Columbia');
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Save profile change' }));
+    expect(await within(sheet).findByText('Changed province from British Columbia to Ontario')).toBeTruthy();
+    await waitFor(() => expect(province).toBe('Ontario'));
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Keep this settlement question');
+  });
+
   it('opens saved tasks from a compact entry, changes one in the sheet, and keeps the typed message', async () => {
     renderScreen();
     const composer = await screen.findByPlaceholderText('Ask anything...');

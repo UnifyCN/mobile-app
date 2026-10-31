@@ -190,6 +190,7 @@ export default function CompanionScreen() {
     // #370: a suggested detail's review, or the saved details.
     | { kind: 'detail'; proposalId: string }
     | { kind: 'details' }
+    | { kind: 'profile'; proposalId: string }
     | { kind: 'plan'; target: PlanTarget }
     | null
   >(null);
@@ -585,6 +586,10 @@ export default function CompanionScreen() {
     Keyboard.dismiss();
     setSheet({ kind: 'details' });
   }, []);
+  const openProfile = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'profile', proposalId });
+  }, []);
   // #367: a removal request's card opens the task's panel on that removal review.
   const openRemoval = useCallback(
     (proposal: RemovalProposal, title: string) => {
@@ -645,7 +650,9 @@ export default function CompanionScreen() {
             }
             isUser={item.isUser}
             proposals={conversationActions?.proposals ?? []}
-            commands={conversationActions?.commands ?? []}
+            commands={[...(conversationActions?.commands ?? []), ...(conversationActions?.profileCommands ?? [])]}
+            profileProposals={conversationActions?.profileProposals ?? []}
+            onReviewProfile={openProfile}
             store={actionStore}
             canWrite={actionsWritable}
             onReview={openDraft}
@@ -681,6 +688,7 @@ export default function CompanionScreen() {
       openSteps,
       openDetail,
       openDetails,
+      openProfile,
       taskTitleOf,
       openRemoval,
       isRemovedNow,
@@ -971,6 +979,7 @@ export default function CompanionScreen() {
         stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
         detailProposalId={sheet?.kind === 'detail' ? sheet.proposalId : null}
         openDetails={sheet?.kind === 'details'}
+        profileProposalId={sheet?.kind === 'profile' ? sheet.proposalId : null}
         initialTask={
           sheet?.kind === 'push' && sheet.target.target === 'available'
             ? { taskRef: sheet.target.task_ref, title: '' }

@@ -1,4 +1,7 @@
 import type { ReminderRead } from '@/services/companionActions/reminders';
+import type { ActionProfile, ProfileProposal } from '@/services/companionActions/profile';
+import { notifyArrivalReconciliation } from '@/services/onboarding/arrivalReconciliation';
+import { personalizedStartersAccountKey } from './personalizedStartersQueryKey';
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 import {
@@ -13,6 +16,7 @@ import {
 } from '@/hooks/auth/useSessionAccountId';
 import {
   ownAccountWork,
+  stillOwned,
   type AccountSnapshot,
 } from '@/services/account/accountSession';
 import { clearOtherAccountsChecklistCache } from '@/utils/checklistTaskCache';
@@ -85,6 +89,7 @@ export type TaskProgressStatus =
   | 'signed_out';
 
 export interface TaskProgressView {
+  profile?: ActionProfile | null;
   status: TaskProgressStatus;
   reminders?: ReminderRead;
   /** Saved progress by task_ref. A content-backed task never written has no entry. */
@@ -178,6 +183,7 @@ export function useTaskProgress(): TaskProgressView {
   const stale = query.isError;
   return {
     status,
+    profile: result?.kind === 'ok' ? result.profile : null,
     byRef,
     stepsByRef,
     details,
@@ -216,6 +222,9 @@ function useTaskActionAccountScope(
       [CONVERSATION_ACTIONS_ROOT, 1],
       [STEP_PROPOSAL_ROOT, 1],
       [DETAIL_PROPOSAL_ROOT, 1],
+      [PROFILE_PROPOSAL_ROOT, 1],
+      ['onboardingProfile', 1],
+      ['userInfo', 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],
@@ -245,6 +254,13 @@ export function useTaskActionStore(
       client: createMobileTaskActionClient({ accountId: userId, epoch }),
       newOperationId,
       onChanged: () => {
+        if (!stillOwned({ accountId: userId, epoch })) return;
+        notifyArrivalReconciliation(userId);
+        void queryClient.invalidateQueries({ queryKey: ['onboardingProfile', userId] });
+        void queryClient.invalidateQueries({ queryKey: ['userInfo', userId] });
+        void queryClient.invalidateQueries({ queryKey: personalizedStartersAccountKey(userId) });
+        void queryClient.invalidateQueries({ queryKey: ['personalize', 'learn'] });
+        void queryClient.invalidateQueries({ queryKey: [PROFILE_PROPOSAL_ROOT, userId] });
         void queryClient.invalidateQueries({
           queryKey: taskProgressKey(userId),
         });
@@ -299,6 +315,24 @@ export function useTaskActionClient(): {
     const owner = { accountId: userId, epoch };
     return { client: createMobileTaskActionClient(owner), owner };
   }, [userId, epoch]);
+}
+
+export const PROFILE_PROPOSAL_ROOT = 'companion-profile-proposal' as const;
+export function useProfileProposal(proposalId: string | null) {
+  const { accountId, epoch } = useAccountSnapshot();
+  return useQuery({
+    queryKey: [PROFILE_PROPOSAL_ROOT, accountId, epoch, proposalId],
+    enabled: Boolean(accountId && proposalId),
+    queryFn: async (): Promise<ProfileProposal> => {
+      const owner = { accountId: accountId!, epoch };
+      if (!stillOwned(owner)) throw new ReadFailed('account changed');
+      const result = await createMobileTaskActionClient(owner).profileProposal!(proposalId!);
+      if (!stillOwned(owner)) throw new ReadFailed('account changed');
+      if (result.kind === 'ok' || result.kind === 'changed') return result.proposal;
+      throw new ReadFailed(result.kind);
+    },
+    staleTime: 0, retry: false,
+  });
 }
 
 /** One task draft, read from the action service as the signed-in account. */

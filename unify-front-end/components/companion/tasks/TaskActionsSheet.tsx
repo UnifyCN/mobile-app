@@ -41,6 +41,7 @@ import { PlanPanel } from '../plans/PlanPanel';
 import type { PlanTarget } from '../plans/PlanEntry';
 import { TaskStatePanel } from './TaskStatePanel';
 import { DetailProposalPanel, SavedDetailsPanel } from './SavedDetails';
+import { ProfilePanel } from './ProfilePanel';
 import { ownAccountWork, stillOwned } from '@/services/account/accountSession';
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 
@@ -73,6 +74,8 @@ interface TaskActionsSheetProps {
   detailProposalId?: string | null;
   /** #370: open on the saved details instead of the task list. */
   openDetails?: boolean;
+  openProfile?: boolean;
+  profileProposalId?: string | null;
   /** Open on a settlement plan draft or saved plan (#364). */
   plan?: PlanTarget | null;
   /** A task row of the plan was opened (#364). */
@@ -98,6 +101,8 @@ export function TaskActionsSheet({
   stepProposalId = null,
   detailProposalId = null,
   openDetails = false,
+  openProfile = false,
+  profileProposalId = null,
   plan = null,
   onOpenTask,
 }: TaskActionsSheetProps) {
@@ -106,6 +111,7 @@ export function TaskActionsSheet({
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
   // #370: the saved details view, opened from the list, a card or a review.
   const [showDetails, setShowDetails] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   const initialRef = initialTask?.taskRef ?? null;
@@ -115,6 +121,9 @@ export function TaskActionsSheet({
   useEffect(() => {
     if (visible) setShowDetails(notificationId ? false : openDetails);
   }, [visible, openDetails, notificationId]);
+  useEffect(() => {
+    if (visible) setShowProfile(notificationId ? false : openProfile);
+  }, [visible, openProfile, notificationId]);
   useEffect(() => {
     if (visible && notificationId && notificationResult !== 'task')
       onNotificationReady?.(notificationId);
@@ -134,13 +143,15 @@ export function TaskActionsSheet({
   const back = () => {
     setSelectedRef(null);
     setShowDetails(false);
+    setShowProfile(false);
   };
   // Opened on a draft or one task: there is no list to go back to.
   const canGoBack =
-    (Boolean(selectedRef) || (showDetails && !openDetails)) &&
+    (Boolean(selectedRef) || (showDetails && !openDetails) || (showProfile && !openProfile)) &&
     !proposalId &&
     !stepProposalId &&
     !detailProposalId &&
+    !profileProposalId &&
     !initialRef &&
     !plan;
 
@@ -194,7 +205,9 @@ export function TaskActionsSheet({
                 <View style={[styles.iconButton, squareTarget()]} />
               )}
               <Text style={styles.heading} accessibilityRole='header'>
-                {showDetails
+                {showProfile || profileProposalId
+                  ? t('profileActions.title')
+                  : showDetails
                   ? t('savedDetails.title')
                   : detailProposalId
                     ? t('savedDetails.reviewTitle')
@@ -244,6 +257,8 @@ export function TaskActionsSheet({
                   </Pressable>
                 ) : null}
               </View>
+            ) : visible && (showProfile || profileProposalId) && !notificationId ? (
+              <ProfileBody proposalId={profileProposalId} />
             ) : visible && showDetails && !notificationId ? (
               <DetailsBody />
             ) : visible && detailProposalId ? (
@@ -279,6 +294,7 @@ export function TaskActionsSheet({
                 }
                 onSelect={setSelectedRef}
                 onOpenDetails={() => setShowDetails(true)}
+                onOpenProfile={() => setShowProfile(true)}
                 onOpenChecklist={onClose}
               />
             ) : null}
@@ -308,6 +324,14 @@ function ProposalBody({ proposalId }: { proposalId: string }) {
       />
     </ScrollView>
   );
+}
+
+function ProfileBody({ proposalId }: { proposalId: string | null }) {
+  const view = useTaskProgress();
+  const store = useTaskActionStore('companion');
+  return <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps='handled'>
+    <ProfilePanel view={view} store={store} proposalId={proposalId} />
+  </ScrollView>;
 }
 
 /** #370: the account's saved details. */
@@ -391,6 +415,7 @@ function SheetBody({
   fallbackTitle,
   onSelect,
   onOpenDetails,
+  onOpenProfile,
   onOpenChecklist,
 }: {
   notificationId?: string | null;
@@ -401,6 +426,7 @@ function SheetBody({
   fallbackTitle: string | null;
   onSelect: (taskRef: string) => void;
   onOpenDetails: () => void;
+  onOpenProfile: () => void;
   onOpenChecklist: () => void;
 }) {
   const { t } = useTranslation();
@@ -612,6 +638,7 @@ function SheetBody({
       view={view}
       onSelect={onSelect}
       onOpenDetails={onOpenDetails}
+      onOpenProfile={onOpenProfile}
     />
   );
 }
@@ -621,11 +648,13 @@ function TaskList({
   view,
   onSelect,
   onOpenDetails,
+  onOpenProfile,
 }: {
   tasks: { taskRef: string; title: string }[];
   view: TaskProgressView;
   onSelect: (taskRef: string) => void;
   onOpenDetails: () => void;
+  onOpenProfile: () => void;
 }) {
   const { t } = useTranslation();
   const rows = tasks
@@ -654,12 +683,19 @@ function TaskList({
       />
     </Pressable>
   );
+  const profileRow = <Pressable onPress={onOpenProfile} accessibilityRole='button' accessibilityLabel={t('profileActions.title')}
+    style={({ pressed }) => [styles.row, { minHeight: minTarget() }, pressed && styles.pressed]}>
+    <View style={styles.rowText}><Text style={styles.rowTitle}>{t('profileActions.title')}</Text>
+      <Text style={styles.rowState}>{t('profileActions.entryHint')}</Text></View>
+    <MaterialIcons name='chevron-right' size={22} color={INK_MUTED} style={I18nManager.isRTL ? styles.flipped : undefined} />
+  </Pressable>;
 
   if (rows.length === 0) {
     return (
       <View style={styles.listContent}>
         <ReminderList view={view} onOpen={ref => onSelect(ref)} />
         {detailsRow}
+        {profileRow}
         <Text style={styles.message}>{t('taskActions.noTasks')}</Text>
       </View>
     );
@@ -671,6 +707,7 @@ function TaskList({
     >
       <ReminderList view={view} onOpen={ref => onSelect(ref)} />
       {detailsRow}
+      {profileRow}
       {view.stale ? (
         <Text style={styles.message}>{t('taskActions.offline')}</Text>
       ) : null}

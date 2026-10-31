@@ -2941,5 +2941,33 @@
       "invalid": "Cette demande n’est pas prise en charge. Aucun changement n’est confirmé.",
       "serviceDisabled": "Le service de notifications est indisponible ou désactivé. Les rappels dans l’application fonctionnent toujours."
     }
+  },
+  "profileActions": {
+    "title": "Profil",
+    "entryHint": "Province et date d'arrivée",
+    "explanation": "Vous pouvez discuter d'une autre province ou date sans modifier votre profil. Vérifiez une modification pour l'enregistrer.",
+    "notSet": "Non renseigné",
+    "review": "Vérifier la modification du profil",
+    "save": "Enregistrer la modification du profil",
+    "current": "Valeur actuelle : {{value}}",
+    "proposed": "Valeur proposée : {{value}}",
+    "changedReview": "Le profil a changé. Vérifiez les valeurs actuelles avant de confirmer de nouveau.",
+    "saved": "Modification de {{field}} : de {{before}} à {{after}}",
+    "invalid": "Entrez une province canadienne ou une date valide au format AAAA-MM-JJ.",
+    "dateHint": "Utilisez AAAA-MM-JJ. Choisissez une date entre il y a 5 ans et dans 3 ans.",
+    "refresh": "Consultez le profil actuel avant de réessayer.",
+    "clarify": "Indiquez un champ du profil et une valeur précise. Par exemple : Mets à jour la province de mon profil à Alberta. Pour la date d'arrivée, utilisez AAAA-MM-JJ. Rien n'a été enregistré.",
+    "field": {
+      "province": "province",
+      "arrival_date": "date d'arrivée"
+    },
+    "input": {
+      "province": "Province",
+      "arrival_date": "Date d'arrivée"
+    },
+    "edit": {
+      "province": "Modifier la province",
+      "arrival_date": "Modifier la date d'arrivée"
+    }
   }
 }

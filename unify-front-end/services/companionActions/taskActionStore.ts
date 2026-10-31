@@ -17,6 +17,7 @@ import type {
   TaskActionClient,
   UndoResult,
 } from './client';
+import type { ProfileProposal } from './profile';
 import {
   isRemoval,
   verifiedCompensationDetail,
@@ -48,6 +49,7 @@ export interface PendingWrite {
 }
 
 export type TaskActionPhase =
+  | { phase: 'profile_review'; proposal: ProfileProposal }
   | { phase: 'idle' }
   | { phase: 'saving'; write: PendingWrite }
   | { phase: 'saved'; receipt: TaskReceipt }
@@ -377,6 +379,11 @@ export class TaskActionStore {
       });
 
     switch (result.kind) {
+      case 'profile_review':
+        this.set(taskRef, { phase: 'profile_review', proposal: result.proposal });
+        report('needs_review');
+        this.deps.onChanged();
+        return;
       case 'applied':
         this.set(taskRef, { phase: 'saved', receipt: result.receipt });
         report(result.replayed ? 'replayed' : 'applied');

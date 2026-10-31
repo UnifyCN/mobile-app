@@ -2921,5 +2921,33 @@
       "invalid": "Yêu cầu này không được hỗ trợ. Chưa xác nhận thay đổi nào.",
       "serviceDisabled": "Dịch vụ thông báo đẩy không khả dụng hoặc đã tắt. Lời nhắc trong ứng dụng vẫn hoạt động."
     }
+  },
+  "profileActions": {
+    "title": "Hồ sơ",
+    "entryHint": "Tỉnh bang và ngày đến",
+    "explanation": "Bạn có thể trao đổi về tỉnh bang hoặc ngày khác mà không đổi hồ sơ. Hãy xem lại thay đổi trước khi lưu.",
+    "notSet": "Chưa đặt",
+    "review": "Xem lại thay đổi hồ sơ",
+    "save": "Lưu thay đổi hồ sơ",
+    "current": "Hiện tại: {{value}}",
+    "proposed": "Đề xuất: {{value}}",
+    "changedReview": "Hồ sơ đã thay đổi. Hãy xem lại các giá trị hiện tại trước khi xác nhận lần nữa.",
+    "saved": "Đã đổi {{field}} từ {{before}} thành {{after}}",
+    "invalid": "Nhập một tỉnh bang của Canada hoặc ngày hợp lệ theo định dạng YYYY-MM-DD.",
+    "dateHint": "Dùng YYYY-MM-DD. Chọn ngày từ 5 năm trước đến 3 năm sau ngày hôm nay.",
+    "refresh": "Đọc hồ sơ hiện tại trước khi thử lại.",
+    "clarify": "Nêu một mục trong hồ sơ và giá trị chính xác. Ví dụ: Cập nhật tỉnh bang trong hồ sơ của tôi thành Alberta. Với ngày đến, dùng YYYY-MM-DD. Chưa lưu thay đổi nào.",
+    "field": {
+      "province": "tỉnh bang",
+      "arrival_date": "ngày đến"
+    },
+    "input": {
+      "province": "Tỉnh bang",
+      "arrival_date": "Ngày đến"
+    },
+    "edit": {
+      "province": "Sửa tỉnh bang",
+      "arrival_date": "Sửa ngày đến"
+    }
   }
 }
