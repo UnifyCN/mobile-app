@@ -256,8 +256,14 @@ export function useTaskActionStore(
       onChanged: () => {
         if (!stillOwned({ accountId: userId, epoch })) return;
         notifyArrivalReconciliation(userId);
-        void queryClient.invalidateQueries({ queryKey: ['onboardingProfile', userId] });
-        void queryClient.invalidateQueries({ queryKey: ['userInfo', userId] });
+        // Invalidation alone reuses an initial read that has no cached data.
+        for (const root of ['onboardingProfile', 'userInfo']) {
+          const queryKey = [root, userId];
+          void queryClient.cancelQueries({ queryKey }).then(() => {
+            if (!stillOwned({ accountId: userId, epoch })) return;
+            return queryClient.invalidateQueries({ queryKey });
+          });
+        }
         void queryClient.invalidateQueries({ queryKey: personalizedStartersAccountKey(userId) });
         void queryClient.invalidateQueries({ queryKey: ['personalize', 'learn'] });
         void queryClient.invalidateQueries({ queryKey: [PROFILE_PROPOSAL_ROOT, userId] });
