@@ -1,0 +1,363 @@
+[
+  {
+    "repo": "mobile",
+    "branch": "t3/profile-371-companion-implementation",
+    "base": "1f736dd2dc2a543cf10803a8a8069834d62becaf",
+    "head": "286e941d47f57ecaa551ccde226dbcbe3de56098",
+    "files": [
+      {
+        "path": ".coderabbit.yaml",
+        "bytes": 424,
+        "sha256": "1759d2ffc365f03dc46f47e3c060be67ee9e273093432ce371fa3c51ab7ce182"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/companionTaskSheet.test.tsx",
+        "bytes": 36313,
+        "sha256": "fba019e4e63fd8a82ec57429ee477cae465b79422725b5716dff004335944940"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/profileLocalStack.test.tsx",
+        "bytes": 8669,
+        "sha256": "a131e485d4b238cfcdfb9c80eb2e3b982f9705f82917c80c8b268dea97651799"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/savedDetails.test.tsx",
+        "bytes": 37471,
+        "sha256": "ad20b8f29fb46b84a5930dbedb14eda5e7a8e0f7e83121ebf7048ad87ac23316"
+      },
+      {
+        "path": "unify-front-end/app/(tabs)/companion/index.tsx",
+        "bytes": 40390,
+        "sha256": "9f58ef80b726ed2c89bead10fa0750c95071d997add56e8efbd540888cd46e04"
+      },
+      {
+        "path": "unify-front-end/components/companion/tasks/ProfilePanel.tsx",
+        "bytes": 3481,
+        "sha256": "d719095afc5c8a526c54655200aba200966f38825483b80961bf1e30992f2055"
+      },
+      {
+        "path": "unify-front-end/components/companion/tasks/ProfileResults.tsx",
+        "bytes": 5342,
+        "sha256": "d0d79907342f51f74f563b5855fa9dfd871e29cb89ec4f1403f0f53f67b83d93"
+      },
+      {
+        "path": "unify-front-end/components/companion/tasks/SavedDetails.tsx",
+        "bytes": 22080,
+        "sha256": "de0f0b954242a186802a04e3ac216d42bf435666443e0322aa47661846986939"
+      },
+      {
+        "path": "unify-front-end/components/companion/tasks/TaskActionCards.tsx",
+        "bytes": 25815,
+        "sha256": "bdaa9977c4c9f0d382d1ec75cc681d7f34a0b379366e30ee6d685b4dddd0a157"
+      },
+      {
+        "path": "unify-front-end/components/companion/tasks/TaskActionsSheet.tsx",
+        "bytes": 26592,
+        "sha256": "1a6708cf080e4bdb70503a3f536b007d1ea49f9723bb3011f7dad8a44de309c2"
+      },
+      {
+        "path": "unify-front-end/context/UserContext.tsx",
+        "bytes": 4974,
+        "sha256": "f00805d4a0be20f127b3c9ad8bae33256accf0ce62a7af788b5756e5ff6d3e68"
+      },
+      {
+        "path": "unify-front-end/hooks/checklist/useChecklistProfile.ts",
+        "bytes": 3651,
+        "sha256": "28a32940db3d4cd7062e640180f243798d3812aff8b6f41c1809ab61b9d517c5"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useProfileEditor.ts",
+        "bytes": 4187,
+        "sha256": "82a7a002bfbb116ff34b3cf42a9bc32c7cc8eada2fba7625f777a5dd4ec1da59"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useSendMessage.ts",
+        "bytes": 24806,
+        "sha256": "d360772118153294d98d495329b2b7e90f07cd146958d7a104601bb6ba818453"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useTaskActions.ts",
+        "bytes": 17197,
+        "sha256": "9a36ff898c7516f6bdcfe2e7c2bcfc7c97734ea5eff9fd58da330ec8a91725ff"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/ar/translation.json",
+        "bytes": 203738,
+        "sha256": "e9be16e4edea43983d2b0c402fc2828149c70f0e77e4678aef18b926240a013d"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/en/translation.json",
+        "bytes": 151542,
+        "sha256": "2844c3f451845505db079025cadf1ad51348da20ce797c80665cfda6c5abf607"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/es/translation.json",
+        "bytes": 168020,
+        "sha256": "16d5b565779755b1d34b25e1e0de6fac9c018bfae5945027298912644ded608b"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/fr-CA/translation.json",
+        "bytes": 177367,
+        "sha256": "8f32046559056621759b16c71990ef62cc29770726ae6d4380908f387775b1f7"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/hi/translation.json",
+        "bytes": 281926,
+        "sha256": "db9a89c46fab20b4793d03e471d5155a2adfcf961bab5925a1773eb5f7554871"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/pa/translation.json",
+        "bytes": 285330,
+        "sha256": "7dc8b4f2e8b64399cd24e0be39a55cbe1db95bd18df93829ac38d438c9f85b1a"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/vi/translation.json",
+        "bytes": 182917,
+        "sha256": "ce1eb9a996e076613fe155725890f14ce40b5c3687397563d1400aab9066266a"
+      },
+      {
+        "path": "unify-front-end/services/companionActions/analytics.ts",
+        "bytes": 4705,
+        "sha256": "50762582029c6d002c5d1a48f489ac832f80ca56faa37e9be030951ee2adc789"
+      },
+      {
+        "path": "unify-front-end/services/companionActions/client.ts",
+        "bytes": 28371,
+        "sha256": "43a10e58aaf4e23dfa503ba5c901aeb3166d806feaa0ac86a8f04a3827cd81e7"
+      },
+      {
+        "path": "unify-front-end/services/companionActions/contract.ts",
+        "bytes": 53063,
+        "sha256": "7ce220e1e613b111dbb091b4bf3ad920ad34879baf9a619890ee2058b2bd854e"
+      },
+      {
+        "path": "unify-front-end/services/companionActions/profile.ts",
+        "bytes": 4507,
+        "sha256": "d58db42e220b95e5f04bbaafffe21184430f7480dfd1ce4ab923ad7eea155550"
+      },
+      {
+        "path": "unify-front-end/services/companionActions/taskActionStore.ts",
+        "bytes": 18056,
+        "sha256": "950c6c27e71464774f510814b244b19355ecb65a4a8213d61c4c6601b21bca22"
+      },
+      {
+        "path": "unify-front-end/supabase/migrations/20261031055422_companion_profile_changes.sql",
+        "bytes": 24895,
+        "sha256": "3c90110c7c7c44f0ddadd45b5bc24f8874d8943a29761f9c7ff5b9e5f459e8be"
+      },
+      {
+        "path": "unify-front-end/supabase/rollbacks/20261031055422_companion_profile_changes.down.sql",
+        "bytes": 3059,
+        "sha256": "35c0da7108e3c845158f1c1e62b6681e803d66c6cba2532e9581f349aebc7365"
+      }
+    ]
+  },
+  {
+    "repo": "web",
+    "branch": "fix/profile-changes-371-r1",
+    "base": "8f3720af36c50768ff05d25804a69d28d36fd5c4",
+    "head": "dd4aac9cc567cac13b5a4a987539f548a2dcb038",
+    "files": [
+      {
+        "path": "app/(main)/companion/page.tsx",
+        "bytes": 11360,
+        "sha256": "e829d206164e7f239265c0da63b3b6336721cf9e32fee787ffd8f9e3eaf58c6e"
+      },
+      {
+        "path": "components/companion/tasks/ProfilePanel.tsx",
+        "bytes": 7937,
+        "sha256": "4f88bb67544a6a61dcc0996b74b0f307603a1f3c03256df6c1b58600d28be56d"
+      },
+      {
+        "path": "components/companion/tasks/TaskActionCards.tsx",
+        "bytes": 26021,
+        "sha256": "28d6b5ce1a1be1b42517ff39a474813521cd7221391cd966395b7569a7592cd8"
+      },
+      {
+        "path": "components/companion/tasks/TaskActions.test.tsx",
+        "bytes": 43924,
+        "sha256": "21b486852f8416fa4cf42cfc8d56d0e9ed2b76c0935b3561c03c4a6bc3d8cf54"
+      },
+      {
+        "path": "components/companion/tasks/TaskActionsDrawer.tsx",
+        "bytes": 17260,
+        "sha256": "31b61738455c58794b980d3650a361c7b92423680f423dff760b3c29ba10dc06"
+      },
+      {
+        "path": "hooks/useCompanion.ts",
+        "bytes": 24199,
+        "sha256": "a27d1bef57601435387b40ece047bdf113cfb3c2ee9475dd0644e0987479d698"
+      },
+      {
+        "path": "hooks/useProfileEditor.ts",
+        "bytes": 4159,
+        "sha256": "18f17ad38e4d42611b2b477dd79da441b29a47af18708ed1528b96ce95a4c5b0"
+      },
+      {
+        "path": "hooks/useTaskActions.ts",
+        "bytes": 14690,
+        "sha256": "1677d2530ccd2491ddfab29ae5673649276d7abcc94f42f287e401d3528010ec"
+      },
+      {
+        "path": "lib/companion/clearPrivateAccountWork.ts",
+        "bytes": 2198,
+        "sha256": "38f25ed0333c21b54c1e24bbca66b258fe721e3a469f9b1157d019bfe6f97a4b"
+      },
+      {
+        "path": "lib/companionActions/analytics.ts",
+        "bytes": 4705,
+        "sha256": "50762582029c6d002c5d1a48f489ac832f80ca56faa37e9be030951ee2adc789"
+      },
+      {
+        "path": "lib/companionActions/client.ts",
+        "bytes": 28371,
+        "sha256": "43a10e58aaf4e23dfa503ba5c901aeb3166d806feaa0ac86a8f04a3827cd81e7"
+      },
+      {
+        "path": "lib/companionActions/contract.ts",
+        "bytes": 53063,
+        "sha256": "7ce220e1e613b111dbb091b4bf3ad920ad34879baf9a619890ee2058b2bd854e"
+      },
+      {
+        "path": "lib/companionActions/profile.ts",
+        "bytes": 4507,
+        "sha256": "d58db42e220b95e5f04bbaafffe21184430f7480dfd1ce4ab923ad7eea155550"
+      },
+      {
+        "path": "lib/companionActions/queryKeys.ts",
+        "bytes": 2299,
+        "sha256": "2d3687b6fdb9b3af43800569c3a81fc8af02ace9265b9c676bbd5f666a6c934d"
+      },
+      {
+        "path": "lib/companionActions/taskActionStore.ts",
+        "bytes": 18056,
+        "sha256": "950c6c27e71464774f510814b244b19355ecb65a4a8213d61c4c6601b21bca22"
+      },
+      {
+        "path": "lib/i18n/locales/ar/translation.json",
+        "bytes": 242421,
+        "sha256": "65b61ecab44d5eb96b7efb5202eeee2c2f41a7fca6cd283b99ed35688f7d2cad"
+      },
+      {
+        "path": "lib/i18n/locales/en/translation.json",
+        "bytes": 180867,
+        "sha256": "d65ae389f49fa4215fb997ffc40d5140e1927c289c2941d75940a528d2f51080"
+      },
+      {
+        "path": "lib/i18n/locales/es/translation.json",
+        "bytes": 199751,
+        "sha256": "e8d9a3f8c0a62848c8e785769b24afa1d27314f8b53902db4ab8787c52defd70"
+      },
+      {
+        "path": "lib/i18n/locales/fr-CA/translation.json",
+        "bytes": 210743,
+        "sha256": "0ee2278fb34c511638636e67bc25ebde1f841918532031649c51bb9654fffe60"
+      },
+      {
+        "path": "lib/i18n/locales/hi/translation.json",
+        "bytes": 339264,
+        "sha256": "86de72e72eba932e28d3ce155461ee8a3dc1e12a5ecb780d39905bc9d5ffd919"
+      },
+      {
+        "path": "lib/i18n/locales/pa/translation.json",
+        "bytes": 342609,
+        "sha256": "b8d7ef2ff7efac7833893fb7e6f4e9505e66c1c80f6a8a1d2213a2e1ad75526e"
+      },
+      {
+        "path": "lib/i18n/locales/vi/translation.json",
+        "bytes": 219378,
+        "sha256": "bba0e88721d8944bfcf65dea68d7397c65827c5a50602bd53c2135c41806570a"
+      },
+      {
+        "path": "services/checklist.ts",
+        "bytes": 14831,
+        "sha256": "15e482ac21eaa55c4fb9fbdc060f8db58af668cdbdc1d5dbd4236e92fb884d62"
+      },
+      {
+        "path": "services/companion.ts",
+        "bytes": 24232,
+        "sha256": "70e2befe4ee67a1a31cbc51840b496682ade8305a37065fa08d5d2ceb539f985"
+      },
+      {
+        "path": "supabase/functions/companion-actions/contract.ts",
+        "bytes": 40277,
+        "sha256": "f8334c9daa44325b0359fba74b7e77a6ace7a01710a6ba5e2291b068a9ee2987"
+      },
+      {
+        "path": "supabase/functions/companion-actions/handler.ts",
+        "bytes": 32781,
+        "sha256": "d313207df1477104c9da73ad50a1a6866f6dc53e17967178c182b77b1f2bac97"
+      },
+      {
+        "path": "supabase/functions/companion-actions/profile.ts",
+        "bytes": 3378,
+        "sha256": "46785978a25564da0afde003026afaf32b8148494b077ce61a5a1b8cc8d19e2b"
+      },
+      {
+        "path": "supabase/functions/rag-query/index.ts",
+        "bytes": 65634,
+        "sha256": "0e0854cc08cdf214c211ad173b36a11933ef92941444a61dbe9bff24d5cd8ab4"
+      },
+      {
+        "path": "supabase/functions/rag-query/lib/actions/proposals.ts",
+        "bytes": 20000,
+        "sha256": "d845367c592cb0c490eb2be824c855147eb0277ac1bbc4dd4e57c79cc4f28025"
+      },
+      {
+        "path": "supabase/functions/rag-query/lib/context/placeNames.ts",
+        "bytes": 23869,
+        "sha256": "0e8c012aa44212d88f277a3e83997b7e614ea3319db1b6022c3598aecb435883"
+      },
+      {
+        "path": "supabase/functions/rag-query/lib/province.ts",
+        "bytes": 2152,
+        "sha256": "4460fa94c98ab7879b115ef0301ca466ce8122ce65f2486c1346e294c8848937"
+      },
+      {
+        "path": "supabase/migrations/20261031055422_companion_profile_changes.sql",
+        "bytes": 24895,
+        "sha256": "3c90110c7c7c44f0ddadd45b5bc24f8874d8943a29761f9c7ff5b9e5f459e8be"
+      },
+      {
+        "path": "supabase/rollbacks/20261031055422_companion_profile_changes.down.sql",
+        "bytes": 3059,
+        "sha256": "35c0da7108e3c845158f1c1e62b6681e803d66c6cba2532e9581f349aebc7365"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profileSupport.ts",
+        "bytes": 1944,
+        "sha256": "597449e6fb2f91d00e0b28b9d185427f764a2a588f0e382e20f0fdbe5985af36"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_browser_fixture.ts",
+        "bytes": 3179,
+        "sha256": "bf28302d2da7b9fbb69f828d243b994ccb5f042d7e72b8e9e4d94c6979a7c943"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_races_test.ts",
+        "bytes": 15493,
+        "sha256": "057caddb79e0979ec3059486a5df983f45bde107a38dd4b59f4df7fba50e57b0"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_reset_fixture.ts",
+        "bytes": 447,
+        "sha256": "14acbe33d80356adf82b99aba3b9fdd93d8e87a33e50886c34b51adc6c9e44b7"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_rollback_test.ts",
+        "bytes": 3152,
+        "sha256": "35b2e6000078237a062b5a1293ce7c29e8915094a9b5c0430befd2e501580bf8"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_test.ts",
+        "bytes": 12773,
+        "sha256": "2c48b281d5badc03341d45cc7162b6491de4fa6dd7ba23306356340a4cc52c12"
+      },
+      {
+        "path": "supabase/tests/companion-actions/profile_validation_test.ts",
+        "bytes": 5478,
+        "sha256": "f9d21f137f72cd63001fe07fba690bfa892edace066935c32ba8d5dce4528adc"
+      }
+    ]
+  }
+]

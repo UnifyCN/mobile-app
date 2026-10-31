@@ -1,0 +1,19 @@
+{
+  "rules": [
+    "jwt",
+    "provider_key",
+    "supabase_secret",
+    "device_token",
+    "signed_url"
+  ],
+  "counts": {
+    "evidence_files": 746,
+    "outgoing_git_blobs": 101,
+    "compressed_members": 11,
+    "bytes": 9150987
+  },
+  "findings": [],
+  "pass": true,
+  "scope": "all own evidence and report; every outgoing git blob from both starting pins; compressed contents",
+  "limit": "pattern scan; not proof of absence of every possible credential encoding"
+}

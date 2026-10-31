@@ -1,0 +1,712 @@
+{
+  "label": "browser-locked-final",
+  "actualPage": true,
+  "actualCookieProxy": true,
+  "localAuth": true,
+  "cmsFixture": true,
+  "hosted": false,
+  "modelAttempts": 0,
+  "checks": [
+    "old/proposed values; reviewed save; cookie proxy; committed read; focus; composer draft; no automatic profile analytics",
+    "Checklist uses new province and retains saved progress",
+    "old plan approval blocked; durable revised review; saved progress retained",
+    "real keyboard and resize; focus; narrow layout; Arabic RTL; actual Chrome 200 percent zoom; reduced motion; account isolation"
+  ],
+  "requests": [
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1025
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 498
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "prepare",
+      "status": 200,
+      "bytes": 423
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "proposal",
+      "status": 200,
+      "bytes": 423
+    },
+    {
+      "path": "owned profile read",
+      "status": 200,
+      "bytes": 76,
+      "rows": 1,
+      "ms": 4
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "apply",
+      "status": 200,
+      "bytes": 631
+    },
+    {
+      "path": "owned profile read",
+      "status": 200,
+      "bytes": 67,
+      "rows": 1,
+      "ms": 4
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "proposal",
+      "status": 200,
+      "bytes": 808
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1025
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1025
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plan_proposal",
+      "status": 200,
+      "bytes": 998
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plan_apply",
+      "status": 409,
+      "bytes": 1200
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plan_proposal",
+      "status": 200,
+      "bytes": 1177
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1204
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1204
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1204
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    },
+    {
+      "path": "owned profile read",
+      "status": 200,
+      "bytes": 67,
+      "rows": 1,
+      "ms": 8
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1018
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    }
+  ],
+  "matrix": [
+    {
+      "name": "profile-en-1280-zoom-1",
+      "browserZoom": 1,
+      "physicalViewportWidth": 1280,
+      "innerWidth": 1280,
+      "devicePixelRatio": 1,
+      "dir": "ltr",
+      "scrollWidth": 1280,
+      "panelWidth": 448,
+      "panelScrollWidth": 448,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "Back to tasks",
+          "height": 44,
+          "width": 44,
+          "left": 840,
+          "right": 884
+        },
+        {
+          "name": "Close",
+          "height": 44,
+          "width": 44,
+          "left": 1228,
+          "right": 1272
+        },
+        {
+          "name": "Edit province",
+          "height": 44,
+          "width": 101.859375,
+          "left": 852,
+          "right": 953.859375
+        },
+        {
+          "name": "Edit arrival date",
+          "height": 44,
+          "width": 116.5,
+          "left": 852,
+          "right": 968.5
+        },
+        {
+          "name": "Province",
+          "height": 44,
+          "width": 374,
+          "left": 869,
+          "right": 1243
+        },
+        {
+          "name": "Review profile change",
+          "height": 44,
+          "width": 154.359375,
+          "left": 869,
+          "right": 1023.359375
+        },
+        {
+          "name": "Not now",
+          "height": 44,
+          "width": 74.21875,
+          "left": 1031.359375,
+          "right": 1105.578125
+        }
+      ],
+      "activeAnimations": 1
+    },
+    {
+      "name": "profile-en-1280-zoom-2",
+      "browserZoom": 2,
+      "physicalViewportWidth": 1280,
+      "innerWidth": 640,
+      "devicePixelRatio": 2,
+      "dir": "ltr",
+      "scrollWidth": 640,
+      "panelWidth": 640,
+      "panelScrollWidth": 640,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "Back to tasks",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "Close",
+          "height": 44,
+          "width": 44,
+          "left": 588,
+          "right": 632
+        },
+        {
+          "name": "Edit province",
+          "height": 44,
+          "width": 101.8515625,
+          "left": 20,
+          "right": 121.8515625
+        },
+        {
+          "name": "Edit arrival date",
+          "height": 44,
+          "width": 116.5,
+          "left": 20,
+          "right": 136.5
+        },
+        {
+          "name": "Province",
+          "height": 44,
+          "width": 566,
+          "left": 37,
+          "right": 603
+        },
+        {
+          "name": "Review profile change",
+          "height": 44,
+          "width": 154.3515625,
+          "left": 37,
+          "right": 191.3515625
+        },
+        {
+          "name": "Not now",
+          "height": 44,
+          "width": 74.21875,
+          "left": 199.3515625,
+          "right": 273.5703125
+        }
+      ],
+      "activeAnimations": 1
+    },
+    {
+      "name": "profile-en-390-zoom-1",
+      "browserZoom": 1,
+      "physicalViewportWidth": 390,
+      "innerWidth": 390,
+      "devicePixelRatio": 1,
+      "dir": "ltr",
+      "scrollWidth": 390,
+      "panelWidth": 390,
+      "panelScrollWidth": 390,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "Back to tasks",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "Close",
+          "height": 44,
+          "width": 44,
+          "left": 338,
+          "right": 382
+        },
+        {
+          "name": "Edit province",
+          "height": 44,
+          "width": 101.859375,
+          "left": 20,
+          "right": 121.859375
+        },
+        {
+          "name": "Edit arrival date",
+          "height": 44,
+          "width": 116.5,
+          "left": 20,
+          "right": 136.5
+        },
+        {
+          "name": "Province",
+          "height": 44,
+          "width": 316,
+          "left": 37,
+          "right": 353
+        },
+        {
+          "name": "Review profile change",
+          "height": 44,
+          "width": 154.359375,
+          "left": 37,
+          "right": 191.359375
+        },
+        {
+          "name": "Not now",
+          "height": 44,
+          "width": 74.21875,
+          "left": 199.359375,
+          "right": 273.578125
+        }
+      ],
+      "activeAnimations": 0
+    },
+    {
+      "name": "profile-en-390-zoom-2",
+      "browserZoom": 2,
+      "physicalViewportWidth": 390,
+      "innerWidth": 195,
+      "devicePixelRatio": 2,
+      "dir": "ltr",
+      "scrollWidth": 195,
+      "panelWidth": 195,
+      "panelScrollWidth": 195,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "Back to tasks",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "Close",
+          "height": 44,
+          "width": 44,
+          "left": 143,
+          "right": 187
+        },
+        {
+          "name": "Edit province",
+          "height": 44,
+          "width": 101.8515625,
+          "left": 20,
+          "right": 121.8515625
+        },
+        {
+          "name": "Edit arrival date",
+          "height": 44,
+          "width": 116.5,
+          "left": 20,
+          "right": 136.5
+        },
+        {
+          "name": "Province",
+          "height": 44,
+          "width": 121,
+          "left": 37,
+          "right": 158
+        },
+        {
+          "name": "Review profile change",
+          "height": 44,
+          "width": 121,
+          "left": 37,
+          "right": 158
+        },
+        {
+          "name": "Not now",
+          "height": 44,
+          "width": 74.21875,
+          "left": 37,
+          "right": 111.21875
+        }
+      ],
+      "activeAnimations": 0
+    },
+    {
+      "name": "profile-ar-1280-zoom-1",
+      "browserZoom": 1,
+      "physicalViewportWidth": 1280,
+      "innerWidth": 1280,
+      "devicePixelRatio": 1,
+      "dir": "rtl",
+      "scrollWidth": 1280,
+      "panelWidth": 448,
+      "panelScrollWidth": 448,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "العودة إلى المهام",
+          "height": 44,
+          "width": 44,
+          "left": 396,
+          "right": 440
+        },
+        {
+          "name": "إغلاق",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "تعديل المقاطعة",
+          "height": 44,
+          "width": 85.265625,
+          "left": 342.734375,
+          "right": 428
+        },
+        {
+          "name": "تعديل تاريخ الوصول",
+          "height": 44,
+          "width": 110.296875,
+          "left": 317.703125,
+          "right": 428
+        },
+        {
+          "name": "المقاطعة",
+          "height": 44,
+          "width": 374,
+          "left": 37,
+          "right": 411
+        },
+        {
+          "name": "مراجعة تغيير الملف الشخصي",
+          "height": 44,
+          "width": 147.078125,
+          "left": 263.921875,
+          "right": 411
+        },
+        {
+          "name": "ليس الآن",
+          "height": 44,
+          "width": 61.78125,
+          "left": 194.140625,
+          "right": 255.921875
+        }
+      ],
+      "activeAnimations": 2
+    },
+    {
+      "name": "profile-ar-1280-zoom-2",
+      "browserZoom": 2,
+      "physicalViewportWidth": 1280,
+      "innerWidth": 640,
+      "devicePixelRatio": 2,
+      "dir": "rtl",
+      "scrollWidth": 640,
+      "panelWidth": 640,
+      "panelScrollWidth": 640,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "العودة إلى المهام",
+          "height": 44,
+          "width": 44,
+          "left": 588,
+          "right": 632
+        },
+        {
+          "name": "إغلاق",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "تعديل المقاطعة",
+          "height": 44,
+          "width": 85.265625,
+          "left": 534.734375,
+          "right": 620
+        },
+        {
+          "name": "تعديل تاريخ الوصول",
+          "height": 44,
+          "width": 110.296875,
+          "left": 509.703125,
+          "right": 620
+        },
+        {
+          "name": "المقاطعة",
+          "height": 44,
+          "width": 566,
+          "left": 37,
+          "right": 603
+        },
+        {
+          "name": "مراجعة تغيير الملف الشخصي",
+          "height": 44,
+          "width": 147.078125,
+          "left": 455.921875,
+          "right": 603
+        },
+        {
+          "name": "ليس الآن",
+          "height": 44,
+          "width": 61.78125,
+          "left": 386.140625,
+          "right": 447.921875
+        }
+      ],
+      "activeAnimations": 1
+    },
+    {
+      "name": "profile-ar-390-zoom-1",
+      "browserZoom": 1,
+      "physicalViewportWidth": 390,
+      "innerWidth": 390,
+      "devicePixelRatio": 1,
+      "dir": "rtl",
+      "scrollWidth": 390,
+      "panelWidth": 390,
+      "panelScrollWidth": 390,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "العودة إلى المهام",
+          "height": 44,
+          "width": 44,
+          "left": 338,
+          "right": 382
+        },
+        {
+          "name": "إغلاق",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "تعديل المقاطعة",
+          "height": 44,
+          "width": 85.265625,
+          "left": 284.734375,
+          "right": 370
+        },
+        {
+          "name": "تعديل تاريخ الوصول",
+          "height": 44,
+          "width": 110.296875,
+          "left": 259.703125,
+          "right": 370
+        },
+        {
+          "name": "المقاطعة",
+          "height": 44,
+          "width": 316,
+          "left": 37,
+          "right": 353
+        },
+        {
+          "name": "مراجعة تغيير الملف الشخصي",
+          "height": 44,
+          "width": 147.078125,
+          "left": 205.921875,
+          "right": 353
+        },
+        {
+          "name": "ليس الآن",
+          "height": 44,
+          "width": 61.78125,
+          "left": 136.140625,
+          "right": 197.921875
+        }
+      ],
+      "activeAnimations": 0
+    },
+    {
+      "name": "profile-ar-390-zoom-2",
+      "browserZoom": 2,
+      "physicalViewportWidth": 390,
+      "innerWidth": 195,
+      "devicePixelRatio": 2,
+      "dir": "rtl",
+      "scrollWidth": 195,
+      "panelWidth": 195,
+      "panelScrollWidth": 195,
+      "viewportScale": 1,
+      "reduced": true,
+      "controls": [
+        {
+          "name": "العودة إلى المهام",
+          "height": 44,
+          "width": 44,
+          "left": 143,
+          "right": 187
+        },
+        {
+          "name": "إغلاق",
+          "height": 44,
+          "width": 44,
+          "left": 8,
+          "right": 52
+        },
+        {
+          "name": "تعديل المقاطعة",
+          "height": 44,
+          "width": 85.265625,
+          "left": 89.734375,
+          "right": 175
+        },
+        {
+          "name": "تعديل تاريخ الوصول",
+          "height": 44,
+          "width": 110.296875,
+          "left": 64.703125,
+          "right": 175
+        },
+        {
+          "name": "المقاطعة",
+          "height": 44,
+          "width": 121,
+          "left": 37,
+          "right": 158
+        },
+        {
+          "name": "مراجعة تغيير الملف الشخصي",
+          "height": 44,
+          "width": 121,
+          "left": 37,
+          "right": 158
+        },
+        {
+          "name": "ليس الآن",
+          "height": 44,
+          "width": 61.78125,
+          "left": 96.21875,
+          "right": 158
+        }
+      ],
+      "activeAnimations": 0
+    }
+  ],
+  "analytics": {
+    "packageVersion": "1.391.2",
+    "sdk": "installed posthog-js; actual public init; fixture transport; before_send captured then dropped",
+    "positiveControl": true,
+    "privateDomEvents": 0
+  },
+  "pass": true,
+  "pageErrorCount": 0
+}

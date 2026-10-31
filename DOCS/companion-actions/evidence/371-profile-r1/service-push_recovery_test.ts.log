@@ -1,0 +1,19 @@
+running 3 tests from ./push_recovery_test.ts
+push rollback: stops execution and preserves terminal history across reapply ...
+------- output -------
+FALSIFIER: rollback leaves enrollment enabled, removes history, or reapply restores execution
+----- output end -----
+push rollback: stops execution and preserves terminal history across reapply ... ok (290ms)
+push rollback: full reverse order and reapply preserve stopped delivery identities ...
+------- output -------
+FALSIFIER: a retained push object blocks older rollback or reapply restarts an old attempt
+----- output end -----
+push rollback: full reverse order and reapply preserve stopped delivery identities ... ok (3s)
+push actions: every request leaves generation quota tripwires untouched ...
+------- output -------
+FALSIFIER: a push action, status check, or target resolver calls an AI-generation quota function
+----- output end -----
+push actions: every request leaves generation quota tripwires untouched ... ok (0ms)
+
+ok | 3 passed | 0 failed (4s)
+

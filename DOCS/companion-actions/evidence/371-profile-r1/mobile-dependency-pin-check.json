@@ -1,0 +1,512 @@
+[
+  {
+    "name": "@expo-google-fonts/funnel-sans",
+    "lock": "0.4.2",
+    "installed": "0.4.2",
+    "equal": true
+  },
+  {
+    "name": "@expo/vector-icons",
+    "lock": "15.1.1",
+    "installed": "15.1.1",
+    "equal": true
+  },
+  {
+    "name": "@legendapp/list",
+    "lock": "2.0.19",
+    "installed": "2.0.19",
+    "equal": true
+  },
+  {
+    "name": "@react-native-async-storage/async-storage",
+    "lock": "2.2.0",
+    "installed": "2.2.0",
+    "equal": true
+  },
+  {
+    "name": "@react-native-google-signin/google-signin",
+    "lock": "16.1.2",
+    "installed": "16.1.2",
+    "equal": true
+  },
+  {
+    "name": "@react-navigation/native",
+    "lock": "7.2.2",
+    "installed": "7.2.2",
+    "equal": true
+  },
+  {
+    "name": "@sanity/client",
+    "lock": "7.22.0",
+    "installed": "7.22.0",
+    "equal": true
+  },
+  {
+    "name": "@supabase/supabase-js",
+    "lock": "2.104.0",
+    "installed": "2.104.0",
+    "equal": true
+  },
+  {
+    "name": "@tanstack/react-query",
+    "lock": "5.99.2",
+    "installed": "5.99.2",
+    "equal": true
+  },
+  {
+    "name": "@testing-library/jest-native",
+    "lock": "5.4.3",
+    "installed": "5.4.3",
+    "equal": true
+  },
+  {
+    "name": "@testing-library/react-native",
+    "lock": "13.3.3",
+    "installed": "13.3.3",
+    "equal": true
+  },
+  {
+    "name": "@tsconfig/node18",
+    "lock": "18.2.6",
+    "installed": "18.2.6",
+    "equal": true
+  },
+  {
+    "name": "@types/jest",
+    "lock": "29.5.14",
+    "installed": "29.5.14",
+    "equal": true
+  },
+  {
+    "name": "@types/node",
+    "lock": "24.12.3",
+    "installed": "24.12.3",
+    "equal": true
+  },
+  {
+    "name": "@types/react",
+    "lock": "19.2.14",
+    "installed": "19.2.14",
+    "equal": true
+  },
+  {
+    "name": "@types/react-dom",
+    "lock": "19.2.3",
+    "installed": "19.2.3",
+    "equal": true
+  },
+  {
+    "name": "dayjs",
+    "lock": "1.11.20",
+    "installed": "1.11.20",
+    "equal": true
+  },
+  {
+    "name": "dotenv",
+    "lock": "16.6.1",
+    "installed": "16.6.1",
+    "equal": true
+  },
+  {
+    "name": "eslint",
+    "lock": "8.57.1",
+    "installed": "8.57.1",
+    "equal": true
+  },
+  {
+    "name": "eslint-config-expo",
+    "lock": "55.0.0",
+    "installed": "55.0.0",
+    "equal": true
+  },
+  {
+    "name": "eslint-plugin-i18next",
+    "lock": "6.1.5",
+    "installed": "6.1.5",
+    "equal": true
+  },
+  {
+    "name": "expo",
+    "lock": "55.0.17",
+    "installed": "55.0.17",
+    "equal": true
+  },
+  {
+    "name": "expo-apple-authentication",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-application",
+    "lock": "55.0.14",
+    "installed": "55.0.14",
+    "equal": true
+  },
+  {
+    "name": "expo-build-properties",
+    "lock": "55.0.18",
+    "installed": "55.0.18",
+    "equal": true
+  },
+  {
+    "name": "expo-clipboard",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-constants",
+    "lock": "55.0.15",
+    "installed": "55.0.15",
+    "equal": true
+  },
+  {
+    "name": "expo-dev-client",
+    "lock": "55.0.28",
+    "installed": "55.0.28",
+    "equal": true
+  },
+  {
+    "name": "expo-device",
+    "lock": "55.0.15",
+    "installed": "55.0.15",
+    "equal": true
+  },
+  {
+    "name": "expo-file-system",
+    "lock": "55.0.17",
+    "installed": "55.0.17",
+    "equal": true
+  },
+  {
+    "name": "expo-font",
+    "lock": "55.0.6",
+    "installed": "55.0.6",
+    "equal": true
+  },
+  {
+    "name": "expo-haptics",
+    "lock": "55.0.14",
+    "installed": "55.0.14",
+    "equal": true
+  },
+  {
+    "name": "expo-image",
+    "lock": "55.0.9",
+    "installed": "55.0.9",
+    "equal": true
+  },
+  {
+    "name": "expo-image-picker",
+    "lock": "55.0.19",
+    "installed": "55.0.19",
+    "equal": true
+  },
+  {
+    "name": "expo-linear-gradient",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-linking",
+    "lock": "55.0.14",
+    "installed": "55.0.14",
+    "equal": true
+  },
+  {
+    "name": "expo-localization",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-notifications",
+    "lock": "55.0.20",
+    "installed": "55.0.20",
+    "equal": true
+  },
+  {
+    "name": "expo-router",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-secure-store",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-splash-screen",
+    "lock": "55.0.19",
+    "installed": "55.0.19",
+    "equal": true
+  },
+  {
+    "name": "expo-status-bar",
+    "lock": "55.0.5",
+    "installed": "55.0.5",
+    "equal": true
+  },
+  {
+    "name": "expo-store-review",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-system-ui",
+    "lock": "55.0.16",
+    "installed": "55.0.16",
+    "equal": true
+  },
+  {
+    "name": "expo-tracking-transparency",
+    "lock": "55.0.13",
+    "installed": "55.0.13",
+    "equal": true
+  },
+  {
+    "name": "expo-updates",
+    "lock": "55.0.21",
+    "installed": "55.0.21",
+    "equal": true
+  },
+  {
+    "name": "expo-web-browser",
+    "lock": "55.0.16",
+    "installed": "55.0.16",
+    "equal": true
+  },
+  {
+    "name": "generate-random-username",
+    "lock": "2.1.0",
+    "installed": "2.1.0",
+    "equal": true
+  },
+  {
+    "name": "i18next",
+    "lock": "23.16.8",
+    "installed": "23.16.8",
+    "equal": true
+  },
+  {
+    "name": "jest",
+    "lock": "29.7.0",
+    "installed": "29.7.0",
+    "equal": true
+  },
+  {
+    "name": "jest-expo",
+    "lock": "55.0.16",
+    "installed": "55.0.16",
+    "equal": true
+  },
+  {
+    "name": "lucide-react-native",
+    "lock": "1.8.0",
+    "installed": "1.8.0",
+    "equal": true
+  },
+  {
+    "name": "or",
+    "lock": "0.2.0",
+    "installed": "0.2.0",
+    "equal": true
+  },
+  {
+    "name": "posthog-react-native",
+    "lock": "4.42.1",
+    "installed": "4.42.1",
+    "equal": true
+  },
+  {
+    "name": "prettier",
+    "lock": "3.8.3",
+    "installed": "3.8.3",
+    "equal": true
+  },
+  {
+    "name": "promptfoo",
+    "lock": "0.121.11",
+    "installed": "0.121.11",
+    "equal": true
+  },
+  {
+    "name": "react",
+    "lock": "19.2.0",
+    "installed": "19.2.0",
+    "equal": true
+  },
+  {
+    "name": "react-dom",
+    "lock": "19.2.0",
+    "installed": "19.2.0",
+    "equal": true
+  },
+  {
+    "name": "react-hook-form",
+    "lock": "7.73.1",
+    "installed": "7.73.1",
+    "equal": true
+  },
+  {
+    "name": "react-i18next",
+    "lock": "14.1.3",
+    "installed": "14.1.3",
+    "equal": true
+  },
+  {
+    "name": "react-native",
+    "lock": "0.83.6",
+    "installed": "0.83.6",
+    "equal": true
+  },
+  {
+    "name": "react-native-circular-progress-indicator",
+    "lock": "4.4.2",
+    "installed": "4.4.2",
+    "equal": true
+  },
+  {
+    "name": "react-native-confetti-cannon",
+    "lock": "1.5.2",
+    "installed": "1.5.2",
+    "equal": true
+  },
+  {
+    "name": "react-native-draggable-flatlist",
+    "lock": "4.0.3",
+    "installed": "4.0.3",
+    "equal": true
+  },
+  {
+    "name": "react-native-elements",
+    "lock": "3.4.3",
+    "installed": "3.4.3",
+    "equal": true
+  },
+  {
+    "name": "react-native-enriched",
+    "lock": "0.6.1",
+    "installed": "0.6.1",
+    "equal": true
+  },
+  {
+    "name": "react-native-gesture-handler",
+    "lock": "2.30.1",
+    "installed": "2.30.1",
+    "equal": true
+  },
+  {
+    "name": "react-native-get-random-values",
+    "lock": "2.0.0",
+    "installed": "2.0.0",
+    "equal": true
+  },
+  {
+    "name": "react-native-keyboard-controller",
+    "lock": "1.20.7",
+    "installed": "1.20.7",
+    "equal": true
+  },
+  {
+    "name": "react-native-month-year-picker",
+    "lock": "1.9.0",
+    "installed": "1.9.0",
+    "equal": true
+  },
+  {
+    "name": "react-native-paper",
+    "lock": "5.15.1",
+    "installed": "5.15.1",
+    "equal": true
+  },
+  {
+    "name": "react-native-reanimated",
+    "lock": "4.2.1",
+    "installed": "4.2.1",
+    "equal": true
+  },
+  {
+    "name": "react-native-render-html",
+    "lock": "6.3.4",
+    "installed": "6.3.4",
+    "equal": true
+  },
+  {
+    "name": "react-native-safe-area-context",
+    "lock": "5.6.2",
+    "installed": "5.6.2",
+    "equal": true
+  },
+  {
+    "name": "react-native-screens",
+    "lock": "4.23.0",
+    "installed": "4.23.0",
+    "equal": true
+  },
+  {
+    "name": "react-native-svg",
+    "lock": "15.15.3",
+    "installed": "15.15.3",
+    "equal": true
+  },
+  {
+    "name": "react-native-svg-transformer",
+    "lock": "1.5.3",
+    "installed": "1.5.3",
+    "equal": true
+  },
+  {
+    "name": "react-native-url-polyfill",
+    "lock": "3.0.0",
+    "installed": "3.0.0",
+    "equal": true
+  },
+  {
+    "name": "react-native-web",
+    "lock": "0.21.2",
+    "installed": "0.21.2",
+    "equal": true
+  },
+  {
+    "name": "react-native-webview",
+    "lock": "13.16.0",
+    "installed": "13.16.0",
+    "equal": true
+  },
+  {
+    "name": "react-native-worklets",
+    "lock": "0.7.4",
+    "installed": "0.7.4",
+    "equal": true
+  },
+  {
+    "name": "react-test-renderer",
+    "lock": "19.2.0",
+    "installed": "19.2.0",
+    "equal": true
+  },
+  {
+    "name": "supabase",
+    "lock": "2.93.0",
+    "installed": "2.93.0",
+    "equal": true
+  },
+  {
+    "name": "tsx",
+    "lock": "4.21.0",
+    "installed": "4.21.0",
+    "equal": true
+  },
+  {
+    "name": "typescript",
+    "lock": "5.9.3",
+    "installed": "5.9.3",
+    "equal": true
+  }
+]

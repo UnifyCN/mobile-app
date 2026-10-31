@@ -1,0 +1,11 @@
+running 1 test from ./push_commit_test.ts
+push commit: lost COMMIT acknowledgement preserves the accepted ticket without resend ...
+------- output -------
+FALSIFIER: losing a committed reply creates a second provider request or removes the committed ticket
+{"backend_commit_messages":4,"acknowledgement_dropped":true,"provider_requests":1}
+{"kind":"provider_fixture_distribution","total":1,"modes":{"ok":1}}
+----- output end -----
+push commit: lost COMMIT acknowledgement preserves the accepted ticket without resend ... ok (1s)
+
+ok | 1 passed | 0 failed (1s)
+

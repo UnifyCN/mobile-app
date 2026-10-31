@@ -1,0 +1,19 @@
+{"label":"red-browser-analytics-r2","pass":false,"checks":[],"modelAttempts":0,"pageErrorCount":0}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: profile interactions reached automatic analytics
+
+4 !== 0
+
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/DOCS/companion-actions/evidence/371-profile-r1/browser.mjs:108:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 4,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.1

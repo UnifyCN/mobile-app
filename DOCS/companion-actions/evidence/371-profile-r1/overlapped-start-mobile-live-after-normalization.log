@@ -1,0 +1,357 @@
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+PASS __tests__/companionActions/profileLocalStack.test.tsx
+  ✓ 371 local: rendered review saves the authoritative profile, refreshes the Checklist reader, preserves drafts and survives a new view (544 ms)
+  ✓ 371 local: a late prepared response cannot restore the previous account; token refresh keeps valid typed work (471 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.567 s, estimated 2 s
+Ran all test suites within paths "__tests__/companionActions/profileLocalStack.test.tsx".

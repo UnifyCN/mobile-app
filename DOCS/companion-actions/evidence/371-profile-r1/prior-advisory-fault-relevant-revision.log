@@ -1,0 +1,31 @@
+running 1 test from ./profile_test.ts
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives ... FAILED (208ms)
+
+ ERRORS 
+
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives => ./profile_test.ts:56:6
+error: AssertionError: Values are not equal: {"plan":{"goal":"Synthetic settlement plan","items":[{"state":"not_started","title":"Synthetic existing SIN task","exists":true,"source":"custom","removed":false,"position":1,"revision":1,"task_ref":"custom:20","waiting_reason":null},{"state":"not_started","title":"Synthetic phone task","exists":true,"source":"custom","removed":false,"position":2,"revision":1,"task_ref":"custom:21","waiting_reason":null}],"review":null,"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-07T00:00:00+00:00"},"existing":[{"task_ref":"custom:20","available":true}]},"plan_id":"a164813d-7fcb-46e1-a804-b2ef7a0c2bb0","receipt":{"kind":"plan","status":"applied","plan_id":"a164813d-7fcb-46e1-a804-b2ef7a0c2bb0","results":[{"kind":"existing","outcome":"reused","task_ref":"custom:20"},{"key":"n1","kind":"new","title":"Synthetic phone task","outcome":"created","task_ref":"custom:21","after_revision":1,"item_operation_id":"eed51d72-f60f-57ff-dbe9-17009e6f9d1a"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":[],"undone_by":null,"created_at":"2026-10-31T06:38:29.02658+00:00","operation_id":"8d05a196-8657-4edb-bb7f-08bf42d92010","removal_count":1,"plan_proposal_id":null},"removed":false,"reviews":[],"revision":1,"created_at":"2026-10-31T06:38:29.02658+00:00","updated_at":"2026-10-31T06:38:29.02658+00:00","proposal_id":"4779f9a3-f6e7-472e-b636-61d26f6efd33"},"status":"applied","receipt":{"kind":"plan","status":"applied","plan_id":"a164813d-7fcb-46e1-a804-b2ef7a0c2bb0","results":[{"kind":"existing","outcome":"reused","task_ref":"custom:20"},{"key":"n1","kind":"new","title":"Synthetic phone task","outcome":"created","task_ref":"custom:21","after_revision":1,"item_operation_id":"eed51d72-f60f-57ff-dbe9-17009e6f9d1a"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":[],"undone_by":null,"created_at":"2026-10-31T06:38:29.02658+00:00","operation_id":"8d05a196-8657-4edb-bb7f-08bf42d92010","removal_count":1,"plan_proposal_id":null},"replayed":false,"operation_id":"8d05a196-8657-4edb-bb7f-08bf42d92010"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:72:5)
+
+ FAILURES 
+
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives => ./profile_test.ts:56:6
+
+FAILED | 0 passed | 1 failed | 4 filtered out (212ms)
+
+error: Test failed

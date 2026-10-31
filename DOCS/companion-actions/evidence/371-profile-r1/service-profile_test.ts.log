@@ -1,0 +1,9 @@
+running 5 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (312ms)
+profile: legacy custom province remains recoverable by a reviewed Undo without widening new supported values ... ok (272ms)
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives ... ok (313ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... ok (402ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (331ms)
+
+ok | 5 passed | 0 failed (1s)
+

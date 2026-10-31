@@ -1,0 +1,17 @@
+{
+  "gate": "mobile CI after accepted integration merge",
+  "command": [
+    "npm",
+    "run",
+    "test:ci"
+  ],
+  "exit": 0,
+  "natural_exit_observed": true,
+  "log": "mobile-ci-after-integration.log",
+  "suites_passed": 157,
+  "suites_skipped": 5,
+  "tests_passed": 1616,
+  "tests_skipped": 31,
+  "dst_suites_passed": 2,
+  "dst_tests_passed": 13
+}

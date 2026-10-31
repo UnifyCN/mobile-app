@@ -1,0 +1,38 @@
+[
+  {
+    "file": "supabase/tests/companion-actions/push_process_test.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "7ab1fd2749a66d1b1444ecc346c38c32d3021b3b1f3e87ab9c2d7bc6ea5c903f",
+    "staged_sha256": "d994ac77390f61f88fc403b08fdeb3494f6b6814c4aa292e56748293777c76b7"
+  },
+  {
+    "file": "supabase/tests/companion-actions/push_delivery_test.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "7d587b1beecc258682c9f7a76387e3f791b4d570e6ef810eb8ec38e3e57fb6e0",
+    "staged_sha256": "348bce002ad89b542a34cff520fa99e859e31b37165d8c5f851175e5f2aad0da"
+  },
+  {
+    "file": "supabase/tests/companion-actions/pushHarness.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "deed88caf46a88800d9f616ec0373d3d50615e46d1f1a09102480a60f4896027",
+    "staged_sha256": "8eda4c017f940fa48a3f7ff6b1afe8234ba04c4297025a870eebfff50e569676"
+  },
+  {
+    "file": "supabase/tests/companion-actions/push_commit_test.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "295be85e51379f879e0420bd13d029970192b6b78e73367bb6bdc69cc0fe137c",
+    "staged_sha256": "d9103793188cd86530bfff9282b1e7c40fb4ea257f4d8e293e928bbef6e7c2b7"
+  },
+  {
+    "file": "supabase/workers/companion-push/process.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "26c7a1736278bf556c013914f6a0a50a6880724769061d4fb745a13ec32b6449",
+    "staged_sha256": "443848d2f1cb902eaf28c7b1621662e07dc98faa79fed63ee077e7e115d9abdf"
+  },
+  {
+    "file": "supabase/workers/companion-push/worker.ts",
+    "change": "port literals 63610-63616 to assigned 64510-64516",
+    "source_sha256": "f8ad77fd0deae255af70dd02a2218999b781cce7698ab9e5f52bcf2267db14f3",
+    "staged_sha256": "6529382608f7ce4f1c5cc55244a0d39a46ceda181ce7841b598ec4a7194f00b3"
+  }
+]

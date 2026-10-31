@@ -1,0 +1,12 @@
+{
+  "file": "reminders_test.ts",
+  "exit": 1,
+  "classification": "historical schema rollback order: #368 rollback cannot remove functions beneath installed #369/#371 wrappers; latest dependencies must be rolled back first",
+  "original_file_unchanged": true,
+  "main_historical_fixture_exit": 0,
+  "passed_cases": 9,
+  "failed_cases": 1,
+  "final_composed_filter": "/^(?!reminders: rollback)/",
+  "filtered_cases": 1,
+  "log": "composed-incompatible-reminder-rollback.log"
+}

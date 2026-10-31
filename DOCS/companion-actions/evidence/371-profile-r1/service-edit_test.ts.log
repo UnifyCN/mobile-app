@@ -1,0 +1,13 @@
+running 9 tests from ./edit_test.ts
+a suggested edit is a draft until approved, and approval applies exactly the reviewed change once ... ok (235ms)
+a renamed or re-described task keeps its identity, and the old receipt keeps the old title ... ok (239ms)
+a suggested state change shows the state it changes from and applies only that state and reason ... ok (290ms)
+a draft that changes nothing, names a removed task or another account's task, or carries a revision is refused ... ok (502ms)
+an edit of a task's details needs a reviewed proposal or a clear command, never a control or a model flag ... ok (237ms)
+a newer edit of the field a proposal changes gives a revised proposal and writes nothing ... ok (262ms)
+a change to another field of the same task does not need a new approval ... ok (230ms)
+a newer state change elsewhere gives a state proposal a new review ... ok (247ms)
+two approvals of one edit released together from a held task lock apply once ... ok (270ms)
+
+ok | 9 passed | 0 failed (2s)
+

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "npx",
+    "eslint",
+    "app/(main)/companion/page.tsx",
+    "components/companion/tasks/ProfilePanel.tsx",
+    "components/companion/tasks/TaskActionCards.tsx",
+    "components/companion/tasks/TaskActions.test.tsx",
+    "components/companion/tasks/TaskActionsDrawer.tsx",
+    "hooks/useCompanion.ts",
+    "hooks/useProfileEditor.ts",
+    "hooks/useTaskActions.ts",
+    "lib/companion/clearPrivateAccountWork.ts",
+    "lib/companionActions/analytics.ts",
+    "lib/companionActions/client.ts",
+    "lib/companionActions/contract.ts",
+    "lib/companionActions/profile.ts",
+    "lib/companionActions/queryKeys.ts",
+    "lib/companionActions/taskActionStore.ts",
+    "services/checklist.ts",
+    "services/companion.ts",
+    "supabase/tests/companion-actions/profileSupport.ts",
+    "supabase/tests/companion-actions/profile_browser_fixture.ts",
+    "supabase/tests/companion-actions/profile_races_test.ts",
+    "supabase/tests/companion-actions/profile_reset_fixture.ts",
+    "supabase/tests/companion-actions/profile_rollback_test.ts",
+    "supabase/tests/companion-actions/profile_test.ts",
+    "supabase/tests/companion-actions/profile_validation_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 2.731,
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root"
+}

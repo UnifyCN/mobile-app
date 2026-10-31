@@ -1,0 +1,10 @@
+running 6 tests from ./plan_undo_test.ts
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added ... ok (417ms)
+a plan that only reuses tasks is undone with a plain control and removes no task ... ok (298ms)
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change ... ok (334ms)
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is ... ok (251ms)
+two plan Undos with different ids, sent together, reverse the receipt once ... ok (218ms)
+cleanup ... ok (3ms)
+
+ok | 6 passed | 0 failed (1s)
+

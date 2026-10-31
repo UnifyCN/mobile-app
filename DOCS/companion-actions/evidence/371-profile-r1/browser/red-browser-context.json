@@ -1,0 +1,26 @@
+{
+  "label": "red-browser-context",
+  "actualPage": true,
+  "actualCookieProxy": true,
+  "localAuth": true,
+  "cmsFixture": true,
+  "hosted": false,
+  "modelAttempts": 0,
+  "checks": [],
+  "requests": [
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "bytes": 1083
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "bytes": 498
+    }
+  ],
+  "matrix": [],
+  "pass": false,
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog').getByRole('button', { name: 'Profile', exact: true })\u001b[22m\n",
+  "pageErrorCount": 0
+}

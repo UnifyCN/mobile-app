@@ -1,0 +1,28 @@
+running 1 test from ./profile_rollback_test.ts
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history ... FAILED (565ms)
+
+ ERRORS 
+
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history => ./profile_rollback_test.ts:5:6
+error: AssertionError: Values are not equal: {"status":"not_applied","operation_id":"c23c9bf6-4105-4e9f-a859-7692225272c8"}
+
+
+    [Diff] Actual / Expected
+
+
+-   not_applied
++   applied
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_rollback_test.ts:31:3)
+
+ FAILURES 
+
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history => ./profile_rollback_test.ts:5:6
+
+FAILED | 0 passed | 1 failed (571ms)
+
+error: Test failed

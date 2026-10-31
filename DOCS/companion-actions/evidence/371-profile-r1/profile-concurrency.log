@@ -1,0 +1,15 @@
+running 3 tests from ./profile_races_test.ts
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ...
+------- output -------
+{"scenario":"duplicate-before-commit","profile":"British Columbia","receipts":0,"graph":[{"pid":2969,"wait_event":"advisory","blockers":[2908,2909]},{"pid":2909,"wait_event":"advisory","blockers":[2908]}]}
+----- output end -----
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ... ok (876ms)
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ...
+------- output -------
+{"scenario":"legacy-profile-first","plans":0,"tasks":1,"committedProvince":"British Columbia","graph":[{"pid":2980,"wait_event":"advisory","blockers":[2908]}]}
+----- output end -----
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ... ok (430ms)
+profile races: simultaneous profile and task changes preserve progress and one profile revision wins ... ok (467ms)
+
+ok | 3 passed | 0 failed (1s)
+

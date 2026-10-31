@@ -1,0 +1,12 @@
+running 8 tests from ./plan_recovery_test.ts
+repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt ... ok (297ms)
+two approvals of one draft with different operation ids, released together from a held lock, save once ... ok (257ms)
+a reply lost after commit is found by lookup, and a retry with the same id replays it ... ok (257ms)
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once ... ok (285ms)
+an operation id reused with different items is refused and writes nothing ... ok (250ms)
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one ... ok (346ms)
+when the plan itself cannot be saved, no addition is written ... ok (271ms)
+cleanup ... ok (2ms)
+
+ok | 8 passed | 0 failed (1s)
+
