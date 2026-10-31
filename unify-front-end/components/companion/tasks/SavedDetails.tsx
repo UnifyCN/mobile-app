@@ -324,6 +324,7 @@ function DetailRow({
   const phase = useTaskActionPhase(store, key);
   const edit = useTaskActionDraft(store, editDraftKey(detail.detailId));
   const [confirming, setConfirming] = useState(false);
+  const editFocus = useConfirmationFocus();
   const removeFocus = useConfirmationFocus();
   const busy = isUnresolved(phase);
   const canWrite = view.canWrite && !busy;
@@ -364,6 +365,7 @@ function DetailRow({
       {!editing && !confirming ? (
         <View style={styles.actions}>
           <Button
+            confirmationFocus={editFocus}
             label={t('savedDetails.edit')}
             name={t('savedDetails.editA11y', { text: detail.text })}
             disabled={!canWrite}
@@ -393,7 +395,10 @@ function DetailRow({
             <Button primary label={t('savedDetails.save')} disabled={!canSave} onPress={save} />
             <Button
               label={t('savedDetails.cancel')}
-              onPress={() => store?.setDraft(editDraftKey(detail.detailId), undefined)}
+              onPress={() => {
+                editFocus.request();
+                store?.setDraft(editDraftKey(detail.detailId), undefined);
+              }}
             />
           </View>
         </View>
