@@ -23,14 +23,22 @@ end $recover_revisions$;
 create schema companion_profile_private;
 revoke all on schema companion_profile_private from public, anon, authenticated;
 
--- Legacy writes already hold the profile row lock when this trigger runs. Task/plan
--- checks take only this advisory lock and read the profile with MVCC. They never take
--- the profile row lock, so a waiting legacy writer cannot form a row/advisory cycle.
+-- UPDATE already holds the profile row. INSERT/UPSERT first locks the stable
+-- account row, so a missing profile cannot appear during a reviewed transaction.
+-- Do not acquire a second profile lock from an UPDATE row trigger: an UPSERT
+-- insert trigger can run before it waits for that existing profile row.
 create function companion_profile_private.track() returns trigger
 language plpgsql security definer set search_path=public,pg_temp as $$
 declare k text;
 begin
-  perform pg_advisory_xact_lock(hashtextextended(new.id::text || ':profile',371));
+  if tg_op='INSERT' then
+    -- RLS WITH CHECK runs after BEFORE INSERT triggers. Refuse an unowned
+    -- client row before this privileged trigger touches its account lock.
+    if current_setting('role',true) in ('anon','authenticated') and auth.uid() is distinct from new.id then
+      raise insufficient_privilege using message='profile_owner_required';
+    end if;
+    perform 1 from auth.users where id=new.id for update;
+  end if;
   new.companion_field_revisions := case when tg_op='INSERT'
     then '{"province":1,"arrival_date":1,"city":1}'::jsonb else old.companion_field_revisions end;
   if tg_op='UPDATE' then
@@ -58,9 +66,10 @@ create function public.companion_profile_context(p_user uuid) returns jsonb
 language plpgsql security definer set search_path=public,pg_temp as $$
 declare value jsonb; revisions jsonb;
 begin
-  -- This includes a missing profile: a first legacy INSERT takes the same lock.
-  -- Hold through the task/plan transaction, rather than merely checking before it.
-  perform pg_advisory_xact_lock_shared(hashtextextended(p_user::text || ':profile',371));
+  -- The account guard also covers a missing profile. KEY SHARE permits ordinary
+  -- Auth metadata updates, and conflicts with the profile INSERT guard above.
+  perform 1 from auth.users where id=p_user for key share;
+  perform 1 from public.user_onboarding_profiles where id=p_user for share;
   value:=public.companion_before371_context(p_user);
   select companion_field_revisions into revisions from public.user_onboarding_profiles where id=p_user;
   return case when value is null then null else value || jsonb_build_object('_revisions',revisions) end;
@@ -175,15 +184,14 @@ begin
     jsonb_build_array(public.companion_apply_one(p_user_id,t.inverse->0)),p_receipt_operation_id);
 end $$;
 
--- A profile review locks its proposal, then the existing profile row, then the
--- account's profile lock. The row lock precedes the lock used by legacy triggers.
+-- A profile review locks its proposal, the stable account row, then the profile.
 create function companion_profile_private.context(p_user uuid,p_field text) returns jsonb
 language plpgsql security definer set search_path=public,pg_temp as $$
 declare p public.user_onboarding_profiles%rowtype;
 begin
+  perform 1 from auth.users where id=p_user for key share;
   select * into p from public.user_onboarding_profiles where id=p_user for update;
   if not found then perform public.companion_fail('CA404','profile_not_found');end if;
-  perform pg_advisory_xact_lock(hashtextextended(p_user::text || ':profile',371));
   return jsonb_build_object('field',p_field,'value',case when p_field='province' then p.province else left(p.arrival_date::text,10) end,
     'revision',p.companion_field_revisions->p_field);
 end $$;
@@ -265,9 +273,9 @@ begin
   if coalesce(p_op->>'type','')<>'profile.update' then return public.companion_before371_apply_one(p_user,p_op);end if;
   if coalesce(current_setting('companion.profile_undo',true),'')<>'true' then
     perform companion_profile_private.check_value(p_op);end if;
+  perform 1 from auth.users where id=p_user for key share;
   select * into p from public.user_onboarding_profiles where id=p_user for update;
   if not found then perform public.companion_fail('CA404','profile_not_found');end if;
-  perform pg_advisory_xact_lock(hashtextextended(p_user::text || ':profile',371));
   rev:=(p.companion_field_revisions->>f)::bigint;
   if rev is distinct from (p_op->>'expected_revision')::bigint then
     perform public.companion_fail('CA409','revision_conflict',jsonb_build_object('field',f,'actual',rev));end if;
