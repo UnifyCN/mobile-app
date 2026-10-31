@@ -9,6 +9,7 @@ import React from 'react';
 import {
   act,
   fireEvent,
+  fireEventAsync,
   render,
   screen,
   waitFor,
@@ -394,8 +395,9 @@ async function send(text: string) {
     expect(screen.getByPlaceholderText(/Ask anything|limit/i).props.editable).toBe(true)
   );
   fireEvent.changeText(screen.getByPlaceholderText(/Ask anything|limit/i), text);
+  await waitFor(() => expect(composer().props.value).toBe(text));
   await waitFor(() => expect(sendButton().props.disabled).toBe(false));
-  fireEvent.press(sendButton());
+  await fireEventAsync.press(sendButton());
 }
 const writes = () => server.sent.filter(b => b.action === 'apply');
 const enabled = (el: { props: { accessibilityState?: { disabled?: boolean } } }) =>
@@ -586,7 +588,7 @@ it('a waiting reason change names the reason before and after on the command car
     return response;
   };
   renderScreen();
-  await send(`Mark task "${PHONE}" as waiting: Appointment on Friday`);
+  const firstSend = send(`Mark task "${PHONE}" as waiting: Appointment on Friday`);
   await waitFor(() => expect(writes()).toHaveLength(1));
   expect(composer().props.editable).toBe(false);
   // The driver must wait for the real controls before the next user action.
@@ -596,6 +598,7 @@ it('a waiting reason change names the reason before and after on the command car
   } finally {
     releaseFirstApply();
   }
+  await firstSend;
   await secondSend;
   await waitFor(() => expect(screen.getAllByTestId('task-command-card')).toHaveLength(2));
   const first = screen.getAllByTestId('task-command-card')[0];
