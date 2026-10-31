@@ -428,6 +428,42 @@ describe('native detail regression controls (#359 N1 and N3)', () => {
     }
   });
 
+  it('returns Edit Cancel focus to the current Edit control without saving the draft', async () => {
+    const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent').mockImplementation(() => {});
+    try {
+      renderScreen(true);
+      const { sheet } = await rememberAndOpen();
+      const before = detailWrites().length;
+      const label = `Edit saved detail: ${FRIDAYS}`;
+      focus.mockClear();
+      for (let cycle = 0; cycle < 2; cycle++) {
+        const edit = within(sheet).getByRole('button', { name: label });
+        await waitFor(() => expect(enabled(edit)).toBe(true));
+        fireEvent.press(edit);
+        fireEvent.changeText(within(sheet).getByLabelText('Saved detail'), 'A cancelled private edit');
+        fireEvent.press(within(sheet).getByRole('button', { name: 'Cancel' }));
+        expect(within(sheet).queryByLabelText('Saved detail')).toBeNull();
+        expect(focus).toHaveBeenCalledTimes(cycle);
+        const currentEdit = within(sheet).getByRole('button', { name: label });
+        const layout = { nativeEvent: { layout: { x: 0, y: 0, width: 180, height: 48 } } };
+        // Deliver the native layout event only if this control handles it. The
+        // expected focus below must still fail when the control has no handler.
+        if (currentEdit.props.onLayout) fireEvent(currentEdit, 'layout', layout);
+        expect(focus).toHaveBeenCalledTimes(cycle + 1);
+        // React Native's View mock exposes the native target through its props.
+        const target = focus.mock.lastCall?.[0] as unknown as { props?: { accessibilityLabel?: string } };
+        expect(target.props?.accessibilityLabel).toBe(label);
+        expect(focus.mock.lastCall?.[1]).toBe('focus');
+        fireEvent(currentEdit, 'layout', layout);
+        expect(focus).toHaveBeenCalledTimes(cycle + 1);
+      }
+      expect(detailWrites()).toHaveLength(before);
+      expect(server.details()[0].text).toBe(FRIDAYS);
+    } finally {
+      focus.mockRestore();
+    }
+  });
+
   it('returns Cancel focus to the current Remove control after its native layout, once per cancellation', async () => {
     const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent').mockImplementation(() => {});
     try {

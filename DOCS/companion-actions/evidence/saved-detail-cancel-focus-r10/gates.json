@@ -1,0 +1,69 @@
+[
+  {
+    "name": "focused",
+    "command": [
+      "npx",
+      "jest",
+      "__tests__/companionActions/savedDetails.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit": 0,
+    "seconds": 4.872757207995164
+  },
+  {
+    "name": "test-ci",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 0,
+    "seconds": 63.8526090420055
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit": 0,
+    "seconds": 6.431702290996327
+  },
+  {
+    "name": "i18n",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0,
+    "seconds": 0.12223387500853278
+  },
+  {
+    "name": "changed-lint",
+    "command": [
+      "npx",
+      "eslint",
+      "components/companion/tasks/SavedDetails.tsx",
+      "__tests__/companionActions/savedDetails.test.tsx"
+    ],
+    "exit": 0,
+    "seconds": 1.3898415000003297
+  },
+  {
+    "name": "native-export",
+    "command": [
+      "npx",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "exit": 0,
+    "seconds": 31.73427908400481
+  }
+]

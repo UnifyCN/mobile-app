@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/savedDetails.test.tsx",
+    "--runInBand",
+    "--watchAll=false",
+    "--testNamePattern=returns Edit Cancel focus"
+  ],
+  "exit": -6,
+  "seconds": 30.058372792002046
+}
