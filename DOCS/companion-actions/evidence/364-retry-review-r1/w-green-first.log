@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-363-spec-web-r2-638d8060
+
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (7 tests | 6 skipped) 1182ms
+   ✓ Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task  1181ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 6 skipped (7)
+   Start at  15:01:02
+   Duration  2.41s (transform 201ms, setup 0ms, collect 639ms, tests 1.18s, environment 309ms, prepare 65ms)
+
+exit=0

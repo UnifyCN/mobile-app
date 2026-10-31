@@ -1,0 +1,31 @@
+FAIL __tests__/companionActions/pushIntents.test.ts
+  ✓ retains one minimal signed-out warm+cold intent until normal authentication and current resolve (2 ms)
+  ✓ drops a late resolver after an account reset in one batch
+  ✓ does not use a stale authenticated SDK last-response read in a new account (1 ms)
+  ✓ does not clear a newer SDK response when an older intent completes
+  ✓ failed content resolution retains a retryable generic result without task data
+  ✕ processes the new account intent after an old account resolver finishes (1 ms)
+
+  ● processes the new account intent after an old account resolver finishes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "55555555-5555-4555-8555-555555555555"
+    Received: undefined
+
+      41 |  const next='55555555-5555-4555-8555-555555555555';s.q.receive({...data,delivery_id:next});const fresh=s.q.process('en');
+      42 |  release({kind:'ok',value:{target:'available',task_ref:'custom:7'}});await old;await fresh;
+    > 43 |  expect(s.q.snapshot()?.deliveryId).toBe(next);expect(s.navigate).toHaveBeenCalledTimes(1);
+         |                                     ^
+      44 | });
+      45 |
+
+      at Object.toBe (__tests__/companionActions/pushIntents.test.ts:43:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        0.51 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushIntents.test.ts/i.

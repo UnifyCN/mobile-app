@@ -1,0 +1,114 @@
+running 6 tests from ./command_test.ts
+a clear command adds exactly the task it names, once, however often it is sent ... FAILED (267ms)
+two operations racing on one command message, released together from a held use, add one task ... FAILED (145ms)
+unclear requests are answered with a question and authorize nothing ... FAILED (166ms)
+a command naming a task that already exists asks which is meant and writes nothing ... FAILED (167ms)
+only the caller's own user message is command evidence ... FAILED (306ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+a clear command adds exactly the task it names, once, however often it is sent => ./command_test.ts:15:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:24:5)
+
+two operations racing on one command message, released together from a held use, add one task => ./command_test.ts:45:6
+error: AssertionError: Values are not equal: could not hold the command use: PostgresError: relation "companion_command_uses" does not exist
+
+
+    [Diff] Actual / Expected
+
+
+-   PostgresError: relation "companion_command_uses" does not exist
+-       at ErrorResponse (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+-       at handle (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+-       at Socket.data (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+-       at Socket.emit (ext:deno_node/_events.mjs:439:20)
+-       at addChunk (node:_stream_readable:452:12)
+-       at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+-       at Socket.Readable.push (node:_stream_readable:308:48)
+-       at TCPWrap.onStreamRead [as onread] (ext:deno_node/internal/stream_base_commons.ts:211:23)
+-       at cachedError (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/query.js:170:23)
+-       at new Query (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/query.js:36:24)
+-       at sql (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/index.js:112:11)
+-       at file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:60:14 {
+-     code: "42P01",
+-     file: "parse_relation.c",
+-     line: "1449",
+-     position: "13",
+-     routine: "parserOpenTable",
+-     severity: "ERROR",
+-     severity_local: "ERROR",
+-   }
++   null
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:70:5)
+
+unclear requests are answered with a question and authorize nothing => ./command_test.ts:82:6
+error: AssertionError: Values are not equal: Add a task
+
+
+    [Diff] Actual / Expected
+
+
+    [
++     200,
++     {
++       kind: "clarify",
++       reason: "missing_title",
++     },
+-     400,
+-     undefined,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:99:7)
+
+a command naming a task that already exists asks which is meant and writes nothing => ./command_test.ts:107:6
+error: TypeError: Cannot read properties of undefined (reading 'kind')
+    assertEquals(i.json.command.kind, 'create');
+                                ^
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:116:33)
+
+only the caller's own user message is command evidence => ./command_test.ts:124:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   404
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/command_test.ts:137:5)
+
+ FAILURES 
+
+a clear command adds exactly the task it names, once, however often it is sent => ./command_test.ts:15:6
+two operations racing on one command message, released together from a held use, add one task => ./command_test.ts:45:6
+unclear requests are answered with a question and authorize nothing => ./command_test.ts:82:6
+a command naming a task that already exists asks which is meant and writes nothing => ./command_test.ts:107:6
+only the caller's own user message is command evidence => ./command_test.ts:124:6
+
+FAILED | 1 passed | 5 failed (1s)
+
+error: Test failed

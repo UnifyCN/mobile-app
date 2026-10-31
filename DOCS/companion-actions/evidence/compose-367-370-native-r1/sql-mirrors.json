@@ -1,0 +1,72 @@
+[
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261025235536_companion_task_actions.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261025235536_companion_task_actions.sql",
+    "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261026165156_companion_task_create.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261026165156_companion_task_create.sql",
+    "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+    "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261027183644_companion_task_steps.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261027183644_companion_task_steps.sql",
+    "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261028001530_companion_task_edit.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261028001530_companion_task_edit.sql",
+    "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261028004902_companion_saved_details.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261028004902_companion_saved_details.sql",
+    "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374"
+  },
+  {
+    "mobile": "unify-front-end/supabase/migrations/20261028025026_companion_task_remove.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/migrations/20261028025026_companion_task_remove.sql",
+    "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+    "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+    "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+    "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+    "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+    "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+    "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6"
+  },
+  {
+    "mobile": "unify-front-end/supabase/rollbacks/20261028025026_companion_task_remove.down.sql",
+    "web": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/rollbacks/20261028025026_companion_task_remove.down.sql",
+    "sha256": "821398d146159a42cd31fb12acccd83e95899e6ea47ef1fae23d8e0a9208c6de"
+  }
+]

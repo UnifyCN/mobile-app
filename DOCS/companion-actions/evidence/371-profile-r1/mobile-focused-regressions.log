@@ -1,0 +1,1431 @@
+PASS __tests__/companionActions/planLocalStack.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/planLocalStack.test.tsx:247:1)
+
+PASS __tests__/companionActions/companionActionsLocalStack.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (components/companion/tasks/CompanionPushControl.tsx:11:1)
+      at Object.require (components/companion/tasks/ReminderSection.tsx:2:1)
+      at Object.require (components/companion/tasks/TaskStatePanel.tsx:1:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../Checklist/index.tsx:64:1)
+      at Object.require (__tests__/companionActions/companionActionsLocalStack.test.tsx:290:1)
+
+PASS __tests__/companionActions/taskCreate.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/taskCreate.test.tsx:326:1)
+
+PASS __tests__/companionActions/savedDetails.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/savedDetails.test.tsx:321:1)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to DetailCommandResult inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CommandCard inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to DetailsBody inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+PASS __tests__/companionActions/checklistTaskProgress.test.tsx (8.628 s)
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (components/companion/tasks/CompanionPushControl.tsx:11:1)
+      at Object.require (components/companion/tasks/ReminderSection.tsx:2:1)
+      at Object.require (components/companion/tasks/TaskStatePanel.tsx:1:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../Checklist/index.tsx:64:1)
+      at Object.require (__tests__/companionActions/checklistTaskProgress.test.tsx:213:1)
+
+PASS __tests__/companionActions/taskSteps.test.tsx (5.328 s)
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (components/companion/tasks/CompanionPushControl.tsx:11:1)
+      at Object.require (components/companion/tasks/ReminderSection.tsx:2:1)
+      at Object.require (components/companion/tasks/TaskStatePanel.tsx:1:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../Checklist/index.tsx:64:1)
+      at Object.require (__tests__/companionActions/taskSteps.test.tsx:213:1)
+
+PASS __tests__/companionActions/taskStepSuggestions.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/taskStepSuggestions.test.tsx:324:1)
+
+PASS __tests__/companionActions/accountOwnershipStages.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/accountOwnershipStages.test.tsx:347:1)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      Error in saveMessage: { message: 'A user save rejected' }
+
+      88 |     return { id: (saved as { id: number }).id };
+      89 |   } catch (error) {
+    > 90 |     if (!isAccountChange(error)) console.error('Error in saveMessage:', error);
+         |                                          ^
+      91 |     throw error;
+      92 |   }
+      93 | };
+
+      at error (services/companion/saveMessage.ts:90:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      Failed to save user message: { message: 'A user save rejected' }
+
+      275 |         savedUserId = savedUser.id;
+      276 |       } catch (error) {
+    > 277 |         console.error('Failed to save user message:', error);
+          |                 ^
+      278 |         // Continue anyway - message will be saved but might not show immediately
+      279 |       }
+      280 |
+
+      at error (hooks/companion/useSendMessage.ts:277:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Failed to save user message: AccountChangedError: The signed-in account changed
+          at assertOwned (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/services/account/accountSession.ts:133:33)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/services/companion/saveMessage.ts:63:16
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      275 |         savedUserId = savedUser.id;
+      276 |       } catch (error) {
+    > 277 |         console.error('Failed to save user message:', error);
+          |                 ^
+      278 |         // Continue anyway - message will be saved but might not show immediately
+      279 |       }
+      280 |
+
+      at error (hooks/companion/useSendMessage.ts:277:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Error in saveMessage: { message: 'rejected' }
+
+      88 |     return { id: (saved as { id: number }).id };
+      89 |   } catch (error) {
+    > 90 |     if (!isAccountChange(error)) console.error('Error in saveMessage:', error);
+         |                                          ^
+      91 |     throw error;
+      92 |   }
+      93 | };
+
+      at error (services/companion/saveMessage.ts:90:42)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      Failed to save message: { message: 'rejected' }
+
+      94 |       });
+      95 |
+    > 96 |       console.error('Failed to save message:', error);
+         |               ^
+      97 |     },
+      98 |   });
+      99 | };
+
+      at Object.error [as onError] (hooks/companion/useSaveMessage.ts:96:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to save user message: { message: 'rejected' }
+
+      275 |         savedUserId = savedUser.id;
+      276 |       } catch (error) {
+    > 277 |         console.error('Failed to save user message:', error);
+          |                 ^
+      278 |         // Continue anyway - message will be saved but might not show immediately
+      279 |       }
+      280 |
+
+      at error (hooks/companion/useSendMessage.ts:277:17)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+PASS __tests__/companionActions/taskEdit.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/taskEdit.test.tsx:322:1)
+
+PASS __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ● Console
+
+    console.log
+      CHECKLIST READS before=14 after=15
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:526:11)
+
+PASS __tests__/companionActions/accountOwnership.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/accountOwnership.test.tsx:277:1)
+
+    console.error
+      Failed to create conversation: Error: A request refused
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:427:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:427:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to create conversation: Error: refused after sign-out
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:463:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:463:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      Failed to create conversation: Error: refused
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      25 |     onError: error => {
+      26 |       if (isAccountChange(error)) return;
+    > 27 |       console.error('Failed to create conversation:', error);
+         |               ^
+      28 |     },
+      29 |   });
+      30 | };
+
+      at Object.error [as onError] (hooks/companion/useCreateConversation.ts:27:15)
+      at Mutation.execute (node_modules/@tanstack/query-core/src/mutation.ts:288:28)
+
+    console.error
+      Failed to create conversation: Error: refused
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      240 |         } catch (error) {
+      241 |           ensureOwned();
+    > 242 |           console.error('Failed to create conversation:', error);
+          |                   ^
+      243 |           setIsLoading(false);
+      244 |           throw error;
+      245 |         }
+
+      at error (hooks/companion/useSendMessage.ts:242:19)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Gemini API error: Error: refused
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:35
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+          at new Promise (<anonymous>)
+          at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+          at callback (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:31:24)
+          at Object.<anonymous>.process.env.NODE_ENV.exports.act (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/react/cjs/react.development.js:814:22)
+          at actImplementation (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@testing-library/react-native/src/act.ts:30:25)
+          at Object.<anonymous> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/accountOwnership.test.tsx:478:14)
+          at Generator.next (<anonymous>)
+          at asyncGeneratorStep (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+          at _next (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+      634 |       // Another account signed in: nothing of this send may reach its screen.
+      635 |       if (!owned()) throw new AccountChangedError();
+    > 636 |       console.error('Gemini API error:', error);
+          |               ^
+      637 |       console.error(
+      638 |         'Error details:',
+      639 |         error instanceof Error ? error.message : String(error)
+
+      at error (hooks/companion/useSendMessage.ts:636:15)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+    console.error
+      Error details: refused
+
+      635 |       if (!owned()) throw new AccountChangedError();
+      636 |       console.error('Gemini API error:', error);
+    > 637 |       console.error(
+          |               ^
+      638 |         'Error details:',
+      639 |         error instanceof Error ? error.message : String(error)
+      640 |       );
+
+      at error (hooks/companion/useSendMessage.ts:637:15)
+          at Generator.throw (<anonymous>)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+PASS __tests__/companionActions/pushNavigation.test.tsx
+PASS __tests__/companionActions/accountOwnershipRequests.test.ts
+PASS __tests__/companionActions/pushDevice.test.ts
+PASS __tests__/checklist/checklistScreenProvince.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (components/companion/tasks/CompanionPushControl.tsx:11:1)
+      at Object.require (components/companion/tasks/ReminderSection.tsx:2:1)
+      at Object.require (components/companion/tasks/TaskStatePanel.tsx:1:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../Checklist/index.tsx:64:1)
+      at Object.require (__tests__/checklist/checklistScreenProvince.test.tsx:175:1)
+
+PASS __tests__/companionActions/pushNative.test.ts
+PASS __tests__/companionActions/reminders.test.tsx
+PASS __tests__/companionActions/accountOwnershipReadFallback.test.ts
+PASS __tests__/companionActions/pushReminderIndependence.test.tsx
+PASS __tests__/companionActions/pushSessionRecovery.test.ts
+PASS __tests__/companionActions/pushRootLifecycle.test.ts
+PASS __tests__/context/userContextStage.test.ts
+PASS __tests__/companionActions/receiptResultFocus.test.tsx
+PASS __tests__/checklist/useChecklistProfile.test.tsx
+PASS __tests__/checklist/useChecklistTasksStage.test.ts
+  ● Console
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+    console.error
+      An update to HookContainer inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      123 |   useEffect(() => {
+      124 |     if (!queryKey || !storageKey || !userId) {
+    > 125 |       setCacheChecked(true);
+          |       ^
+      126 |       return;
+      127 |     }
+      128 |
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setCacheChecked (hooks/checklist/useChecklistTasks.ts:125:7)
+      at Object.react_stack_bottom_frame (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15755:20)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at commitHookEffectListMount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9530:29)
+      at commitHookPassiveMountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9617:11)
+      at commitPassiveMountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11205:13)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11160:11)
+      at commitPassiveMountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11439:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11160:11)
+      at commitPassiveMountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11197:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11160:11)
+      at commitPassiveMountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11197:11)
+      at recursivelyTraversePassiveMountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11160:11)
+      at commitPassiveMountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11240:11)
+      at flushPendingEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14086:11)
+      at flushSpawnedWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13955:44)
+      at commitRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13698:9)
+      at commitRootWhenReady (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12444:7)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12391:15)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+PASS __tests__/companionActions/pushIntents.test.ts
+PASS __tests__/checklist/TaskDetailModalLinks.test.tsx
+PASS __tests__/checklist/checklistModuleLinks.test.ts
+PASS __tests__/checklist/checklistOrder.test.ts
+PASS __tests__/checklist/checklistProvinceProgress.test.ts
+PASS __tests__/companionActions/pushLocalization.test.tsx
+PASS __tests__/checklist/checklistParallelReads.test.ts
+PASS __tests__/companionActions/pushParsing.test.ts
+PASS __tests__/companionActions/taskActionStoreDetailReview.test.ts
+FAIL __tests__/companionActions/removalReceiptEntry.test.tsx
+  ● Test suite failed to run
+
+    [Supabase] Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in .env (saved to disk), then restart Metro: npx expo start -c
+
+      29 |
+      30 | if (!supabaseUrl || !supabaseAnonKey) {
+    > 31 |   throw new Error(
+         |         ^
+      32 |     '[Supabase] Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in .env (saved to disk), then restart Metro: npx expo start -c'
+      33 |   );
+      34 | }
+
+      at Object.<anonymous> (lib/supabase.ts:31:9)
+      at Object.require (services/account/accountSession.ts:1:1)
+      at Object.require (hooks/companion/useProfileEditor.ts:2:1)
+      at Object.require (components/companion/tasks/ProfilePanel.tsx:7:1)
+      at Object.require (components/companion/tasks/TaskActionCards.tsx:29:1)
+      at Object.require (__tests__/companionActions/removalReceiptEntry.test.tsx:6:1)
+
+PASS __tests__/companionActions/receiptReasons.test.ts
+PASS __tests__/checklist/descriptionLinks.test.ts
+PASS __tests__/checklist/checklistPersistence.test.ts
+PASS __tests__/companionActions/planReviewCollection.test.ts
+  ● Console
+
+    console.log
+      {"label":"absent","expected":"ok","actual":"ok","ids":["last"]}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"empty","expected":"ok","actual":"ok","ids":[]}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"two","expected":"ok","actual":"ok","ids":["first","last"]}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"null","expected":"unknown","actual":"unknown","ids":null}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"object","expected":"unknown","actual":"unknown","ids":null}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"string","expected":"unknown","actual":"unknown","ids":null}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"number","expected":"unknown","actual":"unknown","ids":null}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+    console.log
+      {"label":"bad member","expected":"unknown","actual":"unknown","ids":null}
+
+      at Object.log (__tests__/companionActions/planReviewCollection.test.ts:22:11)
+
+PASS __tests__/companionActions/pushAccountRestart.test.ts
+PASS __tests__/companionActions/pushReminderControl.test.ts
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (components/companion/tasks/CompanionPushControl.tsx:11:1)
+      at Object.require (components/companion/tasks/ReminderSection.tsx:2:1)
+      at Object.require (__tests__/companionActions/pushReminderControl.test.ts:3:1)
+
+    console.error
+      An update to CompanionPushControl inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+PASS __tests__/checklist/personaNormalization.test.ts
+PASS __tests__/companionActions/companionTaskSheet.test.tsx
+  ● Console
+
+    console.warn
+      expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/companionTaskSheet.test.tsx:262:1)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to PlanEntry inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to PlanEntry inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+    console.error
+      An update to CompanionScreen inside a test was not wrapped in act(...).
+      
+      When testing, code that causes React state updates should be wrapped into act(...):
+      
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+      
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+
+Summary of all failing tests
+FAIL __tests__/companionActions/removalReceiptEntry.test.tsx
+  ● Test suite failed to run
+
+    [Supabase] Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in .env (saved to disk), then restart Metro: npx expo start -c
+
+      29 |
+      30 | if (!supabaseUrl || !supabaseAnonKey) {
+    > 31 |   throw new Error(
+         |         ^
+      32 |     '[Supabase] Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in .env (saved to disk), then restart Metro: npx expo start -c'
+      33 |   );
+      34 | }
+
+      at Object.<anonymous> (lib/supabase.ts:31:9)
+      at Object.require (services/account/accountSession.ts:1:1)
+      at Object.require (hooks/companion/useProfileEditor.ts:2:1)
+      at Object.require (components/companion/tasks/ProfilePanel.tsx:7:1)
+      at Object.require (components/companion/tasks/TaskActionCards.tsx:29:1)
+      at Object.require (__tests__/companionActions/removalReceiptEntry.test.tsx:6:1)
+
+
+Test Suites: 1 failed, 5 skipped, 42 passed, 43 of 48 total
+Tests:       31 skipped, 333 passed, 364 total
+Snapshots:   0 total
+Time:        43.419 s
+Ran all test suites matching /__tests__\/companionActions|__tests__\/checklist|__tests__\/context/i.

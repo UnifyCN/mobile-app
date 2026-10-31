@@ -1,0 +1,22 @@
+
+supabase/probes/companion-context-362/context_rls_test.ts
+   59:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  246:78  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  249:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  369:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+supabase/tests/companion-actions/rollback_test.ts
+  77:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+supabase/tests/companion-actions/support.ts
+   60:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   76:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  241:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  244:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 12 problems (12 errors, 0 warnings)
+
+exit=1

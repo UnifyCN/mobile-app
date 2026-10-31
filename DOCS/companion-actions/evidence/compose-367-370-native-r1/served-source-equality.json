@@ -1,0 +1,134 @@
+[
+  {
+    "file": "companion-actions/commands.ts",
+    "sha256": "b7bd17ba25f6eafdd22c35004c86588cb046d1453274e00a966330b5fa853a72"
+  },
+  {
+    "file": "companion-actions/contract.ts",
+    "sha256": "f2e51121d25707e90f043c78bff5bb1037cf8f5fdfbecfa3ff5217806cfd2a5b"
+  },
+  {
+    "file": "companion-actions/handler.ts",
+    "sha256": "8fe1968196778bbff008cf7b53f063a176c2f8b168713fa0267bbadaaec223ed"
+  },
+  {
+    "file": "companion-actions/index.ts",
+    "sha256": "7fdbcf5ddc8ce3513cb393e4b93d5421fb6dd9f51baff1297c3c60efac51fa82"
+  },
+  {
+    "file": "companion-actions/planHandler.ts",
+    "sha256": "a41ebc53ca2ec0e1cba47f6e615bf992cc456fc0861273634a5af786a792970d"
+  },
+  {
+    "file": "companion-actions/plans.ts",
+    "sha256": "ae0ebb1ba1266e5c20babe955d6e929cf77b00ee04f5e1631fafa7832f275939"
+  },
+  {
+    "file": "companion-actions/targets.ts",
+    "sha256": "1e5031c2234499fdcfd3220ac9f70c2b547b35a301b49dc1401e9a15c13a878b"
+  },
+  {
+    "file": "rag-query/lib/actions/proposals.ts",
+    "sha256": "152cfb9d0856c260bff406ef8b3072ce58dbac021cd05d6cb284b7df9c2dc31d"
+  },
+  {
+    "file": "rag-query/lib/context/appContext.ts",
+    "sha256": "a8aabc4bff48bc68ab0ecdf5f222e847d5b9606c69d18291c7e87a91645c8094"
+  },
+  {
+    "file": "rag-query/lib/context/companionContext.ts",
+    "sha256": "41ac1ebed1ce19f3a63c662cfd2fe1d4ccb3904960e9d118ab03a585a142b9d7"
+  },
+  {
+    "file": "rag-query/lib/context/contract.ts",
+    "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+  },
+  {
+    "file": "rag-query/lib/context/conversationDetails.ts",
+    "sha256": "bb2ad98f401fe7bc3b52e3d392b08a6d9542aa0f01f741ad4d8c9e3c2849d1d9"
+  },
+  {
+    "file": "rag-query/lib/context/guidance.ts",
+    "sha256": "7d275c07d59e3173626232e08f6a72e2664b1751976d6be02dcda50c10c2d03b"
+  },
+  {
+    "file": "rag-query/lib/context/placeNames.ts",
+    "sha256": "1dd7be7d830e45b0fef628b16184eedd08e50176013fd41d4af3bd6033031389"
+  },
+  {
+    "file": "rag-query/lib/context/placeNames_test.ts",
+    "sha256": "661e6e018232c4e882ec85348f4f93400260f16f62ce3357b2fe089a58905099"
+  },
+  {
+    "file": "rag-query/lib/context/profileFacts.ts",
+    "sha256": "2f8c9d19f0d3a37329b14fbc7508e9278627034580ab33423bfcb58ed77dedab"
+  },
+  {
+    "file": "rag-query/lib/context/promptBlocks.ts",
+    "sha256": "c3f23734328eded09a55d0b06ee029097072d8eda87a3867be2d10c6e32b3bec"
+  },
+  {
+    "file": "rag-query/lib/context/registry.ts",
+    "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+  },
+  {
+    "file": "rag-query/lib/currentFacts.ts",
+    "sha256": "c250ece6a91d67fddb196a7ea39ff912f6254b9b3b35fe7c454359369130c1a5"
+  },
+  {
+    "file": "rag-query/lib/dates.ts",
+    "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+  },
+  {
+    "file": "rag-query/lib/dates_test.ts",
+    "sha256": "08763692934a86d3df62aac201f1b4b3bf09bf93d96af26ecc5244d9dcefa212"
+  },
+  {
+    "file": "rag-query/lib/profile.ts",
+    "sha256": "86c22b063591c0e6651bd25a317d4bdf5d6a37561a05a6fbab1d083e2ba69af2"
+  },
+  {
+    "file": "rag-query/lib/profile_test.ts",
+    "sha256": "13adfbb2dee07e88a977a82d00327e83748ecb142cd74e3fcfc5feff64bff35e"
+  },
+  {
+    "file": "rag-query/lib/province.ts",
+    "sha256": "feb5503282f5b9bedadfe70b35bf100ba334cf67c416ff6a5e55d4d72acddcc8"
+  },
+  {
+    "file": "rag-query/lib/provincePointer.ts",
+    "sha256": "3a9e7b1be98b3c39c0d1920c3fc61a3c73fb79eae97197d6b58fdd0b02e8b121"
+  },
+  {
+    "file": "rag-query/lib/provincePointer_test.ts",
+    "sha256": "8c528e08d9e782e10a9db911f77c26cd7129d4185fdeb7278c53a99382910f27"
+  },
+  {
+    "file": "rag-query/lib/province_test.ts",
+    "sha256": "31d82889fc3568755d5374694d3b39a9e42a942cfd718fa0c2a20d66c669e13e"
+  },
+  {
+    "file": "rag-query/lib/retrieval.ts",
+    "sha256": "0f71f72c3ddd3da0b2ad50873c1f46442828deda65369984ad6c35d410caccd1"
+  },
+  {
+    "file": "rag-query/lib/retrieval_test.ts",
+    "sha256": "ebe2631a178301b4a5fd873514819d4ef2a43937f3ef570413d012a844381c44"
+  },
+  {
+    "file": "rag-query/lib/retrievedContext.ts",
+    "sha256": "d4899bb11cb8f2aa871e936067f7f4628e8fc891ac4114c3e3c416b49e439843"
+  },
+  {
+    "file": "rag-query/lib/retrievedContext_test.ts",
+    "sha256": "0104c8db31c4a86b8ce6ec5dcee9ef29f73fb27e91f044746287618b489609fb"
+  },
+  {
+    "file": "rag-query/lib/topic.ts",
+    "sha256": "1c3436e8009477c57c8a3a909dd93104cf60bd0d66203df152fa23c777307dca"
+  },
+  {
+    "file": "rag-query/lib/topic_test.ts",
+    "sha256": "e9b198b0dfd9088e97fefce89d6dcc6b20b90bfa8e6c883f8bca7b87f392155a"
+  }
+]

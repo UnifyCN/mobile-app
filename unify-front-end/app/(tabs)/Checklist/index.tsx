@@ -26,6 +26,8 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useQueryClient } from '@tanstack/react-query';
+import { plansKey } from '@/hooks/companion/planQueryKeys';
 import { useAnalytics } from '@/utils/analytics';
 import { useUserStage } from '@/hooks/onboarding/useUserStage';
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
@@ -59,7 +61,14 @@ import { firstPartnerHelpKey } from '@/constants/PartnerSpotlight';
 import { useHapticsPreference } from '@/context/HapticsContext';
 import { useCurrentUser } from '@/context/UserContext';
 import TabHeader from '@/components/home/HomeHeader';
+import { TaskStatePanel } from '@/components/companion/tasks/TaskStatePanel';
+import {
+  progressFor,
+  useTaskActionStore,
+  useTaskProgress,
+} from '@/hooks/companion/useTaskActions';
 import LoadingScreen from '@/components/LoadingScreen';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 
 /**
  * Map checklist tab slug to (tabs) route for "Learn how" navigation.
@@ -180,6 +189,7 @@ function extractTasksInSection(
 
 export default function ChecklistScreen() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
   const {
     trackScreen,
@@ -210,6 +220,22 @@ export default function ChecklistScreen() {
     null
   );
   const [modalVisible, setModalVisible] = useState(false);
+  // The open task belongs to one account: close it before another account (or
+  // a signed-out screen) renders. A token refresh of the same account keeps it.
+  const { epoch: accountEpoch } = useAccountSnapshot();
+  const [sheetEpoch, setSheetEpoch] = useState(accountEpoch);
+  if (accountEpoch !== sheetEpoch) {
+    setSheetEpoch(accountEpoch);
+    setModalVisible(false);
+    setSelectedTask(null);
+  }
+  // Saved task progress (mobile-app#361). Off when the feature is off or the
+  // contract version is unsupported: the Checklist then works as before.
+  const taskProgress = useTaskProgress();
+  const taskActionStore = useTaskActionStore('checklist');
+  const progressEnabled =
+    taskProgress.status !== 'unavailable' &&
+    taskProgress.status !== 'signed_out';
   const [confettiKey, setConfettiKey] = useState<number | null>(null);
   const confettiTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -449,6 +475,10 @@ export default function ChecklistScreen() {
           newCompletedStatus
         );
       }
+      // The legacy write moved the task's revision: re-read saved progress.
+      taskProgress.refetch();
+      // Companion can remain mounted on another tab with its own plan query.
+      void queryClient.invalidateQueries({ queryKey: plansKey(user.id) });
     } catch (error) {
       console.error('Error updating task completion:', error);
       refetch();
@@ -615,6 +645,12 @@ export default function ChecklistScreen() {
                 task={task}
                 onPress={() => handleTaskPress(task)}
                 showPartnerHelp={item.key === partnerHelpKey}
+                testID={`checklist-row-${item.key}`}
+                savedProgress={
+                  progressEnabled
+                    ? progressFor(getChecklistTaskOrderKey(task), taskProgress)
+                    : null
+                }
               />
             </View>
 
@@ -638,7 +674,14 @@ export default function ChecklistScreen() {
         </ScaleDecorator>
       );
     },
-    [handleTaskPress, handleDragStart, partnerHelpKey, t]
+    [
+      handleTaskPress,
+      handleDragStart,
+      partnerHelpKey,
+      t,
+      progressEnabled,
+      taskProgress,
+    ]
   );
 
   if (isLoading) {
@@ -768,6 +811,33 @@ export default function ChecklistScreen() {
         isCustomTask={selectedTask?.source === 'custom'}
         onDeleteCustomTask={handleDeleteCustomTask}
         onRemoveSuggestedTask={handleRemoveSuggestedTask}
+        // #367: with the shared task actions on, removal is the reviewed removal (named
+        // effects on plans and steps, confirmation, Undo); otherwise the legacy controls.
+        onRemoveTask={
+          progressEnabled && selectedTask && taskActionStore
+            ? () =>
+                taskActionStore.requestRemoval(
+                  getChecklistTaskOrderKey(selectedTask)
+                )
+            : undefined
+        }
+        progressPanel={
+          progressEnabled && selectedTask ? (
+            <TaskStatePanel
+              taskRef={getChecklistTaskOrderKey(selectedTask)}
+              view={taskProgress}
+              store={taskActionStore}
+              taskTitle={selectedTask.task.task_name}
+            />
+          ) : undefined
+        }
+        progressSummary={
+          progressEnabled && selectedTask
+            ? t(
+                `taskActions.state.${progressFor(getChecklistTaskOrderKey(selectedTask), taskProgress).state}`
+              )
+            : null
+        }
       />
 
       {confettiKey !== null && (

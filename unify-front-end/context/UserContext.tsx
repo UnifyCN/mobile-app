@@ -46,9 +46,13 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   // Get user ID and email from auth
   useEffect(() => {
+    let active = true;
+    let authVersion = 0;
     const getAuthUser = async () => {
+      const version = authVersion;
       try {
         const { data } = await supabase.auth.getUser();
+        if (!active || version !== authVersion) return;
         if (data?.user) {
           setUserId(data.user.id);
           setUserEmail(data.user.email || null);
@@ -57,6 +61,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           setUserEmail(null);
         }
       } catch (err) {
+        if (!active || version !== authVersion) return;
         // Stale session in SecureStore (e.g. refresh token rotated, expired,
         // or invalidated server-side). Clear it locally so subsequent calls
         // return a clean null user and stop throwing on every app launch.
@@ -78,6 +83,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      authVersion++;
       if (session?.user) {
         setUserId(session.user.id);
         setUserEmail(session.user.email || null);
@@ -87,7 +93,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => { active = false; subscription.unsubscribe(); };
   }, []);
 
   // Refetch the signed-in user's profile (for example after the arrival date

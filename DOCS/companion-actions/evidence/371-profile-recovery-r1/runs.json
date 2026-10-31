@@ -1,0 +1,392 @@
+{
+  "mobile-01-green": {
+    "label": "mobile-01-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371 recovery: stops loading|371: reviews old"
+    ],
+    "exit_code": 0,
+    "seconds": 4.067,
+    "utc": "2026-10-31T08:59:47.970986+00:00"
+  },
+  "mobile-01-red": {
+    "label": "mobile-01-red",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371 recovery: stops loading"
+    ],
+    "exit_code": 1,
+    "seconds": 9.965,
+    "utc": "2026-10-31T08:59:28.458210+00:00"
+  },
+  "mobile-02-green": {
+    "label": "mobile-02-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371"
+    ],
+    "exit_code": 0,
+    "seconds": 3.107,
+    "utc": "2026-10-31T09:01:21.495670+00:00"
+  },
+  "mobile-02-red-corrected-driver": {
+    "label": "mobile-02-red-corrected-driver",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371 recovery: an unknown Undo"
+    ],
+    "exit_code": 1,
+    "seconds": 3.147,
+    "utc": "2026-10-31T09:01:02.694247+00:00"
+  },
+  "mobile-02-red": {
+    "label": "mobile-02-red",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371 recovery: an unknown Undo"
+    ],
+    "exit_code": 1,
+    "seconds": 3.306,
+    "utc": "2026-10-31T09:00:25.513175+00:00"
+  },
+  "mobile-changed-lint-final": {
+    "label": "mobile-changed-lint-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/companion/useProfileEditor.ts",
+      "components/companion/tasks/ProfilePanel.tsx",
+      "__tests__/companionActions/companionTaskSheet.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 0.813,
+    "utc": "2026-10-31T09:07:43.458872+00:00"
+  },
+  "mobile-changed-lint": {
+    "label": "mobile-changed-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/companion/useProfileEditor.ts",
+      "components/companion/tasks/ProfilePanel.tsx",
+      "__tests__/companionActions/companionTaskSheet.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 1.876,
+    "utc": "2026-10-31T09:02:48.920184+00:00"
+  },
+  "mobile-export": {
+    "label": "mobile-export",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/expo/bin/cli",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "exit_code": 0,
+    "seconds": 21.23,
+    "utc": "2026-10-31T09:03:58.495757+00:00"
+  },
+  "mobile-full-ci-final": {
+    "label": "mobile-full-ci-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit_code": 0,
+    "seconds": 65.301,
+    "utc": "2026-10-31T09:06:07.318264+00:00"
+  },
+  "mobile-full-ci": {
+    "label": "mobile-full-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit_code": 1,
+    "seconds": 78.916,
+    "utc": "2026-10-31T09:03:48.146843+00:00"
+  },
+  "mobile-i18n": {
+    "label": "mobile-i18n",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit_code": 0,
+    "seconds": 0.186,
+    "utc": "2026-10-31T09:02:47.230132+00:00"
+  },
+  "mobile-stage-control": {
+    "label": "mobile-stage-control",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "371 recovery"
+    ],
+    "exit_code": 0,
+    "seconds": 5.221,
+    "utc": "2026-10-31T09:02:03.091477+00:00"
+  },
+  "mobile-types-final": {
+    "label": "mobile-types-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 7.73,
+    "utc": "2026-10-31T09:07:50.375654+00:00"
+  },
+  "mobile-types": {
+    "label": "mobile-types",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 17.59,
+    "utc": "2026-10-31T09:02:46.819832+00:00"
+  },
+  "web-01-green": {
+    "label": "web-01-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371 recovery: stops loading|371: reviews authoritative"
+    ],
+    "exit_code": 0,
+    "seconds": 2.752,
+    "utc": "2026-10-31T08:59:46.655474+00:00"
+  },
+  "web-01-red": {
+    "label": "web-01-red",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371 recovery: stops loading"
+    ],
+    "exit_code": 1,
+    "seconds": 3.961,
+    "utc": "2026-10-31T08:59:22.454450+00:00"
+  },
+  "web-02-green": {
+    "label": "web-02-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371"
+    ],
+    "exit_code": 0,
+    "seconds": 1.806,
+    "utc": "2026-10-31T09:01:20.194851+00:00"
+  },
+  "web-02-red-corrected-driver": {
+    "label": "web-02-red-corrected-driver",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371 recovery: an unknown Undo"
+    ],
+    "exit_code": 1,
+    "seconds": 1.939,
+    "utc": "2026-10-31T09:01:01.486612+00:00"
+  },
+  "web-02-red": {
+    "label": "web-02-red",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371 recovery: an unknown Undo"
+    ],
+    "exit_code": 1,
+    "seconds": 2.201,
+    "utc": "2026-10-31T09:00:24.408253+00:00"
+  },
+  "web-build": {
+    "label": "web-build",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "seconds": 22.648,
+    "utc": "2026-10-31T09:03:59.913981+00:00"
+  },
+  "web-changed-lint-final": {
+    "label": "web-changed-lint-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/useProfileEditor.ts",
+      "components/companion/tasks/ProfilePanel.tsx",
+      "components/companion/tasks/TaskActions.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 1.968,
+    "utc": "2026-10-31T09:03:39.233844+00:00"
+  },
+  "web-changed-lint": {
+    "label": "web-changed-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/useProfileEditor.ts",
+      "components/companion/tasks/ProfilePanel.tsx",
+      "components/companion/tasks/TaskActions.test.tsx"
+    ],
+    "exit_code": 1,
+    "seconds": 2.917,
+    "utc": "2026-10-31T09:02:49.961337+00:00"
+  },
+  "web-final-file": {
+    "label": "web-final-file",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 4.403,
+    "utc": "2026-10-31T09:03:41.668412+00:00"
+  },
+  "web-full-lint": {
+    "label": "web-full-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit_code": 1,
+    "seconds": 11.328,
+    "utc": "2026-10-31T09:05:13.345131+00:00"
+  },
+  "web-full-test": {
+    "label": "web-full-test",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "seconds": 15.123,
+    "utc": "2026-10-31T09:02:44.353788+00:00"
+  },
+  "web-i18n": {
+    "label": "web-i18n",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit_code": 0,
+    "seconds": 0.184,
+    "utc": "2026-10-31T09:02:47.227914+00:00"
+  },
+  "web-stage-control": {
+    "label": "web-stage-control",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "-t",
+      "371 recovery"
+    ],
+    "exit_code": 0,
+    "seconds": 2.519,
+    "utc": "2026-10-31T09:02:00.389784+00:00"
+  },
+  "web-types": {
+    "label": "web-types",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit"
+    ],
+    "exit_code": 0,
+    "seconds": 16.538,
+    "utc": "2026-10-31T09:02:45.768841+00:00"
+  }
+}

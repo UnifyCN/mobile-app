@@ -1,0 +1,23 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 4 tests from ./profile_races_test.ts
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ...
+------- output -------
+{"scenario":"duplicate-before-commit","profile":"British Columbia","receipts":0,"graph":[{"pid":5807,"wait_event":"advisory","blockers":[8034,5808]},{"pid":5808,"wait_event":"advisory","blockers":[8034]}]}
+----- output end -----
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ... ok (418ms)
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ...
+------- output -------
+{"scenario":"legacy-profile-first","plans":0,"tasks":1,"committedProvince":"British Columbia","graph":[{"pid":5806,"wait_event":"advisory","blockers":[8034]}]}
+----- output end -----
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ... ok (236ms)
+profile races: simultaneous profile and task changes preserve progress and one profile revision wins ... ok (273ms)
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ...
+------- output -------
+{"scenario":"task-first-before-commit","profile":"British Columbia","plans":0,"graph":[{"pid":5819,"wait_event":"advisory","blockers":[5804]}]}
+----- output end -----
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ... ok (300ms)
+
+ok | 4 passed | 0 failed (1s)
+

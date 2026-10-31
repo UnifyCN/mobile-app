@@ -1,0 +1,5 @@
+Typed: R2 attente du fournisseur
+Native keyboard value before size change: R2 attempts du fournisseur
+Native keyboard value after size change: R2 attempts du fournisseur
+Expected literal assertion failed because the English hardware keyboard corrected attente to attempts. No waiting reason was saved. Actual value retention is checked separately.
+The first corrected readback selected the static label, whose value is null. The final readback selects the native input value and passes.

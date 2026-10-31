@@ -1,0 +1,462 @@
+{
+  "status": "HOLD: Edge startup unresolved before test preflight",
+  "runtime_service_files_planned": [
+    "reminders_test.ts",
+    "reminders_commands_test.ts",
+    "reminders_races_test.ts",
+    "actions_test.ts",
+    "boundary_test.ts",
+    "command_test.ts",
+    "compose_365_370_test.ts",
+    "compose_367_370_recovery_test.ts",
+    "compose_367_370_rollback_test.ts",
+    "compose_367_370_test.ts",
+    "compose_rollback_test.ts",
+    "create_rollback_test.ts",
+    "create_test.ts",
+    "details_language_test.ts",
+    "details_rollback_test.ts",
+    "details_test.ts",
+    "edit_command_test.ts",
+    "edit_published_test.ts",
+    "edit_rollback_test.ts",
+    "edit_test.ts",
+    "edit_undo_test.ts",
+    "plan_access_test.ts",
+    "plan_multiple_reviews_test.ts",
+    "plan_recovery_test.ts",
+    "plan_retry_review_test.ts",
+    "plan_rollback_test.ts",
+    "plan_test.ts",
+    "plan_undo_test.ts",
+    "receipt_history_test.ts",
+    "remove_plan_race_test.ts",
+    "remove_rollback_test.ts",
+    "remove_test.ts",
+    "rollback_test.ts",
+    "steps_context_race_test.ts",
+    "steps_parent_race_test.ts",
+    "steps_rollback_test.ts",
+    "steps_test.ts",
+    "undo_test.ts"
+  ],
+  "runtime_service_files_planned_count": 38,
+  "runtime_service_files_executed": 0,
+  "runtime_assertion_passes": 0,
+  "runtime_assertion_failures": 0,
+  "mutations_executed": 0,
+  "mutation_kills": null,
+  "mutation_survivors": null,
+  "races_executed": 0,
+  "races_required": 10,
+  "live_mobile_executed": false,
+  "live_browser_executed": false,
+  "normal_types": {
+    "mobile": true,
+    "edge_entrypoints": 10,
+    "edge_shared_files": 11,
+    "edge_test_files": 19,
+    "reminder_service_test_files": 3,
+    "exit": 0
+  },
+  "edge_workflow": {
+    "files": [
+      {
+        "file": "./supabase/functions/_shared/platform_test.ts",
+        "tests": 8
+      },
+      {
+        "file": "./supabase/functions/cover-letter-chat/index_test.ts",
+        "tests": 3
+      },
+      {
+        "file": "./supabase/functions/events-crawler/lib/relevance_test.ts",
+        "tests": 4
+      },
+      {
+        "file": "./supabase/functions/rag-query/index_companion_context_test.ts",
+        "tests": 44
+      },
+      {
+        "file": "./supabase/functions/rag-query/index_concurrent_test.ts",
+        "tests": 1
+      },
+      {
+        "file": "./supabase/functions/rag-query/index_context_test.ts",
+        "tests": 17
+      },
+      {
+        "file": "./supabase/functions/rag-query/index_embedding_test.ts",
+        "tests": 82
+      },
+      {
+        "file": "./supabase/functions/rag-query/index_test.ts",
+        "tests": 13
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/context/placeNames_test.ts",
+        "tests": 3
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/dates_test.ts",
+        "tests": 4
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/profile_test.ts",
+        "tests": 17
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/provincePointer_test.ts",
+        "tests": 7
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/province_test.ts",
+        "tests": 5
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/retrieval_test.ts",
+        "tests": 6
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/retrievedContext_test.ts",
+        "tests": 16
+      },
+      {
+        "file": "./supabase/functions/rag-query/lib/topic_test.ts",
+        "tests": 18
+      },
+      {
+        "file": "./supabase/functions/resume-chat/index_test.ts",
+        "tests": 3
+      },
+      {
+        "file": "./supabase/functions/translate-content/index_test.ts",
+        "tests": 3
+      },
+      {
+        "file": "./supabase/functions/translate-content/lib/contentTypes_test.ts",
+        "tests": 23
+      }
+    ],
+    "file_count": 19,
+    "passed": 277,
+    "failed": 0,
+    "executed_test_count": 277,
+    "proof": "network fixtures; no permissions for net/env/file; exact complete workflow test command",
+    "provider_calls": 0
+  },
+  "driver_lint": {
+    "mobile_exit": 0,
+    "browser_exit": 0,
+    "browser_node_syntax_exit": 0
+  },
+  "mobile_default_guard": {
+    "skipped": 1,
+    "proof": "default skip and natural exit only"
+  },
+  "reused_client_checks": {
+    "mobile_main": {
+      "passed": 1516,
+      "skipped": 24,
+      "total": 1540,
+      "natural_exit": true
+    },
+    "mobile_dst": {
+      "passed": 13,
+      "natural_exit": true
+    },
+    "web": {
+      "passed": 720,
+      "skipped": 13,
+      "total": 733
+    },
+    "browser": [
+      {
+        "lang": "en",
+        "width": 390,
+        "proof": "scripted rendered browser only",
+        "saved": true,
+        "stableRef": "sanity:1",
+        "focusInside": true,
+        "composerPreserved": true,
+        "overflow": false,
+        "targets": [
+          {
+            "text": "",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Open task",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Review reminder",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Undo this change",
+            "height": 44,
+            "layoutHeight": 44
+          }
+        ],
+        "dir": "ltr"
+      },
+      {
+        "lang": "en",
+        "width": 1280,
+        "proof": "scripted rendered browser only",
+        "saved": true,
+        "stableRef": "sanity:1",
+        "focusInside": true,
+        "composerPreserved": true,
+        "overflow": false,
+        "targets": [
+          {
+            "text": "",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Open task",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Review reminder",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "Undo this change",
+            "height": 44,
+            "layoutHeight": 44
+          }
+        ],
+        "dir": "ltr"
+      },
+      {
+        "lang": "ar",
+        "width": 390,
+        "proof": "scripted rendered browser only",
+        "saved": true,
+        "stableRef": "sanity:1",
+        "focusInside": true,
+        "composerPreserved": true,
+        "overflow": false,
+        "targets": [
+          {
+            "text": "",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0641\u062a\u062d \u0627\u0644\u0645\u0647\u0645\u0629",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u0630\u0643\u064a\u0631",
+            "height": 44,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0639\u0646 \u0647\u0630\u0627 \u0627\u0644\u062a\u063a\u064a\u064a\u0631",
+            "height": 44,
+            "layoutHeight": 44
+          }
+        ],
+        "dir": "rtl"
+      },
+      {
+        "lang": "ar",
+        "width": 1280,
+        "proof": "scripted rendered browser only",
+        "saved": true,
+        "stableRef": "sanity:1",
+        "focusInside": true,
+        "composerPreserved": true,
+        "overflow": false,
+        "targets": [
+          {
+            "text": "",
+            "height": 43.48499298095703,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0641\u062a\u062d \u0627\u0644\u0645\u0647\u0645\u0629",
+            "height": 43.4849853515625,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u0630\u0643\u064a\u0631",
+            "height": 43.4849853515625,
+            "layoutHeight": 44
+          },
+          {
+            "text": "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0639\u0646 \u0647\u0630\u0627 \u0627\u0644\u062a\u063a\u064a\u064a\u0631",
+            "height": 43.4849853515625,
+            "layoutHeight": 44
+          }
+        ],
+        "dir": "rtl"
+      }
+    ],
+    "changed_lint": {
+      "mobile": {
+        "exit": 0,
+        "files": 18,
+        "warnings": 11
+      },
+      "web": {
+        "exit": 0,
+        "files": 28,
+        "warnings": 5,
+        "warning_class": "five ignored service source files; covered by Deno checks"
+      }
+    },
+    "web_full_lint": {
+      "errors": 12,
+      "class": "accepted baseline"
+    },
+    "native_exports": {
+      "ios": true,
+      "android": true,
+      "proof": "Hermes bundles only"
+    }
+  },
+  "reused_check_source": "../368-reminders-r1/checks.json; product inputs verified in reused-client-source-hashes.json",
+  "provider_calls": 0,
+  "cleanup": {
+    "resources": {
+      "containers": [
+        {
+          "Command": "\"sh -c 'exec edge-ru\u2026\"",
+          "CreatedAt": "2026-10-29 12:38:56 -0700 PDT",
+          "HealthStatus": "none",
+          "ID": "91f09e93156c",
+          "Image": "public.ecr.aws/supabase/edge-runtime:v1.76.2",
+          "Labels": "com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/binds/1/Source=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/binds/1/SourceKind=hostFile,desktop.docker.io/binds/1/Target=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/ports.scheme=v2",
+          "LocalVolumes": "1",
+          "Mounts": "/host_mnt/Volu\u2026,supabase_edge_\u2026",
+          "Names": "supabase_edge_runtime_unify-reminders-368-r1",
+          "Networks": "supabase_network_unify-reminders-368-r1",
+          "Platform": {
+            "architecture": "arm64",
+            "os": "linux"
+          },
+          "Ports": "",
+          "RunningFor": "3 minutes ago",
+          "Size": "61.4kB (virtual 700MB)",
+          "State": "created",
+          "Status": "Created"
+        }
+      ],
+      "volumes": [
+        {
+          "Availability": "N/A",
+          "Driver": "local",
+          "Group": "N/A",
+          "Labels": "com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1",
+          "Links": "N/A",
+          "Mountpoint": "/var/lib/docker/volumes/supabase_db_unify-reminders-368-r1/_data",
+          "Name": "supabase_db_unify-reminders-368-r1",
+          "Scope": "local",
+          "Size": "N/A",
+          "Status": "N/A"
+        },
+        {
+          "Availability": "N/A",
+          "Driver": "local",
+          "Group": "N/A",
+          "Labels": "com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1",
+          "Links": "N/A",
+          "Mountpoint": "/var/lib/docker/volumes/supabase_edge_runtime_unify-reminders-368-r1/_data",
+          "Name": "supabase_edge_runtime_unify-reminders-368-r1",
+          "Scope": "local",
+          "Size": "N/A",
+          "Status": "N/A"
+        }
+      ],
+      "networks": [
+        {
+          "CreatedAt": "2026-10-29 19:38:38.3914423 +0000 UTC",
+          "Driver": "bridge",
+          "ID": "a8c49c21ca9a",
+          "IPv4": "true",
+          "IPv6": "false",
+          "Internal": "false",
+          "Labels": "com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1",
+          "Name": "supabase_network_unify-reminders-368-r1",
+          "Scope": "local"
+        }
+      ]
+    },
+    "ports": [
+      {
+        "address": "127.0.0.1",
+        "port": 63081,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 63081,
+        "result": "free"
+      },
+      {
+        "address": "127.0.0.1",
+        "port": 63082,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 63082,
+        "result": "free"
+      },
+      {
+        "address": "127.0.0.1",
+        "port": 63083,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 63083,
+        "result": "free"
+      },
+      {
+        "address": "127.0.0.1",
+        "port": 63084,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 63084,
+        "result": "free"
+      },
+      {
+        "address": "127.0.0.1",
+        "port": 3385,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 3385,
+        "result": "free"
+      },
+      {
+        "address": "127.0.0.1",
+        "port": 3390,
+        "result": "free"
+      },
+      {
+        "address": "::1",
+        "port": 3390,
+        "result": "free"
+      }
+    ],
+    "owned_client_jobs": [],
+    "cleanup_complete": false
+  }
+}

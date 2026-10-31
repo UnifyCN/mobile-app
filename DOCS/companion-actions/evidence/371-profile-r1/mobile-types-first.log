@@ -1,0 +1,5 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+hooks/companion/useSendMessage.ts(103,4): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.

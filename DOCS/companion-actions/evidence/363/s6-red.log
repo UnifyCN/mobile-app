@@ -1,0 +1,52 @@
+running 3 tests from ./create_test.ts
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... FAILED (485ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... FAILED (287ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... FAILED (200ms)
+
+ ERRORS 
+
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing => ./create_test.ts:360:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   404
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:370:5)
+
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance => ./create_test.ts:410:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:421:5)
+
+a cancelled draft cannot be approved and stays visible as cancelled => ./create_test.ts:430:6
+error: TypeError: Cannot read properties of undefined (reading 'status')
+    assertEquals([stale.status, stale.json.error, stale.json.proposal.status], [409, 'proposal_changed', 'draft']);
+                                                                      ^
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:439:71)
+
+ FAILURES 
+
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing => ./create_test.ts:360:6
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance => ./create_test.ts:410:6
+a cancelled draft cannot be approved and stays visible as cancelled => ./create_test.ts:430:6
+
+FAILED | 0 passed | 3 failed | 13 filtered out (986ms)
+
+error: Test failed

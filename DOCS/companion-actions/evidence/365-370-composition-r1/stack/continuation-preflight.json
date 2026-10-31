@@ -1,0 +1,222 @@
+{
+  "owned": [
+    {
+      "id": "a5c4e168e39b16c18a258d881a27bd3ee2962d7d9b01c140807f077ba1849456",
+      "name": "/supabase_db_unify-compose-details-370-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions"
+      },
+      "status": "running"
+    },
+    {
+      "id": "dfc303c6db89d3b313d31acd28214294b22b473cc72e725c37f5465ceba07f37",
+      "name": "/supabase_edge_runtime_unify-compose-details-370-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions"
+      },
+      "status": "running"
+    },
+    {
+      "id": "acd882f925435f6f2da49177eea356ee84377788d7833419fd583f370546e5d1",
+      "name": "/supabase_rest_unify-compose-details-370-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions"
+      },
+      "status": "running"
+    },
+    {
+      "id": "c37602331ffa31b8682348308deea5e24566cb14d176a71c9e75afc07f3ca7c4",
+      "name": "/supabase_auth_unify-compose-details-370-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions"
+      },
+      "status": "running"
+    },
+    {
+      "id": "d4e84bd6ac1480eb0e00f7d7f9ceecb827d6f0d0af011c9eb1f45af5f426ef9d",
+      "name": "/supabase_kong_unify-compose-details-370-r1",
+      "labels": {
+        "com.docker.compose.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.project": "unify-compose-details-370-r1",
+        "com.supabase.cli.workdir": "/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "status": "running"
+    }
+  ],
+  "otherContainers": [
+    {
+      "ID": "e1ece5935528",
+      "Names": "supabase_edge_runtime_unify-native-remove-367-r1",
+      "Status": "Up 10 hours"
+    },
+    {
+      "ID": "2c0c0a7ecb3b",
+      "Names": "supabase_rest_unify-native-remove-367-r1",
+      "Status": "Up 10 hours"
+    },
+    {
+      "ID": "bd371f3a705c",
+      "Names": "supabase_auth_unify-native-remove-367-r1",
+      "Status": "Up 10 hours (healthy)"
+    },
+    {
+      "ID": "a3bc8a21f49f",
+      "Names": "supabase_kong_unify-native-remove-367-r1",
+      "Status": "Up 10 hours (healthy)"
+    },
+    {
+      "ID": "b3dce4225365",
+      "Names": "supabase_db_unify-native-remove-367-r1",
+      "Status": "Up 10 hours (healthy)"
+    },
+    {
+      "ID": "ae532e5054ff",
+      "Names": "supabase_edge_runtime_unify-native-layout-359-r1",
+      "Status": "Up 11 hours"
+    },
+    {
+      "ID": "aa80d9d84068",
+      "Names": "supabase_rest_unify-native-layout-359-r1",
+      "Status": "Up 11 hours"
+    },
+    {
+      "ID": "4fa5c5ada841",
+      "Names": "supabase_auth_unify-native-layout-359-r1",
+      "Status": "Up 11 hours (healthy)"
+    },
+    {
+      "ID": "054e593e83de",
+      "Names": "supabase_kong_unify-native-layout-359-r1",
+      "Status": "Up 11 hours (healthy)"
+    },
+    {
+      "ID": "2b532f6e9391",
+      "Names": "supabase_db_unify-native-layout-359-r1",
+      "Status": "Up 11 hours (healthy)"
+    },
+    {
+      "ID": "cb0a5da23bc4",
+      "Names": "unify-publication-177-postgres",
+      "Status": "Up 14 hours"
+    },
+    {
+      "ID": "34a683c95654",
+      "Names": "supabase_db_unify-actions-363",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "836500dda55a",
+      "Names": "supabase_edge_runtime_unify-actions-363",
+      "Status": "Exited (255) 23 hours ago"
+    },
+    {
+      "ID": "1ab7dbb03246",
+      "Names": "supabase_rest_unify-actions-363",
+      "Status": "Up 23 hours"
+    },
+    {
+      "ID": "585dd896f077",
+      "Names": "supabase_auth_unify-actions-363",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "a0bcccb34a41",
+      "Names": "supabase_kong_unify-actions-363",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "e0efa9882935",
+      "Names": "supabase_db_unify-actions-361",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "a9d45f47c23d",
+      "Names": "supabase_edge_runtime_unify-actions-361",
+      "Status": "Exited (255) 23 hours ago"
+    },
+    {
+      "ID": "185a57cb3750",
+      "Names": "supabase_rest_unify-actions-361",
+      "Status": "Exited (255) 23 hours ago"
+    },
+    {
+      "ID": "165d381deca2",
+      "Names": "supabase_auth_unify-actions-361",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "fca88e333704",
+      "Names": "supabase_kong_unify-actions-361",
+      "Status": "Up 23 hours (healthy)"
+    },
+    {
+      "ID": "476e3d8d4ac4",
+      "Names": "supabase_db_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "856288c0ebe8",
+      "Names": "supabase_studio_vault-memory",
+      "Status": "Exited (143) 2 months ago"
+    },
+    {
+      "ID": "15117adf2bb6",
+      "Names": "supabase_pg_meta_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "2d7ebeddcd41",
+      "Names": "supabase_edge_runtime_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "8406c5badcc8",
+      "Names": "supabase_storage_vault-memory",
+      "Status": "Exited (0) 2 months ago"
+    },
+    {
+      "ID": "9d7f706f026e",
+      "Names": "supabase_rest_vault-memory",
+      "Status": "Exited (255) 2 months ago"
+    },
+    {
+      "ID": "10ba8972e70b",
+      "Names": "supabase_realtime_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "dfdb15fbcfd5",
+      "Names": "supabase_inbucket_vault-memory",
+      "Status": "Exited (0) 2 months ago"
+    },
+    {
+      "ID": "dc9b7211cce1",
+      "Names": "supabase_auth_vault-memory",
+      "Status": "Exited (0) 2 months ago"
+    },
+    {
+      "ID": "07b10db45ce1",
+      "Names": "supabase_kong_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "66b2741d8a6f",
+      "Names": "supabase_vector_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    },
+    {
+      "ID": "accf07fb7b1d",
+      "Names": "supabase_analytics_vault-memory",
+      "Status": "Exited (137) 2 months ago"
+    }
+  ]
+}

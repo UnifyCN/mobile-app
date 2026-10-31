@@ -1,0 +1,428 @@
+"use client";
+
+import { useId, useState, useSyncExternalStore } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { WifiOff } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
+import {
+<<<<<<< HEAD
+  isDetailProposal,
+=======
+  isRemovalProposal,
+>>>>>>> c022bb48e61b5195ce3d22e5e9190b4d8b2920a9
+  isStepProposal,
+  TITLE_MAX,
+  createTaskOperation,
+  type ProposalContext,
+  type TaskProposal,
+} from "@/lib/companionActions/contract";
+import { taskProposalKey } from "@/lib/companionActions/queryKeys";
+import {
+  isUnresolved,
+  type TaskActionStore,
+} from "@/lib/companionActions/taskActionStore";
+import {
+  useTaskActionClient,
+  useTaskActionPhase,
+  useTaskProposal,
+  type TaskProgressView,
+} from "@/hooks/useTaskActions";
+import { stillOwned, type AccountOwner } from "@/lib/accountSession";
+import type {
+  ProposalResult,
+  TaskActionClient,
+} from "@/lib/companionActions/client";
+import { ReceiptBlock } from "./ReceiptBlock";
+import { PhaseMessage } from "./TaskStatePanel";
+import { TaskEditProposalPanel } from "./TaskEditProposalPanel";
+
+interface TaskProposalPanelProps {
+  proposalId: string;
+  view: TaskProgressView;
+  store: TaskActionStore | null;
+  /** The Checklist title of a task, for an edit draft that does not carry one (#365). */
+  titleFor?: (taskRef: string) => string | null;
+}
+
+const PROFILE_FIELDS = [
+  ["city", "taskCreate.profileCity"],
+  ["province", "taskCreate.profileProvince"],
+  ["arrivalDate", "taskCreate.profileArrival"],
+] as const;
+
+/**
+ * Review of one server-owned task draft (mobile-app#363), direction B drawer. The
+ * draft is not saved work: it shows its exact title, the profile context it was
+ * prepared against, any task with the same title, and one approval control that
+ * names the change. Approval binds to the shown revision; an edited title or a
+ * changed profile needs a new approval. Every write needs a connection and a fresh
+ * read; offline nothing is sent or queued.
+ */
+export function TaskProposalPanel({
+  proposalId,
+  view,
+  store,
+  titleFor,
+}: TaskProposalPanelProps) {
+  const { t, i18n } = useTranslation();
+  const ids = useId();
+  const key = `proposal:${proposalId}`;
+  const queryClient = useQueryClient();
+  const bound = useTaskActionClient();
+  const client = bound?.client ?? null;
+  // The draft is the private work of the account and session the panel was opened
+  // in. The page closes the drawer only once the profile of a new account loads, so
+  // until then this panel shows and reads nothing for another account or session.
+  const [openedFor] = useState(() => bound?.owner ?? null);
+  const sameSession =
+    openedFor !== null &&
+    bound !== null &&
+    openedFor.accountId === bound.owner.accountId &&
+    openedFor.epoch === bound.owner.epoch;
+  const query = useTaskProposal(sameSession ? proposalId : null);
+  const phase = useTaskActionPhase(store, key);
+  const titleDraft = useSyncExternalStore(
+    store?.subscribe ?? (() => () => {}),
+    () => store?.draft(key),
+    () => undefined,
+  );
+  // A Save title or Not now request in flight, or its refusal. It belongs to the
+  // account and session it was made in, so it never shows for another one.
+  const [request, setRequest] = useState<{
+    owner: AccountOwner;
+    state: "busy" | "failed";
+  } | null>(null);
+  const ownRequest =
+    request &&
+    bound &&
+    request.owner.accountId === bound.owner.accountId &&
+    request.owner.epoch === bound.owner.epoch
+      ? request.state
+      : null;
+  const requestBusy = ownRequest === "busy";
+  const requestFailed = ownRequest === "failed";
+
+  // A refreshed revision from a needs-review reply is newer than the last read.
+  const proposal: TaskProposal | undefined =
+    phase.phase === "needs_review" &&
+    !isStepProposal(phase.proposal) &&
+<<<<<<< HEAD
+    !isDetailProposal(phase.proposal) &&
+=======
+    !isRemovalProposal(phase.proposal) &&
+>>>>>>> c022bb48e61b5195ce3d22e5e9190b4d8b2920a9
+    phase.proposal.proposalRevision >= (query.data?.proposalRevision ?? 0)
+      ? phase.proposal
+      : query.data;
+
+  if (!sameSession) return null;
+  if (!proposal) {
+    return query.isError ? (
+      <p className="text-sm text-ink-muted">
+        {t("taskCreate.draftUnavailable")}
+      </p>
+    ) : (
+      <p role="status" className="loading-delayed text-sm text-ink-muted">
+        {t("taskCreate.loadingDraft")}
+      </p>
+    );
+  }
+  // #365: a draft of a change to an existing task has its own review.
+  if (proposal.kind === "task_edit") {
+    return (
+      <TaskEditProposalPanel
+        proposal={proposal}
+        view={view}
+        store={store}
+        fallbackTitle={titleFor?.(proposal.operation.task_ref) ?? null}
+      />
+    );
+  }
+  const created = proposal;
+
+  const busy = isUnresolved(phase) || requestBusy;
+  const writable =
+    Boolean(store && client) && view.canWrite && proposal.status === "draft";
+  const canWrite = writable && !busy;
+  const savedTitle = proposal.operation.title;
+  const title = titleDraft ?? savedTitle;
+  const edited = title.trim() !== savedTitle;
+  const titleValid =
+    title.trim().length > 0 &&
+    title.trim().length <= TITLE_MAX &&
+    !/[\n\r]/.test(title);
+  const shownTitle = edited ? title.trim() : savedTitle;
+  const receipt = phase.phase === "saved" ? phase.receipt : proposal.receipt;
+  // After a confirmed "not applied" nothing was written, so a changed title can still
+  // be saved as a new revision. While the outcome is unknown only a lookup is allowed.
+  const unknownOutcome = isUnresolved(phase) && phase.phase !== "not_applied";
+  const canSaveTitle =
+    writable && !requestBusy && !unknownOutcome && edited && titleValid;
+  // Retry repeats the reviewed operation: only while the draft shows that title.
+  const canRetry = writable && !requestBusy && !edited;
+
+  /**
+   * One Save title or Not now intent, made as the account and session the panel
+   * shows. Its result, the cached draft and the panel state are written only while
+   * that session is still the signed-in one: after another account or a sign-out
+   * (even if the same account signs in again) the late reply is dropped.
+   */
+  async function proposalRequest(
+    run: (c: TaskActionClient) => Promise<ProposalResult>,
+  ) {
+    if (!bound || !stillOwned(bound.owner)) return null;
+    const { client: own, owner } = bound;
+    setRequest({ owner, state: "busy" });
+    const result = await run(own);
+    if (!stillOwned(owner)) return null;
+    if (result.kind === "ok" || result.kind === "changed") {
+      setRequest(null);
+      queryClient.setQueryData<TaskProposal>(
+        taskProposalKey(owner.accountId, proposalId),
+        result.proposal,
+      );
+      return result;
+    }
+    setRequest({ owner, state: "failed" });
+    return null;
+  }
+
+  async function saveTitle() {
+    if (!canSaveTitle) return;
+    const submitted = title;
+    const result = await proposalRequest((c) =>
+      c.revise(
+        created.proposalId,
+        created.proposalRevision,
+        createTaskOperation(submitted),
+      ),
+    );
+    if (result?.kind !== "ok") return;
+    // The saved title is a new revision: an approval that was confirmed not applied
+    // can no longer be retried; the new title needs its own approval.
+    store?.supersedeNotApplied(key);
+    // Clear the typed title only when this edit is the saved one.
+    if ((store?.draft(key) ?? submitted) === submitted)
+      store?.setDraft(key, undefined);
+  }
+
+  function approve() {
+    if (!canWrite || !store || edited) return;
+    store.dismiss(key);
+    void store.applyOperation(key, created.operation, {
+      kind: "approved_proposal",
+      proposal_id: created.proposalId,
+      proposal_revision: created.proposalRevision,
+    });
+  }
+
+  function notNow() {
+    if (!canWrite) return;
+    void proposalRequest((c) =>
+      c.cancel(created.proposalId, created.proposalRevision),
+    );
+  }
+
+  const profileLines = (ctx: ProposalContext | null) => {
+    const before =
+      created.reviewReason === "context_changed"
+        ? created.previousContext?.profile
+        : null;
+    return PROFILE_FIELDS.flatMap(([field, label]) => {
+      const value = ctx?.profile?.[field];
+      if (!value) return [];
+      const shown =
+        field === "arrivalDate" ? formatDate(value, i18n.language) : value;
+      const old = before?.[field];
+      const changed = before && old !== value;
+      return [
+        <li key={field}>
+          <span>{t(label, { value: shown })}</span>
+          {changed && old && (
+            <span className="block text-xs text-ink-muted">
+              {t("taskCreate.before", {
+                value:
+                  field === "arrivalDate"
+                    ? formatDate(old, i18n.language)
+                    : old,
+              })}
+            </span>
+          )}
+        </li>,
+      ];
+    });
+  };
+  const lines = profileLines(proposal.context);
+
+  const reviewNote =
+    proposal.status === "draft" && proposal.reviewReason
+      ? t(
+          proposal.reviewReason === "edited"
+            ? "taskCreate.reviewEdited"
+            : proposal.reviewReason === "context_changed"
+              ? "taskCreate.reviewContextChanged"
+              : "taskCreate.reviewRestored",
+        )
+      : null;
+
+  return (
+    <section aria-labelledby={`${ids}-title`} className="space-y-5">
+      <div>
+        <p className="text-xs font-medium text-ink-muted">
+          {proposal.status === "draft"
+            ? t("taskCreate.draftBadge")
+            : t("taskCreate.cardEyebrow")}
+        </p>
+        <h3
+          id={`${ids}-title`}
+          tabIndex={-1}
+          data-drawer-focus=""
+          className="mt-0.5 break-words text-lg font-semibold text-ink-secondary focus-visible:outline-none"
+        >
+          {savedTitle}
+        </h3>
+      </div>
+
+      {view.stale && (
+        <p className="flex items-start gap-2 rounded-lg bg-surface-card px-3 py-2 text-sm text-ink-tertiary">
+          <WifiOff className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+          {t("taskActions.offline")}
+        </p>
+      )}
+
+      {reviewNote && (
+        <p className="rounded-lg border border-primary-subtle bg-primary-bg px-3 py-2 text-sm text-ink-secondary">
+          {reviewNote}
+        </p>
+      )}
+
+      {proposal.status === "draft" && (
+        <div>
+          <label
+            htmlFor={`${ids}-input`}
+            className="text-sm font-semibold text-ink-secondary"
+          >
+            {t("taskCreate.titleLabel")}
+          </label>
+          <input
+            id={`${ids}-input`}
+            value={title}
+            maxLength={TITLE_MAX + 50}
+            onChange={(e) => store?.setDraft(key, e.target.value)}
+            className="mt-1.5 w-full rounded-lg border border-border-card bg-surface px-3 py-2 text-base text-ink-secondary placeholder:text-ink-placeholder focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          />
+          <p className="mt-1 text-xs text-ink-muted">
+            {titleValid
+              ? t("taskCreate.titleHint")
+              : t("taskCreate.titleInvalid", { max: TITLE_MAX })}
+          </p>
+          <div className="mt-2">
+            <Button
+              type="button"
+              size="sm"
+              variant="secondary"
+              aria-disabled={!canSaveTitle}
+              className={cn(!canSaveTitle && "cursor-not-allowed opacity-60")}
+              onClick={() => void saveTitle()}
+            >
+              {t("taskCreate.saveTitle")}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      <div>
+        <p className="text-sm font-semibold text-ink-secondary">
+          {t("taskCreate.priorityDoSoon")}
+        </p>
+        <p className="mt-3 text-sm font-semibold text-ink-secondary">
+          {t("taskCreate.basedOn")}
+        </p>
+        {lines.length ? (
+          <ul className="mt-1 space-y-1 text-sm text-ink-tertiary">{lines}</ul>
+        ) : (
+          <p className="mt-1 text-sm text-ink-tertiary">
+            {t("taskCreate.noProfile")}
+          </p>
+        )}
+        {proposal.context?.sameTitleTasks.map((task) => (
+          <p
+            key={task.taskRef}
+            className="mt-2 break-words text-sm text-ink-tertiary"
+          >
+            {t("taskCreate.sameTitle", { title: task.title })}
+          </p>
+        ))}
+      </div>
+
+      <div aria-live="polite" role="status" className="space-y-3">
+        {proposal.status === "cancelled" && (
+          <p className="text-sm text-ink-tertiary">{t("taskCreate.closed")}</p>
+        )}
+        {requestFailed && (
+          <p className="text-sm text-destructive-label">
+            {t("taskActions.refused")}
+          </p>
+        )}
+        {phase.phase !== "saved" && phase.phase !== "needs_review" && (
+          <PhaseMessage
+            writable={canRetry}
+            phase={phase.phase}
+            phaseValue={phase}
+            stateLabel={(s) => t(`taskActions.state.${s}`)}
+            store={store}
+            taskRef={key}
+          />
+        )}
+        {receipt && (
+          <ReceiptBlock
+            receipt={receipt}
+            storeKey={key}
+            store={store}
+            canWrite={Boolean(store) && view.canWrite && !busy}
+          />
+        )}
+      </div>
+
+      {proposal.status === "draft" && (
+        <div className="flex flex-wrap gap-2">
+          {/* Dark fill as in the reviewed prototype: white on the brand orange is below 4.5:1. */}
+          <Button
+            type="button"
+            aria-label={t("taskCreate.approveA11y", { title: shownTitle })}
+            aria-disabled={!canWrite || edited}
+            className={cn(
+              "bg-ink-secondary hover:bg-ink",
+              (!canWrite || edited) && "cursor-not-allowed opacity-60",
+            )}
+            onClick={approve}
+          >
+            {t("taskCreate.approve")}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            aria-disabled={!canWrite}
+            className={cn(!canWrite && "cursor-not-allowed opacity-60")}
+            onClick={notNow}
+          >
+            {t("taskCreate.notNow")}
+          </Button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function formatDate(value: string, language: string): string {
+  const d = new Date(value.length === 10 ? `${value}T00:00:00Z` : value);
+  if (Number.isNaN(d.getTime())) return value;
+  return new Intl.DateTimeFormat(language, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(d);
+}

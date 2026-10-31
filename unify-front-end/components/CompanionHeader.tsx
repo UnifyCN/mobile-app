@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, X } from 'lucide-react-native';
 import { Theme } from '@/constants/Theme';
 import { TAB_HEADER_METRICS, getTabHeaderHeight } from '@/constants/TabHeader';
+import { BAR_LABEL_MAX_SCALE } from '@/utils/textScale';
 
 interface CompanionHeaderProps {
   title?: string;
@@ -69,7 +70,15 @@ const CompanionHeader = ({
       ) : (
         leftButton || <View style={styles.placeholder} />
       )}
-      <Text style={styles.title}>{title}</Text>
+      {/* A bar title, as in UIKit: one line, scaling up to the bar maximum, so it
+          always fits the fixed bar row. */}
+      <Text
+        style={styles.title}
+        numberOfLines={1}
+        maxFontSizeMultiplier={BAR_LABEL_MAX_SCALE}
+      >
+        {title}
+      </Text>
       {rightButton || <View style={styles.placeholder} />}
     </View>
   );
@@ -97,6 +106,8 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.section,
+    flexShrink: 1,
+    textAlign: 'center',
 
     color: Theme.black,
   },

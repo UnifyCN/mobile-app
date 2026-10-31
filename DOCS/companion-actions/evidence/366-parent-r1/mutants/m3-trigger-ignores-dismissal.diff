@@ -1,0 +1,18 @@
+@@ -152,7 +152,7 @@
+ -- too (companion_user_tasks_step_order below), because such a task may have no progress
+ -- row yet, and a new row has no row lock a step write could wait for.
+ create function public.companion_step_parent_lock(p_user uuid, p_ref text) returns void
+-language sql set search_path = public, pg_temp as $$
++language sql as $$
+   select pg_advisory_xact_lock(hashtextextended(p_user::text || ':' || p_ref, 366))
+ $$;
+ 
+@@ -214,7 +214,7 @@
+ language plpgsql security definer set search_path = public, pg_temp as $$
+ begin
+   if new.user_id is not null and new.sanity_checklist_id is not null
+-     and (new.completed is true or new.dismissed_at is not null)
++     and (new.completed is true)
+      and (tg_op = 'INSERT'
+           or (new.user_id, new.sanity_checklist_id) is distinct from (old.user_id, old.sanity_checklist_id)) then
+     perform public.companion_step_parent_lock(new.user_id, 'sanity:' || new.sanity_checklist_id);

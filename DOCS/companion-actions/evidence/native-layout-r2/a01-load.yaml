@@ -1,0 +1,16 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    text: "Open"
+    optional: true
+- extendedWaitUntil:
+    visible: "Learn.*|Dismiss.*|Open history"
+    timeout: 90000
+- tapOn:
+    text: "Dismiss.*"
+    optional: true
+- tapOn:
+    text: "Dismiss.*"
+    optional: true
+- tapOn: "Companion, tab.*"
+- assertVisible: "Open history"

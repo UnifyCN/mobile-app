@@ -1,0 +1,15 @@
+components/companion/tasks/TaskActionCards.tsx(107,197): error TS2554: Expected 1 arguments, but got 2.
+components/companion/tasks/TaskActionCards.tsx(652,293): error TS2304: Cannot find name 'taskTitleOf'.
+components/companion/tasks/TaskActionCards.tsx(652,293): error TS2554: Expected 1 arguments, but got 2.
+hooks/useCompanion.ts(353,58): error TS18047: 'reply' is possibly 'null'.
+hooks/useCompanion.ts(353,64): error TS2339: Property 'actionProposal' does not exist on type 'string'.
+hooks/useCompanion.ts(355,106): error TS2448: Block-scoped variable 'savedAnswer' used before its declaration.
+hooks/useCompanion.ts(355,106): error TS2454: Variable 'savedAnswer' is used before being assigned.
+hooks/useCompanion.ts(377,58): error TS2448: Block-scoped variable 'reply' used before its declaration.
+hooks/useCompanion.ts(377,58): error TS2454: Variable 'reply' is used before being assigned.
+hooks/useCompanion.ts(379,106): error TS2448: Block-scoped variable 'savedAnswer' used before its declaration.
+hooks/useCompanion.ts(379,106): error TS2454: Variable 'savedAnswer' is used before being assigned.
+hooks/useCompanion.ts(391,56): error TS2448: Block-scoped variable 'reply' used before its declaration.
+hooks/useCompanion.ts(391,56): error TS2454: Variable 'reply' is used before being assigned.
+hooks/useCompanion.ts(393,106): error TS2448: Block-scoped variable 'savedAnswer' used before its declaration.
+hooks/useCompanion.ts(393,106): error TS2454: Variable 'savedAnswer' is used before being assigned.

@@ -1,0 +1,12 @@
+{
+  "redacted_private_logs": [
+    "android-setup-1-prebuild",
+    "ios-setup-1-pods",
+    "local-start",
+    "local-bootstrap",
+    "ios-setup-1-prebuild"
+  ],
+  "private_directory_mode": "0700",
+  "raw_credential_log_copies_retained": false,
+  "note": "The wrapper initially retained private startup originals until this correction. The redacted copies now replace those owned originals. No old evidence was changed."
+}

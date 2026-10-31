@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npx",
+    "jest",
+    "--config",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/jest.config.json",
+    "--runTestsByPath",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/announcement.test.tsx",
+    "--runInBand",
+    "--testNamePattern",
+    "a removal request in a conversation only opens a review"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/unify-front-end",
+  "exit": 1,
+  "elapsed_s": 9.715
+}

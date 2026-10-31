@@ -1,0 +1,38 @@
+running 2 tests from ./remove_rollback_test.ts
+rolling back #367 alone keeps removed tasks removed and restores the #366 functions; re-applying restores receipts and reviews ... FAILED (399ms)
+after a full rollback and re-application a removed custom task is still removed and its Undo is a reviewed restore ... FAILED (234ms)
+
+ ERRORS 
+
+rolling back #367 alone keeps removed tasks removed and restores the #366 functions; re-applying restores receipts and reviews => ./remove_rollback_test.ts:50:6
+error: PostgresError: function "companion_remove_effects" already exists with same argument types
+      errorResponse = Errors.postgres(parseError(x))
+                             ^
+    at ErrorResponse (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+    at handle (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+    at Socket.data (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+    at Socket.emit (ext:deno_node/_events.mjs:439:20)
+    at addChunk (node:_stream_readable:452:12)
+    at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+    at Socket.Readable.push (node:_stream_readable:308:48)
+
+after a full rollback and re-application a removed custom task is still removed and its Undo is a reviewed restore => ./remove_rollback_test.ts:86:6
+error: PostgresError: check constraint "companion_proposals_kind_check" of relation "companion_proposals" is violated by some row
+      errorResponse = Errors.postgres(parseError(x))
+                             ^
+    at ErrorResponse (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+    at handle (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+    at Socket.data (file:///Users/savargupta/Library/Caches/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+    at Socket.emit (ext:deno_node/_events.mjs:439:20)
+    at addChunk (node:_stream_readable:452:12)
+    at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+    at Socket.Readable.push (node:_stream_readable:308:48)
+
+ FAILURES 
+
+rolling back #367 alone keeps removed tasks removed and restores the #366 functions; re-applying restores receipts and reviews => ./remove_rollback_test.ts:50:6
+after a full rollback and re-application a removed custom task is still removed and its Undo is a reviewed restore => ./remove_rollback_test.ts:86:6
+
+FAILED | 0 passed | 2 failed (640ms)
+
+error: Test failed

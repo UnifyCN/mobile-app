@@ -1,0 +1,12 @@
+running 8 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (617ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... ok (388ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... ok (412ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... ok (382ms)
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add ... ok (540ms)
+content tasks are reused by published identity only; a named content match is offered, never merged ... ok (376ms)
+a relevant change since review asks for a new review; an unrelated progress change does not ... ok (1s)
+cleanup ... ok (4ms)
+
+ok | 8 passed | 0 failed (4s)
+

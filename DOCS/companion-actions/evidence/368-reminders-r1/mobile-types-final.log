@@ -1,0 +1,8 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/reminders.test.tsx(97,39): error TS2741: Property 'readAt' is missing in type '{ status: "ready"; byRef: Map<any, any>; stepsByRef: Map<any, any>; details: never[]; stale: false; canWrite: true; refetch: jest.Mock<any, any, any>; reminders: { items: never[]; scheduler: "ready"; }; }' but required in type 'TaskProgressView'.
+components/companion/tasks/ReminderSection.tsx(183,18): error TS18047: 'receipt' is possibly 'null'.
+components/companion/tasks/ReminderSection.tsx(190,43): error TS18047: 'receipt' is possibly 'null'.
+components/companion/tasks/ReminderSection.tsx(192,41): error TS18047: 'receipt' is possibly 'null'.

@@ -1,0 +1,31 @@
+running 1 test from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_delivery_test.ts
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ...
+------- output -------
+FALSIFIER: a disabled due event is not durably suppressed, or task/reminder state changes
+----- output end -----
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ... FAILED (1s)
+
+ ERRORS 
+
+push delivery: disabled dispatch consumes due history without changing the in-app reminder => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_delivery_test.ts:9:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   undefined
++   "dispatch_disabled"
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_delivery_test.ts:19:2)
+
+ FAILURES 
+
+push delivery: disabled dispatch consumes due history without changing the in-app reminder => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_delivery_test.ts:9:6
+
+FAILED | 0 passed | 1 failed (1s)
+
+error: Test failed

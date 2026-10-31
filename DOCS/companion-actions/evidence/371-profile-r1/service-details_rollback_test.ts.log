@@ -1,0 +1,6 @@
+running 2 tests from ./details_rollback_test.ts
+rolling back stops every use of saved details; re-applying restores them, their receipts and a re-review ... ok (1s)
+the full schema rollback (all four migrations) and re-application still work with #370 first ... ok (3s)
+
+ok | 2 passed | 0 failed (5s)
+

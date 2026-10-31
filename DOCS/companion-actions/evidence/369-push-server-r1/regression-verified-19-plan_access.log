@@ -1,0 +1,10 @@
+running 6 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/plan_access_test.ts
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks ... ok (837ms)
+forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing ... ok (685ms)
+a new conversation and another platform resume the same plan with current progress; receipts stay historical ... ok (320ms)
+a removed task stays a disabled reference in the plan and is never recreated ... ok (281ms)
+prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance ... ok (325ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (2s)
+

@@ -1,0 +1,22 @@
+PASS __tests__/companionActions/pushDevice.test.ts
+FAIL __tests__/companionActions/pushRouting.test.ts
+  ● Test suite failed to run
+
+    ENOENT: no such file or directory, open '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/__tests__/companionActions/pushRouting.test.ts'
+
+      at runTestInternal (node_modules/jest-runner/build/runTest.js:170:27)
+
+FAIL __tests__/companionActions/pushClient.test.ts
+  ● Test suite failed to run
+
+    ENOENT: no such file or directory, open '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/__tests__/companionActions/pushClient.test.ts'
+
+      at runTestInternal (node_modules/jest-runner/build/runTest.js:170:27)
+
+PASS __tests__/companionActions/pushNative.test.ts
+
+Test Suites: 2 failed, 2 passed, 4 total
+Tests:       35 passed, 35 total
+Snapshots:   0 total
+Time:        0.559 s, estimated 1 s
+Ran all test suites within paths "__tests__/companionActions/pushNative.test.ts", "__tests__/companionActions/pushDevice.test.ts", "__tests__/companionActions/pushClient.test.ts", "__tests__/companionActions/pushRouting.test.ts".

@@ -1,0 +1,20 @@
+FAULT: remount step control after every save
+  exit=1
+      ✕ the same step control stays mounted through its save and the re-read; a typed step survives close and reopen (416 ms)
+  Tests:       1 failed, 7 skipped, 8 total
+FAULT: retry blind instead of lookup after an unknown reply
+  exit=1
+      ✕ a step reply lost after commit is looked up, never resent; the step and its receipt appear once (406 ms)
+  Tests:       1 failed, 7 skipped, 8 total
+FAULT: step controls ignore a failed read
+  exit=1
+      ✕ offline: a failed read turns step controls off, sends nothing and keeps the typed step (289 ms)
+  Tests:       1 failed, 7 skipped, 8 total
+FAULT: removal sent without confirmation
+  exit=1
+      ✕ a removal asks first and Keep sends nothing; removal and Undo keep their own receipts (1280 ms)
+  Tests:       1 failed, 7 skipped, 8 total
+FAULT: step title sent to analytics
+  exit=1
+      ✕ step results reach analytics as allowlisted categories only, never the step text (258 ms)
+  Tests:       1 failed, 7 skipped, 8 total

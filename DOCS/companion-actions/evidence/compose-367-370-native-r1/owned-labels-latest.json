@@ -1,0 +1,48 @@
+[
+  {
+    "name": "supabase_db_unify-compose-367-370-r1",
+    "id": "869ea64416775e46cfda18762df615d24646633ad3a705961dfa3fa7b4cf0d82",
+    "labels": {
+      "com.docker.compose.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions"
+    }
+  },
+  {
+    "name": "supabase_rest_unify-compose-367-370-r1",
+    "id": "e99d32fe90f175e79cbe1aeb97f4a89418949da891efe3eb1541fbab58133085",
+    "labels": {
+      "com.docker.compose.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions"
+    }
+  },
+  {
+    "name": "supabase_kong_unify-compose-367-370-r1",
+    "id": "863e81a2e58037a735aa5c0402ce0ae9a3de6fa60dad3a6db6ea11b08c1fa987",
+    "labels": {
+      "com.docker.compose.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions",
+      "maintainer": "Kong <support@konghq.com>"
+    }
+  },
+  {
+    "name": "supabase_auth_unify-compose-367-370-r1",
+    "id": "991cacf37aa05718e94c975b4793a58eef5e3e37759702a69ac1ee301ff78d3f",
+    "labels": {
+      "com.docker.compose.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions"
+    }
+  },
+  {
+    "name": "supabase_edge_runtime_unify-compose-367-370-r1",
+    "id": "74f4e339e6c53f9733fa7668f6101ddb8d16d21bb5fd1ac12fc51a7605b57aeb",
+    "labels": {
+      "com.docker.compose.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.project": "unify-compose-367-370-r1",
+      "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions"
+    }
+  }
+]

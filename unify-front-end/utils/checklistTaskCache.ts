@@ -85,3 +85,22 @@ export async function saveChecklistToDisk(
     console.warn('Failed to persist checklist cache', e);
   }
 }
+
+/**
+ * Removes every other account's Checklist rows from memory and from disk, so a
+ * new account on this device never reads them (mobile-app#361).
+ */
+export async function clearOtherAccountsChecklistCache(
+  keepUserId: string | null
+): Promise<void> {
+  const own = (key: string) =>
+    keepUserId !== null && key.startsWith(`${STORAGE_PREFIX}:${keepUserId}:`);
+  for (const key of [...memory.keys()]) if (!own(key)) memory.delete(key);
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    const stale = keys.filter(k => k.startsWith(`${STORAGE_PREFIX}:`) && !own(k));
+    if (stale.length) await AsyncStorage.multiRemove(stale);
+  } catch (e) {
+    console.warn('Failed to clear checklist cache', e);
+  }
+}

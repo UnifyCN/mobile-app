@@ -1,0 +1,199 @@
+running 30 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts
+push worker: unknown transport and response parsing never resend ...
+------- output -------
+FALSIFIER: unknown outcome becomes retryable or changes in-app state
+----- output end -----
+push worker: unknown transport and response parsing never resend ... ok (2s)
+push worker: ticket, missing receipt, provider acceptance and display remain separate ...
+------- output -------
+FALSIFIER: receipt polling sends again or claims device display
+----- output end -----
+push worker: ticket, missing receipt, provider acceptance and display remain separate ... ok (2s)
+push worker: definite reject backoff and cap ...
+------- output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- output end -----
+push worker: definite reject backoff and cap ... ok (1s)
+push worker: definite rate backoff and cap ...
+------- output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- output end -----
+push worker: definite rate backoff and cap ... ok (1s)
+push worker: permanent error disables the original enrollment ...
+------- output -------
+FALSIFIER: invalid token still enables the same tuple
+----- output end -----
+push worker: permanent error disables the original enrollment ... ok (1s)
+push worker: late receipt preserves a newer token generation ...
+------- output -------
+FALSIFIER: late DeviceNotRegistered disables a rotated token
+----- output end -----
+push worker: late receipt preserves a newer token generation ... ok (2s)
+push worker: disabled installation stays suppressed after enablement ...
+------- output -------
+FALSIFIER: renewal creates delivery for an already consumed event
+----- output end -----
+push worker: disabled installation stays suppressed after enablement ... ok (1s)
+push worker: closed-app age does not create a foreground lease ...
+------- output -------
+FALSIFIER: 90-day enrollment age alone prevents an authorized send
+----- output end -----
+push worker: closed-app age does not create a foreground lease ... ok (1s)
+push worker: final session authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final session authorization ... ok (2s)
+push worker: final permission authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final permission authorization ... ok (1s)
+push worker: final generation authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final generation authorization ... ok (1s)
+push worker: final credential authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final credential authorization ... ok (2s)
+push worker: final policy authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final policy authorization ... ok (1s)
+push worker: provider budget fails closed and includes reserved existing senders ...
+------- output -------
+FALSIFIER: missing aggregate verification or exhausted shared capacity permits a send
+----- output end -----
+push worker: provider budget fails closed and includes reserved existing senders ... FAILED (2s)
+push worker: owned current task resolver rejects another account and removed task ...
+------- output -------
+FALSIFIER: a shared task identifier authorizes another account
+----- output end -----
+push worker: owned current task resolver rejects another account and removed task ... ok (2s)
+push worker: complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+----- output end -----
+push worker: complete action-first ... FAILED (14s)
+push worker: remove action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"action-first","intermediate":"pending","committed":"cancelled","provider_calls":0}
+----- output end -----
+push worker: remove action-first ... ok (2s)
+push worker: cancel action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"action-first","intermediate":"pending","committed":"cancelled","provider_calls":0}
+----- output end -----
+push worker: cancel action-first ... ok (1s)
+push worker: legacy action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+----- output end -----
+push worker: legacy action-first ... FAILED (13s)
+push worker: content-complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"action-first","intermediate":"pending","committed":"cancelled","provider_calls":0}
+----- output end -----
+push worker: content-complete action-first ... ok (2s)
+push worker: complete worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"worker-first","intermediate":"pending","graph":[{"pid":1906,"blockers":[3079]}],"provider_calls":1}
+----- output end -----
+push worker: complete worker-first ... ok (2s)
+push worker: remove worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"worker-first","intermediate":"pending","graph":[{"pid":1906,"blockers":[3079]}],"provider_calls":1}
+----- output end -----
+push worker: remove worker-first ... ok (2s)
+push worker: cancel worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"worker-first","intermediate":"pending","graph":[{"pid":1880,"blockers":[2778]}],"provider_calls":1}
+----- output end -----
+push worker: cancel worker-first ... ok (1s)
+push worker: legacy worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"legacy","order":"worker-first","intermediate":"pending","graph":[{"pid":1906,"blockers":[3079]}],"provider_calls":1}
+----- output end -----
+push worker: legacy worker-first ... ok (1s)
+push worker: content-complete worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"worker-first","intermediate":"pending","graph":[{"pid":1906,"blockers":[2778]}],"provider_calls":1}
+----- output end -----
+push worker: content-complete worker-first ... ok (2s)
+push worker: content headers total deadline ...
+------- output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-headers","ms":2215.733416999996,"graph":[{"pid":1906,"blockers":[2778]}]}
+----- output end -----
+push worker: content headers total deadline ... ok (4s)
+push worker: content body total deadline ...
+------- output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-body","ms":2222.099332999991,"graph":[{"pid":1880,"blockers":[3079]}]}
+----- output end -----
+push worker: content body total deadline ... ok (4s)
+push worker: provider hold total deadline ...
+------- output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-hold","ms":2253.476542000004,"graph":[{"pid":1880,"blockers":[2778]}]}
+----- output end -----
+push worker: provider hold total deadline ... ok (4s)
+push worker: provider body total deadline ...
+------- output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-body","ms":2285.164333000008,"graph":[{"pid":1880,"blockers":[2778]}]}
+----- output end -----
+push worker: provider body total deadline ... ok (4s)
+push worker: fixture cleanup ... ok (3ms)
+
+ ERRORS 
+
+push worker: provider budget fails closed and includes reserved existing senders => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+error: PostgresError: new row for relation "settings" violates check constraint "settings_other_senders_reserved_per_second_check"
+      errorResponse = Errors.postgres(parseError(x))
+                             ^
+    at ErrorResponse (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+    at handle (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+    at Socket.data (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+    at Socket.emit (ext:deno_node/_events.mjs:439:20)
+    at addChunk (node:_stream_readable:452:12)
+    at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+    at Socket.Readable.push (node:_stream_readable:308:48)
+
+push worker: complete action-first => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+error: Error: SETUP_TIMEOUT public stop waits
+ throw Error('SETUP_TIMEOUT '+label);
+       ^
+    at until (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/pushHarness.ts:57:8)
+    at async file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:89:25
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:160)
+
+push worker: legacy action-first => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+error: Error: SETUP_TIMEOUT public stop waits
+ throw Error('SETUP_TIMEOUT '+label);
+       ^
+    at until (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/pushHarness.ts:57:8)
+    at async file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:89:25
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:160)
+
+ FAILURES 
+
+push worker: provider budget fails closed and includes reserved existing senders => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+push worker: complete action-first => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+push worker: legacy action-first => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts:9:70
+
+FAILED | 27 passed | 3 failed (1m32s)
+
+error: Test failed

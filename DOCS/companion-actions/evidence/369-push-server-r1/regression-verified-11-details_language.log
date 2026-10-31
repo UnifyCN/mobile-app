@@ -1,0 +1,21 @@
+running 3 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/details_language_test.ts
+S370-3: every locale’s own help example saves its whole first-person detail ... FAILED (1ms)
+S370-3: Arabic attached first-person forms keep their meaning; other attached forms ask ... ok (847ms)
+S370-2: a need that mentions a permit is saved; a statement of status stays with the profile ... ok (874ms)
+
+ ERRORS 
+
+S370-3: every locale’s own help example saves its whole first-person detail => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/details_language_test.ts:47:6
+error: NotFound: No such file or directory (os error 2): readdir '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/lib/i18n/locales'
+    const dirs = [...Deno.readDirSync(LOCALES)].filter(e => e.isDirectory).map(e => e.name).sort();
+                          ^
+    at Object.readDirSync (ext:deno_fs/30_fs.js:211:10)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/details_language_test.ts:54:27)
+
+ FAILURES 
+
+S370-3: every locale’s own help example saves its whole first-person detail => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/details_language_test.ts:47:6
+
+FAILED | 2 passed | 1 failed (1s)
+
+error: Test failed

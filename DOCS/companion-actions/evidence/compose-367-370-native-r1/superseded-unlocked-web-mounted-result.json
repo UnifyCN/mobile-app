@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node_modules/.bin/vitest",
+    "run",
+    "components/companion/tasks/TaskRemovalLocalStack.test.tsx",
+    "-t",
+    "composition:"
+  ],
+  "cwd": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05",
+  "exit": 0,
+  "seconds": 2.995358943939209
+}

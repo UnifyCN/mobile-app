@@ -1,0 +1,79 @@
+FAIL __tests__/companionActions/pushReminderControl.test.ts
+  ● shows a device-wide Companion control while in-app reminder review remains independent
+
+    Unable to find an element with text: companionPush.scope
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mreminders.title[0m
+      [36m</Text>[39m
+      [36m<Text>[39m
+        [0mreminders.instant[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"reminders.instant"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mreminders.zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"reminders.zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mreminders.timeHelp[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mreminders.review[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      18 |   taskRef: 'custom:7', view: { status: 'ready', canWrite: true, byRef: new Map(), stepsByRef: new Map(), details: [], stale: false, readAt: 1, refetch() {} }, store: null,
+      19 |  }));
+    > 20 |  expect(ui.getByText('companionPush.scope')).toBeTruthy();
+         |            ^
+      21 |  fireEvent.press(ui.getByText('reminders.review'));
+      22 |  expect(mockPrepare).toHaveBeenCalledTimes(1);
+      23 | });
+
+      at Object.getByText (__tests__/companionActions/pushReminderControl.test.ts:20:12)
+
+FAIL __tests__/companionActions/pushAccountRestart.test.ts
+  ● does not restore old work after unknown ownership on subscription restart
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      13 |  stop(); expect(stillOwned(old)).toBe(false);
+      14 |  const stop2 = subscribeAccount(() => {}); await Promise.resolve(); await Promise.resolve();
+    > 15 |  expect(stillOwned(old)).toBe(false);
+         |                          ^
+      16 |  expect(stillOwned(ownAccountWork())).toBe(true); stop2();
+      17 | });
+      18 |
+
+      at Object.toBe (__tests__/companionActions/pushAccountRestart.test.ts:15:26)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 2 failed, 2 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        1.6 s
+Ran all test suites matching /__tests__\/companionActions\/pushReminderControl.test.ts|__tests__\/companionActions\/pushAccountRestart.test.ts/i.

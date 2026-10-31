@@ -1,0 +1,30 @@
+running 3 tests from ./profile_validation_test.ts
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing ... ok (718ms)
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes ... ok (642ms)
+profile preparation: existing province aliases and localized values resolve before review without saving a fact ... FAILED (167ms)
+
+ ERRORS 
+
+profile preparation: existing province aliases and localized values resolve before review without saving a fact => ./profile_validation_test.ts:57:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_profile_value"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_validation_test.ts:63:5)
+
+ FAILURES 
+
+profile preparation: existing province aliases and localized values resolve before review without saving a fact => ./profile_validation_test.ts:57:6
+
+FAILED | 2 passed | 1 failed (1s)
+
+error: Test failed
+

@@ -1,0 +1,12 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/pushIntents.test.ts(12,36): error TS2322: Type 'Mock<Promise<{ kind: string; value: { target: string; task_ref: string; }; }>, [], any>' is not assignable to type '(owner: AccountSnapshot, deliveryId: string, locale: PushLocale) => Promise<PushResult<PushTarget>>'.
+  Type 'Promise<{ kind: string; value: { target: string; task_ref: string; }; }>' is not assignable to type 'Promise<PushResult<PushTarget>>'.
+    Type '{ kind: string; value: { target: string; task_ref: string; }; }' is not assignable to type 'PushResult<PushTarget>'.
+      Type '{ kind: string; value: { target: string; task_ref: string; }; }' is not assignable to type '{ kind: "ok"; value: PushTarget; }'.
+        Types of property 'kind' are incompatible.
+          Type 'string' is not assignable to type '"ok"'.
+services/companionActions/pushDevice.ts(199,30): error TS2339: Property 'results' does not exist on type 'Omit<PushApplyReply, "replayed"> | { status: "pending" | "not_applied"; operation_id: string; }'.
+  Property 'results' does not exist on type '{ status: "pending" | "not_applied"; operation_id: string; }'.

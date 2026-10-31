@@ -1,0 +1,70 @@
+{
+  "final_cleanup": false,
+  "violations": [],
+  "owned_resources": {
+    "containers": [
+      "/supabase_db_unify-profile-371-r1",
+      "/supabase_edge_runtime_unify-profile-371-r1",
+      "/supabase_rest_unify-profile-371-r1",
+      "/supabase_auth_unify-profile-371-r1",
+      "/supabase_kong_unify-profile-371-r1"
+    ],
+    "networks": [
+      "supabase_network_unify-profile-371-r1"
+    ],
+    "volumes": [
+      "supabase_db_unify-profile-371-r1",
+      "supabase_edge_runtime_unify-profile-371-r1"
+    ]
+  },
+  "older_mounts_compared_in_full": true,
+  "native_lifecycle_exception": "unify-push-369-ios-native-r8",
+  "ports": [
+    {
+      "port": 64510,
+      "ipv4": "occupied:48",
+      "ipv6": "occupied:48"
+    },
+    {
+      "port": 64511,
+      "ipv4": "occupied:48",
+      "ipv6": "occupied:48"
+    },
+    {
+      "port": 64512,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 64513,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 64514,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 64515,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 64516,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 3456,
+      "ipv4": "free",
+      "ipv6": "free"
+    },
+    {
+      "port": 3487,
+      "ipv4": "occupied:48",
+      "ipv6": "free"
+    }
+  ],
+  "pass": true
+}

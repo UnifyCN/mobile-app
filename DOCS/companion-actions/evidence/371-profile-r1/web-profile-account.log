@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root
+
+stderr | components/companion/tasks/TaskActions.test.tsx > review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:80:7)
+    at listOnTimeout (node:internal/timers:585:17)
+    at processTimers (node:internal/timers:521:7) undefined
+
+ ✓ components/companion/tasks/TaskActions.test.tsx (21 tests) 1981ms
+   ✓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it  364ms
+
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+   Start at  23:46:59
+   Duration  3.31s (transform 313ms, setup 0ms, collect 825ms, tests 1.98s, environment 309ms, prepare 48ms)
+

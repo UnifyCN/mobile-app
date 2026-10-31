@@ -1,0 +1,68 @@
+Initialize postgres@3.4.9
+running 2 tests from ./index_companion_context_test.ts
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"0277c385-42ff-4732-b060-db96890e2fbd","identity":"canonical"}
+{"event":"embedding_checked","call_id":"0277c385-42ff-4732-b060-db96890e2fbd","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need in my first week in Vancouver?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":2,"profile_ms":4,"classify_ms":0,"embedding_ms":2,"vector_search_ms":3,"generation_ms":1,"total_ms":59}
+----- output end -----
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ... FAILED (75ms)
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6bcec26b-4ced-41f5-a02d-2c6317a5f724","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6bcec26b-4ced-41f5-a02d-2c6317a5f724","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":1,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":5}
+----- output end -----
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ... FAILED (5ms)
+
+ ERRORS 
+
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared => ./index_companion_context_test.ts:1358:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
++   {
++     title: "Set up phone service",
++     type: "task.create_custom",
++     version: 1,
++   }
+-   undefined
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/functions/rag-query/index_companion_context_test.ts:1367:7)
+
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text => ./index_companion_context_test.ts:1378:6
+error: AssertionError: Answer.
+[TASK]: <b>Set up phone service</b>
+    throw new AssertionError(msg);
+          ^
+    at assert (https://jsr.io/@std/assert/1.0.19/assert.ts:22:11)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/functions/rag-query/index_companion_context_test.ts:1395:7)
+
+ FAILURES 
+
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared => ./index_companion_context_test.ts:1358:6
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text => ./index_companion_context_test.ts:1378:6
+
+FAILED | 0 passed | 2 failed | 28 filtered out (84ms)
+
+error: Test failed

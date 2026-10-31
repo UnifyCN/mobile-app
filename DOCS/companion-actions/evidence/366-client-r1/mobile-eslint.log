@@ -1,0 +1,50 @@
+
+/Users/savargupta/.t3/worktrees/Unify/t3-7c5562c7/unify-front-end/__tests__/companionActions/companionActionsLocalStack.test.tsx
+   14:3   warning  'act' is defined but never used           @typescript-eslint/no-unused-vars
+   55:17  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   70:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   85:38  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   99:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  111:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  112:7   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  116:9   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  117:11  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  286:1   warning  Import in body of module; reorder to top  import/first
+  287:1   warning  Import in body of module; reorder to top  import/first
+  498:18  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+/Users/savargupta/.t3/worktrees/Unify/t3-7c5562c7/unify-front-end/__tests__/companionActions/taskStepSuggestions.test.tsx
+    7:3   warning  'act' is defined but never used                 @typescript-eslint/no-unused-vars
+   23:3   warning  'TASK_PROPOSAL_ROOT' is defined but never used  @typescript-eslint/no-unused-vars
+   24:3   warning  'taskProposalKey' is defined but never used     @typescript-eslint/no-unused-vars
+   41:17  warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+   56:20  warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+   71:38  warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+   85:20  warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+   97:5   warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+   98:7   warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+  102:9   warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+  103:11  warning  A `require()` style import is forbidden         @typescript-eslint/no-require-imports
+  323:1   warning  Import in body of module; reorder to top        import/first
+  354:10  warning  'answers' is defined but never used             @typescript-eslint/no-unused-vars
+  397:7   warning  'creates' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  403:16  warning  'openDraft' is defined but never used           @typescript-eslint/no-unused-vars
+  413:16  warning  'approveIn' is defined but never used           @typescript-eslint/no-unused-vars
+
+/Users/savargupta/.t3/worktrees/Unify/t3-7c5562c7/unify-front-end/__tests__/companionActions/taskSteps.test.tsx
+   13:3   warning  'within' is defined but never used                        @typescript-eslint/no-unused-vars
+   35:17  warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   50:20  warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   65:38  warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   79:20  warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   85:5   warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   86:7   warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   90:9   warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+   91:11  warning  A `require()` style import is forbidden                   @typescript-eslint/no-require-imports
+  213:1   warning  Import in body of module; reorder to top                  import/first
+  274:7   warning  'companionActionUrls' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  278:10  warning  'captureForeground' is defined but never used             @typescript-eslint/no-unused-vars
+  293:16  warning  'openTaskProgress' is defined but never used              @typescript-eslint/no-unused-vars
+
+✖ 41 problems (0 errors, 41 warnings)
+  0 errors and 4 warnings potentially fixable with the `--fix` option.

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npx",
+    "tsc",
+    "--noEmit",
+    "--incremental",
+    "false"
+  ],
+  "exit": 0,
+  "seconds": 5.67
+}

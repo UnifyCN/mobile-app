@@ -1,0 +1,15 @@
+running 2 tests from ./push_delivery_test.ts
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ...
+------- output -------
+FALSIFIER: a disabled due event is not durably suppressed, or task/reminder state changes
+----- output end -----
+push delivery: disabled dispatch consumes due history without changing the in-app reminder ... ok (1s)
+push delivery: enabled competing workers commit one intent and one provider request ...
+------- output -------
+FALSIFIER: two sends, no durable intent before I/O, or ticket claims device display
+{"kind":"provider_fixture_distribution","total":1,"modes":{"ok":1}}
+----- output end -----
+push delivery: enabled competing workers commit one intent and one provider request ... ok (2s)
+
+ok | 2 passed | 0 failed (3s)
+

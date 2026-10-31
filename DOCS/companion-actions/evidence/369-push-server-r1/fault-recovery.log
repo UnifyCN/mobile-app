@@ -1,0 +1,32 @@
+running 1 test from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/recovery/supabase/tests/companion-actions/push_process_test.ts
+push process: kill after durable intent retains unknown identity without resend ...
+------- output -------
+FALSIFIER: killing the sender after intent loses the attempt or a restart sends it
+----- output end -----
+push process: kill after durable intent retains unknown identity without resend ... FAILED (1s)
+
+ ERRORS 
+
+push process: kill after durable intent retains unknown identity without resend => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/recovery/supabase/tests/companion-actions/push_process_test.ts:12:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   queued
++   unknown
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/recovery/supabase/tests/companion-actions/push_process_test.ts:23:28)
+
+ FAILURES 
+
+push process: kill after durable intent retains unknown identity without resend => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/mutations/recovery/supabase/tests/companion-actions/push_process_test.ts:12:6
+
+FAILED | 0 passed | 1 failed | 4 filtered out (1s)
+
+error: Test failed

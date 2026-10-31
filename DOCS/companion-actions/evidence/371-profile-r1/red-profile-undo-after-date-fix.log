@@ -1,0 +1,33 @@
+running 3 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (312ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... FAILED (210ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (346ms)
+
+ ERRORS 
+
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change => ./profile_test.ts:39:6
+error: AssertionError: Values are not equal: {"error":"not_found","reason":"task_not_found","detail":{"task_ref":null}}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     404,
+-     "not_found",
++     409,
++     "undo_conflict",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:56:5)
+
+ FAILURES 
+
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change => ./profile_test.ts:39:6
+
+FAILED | 2 passed | 1 failed (873ms)
+
+error: Test failed

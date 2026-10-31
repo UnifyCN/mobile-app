@@ -1,0 +1,49 @@
+running 3 tests from ./create_rollback_test.ts
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it ... FAILED (568ms)
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing ... FAILED (1s)
+cleanup ... ok (4ms)
+
+ ERRORS 
+
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it => ./create_rollback_test.ts:31:6
+error: AssertionError: Values are not equal: {"error":"internal"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     500,
+-     undefined,
++     422,
++     "not_undoable",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_rollback_test.ts:44:5)
+
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing => ./create_rollback_test.ts:66:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   200
++   403
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_rollback_test.ts:81:5)
+
+ FAILURES 
+
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it => ./create_rollback_test.ts:31:6
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing => ./create_rollback_test.ts:66:6
+
+FAILED | 1 passed | 2 failed (1s)
+
+error: Test failed

@@ -1,0 +1,49 @@
+[
+  {
+    "name": "/supabase_db_unify-reminders-368-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-reminders-368-r1",
+      "com.supabase.cli.project": "unify-reminders-368-r1",
+      "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+    },
+    "image": "sha256:658d1c9b09ae4f61b8e95087b6859181b4b7d6940d769cf7b605609c8aad43e9"
+  },
+  {
+    "name": "/supabase_auth_unify-reminders-368-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-reminders-368-r1",
+      "com.supabase.cli.project": "unify-reminders-368-r1",
+      "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+    },
+    "image": "sha256:1736a63078f5922b198c4cbe50f80ab9a2d3b54fe8b7b6cfb2e9dc5dbbc12c6b"
+  },
+  {
+    "name": "/supabase_rest_unify-reminders-368-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-reminders-368-r1",
+      "com.supabase.cli.project": "unify-reminders-368-r1",
+      "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+    },
+    "image": "sha256:ec0e25a4e24b0a3bc5e4f011369bfc736bd1b19f513bd01079b86329a7636962"
+  },
+  {
+    "name": "/supabase_kong_unify-reminders-368-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-reminders-368-r1",
+      "com.supabase.cli.project": "unify-reminders-368-r1",
+      "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "image": "sha256:1b53405d8680a09d6f44494b7990bf7da2ea43f84a258c59717d4539abf09f6d"
+  },
+  {
+    "name": "/supabase_edge_runtime_unify-reminders-368-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-reminders-368-r1",
+      "com.supabase.cli.project": "unify-reminders-368-r1",
+      "com.supabase.cli.workdir": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions"
+    },
+    "image": "sha256:edd22bef4477b900d5c300e287ce9b18bff9b81a0291bee14ee0b7c7b71a2899",
+    "actual_content_url": "http://host.docker.internal:3385/content"
+  }
+]

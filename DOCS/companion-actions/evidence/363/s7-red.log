@@ -1,0 +1,27 @@
+running 1 test from ./create_test.ts
+reopening a conversation reads its drafts and command results with their current state ... FAILED (652ms)
+
+ ERRORS 
+
+reopening a conversation reads its drafts and command results with their current state => ./create_test.ts:449:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:466:5)
+
+ FAILURES 
+
+reopening a conversation reads its drafts and command results with their current state => ./create_test.ts:449:6
+
+FAILED | 0 passed | 1 failed | 16 filtered out (661ms)
+
+error: Test failed

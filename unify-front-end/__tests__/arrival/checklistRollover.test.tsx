@@ -7,6 +7,7 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/locales/en/translation.json';
@@ -148,7 +149,9 @@ import { AppState } from 'react-native';
 import ChecklistScreen from '@/app/(tabs)/Checklist/index';
 
 let client: QueryClient;
-let foreground: ((state: string) => void) | undefined;
+// Every AppState listener of the screen (the day rollover and, since
+// mobile-app#361, the task progress re-read).
+let foregroundListeners: ((state: string) => void)[] = [];
 
 const requestedSlugs = () =>
   mockGetChecklist.mock.calls.map(call => call[2] as string);
@@ -181,8 +184,8 @@ beforeEach(() => {
   jest.clearAllMocks();
   mockStore.clear();
   mockFocusCallbacks = [];
-  foreground = undefined;
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  foregroundListeners = [];
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.useFakeTimers({
     now: new Date(2026, 9, 23, 23, 59),
     doNotFake: [
@@ -207,7 +210,7 @@ beforeEach(() => {
     _name: string,
     cb: (state: string) => void
   ) => {
-    foreground = cb;
+    foregroundListeners.push(cb);
     return { remove: jest.fn() };
   }) as never);
 });
@@ -227,7 +230,7 @@ describe('arrival midnight on a mounted Checklist', () => {
     await waitFor(() => expect(requestedSlugs()).toContain('not_arrived'));
 
     jest.setSystemTime(new Date(2026, 9, 24, 0, 1));
-    act(() => foreground?.('active'));
+    act(() => foregroundListeners.forEach(cb => cb('active')));
 
     await waitFor(() =>
       expect(screen.getByText('Your first 30 days')).toBeTruthy()

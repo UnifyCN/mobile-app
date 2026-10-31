@@ -1,0 +1,37 @@
+  console.log
+    CHECKLIST READS before=12 after=13
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:497:11)
+
+FAIL __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ✓ review control: approved current target opens through the root hook and actual sheet (227 ms)
+  ✓ review control: unavailable resolution replaces an open task with a generic result (91 ms)
+  ✓ review: a new notification preserves the open task edit draft (176 ms)
+  ✕ review: a notification selects its task while saved details are open inside the sheet (77 ms)
+  ✓ review: fresh available notification revalidates an already open cached checklist (101 ms)
+  ✓ does not acknowledge a notification before the fresh checklist finishes (81 ms)
+
+  ● review: a notification selects its task while saved details are open inside the sheet
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      478 |   const sheet=screen.getByTestId('companion-task-sheet');
+      479 |   expect(mockPush).toHaveBeenCalledTimes(1);
+    > 480 |   expect(mockClear).toHaveBeenCalledTimes(1);
+          |                     ^
+      481 |   expect(within(sheet).queryByText(en.savedDetails.title)).toBeNull();
+      482 |   expect(within(sheet).getByText('Get a SIN')).toBeTruthy();
+      483 | });
+
+      at Object.toHaveBeenCalledTimes (__tests__/companionActions/pushSelectionRecovery.test.tsx:480:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        1.901 s, estimated 2 s
+Ran all test suites matching /__tests__\/companionActions\/pushSelectionRecovery.test.tsx/i.

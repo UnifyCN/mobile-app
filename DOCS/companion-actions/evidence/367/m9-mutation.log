@@ -1,0 +1,444 @@
+FAIL __tests__/companionActions/planLocalStack.test.tsx
+  Settlement plans against the real local stack (mobile)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+  Independent retained mobile Checklist completion
+    ○ skipped Checklist completion refreshes the retained Companion plan entry
+  Plan and task steps together against the real local stack (mobile)
+    ○ skipped a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+  Task removal against the real local stack (mobile, #367)
+    ✕ a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing (611 ms)
+    ○ skipped a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+    ○ skipped a removal request card turns historical after another device removed the task; its review cannot remove again
+    ○ skipped another account sees none of a removal review, card or receipt
+
+  ● Task removal against the real local stack (mobile, #367) › a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+
+    Unable to find an element with text: Steps kept as history: 1
+
+    <View>
+      <View
+        accessibilityLabel="Select Checklist tab"
+        accessibilityRole="button"
+        accessible={true}
+      >
+        <Text>
+          Checklist
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="Select Companion tab"
+        accessibilityRole="button"
+        accessible={true}
+      >
+        <Text>
+          Companion
+        </Text>
+      </View>
+      <View>
+        <View>
+          <View>
+            <View>
+              <View
+                accessibilityLabel="Open history"
+                accessibilityRole="button"
+                accessible={true}
+              />
+              <Text>
+                Companion
+              </Text>
+              <View
+                accessibilityLabel="New chat"
+                accessibilityRole="button"
+                accessible={true}
+              />
+            </View>
+            <View
+              accessibilityLabel="Your tasks, In progress: 0 · Waiting: 0"
+              accessibilityRole="button"
+              accessible={true}
+            >
+              <View />
+              <View>
+                <Text>
+                  Your tasks
+                </Text>
+                <Text>
+                  In progress: 0 · Waiting: 0
+                </Text>
+              </View>
+            </View>
+            <View
+              accessibilityLabel="Your plan, Your first week in Vancouver, 0 of 3 done"
+              accessibilityRole="button"
+              accessible={true}
+            >
+              <View />
+              <View>
+                <Text>
+                  Your plan
+                </Text>
+                <Text>
+                  Your first week in Vancouver
+                </Text>
+                <Text>
+                  0 of 3 done
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+            >
+              <View>
+                <View
+                  pointerEvents="none"
+                />
+                <Text>
+                  Ask me anything.
+                </Text>
+                <Text>
+                  Fact-checked answers about anything in Canada.
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View>
+            <View>
+              <Text>
+                Try one of these
+              </Text>
+              <View>
+                <TextInput
+                  editable={true}
+                  placeholder="Ask anything..."
+                  value=""
+                />
+                <View
+                  accessibilityState={
+                    {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                >
+                  <View />
+                </View>
+              </View>
+              <View>
+                <Text>
+                  Companion can make mistakes. Verify important info.
+                </Text>
+              </View>
+            </View>
+          </View>
+          <Modal>
+            <View>
+              <View
+                accessible={false}
+              >
+                <View />
+              </View>
+              <View
+                pointerEvents="box-none"
+              >
+                <View
+                  accessibilityViewIsModal={true}
+                  testID="companion-task-sheet"
+                >
+                  <View />
+                  <View>
+                    <View />
+                    <Text
+                      accessibilityRole="header"
+                    >
+                      Task progress
+                    </Text>
+                    <View
+                      accessibilityLabel="Close"
+                      accessibilityRole="button"
+                      accessible={true}
+                    />
+                  </View>
+                  <RCTScrollView>
+                    <View>
+                      <Text>
+                        Checklist task
+                      </Text>
+                      <Text
+                        accessibilityRole="header"
+                      >
+                        Set up phone service
+                      </Text>
+                      <View>
+                        <View>
+                          <View>
+                            <Text
+                              accessibilityRole="header"
+                            >
+                              Steps
+                            </Text>
+                            <Text>
+                              0 of 1 done
+                            </Text>
+                          </View>
+                          <Text>
+                            Checking steps does not complete the task.
+                          </Text>
+                          <View
+                            accessibilityRole="list"
+                          >
+                            <View>
+                              <View>
+                                <View
+                                  accessibilityLabel="Compare phone plans"
+                                  accessibilityRole="checkbox"
+                                  accessibilityState={
+                                    {
+                                      "checked": false,
+                                      "disabled": false,
+                                    }
+                                  }
+                                  accessible={true}
+                                >
+                                  <Text>
+                                    Compare phone plans
+                                  </Text>
+                                </View>
+                                <View
+                                  accessibilityLabel="Edit step: Compare phone plans"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "disabled": false,
+                                    }
+                                  }
+                                  accessible={true}
+                                />
+                                <View
+                                  accessibilityLabel="Remove step: Compare phone plans"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "disabled": false,
+                                    }
+                                  }
+                                  accessible={true}
+                                />
+                              </View>
+                              <View />
+                            </View>
+                          </View>
+                          <View>
+                            <TextInput
+                              accessibilityLabel="New step"
+                              editable={true}
+                              placeholder="Add a step"
+                              value=""
+                            />
+                            <View
+                              accessibilityLabel="Add step"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "disabled": true,
+                                }
+                              }
+                              accessible={true}
+                            >
+                              <Text>
+                                Add step
+                              </Text>
+                            </View>
+                          </View>
+                          <View />
+                        </View>
+                        <Text
+                          accessibilityRole="header"
+                        >
+                          Task state
+                        </Text>
+                        <View
+                          accessibilityLabel="Task state"
+                          accessibilityRole="radiogroup"
+                        >
+                          <View
+                            accessibilityLabel="Not started"
+                            accessibilityRole="radio"
+                            accessibilityState={
+                              {
+                                "checked": true,
+                                "disabled": false,
+                                "selected": true,
+                              }
+                            }
+                            accessible={true}
+                          >
+                            <Text>
+                              Not started
+                            </Text>
+                          </View>
+                          <View
+                            accessibilityLabel="In progress"
+                            accessibilityRole="radio"
+                            accessibilityState={
+                              {
+                                "checked": false,
+                                "disabled": false,
+                                "selected": false,
+                              }
+                            }
+                            accessible={true}
+                          >
+                            <Text>
+                              In progress
+                            </Text>
+                          </View>
+                          <View
+                            accessibilityLabel="Waiting"
+                            accessibilityRole="radio"
+                            accessibilityState={
+                              {
+                                "checked": false,
+                                "disabled": false,
+                                "selected": false,
+                              }
+                            }
+                            accessible={true}
+                          >
+                            <Text>
+                              Waiting
+                            </Text>
+                          </View>
+                          <View
+                            accessibilityLabel="Completed"
+                            accessibilityRole="radio"
+                            accessibilityState={
+                              {
+                                "checked": false,
+                                "disabled": false,
+                                "selected": false,
+                              }
+                            }
+                            accessible={true}
+                          >
+                            <Text>
+                              Completed
+                            </Text>
+                          </View>
+                        </View>
+                        <Text>
+                          Select Completed when the whole task is done. Your steps do not complete it.
+                        </Text>
+                        <View>
+                          <View>
+                            <Text>
+                              Added to Checklist: Set up phone service
+                            </Text>
+                            <Text>
+                              Oct 27, 9:03 PM
+                            </Text>
+                            <View
+                              accessibilityLabel="Undo adding Set up phone service"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "disabled": false,
+                                }
+                              }
+                              accessible={true}
+                            >
+                              <Text>
+                                Undo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          testID="task-removal-review"
+                        >
+                          <Text
+                            accessibilityRole="header"
+                          >
+                            Remove “Set up phone service”?
+                          </Text>
+                          <Text>
+                            Current state: Not started
+                          </Text>
+                          <Text>
+                            Saved plans that include it: Your first week in Vancouver. It shows there as removed.
+                          </Text>
+                          <Text>
+                            Steps kept as history: {{n}}
+                          </Text>
+                          <Text>
+                            It leaves your Checklist. You can undo this from the receipt.
+                          </Text>
+                          <View>
+                            <View
+                              accessibilityLabel="Remove task"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "disabled": false,
+                                }
+                              }
+                              accessible={true}
+                            >
+                              <Text>
+                                Remove task
+                              </Text>
+                            </View>
+                            <View
+                              accessibilityLabel="Cancel"
+                              accessibilityRole="button"
+                              accessible={true}
+                            >
+                              <Text>
+                                Cancel
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View
+                        accessibilityLabel="Open in Checklist"
+                        accessibilityRole="button"
+                        accessible={true}
+                      >
+                        <Text>
+                          Open in Checklist
+                        </Text>
+                      </View>
+                    </View>
+                  </RCTScrollView>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      </View>
+    </View>
+
+      1080 |     fireEvent.press(await enabledButton(within(sheet), `Remove task: ${PHONE}`));
+      1081 |     expect(await within(sheet).findByText(`Remove “${PHONE}”?`, {}, { timeout: 10_000 })).toBeTruthy();
+    > 1082 |     expect(within(sheet).getByText('Steps kept as history: 1')).toBeTruthy();
+           |                          ^
+      1083 |
+      1084 |     // Another device moves the task on while the review is open.
+      1085 |     const before = await taskNow(acc.jwt, phoneRef);
+
+      at Object.getByText (__tests__/companionActions/planLocalStack.test.tsx:1082:26)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 13 skipped, 14 total
+Snapshots:   0 total
+Time:        1.736 s, estimated 5 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "change on another device between review".

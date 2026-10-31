@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ✓ components/companion/tasks/TaskRemovalLocalStack.test.tsx (4 tests | 3 skipped) 1844ms
+   ✓ Task removal against the real local stack (web, #367) > composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account  1395ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  13:14:00
+   Duration  2.76s (transform 269ms, setup 0ms, collect 572ms, tests 1.84s, environment 152ms, prepare 33ms)
+

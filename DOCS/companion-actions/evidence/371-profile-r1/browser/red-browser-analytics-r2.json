@@ -1,0 +1,84 @@
+{
+  "label": "red-browser-analytics-r2",
+  "actualPage": true,
+  "actualCookieProxy": true,
+  "localAuth": true,
+  "cmsFixture": true,
+  "hosted": false,
+  "modelAttempts": 0,
+  "checks": [],
+  "requests": [
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1078
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 498
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 498
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "prepare",
+      "status": 200,
+      "bytes": 423
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "proposal",
+      "status": 200,
+      "bytes": 423
+    },
+    {
+      "path": "owned profile read",
+      "status": 200,
+      "bytes": 76,
+      "rows": 1,
+      "ms": 4
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "apply",
+      "status": 200,
+      "bytes": 631
+    },
+    {
+      "path": "owned profile read",
+      "status": 200,
+      "bytes": 67,
+      "rows": 1,
+      "ms": 4
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1078
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "proposal",
+      "status": 200,
+      "bytes": 808
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 489
+    }
+  ],
+  "matrix": [],
+  "pass": false,
+  "failure": "profile interactions reached automatic analytics\n\n4 !== 0\n",
+  "pageErrorCount": 0
+}

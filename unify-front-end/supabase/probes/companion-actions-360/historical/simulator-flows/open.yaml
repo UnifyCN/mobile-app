@@ -1,0 +1,5 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn: "Open"
+- waitForAnimationToEnd:
+    timeout: 60000

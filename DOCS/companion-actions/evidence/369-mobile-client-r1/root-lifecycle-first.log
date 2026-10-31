@@ -1,0 +1,79 @@
+FAIL __tests__/companionActions/pushRootLifecycle.test.ts
+  ✓ fetches an Expo token after native-token rotation and uses the current revision; foreground permission changes stop local eligibility (13 ms)
+  ✕ drops an authenticated cold response that arrives after account replacement (4 ms)
+  ✕ keeps same-session token refresh as the cold-response positive control (2 ms)
+
+  ● drops an authenticated cold response that arrives after account replacement
+
+    TypeError: Cannot read properties of undefined (reading 'remove')
+
+      88 |       active = false;
+      89 |       listener.remove();
+    > 90 |       foreground.remove();
+         |                  ^
+      91 |       tokens.remove();
+      92 |       stopAccount();
+      93 |       stopDevice();
+
+      at remove (hooks/companion/useCompanionPush.ts:90:18)
+      at Object.react_stack_bottom_frame (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15767:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at commitHookEffectListUnmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9597:17)
+      at commitHookPassiveUnmountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9628:11)
+      at commitPassiveUnmountEffectsInsideOfDeletedTree_begin (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11939:13)
+      at recursivelyTraversePassiveUnmountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11760:13)
+      at commitPassiveUnmountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11802:11)
+      at flushPendingEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14082:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2896:11)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  ● keeps same-session token refresh as the cold-response positive control
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      61 |  let release:any;mockCold.mockImplementationOnce(()=>new Promise(r=>release=r));renderHook(()=>useCompanionPushNotifications());
+      62 |  await act(async()=>auth(mockId,'TOKEN_REFRESHED'));await act(async()=>release({notification:{request:{content:{data:{type:'companion_reminder',delivery_id:delivery}}}}}));
+    > 63 |  expect(requests.filter(b=>b.action==='push_resolve').length).toBe(1);expect(mockNavigate).toHaveBeenCalledTimes(1);
+         |                                                               ^
+      64 |  expect(Notifications.clearLastNotificationResponse).not.toHaveBeenCalled();
+      65 | });
+      66 |
+
+      at Object.toBe (__tests__/companionActions/pushRootLifecycle.test.ts:63:63)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● keeps same-session token refresh as the cold-response positive control
+
+    TypeError: Cannot read properties of undefined (reading 'remove')
+
+      88 |       active = false;
+      89 |       listener.remove();
+    > 90 |       foreground.remove();
+         |                  ^
+      91 |       tokens.remove();
+      92 |       stopAccount();
+      93 |       stopDevice();
+
+      at remove (hooks/companion/useCompanionPush.ts:90:18)
+      at Object.react_stack_bottom_frame (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15767:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at commitHookEffectListUnmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9597:17)
+      at commitHookPassiveUnmountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9628:11)
+      at commitPassiveUnmountEffectsInsideOfDeletedTree_begin (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11939:13)
+      at recursivelyTraversePassiveUnmountEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11760:13)
+      at commitPassiveUnmountOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11802:11)
+      at flushPendingEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14082:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2896:11)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 1 passed, 3 total
+Snapshots:   0 total
+Time:        0.73 s
+Ran all test suites matching /__tests__\/companionActions\/pushRootLifecycle.test.ts/i.

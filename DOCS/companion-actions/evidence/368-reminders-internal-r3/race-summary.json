@@ -1,0 +1,37 @@
+{
+  "orders": 10,
+  "intermediate_records": 10,
+  "final_records": 10,
+  "names": [
+    "cancel-claim-final",
+    "cancel-claim-intermediate",
+    "cancel-stop-final",
+    "cancel-stop-intermediate",
+    "complete-claim-final",
+    "complete-claim-intermediate",
+    "complete-stop-final",
+    "complete-stop-intermediate",
+    "content_complete-claim-final",
+    "content_complete-claim-intermediate",
+    "content_complete-stop-final",
+    "content_complete-stop-intermediate",
+    "legacy-claim-final",
+    "legacy-claim-intermediate",
+    "legacy-stop-final",
+    "legacy-stop-intermediate",
+    "remove-claim-final",
+    "remove-claim-intermediate",
+    "remove-stop-final",
+    "remove-stop-intermediate"
+  ],
+  "log_sha256": "354e3b50c0de883e92fa66075c7d3e49c1d66c4cecaf5d85a84643687b2811b5",
+  "claimed_distribution": {
+    "True": 5,
+    "False": 5
+  },
+  "cancelled_reason_distribution": {
+    "task_completed": 6,
+    "task_removed": 2,
+    "user_cancelled": 2
+  }
+}

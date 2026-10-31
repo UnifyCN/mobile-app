@@ -1,0 +1,6 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/pushNavigation.test.tsx(388,64): error TS2353: Object literal may only specify known properties, and 'post_id' does not exist in type '{ type: string; delivery_id: string; task_id: string; url: string; }'.
+__tests__/companionActions/pushNavigation.test.tsx(390,73): error TS2353: Object literal may only specify known properties, and 'lesson_id' does not exist in type '{ type: string; delivery_id: string; task_id: string; url: string; }'.

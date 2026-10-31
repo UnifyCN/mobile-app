@@ -1,0 +1,172 @@
+
+> web-app@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ✓ lib/companionActions/taskActionStore.detailReview.test.ts (5 tests) 4ms
+ ✓ components/companion/plans/PlanPanelMotion.test.tsx (4 tests) 148ms
+ ✓ lib/documents/documentLanguage.test.ts (9 tests) 142ms
+ ✓ components/learn/practice/reflectionRender.test.ts (37 tests) 398ms
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (10 tests | 9 skipped) 1ms
+stderr | components/companion/accountOwnershipRequests.test.tsx > web service requests belong to the account that started them > a creation whose tagged insert fails after B signed in does not retry as B
+[companion] conversations.source/lesson_id columns not present — falling back to an untagged insert (apply the source-tag migration). { code: [32m'42703'[39m, message: [32m'column'[39m }
+
+stderr | components/companion/accountOwnershipRequests.test.tsx > web hooks keep one owner for every request and cache write > a send whose account changes while its cache is prepared saves nothing as B
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ components/companion/accountOwnershipRequests.test.tsx (12 tests) 250ms
+ ✓ lib/admin/eventForm.test.ts (67 tests) 65ms
+stderr | proxy.learningDestination.test.ts > proxy learning destination flow > keeps the existing gate-query error behavior without consuming intent
+proxy: consent gate query failed Error: test outage
+    at Object.maybeSingle (proxy.learningDestination.test.ts:10:33)
+    at Module.proxy (proxy.ts:115:113)
+    at async (proxy.learningDestination.test.ts:225:22)
+
+ ✓ proxy.learningDestination.test.ts (47 tests) 48ms
+ ✓ components/companion/accountOwnership.test.tsx (7 tests) 512ms
+ ✓ components/companion/CompanionContextDrawer.test.ts (8 tests) 73ms
+ ✓ lib/resources/search.test.ts (10 tests) 32ms
+ ✓ lib/resources/filters.test.ts (14 tests) 9ms
+ ✓ components/learn/help/inLessonAccountOwnership.test.tsx (6 tests) 366ms
+ ✓ components/learn/practice/reflectionGrading.test.ts (52 tests) 10ms
+ ✓ hooks/drafts/createDraftHooks.test.ts (6 tests) 10ms
+ ✓ app/fonts/fonts.test.ts (7 tests) 11ms
+ ✓ lib/i18n/groupText.test.ts (17 tests) 7ms
+ ✓ app/api/cron/sentry-snapshot/route.test.ts (8 tests) 15ms
+ ✓ app/api/aiPlatform.test.ts (7 tests) 6ms
+stderr | components/companion/companionContext.acceptance.test.ts > Companion context on web: Vancouver arrival > saves the answer's context with it, unchanged, and makes no other write
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+stderr | hooks/useCompanion.analytics.test.ts > useSendMessage analytics > first message of a new conversation: turn 1, with its input source
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ hooks/useCompanion.analytics.test.ts (4 tests) 12ms
+ ✓ components/learn/practice/reflectionControllers.test.ts (27 tests) 35ms
+ ✓ components/companion/companionContext.acceptance.test.ts (8 tests) 72ms
+ ✓ lib/admin/eventPartners.test.ts (8 tests) 2ms
+ ✓ lib/jobPosting/handler.test.ts (4 tests) 9ms
+ ✓ services/checklist.dismissal.test.ts (3 tests) 4ms
+ ✓ app/api/learning-destination/route.test.ts (6 tests) 5ms
+ ✓ app/api/companion/actions/route.test.ts (5 tests) 18ms
+stderr | components/learn/StructuredLessonContent.test.ts > sections whose arrays Sanity omitted render without throwing
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: [32m'NO_I18NEXT_INSTANCE'[39m }
+
+ ✓ components/learn/StructuredLessonContent.test.ts (4 tests) 8ms
+ ✓ services/coverLetter.jobPosting.test.ts (3 tests) 7ms
+ ✓ lib/admin/eventCover.test.ts (27 tests) 5ms
+ ✓ lib/authEmailHandoff.test.ts (10 tests) 5ms
+ ✓ lib/seo/routes.test.ts (4 tests) 4ms
+ ✓ lib/analytics.test.ts (14 tests) 10ms
+ ✓ lib/resources/partners.test.ts (5 tests) 11ms
+ ✓ lib/admin/eventVisibility.test.ts (18 tests) 4ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ proxy.matcher.test.ts (9 tests) 4ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ lib/learn/highlightRange.test.ts (4 tests) 4ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ lib/resources/partnerCopy.test.ts (4 tests) 5ms
+ ✓ lib/admin/eventList.test.ts (23 tests) 3ms
+ ✓ lib/whatsNew.test.ts (13 tests) 6ms
+ ✓ services/companion.generateReply.test.ts (3 tests) 3ms
+ ✓ lib/pii/scrubEmail.test.ts (22 tests) 4ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ lib/supabase/imageUrl.test.ts (10 tests) 4ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: absent
+{"label":"absent","expected":"ok","actual":"ok","ids":["last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: empty
+{"label":"empty","expected":"ok","actual":"ok","ids":[]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: two
+{"label":"two","expected":"ok","actual":"ok","ids":["first","last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: null
+{"label":"null","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: object
+{"label":"object","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: string
+{"label":"string","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: number
+{"label":"number","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: bad member
+{"label":"bad member","expected":"unknown","actual":"unknown","ids":null}
+
+ ✓ lib/companionActions/planReviewCollection.test.ts (8 tests) 3ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ lib/admin/access.test.ts (5 tests) 2ms
+ ✓ lib/supabase/storageHost.test.ts (5 tests) 4ms
+ ✓ lib/companionAnalytics.test.ts (9 tests) 3ms
+ ✓ lib/resources/plurals.test.ts (2 tests) 3ms
+ ✓ lib/posthog.test.ts (4 tests) 2ms
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ components/companion/tasks/SavedDetails.test.tsx (16 tests) 2181ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  633ms
+ ✓ lib/recoveryPending.test.ts (5 tests) 3ms
+ ✓ lib/motion.test.ts (3 tests) 3ms
+ ✓ lib/news/thumbnail.test.ts (2 tests) 1ms
+ ✓ lib/appLinks.test.ts (2 tests) 3ms
+ ✓ lib/search.test.ts (4 tests) 2ms
+ ✓ services/auth.signOut.test.ts (1 test) 1ms
+stderr | components/companion/tasks/TaskActions.test.tsx > review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/node_modules/.deno/jsdom@26.1.0/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:80:7)
+    at listOnTimeout (node:internal/timers:585:17)
+    at processTimers (node:internal/timers:521:7) [90mundefined[39m
+
+ ✓ components/companion/tasks/TaskCreate.test.tsx (22 tests) 2870ms
+   ✓ Add one task through Companion (web) > shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task  557ms
+ ✓ components/companion/tasks/TaskActions.test.tsx (19 tests) 3103ms
+   ✓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it  679ms
+   ✓ Checklist task progress (web) > pending and failed lookups stay unresolved and never write; not applied retries the same operation  377ms
+   ✓ Companion task entry and drawer (web) > opens saved tasks from a compact entry, changes one in the drawer, keeps the typed message, and can open Checklist  333ms
+ ✓ components/companion/tasks/TaskSteps.test.tsx (29 tests) 4661ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  893ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  968ms
+
+ Test Files  59 passed (59)
+      Tests  698 passed | 9 skipped (707)
+   Start at  20:52:32
+   Duration  6.61s (transform 4.20s, setup 0ms, collect 17.58s, tests 15.20s, environment 4.32s, prepare 3.26s)
+

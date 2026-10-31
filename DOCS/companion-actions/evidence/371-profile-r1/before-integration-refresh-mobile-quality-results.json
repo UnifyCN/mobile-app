@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+    "exit": 1,
+    "seconds": 6.805,
+    "log": "mobile-quality-1.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+    "exit": 0,
+    "seconds": 0.17,
+    "log": "mobile-quality-2.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+    "exit": 0,
+    "seconds": 8.308,
+    "log": "mobile-quality-3.log"
+  },
+  {
+    "command": [
+      "npx",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+    "exit": 0,
+    "seconds": 23.235,
+    "log": "mobile-quality-4.log"
+  }
+]

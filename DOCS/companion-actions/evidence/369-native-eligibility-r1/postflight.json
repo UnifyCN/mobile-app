@@ -1,0 +1,1167 @@
+{
+  "containers": [
+    {
+      "Id": "6aa704faeb958b65d8ddcb2642e47a9ac5673062ab11737ad42282eb7b29ca30",
+      "Name": "/supabase_edge_runtime_unify-native-a11y359-r1-r2-copy",
+      "State": "created",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-native-a11y359-r1",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-a11y359-r1/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1",
+        "unify.verifier": "native-final-undo-recovery-r2"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "ced81ddb3db97f7ae4f51c30c41962e2898fd99d39cd744bd309c442aff58649",
+      "Name": "/supabase_edge_runtime_unify-native-a11y359-r1",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1/supabase/functions",
+          "Destination": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1/supabase/functions",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-native-a11y359-r1",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-a11y359-r1/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "47bcaf02fbb15aa6ceeb5bb292d042613708df7d3511095fc9c4408b76414095",
+      "Name": "/supabase_rest_unify-native-a11y359-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "478d9cc56b3ce5943bf69d072828458450795b590f3980a079bad3b95bee690f",
+      "Name": "/supabase_auth_unify-native-a11y359-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "0290f0e2137e0523f64d9ce75f44ae3880209a4864e35dd01e41ec738cd9ebb7",
+      "Name": "/supabase_kong_unify-native-a11y359-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "fc7c7a8fcd837a42432156ffd3436a7531139720831f2e53a7deec14ecf5e01a",
+      "Name": "/supabase_db_unify-native-a11y359-r1",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_unify-native-a11y359-r1",
+          "Source": "/var/lib/docker/volumes/supabase_db_unify-native-a11y359-r1/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify/t3-cc46bcbd/unify-front-end/build/native-a11y359-r1"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "e1ece5935528cb3197677f80efcde51da8e821b325d30bd7a268f1b9862d7b60",
+      "Name": "/supabase_edge_runtime_unify-native-remove-367-r1",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-native-remove-367-r1",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-remove-367-r1/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+          "Destination": "/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+          "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.workdir": "/tmp/unify-merge-361-web/build/native367-stack"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "2c0c0a7ecb3b7fae2235e8bea987321be329ac9bf792030b6280fb2fef6072df",
+      "Name": "/supabase_rest_unify-native-remove-367-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.workdir": "/tmp/unify-merge-361-web/build/native367-stack"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "bd371f3a705cf97e613324f1b4ced195ffd2aa834a31fbb685ebd80c607f5ed8",
+      "Name": "/supabase_auth_unify-native-remove-367-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.workdir": "/tmp/unify-merge-361-web/build/native367-stack"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "a3bc8a21f49f9d63d71a3975601c3c0ce5232da0806078d0c8b8ab31a8bb3498",
+      "Name": "/supabase_kong_unify-native-remove-367-r1",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.workdir": "/tmp/unify-merge-361-web/build/native367-stack",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "b3dce422536523ef477ebc321faa5e9946e2c0d9ef24e99218559b9aed7f303e",
+      "Name": "/supabase_db_unify-native-remove-367-r1",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_unify-native-remove-367-r1",
+          "Source": "/var/lib/docker/volumes/supabase_db_unify-native-remove-367-r1/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.workdir": "/tmp/unify-merge-361-web/build/native367-stack"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "34a683c95654a27331c2189f8785418c9818b58fe3a28dd271b40cc48e9dce89",
+      "Name": "/supabase_db_unify-actions-363",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_unify-actions-363",
+          "Source": "/var/lib/docker/volumes/supabase_db_unify-actions-363/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "836500dda55a09d4f04394686c1130f6e1c839b5a07a1ff4f5bdb69837b733db",
+      "Name": "/supabase_edge_runtime_unify-actions-363",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/supabase/functions",
+          "Destination": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/supabase/functions",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-actions-363",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-actions-363/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "1ab7dbb03246520df34f7f02b2f3d89d3853792c01d00c14ea3ece1a8f89e42e",
+      "Name": "/supabase_rest_unify-actions-363",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "585dd896f0773dee0ebe8335ec01112c48b9532a73467efdc303b5c3c32f9780",
+      "Name": "/supabase_auth_unify-actions-363",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "a0bcccb34a4195b08172639e55f92df79ffb638ff8c685c0b5998b5cdafe92e5",
+      "Name": "/supabase_kong_unify-actions-363",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "e0efa988293511361f2a3428b5e0f28039c6ad5dce13bd81d0a67f2f856d63f0",
+      "Name": "/supabase_db_unify-actions-361",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_unify-actions-361",
+          "Source": "/var/lib/docker/volumes/supabase_db_unify-actions-361/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "a9d45f47c23d868ed16e8e254486a9480d1acf6808732e956935730b81a83f38",
+      "Name": "/supabase_edge_runtime_unify-actions-361",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/host_mnt/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions/supabase/functions",
+          "Destination": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions/supabase/functions",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "volume",
+          "Name": "supabase_edge_runtime_unify-actions-361",
+          "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-actions-361/_data",
+          "Destination": "/root/.cache/deno",
+          "Driver": "local",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "185a57cb375072026c16bfbb592913cc1e62ee43901e22da349335cb781248d4",
+      "Name": "/supabase_rest_unify-actions-361",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "165d381deca272105c91e0d6b7e69db9cb4e04c9831e70b9da59de65fab31e24",
+      "Name": "/supabase_auth_unify-actions-361",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "fca88e33370409a8d000e8c4dd61fd27b33b2fe0280648b3de0aa8c08c39c180",
+      "Name": "/supabase_kong_unify-actions-361",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361",
+        "com.supabase.cli.workdir": "/Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-actions-361/supabase/tests/companion-actions",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "476e3d8d4ac4fcf478e62b8d38a6a5a2a72d2509c12bb314edc9ccce6cc1b3bd",
+      "Name": "/supabase_db_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_db_vault-memory",
+          "Source": "/var/lib/docker/volumes/supabase_db_vault-memory/_data",
+          "Destination": "/var/lib/postgresql/data",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "856288c0ebe828a4cbfda346bed7735dd8e6be27e783824e0cd7dc12553ecb68",
+      "Name": "/supabase_studio_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/Users/savargupta/Github/vault-memory/supabase/snippets",
+          "Destination": "/Users/savargupta/Github/vault-memory/supabase/snippets",
+          "Mode": "rw",
+          "RW": true,
+          "Propagation": "rprivate"
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "15117adf2bb6f9b58e20b31f3b0104df50e2033212df62c13a6aaf67ce309d84",
+      "Name": "/supabase_pg_meta_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "2d7ebeddcd4175c8a01f1e1706360134614c7fe249af8a232cc0d4ed86f9bda6",
+      "Name": "/supabase_edge_runtime_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/Users/savargupta/Github/vault-memory/supabase/.temp/start-secrets/supabase_edge_runtime_vault-memory/main/index.ts",
+          "Destination": "/root/index.ts",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "no",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "8406c5badcc87f9f74b5c041297facfefb3ed7dea53d8ad451df344752429a8f",
+      "Name": "/supabase_storage_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "volume",
+          "Name": "supabase_storage_vault-memory",
+          "Source": "/var/lib/docker/volumes/supabase_storage_vault-memory/_data",
+          "Destination": "/mnt",
+          "Driver": "local",
+          "Mode": "z",
+          "RW": true,
+          "Propagation": ""
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "9d7f706f026e54dfcd22bbdb8cfc71a44bbab7401a11dbdf5a4eff29610dec97",
+      "Name": "/supabase_rest_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory",
+        "org.opencontainers.image.created": "2026-06-27T04:19:53.170736+00:00",
+        "org.opencontainers.image.description": "The Ubuntu container image maintained by Canonical\n\nUbuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things.\nIt is the world's most popular operating system across public clouds and OpenStack clouds.\nIt is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale.\nFast, secure and simple, Ubuntu powers millions of PCs worldwide.\n",
+        "org.opencontainers.image.title": "ubuntu",
+        "org.opencontainers.image.version": "26.04"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "10ba8972e70bd8c024ebb74e4190f85fc4895a776f95129dc82a3f52b19114ac",
+      "Name": "/supabase_realtime_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "dfdb15fbcfd587587f820ed63a2d704c95fde5d44e00e5ca89853b11a511d9a0",
+      "Name": "/supabase_inbucket_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory",
+        "org.opencontainers.image.description": "An email and SMTP testing tool with API for developers",
+        "org.opencontainers.image.documentation": "https://mailpit.axllent.org/docs/",
+        "org.opencontainers.image.licenses": "MIT",
+        "org.opencontainers.image.source": "https://github.com/axllent/mailpit",
+        "org.opencontainers.image.title": "Mailpit",
+        "org.opencontainers.image.url": "https://mailpit.axllent.org"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "dc9b7211cce119140a960dc1d184a1c99ad63210e53dccf0d940a8c2e3642f13",
+      "Name": "/supabase_auth_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "07b10db45ce10f3be970c8e89d418d45a9a5d574c03a61b9f1b02da294042425",
+      "Name": "/supabase_kong_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/Users/savargupta/Github/vault-memory/supabase/.temp/start-secrets/supabase_kong_vault-memory/secret-1",
+          "Destination": "/home/kong/localhost.crt",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/Users/savargupta/Github/vault-memory/supabase/.temp/start-secrets/supabase_kong_vault-memory/secret-2",
+          "Destination": "/home/kong/localhost.key",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/Users/savargupta/Github/vault-memory/supabase/.temp/start-secrets/supabase_kong_vault-memory/secret-0",
+          "Destination": "/home/kong/kong.yml",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory",
+        "maintainer": "Kong <support@konghq.com>"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "66b2741d8a6f7b5fd157e23e1b5cee486a046c4b5005f3afab6b9f3da419c8ad",
+      "Name": "/supabase_vector_vault-memory",
+      "State": "exited",
+      "Mounts": [
+        {
+          "Type": "bind",
+          "Source": "/var/run/docker.sock",
+          "Destination": "/var/run/docker.sock",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory",
+        "org.opencontainers.image.documentation": "https://vector.dev/docs",
+        "org.opencontainers.image.source": "https://github.com/vectordotdev/vector",
+        "org.opencontainers.image.url": "https://vector.dev"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    },
+    {
+      "Id": "accf07fb7b1d2836dadb6157032f280d3363a58658251b1daa4ece58c04c4c0c",
+      "Name": "/supabase_analytics_vault-memory",
+      "State": "exited",
+      "Mounts": [],
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory",
+        "com.supabase.cli.workdir": "/Users/savargupta/Github/vault-memory"
+      },
+      "RestartPolicy": {
+        "Name": "unless-stopped",
+        "MaximumRetryCount": 0
+      }
+    }
+  ],
+  "volumes": [
+    "supabase_db_unica-qa-161",
+    "supabase_db_unify-actions-361",
+    "supabase_db_unify-actions-363",
+    "supabase_db_unify-details-370-corrections-r1",
+    "supabase_db_unify-native-a11y359-r1",
+    "supabase_db_unify-native-layout-359-r1",
+    "supabase_db_unify-native-remove-367-r1",
+    "supabase_db_vault-memory",
+    "supabase_edge_runtime_",
+    "supabase_edge_runtime_unify-actions-361",
+    "supabase_edge_runtime_unify-actions-363",
+    "supabase_edge_runtime_unify-details-370-corrections-r1",
+    "supabase_edge_runtime_unify-native-a11y359-r1",
+    "supabase_edge_runtime_unify-native-layout-359-r1",
+    "supabase_edge_runtime_unify-native-remove-367-r1",
+    "supabase_edge_runtime_vault-memory",
+    "supabase_storage_unica-qa-161",
+    "supabase_storage_vault-memory"
+  ],
+  "networks": [
+    {
+      "Id": "28e6805207ba42516ea6b03c04033c4a4df26e4a8cfe68621b927b6fee7dd871",
+      "Name": "bridge",
+      "Created": "2026-10-30T22:53:04.103816833Z",
+      "Labels": {},
+      "Containers": {}
+    },
+    {
+      "Id": "f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670",
+      "Name": "host",
+      "Created": "2026-07-29T23:26:01.032119083Z",
+      "Labels": {},
+      "Containers": {}
+    },
+    {
+      "Id": "3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87",
+      "Name": "none",
+      "Created": "2026-07-29T23:26:01.030358125Z",
+      "Labels": {},
+      "Containers": {}
+    },
+    {
+      "Id": "75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1",
+      "Name": "supabase_network_unify-actions-361",
+      "Created": "2026-10-25T23:58:21.514138053Z",
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-361",
+        "com.supabase.cli.project": "unify-actions-361"
+      },
+      "Containers": {}
+    },
+    {
+      "Id": "f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc",
+      "Name": "supabase_network_unify-actions-363",
+      "Created": "2026-10-26T16:52:54.259124917Z",
+      "Labels": {
+        "com.docker.compose.project": "unify-actions-363",
+        "com.supabase.cli.project": "unify-actions-363"
+      },
+      "Containers": {}
+    },
+    {
+      "Id": "3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe",
+      "Name": "supabase_network_unify-native-a11y359-r1",
+      "Created": "2026-10-29T00:12:37.558150887Z",
+      "Labels": {
+        "com.docker.compose.project": "unify-native-a11y359-r1",
+        "com.supabase.cli.project": "unify-native-a11y359-r1"
+      },
+      "Containers": {}
+    },
+    {
+      "Id": "995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b",
+      "Name": "supabase_network_unify-native-remove-367-r1",
+      "Created": "2026-10-28T06:38:41.374042006Z",
+      "Labels": {
+        "com.docker.compose.project": "unify-native-remove-367-r1",
+        "com.supabase.cli.project": "unify-native-remove-367-r1"
+      },
+      "Containers": {}
+    },
+    {
+      "Id": "f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad",
+      "Name": "supabase_network_vault-memory",
+      "Created": "2026-07-31T02:02:22.382161212Z",
+      "Labels": {
+        "com.docker.compose.project": "vault-memory",
+        "com.supabase.cli.project": "vault-memory"
+      },
+      "Containers": {}
+    }
+  ],
+  "simulators": {
+    "devices": {
+      "com.apple.CoreSimulator.SimRuntime.iOS-26-5": [
+        {
+          "lastBootedAt": "2026-10-24T20:44:20Z",
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/800AB250-F665-4043-B71C-D27B08296F93/data",
+          "dataPathSize": 2333544448,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/800AB250-F665-4043-B71C-D27B08296F93",
+          "udid": "800AB250-F665-4043-B71C-D27B08296F93",
+          "isAvailable": true,
+          "logPathSize": 475136,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+          "state": "Shutdown",
+          "name": "iPhone 17 Pro"
+        },
+        {
+          "lastBootedAt": "2026-10-24T22:13:00Z",
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/F05C5692-44A1-4A6A-980C-1F4B8DEC140C/data",
+          "dataPathSize": 3287687168,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/F05C5692-44A1-4A6A-980C-1F4B8DEC140C",
+          "udid": "F05C5692-44A1-4A6A-980C-1F4B8DEC140C",
+          "isAvailable": true,
+          "logPathSize": 483328,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+          "state": "Shutdown",
+          "name": "Unify Learn Resume QA"
+        },
+        {
+          "lastBootedAt": "2026-10-28T16:40:45Z",
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/0E75438E-474A-4E0B-A615-ABC8BE2D7A36/data",
+          "dataPathSize": 2290294784,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/0E75438E-474A-4E0B-A615-ABC8BE2D7A36",
+          "udid": "0E75438E-474A-4E0B-A615-ABC8BE2D7A36",
+          "isAvailable": true,
+          "logPathSize": 421888,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+          "state": "Shutdown",
+          "name": "unify-native-remove367-r1"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/0531BAA9-120B-43D1-8E22-56AEE70544F7/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/0531BAA9-120B-43D1-8E22-56AEE70544F7",
+          "udid": "0531BAA9-120B-43D1-8E22-56AEE70544F7",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max",
+          "state": "Shutdown",
+          "name": "iPhone 17 Pro Max"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/3D390EE9-C10A-4F58-BF10-9FA53153B859/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/3D390EE9-C10A-4F58-BF10-9FA53153B859",
+          "udid": "3D390EE9-C10A-4F58-BF10-9FA53153B859",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17e",
+          "state": "Shutdown",
+          "name": "iPhone 17e"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/4BD3343D-586E-44F0-8C5E-CE543ED54D7D/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/4BD3343D-586E-44F0-8C5E-CE543ED54D7D",
+          "udid": "4BD3343D-586E-44F0-8C5E-CE543ED54D7D",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-Air",
+          "state": "Shutdown",
+          "name": "iPhone Air"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/63C5315C-C405-45BD-BDF3-AEBB8F8CE827/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/63C5315C-C405-45BD-BDF3-AEBB8F8CE827",
+          "udid": "63C5315C-C405-45BD-BDF3-AEBB8F8CE827",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+          "state": "Shutdown",
+          "name": "iPhone 17"
+        },
+        {
+          "lastBootedAt": "2026-10-28T23:33:30Z",
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/A54D1945-3A80-4584-BBD0-AAD229FF3102/data",
+          "dataPathSize": 3088076800,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/A54D1945-3A80-4584-BBD0-AAD229FF3102",
+          "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102",
+          "isAvailable": true,
+          "logPathSize": 618496,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+          "state": "Shutdown",
+          "name": "unify-layout359-r1"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/3AC9B276-BDC7-4A5D-A432-556E65C4E961/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/3AC9B276-BDC7-4A5D-A432-556E65C4E961",
+          "udid": "3AC9B276-BDC7-4A5D-A432-556E65C4E961",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+          "state": "Shutdown",
+          "name": "iPad Pro 13-inch (M5)"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/F80009E0-7D9B-4686-B4C5-1060369C121E/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/F80009E0-7D9B-4686-B4C5-1060369C121E",
+          "udid": "F80009E0-7D9B-4686-B4C5-1060369C121E",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M5-12GB",
+          "state": "Shutdown",
+          "name": "iPad Pro 11-inch (M5)"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/4AA037EA-FD03-4DC2-8D92-D59287EEEAF2/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/4AA037EA-FD03-4DC2-8D92-D59287EEEAF2",
+          "udid": "4AA037EA-FD03-4DC2-8D92-D59287EEEAF2",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro",
+          "state": "Shutdown",
+          "name": "iPad mini (A17 Pro)"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/461CCA18-5041-45C4-8203-B6DC7E7F1A64/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/461CCA18-5041-45C4-8203-B6DC7E7F1A64",
+          "udid": "461CCA18-5041-45C4-8203-B6DC7E7F1A64",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-13-inch-M4",
+          "state": "Shutdown",
+          "name": "iPad Air 13-inch (M4)"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/D5A5A617-3A82-4659-8E9C-C7A28E4031FD/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/D5A5A617-3A82-4659-8E9C-C7A28E4031FD",
+          "udid": "D5A5A617-3A82-4659-8E9C-C7A28E4031FD",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4",
+          "state": "Shutdown",
+          "name": "iPad Air 11-inch (M4)"
+        },
+        {
+          "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/3F931ED4-5154-44B8-9196-02380D4F8032/data",
+          "dataPathSize": 18337792,
+          "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/3F931ED4-5154-44B8-9196-02380D4F8032",
+          "udid": "3F931ED4-5154-44B8-9196-02380D4F8032",
+          "isAvailable": true,
+          "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-A16",
+          "state": "Shutdown",
+          "name": "iPad (A16)"
+        }
+      ]
+    }
+  },
+  "captured_at": "2026-10-30T23:06:59.994305+00:00",
+  "ports": [
+    {
+      "port": 63710,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63710,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63711,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63711,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63712,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63712,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63713,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63713,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63714,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63714,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63715,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63715,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 63716,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 63716,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 8371,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 8371,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 3396,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 3396,
+      "host": "::1",
+      "free": true
+    },
+    {
+      "port": 3397,
+      "host": "127.0.0.1",
+      "free": true
+    },
+    {
+      "port": 3397,
+      "host": "::1",
+      "free": true
+    }
+  ]
+}

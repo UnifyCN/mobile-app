@@ -1,0 +1,19 @@
+PASS __tests__/companionActions/pushReminderIndependence.test.tsx
+  ✓ saving an in-app reminder stays independent while push is off (180 ms)
+  ✓ saving an in-app reminder stays independent while push is denied (117 ms)
+  ✓ saving an in-app reminder stays independent while push is unsupported (118 ms)
+  ✓ saving an in-app reminder stays independent while push is serviceDisabled (120 ms)
+  ✓ saving an in-app reminder stays independent while push is unknown (122 ms)
+  ✓ saving an in-app reminder stays independent while push is unavailable (111 ms)
+  ✓ cancelling an in-app reminder stays independent while push is off (352 ms)
+  ✓ cancelling an in-app reminder stays independent while push is denied (351 ms)
+  ✓ cancelling an in-app reminder stays independent while push is unsupported (346 ms)
+  ✓ cancelling an in-app reminder stays independent while push is serviceDisabled (346 ms)
+  ✓ cancelling an in-app reminder stays independent while push is unknown (348 ms)
+  ✓ cancelling an in-app reminder stays independent while push is unavailable (350 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        3.256 s, estimated 11 s
+Ran all test suites matching /__tests__\/companionActions\/pushReminderIndependence.test.tsx/i.

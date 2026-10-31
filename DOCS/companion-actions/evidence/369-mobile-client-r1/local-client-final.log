@@ -1,0 +1,18 @@
+  console.log
+    FALSIFIER: wrong project identity, duplicate revision on lost reply, foreign access, failed persisted disable or obsolete target resolution.
+
+      at Object.log (__tests__/companionActions/pushLocal.test.ts:144:13)
+
+  console.log
+    Persisted readbacks: revision 1 after lost reply+status+replay; revision 3 disabled; completed available; foreign and removed unavailable. No provider call.
+
+      at Object.log (__tests__/companionActions/pushLocal.test.ts:334:13)
+
+PASS __tests__/companionActions/pushLocal.test.ts
+  ✓ client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access (2444 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        3.013 s
+Ran all test suites matching /__tests__\/companionActions\/pushLocal.test.ts/i.

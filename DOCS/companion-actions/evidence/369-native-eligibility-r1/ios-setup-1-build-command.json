@@ -1,0 +1,25 @@
+{
+  "command": [
+    "xcodebuild",
+    "-workspace",
+    "ios/Unify.xcworkspace",
+    "-scheme",
+    "Unify",
+    "-configuration",
+    "Debug",
+    "-sdk",
+    "iphonesimulator",
+    "-destination",
+    "generic/platform=iOS Simulator",
+    "-derivedDataPath",
+    "../derived-data",
+    "-jobs",
+    "4",
+    "CODE_SIGNING_ALLOWED=NO"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile",
+  "exit": 0,
+  "seconds": 539.5262720584869,
+  "redacted": true,
+  "raw_log_retained_in_ignored_private_path": true
+}

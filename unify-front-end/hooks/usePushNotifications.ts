@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useCompanionPushNotifications } from '@/hooks/companion/useCompanionPush';
 import { AppState } from 'react-native';
 import { type Href, useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
@@ -22,6 +23,7 @@ const isValidCircleId = (id: unknown): id is string =>
  * Should be called once in a component that has access to UserContext and router.
  */
 export function usePushNotifications() {
+  useCompanionPushNotifications();
   const { currentUser } = useCurrentUser();
   const router = useRouter();
   const responseListenerRef = useRef<Subscription>(null);
@@ -62,13 +64,14 @@ export function usePushNotifications() {
           }
         }
       })
-      .catch(err => {
-        console.error('Push notification registration failed:', err);
+      .catch(() => {
+        console.error('Push notification registration failed');
       });
 
     // Handle notification taps
     responseListenerRef.current = addNotificationResponseListener(response => {
       const data = response.notification.request.content.data;
+      if (data?.type === 'companion_reminder') return;
       const notificationType =
         typeof data?.type === 'string' ? data.type : 'unknown';
 

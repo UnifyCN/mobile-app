@@ -1,0 +1,9 @@
+{
+  "path": "supabase/workers/companion-push/worker.ts",
+  "old": "if(!available || !r || r.status!=='pending' || !n || !p || !budgetReady(p))",
+  "new": "if(!n || !p || !budgetReady(p))",
+  "occurrences": 1,
+  "base_sha256": "17e8ed651f3ba69d27e13337719bb3afe6821f509c6a26f7e691ef43a33201c0",
+  "fault_sha256": "5712fbb612832594f2d034cb8d6a49a0080bafed47e2aaed1bb4ae14f32f7376",
+  "filter": "complete action-first"
+}

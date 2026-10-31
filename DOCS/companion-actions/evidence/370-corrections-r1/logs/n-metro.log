@@ -1,0 +1,790 @@
+Starting project at /Users/savargupta/.t3/worktrees/Unify/t3-a768fdfa/unify-front-end
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+Waiting on http://localhost:8197
+Logs for your project will appear below.
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 53.8% (659/906)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 53.8% (1044/1536)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 54.4% (1647/3855)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓░░░░░░ 63.0% (3163/3985)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 80.7% (4072/4575)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 94.2% (5514/5682)
+iOS Bundled 21858ms node_modules/expo-router/entry.js (5867 modules)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 1ec21d15e3982ba9b51b78acd1c68aad)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+ WARN  Failed to update onboarding stage cache: [Error: Failed to update user stage: null value in column "stage" of relation "user_onboarding_profiles" violates not-null constraint]
+ ERROR  Error updating user stage: [Error: Failed to update user stage: null value in column "stage" of relation "user_onboarding_profiles" violates not-null constraint] 
+
+Code: updateUserStage.ts
+[0m [90m 14 |[39m
+ [90m 15 |[39m     [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 16 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to update user stage: ${error.message}`[39m)[33m;[39m
+ [90m    |[39m                      [31m[1m^[22m[39m
+ [90m 17 |[39m     }
+ [90m 18 |[39m   } [36mcatch[39m (error) {
+ [90m 19 |[39m     console[33m.[39merror([32m'Error updating user stage:'[39m[33m,[39m error)[33m;[39m[0m
+Call Stack
+  updateUserStage (services/onboarding/updateUserStage.ts:16:22)
+ WARN  Failed to update onboarding stage cache: [Error: Failed to update user stage: null value in column "stage" of relation "user_onboarding_profiles" violates not-null constraint]
+ ERROR  Error updating user stage: [Error: Failed to update user stage: null value in column "stage" of relation "user_onboarding_profiles" violates not-null constraint] 
+
+Code: updateUserStage.ts
+[0m [90m 14 |[39m
+ [90m 15 |[39m     [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 16 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to update user stage: ${error.message}`[39m)[33m;[39m
+ [90m    |[39m                      [31m[1m^[22m[39m
+ [90m 17 |[39m     }
+ [90m 18 |[39m   } [36mcatch[39m (error) {
+ [90m 19 |[39m     console[33m.[39merror([32m'Error updating user stage:'[39m[33m,[39m error)[33m;[39m[0m
+Call Stack
+  updateUserStage (services/onboarding/updateUserStage.ts:16:22)
+ ERROR  Error fetching conversations: {"code": "42703", "details": null, "hint": "Perhaps you meant to reference the column \"conversations.created_at\".", "message": "column conversations.updated_at does not exist"} 
+
+Code: getConversations.ts
+[0m [90m 30 |[39m
+ [90m 31 |[39m     [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 32 |[39m       console[33m.[39merror([32m'Error fetching conversations:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                    [31m[1m^[22m[39m
+ [90m 33 |[39m       [36mthrow[39m error[33m;[39m
+ [90m 34 |[39m     }
+ [90m 35 |[39m[0m
+Call Stack
+  getConversations (services/companion/getConversations.ts:32:20)
+ ERROR  Error in getConversations: {"code": "42703", "details": null, "hint": "Perhaps you meant to reference the column \"conversations.created_at\".", "message": "column conversations.updated_at does not exist"} 
+
+Code: getConversations.ts
+[0m [90m 38 |[39m     [90m// Another account signed in: fail the read, never cache another list here.[39m
+ [90m 39 |[39m     [36mif[39m (isAccountChange(error)) [36mthrow[39m error[33m;[39m
+[31m[1m>[22m[39m[90m 40 |[39m     console[33m.[39merror([32m'Error in getConversations:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 41 |[39m     [36mreturn[39m [][33m;[39m
+ [90m 42 |[39m   }
+ [90m 43 |[39m }[33m;[39m[0m
+Call Stack
+  getConversations (services/companion/getConversations.ts:40:18)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 391ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 35298477dd784759c35f33254b86b830)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 94ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 3a461fd630445af8430247a7f000c929)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 73ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 53da18badd2b0002814b810704010610)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 160ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 31bee2f7a577e5cd6cb8cbdfb0f992ee)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 100ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 4b6d9305d8788eee7e3014874fe01106)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)

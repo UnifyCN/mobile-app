@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit": 2,
+  "seconds": 0.05328106880187988,
+  "scope": "Evidence-only staged change. The implementation commit passed its own whitespace check."
+}

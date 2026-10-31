@@ -1,0 +1,5 @@
+10-28 18:40:43.216  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Restored to your Checklist: Get a phone plan", utteranceId=talkback_67, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1652265
+10-28 18:40:43.245  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Restored to your Checklist: Get a phone plan", utteranceId=talkback_68, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1652336
+10-28 18:40:43.250  2747  2823 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_67", returned false
+10-28 18:40:43.340  2747  2747 V talkback: SpeechControllerImpl: Interrupted 67 with talkback_68
+10-28 18:40:46.326  2747  5292 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_68", returned true

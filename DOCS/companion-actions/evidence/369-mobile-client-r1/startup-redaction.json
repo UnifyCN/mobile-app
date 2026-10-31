@@ -1,0 +1,14 @@
+{
+  "original_raw_sha256": "d8e2dc4c86f993e11360abd1e893b22a4b264ca8407dc632925664dda1783bb8",
+  "public_log": "local-start-redacted.log",
+  "local_credential_fields_removed": [
+    "PUBLISHABLE_KEY",
+    "SECRET_KEY",
+    "JWT_SECRET",
+    "ANON_KEY",
+    "SERVICE_ROLE_KEY",
+    "DB_URL"
+  ],
+  "private_raw": "private/startup-raw.log",
+  "private_raw_removed_during_cleanup": true
+}

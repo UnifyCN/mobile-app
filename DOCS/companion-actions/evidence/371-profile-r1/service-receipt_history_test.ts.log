@@ -1,0 +1,8 @@
+running 4 tests from ./receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... ok (388ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... ok (364ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... ok (450ms)
+cleanup ... ok (4ms)
+
+ok | 4 passed | 0 failed (1s)
+

@@ -1,0 +1,5 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn: ".*Undo completion"
+- waitForAnimationToEnd:
+    timeout: 8000

@@ -1,0 +1,106 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+build/native-combined359/supabase/functions/companion-actions/handler.ts(7,37): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/native-combined359/supabase/functions/companion-actions/handler.ts(118,13): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/native-combined359/supabase/functions/companion-actions/handler.ts(119,10): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/native-combined359/supabase/functions/companion-actions/handler.ts(142,13): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/native-combined359/supabase/functions/companion-actions/handler.ts(143,10): error TS7006: Parameter 'row' implicitly has an 'any' type.
+build/native-combined359/supabase/functions/companion-actions/index.ts(5,30): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/native-combined359/supabase/functions/companion-actions/index.ts(10,21): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/index.ts(11,41): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/index.ts(17,12): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/index.ts(18,38): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/index.ts(21,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/index.ts(21,80): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/companion-actions/planHandler.ts(6,37): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/context/appContext.ts(16,30): error TS2307: Cannot find module 'jsr:@supabase/supabase-js@2' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/context/guidance.ts(16,33): error TS2307: Cannot find module '../../../_shared/ssrf.ts' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/context/placeNames_test.ts(4,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/context/placeNames_test.ts(7,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/context/placeNames_test.ts(19,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/context/placeNames_test.ts(26,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/dates_test.ts(7,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/dates_test.ts(15,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/dates_test.ts(26,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/dates_test.ts(37,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/dates_test.ts(44,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(9,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(29,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(39,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(53,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(62,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(73,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(78,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(94,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(122,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(134,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(164,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(179,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(189,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(209,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(230,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(243,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(258,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/profile_test.ts(265,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(9,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(59,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(75,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(81,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(87,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/province_test.ts(99,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(8,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(33,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(46,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(51,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(57,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(65,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(83,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/provincePointer_test.ts(90,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval.ts(5,33): error TS2307: Cannot find module '../../_shared/embeddings.ts' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(8,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(17,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(27,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(59,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(78,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(86,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrieval_test.ts(99,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(10,60): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(41,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(61,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(72,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(81,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(88,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(100,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(108,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(115,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(125,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(151,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(170,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(178,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(186,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(207,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(214,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/retrievedContext_test.ts(223,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic.ts(18,36): error TS2307: Cannot find module '../../_shared/topics.ts' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/topic.ts(104,20): error TS7006: Parameter 't' implicitly has an 'any' type.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(6,30): error TS2307: Cannot find module 'jsr:@std/assert@1' or its corresponding type declarations.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(16,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(34,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(41,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(45,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(54,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(97,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(112,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(127,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(139,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(144,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(151,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(157,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(162,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(181,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(194,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(212,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(222,1): error TS2304: Cannot find name 'Deno'.
+build/native-combined359/supabase/functions/rag-query/lib/topic_test.ts(233,1): error TS2304: Cannot find name 'Deno'.

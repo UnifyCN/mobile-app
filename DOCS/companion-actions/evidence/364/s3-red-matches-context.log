@@ -1,0 +1,74 @@
+# 2026-10-27T18:44:37Z s3 red: matches and review context
+running 8 tests from ./plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (428ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... ok (315ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... ok (290ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... ok (291ms)
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add ... FAILED (164ms)
+content tasks are reused by published identity only; a named content match is offered, never merged ... FAILED (214ms)
+a relevant change since review asks for a new review; an unrelated progress change does not ... FAILED (409ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add => ./plan_test.ts:180:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
++   [
++     "n1",
++   ]
+-   undefined
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:191:5)
+
+content tasks are reused by published identity only; a named content match is offered, never merged => ./plan_test.ts:218:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   undefined
++   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:230:5)
+
+a relevant change since review asks for a new review; an unrelated progress change does not => ./plan_test.ts:238:6
+error: AssertionError: Values are not equal: reused task removed {"plan":{"goal":"Your first week in Vancouver","items":[{"label":"Get your SIN","state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"label":"Open a bank account","state":"not_started","exists":true,"source":"sanity","removed":true,"position":2,"revision":2,"task_ref":"sanity:bank-account","waiting_reason":null},{"state":"not_started","title":"Set up phone service","exists":true,"source":"custom","removed":false,"position":3,"revision":1,"task_ref":"custom:5","waiting_reason":null}],"source":null,"context":{"matches":{"n1":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true},{"task_ref":"sanity:bank-account","available":true}]},"plan_id":"6da56087-cbf9-44cf-8fd0-bf862e5554cf","receipt":{"kind":"plan","status":"applied","plan_id":"6da56087-cbf9-44cf-8fd0-bf862e5554cf","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:5","after_revision":1,"item_operation_id":"9a04d762-d4fa-9378-9d45-f0c214961b03"}],"created_at":"2026-10-27T18:45:08.336035+00:00","operation_id":"59809867-daac-4792-99f1-88634af5766f"},"removed":false,"revision":1,"created_at":"2026-10-27T18:45:08.336035+00:00","updated_at":"2026-10-27T18:45:08.336035+00:00","proposal_id":"1862431c-4e15-49c1-9e33-d9c238c89368"},"status":"applied","receipt":{"kind":"plan","status":"applied","plan_id":"6da56087-cbf9-44cf-8fd0-bf862e5554cf","results":[{"kind":"existing","label":"Get your SIN","outcome":"reused","task_ref":"sanity:sin-number"},{"kind":"existing","label":"Open a bank account","outcome":"reused","task_ref":"sanity:bank-account"},{"key":"n1","kind":"new","title":"Set up phone service","outcome":"created","task_ref":"custom:5","after_revision":1,"item_operation_id":"9a04d762-d4fa-9378-9d45-f0c214961b03"}],"created_at":"2026-10-27T18:45:08.336035+00:00","operation_id":"59809867-daac-4792-99f1-88634af5766f"},"replayed":false,"operation_id":"59809867-daac-4792-99f1-88634af5766f"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:269:7)
+
+ FAILURES 
+
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add => ./plan_test.ts:180:6
+content tasks are reused by published identity only; a named content match is offered, never merged => ./plan_test.ts:218:6
+a relevant change since review asks for a new review; an unrelated progress change does not => ./plan_test.ts:238:6
+
+FAILED | 5 passed | 3 failed (2s)
+
+error: Test failed
+exit=1

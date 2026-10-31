@@ -1,0 +1,18 @@
+{
+  "code_commit": "9df597c951a507f19e5a4aafa4be80608d64b7ab",
+  "code_tree": "515cf51b489ecb5a96e9d34a33c37dfafbfc4ed4",
+  "final_native_undo": "UNRESOLVED. revision 4 remains removed. Network error visible. Cause unproved.",
+  "native_result_sources": {
+    "N1": "b03/b04 selected English live scale and retained edit/focus",
+    "N3": "c05/c06 correct Remove control focus after Cancel",
+    "N2_initial": "d08 removal utterance 62 complete, d13 restore utterance 68 complete before entry-history guard",
+    "N2_final": "e15 removal utterance 45 complete; e18/e20 Undo did not restore"
+  },
+  "cleanup": {
+    "root_processes": "none found at continuation",
+    "docker": "stopped; inventory unavailable",
+    "guest_preferences": "not restored before interruption",
+    "retained_data": true
+  },
+  "ticket_acceptance": "None. Native criterion 8 INCOMPLETE."
+}

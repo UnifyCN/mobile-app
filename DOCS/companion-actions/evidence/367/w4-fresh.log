@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ✓ components/companion/tasks/TaskRemovalLocalStack.test.tsx (3 tests) 3146ms
+   ✓ Task removal against the real local stack (web, #367) > a removal request opens a review in the drawer; Cancel writes nothing and returns focus; the confirmed removal names the plan; Undo restores; the draft stays  1278ms
+   ✓ Task removal against the real local stack (web, #367) > the Checklist delete control opens the reviewed removal; a change on another device before approval revises the review and removes nothing  561ms
+   ✓ Task removal against the real local stack (web, #367) > an old removal request opened after another device removed the task offers nothing to remove; the card turns historical  601ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  21:07:16
+   Duration  4.36s (transform 262ms, setup 0ms, collect 753ms, tests 3.15s, environment 268ms, prepare 47ms)
+

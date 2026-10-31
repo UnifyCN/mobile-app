@@ -1,0 +1,23 @@
+[
+  {
+    "fault": "context-lock",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_definition_sha256": "861c43af2580e53184d52421716c050dbad509327eca9005882c2ccffa02c6c5"
+  },
+  {
+    "fault": "relevant-revision",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_definition_sha256": "861c43af2580e53184d52421716c050dbad509327eca9005882c2ccffa02c6c5"
+  },
+  {
+    "fault": "rendered-client-reconciliation",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_source_sha256": "9a36ff898c7516f6bdcfe2e7c2bcfc7c97734ea5eff9fd58da330ec8a91725ff"
+  }
+]

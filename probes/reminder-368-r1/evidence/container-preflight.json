@@ -1,0 +1,79 @@
+[
+  {
+    "name": "/supabase_db_unify-reminder-probe-368-r1",
+    "image": "public.ecr.aws/supabase/postgres:17.6.1.171",
+    "image_id": "sha256:658d1c9b09ae4f61b8e95087b6859181b4b7d6940d769cf7b605609c8aad43e9",
+    "labels": {
+      "com.docker.compose.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_auth_unify-reminder-probe-368-r1",
+    "image": "public.ecr.aws/supabase/gotrue:v2.197.0",
+    "image_id": "sha256:1736a63078f5922b198c4cbe50f80ab9a2d3b54fe8b7b6cfb2e9dc5dbbc12c6b",
+    "labels": {
+      "com.docker.compose.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_rest_unify-reminder-probe-368-r1",
+    "image": "public.ecr.aws/supabase/postgrest:v16.3",
+    "image_id": "sha256:ec0e25a4e24b0a3bc5e4f011369bfc736bd1b19f513bd01079b86329a7636962",
+    "labels": {
+      "com.docker.compose.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_kong_unify-reminder-probe-368-r1",
+    "image": "public.ecr.aws/supabase/kong:2.8.1",
+    "image_id": "sha256:1b53405d8680a09d6f44494b7990bf7da2ea43f84a258c59717d4539abf09f6d",
+    "labels": {
+      "com.docker.compose.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_edge_runtime_unify-reminder-probe-368-r1",
+    "image": "public.ecr.aws/supabase/edge-runtime:v1.76.2",
+    "image_id": "sha256:edd22bef4477b900d5c300e287ce9b18bff9b81a0291bee14ee0b7c7b71a2899",
+    "labels": {
+      "com.docker.compose.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.project": "unify-reminder-probe-368-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions"
+    },
+    "running": true,
+    "actual_content_query_url": "http://host.docker.internal:3383/content",
+    "mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_edge_runtime_unify-reminder-probe-368-r1",
+        "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-reminder-probe-368-r1/_data",
+        "Destination": "/root/.cache/deno",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      },
+      {
+        "Type": "bind",
+        "Source": "/host_mnt/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions/supabase/functions",
+        "Destination": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/supabase/tests/companion-actions/supabase/functions",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ]
+  }
+]

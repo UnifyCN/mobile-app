@@ -1,0 +1,15 @@
+running 11 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/boundary_test.ts
+wrong account: no token, project key, forged token, or another account's task ... ok (869ms)
+forged or model-made approval is refused and writes nothing ... ok (716ms)
+invalid contract versions and platforms are refused before any write ... ok (348ms)
+invalid payloads are 4xx, never 500, and write nothing ... ok (677ms)
+a stale revision is a conflict that names expected and actual, and writes nothing ... ok (280ms)
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... ok (531ms)
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... ok (3s)
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... ok (385ms)
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... ok (273ms)
+only POST is served ... ok (147ms)
+cleanup ... ok (3ms)
+
+ok | 11 passed | 0 failed (7s)
+

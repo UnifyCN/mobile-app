@@ -1,4 +1,9 @@
 import { supabase } from '@/lib/supabase';
+import {
+  assertOwned,
+  isAccountChange,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 import { QueryType } from '@/types/chatbot';
 
 export interface ConversationMessage {
@@ -9,43 +14,76 @@ export interface ConversationMessage {
   sources: any | null; // JSONB field
   query_type?: QueryType; // Optional - may not exist in DB yet
   disclaimer?: string; // Optional - may not exist in DB yet
+  /** Saved Companion context (ticket #362), unvalidated. Absent until the
+   *  additive companion_context migration is applied. */
+  companion_context?: unknown;
   created_at: string;
 }
 
-export const getConversationMessages = async (
-  conversationIdentifier: string
-): Promise<ConversationMessage[]> => {
-  try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) throw new Error('No authenticated user');
+/**
+ * True when PostgREST rejects `messages.companion_context` because the
+ * additive migration is not applied yet (42703 / PGRST204 / schema cache).
+ * Callers then retry without the column, so chat keeps working.
+ */
+export const isMissingContextColumn = (error: unknown): boolean => {
+  const e = error as { code?: string; message?: string } | null;
+  if (!e) return false;
+  return (
+    e.code === '42703' ||
+    e.code === 'PGRST204' ||
+    /companion_context/i.test(e.message ?? '')
+  );
+};
 
-    // Use a join to fetch messages directly by conversation_identifier
-    // Note: query_type and disclaimer columns are optional - only include if they exist in your DB
-    const { data: messages, error: messagesError } = await supabase
-      .from('messages')
-      .select(
-        `
+const MESSAGE_COLUMNS = `
         id,
         role,
         content,
         sources,
         created_at,
         conversations!inner(conversation_identifier, user_id)
-      `
-      )
-      .eq('conversations.conversation_identifier', conversationIdentifier)
-      .eq('conversations.user_id', user.id) // Ensure user owns this conversation
-      .order('created_at', { ascending: true });
+      `;
+
+export const getConversationMessages = async (
+  conversationIdentifier: string,
+  /** The account whose thread this is (mobile-app#361). */
+  owner: AccountSnapshot
+): Promise<ConversationMessage[]> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error('No authenticated user');
+    assertOwned(owner, user.id);
+
+    // Use a join to fetch messages directly by conversation_identifier
+    // Note: query_type and disclaimer columns are optional - only include if they exist in your DB
+    const query = (columns: string) =>
+      supabase
+        .from('messages')
+        .select(columns)
+        .eq('conversations.conversation_identifier', conversationIdentifier)
+        .eq('conversations.user_id', user.id) // Ensure user owns this conversation
+        .order('created_at', { ascending: true });
+    let { data: messages, error: messagesError } = await query(
+      `${MESSAGE_COLUMNS}, companion_context`
+    );
+    if (messagesError && isMissingContextColumn(messagesError)) {
+      // The first reply may answer after another account signed in: the
+      // retry is a new request, made only while the reader is still signed in.
+      assertOwned(owner);
+      ({ data: messages, error: messagesError } = await query(MESSAGE_COLUMNS));
+    }
 
     if (messagesError) {
       console.error('Error fetching messages:', messagesError);
       throw messagesError;
     }
 
-    return messages || [];
+    return (messages as unknown as ConversationMessage[] | null) || [];
   } catch (error) {
+    // Another account signed in: fail the read, never cache another thread here.
+    if (isAccountChange(error)) throw error;
     console.error('Error in getConversationMessages:', error);
     return [];
   }

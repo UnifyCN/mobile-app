@@ -1,0 +1,24 @@
+{
+  "source": "private/startup-original.log",
+  "source_sha256": "0e6108258705e3ee630fe311a531cdb4565fb55549581b90bad056e76471192a",
+  "retained": "startup.log",
+  "retained_sha256": "8f64887c3268c5368a335e539ce4e5a43208b2d1620c371515fda893b1cd7fc4",
+  "redactions": [
+    {
+      "pattern": "eyJ[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+",
+      "count": 2
+    },
+    {
+      "pattern": "sb_secret_[A-Za-z0-9_-]+",
+      "count": 1
+    },
+    {
+      "pattern": "sb_publishable_[A-Za-z0-9_-]+",
+      "count": 1
+    },
+    {
+      "pattern": "local database URL password",
+      "count": 1
+    }
+  ]
+}

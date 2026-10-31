@@ -1,0 +1,922 @@
+FAIL __tests__/companionActions/pushReminderIndependence.test.tsx (10.97 s)
+  ✓ saving an in-app reminder stays independent while push is off (206 ms)
+  ✓ saving an in-app reminder stays independent while push is denied (114 ms)
+  ✓ saving an in-app reminder stays independent while push is unsupported (116 ms)
+  ✓ saving an in-app reminder stays independent while push is serviceDisabled (118 ms)
+  ✓ saving an in-app reminder stays independent while push is unknown (121 ms)
+  ✓ saving an in-app reminder stays independent while push is unavailable (116 ms)
+  ✕ cancelling an in-app reminder stays independent while push is off (1449 ms)
+  ✕ cancelling an in-app reminder stays independent while push is denied (1374 ms)
+  ✕ cancelling an in-app reminder stays independent while push is unsupported (1510 ms)
+  ✕ cancelling an in-app reminder stays independent while push is serviceDisabled (1629 ms)
+  ✕ cancelling an in-app reminder stays independent while push is unknown (2028 ms)
+  ✕ cancelling an in-app reminder stays independent while push is unavailable (1526 ms)
+
+  ● cancelling an in-app reminder stays independent while push is off
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mPush is off on this device.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Enable on this device"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mEnable on this device[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling an in-app reminder stays independent while push is denied
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mSystem permission blocks push. In-app reminders still work.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Enable on this device"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mEnable on this device[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling an in-app reminder stays independent while push is unsupported
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mPush is not supported here. In-app reminders still work.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling an in-app reminder stays independent while push is serviceDisabled
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mThe push service is unavailable or disabled. In-app reminders still work.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Check result"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mCheck result[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling an in-app reminder stays independent while push is unknown
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mThe save result is unknown. Check the result before retrying.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Check result"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mCheck result[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● cancelling an in-app reminder stays independent while push is unavailable
+
+    Unable to find an element with text: Reminder stopped
+
+    [36m<View>[39m
+      [36m<Text[39m
+        [33maccessibilityRole[39m=[32m"header"[39m
+      [36m>[39m
+        [0mReminders[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mCompanion push reminders[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mApplies to Companion reminders on this device, across all tasks. In-app reminders work separately.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mSystem permission: denied[0m
+        [36m</Text>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mSecure device access is unavailable. No push change is confirmed. Refresh after unlocking. Lost credentials need a separate recovery process.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Enable on this device"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mEnable on this device[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Refresh status"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "busy": false,
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mRefresh status[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mSynthetic reminder[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mScheduled[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+      [36m<Text>[39m
+        [0mDate and time with UTC offset[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Date and time with UTC offset"[39m
+        [33mplaceholder[39m=[32m"2027-11-07T01:30-04:00"[39m
+        [33mvalue[39m=[32m""[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mTime zone[0m
+      [36m</Text>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Time zone"[39m
+        [33mvalue[39m=[32m"America/Vancouver"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mEnter the date, time, UTC offset and named time zone. Check all values before you save.[0m
+      [36m</Text>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mReview reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessibilityState[39m=[32m{
+          {
+            "disabled": false,
+          }
+        }[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCancel reminder[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<Text[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [0mReminder saved.[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mNov 7, 2027, 01:30 AM GMT-04:00 · America/New_York[0m
+        [36m</Text>[39m
+        [36m<Text>[39m
+          [0mUndo leaves stopped reminders stopped. Starting a reminder again requires a new time review.[0m
+        [36m</Text>[39m
+        [36m<View[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessibilityState[39m=[32m{
+            {
+              "disabled": false,
+            }
+          }[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUndo this change[0m
+          [36m</Text>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      256 |       await screen.findByRole('button', { name: en.reminders.confirmCancel })
+      257 |     );
+    > 258 |     await screen.findByText(en.reminders.stopped);
+          |                  ^
+      259 |     expect(calls.map(b => b.action)).toEqual(['prepare', 'apply']);
+      260 |     expect(
+      261 |       calls
+
+      at findByText (__tests__/companionActions/pushReminderIndependence.test.tsx:258:18)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 6 passed, 12 total
+Snapshots:   0 total
+Time:        11.268 s
+Ran all test suites matching /__tests__\/companionActions\/pushReminderIndependence.test.tsx/i.

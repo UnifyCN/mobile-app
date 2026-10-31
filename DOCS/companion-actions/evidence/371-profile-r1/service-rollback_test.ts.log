@@ -1,0 +1,10 @@
+running 6 tests from ./rollback_test.ts
+legacy Checklist calls and existing rows are identical on the baseline, after up, after down and after up again ... ok (8s)
+the migration ships the feature off; API roles cannot execute the action SQL ... ok (3s)
+receipts, waiting reasons and Undo survive a rollback and re-application; held revisions go stale ... ok (4s)
+a full rollback stops every pending reminder; re-application restarts none; history stays exact ... ok (7s)
+account deletion removes receipts and proposals with the account ... ok (223ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (23s)
+

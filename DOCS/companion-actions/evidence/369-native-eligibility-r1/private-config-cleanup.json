@@ -1,0 +1,26 @@
+{
+  "files": [
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/private/account.json",
+      "bytes": 139,
+      "removed": true
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/private/manifest.json",
+      "bytes": 5275,
+      "removed": true
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/private/entry.bundle",
+      "bytes": 29025551,
+      "removed": true
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/private/source-map.json",
+      "bytes": 43148177,
+      "removed": true
+    }
+  ],
+  "owned_stack_removed": true,
+  "reason": "Local account, manifest, bundle and map private data are no longer needed after byte/hash verification."
+}

@@ -1,0 +1,13 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 1 test from ./profile_rollback_test.ts
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history ...
+------- output -------
+{"kind":"profile_schema_ready","present":false,"observations":[{"schema":false,"status":404,"bytes":385},{"schema":false,"status":404,"bytes":385},{"schema":false,"status":404,"bytes":385}]}
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- output end -----
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history ... ok (738ms)
+
+ok | 1 passed | 0 failed (746ms)
+

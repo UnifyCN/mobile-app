@@ -1,0 +1,8 @@
+running 4 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (457ms)
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives ... ok (484ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... ok (779ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (570ms)
+
+ok | 4 passed | 0 failed (2s)
+

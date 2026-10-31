@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "label=com.supabase.cli.project=unify-reminders-368-r1",
+      "--format",
+      "{{json .}}"
+    ],
+    "exit": 0,
+    "stdout": "{\"Command\":\"\\\"sh -c 'exec edge-ru\u2026\\\"\",\"CreatedAt\":\"2026-10-29 12:38:56 -0700 PDT\",\"HealthStatus\":\"none\",\"ID\":\"91f09e93156c\",\"Image\":\"public.ecr.aws/supabase/edge-runtime:v1.76.2\",\"Labels\":\"com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/binds/1/Source=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/binds/1/SourceKind=hostFile,desktop.docker.io/binds/1/Target=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/ports.scheme=v2\",\"LocalVolumes\":\"1\",\"Mounts\":\"/host_mnt/Volu\u2026,supabase_edge_\u2026\",\"Names\":\"supabase_edge_runtime_unify-reminders-368-r1\",\"Networks\":\"supabase_network_unify-reminders-368-r1\",\"Platform\":{\"architecture\":\"arm64\",\"os\":\"linux\"},\"Ports\":\"\",\"RunningFor\":\"About a minute ago\",\"Size\":\"61.4kB (virtual 700MB)\",\"State\":\"created\",\"Status\":\"Created\"}\n{\"Command\":\"\\\"/bin/postgrest\\\"\",\"CreatedAt\":\"2026-10-29 12:38:55 -0700 PDT\",\"HealthStatus\":\"none\",\"ID\":\"eb1f95ea4d92\",\"Image\":\"public.ecr.aws/supabase/postgrest:v16.3\",\"Labels\":\"com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/ports.scheme=v2\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Names\":\"supabase_rest_unify-reminders-368-r1\",\"Networks\":\"supabase_network_unify-reminders-368-r1\",\"Platform\":{\"architecture\":\"arm64\",\"os\":\"linux\"},\"Ports\":\"3000/tcp\",\"RunningFor\":\"About a minute ago\",\"Size\":\"4.1kB (virtual 20.5MB)\",\"State\":\"running\",\"Status\":\"Up About a minute\"}\n{\"Command\":\"\\\"auth\\\"\",\"CreatedAt\":\"2026-10-29 12:38:54 -0700 PDT\",\"HealthStatus\":\"healthy\",\"ID\":\"c5bda82a16b6\",\"Image\":\"public.ecr.aws/supabase/gotrue:v2.197.0\",\"Labels\":\"com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/ports.scheme=v2\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Names\":\"supabase_auth_unify-reminders-368-r1\",\"Networks\":\"supabase_network_unify-reminders-368-r1\",\"Platform\":{\"architecture\":\"arm64\",\"os\":\"linux\"},\"Ports\":\"9999/tcp\",\"RunningFor\":\"About a minute ago\",\"Size\":\"4.1kB (virtual 60.6MB)\",\"State\":\"running\",\"Status\":\"Up About a minute (healthy)\"}\n{\"Command\":\"\\\"sh -c 'cat \\u003c\\u003c'EOF' \u2026\\\"\",\"CreatedAt\":\"2026-10-29 12:38:53 -0700 PDT\",\"HealthStatus\":\"healthy\",\"ID\":\"5f184ef329f2\",\"Image\":\"public.ecr.aws/supabase/kong:2.8.1\",\"Labels\":\"com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/8000/tcp=:63081,maintainer=Kong \\u003csupport@konghq.com\\u003e\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Names\":\"supabase_kong_unify-reminders-368-r1\",\"Networks\":\"supabase_network_unify-reminders-368-r1\",\"Platform\":{\"architecture\":\"arm64\",\"os\":\"linux\",\"variant\":\"v8\"},\"Ports\":\"0.0.0.0:63081-\\u003e8000/tcp, [::]:63081-\\u003e8000/tcp\",\"RunningFor\":\"About a minute ago\",\"Size\":\"160kB (virtual 164MB)\",\"State\":\"running\",\"Status\":\"Up About a minute (healthy)\"}\n{\"Command\":\"\\\"sh -c '\\\\ncat \\u003c\\u003c'EOF'\u2026\\\"\",\"CreatedAt\":\"2026-10-29 12:38:38 -0700 PDT\",\"HealthStatus\":\"healthy\",\"ID\":\"11d504847765\",\"Image\":\"public.ecr.aws/supabase/postgres:17.6.1.171\",\"Labels\":\"com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/5432/tcp=:63082\",\"LocalVolumes\":\"1\",\"Mounts\":\"supabase_db_un\u2026\",\"Names\":\"supabase_db_unify-reminders-368-r1\",\"Networks\":\"supabase_network_unify-reminders-368-r1\",\"Platform\":{\"architecture\":\"arm64\",\"os\":\"linux\"},\"Ports\":\"0.0.0.0:63082-\\u003e5432/tcp, [::]:63082-\\u003e5432/tcp\",\"RunningFor\":\"About a minute ago\",\"Size\":\"86kB (virtual 1.39GB)\",\"State\":\"running\",\"Status\":\"Up About a minute (healthy)\"}\n",
+    "stderr": "",
+    "seconds": 0.037
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "--type",
+      "container",
+      "supabase_edge_runtime_unify-reminders-368-r1",
+      "--format",
+      "{{json .State}}"
+    ],
+    "timeout": 8,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 8.007
+  },
+  {
+    "command": [
+      "docker",
+      "logs",
+      "--tail",
+      "30",
+      "supabase_edge_runtime_unify-reminders-368-r1"
+    ],
+    "timeout": 8,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 8.018
+  }
+]

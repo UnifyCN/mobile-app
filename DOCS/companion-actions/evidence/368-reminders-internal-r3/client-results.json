@@ -1,0 +1,39 @@
+{
+  "prepare_live": {
+    "exit": 0,
+    "proof": "owned schema setup only"
+  },
+  "mobile_live": {
+    "exit": 0,
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "natural_exit": true,
+    "proof": "RNTL controls, real Auth/JWT/action service and actual Cron; no native device or screen-reader proof",
+    "warning": "React act warnings retained"
+  },
+  "browser_live": {
+    "exit": 0,
+    "cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "natural_exit": true,
+    "proof": "real local Auth/JWT/action service and rendered fixture",
+    "http_records": 50,
+    "status_distribution": {
+      "200": 49,
+      "201": 1
+    },
+    "endpoint_distribution": {
+      "/auth/v1/admin/users": 2,
+      "/auth/v1/token": 2,
+      "/rest/v1/custom_checklist_tasks": 1,
+      "/functions/v1/companion-actions": 43,
+      "/auth/v1/admin/users/1a5ca3bc-52a5-473a-b885-f4883c5bc54e": 1,
+      "/auth/v1/admin/users/823ad09d-0b2d-4c7e-9e82-70e257476edc": 1
+    }
+  },
+  "mobile-live.log_sha256": "acb9a66c95232df2105321ab09213e598be042da23e01f4fbf8cf07804ec8a8e",
+  "browser-live.log_sha256": "9bc518e9cb9f45babb7d5455ab42041c1c8a3feb6e0c69de33d31eace1d5a1a2",
+  "prepare-live.log_sha256": "ce2df277332f14c9208ea5ddd1ac211bc6309ac6f6a0924e8e2697d3cd77c64c"
+}

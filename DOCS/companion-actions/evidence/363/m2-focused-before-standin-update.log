@@ -1,0 +1,37 @@
+PASS __tests__/companion/companionAnalytics.test.ts
+PASS __tests__/companion/companionTemplates.test.ts
+FAIL __tests__/companionActions/accountOwnershipReadFallback.test.ts
+  ● the answer save retries without companion_context only for its account › when another account signs in during the first insert, no retry is requested
+  ● the answer save retries without companion_context only for its account › when the account signs out during the first insert, no retry is requested
+  ● the answer save retries without companion_context only for its account › when the session becomes unknown during the first insert, no retry is requested
+  ● the answer save retries without companion_context only for its account › positive control: a token refresh of the same account keeps the retry
+PASS __tests__/companion/stageContext.test.ts
+PASS __tests__/companionActions/accountOwnershipRequests.test.ts
+PASS __tests__/companion/ragQueryErrors.test.ts
+PASS __tests__/companion/requestToday.test.ts
+PASS __tests__/companion/companionStarterHistory.test.ts
+PASS __tests__/companion/companionContextSheet.test.tsx
+PASS __tests__/companion/personalizedStartersAccount.test.ts
+PASS __tests__/companionActions/companionActionsLocalStack.test.tsx
+PASS __tests__/hooks/useUserStage.test.ts
+PASS __tests__/companionActions/accountOwnership.test.tsx
+PASS __tests__/companionActions/taskCreate.test.tsx
+FAIL __tests__/companionActions/accountOwnershipStages.test.tsx
+  ● message save stages and their cache writes belong to their account › a save that fails after B loaded does not restore A's cached messages
+  ● message save stages and their cache writes belong to their account › a save that succeeds after B loaded leaves no A entry and no stream
+FAIL __tests__/companionActions/companionTaskSheet.test.tsx
+  ● review r2 corrections (mobile sheet) › F1: the open task sheet drops A's private task once B signs in
+  ● review r2 corrections (mobile sheet) › F1: A's Checklist read that ends after B signed in never shows A's task
+PASS __tests__/companionActions/checklistTaskProgress.test.tsx (8.698 s)
+FAIL __tests__/companion/companionContext.acceptance.test.tsx (11.135 s)
+  ● Companion context on mobile: Vancouver arrival › the streaming answer shows the place, arrival, Checklist count and check time before the text finishes
+  ● Companion context on mobile: Vancouver arrival › saves the context with the answer, unchanged, and the reopened answer shows the same
+  ● Companion context on mobile: Vancouver arrival › Sources and context opens a sheet with each page, publisher, address and read time, and the context used
+  ● Companion context on mobile: Vancouver arrival › analytics never receive the context: no place, task title, URL or publisher
+  ● Companion context on mobile: Vancouver arrival › every locale shows the context control in its own language, with no raw keys
+  ● Companion context on mobile: missing, conflicting and unavailable information › a stated province that differs from the profile is shown in words, and the profile is said to be unchanged
+  ● Companion context on mobile: missing, conflicting and unavailable information › guidance that could not be checked says so and shows no check time
+  ● Companion context on mobile: missing, conflicting and unavailable information › an older rag-query with no context: the answer saves and renders as before, with no context control
+  ● Companion context on mobile: missing, conflicting and unavailable information › before the column is migrated, the answer still saves and reopens, without its context
+Test Suites: 4 failed, 1 skipped, 14 passed, 18 of 19 total
+Tests:       17 failed, 3 skipped, 204 passed, 224 total

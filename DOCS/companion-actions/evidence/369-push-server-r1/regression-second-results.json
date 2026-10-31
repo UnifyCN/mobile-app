@@ -1,0 +1,230 @@
+[
+  {
+    "name": "actions_test.ts",
+    "label": "regression-final-01-actions",
+    "exit": 0,
+    "seconds": 17.770414113998413
+  },
+  {
+    "name": "boundary_test.ts",
+    "label": "regression-final-02-boundary",
+    "exit": 0,
+    "seconds": 23.687236070632935
+  },
+  {
+    "name": "command_test.ts",
+    "label": "regression-final-03-command",
+    "exit": 0,
+    "seconds": 19.460824251174927
+  },
+  {
+    "name": "compose_365_370_test.ts",
+    "label": "regression-final-04-compose_365_370",
+    "exit": 0,
+    "seconds": 19.257058143615723
+  },
+  {
+    "name": "compose_367_370_recovery_test.ts",
+    "label": "regression-final-05-compose_367_370_recovery",
+    "exit": 0,
+    "seconds": 21.25238299369812
+  },
+  {
+    "name": "compose_367_370_rollback_test.ts",
+    "label": "regression-final-06-compose_367_370_rollback",
+    "exit": 0,
+    "seconds": 21.545912265777588
+  },
+  {
+    "name": "compose_367_370_test.ts",
+    "label": "regression-final-07-compose_367_370",
+    "exit": 0,
+    "seconds": 18.262622117996216
+  },
+  {
+    "name": "compose_rollback_test.ts",
+    "label": "regression-final-08-compose_rollback",
+    "exit": 0,
+    "seconds": 29.2192599773407
+  },
+  {
+    "name": "create_rollback_test.ts",
+    "label": "regression-final-09-create_rollback",
+    "exit": 0,
+    "seconds": 25.37457823753357
+  },
+  {
+    "name": "create_test.ts",
+    "label": "regression-final-10-create",
+    "exit": 0,
+    "seconds": 24.974647998809814
+  },
+  {
+    "name": "details_language_test.ts",
+    "label": "regression-final-11-details_language",
+    "exit": 0,
+    "seconds": 20.047980070114136
+  },
+  {
+    "name": "details_rollback_test.ts",
+    "label": "regression-final-12-details_rollback",
+    "exit": 0,
+    "seconds": 23.36317777633667
+  },
+  {
+    "name": "details_test.ts",
+    "label": "regression-final-13-details",
+    "exit": 0,
+    "seconds": 23.670756101608276
+  },
+  {
+    "name": "edit_command_test.ts",
+    "label": "regression-final-14-edit_command",
+    "exit": 0,
+    "seconds": 27.756733894348145
+  },
+  {
+    "name": "edit_published_test.ts",
+    "label": "regression-final-15-edit_published",
+    "exit": 1,
+    "seconds": 14.174351930618286
+  },
+  {
+    "name": "edit_rollback_test.ts",
+    "label": "regression-final-16-edit_rollback",
+    "exit": 0,
+    "seconds": 23.30385994911194
+  },
+  {
+    "name": "edit_test.ts",
+    "label": "regression-final-17-edit",
+    "exit": 0,
+    "seconds": 19.434399843215942
+  },
+  {
+    "name": "edit_undo_test.ts",
+    "label": "regression-final-18-edit_undo",
+    "exit": 0,
+    "seconds": 17.683998823165894
+  },
+  {
+    "name": "plan_access_test.ts",
+    "label": "regression-final-19-plan_access",
+    "exit": 0,
+    "seconds": 20.18837022781372
+  },
+  {
+    "name": "plan_multiple_reviews_test.ts",
+    "label": "regression-final-20-plan_multiple_reviews",
+    "exit": 0,
+    "seconds": 19.48332691192627
+  },
+  {
+    "name": "plan_recovery_test.ts",
+    "label": "regression-final-21-plan_recovery",
+    "exit": 0,
+    "seconds": 19.56636905670166
+  },
+  {
+    "name": "plan_retry_review_test.ts",
+    "label": "regression-final-22-plan_retry_review",
+    "exit": 0,
+    "seconds": 20.951029062271118
+  },
+  {
+    "name": "plan_rollback_test.ts",
+    "label": "regression-final-23-plan_rollback",
+    "exit": 0,
+    "seconds": 24.745172262191772
+  },
+  {
+    "name": "plan_test.ts",
+    "label": "regression-final-24-plan",
+    "exit": 0,
+    "seconds": 22.772260665893555
+  },
+  {
+    "name": "plan_undo_test.ts",
+    "label": "regression-final-25-plan_undo",
+    "exit": 0,
+    "seconds": 19.77419400215149
+  },
+  {
+    "name": "receipt_history_test.ts",
+    "label": "regression-final-26-receipt_history",
+    "exit": 0,
+    "seconds": 19.88251304626465
+  },
+  {
+    "name": "reminders_commands_test.ts",
+    "label": "regression-final-27-reminders_commands",
+    "exit": 0,
+    "seconds": 17.48412799835205
+  },
+  {
+    "name": "reminders_races_test.ts",
+    "label": "regression-final-28-reminders_races",
+    "exit": 0,
+    "seconds": 46.680442810058594
+  },
+  {
+    "name": "reminders_test.ts",
+    "label": "regression-final-29-reminders",
+    "exit": 0,
+    "seconds": 38.785706996917725
+  },
+  {
+    "name": "remove_plan_race_test.ts",
+    "label": "regression-final-30-remove_plan_race",
+    "exit": 0,
+    "seconds": 17.924039840698242
+  },
+  {
+    "name": "remove_rollback_test.ts",
+    "label": "regression-final-31-remove_rollback",
+    "exit": 0,
+    "seconds": 20.844046115875244
+  },
+  {
+    "name": "remove_test.ts",
+    "label": "regression-final-32-remove",
+    "exit": 0,
+    "seconds": 23.254571676254272
+  },
+  {
+    "name": "rollback_test.ts",
+    "label": "regression-final-33-rollback",
+    "exit": 0,
+    "seconds": 37.245604038238525
+  },
+  {
+    "name": "steps_context_race_test.ts",
+    "label": "regression-final-34-steps_context_race",
+    "exit": 0,
+    "seconds": 27.38352394104004
+  },
+  {
+    "name": "steps_parent_race_test.ts",
+    "label": "regression-final-35-steps_parent_race",
+    "exit": 0,
+    "seconds": 21.8381826877594
+  },
+  {
+    "name": "steps_rollback_test.ts",
+    "label": "regression-final-36-steps_rollback",
+    "exit": 0,
+    "seconds": 21.036808967590332
+  },
+  {
+    "name": "steps_test.ts",
+    "label": "regression-final-37-steps",
+    "exit": 0,
+    "seconds": 24.32100796699524
+  },
+  {
+    "name": "undo_test.ts",
+    "label": "regression-final-38-undo",
+    "exit": 0,
+    "seconds": 18.963418006896973
+  }
+]

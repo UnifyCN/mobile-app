@@ -1,0 +1,7 @@
+running 3 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/create_rollback_test.ts
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it ... ok (2s)
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing ... ok (5s)
+cleanup ... ok (8ms)
+
+ok | 3 passed | 0 failed (7s)
+

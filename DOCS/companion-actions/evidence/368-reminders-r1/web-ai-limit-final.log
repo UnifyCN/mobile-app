@@ -1,0 +1,23 @@
+
+ RUN  v3.2.7 /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359
+
+ ✓ components/companion/tasks/ReminderNavigation.test.tsx (2 tests) 67ms
+ ✓ components/companion/tasks/Reminders.test.tsx (5 tests) 137ms
+ ✓ components/companion/tasks/RemovedReceiptPage.test.tsx (2 tests) 104ms
+stderr | components/companion/tasks/TaskActions.test.tsx > review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:80:7)
+    at listOnTimeout (node:internal/timers:585:17)
+    at processTimers (node:internal/timers:521:7) undefined
+
+ ✓ components/companion/tasks/TaskActions.test.tsx (19 tests) 1641ms
+   ✓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it  358ms
+
+ Test Files  4 passed (4)
+      Tests  28 passed (28)
+   Start at  11:50:23
+   Duration  2.87s (transform 463ms, setup 0ms, collect 1.77s, tests 1.95s, environment 1.58s, prepare 172ms)
+

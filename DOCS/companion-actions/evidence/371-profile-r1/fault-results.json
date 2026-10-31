@@ -1,0 +1,30 @@
+[
+  {
+    "fault": "context-lock",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_definition_sha256": "c7edd5209cfc0150d17c92d9db0ca0f5912b75cf3609ce954b370b40cbb9e4f3"
+  },
+  {
+    "fault": "missing-profile-lock",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_definition_sha256": "c7edd5209cfc0150d17c92d9db0ca0f5912b75cf3609ce954b370b40cbb9e4f3"
+  },
+  {
+    "fault": "relevant-revision",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_definition_sha256": "c7edd5209cfc0150d17c92d9db0ca0f5912b75cf3609ce954b370b40cbb9e4f3"
+  },
+  {
+    "fault": "rendered-client-reconciliation",
+    "exit": 1,
+    "assertion_red": true,
+    "restored": true,
+    "restored_source_sha256": "9a36ff898c7516f6bdcfe2e7c2bcfc7c97734ea5eff9fd58da330ec8a91725ff"
+  }
+]

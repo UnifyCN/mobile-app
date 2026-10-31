@@ -1,0 +1,12 @@
+running 8 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/plan_retry_review_test.ts
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task ... ok (522ms)
+concurrent retries open one review; replays, a second context change, competing and lost approvals add one task ... ok (488ms)
+an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review ... ok (310ms)
+a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none ... ok (380ms)
+Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review ... ok (781ms)
+another account cannot read, edit, approve, close or retry a revised review ... ok (576ms)
+rolling back #364 and applying it again keeps an open revised review reachable; its earlier approval is not used ... ok (1s)
+cleanup ... ok (4ms)
+
+ok | 8 passed | 0 failed (4s)
+

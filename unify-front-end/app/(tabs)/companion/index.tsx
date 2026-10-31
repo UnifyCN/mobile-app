@@ -1,4 +1,10 @@
 import { typography } from '@/constants/Typography';
+import {
+  companionPushIntents,
+  useCompanionPushSelection,
+} from '@/hooks/companion/useCompanionPush';
+import { currentPushLocale } from '@/services/companionActions/pushNative';
+import type { PushSelection } from '@/services/companionActions/pushIntents';
 import React, {
   useState,
   useRef,
@@ -8,11 +14,11 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
   TextInput,
   Pressable,
   TouchableOpacity,
   FlatList,
+  ScrollView,
   StyleSheet,
   Dimensions,
   Keyboard,
@@ -20,6 +26,7 @@ import {
   Platform,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  useWindowDimensions,
 } from 'react-native';
 import { History, Plus } from 'lucide-react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -27,6 +34,7 @@ import { useConversationMessages } from '@/hooks/companion/useConversationMessag
 import { useChatbotUsage } from '@/hooks/companion/useChatbotUsage';
 import { useCompanionReviewPrompt } from '@/hooks/companion/useCompanionReviewPrompt';
 import { useSendMessage } from '@/hooks/companion/useSendMessage';
+import { useComposerDraft } from '@/hooks/companion/useComposerDraft';
 import { useCurrentUser } from '@/context/UserContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
@@ -36,12 +44,14 @@ import {
   Message,
 } from '@/helpers/companion/messageHelpers';
 import { MessageWithSources } from '@/components/companion/MessageWithSources';
+import { LiveText as Text } from '@/components/common/LiveText';
 import { TypingIndicator } from '@/components/companion/TypingIndicator';
 import { StarterPrompts } from '@/components/companion/StarterPrompts';
 import PartnerSpotlightBanner from '@/components/companion/PartnerSpotlightBanner';
 import { shouldShowCompanionSpotlight } from '@/constants/PartnerSpotlight';
 import { Theme } from '@/constants/Theme';
 import { TAB_HEADER_METRICS } from '@/constants/TabHeader';
+import { isLargeText, textScaleKey } from '@/utils/textScale';
 import SendIcon from '@/components/icons/SendIcon.svg';
 import { AnimatedDottedBackground } from '@/components/companion/AnimatedDottedBackground';
 import CompanionHeader from '@/components/CompanionHeader';
@@ -51,7 +61,6 @@ import { useAnalytics } from '@/utils/analytics';
 import {
   buildCompanionStarterPromptProperties,
   buildCompanionSuggestionClickedProperties,
-  CompanionInputOrigin,
   CompanionInputSource,
   CompanionStarterRef,
   isConversationHistoryLoaded,
@@ -60,6 +69,25 @@ import {
 import { usePersonalizedStarters } from '@/hooks/companion/usePersonalizedStarters';
 import { AICompanionBusyError, AICompanionLimitError } from '@/utils/gemini';
 import { useToast } from '@/context/ToastContext';
+import { CompanionTasksEntry } from '@/components/companion/tasks/CompanionTasksEntry';
+import { TaskActionsSheet } from '@/components/companion/tasks/TaskActionsSheet';
+import { TaskActionCards } from '@/components/companion/tasks/TaskActionCards';
+import { useChecklistTaskTitlesState } from '@/hooks/checklist/useChecklistTaskTitles';
+import {
+  PlanEntry,
+  type PlanTarget,
+} from '@/components/companion/plans/PlanEntry';
+import { PlanCards } from '@/components/companion/plans/PlanCards';
+import { useConversationPlans, usePlanStore } from '@/hooks/companion/usePlans';
+import {
+  progressFor,
+  useConversationActions,
+  useTaskActionStore,
+  useTaskProgress,
+} from '@/hooks/companion/useTaskActions';
+import type { RemovalProposal } from '@/services/companionActions/contract';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+import { ownAccountWork, stillOwned } from '@/services/account/accountSession';
 
 // Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
 // the rag-query edge function (source of truth: UnifyCN/web-app,
@@ -94,7 +122,7 @@ const isSendButtonDisabled = (
 };
 
 export default function CompanionScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { currentUser } = useCurrentUser();
   const { data: personalization } = usePersonalizedStarters(currentUser?.id);
   const { conversationId } = useLocalSearchParams<{
@@ -102,6 +130,13 @@ export default function CompanionScreen() {
   }>();
   const router = useRouter();
   const tabBarHeight = useBottomTabBarHeight();
+  // The current system text size. It updates live, so the layout below follows a
+  // change in Settings without a restart, and the screen (and its draft) stays mounted.
+  const { fontScale } = useWindowDimensions();
+  const largeText = isLargeText(fontScale);
+  // Static text blocks below are created again for each size (see textScaleKey); the
+  // screen, the composer and its draft, the list and the sheets stay mounted.
+  const scaleKey = textScaleKey(fontScale);
   const { showToast } = useToast();
   const { height: kbHeight, progress: kbProgress } =
     useReanimatedKeyboardAnimation();
@@ -138,10 +173,64 @@ export default function CompanionScreen() {
     string | null
   >(null);
 
-  const [inputText, setInputText] = useState('');
+  const { text: inputText, origin: inputOrigin, setDraft } = useComposerDraft();
+  // Direction B (mobile-app#361, #363): task progress, a task draft or one task
+  // opens in a bottom sheet over the conversation, so the conversation and the
+  // typed message stay mounted.
+  const [sheet, setSheet] = useState<
+    | { kind: 'push'; deliveryId: string; target: PushSelection['target'] }
+    | { kind: 'tasks' }
+    | {
+        kind: 'proposal';
+        proposalId: string;
+        proposalKind: 'task_create' | 'task_edit';
+      }
+    | { kind: 'steps'; proposalId: string }
+    | { kind: 'task'; taskRef: string; title: string }
+    // #370: a suggested detail's review, or the saved details.
+    | { kind: 'detail'; proposalId: string }
+    | { kind: 'details' }
+    | { kind: 'profile'; proposalId: string }
+    | { kind: 'plan'; target: PlanTarget }
+    | null
+  >(null);
   // Local greeting message shown when user clicks "Ask Anything"
   const [greetingMessage, setGreetingMessage] = useState<Message | null>(null);
   const [optimisticMessages, setOptimisticMessages] = useState<Message[]>([]);
+
+  // The unsent message and the open conversation belong to one account. When
+  // another account signs in (or this one signs out), drop them before the next
+  // render, so the new account never sees them. A token refresh keeps them.
+  // Pending sends check the same account epoch before they write a result.
+  const { accountId, epoch: accountEpoch } = useAccountSnapshot();
+  // Until the session names the account, a send has no owner: keep the text
+  // and send nothing (unknown ownership is not permission).
+  const accountKnown = typeof accountId === 'string';
+  const [composerEpoch, setComposerEpoch] = useState(accountEpoch);
+  if (accountEpoch !== composerEpoch) {
+    setComposerEpoch(accountEpoch);
+    setCurrentConversationId(null);
+    setGreetingMessage(null);
+    setOptimisticMessages([]);
+    // A draft or task view names the previous account's record: close it. The task
+    // list and the saved details stay open and read only the new account's records.
+    setSheet(current =>
+      current?.kind === 'tasks' || current?.kind === 'details' ? current : null
+    );
+  }
+
+  const pushSelection = useCompanionPushSelection();
+  const onPushSelectionReady = useCallback((id: string) => {
+    companionPushIntents.complete(id);
+  }, []);
+  useEffect(() => {
+    if (!pushSelection || !stillOwned(pushSelection.owner)) return;
+    setSheet({
+      kind: 'push',
+      deliveryId: pushSelection.deliveryId,
+      target: pushSelection.target,
+    });
+  }, [pushSelection]);
 
   // Fetch messages for the current conversation
   const { data: dbMessages, isLoading: isLoadingMessages } =
@@ -213,6 +302,10 @@ export default function CompanionScreen() {
 
   const { data: usage } = useChatbotUsage();
   const isPremium = currentUser?.isPremium ?? false;
+  // Titles of the account's live Checklist tasks: suggestions name their task (#366) and a
+  // removal request names the task to review (#367).
+  const { titles: taskTitles, ready: taskTitlesReady } =
+    useChecklistTaskTitlesState();
   const {
     sendMessage,
     isLoading,
@@ -226,17 +319,15 @@ export default function CompanionScreen() {
     isHistoryLoaded: isConversationHistoryLoaded(dbMessages),
     setCurrentConversationId,
     isPremium,
+    taskTitles: taskTitlesReady ? taskTitles : null,
   });
 
   const messageCount = usage?.message_count ?? 0;
   useCompanionReviewPrompt(usage?.message_count);
   const messagesLeft = getMessagesLeft(messageCount, MESSAGE_LIMIT);
   const canSend = canSendMessage(isPremium, messagesLeft);
-  const sendButtonDisabled = isSendButtonDisabled(
-    inputText,
-    isLoading,
-    canSend
-  );
+  const sendButtonDisabled =
+    isSendButtonDisabled(inputText, isLoading, canSend) || !accountKnown;
   // Render the in-flight streaming bot bubble at the bottom of the list while
   // tokens are arriving. Once the message is persisted, useSendMessage clears
   // streamingBotMessage and the saved copy from the React Query cache takes
@@ -269,15 +360,9 @@ export default function CompanionScreen() {
     spotlightClosed
   );
 
-  // Text the app put in the input box (fact-check prefill, or a failed send
-  // restored for retry) and its source. Labels the next send from the input.
-  const inputOriginRef = useRef<CompanionInputOrigin | null>(null);
-
-  const resetDraftState = useCallback(() => {
-    inputOriginRef.current = null;
+  const resetConversationState = useCallback(() => {
     setOptimisticMessages([]);
     setGreetingMessage(null);
-    setInputText('');
     immigrationAnswerIdsRef.current = new Set();
     setImmigrationAnswerCount(0);
     setSpotlightClosed(false);
@@ -291,10 +376,10 @@ export default function CompanionScreen() {
       // Clear conversation ID when starting a new conversation (no conversationId param)
       setCurrentConversationId(null);
     }
-    resetDraftState();
+    resetConversationState();
     previousMessageCountRef.current = 0;
     isNearBottomRef.current = true;
-  }, [conversationId, resetDraftState]);
+  }, [conversationId, resetConversationState]);
 
   // Scroll to end only when new messages are added (not when sources expand/collapse).
   // Skip while the user has scrolled up to read earlier messages, and use a
@@ -332,11 +417,12 @@ export default function CompanionScreen() {
   const handleSendMessage = useCallback(
     async (messageText?: string, source?: CompanionInputSource) => {
       const textToSend = messageText || inputText.trim();
-      if (!textToSend || isLoading || !canSend) return;
+      if (!textToSend || isLoading || !canSend || !accountKnown) return;
       const inputSource =
-        source ?? resolveTypedInputSource(textToSend, inputOriginRef.current);
-      inputOriginRef.current = null;
+        source ?? resolveTypedInputSource(textToSend, inputOrigin);
 
+      // Results of this send are written only while its account is signed in.
+      const owner = ownAccountWork();
       let optimisticMessageId: string | null = null;
       if (!currentConversationId) {
         optimisticMessageId = `optimistic-user-${Date.now()}`;
@@ -350,7 +436,7 @@ export default function CompanionScreen() {
         setOptimisticMessages(current => [...current, optimisticMessage]);
       }
 
-      setInputText('');
+      const clearedDraft = setDraft('', null);
 
       try {
         await sendMessage(
@@ -359,6 +445,9 @@ export default function CompanionScreen() {
           inputSource
         );
       } catch (error) {
+        // Another account signed in meanwhile: its screen gets nothing back,
+        // not even the question to retry.
+        if (!stillOwned(owner)) return;
         if (optimisticMessageId) {
           setOptimisticMessages(current =>
             current.filter(message => message.id !== optimisticMessageId)
@@ -368,8 +457,13 @@ export default function CompanionScreen() {
           !(error instanceof Error) ||
           !(error as Error & { messagePersisted?: boolean }).messagePersisted
         ) {
-          setInputText(textToSend);
-          inputOriginRef.current = { text: textToSend, source: inputSource };
+          if (clearedDraft) {
+            setDraft(
+              textToSend,
+              { text: textToSend, source: inputSource },
+              clearedDraft
+            );
+          }
         }
         if (
           error instanceof AICompanionBusyError ||
@@ -381,8 +475,11 @@ export default function CompanionScreen() {
     },
     [
       inputText,
+      inputOrigin,
+      setDraft,
       isLoading,
       canSend,
+      accountKnown,
       sendMessage,
       currentConversationId,
       setOptimisticMessages,
@@ -432,8 +529,7 @@ export default function CompanionScreen() {
 
     // For fact check, pre-fill the input so user can complete the sentence
     if (mode === 'fact_check') {
-      inputOriginRef.current = { text: prompt, source: 'starter_prompt' };
-      setInputText(prompt);
+      setDraft(prompt, { text: prompt, source: 'starter_prompt' });
       // Focus input after setting text so user can type immediately
       setTimeout(() => inputRef.current?.focus(), 50);
       return;
@@ -455,6 +551,73 @@ export default function CompanionScreen() {
     [trackCompanionSuggestionClicked, handleSendMessage]
   );
 
+  // #363: drafts and command results of the open conversation, for its cards.
+  const { data: conversationActions } = useConversationActions(
+    currentConversationId
+  );
+  const actionStore = useTaskActionStore('companion');
+  const taskProgress = useTaskProgress();
+  const actionsWritable = taskProgress.canWrite;
+  const openDraft = useCallback(
+    (proposalId: string, proposalKind: 'task_create' | 'task_edit') => {
+      Keyboard.dismiss();
+      setSheet({ kind: 'proposal', proposalId, proposalKind });
+    },
+    []
+  );
+  // #366: suggested steps for a task this account has; the card names it.
+  const taskTitleOf = useCallback(
+    (taskRef: string) => taskTitles.get(taskRef) ?? null,
+    [taskTitles]
+  );
+  const openSteps = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'steps', proposalId });
+  }, []);
+  const openTask = useCallback((taskRef: string, title: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'task', taskRef, title });
+  }, []);
+  const openDetail = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'detail', proposalId });
+  }, []);
+  const openDetails = useCallback(() => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'details' });
+  }, []);
+  const openProfile = useCallback((proposalId: string) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'profile', proposalId });
+  }, []);
+  // #367: a removal request's card opens the task's panel on that removal review.
+  const openRemoval = useCallback(
+    (proposal: RemovalProposal, title: string) => {
+      if (proposal.status === 'draft')
+        actionStore?.requestRemoval(
+          proposal.operation.task_ref,
+          proposal.proposalId
+        );
+      openTask(proposal.operation.task_ref, title);
+    },
+    [actionStore, openTask]
+  );
+  const isRemovedNow = useCallback(
+    (taskRef: string) =>
+      taskProgress.status === 'ready' &&
+      progressFor(taskRef, taskProgress).removed,
+    [taskProgress]
+  );
+  // #364: the plan drafts of the open conversation, and the account's plan store.
+  const { data: conversationPlans } = useConversationPlans(
+    currentConversationId
+  );
+  const planStore = usePlanStore('companion');
+  const openPlan = useCallback((target: PlanTarget) => {
+    Keyboard.dismiss();
+    setSheet({ kind: 'plan', target });
+  }, []);
+
   const renderMessage = useCallback(
     ({ item, index }: { item: Message; index: number }) => {
       // Only show suggestions and lastVerified on the last bot message
@@ -469,17 +632,69 @@ export default function CompanionScreen() {
       const displayItem =
         isLastBotMessage && lastVerified ? { ...item, lastVerified } : item;
 
+      // Saved messages have positive integer ids; optimistic and streaming ones do not.
+      const savedId = Number(item.id);
       return (
-        <MessageWithSources
-          item={displayItem}
-          suggestedNextSteps={
-            showSuggestions ? lastSuggestedNextSteps : undefined
-          }
-          onSuggestionPress={handleSuggestionClick}
-        />
+        <React.Fragment>
+          <MessageWithSources
+            item={displayItem}
+            suggestedNextSteps={
+              showSuggestions ? lastSuggestedNextSteps : undefined
+            }
+            onSuggestionPress={handleSuggestionClick}
+          />
+          <TaskActionCards
+            reminderProposals={conversationActions?.reminderProposals ?? []}
+            messageId={
+              Number.isInteger(savedId) && savedId > 0 ? savedId : null
+            }
+            isUser={item.isUser}
+            proposals={conversationActions?.proposals ?? []}
+            commands={[...(conversationActions?.commands ?? []), ...(conversationActions?.profileCommands ?? [])]}
+            profileProposals={conversationActions?.profileProposals ?? []}
+            onReviewProfile={openProfile}
+            store={actionStore}
+            canWrite={actionsWritable}
+            onReview={openDraft}
+            onViewTask={openTask}
+            stepProposals={conversationActions?.stepProposals ?? []}
+            onReviewSteps={openSteps}
+            taskTitleOf={taskTitleOf}
+            detailProposals={conversationActions?.detailProposals ?? []}
+            detailCommands={conversationActions?.detailCommands ?? []}
+            onReviewDetail={openDetail}
+            onViewDetails={openDetails}
+            removalProposals={conversationActions?.removalProposals ?? []}
+            onReviewRemoval={openRemoval}
+            isRemovedNow={isRemovedNow}
+          />
+          <PlanCards
+            messageId={
+              Number.isInteger(savedId) && savedId > 0 ? savedId : null
+            }
+            proposals={conversationPlans ?? []}
+            store={planStore}
+            onOpen={proposalId => openPlan({ proposalId })}
+          />
+        </React.Fragment>
       );
     },
     [
+      conversationActions,
+      actionStore,
+      actionsWritable,
+      openDraft,
+      openTask,
+      openSteps,
+      openDetail,
+      openDetails,
+      openProfile,
+      taskTitleOf,
+      openRemoval,
+      isRemovedNow,
+      conversationPlans,
+      planStore,
+      openPlan,
       displayMessages.length,
       streamingBotMessage,
       lastSuggestedNextSteps,
@@ -488,28 +703,66 @@ export default function CompanionScreen() {
     ]
   );
 
-  const renderLoadingIndicator = useCallback(() => {
-    // Only show typing indicator when waiting for bot response (not when saving user message)
-    if (!isWaitingForBot) return null;
-    return <TypingIndicator />;
-  }, [isWaitingForBot]);
+  const disclaimer = <Disclaimer text={t('companion.disclaimer')} />;
+
+  const renderLoadingIndicator = useCallback(
+    () => (
+      <>
+        {/* Only show typing indicator when waiting for bot response (not when saving user message) */}
+        {isWaitingForBot && <TypingIndicator />}
+        {/* At large text the disclaimer follows the messages (see the pinned section). */}
+        {largeText && (
+          <View style={styles.listEntries}>
+            <Disclaimer text={t('companion.disclaimer')} />
+          </View>
+        )}
+      </>
+    ),
+    [isWaitingForBot, largeText, t]
+  );
 
   const keyExtractor = useCallback((item: Message) => item.id, []);
 
   const handleNewChatPress = useCallback(() => {
     setCurrentConversationId(null);
-    resetDraftState();
+    resetConversationState();
     previousMessageCountRef.current = 0;
     isNearBottomRef.current = true;
     Keyboard.dismiss();
     router.replace('/(tabs)/companion' as any);
-  }, [resetDraftState, router]);
+  }, [resetConversationState, router]);
+
+  const entries = (
+    <>
+      <CompanionTasksEntry
+        textKey={scaleKey}
+        onOpen={() => {
+          Keyboard.dismiss();
+          setSheet({ kind: 'tasks' });
+        }}
+      />
+      <PlanEntry textKey={scaleKey} onOpen={openPlan} />
+    </>
+  );
+
+  const starters = (
+    <>
+      <Text style={styles.startersLabel}>{t('companion.tryOneOfThese')}</Text>
+      <StarterPrompts
+        textKey={scaleKey}
+        onPromptSelect={handleStarterPromptSelect}
+        personalizedStarters={personalization?.starters}
+        layout={largeText ? 'stack' : 'row'}
+      />
+    </>
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.contentWrapper}>
         {/* Header */}
         <CompanionHeader
+          key={scaleKey}
           title={t('companion.title')}
           showBackButton={false}
           leftButton={
@@ -553,6 +806,10 @@ export default function CompanionScreen() {
           }
         />
 
+        {/* At default sizes the entries stay above the conversation. At large text
+            they scroll with it, so they never take the height the conversation needs. */}
+        {(!largeText || showLoadingState) && entries}
+
         {/* Messages - takes up available space. The FlatList is intentionally
             NOT wrapped in a Pressable: wrapping a scrollable in a Pressable
             creates a gesture-responder race with the list's scroll responder
@@ -561,7 +818,7 @@ export default function CompanionScreen() {
             dismissal: keyboardDismissMode='interactive' handles smooth
             drag-to-dismiss, keyboardShouldPersistTaps='handled' dismisses on
             tap-outside-children. The tap-to-dismiss Pressable is only used
-            for the non-scrollable empty/loading states. */}
+            for the non-scrollable loading state. */}
         {showLoadingState ? (
           <Pressable style={styles.messagesArea} onPress={Keyboard.dismiss}>
             <View style={styles.emptyContainer}>
@@ -569,22 +826,39 @@ export default function CompanionScreen() {
             </View>
           </Pressable>
         ) : showEmptyState ? (
-          <Pressable style={styles.messagesArea} onPress={Keyboard.dismiss}>
-            <View style={styles.emptyState}>
-              <View style={styles.dottedLineContainer} pointerEvents='none'>
+          <View style={styles.messagesArea}>
+            <View style={styles.dottedLineFrame} pointerEvents='none'>
+              <View style={styles.dottedLineContainer}>
                 <AnimatedDottedBackground
                   width={dottedLineWidth}
                   height={dottedLineHeight}
                 />
               </View>
-              <Text style={styles.welcomeTitle}>
-                {t('companion.welcomeTitle')}
-              </Text>
-              <Text style={styles.welcomeCaption}>
-                {t('companion.welcomeCaption')}
-              </Text>
             </View>
-          </Pressable>
+            {/* The welcome scrolls inside its own region: when the space is short
+                (larger text, a small screen) it can never draw over the entries
+                above it or take their taps. */}
+            <ScrollView
+              style={styles.messagesList}
+              contentContainerStyle={styles.emptyScrollContent}
+              keyboardShouldPersistTaps='handled'
+              keyboardDismissMode='interactive'
+            >
+              {largeText && entries}
+              <View style={styles.emptyState}>
+                {/* A title grows like iOS Title 1, not by the body multiplier,
+                    so a long word still fits the width at accessibility sizes. */}
+                <Text style={styles.welcomeTitle} dynamicTypeRamp='title1'>
+                  {t('companion.welcomeTitle')}
+                </Text>
+                <Text style={styles.welcomeCaption}>
+                  {t('companion.welcomeCaption')}
+                </Text>
+              </View>
+              {largeText && starters}
+              {largeText && disclaimer}
+            </ScrollView>
+          </View>
         ) : (
           <FlatList
             ref={flatListRef}
@@ -593,6 +867,8 @@ export default function CompanionScreen() {
             keyExtractor={keyExtractor}
             style={styles.messagesList}
             contentContainerStyle={styles.messagesContent}
+            ListHeaderComponent={largeText ? entries : undefined}
+            ListHeaderComponentStyle={styles.listEntries}
             ListFooterComponent={renderLoadingIndicator}
             keyboardShouldPersistTaps='handled'
             keyboardDismissMode='interactive'
@@ -612,18 +888,9 @@ export default function CompanionScreen() {
 
       <Animated.View style={[styles.stickyContainer, bottomAnimatedStyle]}>
         <View style={styles.bottomSection}>
-          {/* Starter Prompts - Only show when no messages and no greeting */}
-          {showEmptyState && (
-            <>
-              <Text style={styles.startersLabel}>
-                {t('companion.tryOneOfThese')}
-              </Text>
-              <StarterPrompts
-                onPromptSelect={handleStarterPromptSelect}
-                personalizedStarters={personalization?.starters}
-              />
-            </>
-          )}
+          {/* Starter Prompts - Only show when no messages and no greeting. At
+              large text they scroll with the welcome instead. */}
+          {showEmptyState && !largeText && starters}
 
           {showPartnerSpotlight && (
             <View style={styles.spotlightContainer}>
@@ -637,9 +904,21 @@ export default function CompanionScreen() {
           <View style={styles.inputContainer}>
             <TextInput
               ref={inputRef}
-              style={[styles.textInput, !canSend && styles.disabledInput]}
+              style={[
+                styles.textInput,
+                // One line of the current text size plus padding: its natural
+                // height. It changes with the size, so the mounted input is
+                // measured again after a live change (see textScaleKey).
+                {
+                  minHeight: Math.max(
+                    44,
+                    Math.ceil(typography.body.lineHeight * fontScale) + 24
+                  ),
+                },
+                !canSend && styles.disabledInput,
+              ]}
               value={inputText}
-              onChangeText={setInputText}
+              onChangeText={text => setDraft(text)}
               placeholder={
                 canSend
                   ? t('companion.inputPlaceholder')
@@ -670,14 +949,55 @@ export default function CompanionScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Disclaimer */}
-          <View style={styles.disclaimerContainer}>
-            <Text style={styles.disclaimerText}>
-              {t('companion.disclaimer')}
-            </Text>
-          </View>
+          {/* Disclaimer. At large text its several lines would take the
+              conversation's height, so it scrolls with the content instead. */}
+          {!largeText && disclaimer}
         </View>
       </Animated.View>
+
+      <TaskActionsSheet
+        // The sheet's selection and title cache belong to this account session.
+        key={`${accountId ?? 'unknown'}:${accountEpoch}`}
+        notificationId={sheet?.kind === 'push' ? sheet.deliveryId : null}
+        onNotificationReady={onPushSelectionReady}
+        notificationResult={
+          sheet?.kind === 'push'
+            ? sheet.target.target === 'available'
+              ? 'task'
+              : sheet.target.target
+            : undefined
+        }
+        onRetryNotification={() =>
+          void companionPushIntents.process(currentPushLocale(i18n.language))
+        }
+        visible={sheet !== null}
+        onClose={() => setSheet(null)}
+        proposalId={sheet?.kind === 'proposal' ? sheet.proposalId : null}
+        proposalKind={
+          sheet?.kind === 'proposal' ? sheet.proposalKind : undefined
+        }
+        stepProposalId={sheet?.kind === 'steps' ? sheet.proposalId : null}
+        detailProposalId={sheet?.kind === 'detail' ? sheet.proposalId : null}
+        openDetails={sheet?.kind === 'details'}
+        profileProposalId={sheet?.kind === 'profile' ? sheet.proposalId : null}
+        initialTask={
+          sheet?.kind === 'push' && sheet.target.target === 'available'
+            ? { taskRef: sheet.target.task_ref, title: '' }
+            : sheet?.kind === 'task'
+              ? { taskRef: sheet.taskRef, title: sheet.title }
+              : null
+        }
+        plan={sheet?.kind === 'plan' ? sheet.target : null}
+        onOpenTask={openTask}
+      />
+    </View>
+  );
+}
+
+function Disclaimer({ text }: { text: string }) {
+  return (
+    <View style={styles.disclaimerContainer}>
+      <Text style={styles.disclaimerText}>{text}</Text>
     </View>
   );
 }
@@ -697,10 +1017,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  emptyScrollContent: {
+    flexGrow: 1,
+  },
   emptyState: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
     alignItems: 'stretch',
+    paddingHorizontal: 18,
+    paddingBottom: 8,
+  },
+  // Same box as the welcome area, so the background keeps its position.
+  dottedLineFrame: {
+    ...StyleSheet.absoluteFillObject,
     paddingHorizontal: 18,
     paddingBottom: 8,
   },
@@ -740,6 +1069,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     gap: 4,
     paddingVertical: 10,
+  },
+  // The entries keep their own side margins inside the list's padding.
+  listEntries: {
+    marginHorizontal: -18,
   },
   bottomSection: {
     backgroundColor: '#fff',

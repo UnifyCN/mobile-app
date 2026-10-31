@@ -1,0 +1,40 @@
+{
+  "candidate": {
+    "root": "/Users/savargupta/.t3/worktrees/Unify/t3-12e53450",
+    "branch": "t3/companion-native-layout-359",
+    "head": "dee8d770323f9082f1aaf830d3de256eb030c01e",
+    "tree": "3607ff971d330559f4fc22ce28c236d397d009e1",
+    "status_porcelain": ""
+  },
+  "mobile_integration": {
+    "root": "/Users/savargupta/.t3/worktrees/Unify/feat-companion-actions-359",
+    "branch": "feat/companion-actions-359",
+    "head": "68984d18c534cb870b1d2f41a8fe823625017976",
+    "tree": "1017aae91c087435bcff18b18247075c1ef56aaa",
+    "status_porcelain": ""
+  },
+  "web_integration": {
+    "root": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359",
+    "branch": "feat/companion-actions-359",
+    "head": "edcc47a3f9003c6eacb4f2a3c02da6039d9e9bec",
+    "tree": "048a90ac105afd411d9b865bdcd03cc93abe3b58",
+    "status_porcelain": ""
+  },
+  "web_service_source_unchanged": {
+    "argv": [
+      "git",
+      "-C",
+      "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359",
+      "diff",
+      "--quiet",
+      "21df0701f12f99b5d1dd8af246fa4b5f8acb41ae",
+      "edcc47a3f9003c6eacb4f2a3c02da6039d9e9bec",
+      "--",
+      "supabase/functions/companion-actions",
+      "supabase/functions/rag-query/lib"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

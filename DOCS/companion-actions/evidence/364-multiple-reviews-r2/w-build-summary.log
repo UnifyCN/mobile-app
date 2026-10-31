@@ -1,0 +1,40 @@
+├ ƒ /community
+├ ƒ /community/[groupId]
+├ ƒ /community/event/[eventId]
+├ ƒ /companion
+├ ƒ /cover-letter
+├ ƒ /cover-letter/[letterId]
+├ ƒ /forgot-password
+├ ƒ /home
+├ ƒ /learn
+├ ƒ /learn/[moduleId]
+├ ƒ /learn/[moduleId]/[submoduleId]
+├ ƒ /learn/[moduleId]/[submoduleId]/[lessonId]
+├ ƒ /learn/[moduleId]/[submoduleId]/practice
+├ ƒ /login
+├ ƒ /onboarding
+├ ○ /opengraph-image
+├ ƒ /post/[postId]
+├ ƒ /profile
+├ ƒ /profile/[userId]
+├ ƒ /profile/[userId]/followers
+├ ƒ /reset-password
+├ ƒ /resources
+├ ƒ /resources/[slug]
+├ ƒ /resources/category/[key]
+├ ƒ /resume
+├ ƒ /resume/[draftId]
+├ ○ /robots.txt
+├ ƒ /settings
+├ ƒ /signup
+├ ○ /sitemap.xml
+├ ƒ /verify-email
+└ ƒ /welcome
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+exit=0

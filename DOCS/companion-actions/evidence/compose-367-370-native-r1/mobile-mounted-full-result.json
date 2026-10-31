@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node_modules/.bin/jest",
+    "__tests__/companionActions/companionActionsLocalStack.test.tsx",
+    "__tests__/companionActions/planLocalStack.test.tsx",
+    "--runInBand",
+    "--watchAll=false"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/unify-front-end",
+  "exit": 0,
+  "seconds": 27.85318922996521
+}

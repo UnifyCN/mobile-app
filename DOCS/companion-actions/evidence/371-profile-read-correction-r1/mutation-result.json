@@ -1,0 +1,7 @@
+{
+  "expected_previous_account_invalidations": 10,
+  "observed_after_removed_guard": 11,
+  "assertion_failed": true,
+  "source_restored_exactly": true,
+  "prior_scan_error": "The first log scan incorrectly assumed absolute counts 0 and 1. The test compares the recorded count before release with the count after release."
+}

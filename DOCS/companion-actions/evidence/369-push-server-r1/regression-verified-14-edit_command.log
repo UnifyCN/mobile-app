@@ -1,0 +1,28 @@
+running 10 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_command_test.ts
+a clear rename command changes exactly the task it names, once ... ok (509ms)
+the documented command examples in every supported language make exactly their change ... ok (3s)
+an unclear target or meaning gets a question and writes nothing ... ok (643ms)
+a command line with more quoted text than one change uses asks one change at a time and writes nothing ... ok (620ms)
+a command never names a task it cannot see: published tasks unread, another account, an assistant message ... ok (403ms)
+naming Waiting keeps the reason a waiting task has, and a change in between is a conflict ... ok (461ms)
+a waiting reason change names both reasons in its receipt, kept after a later edit and through lookup, replay and Undo ... ok (400ms)
+a retry of a committed rename command replays its result instead of refusing or writing again ... ok (257ms)
+every priority label the mobile or web Checklist shows, in every language, names that priority ... FAILED (150ms)
+the database refuses a second write under one command message even at the current revision ... ok (156ms)
+
+ ERRORS 
+
+every priority label the mobile or web Checklist shows, in every language, names that priority => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_command_test.ts:393:6
+error: NotFound: No such file or directory (os error 2): readfile '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/lib/i18n/locales/en/translation.json'
+      const web = JSON.parse(await Deno.readTextFile(new URL(`${lang}/translation.json`, webRoot))).checklist.createItem;
+                                        ^
+    at Object.readTextFile (ext:deno_fs/30_fs.js:814:24)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_command_test.ts:417:41)
+
+ FAILURES 
+
+every priority label the mobile or web Checklist shows, in every language, names that priority => ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_command_test.ts:393:6
+
+FAILED | 9 passed | 1 failed (6s)
+
+error: Test failed

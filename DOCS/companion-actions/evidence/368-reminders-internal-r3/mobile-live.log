@@ -1,0 +1,39 @@
+PASS actual labels, loopback URLs and content environment
+  console.error
+    An update to Panel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      145 |       const r = await mockClient.read();
+      146 |       if (!cancelled && r.kind === 'ok')
+    > 147 |         setView({
+          |         ^
+      148 |           status: 'ready',
+      149 |           byRef: new Map(r.tasks.map(t => [t.taskRef, t])),
+      150 |           stepsByRef: new Map(),
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6208:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6165:7)
+      at setView (__tests__/companionActions/remindersLocalStack.test.tsx:147:9)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS __tests__/companionActions/remindersLocalStack.test.tsx (62.725 s)
+  ✓ reviews and saves a reminder, observes actual Cron due state, opens the same task and stops it through its own receipt (61640 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        63.05 s
+Ran all test suites within paths "__tests__/companionActions/remindersLocalStack.test.tsx".

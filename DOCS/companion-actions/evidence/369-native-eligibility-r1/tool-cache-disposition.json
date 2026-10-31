@@ -1,0 +1,20 @@
+{
+  "rows": [
+    {
+      "tool": "npm-cache",
+      "exit": 0,
+      "stdout": "/Users/savargupta/.npm",
+      "stderr": ""
+    },
+    {
+      "tool": "cocoapods-home",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- cocoapods (LoadError)\n\tfrom /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'\n\tfrom -e:1:in `<main>'"
+    }
+  ],
+  "prior_cache_snapshot": false,
+  "strict_cache_write_confinement_proven": false,
+  "note": "npm ci and pod install used their existing default tool caches. No cache cleanup is authorized. Product and runtime outputs use the prepared primary. Future commands use owned caches where supported.",
+  "metro_cache_scope": "Default system temporary cache. No before-state cache record."
+}

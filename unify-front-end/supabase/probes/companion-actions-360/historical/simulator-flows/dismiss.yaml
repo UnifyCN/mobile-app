@@ -1,0 +1,8 @@
+appId: com.anonymous.unifyfrontend
+---
+- swipe:
+    start: "50%,52%"
+    end: "50%,98%"
+    duration: 400
+- waitForAnimationToEnd
+- takeScreenshot: /tmp/unify-companion-359/opus-360/sim/shot9

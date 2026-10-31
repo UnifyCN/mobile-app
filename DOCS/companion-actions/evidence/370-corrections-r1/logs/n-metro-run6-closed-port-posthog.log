@@ -1,0 +1,649 @@
+Starting project at /Users/savargupta/.t3/worktrees/Unify/t3-a768fdfa/unify-front-end
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+Waiting on http://localhost:8197
+Logs for your project will appear below.
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓░░░░░░░░░ 46.5% ( 655/1116)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 53.6% (1294/3463)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 53.6% (2872/3955)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 82.0% (4196/4911)
+iOS Bundled 17151ms node_modules/expo-router/entry.js (5867 modules)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  [expo-notifications] Error reading persisted server registration info:  [Error: Calling the 'getRegistrationInfoAsync' function has failed
+→ Caused by: Keychain access failed: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Uncaught (in promise, id: 0) Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Uncaught (in promise, id: 1) Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Error while flushing PostHog [PostHogFetchNetworkError: Network error while fetching PostHog] 
+
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  PostHogFetchNetworkError#constructor (node_modules/@posthog/core/dist/posthog-core-stateless.js:54:9)
+  <anonymous> (node_modules/@posthog/core/dist/posthog-core-stateless.js:659:51)
+  throw (<native>)
+  asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+  _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:27)
+  tryCallOne (address at (InternalBytecode.js:1:1180)
+  anonymous (address at (InternalBytecode.js:1:1874)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ WARN  [AuthWrapper] Failed to read auth session: [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.]
+ ERROR  [UserContext] Failed to load auth user: [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Error while flushing PostHog [PostHogFetchNetworkError: Network error while fetching PostHog] 
+
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  PostHogFetchNetworkError#constructor (node_modules/@posthog/core/dist/posthog-core-stateless.js:54:9)
+  <anonymous> (node_modules/@posthog/core/dist/posthog-core-stateless.js:659:51)
+  throw (<native>)
+  asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+  _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:27)
+  tryCallOne (address at (InternalBytecode.js:1:1180)
+  anonymous (address at (InternalBytecode.js:1:1874)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 87ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error while flushing PostHog [PostHogFetchNetworkError: Network error while fetching PostHog] 
+
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  PostHogFetchNetworkError#constructor (node_modules/@posthog/core/dist/posthog-core-stateless.js:54:9)
+  <anonymous> (node_modules/@posthog/core/dist/posthog-core-stateless.js:659:51)
+  throw (<native>)
+  asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+  _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:27)
+  tryCallOne (address at (InternalBytecode.js:1:1180)
+  anonymous (address at (InternalBytecode.js:1:1874)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error while flushing PostHog [PostHogFetchNetworkError: Network error while fetching PostHog] 
+
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  PostHogFetchNetworkError#constructor (node_modules/@posthog/core/dist/posthog-core-stateless.js:54:9)
+  <anonymous> (node_modules/@posthog/core/dist/posthog-core-stateless.js:659:51)
+  throw (<native>)
+  asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+  _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:27)
+  tryCallOne (address at (InternalBytecode.js:1:1180)
+  anonymous (address at (InternalBytecode.js:1:1874)
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 125ms node_modules/expo-router/entry.js (1 module)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching user legal status: {"code": "42703", "details": null, "hint": null, "message": "column users.privacy_policy_accepted_at does not exist"} 
+
+Code: AuthWrapper.tsx
+[0m [90m 36 |[39m
+ [90m 37 |[39m   [36mif[39m (error) {
+[31m[1m>[22m[39m[90m 38 |[39m     console[33m.[39merror([32m'Error fetching user legal status:'[39m[33m,[39m error)[33m;[39m
+ [90m    |[39m                  [31m[1m^[22m[39m
+ [90m 39 |[39m     [36mthrow[39m error[33m;[39m
+ [90m 40 |[39m   }
+ [90m 41 |[39m   [36mreturn[39m data[33m;[39m[0m
+Call Stack
+  fetchUserLegalStatus (components/AuthComponents/AuthWrapper.tsx:38:18)
+ WARN  InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+ ERROR  Error fetching user info: [Error: Failed to fetch user info: column users.username does not exist] 
+
+Code: getUserInfo.ts
+[0m [90m  96 |[39m
+ [90m  97 |[39m     [36mif[39m (userError) {
+[31m[1m>[22m[39m[90m  98 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m`Failed to fetch user info: ${userError.message}`[39m)[33m;[39m
+ [90m     |[39m                      [31m[1m^[22m[39m
+ [90m  99 |[39m     }
+ [90m 100 |[39m     [36mif[39m ([33m![39muserData) {
+ [90m 101 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'Failed to fetch user info: no user data returned'[39m)[33m;[39m[0m
+Call Stack
+  getUserInfo (services/users/getUserInfo.ts:98:22)
+ ERROR  Error fetching progress data: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: cachedProgressService.ts
+[0m [90m 214 |[39m       [36mreturn[39m progressData[33m;[39m
+ [90m 215 |[39m     } [36mcatch[39m (error) {
+[31m[1m>[22m[39m[90m 216 |[39m       console[33m.[39merror([32m'Error fetching progress data:'[39m[33m,[39m error)[33m;[39m
+ [90m     |[39m                    [31m[1m^[22m[39m
+ [90m 217 |[39m       [36mreturn[39m [36mthis[39m[33m.[39mcurrentResult(generation[33m,[39m accountEpoch)[33m;[39m [90m// Return stale cache on error[39m
+ [90m 218 |[39m     }
+ [90m 219 |[39m   }[0m
+Call Stack
+  CachedProgressService#fetchProgressData (services/progress/cachedProgressService.ts:216:20)
+ ERROR  Error fetching lesson progress: {"code": "PGRST205", "details": null, "hint": null, "message": "Could not find the table 'public.user_lesson_progress' in the schema cache"} 
+
+Code: useInProgressLessons.ts
+[0m [90m 86 |[39m       [36mif[39m (lessonError) {
+ [90m 87 |[39m         [36mif[39m (isLatestRequest()) {
+[31m[1m>[22m[39m[90m 88 |[39m           console[33m.[39merror([32m'Error fetching lesson progress:'[39m[33m,[39m lessonError)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 89 |[39m           setError([32m'Failed to fetch lessons'[39m)[33m;[39m
+ [90m 90 |[39m         }
+ [90m 91 |[39m         [36mreturn[39m[33m;[39m[0m
+Call Stack
+  fetchInProgressLessons (hooks/progress/useInProgressLessons.ts:88:24)
+ ERROR  Error fetching modules with submodules from Sanity: [Error: Dataset not found - Dataset "production" not found for project ID "placeholder" (traceId: 1ec21d15e3982ba9b51b78acd1c68aad)] 
+
+Code: modules.ts
+[0m [90m 90 |[39m [32m    }`[39m[33m;[39m
+ [90m 91 |[39m
+[31m[1m>[22m[39m[90m 92 |[39m     [36mconst[39m modules [33m=[39m [36mawait[39m sanityClient[33m.[39mfetch[33m<[39m[33mModuleRow[39m[][33m>[39m(query[33m,[39m {
+ [90m    |[39m                                             [31m[1m^[22m[39m
+ [90m 93 |[39m       lang[33m:[39m language[33m,[39m
+ [90m 94 |[39m     })[33m;[39m
+ [90m 95 |[39m     [36mreturn[39m (modules [33m||[39m [])[33m.[39mmap(mergeModuleTree)[33m;[39m[0m
+Call Stack
+  getAllModulesWithSubmodules (services/sanity/modules.ts:92:45)
+  <global> (services/sanity/modules.ts:100:2)
+  getAllModulesWithSubmodules (services/sanity/modules.ts:68:50)
+ ERROR  Error while flushing PostHog [PostHogFetchNetworkError: Network error while fetching PostHog] 
+
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  PostHogFetchNetworkError#constructor (node_modules/@posthog/core/dist/posthog-core-stateless.js:54:9)
+  <anonymous> (node_modules/@posthog/core/dist/posthog-core-stateless.js:659:51)
+  throw (<native>)
+  asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+  _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:27)
+  tryCallOne (address at (InternalBytecode.js:1:1180)
+  anonymous (address at (InternalBytecode.js:1:1874)

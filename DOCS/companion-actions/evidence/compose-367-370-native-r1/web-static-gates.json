@@ -1,0 +1,69 @@
+[
+  {
+    "name": "types",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit"
+    ],
+    "cwd": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05",
+    "exit": 0,
+    "seconds": 1.0804970264434814
+  },
+  {
+    "name": "i18n",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "cwd": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05",
+    "exit": 0,
+    "seconds": 0.12525105476379395
+  },
+  {
+    "name": "lint-changed",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--format=json",
+      "app/(main)/checklist/page.tsx",
+      "app/(main)/companion/page.tsx",
+      "components/companion/tasks/ReceiptBlock.tsx",
+      "components/companion/tasks/SavedDetails.test.tsx",
+      "components/companion/tasks/SavedDetails.tsx",
+      "components/companion/tasks/TaskActionCards.tsx",
+      "components/companion/tasks/TaskActionsDrawer.tsx",
+      "components/companion/tasks/TaskEdit.test.tsx",
+      "components/companion/tasks/TaskProposalPanel.tsx",
+      "components/companion/tasks/TaskRemovalLocalStack.test.tsx",
+      "components/companion/tasks/TaskRemovalSection.tsx",
+      "components/companion/tasks/TaskStatePanel.tsx",
+      "components/companion/tasks/taskActionsTestHarness.tsx",
+      "hooks/useAccountScope.ts",
+      "hooks/useCompanion.ts",
+      "hooks/useTaskActions.ts",
+      "lib/companionActions/analytics.ts",
+      "lib/companionActions/client.ts",
+      "lib/companionActions/contract.ts",
+      "lib/companionActions/queryKeys.ts",
+      "lib/companionActions/taskActionStore.detailReview.test.ts",
+      "lib/companionActions/taskActionStore.ts",
+      "scripts/verify-companion-saved-details.mjs",
+      "scripts/verify-companion-task-remove.mjs",
+      "services/companion.ts"
+    ],
+    "cwd": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05",
+    "exit": 0,
+    "seconds": 4.638948678970337
+  },
+  {
+    "name": "lint-full",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--format=json",
+      "."
+    ],
+    "cwd": "/tmp/unify-review-actions-361-web-r5-deno-base-9d05",
+    "exit": 1,
+    "seconds": 8.493914127349854
+  }
+]

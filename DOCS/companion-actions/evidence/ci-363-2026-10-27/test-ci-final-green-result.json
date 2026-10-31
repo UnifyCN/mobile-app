@@ -1,0 +1,22 @@
+{
+  "command": "npm run test:ci",
+  "exit_code": 0,
+  "seconds": 39.321,
+  "timed_out": false,
+  "summaries": [
+    "> unify-front-end@1.6.0 test:ci",
+    "> npm run test:main && npm run test:dst",
+    "> unify-front-end@1.6.0 test:main",
+    "> jest __tests__ --runInBand --watchAll=false",
+    "Test Suites: 1 skipped, 133 passed, 133 of 134 total",
+    "Tests:       3 skipped, 1412 passed, 1415 total",
+    "Time:        35.255 s, estimated 37 s",
+    "Ran all test suites matching /__tests__/i.",
+    "> unify-front-end@1.6.0 test:dst",
+    "> TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/",
+    "Test Suites: 2 passed, 2 total",
+    "Tests:       13 passed, 13 total",
+    "Time:        0.843 s",
+    "Ran all test suites matching /__tests__\\/dst/i."
+  ]
+}

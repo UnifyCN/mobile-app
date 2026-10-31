@@ -1,0 +1,81 @@
+{
+  "falsifier": "Any owned listener, container, driver, recorder, or booted simulator remains.",
+  "ports": {
+    "argv": [
+      "lsof",
+      "-nP",
+      "-iTCP:61791",
+      "-iTCP:61792",
+      "-iTCP:61793",
+      "-iTCP:61794",
+      "-iTCP:3276",
+      "-iTCP:8199",
+      "-iTCP:61799",
+      "-sTCP:LISTEN"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "containers": {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "label=com.supabase.cli.project=unify-native-layout-359-r1",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "volumes": {
+    "argv": [
+      "docker",
+      "volume",
+      "ls",
+      "--filter",
+      "label=com.supabase.cli.project=unify-native-layout-359-r1",
+      "--format",
+      "{{.Name}}"
+    ],
+    "exit": 0,
+    "stdout": "supabase_db_unify-native-layout-359-r1\nsupabase_edge_runtime_unify-native-layout-359-r1\n",
+    "stderr": ""
+  },
+  "simulator": {
+    "lastBootedAt": "2026-10-28T18:47:55Z",
+    "dataPath": "/Users/savargupta/Library/Developer/CoreSimulator/Devices/A54D1945-3A80-4584-BBD0-AAD229FF3102/data",
+    "dataPathSize": 2987921408,
+    "logPath": "/Users/savargupta/Library/Logs/CoreSimulator/A54D1945-3A80-4584-BBD0-AAD229FF3102",
+    "udid": "A54D1945-3A80-4584-BBD0-AAD229FF3102",
+    "isAvailable": true,
+    "logPathSize": 598016,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17",
+    "state": "Shutdown",
+    "name": "unify-layout359-r1"
+  },
+  "owned_jobs": {
+    "argv": [
+      "ps",
+      "-p",
+      "87221,43782,43793,50900",
+      "-o",
+      "pid,ppid,command"
+    ],
+    "exit": 1,
+    "stdout": "  PID  PPID COMMAND\n",
+    "stderr": ""
+  },
+  "fixture": {
+    "message_id": 4,
+    "full_row_matches_before": true
+  },
+  "reduce_motion_restored": true,
+  "content_size_restored": "large",
+  "language_restored": "en",
+  "native_final_capture": "e04-final-companion",
+  "retained_debug_build": true
+}

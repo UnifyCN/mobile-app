@@ -1,0 +1,3954 @@
+{
+  "legacy": {
+    "files": 38,
+    "selected": 254,
+    "passed": 254,
+    "failed": 0,
+    "results": [
+      {
+        "name": "actions_test.ts",
+        "label": "regression-verified-01-actions",
+        "exit": 0,
+        "seconds": 17.45808696746826,
+        "sha256": "b5379adff08fadc8b2d3537dc0ff55aee6dad9acaf785cc74a2b180de6b455c6",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 4,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "boundary_test.ts",
+        "label": "regression-verified-02-boundary",
+        "exit": 0,
+        "seconds": 23.230588912963867,
+        "sha256": "b415c6e41d794d2c0605e69df24637b7d4e6ef9cb6bb12c169717838c5a0cacf",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 11,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "command_test.ts",
+        "label": "regression-verified-03-command",
+        "exit": 0,
+        "seconds": 19.492566108703613,
+        "sha256": "150bbbefa5454a6f24d31aa2d2941a856ba5ddf514e6e4fe16d37dbbe3593474",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 7,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "compose_365_370_test.ts",
+        "label": "regression-verified-04-compose_365_370",
+        "exit": 0,
+        "seconds": 19.06011700630188,
+        "sha256": "37fa6208c7ae49b2bcc9307940153162d135f85756440bd71e8f3c9c2166d110",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 4,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "compose_367_370_recovery_test.ts",
+        "label": "regression-verified-05-compose_367_370_recovery",
+        "exit": 0,
+        "seconds": 21.974576234817505,
+        "sha256": "82b509961f5fb1819aceb2a598e45659c38341c46b293bb2ea6750909009ab5f",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 1,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "compose_367_370_rollback_test.ts",
+        "label": "regression-verified-06-compose_367_370_rollback",
+        "exit": 0,
+        "seconds": 22.998367071151733,
+        "sha256": "5304d5a7f0e8e6603e6a499dbee1c46420efbbd17f4006f3e744808f2b56f6d5",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 1,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "compose_367_370_test.ts",
+        "label": "regression-verified-07-compose_367_370",
+        "exit": 0,
+        "seconds": 17.67236304283142,
+        "sha256": "3a363c436b79e03a52da55b0b05df5616881a7824b0461bcdd688e57c2452ccd",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 1,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "compose_rollback_test.ts",
+        "label": "regression-verified-08-compose_rollback",
+        "exit": 0,
+        "seconds": 27.411041021347046,
+        "sha256": "487329c2c65c8bdbbd96c93d23391b93f6302310892b071b59e88a77c81fe8bc",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 2,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "create_rollback_test.ts",
+        "label": "regression-verified-09-create_rollback",
+        "exit": 0,
+        "seconds": 24.159409999847412,
+        "sha256": "d8f0eb13636b60f6ca47bdaf74405f6dbfc4b181fc5ce97dd1b45c03e2399d9d",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "create_test.ts",
+        "label": "regression-verified-10-create",
+        "exit": 0,
+        "seconds": 21.44631791114807,
+        "sha256": "6d890ff2e696742aa5d9e98ea8b9255f272fd29c92545030ec9a51f1a67acaf1",
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 17,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "details_language_test.ts",
+        "label": "regression-verified-11-details_language",
+        "exit": 0,
+        "seconds": 18.045416831970215,
+        "sha256": "df775d97eaca47a1bf50a9e416e38fcf28c38c4165ba10ca922a2f1b7b5fda29",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": [],
+        "original_exit": 1,
+        "original_failed": 1,
+        "final_log": "regression-verified-recheck-languages.log"
+      },
+      {
+        "name": "details_rollback_test.ts",
+        "label": "regression-verified-12-details_rollback",
+        "exit": 0,
+        "seconds": 22.01398491859436,
+        "sha256": "4bb9ed0c032339e5d4544cf99903c709e2874332e2d0b804540712fd28a0eeea",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 2,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "details_test.ts",
+        "label": "regression-verified-13-details",
+        "exit": 0,
+        "seconds": 21.25923728942871,
+        "sha256": "a96691d9fa4ec66b54cd4627b7e8abc00f7dc8683521ccf56b6e66629e152a07",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 12,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "edit_command_test.ts",
+        "label": "regression-verified-14-edit_command",
+        "exit": 0,
+        "seconds": 23.131981134414673,
+        "sha256": "6dd4d83635f7539702dd909e8acd5a0298fae1820b600c51a9a62512410a81f7",
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 10,
+        "cases": [],
+        "observations": [],
+        "original_exit": 1,
+        "original_failed": 1,
+        "final_log": "regression-verified-mobile-labels.log"
+      },
+      {
+        "name": "edit_published_test.ts",
+        "label": "regression-verified-15-edit_published",
+        "exit": 0,
+        "seconds": 17.828354597091675,
+        "sha256": "acfaf88c060a8462cdee68c8c77950f9f15d66ba55ed5039b1fa9e7513931a96",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 5,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "edit_rollback_test.ts",
+        "label": "regression-verified-16-edit_rollback",
+        "exit": 0,
+        "seconds": 23.28181505203247,
+        "sha256": "2504892b5b604222073ff30039a613ccd85dd581eb921f730e0d2c297f39d2b5",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 2,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "edit_test.ts",
+        "label": "regression-verified-17-edit",
+        "exit": 0,
+        "seconds": 19.879521131515503,
+        "sha256": "34a244f681b51a4a39da18f35d37dfc842633e73bc9d18bc432ae8eb6c7bc5ce",
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 9,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "edit_undo_test.ts",
+        "label": "regression-verified-18-edit_undo",
+        "exit": 0,
+        "seconds": 17.466195344924927,
+        "sha256": "33f18d98d8a427d09fa6e3992905f0b43fd89e1368ecbe7746e5494227bc8d00",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_access_test.ts",
+        "label": "regression-verified-19-plan_access",
+        "exit": 0,
+        "seconds": 18.704447984695435,
+        "sha256": "a980f8c899f27ffe57ee1cb7ac9187b6ad139566ce2b11c77fa1ed674c005a17",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 6,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_multiple_reviews_test.ts",
+        "label": "regression-verified-20-plan_multiple_reviews",
+        "exit": 0,
+        "seconds": 19.07195520401001,
+        "sha256": "09437efe3363f2b8c75e81d84fdf33dda23f58b5bead1232679bd8852480d737",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 5,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_recovery_test.ts",
+        "label": "regression-verified-21-plan_recovery",
+        "exit": 0,
+        "seconds": 18.467113256454468,
+        "sha256": "0e4f2f682c1eee1aa9455f0fe8dcfe4e49cacc19f880dde14982c7ff92c99041",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 8,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_retry_review_test.ts",
+        "label": "regression-verified-22-plan_retry_review",
+        "exit": 0,
+        "seconds": 20.876151084899902,
+        "sha256": "5b5f723f2f55aa9618fc3acf96d151da36e8a1ccec68241cbaebd67b889cec19",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 8,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_rollback_test.ts",
+        "label": "regression-verified-23-plan_rollback",
+        "exit": 0,
+        "seconds": 23.956002950668335,
+        "sha256": "eb72114ec682b536128fe1f06ad884fd090e65b64bd54aee0c1210c598fac425",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_test.ts",
+        "label": "regression-verified-24-plan",
+        "exit": 0,
+        "seconds": 19.265904903411865,
+        "sha256": "566f73b8ebf618677e53f999436840f31979b718015b8d982c8d035f43868e67",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 8,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "plan_undo_test.ts",
+        "label": "regression-verified-25-plan_undo",
+        "exit": 0,
+        "seconds": 19.897927045822144,
+        "sha256": "9907005b9c94ebc765ea70c75c46a11500cc67d36f46ac96bbe72865ef51d53f",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 6,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "receipt_history_test.ts",
+        "label": "regression-verified-26-receipt_history",
+        "exit": 0,
+        "seconds": 17.38825798034668,
+        "sha256": "54d9e8ffc24f2dc2b6a067dd2f941b15bdf1036829c47fb495b5701cf9aa7bdc",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 4,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "reminders_commands_test.ts",
+        "label": "regression-verified-27-reminders_commands",
+        "exit": 0,
+        "seconds": 18.857588052749634,
+        "sha256": "b8325b642cd5be8b2cc1be4f4e626482506a3f023a073b36873b42e8163d0783",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "reminders_races_test.ts",
+        "label": "regression-verified-28-reminders_races",
+        "exit": 0,
+        "seconds": 47.02679395675659,
+        "sha256": "2032157d36a18bb11860f21f588417ea93c406c38f09acd5a267eb5c2be72aee",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 11,
+        "cases": [],
+        "observations": [
+          {
+            "name": "complete-claim-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "transactionid",
+                  "blockers": [
+                    283
+                  ]
+                },
+                {
+                  "pid": 283,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "complete-claim-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": true
+            }
+          },
+          {
+            "name": "complete-stop-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                },
+                {
+                  "pid": 353,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "transactionid",
+                  "blockers": [
+                    269
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "complete-stop-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": false
+            }
+          },
+          {
+            "name": "remove-claim-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    407
+                  ]
+                },
+                {
+                  "pid": 407,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "remove-claim-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_removed",
+              "claimed": true
+            }
+          },
+          {
+            "name": "remove-stop-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                },
+                {
+                  "pid": 480,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    269
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "remove-stop-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_removed",
+              "claimed": false
+            }
+          },
+          {
+            "name": "cancel-claim-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    523
+                  ]
+                },
+                {
+                  "pid": 523,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "cancel-claim-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "user_cancelled",
+              "claimed": true
+            }
+          },
+          {
+            "name": "cancel-stop-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                },
+                {
+                  "pid": 583,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    269
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "cancel-stop-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "user_cancelled",
+              "claimed": false
+            }
+          },
+          {
+            "name": "legacy-claim-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "transactionid",
+                  "blockers": [
+                    616
+                  ]
+                },
+                {
+                  "pid": 616,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "legacy-claim-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": true
+            }
+          },
+          {
+            "name": "legacy-stop-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                },
+                {
+                  "pid": 649,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "transactionid",
+                  "blockers": [
+                    269
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "legacy-stop-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": false
+            }
+          },
+          {
+            "name": "content_complete-claim-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    680
+                  ]
+                },
+                {
+                  "pid": 680,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "content_complete-claim-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": true
+            }
+          },
+          {
+            "name": "content_complete-stop-intermediate",
+            "data": {
+              "snapshot": {
+                "status": "pending",
+                "cancelled_reason": null,
+                "claimed": false
+              },
+              "graph": [
+                {
+                  "pid": 269,
+                  "application_name": "PostgREST 16.3",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    231
+                  ]
+                },
+                {
+                  "pid": 703,
+                  "application_name": "pg_cron",
+                  "wait_event_type": "Lock",
+                  "wait_event": "advisory",
+                  "blockers": [
+                    269
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "content_complete-stop-final",
+            "data": {
+              "status": "cancelled",
+              "cancelled_reason": "task_completed",
+              "claimed": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "reminders_test.ts",
+        "label": "regression-verified-29-reminders",
+        "exit": 0,
+        "seconds": 37.99236989021301,
+        "sha256": "4b156d01111fdf9c37c5b1e0600e23b9dfb765e160495a2461b0235d8524d715",
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 10,
+        "cases": [],
+        "observations": [
+          {
+            "name": "duplicate-intermediate",
+            "reminders": 0,
+            "graph": [
+              {
+                "pid": 271,
+                "blockers": [
+                  230
+                ]
+              },
+              {
+                "pid": 303,
+                "blockers": [
+                  230,
+                  271
+                ]
+              }
+            ]
+          },
+          {
+            "mutations": [
+              {
+                "name": "owner",
+                "verdict": "assertion RED"
+              },
+              {
+                "name": "cancelled due",
+                "verdict": "assertion RED"
+              },
+              {
+                "name": "due time",
+                "verdict": "assertion RED"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "remove_plan_race_test.ts",
+        "label": "regression-verified-30-remove_plan_race",
+        "exit": 0,
+        "seconds": 17.92218279838562,
+        "sha256": "e4f526e18ed97fad05cce7593544c8ab01f0a31adee4cdc85a62ce02afe2a711",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 3,
+        "cases": [],
+        "observations": [
+          {
+            "waiting": 1,
+            "blockers": [
+              "companion_apply_actions"
+            ],
+            "middle": {
+              "plans": [
+                "Transit only"
+              ],
+              "removed": false
+            }
+          },
+          {
+            "removal": [
+              200,
+              null,
+              []
+            ],
+            "plan": [
+              409,
+              "needs_review"
+            ]
+          },
+          {
+            "waiting": 1,
+            "blockers": [
+              "companion_plan_apply"
+            ],
+            "middle": {
+              "plans": [],
+              "removed": false
+            }
+          },
+          {
+            "plan": [
+              200,
+              null
+            ],
+            "removal": [
+              409,
+              "needs_review",
+              null
+            ]
+          },
+          {
+            "waiting": 1,
+            "blockers": [
+              "companion_apply_actions"
+            ]
+          },
+          {
+            "removal": [
+              200,
+              []
+            ],
+            "retry": [
+              409,
+              "needs_review"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "remove_rollback_test.ts",
+        "label": "regression-verified-31-remove_rollback",
+        "exit": 0,
+        "seconds": 21.084645986557007,
+        "sha256": "306820d219fac3d362f9a5b61f9ba7f5692b1426c541331911b847ee0ca0444d",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 2,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "remove_test.ts",
+        "label": "regression-verified-32-remove",
+        "exit": 0,
+        "seconds": 23.28219509124756,
+        "sha256": "a4abaddde88a58d719214cab248a2badc2b19baa6008c7219034ec2add5a13f2",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 15,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "rollback_test.ts",
+        "label": "regression-verified-33-rollback",
+        "exit": 0,
+        "seconds": 37.071115016937256,
+        "sha256": "774f9726fcbfc1c58a79dbe59dcf9e1be51209bcac7757ae3322810bd8ee935b",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 6,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "steps_context_race_test.ts",
+        "label": "regression-verified-34-steps_context_race",
+        "exit": 0,
+        "seconds": 26.73763918876648,
+        "sha256": "20ed0f42a502d854989c358aa619fb5f0a56a499d300b82cd22716a0f7a47d6c",
+        "passed": 23,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 23,
+        "cases": [],
+        "observations": [
+          {
+            "case": "a direct add of the same title (content-backed task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "d72d1ed4-ef22-46a8-a902-54f7fabaa4c9"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "d72d1ed4-ef22-46a8-a902-54f7fabaa4c9"
+            ]
+          },
+          {
+            "case": "a direct add of the same title (content-backed task)",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "8a18da30-3dcd-4fd4-b1e9-a5999915859c",
+              "c6c0f285-9719-4d40-9d96-3f3002da0813"
+            ]
+          },
+          {
+            "case": "a direct add of the same title (custom task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "47174d73-3e92-4eda-a765-c755cc8e4e1a"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "47174d73-3e92-4eda-a765-c755cc8e4e1a"
+            ]
+          },
+          {
+            "case": "a direct add of the same title (custom task)",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "954af7ef-8fe7-4547-a41f-8e47ab9213c3",
+              "d8946d1b-3539-4912-b56e-f13356852833"
+            ]
+          },
+          {
+            "case": "a rename of another step to the same title (custom task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "a72afe80-46e3-49c6-b2fc-f47a6f21b0c7"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "a72afe80-46e3-49c6-b2fc-f47a6f21b0c7"
+            ]
+          },
+          {
+            "case": "a rename of another step to the same title (custom task)",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "cd09fd7e-6dfe-43f0-8c16-a0d28e6cddaf",
+              "ed4a2fea-7baa-440b-aa9b-84fa8df7f909"
+            ]
+          },
+          {
+            "case": "a rename of another step to the same title (content-backed task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "b1bc0fd8-66d9-48bb-aae8-56b33bc93e58"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "b1bc0fd8-66d9-48bb-aae8-56b33bc93e58"
+            ]
+          },
+          {
+            "case": "a rename of another step to the same title (content-backed task)",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "31eae2f9-e8c0-448c-9754-923488fbf6c1",
+              "d610ae23-f526-4e4d-8842-6e0158c907d2"
+            ]
+          },
+          {
+            "case": "a rename of the matching step to another title (custom task)",
+            "order": "change-first",
+            "reviewed": [
+              "fab53835-497a-4d4d-a65b-d0dc462e28b1"
+            ],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": []
+          },
+          {
+            "case": "a rename of the matching step to another title (custom task)",
+            "order": "approval-first",
+            "reviewed": [
+              "2c0f44cc-1b51-49e6-afb4-e77eec168c76"
+            ],
+            "changeWaited": "blocked",
+            "mid": [
+              "2c0f44cc-1b51-49e6-afb4-e77eec168c76"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "a240497b-267e-4b6a-b851-9ae62ed3a3ef"
+            ]
+          },
+          {
+            "case": "a confirmed removal of the matching step (content-backed task)",
+            "order": "change-first",
+            "reviewed": [
+              "eb51b2d3-a213-41bc-aa3a-672e69f096f2"
+            ],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": []
+          },
+          {
+            "case": "a confirmed removal of the matching step (content-backed task)",
+            "order": "approval-first",
+            "reviewed": [
+              "34a4664e-694d-440c-b832-709df67125f8"
+            ],
+            "changeWaited": "blocked",
+            "mid": [
+              "34a4664e-694d-440c-b832-709df67125f8"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "f7cf95ca-0761-4307-b790-e9b8eab2f40e"
+            ]
+          },
+          {
+            "case": "an Undo that restores a removed matching step (custom task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "151cb7be-877b-462f-9331-6e6208fce140"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "151cb7be-877b-462f-9331-6e6208fce140"
+            ]
+          },
+          {
+            "case": "an Undo that restores a removed matching step (custom task)",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "05be62d3-6b29-45cb-81c3-448de9d64ddb",
+              "e3ca0cee-0dd0-4481-aa37-ee832ce9426d"
+            ]
+          },
+          {
+            "case": "a confirmed Undo of the added matching step (content-backed task)",
+            "order": "change-first",
+            "reviewed": [
+              "dc51072a-721e-4e90-85b3-b37c36c53839"
+            ],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": []
+          },
+          {
+            "case": "a confirmed Undo of the added matching step (content-backed task)",
+            "order": "approval-first",
+            "reviewed": [
+              "8653be52-ba59-457f-90e2-b099e0f2aed0"
+            ],
+            "changeWaited": "blocked",
+            "mid": [
+              "8653be52-ba59-457f-90e2-b099e0f2aed0"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "e4442e6b-39f5-4cfc-bba7-46af8f22c205"
+            ]
+          },
+          {
+            "case": "a direct add of the same title (content-backed task)",
+            "order": "late-window",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "9d5f1e54-d20b-4615-bce5-f5b77e4388b0",
+              "ec2d0823-aa3a-46ca-b848-e91bce5dc325"
+            ]
+          },
+          {
+            "case": "a rename of another step to the same title (custom task)",
+            "order": "late-window",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "65f5e1c8-5cee-4921-a1b9-12e1d178ec64",
+              "becbcccd-ed53-4fea-874f-5aa0665d4f4c"
+            ]
+          },
+          {
+            "case": "an Undo that restores a removed matching step (custom task)",
+            "order": "late-window",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "11942a21-01c6-414d-b607-1fc282ec470a",
+              "b782753a-01c8-4063-b926-440c7b46c070"
+            ]
+          },
+          {
+            "case": "another title on the same task",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "d61fa88a-6fc3-491c-bb70-130ed8473e7b"
+            ]
+          },
+          {
+            "case": "another title on the same task",
+            "order": "approval-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "057a6336-3087-4d83-b826-428b9b7431bb"
+            ]
+          },
+          {
+            "case": "checking the matching step",
+            "order": "change-first",
+            "reviewed": [
+              "533314dd-2f1a-43cf-b7f2-e70db94f5d0b"
+            ],
+            "changeWaited": "blocked",
+            "mid": [
+              "533314dd-2f1a-43cf-b7f2-e70db94f5d0b"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "533314dd-2f1a-43cf-b7f2-e70db94f5d0b",
+              "dec53dc7-6ace-4956-8e94-dec627c9ce99"
+            ]
+          },
+          {
+            "case": "checking the matching step",
+            "order": "approval-first",
+            "reviewed": [
+              "15ce564f-0a7a-4891-894c-7cc7561a0c66"
+            ],
+            "changeWaited": "blocked",
+            "mid": [
+              "15ce564f-0a7a-4891-894c-7cc7561a0c66"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 200
+            },
+            "final": [
+              "15ce564f-0a7a-4891-894c-7cc7561a0c66",
+              "63a7853a-5210-4a62-b73f-da6b36dc72de"
+            ]
+          },
+          {
+            "mid": [
+              "5e8d4daf-194d-4b4c-a3cf-2e9ca789ce77"
+            ],
+            "openAtMid": true,
+            "r1": [
+              409,
+              "needs_review",
+              null
+            ],
+            "r2": [
+              403,
+              "forbidden",
+              "invalid_authorization"
+            ],
+            "final": [
+              "5e8d4daf-194d-4b4c-a3cf-2e9ca789ce77"
+            ]
+          },
+          {
+            "case": "a direct add of the same title (content-backed task)",
+            "order": "change-first",
+            "reviewed": [],
+            "changeWaited": "blocked",
+            "mid": [
+              "7b726494-b9ee-404d-8579-e22993912d0f"
+            ],
+            "approvalOpenAtMid": true,
+            "change": {
+              "status": 200
+            },
+            "approval": {
+              "status": 409,
+              "error": "needs_review",
+              "revision": 2
+            },
+            "final": [
+              "7b726494-b9ee-404d-8579-e22993912d0f"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "steps_parent_race_test.ts",
+        "label": "regression-verified-35-steps_parent_race",
+        "exit": 0,
+        "seconds": 22.246957778930664,
+        "sha256": "e0d4019df1f370221dfa0230eba1d38ab8ade33df955748ce134c3c37462aad7",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 11,
+        "cases": [],
+        "observations": [
+          {
+            "mode": "completion",
+            "legacyFirst": "blocked",
+            "legacyWhileStepHeld": [
+              "advisory"
+            ],
+            "mid1": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "mid2": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 200,
+              "json": {
+                "status": "applied",
+                "receipt": {
+                  "kind": "change",
+                  "steps": [
+                    {
+                      "done": false,
+                      "title": "held completion step",
+                      "step_id": "9efe809a-2191-41fe-8f27-93514e3e6b11",
+                      "before_done": false,
+                      "after_revision": 1,
+                      "before_revision": 0
+                    }
+                  ],
+                  "current": true,
+                  "undo_of": null,
+                  "task_ref": "sanity:sin-number",
+                  "undoable": true,
+                  "undone_by": null,
+                  "created_at": "2026-10-30T19:05:29.515996+00:00",
+                  "after_state": "not_started",
+                  "before_state": "not_started",
+                  "operation_id": "35d6a9de-2b73-48a4-91ae-33c4c89cdb3e",
+                  "after_revision": 1,
+                  "operation_type": "step.create",
+                  "before_revision": 0
+                },
+                "results": [
+                  {
+                    "type": "step.create",
+                    "state": "not_started",
+                    "steps": [
+                      {
+                        "done": false,
+                        "title": "held completion step",
+                        "step_id": "9efe809a-2191-41fe-8f27-93514e3e6b11",
+                        "before_done": false,
+                        "after_revision": 1,
+                        "before_revision": 0
+                      }
+                    ],
+                    "task_ref": "sanity:sin-number",
+                    "before_state": "not_started",
+                    "after_revision": 1,
+                    "before_revision": 0
+                  }
+                ],
+                "replayed": false,
+                "operation_id": "35d6a9de-2b73-48a4-91ae-33c4c89cdb3e"
+              }
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:29.541813+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "held completion step",
+                  "step_id": "9efe809a-2191-41fe-8f27-93514e3e6b11",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "mode": "completion",
+            "legacyState": "blocked",
+            "stepState": "blocked",
+            "mid": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "step": {
+              "status": 422,
+              "json": {
+                "error": "invalid_request",
+                "reason": "task_completed",
+                "detail": {
+                  "task_ref": "sanity:sin-number"
+                }
+              },
+              "headers": {}
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:29.831138+00:00"
+                }
+              ],
+              "steps": [],
+              "details": []
+            }
+          },
+          {
+            "mode": "dismissal",
+            "legacyFirst": "blocked",
+            "legacyWhileStepHeld": [
+              "advisory"
+            ],
+            "mid1": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "mid2": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 200,
+              "json": {
+                "status": "applied",
+                "receipt": {
+                  "kind": "change",
+                  "steps": [
+                    {
+                      "done": false,
+                      "title": "held dismissal step",
+                      "step_id": "1bed011b-18b9-4432-8ef9-ab1fb41d1a61",
+                      "before_done": false,
+                      "after_revision": 1,
+                      "before_revision": 0
+                    }
+                  ],
+                  "current": true,
+                  "undo_of": null,
+                  "task_ref": "sanity:sin-number",
+                  "undoable": true,
+                  "undone_by": null,
+                  "created_at": "2026-10-30T19:05:30.179796+00:00",
+                  "after_state": "not_started",
+                  "before_state": "not_started",
+                  "operation_id": "74e01d6c-caf6-4a73-a6d4-c58b705cd86c",
+                  "after_revision": 1,
+                  "operation_type": "step.create",
+                  "before_revision": 0
+                },
+                "results": [
+                  {
+                    "type": "step.create",
+                    "state": "not_started",
+                    "steps": [
+                      {
+                        "done": false,
+                        "title": "held dismissal step",
+                        "step_id": "1bed011b-18b9-4432-8ef9-ab1fb41d1a61",
+                        "before_done": false,
+                        "after_revision": 1,
+                        "before_revision": 0
+                      }
+                    ],
+                    "task_ref": "sanity:sin-number",
+                    "before_state": "not_started",
+                    "after_revision": 1,
+                    "before_revision": 0
+                  }
+                ],
+                "replayed": false,
+                "operation_id": "74e01d6c-caf6-4a73-a6d4-c58b705cd86c"
+              }
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "not_started",
+                  "source": "sanity",
+                  "removed": true,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:30.221518+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "held dismissal step",
+                  "step_id": "1bed011b-18b9-4432-8ef9-ab1fb41d1a61",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "mode": "dismissal",
+            "legacyState": "blocked",
+            "stepState": "blocked",
+            "mid": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "step": {
+              "status": 422,
+              "json": {
+                "error": "invalid_request",
+                "reason": "task_removed",
+                "detail": {
+                  "task_ref": "sanity:sin-number"
+                }
+              },
+              "headers": {}
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "not_started",
+                  "source": "sanity",
+                  "removed": true,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:30.511021+00:00"
+                }
+              ],
+              "steps": [],
+              "details": []
+            }
+          },
+          {
+            "mode": "completion",
+            "legacyState": "blocked",
+            "mid": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 200,
+              "json": {
+                "status": "applied",
+                "receipt": {
+                  "kind": "change",
+                  "steps": [
+                    {
+                      "done": false,
+                      "title": "late completion step",
+                      "step_id": "803516ce-ba59-4579-9360-0b82c691f733",
+                      "before_done": false,
+                      "after_revision": 1,
+                      "before_revision": 0
+                    }
+                  ],
+                  "current": true,
+                  "undo_of": null,
+                  "task_ref": "sanity:sin-number",
+                  "undoable": true,
+                  "undone_by": null,
+                  "created_at": "2026-10-30T19:05:30.79231+00:00",
+                  "after_state": "not_started",
+                  "before_state": "not_started",
+                  "operation_id": "ad7941d3-7570-4206-b079-c5713a8dbf19",
+                  "after_revision": 1,
+                  "operation_type": "step.create",
+                  "before_revision": 0
+                },
+                "results": [
+                  {
+                    "type": "step.create",
+                    "state": "not_started",
+                    "steps": [
+                      {
+                        "done": false,
+                        "title": "late completion step",
+                        "step_id": "803516ce-ba59-4579-9360-0b82c691f733",
+                        "before_done": false,
+                        "after_revision": 1,
+                        "before_revision": 0
+                      }
+                    ],
+                    "task_ref": "sanity:sin-number",
+                    "before_state": "not_started",
+                    "after_revision": 1,
+                    "before_revision": 0
+                  }
+                ],
+                "replayed": false,
+                "operation_id": "ad7941d3-7570-4206-b079-c5713a8dbf19"
+              }
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:30.805035+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "late completion step",
+                  "step_id": "803516ce-ba59-4579-9360-0b82c691f733",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "mode": "dismissal",
+            "legacyState": "blocked",
+            "mid": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 200,
+              "json": {
+                "status": "applied",
+                "receipt": {
+                  "kind": "change",
+                  "steps": [
+                    {
+                      "done": false,
+                      "title": "late dismissal step",
+                      "step_id": "580d93a3-02ff-427a-ad1d-3054554433d6",
+                      "before_done": false,
+                      "after_revision": 1,
+                      "before_revision": 0
+                    }
+                  ],
+                  "current": true,
+                  "undo_of": null,
+                  "task_ref": "sanity:sin-number",
+                  "undoable": true,
+                  "undone_by": null,
+                  "created_at": "2026-10-30T19:05:31.054522+00:00",
+                  "after_state": "not_started",
+                  "before_state": "not_started",
+                  "operation_id": "42bdc468-5630-4a56-b8cd-f7bb2ccb80d1",
+                  "after_revision": 1,
+                  "operation_type": "step.create",
+                  "before_revision": 0
+                },
+                "results": [
+                  {
+                    "type": "step.create",
+                    "state": "not_started",
+                    "steps": [
+                      {
+                        "done": false,
+                        "title": "late dismissal step",
+                        "step_id": "580d93a3-02ff-427a-ad1d-3054554433d6",
+                        "before_done": false,
+                        "after_revision": 1,
+                        "before_revision": 0
+                      }
+                    ],
+                    "task_ref": "sanity:sin-number",
+                    "before_state": "not_started",
+                    "after_revision": 1,
+                    "before_revision": 0
+                  }
+                ],
+                "replayed": false,
+                "operation_id": "42bdc468-5630-4a56-b8cd-f7bb2ccb80d1"
+              }
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "not_started",
+                  "source": "sanity",
+                  "removed": true,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.066516+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "late dismissal step",
+                  "step_id": "580d93a3-02ff-427a-ad1d-3054554433d6",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "checkState": "blocked",
+            "legacyFirst": "blocked",
+            "legacyWhileCheckHeld": [
+              "advisory"
+            ],
+            "mid1": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "check me",
+                  "step_id": "2ccef3d7-6f0e-4a4f-af70-63ba17ec5b0f",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            },
+            "mid2": {
+              "contract_version": 1,
+              "tasks": [],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "check me",
+                  "step_id": "2ccef3d7-6f0e-4a4f-af70-63ba17ec5b0f",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            },
+            "check": {
+              "status": 200,
+              "json": {
+                "status": "applied",
+                "receipt": {
+                  "kind": "change",
+                  "steps": [
+                    {
+                      "done": true,
+                      "title": "check me",
+                      "step_id": "2ccef3d7-6f0e-4a4f-af70-63ba17ec5b0f",
+                      "before_done": false,
+                      "before_title": "check me",
+                      "after_revision": 2,
+                      "before_revision": 1
+                    }
+                  ],
+                  "current": true,
+                  "undo_of": null,
+                  "task_ref": "sanity:sin-number",
+                  "undoable": true,
+                  "undone_by": null,
+                  "created_at": "2026-10-30T19:05:31.37733+00:00",
+                  "after_state": "not_started",
+                  "before_state": "not_started",
+                  "operation_id": "68788fa5-a49a-46cf-9ef0-e3d47d31efff",
+                  "after_revision": 2,
+                  "operation_type": "step.set_done",
+                  "before_revision": 1
+                },
+                "results": [
+                  {
+                    "type": "step.set_done",
+                    "state": "not_started",
+                    "steps": [
+                      {
+                        "done": true,
+                        "title": "check me",
+                        "step_id": "2ccef3d7-6f0e-4a4f-af70-63ba17ec5b0f",
+                        "before_done": false,
+                        "before_title": "check me",
+                        "after_revision": 2,
+                        "before_revision": 1
+                      }
+                    ],
+                    "task_ref": "sanity:sin-number",
+                    "before_state": "not_started",
+                    "after_revision": 2,
+                    "before_revision": 1
+                  }
+                ],
+                "replayed": false,
+                "operation_id": "68788fa5-a49a-46cf-9ef0-e3d47d31efff"
+              },
+              "headers": {}
+            },
+            "legacy": {
+              "status": 201,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.391798+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": true,
+                  "title": "check me",
+                  "step_id": "2ccef3d7-6f0e-4a4f-af70-63ba17ec5b0f",
+                  "position": 0,
+                  "revision": 2,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "shape": "upsert",
+            "legacyState": "blocked",
+            "stepState": "blocked",
+            "legacyWhileStepHeld": [
+              "advisory"
+            ],
+            "mid": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "not_started",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.655186+00:00"
+                }
+              ],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 200
+            },
+            "legacy": {
+              "status": 200,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 2,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.686846+00:00"
+                }
+              ],
+              "steps": [
+                {
+                  "done": false,
+                  "title": "existing upsert",
+                  "step_id": "d215f67b-73b6-4f46-87d9-100d34f0af55",
+                  "position": 0,
+                  "revision": 1,
+                  "task_ref": "sanity:sin-number"
+                }
+              ],
+              "details": []
+            }
+          },
+          {
+            "shape": "update",
+            "legacyState": "settled",
+            "stepState": "settled",
+            "legacyWhileStepHeld": [],
+            "mid": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 2,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.956554+00:00"
+                }
+              ],
+              "steps": [],
+              "details": []
+            },
+            "step": {
+              "status": 422,
+              "reason": "task_completed"
+            },
+            "legacy": {
+              "status": 204,
+              "error": null
+            },
+            "after": {
+              "contract_version": 1,
+              "tasks": [
+                {
+                  "state": "completed",
+                  "source": "sanity",
+                  "removed": false,
+                  "revision": 2,
+                  "task_ref": "sanity:sin-number",
+                  "last_receipt": null,
+                  "waiting_reason": null,
+                  "state_updated_at": "2026-10-30T19:05:31.956554+00:00"
+                }
+              ],
+              "steps": [],
+              "details": []
+            }
+          }
+        ]
+      },
+      {
+        "name": "steps_rollback_test.ts",
+        "label": "regression-verified-36-steps_rollback",
+        "exit": 0,
+        "seconds": 21.129344940185547,
+        "sha256": "17f3f05a3e25712482119225e0e691c3f3252f9b62153a167e81e22f412da454",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 2,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "steps_test.ts",
+        "label": "regression-verified-37-steps",
+        "exit": 0,
+        "seconds": 21.806632041931152,
+        "sha256": "1b70e6f67f3031a8609743203f30f5d57d64d61f7813e7ea0d1011083f183b34",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 15,
+        "cases": [],
+        "observations": []
+      },
+      {
+        "name": "undo_test.ts",
+        "label": "regression-verified-38-undo",
+        "exit": 0,
+        "seconds": 18.578999042510986,
+        "sha256": "fe94e73683897d9d668d91ae83c288297073ddee237f08571db1c349c46ca08a",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "selected": 8,
+        "cases": [],
+        "observations": []
+      }
+    ]
+  },
+  "new": [
+    {
+      "label": "final-full-a",
+      "sha256": "8eb6e2a65928f5cb77c99be964926d8793dfe72041c137fd0ea8bb15b2b1267e",
+      "passed": 58,
+      "failed": 0,
+      "ignored": 0,
+      "selected": 58,
+      "cases": [
+        {
+          "name": "push enrollment: disabled server retains no enrollment or token",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: authenticated save replays one revision and a content-free receipt",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: known installation requires proof even for the current account",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: transfer needs possession and removal of the earlier server session",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: different-token transfer preserves the earlier social and learn token",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: token collision is atomic for same-account and cross-account races",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: RLS grants and the common operation namespace reject bypass",
+          "result": "ok"
+        },
+        {
+          "name": "push delivery: disabled dispatch consumes due history without changing the in-app reminder",
+          "result": "ok"
+        },
+        {
+          "name": "push delivery: enabled competing workers commit one intent and one provider request",
+          "result": "ok"
+        },
+        {
+          "name": "push target: owner first, same published task across accounts, current profile access and removal",
+          "result": "ok"
+        },
+        {
+          "name": "push process: kill after durable intent retains unknown identity without resend",
+          "result": "ok"
+        },
+        {
+          "name": "push process: forced database close is recovered in an independent connection",
+          "result": "ok"
+        },
+        {
+          "name": "push process: stopped sender loses database locks before the action lock limit",
+          "result": "ok"
+        },
+        {
+          "name": "push process: production supervisor kills a stopped child and a new cycle recovers it",
+          "result": "ok"
+        },
+        {
+          "name": "push process: cleanup",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: unknown transport and response parsing never resend",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: ticket, missing receipt, provider acceptance and display remain separate",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: definite reject backoff and cap",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: definite rate backoff and cap",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: permanent error disables the original enrollment",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: late receipt preserves a newer token generation",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: disabled installation stays suppressed after enablement",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: closed-app age does not create a foreground lease",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final session authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final permission authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final generation authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final credential authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final policy authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider budget fails closed and includes reserved existing senders",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: owned current task resolver rejects another account and removed task",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: complete action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: remove action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: cancel action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: legacy action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content-complete action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: complete worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: remove worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: cancel worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: legacy worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content-complete worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content headers total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content body total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider hold total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider body total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment renew waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment disable waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment revoke waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: receipt expiry never returns a sendable identity",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final write timeout releases cancellation and keeps unknown intent",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: fixture cleanup",
+          "result": "ok"
+        },
+        {
+          "name": "push commit: lost COMMIT acknowledgement preserves the accepted ticket without resend",
+          "result": "ok"
+        },
+        {
+          "name": "push expiry: session expiry during content I/O is checked at the last preventable POST boundary",
+          "result": "ok"
+        },
+        {
+          "name": "push account deletion: new attempt history does not block Auth account deletion",
+          "result": "ok"
+        },
+        {
+          "name": "push rollback: stops execution and preserves terminal history across reapply",
+          "result": "ok"
+        },
+        {
+          "name": "push rollback: full reverse order and reapply preserve stopped delivery identities",
+          "result": "ok"
+        },
+        {
+          "name": "push actions: every request leaves generation quota tripwires untouched",
+          "result": "ok"
+        }
+      ],
+      "observations": [
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        },
+        {
+          "forced_close_exit": 0,
+          "ms": 2275.7397499999997,
+          "stderr_bytes": 0
+        },
+        {
+          "stopped_process_cancel_ms": 2508.7169999999996
+        },
+        {
+          "event": "companion_push_child_failed",
+          "exit_code": 137,
+          "signal": "SIGKILL"
+        },
+        {
+          "supervisor_exit": 137,
+          "elapsed_ms": 4076.587374999999
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 3,
+          "modes": {
+            "hold": 3
+          }
+        },
+        {
+          "race": "complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "remove",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1249,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        },
+        {
+          "race": "cancel",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                2175
+              ]
+            },
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "legacy",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1249,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "race": "content-complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "remove",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "cancel",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2164
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "legacy",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "content-complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "deadline": "content-headers",
+          "ms": 2219.1318329999995,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "content-body",
+          "ms": 2218.4561250000042,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-hold",
+          "ms": 2216.457499999997,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-body",
+          "ms": 2215.0404160000035,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "renew",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "disable",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "revoke",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "final-write",
+          "ms": 2228.914875000002,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 3412,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 23,
+          "modes": {
+            "lost": 1,
+            "ok": 5,
+            "reject": 3,
+            "rate": 3,
+            "invalid": 1,
+            "hold": 9,
+            "body": 1
+          }
+        },
+        {
+          "backend_commit_messages": 4,
+          "acknowledgement_dropped": true,
+          "provider_requests": 1
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 0,
+          "modes": {}
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        }
+      ],
+      "provider_calls": 29,
+      "provider_modes": {
+        "body": 1,
+        "hold": 12,
+        "invalid": 1,
+        "lost": 1,
+        "ok": 8,
+        "rate": 3,
+        "reject": 3
+      },
+      "lifecycle_races": [
+        {
+          "race": "complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "remove",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1249,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        },
+        {
+          "race": "cancel",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                2175
+              ]
+            },
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "legacy",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1249,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "race": "content-complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2164,
+              "blockers": [
+                1274
+              ]
+            },
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "race": "complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "remove",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2153
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "cancel",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2164
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "legacy",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "content-complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ],
+          "provider_calls": 1
+        }
+      ],
+      "enrollment_races": [
+        {
+          "enrollment_race": "renew",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "disable",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "revoke",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        }
+      ],
+      "deadlines": [
+        {
+          "deadline": "content-headers",
+          "ms": 2219.1318329999995,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 1274,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "content-body",
+          "ms": 2218.4561250000042,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                1249
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-hold",
+          "ms": 2216.457499999997,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2164
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-body",
+          "ms": 2215.0404160000035,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 2175,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "final-write",
+          "ms": 2228.914875000002,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 3412,
+              "blockers": [
+                2153
+              ]
+            }
+          ]
+        }
+      ],
+      "behavior_cases": 56
+    },
+    {
+      "label": "final-full-b",
+      "sha256": "d96c4510cca6b3ef432789991777ac1c126affe8295804a2db255261f5ddddb6",
+      "passed": 58,
+      "failed": 0,
+      "ignored": 0,
+      "selected": 58,
+      "cases": [
+        {
+          "name": "push enrollment: disabled server retains no enrollment or token",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: authenticated save replays one revision and a content-free receipt",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: known installation requires proof even for the current account",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: transfer needs possession and removal of the earlier server session",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: different-token transfer preserves the earlier social and learn token",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: token collision is atomic for same-account and cross-account races",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed",
+          "result": "ok"
+        },
+        {
+          "name": "push enrollment: RLS grants and the common operation namespace reject bypass",
+          "result": "ok"
+        },
+        {
+          "name": "push delivery: disabled dispatch consumes due history without changing the in-app reminder",
+          "result": "ok"
+        },
+        {
+          "name": "push delivery: enabled competing workers commit one intent and one provider request",
+          "result": "ok"
+        },
+        {
+          "name": "push target: owner first, same published task across accounts, current profile access and removal",
+          "result": "ok"
+        },
+        {
+          "name": "push process: kill after durable intent retains unknown identity without resend",
+          "result": "ok"
+        },
+        {
+          "name": "push process: forced database close is recovered in an independent connection",
+          "result": "ok"
+        },
+        {
+          "name": "push process: stopped sender loses database locks before the action lock limit",
+          "result": "ok"
+        },
+        {
+          "name": "push process: production supervisor kills a stopped child and a new cycle recovers it",
+          "result": "ok"
+        },
+        {
+          "name": "push process: cleanup",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: unknown transport and response parsing never resend",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: ticket, missing receipt, provider acceptance and display remain separate",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: definite reject backoff and cap",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: definite rate backoff and cap",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: permanent error disables the original enrollment",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: late receipt preserves a newer token generation",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: disabled installation stays suppressed after enablement",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: closed-app age does not create a foreground lease",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final session authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final permission authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final generation authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final credential authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final policy authorization",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider budget fails closed and includes reserved existing senders",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: owned current task resolver rejects another account and removed task",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: complete action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: remove action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: cancel action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: legacy action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content-complete action-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: complete worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: remove worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: cancel worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: legacy worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content-complete worker-first",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content headers total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: content body total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider hold total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: provider body total deadline",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment renew waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment disable waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: enrollment revoke waits behind dispatch",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: receipt expiry never returns a sendable identity",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: final write timeout releases cancellation and keeps unknown intent",
+          "result": "ok"
+        },
+        {
+          "name": "push worker: fixture cleanup",
+          "result": "ok"
+        },
+        {
+          "name": "push commit: lost COMMIT acknowledgement preserves the accepted ticket without resend",
+          "result": "ok"
+        },
+        {
+          "name": "push expiry: session expiry during content I/O is checked at the last preventable POST boundary",
+          "result": "ok"
+        },
+        {
+          "name": "push account deletion: new attempt history does not block Auth account deletion",
+          "result": "ok"
+        },
+        {
+          "name": "push rollback: stops execution and preserves terminal history across reapply",
+          "result": "ok"
+        },
+        {
+          "name": "push rollback: full reverse order and reapply preserve stopped delivery identities",
+          "result": "ok"
+        },
+        {
+          "name": "push actions: every request leaves generation quota tripwires untouched",
+          "result": "ok"
+        }
+      ],
+      "observations": [
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        },
+        {
+          "forced_close_exit": 0,
+          "ms": 2279.7882499999996,
+          "stderr_bytes": 0
+        },
+        {
+          "stopped_process_cancel_ms": 2505.5455839999995
+        },
+        {
+          "event": "companion_push_child_failed",
+          "exit_code": 137,
+          "signal": "SIGKILL"
+        },
+        {
+          "supervisor_exit": 137,
+          "elapsed_ms": 4076.3544999999995
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 3,
+          "modes": {
+            "hold": 3
+          }
+        },
+        {
+          "race": "complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            },
+            {
+              "pid": 5643,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "remove",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            },
+            {
+              "pid": 5633,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "cancel",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4736,
+              "blockers": [
+                5654
+              ]
+            },
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "race": "legacy",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            },
+            {
+              "pid": 5633,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "content-complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4736,
+              "blockers": [
+                4761
+              ]
+            },
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "race": "complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "remove",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "cancel",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5643
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "legacy",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "content-complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "deadline": "content-headers",
+          "ms": 2224.6968750000015,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "content-body",
+          "ms": 2223.175292000007,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-hold",
+          "ms": 2215.086792000002,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-body",
+          "ms": 2225.9974169999987,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "renew",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "disable",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "revoke",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "final-write",
+          "ms": 2221.375583000001,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 6899,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 23,
+          "modes": {
+            "lost": 1,
+            "ok": 5,
+            "reject": 3,
+            "rate": 3,
+            "invalid": 1,
+            "hold": 9,
+            "body": 1
+          }
+        },
+        {
+          "backend_commit_messages": 4,
+          "acknowledgement_dropped": true,
+          "provider_requests": 1
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 0,
+          "modes": {}
+        },
+        {
+          "kind": "provider_fixture_distribution",
+          "total": 1,
+          "modes": {
+            "ok": 1
+          }
+        }
+      ],
+      "provider_calls": 29,
+      "provider_modes": {
+        "body": 1,
+        "hold": 12,
+        "invalid": 1,
+        "lost": 1,
+        "ok": 8,
+        "rate": 3,
+        "reject": 3
+      },
+      "lifecycle_races": [
+        {
+          "race": "complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            },
+            {
+              "pid": 5643,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "remove",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            },
+            {
+              "pid": 5633,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "cancel",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4736,
+              "blockers": [
+                5654
+              ]
+            },
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "race": "legacy",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            },
+            {
+              "pid": 5633,
+              "blockers": [
+                4761
+              ]
+            }
+          ]
+        },
+        {
+          "race": "content-complete",
+          "order": "action-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4736,
+              "blockers": [
+                4761
+              ]
+            },
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "race": "complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "remove",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "cancel",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5643
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "legacy",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            }
+          ],
+          "provider_calls": 1
+        },
+        {
+          "race": "content-complete",
+          "order": "worker-first",
+          "intermediate": "pending",
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5633
+              ]
+            }
+          ],
+          "provider_calls": 1
+        }
+      ],
+      "enrollment_races": [
+        {
+          "enrollment_race": "renew",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "disable",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "enrollment_race": "revoke",
+          "intermediate_revision": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                5643
+              ]
+            }
+          ]
+        }
+      ],
+      "deadlines": [
+        {
+          "deadline": "content-headers",
+          "ms": 2224.6968750000015,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 4761,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "content-body",
+          "ms": 2223.175292000007,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-hold",
+          "ms": 2215.086792000002,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                4736
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "provider-body",
+          "ms": 2225.9974169999987,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 5654,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        },
+        {
+          "deadline": "final-write",
+          "ms": 2221.375583000001,
+          "http_status": 200,
+          "public_reminder_rows": 1,
+          "graph": [
+            {
+              "pid": 6899,
+              "blockers": [
+                5633
+              ]
+            }
+          ]
+        }
+      ],
+      "behavior_cases": 56
+    }
+  ],
+  "same_executed_inputs": true,
+  "input_entries": 307,
+  "mutations": [
+    {
+      "name": "unknown",
+      "exit": 1,
+      "assertion_killed": true,
+      "seconds": 2.7818000316619873
+    },
+    {
+      "name": "cancel",
+      "exit": 1,
+      "assertion_killed": true,
+      "seconds": 4.066305875778198
+    },
+    {
+      "name": "generation",
+      "exit": 1,
+      "assertion_killed": true,
+      "seconds": 1.915576696395874
+    },
+    {
+      "name": "recovery",
+      "exit": 1,
+      "assertion_killed": true,
+      "seconds": 1.982975959777832
+    }
+  ]
+}

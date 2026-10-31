@@ -1,0 +1,32 @@
+running 1 test from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_expiry_test.ts
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary ...
+------- output -------
+FALSIFIER: content delay lets a session expire before POST but the worker still sends
+{"kind":"provider_fixture_distribution","total":1,"modes":{"ok":1}}
+----- output end -----
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary ... FAILED (3s)
+
+ ERRORS 
+
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_expiry_test.ts:5:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   1
++   0
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_expiry_test.ts:12:3)
+
+ FAILURES 
+
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_expiry_test.ts:5:6
+
+FAILED | 0 passed | 1 failed (3s)
+
+error: Test failed

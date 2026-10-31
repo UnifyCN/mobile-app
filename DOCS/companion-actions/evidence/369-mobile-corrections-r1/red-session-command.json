@@ -1,0 +1,16 @@
+{
+  "source_head": "116ce513803e6646d02dd394c8b76342d2b98624",
+  "source_tree": "bf5be7bda5a59f82749decde186ed7c4ebdcd8ff",
+  "product_dirty": "?? unify-front-end/__tests__/companionActions/pushSessionRecovery.test.ts",
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/pushSessionRecovery.test.ts",
+    "--runInBand",
+    "--watchAll=false"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 1,
+  "seconds": 1.6679608821868896
+}

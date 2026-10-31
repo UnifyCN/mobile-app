@@ -1,0 +1,10 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit": 2,
+  "disposition": "Raw runner logs contain trailing whitespace. Preserve exact raw bytes in gzip files. Recheck source and evidence after lossless compression."
+}

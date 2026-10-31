@@ -1,0 +1,21 @@
+{
+  "label": "context-network-green",
+  "command": [
+    "node",
+    "node_modules/jest/bin/jest.js",
+    "--runTestsByPath",
+    "__tests__/companion/companionContext.acceptance.test.tsx",
+    "--runInBand",
+    "--watchAll=false",
+    "--json",
+    "--outputFile=/Users/savargupta/.t3/worktrees/Unify/t3-27ee6519/unify-front-end/.scratch/ci363/context-network-green-jest.json"
+  ],
+  "verdict": "pass",
+  "seconds": 2.981,
+  "exit_code": 0,
+  "timed_out": false,
+  "assertions_passed": true,
+  "passed_tests": 9,
+  "failed_tests": 0,
+  "skipped_tests": 0
+}

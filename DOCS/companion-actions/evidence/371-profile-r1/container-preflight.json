@@ -1,0 +1,79 @@
+[
+  {
+    "name": "supabase_db_unify-profile-371-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-profile-371-r1",
+      "com.supabase.cli.project": "unify-profile-371-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions"
+    },
+    "mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_db_unify-profile-371-r1",
+        "Source": "/var/lib/docker/volumes/supabase_db_unify-profile-371-r1/_data",
+        "Destination": "/var/lib/postgresql/data",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+      }
+    ]
+  },
+  {
+    "name": "supabase_auth_unify-profile-371-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-profile-371-r1",
+      "com.supabase.cli.project": "unify-profile-371-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions"
+    },
+    "mounts": []
+  },
+  {
+    "name": "supabase_rest_unify-profile-371-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-profile-371-r1",
+      "com.supabase.cli.project": "unify-profile-371-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions"
+    },
+    "mounts": []
+  },
+  {
+    "name": "supabase_kong_unify-profile-371-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-profile-371-r1",
+      "com.supabase.cli.project": "unify-profile-371-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "mounts": []
+  },
+  {
+    "name": "supabase_edge_runtime_unify-profile-371-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-profile-371-r1",
+      "com.supabase.cli.project": "unify-profile-371-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions"
+    },
+    "mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_edge_runtime_unify-profile-371-r1",
+        "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-profile-371-r1/_data",
+        "Destination": "/root/.cache/deno",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      },
+      {
+        "Type": "bind",
+        "Source": "/host_mnt/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/supabase/functions",
+        "Destination": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/supabase/functions",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "content_url": "http://host.docker.internal:3456/content"
+  }
+]

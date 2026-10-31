@@ -1,0 +1,97 @@
+{
+  "edge_files": 19,
+  "edge_passed": 277,
+  "edge_failed": 0,
+  "reused_source_counts": [
+    1264,
+    752
+  ],
+  "runtime_files_executed": 0,
+  "containers": [
+    {
+      "Command": "\"sh -c 'exec edge-ru\u2026\"",
+      "CreatedAt": "2026-10-29 12:38:56 -0700 PDT",
+      "HealthStatus": "none",
+      "ID": "91f09e93156c",
+      "Image": "public.ecr.aws/supabase/edge-runtime:v1.76.2",
+      "Labels": "com.docker.compose.project=unify-reminders-368-r1,com.supabase.cli.project=unify-reminders-368-r1,com.supabase.cli.workdir=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions,desktop.docker.io/binds/1/Source=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/binds/1/SourceKind=hostFile,desktop.docker.io/binds/1/Target=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-0a487678/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/functions,desktop.docker.io/ports.scheme=v2",
+      "LocalVolumes": "1",
+      "Mounts": "/host_mnt/Volu\u2026,supabase_edge_\u2026",
+      "Names": "supabase_edge_runtime_unify-reminders-368-r1",
+      "Networks": "supabase_network_unify-reminders-368-r1",
+      "Platform": {
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      "Ports": "",
+      "RunningFor": "8 minutes ago",
+      "Size": "61.4kB (virtual 700MB)",
+      "State": "created",
+      "Status": "Created"
+    }
+  ],
+  "ports": [
+    {
+      "address": "127.0.0.1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 3390,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 3390,
+      "free": true
+    }
+  ],
+  "owned_client_jobs": [],
+  "unresolved_daemon_operation": "Edge start/removal may remain pending; no replacement attempted"
+}

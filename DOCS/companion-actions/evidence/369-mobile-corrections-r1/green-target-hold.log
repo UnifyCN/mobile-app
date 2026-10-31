@@ -1,0 +1,18 @@
+  console.log
+    CHECKLIST READS before=14 after=15
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:497:11)
+
+PASS __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ✓ review control: approved current target opens through the root hook and actual sheet (204 ms)
+  ✓ review control: unavailable resolution replaces an open task with a generic result (89 ms)
+  ✓ review: a new notification preserves the open task edit draft (171 ms)
+  ✓ review: a notification selects its task while saved details are open inside the sheet (104 ms)
+  ✓ review: fresh available notification revalidates an already open cached checklist (94 ms)
+  ✓ does not acknowledge a notification before the fresh checklist finishes (81 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        1.815 s, estimated 2 s
+Ran all test suites matching /__tests__\/companionActions\/pushSelectionRecovery.test.tsx/i.

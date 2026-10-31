@@ -1,0 +1,77 @@
+9f85db40241b5b1bafd643cc3b9f4a9e9ca0d622
+[0m[38;5;245mrunning 3 tests from ./remove_plan_race_test.ts[0m
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":0,"blockers":[],"middle":{"plans":["Phone first","Transit only"],"removed":false}}
+{"removal":[200,null,[]],"plan":[200,null]}
+[0m[38;5;245m----- output end -----[0m
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ... [0m[31mFAILED[0m [0m[38;5;245m(5s)[0m
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":0,"blockers":[],"middle":{"plans":[],"removed":true}}
+{"plan":[200,null],"removal":[200,null,[]]}
+[0m[38;5;245m----- output end -----[0m
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ... [0m[31mFAILED[0m [0m[38;5;245m(2s)[0m
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":0,"blockers":[]}
+{"removal":[200,[]],"retry":[200,null]}
+[0m[38;5;245m----- output end -----[0m
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ... [0m[31mFAILED[0m [0m[38;5;245m(2s)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait [0m[38;5;245m=> ./remove_plan_race_test.ts:68:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the plan approval did not wait for the removal in progress
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   0[22m[39m
+[32m[1m+   1[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/[0m[0m[36mremove_plan_race_test.ts[0m:[0m[33m99[0m:[0m[33m7[0m)
+
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan [0m[38;5;245m=> ./remove_plan_race_test.ts:121:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the removal did not wait for the plan approval in progress
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   0[22m[39m
+[32m[1m+   1[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/[0m[0m[36mremove_plan_race_test.ts[0m:[0m[33m149[0m:[0m[33m7[0m)
+
+an approved plan retry review that references an existing task waits for its removal, then needs a new review [0m[38;5;245m=> ./remove_plan_race_test.ts:175:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the reviewed retry did not wait for the removal in progress
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   0[22m[39m
+[32m[1m+   1[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/[0m[0m[36mremove_plan_race_test.ts[0m:[0m[33m203[0m:[0m[33m7[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait [0m[38;5;245m=> ./remove_plan_race_test.ts:68:6[0m
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan [0m[38;5;245m=> ./remove_plan_race_test.ts:121:6[0m
+an approved plan retry review that references an existing task waits for its removal, then needs a new review [0m[38;5;245m=> ./remove_plan_race_test.ts:175:6[0m
+
+[0m[31mFAILED[0m | 0 passed | 3 failed [0m[38;5;245m(10s)[0m
+
+[0m[1m[31merror[0m: Test failed

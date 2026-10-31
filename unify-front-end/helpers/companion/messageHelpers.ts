@@ -1,5 +1,9 @@
 import { ConversationMessage } from '@/services/companion/getConversationMessages';
 import { QueryType, RAGResponse, TokenUsage } from '@/types/chatbot';
+import {
+  CompanionContext,
+  parseCompanionContext,
+} from '@/helpers/companion/companionContext';
 
 export interface Source {
   document_id: number;
@@ -18,6 +22,8 @@ export interface Message {
   disclaimer?: string;
   suggestedNextSteps?: string[]; // AI-generated follow-up questions
   lastVerified?: string; // ISO timestamp of when source docs were last verified/crawled
+  /** What the answer read and checked (ticket #362); null for older answers. */
+  companionContext?: CompanionContext | null;
 }
 
 export interface ConversationMessageForAPI {
@@ -117,6 +123,19 @@ export const sanitizeSuggestedNextSteps = (
 /**
  * Converts database messages to UI Message format
  */
+// Parsed contexts by saved row object. React Query keeps unchanged rows as the
+// same objects across refetches, so a message keeps the same parsed context
+// and its memoized bubble does not re-render.
+const parsedContexts = new WeakMap<object, CompanionContext | null>();
+
+const savedContext = (raw: unknown): CompanionContext | null => {
+  if (!raw || typeof raw !== 'object') return null;
+  if (!parsedContexts.has(raw)) {
+    parsedContexts.set(raw, parseCompanionContext(raw));
+  }
+  return parsedContexts.get(raw) ?? null;
+};
+
 export const formatMessagesForUI = (
   dbMessages: ConversationMessage[] | undefined
 ): Message[] => {
@@ -129,6 +148,7 @@ export const formatMessagesForUI = (
     isUser: msg.role === 'user',
     timestamp: new Date(msg.created_at),
     sources: msg.sources || undefined,
+    companionContext: savedContext(msg.companion_context),
     // Note: queryType, disclaimer, and suggestedNextSteps are not persisted to DB
     // They are only available in real-time responses, not when loading from DB
   }));

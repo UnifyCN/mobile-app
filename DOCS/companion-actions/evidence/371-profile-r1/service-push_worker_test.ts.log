@@ -1,0 +1,197 @@
+running 35 tests from ./push_worker_test.ts
+push worker: unknown transport and response parsing never resend ...
+------- output -------
+FALSIFIER: unknown outcome becomes retryable or changes in-app state
+----- output end -----
+push worker: unknown transport and response parsing never resend ... ok (1s)
+push worker: ticket, missing receipt, provider acceptance and display remain separate ...
+------- output -------
+FALSIFIER: receipt polling sends again or claims device display
+----- output end -----
+push worker: ticket, missing receipt, provider acceptance and display remain separate ... ok (1s)
+push worker: definite reject backoff and cap ...
+------- output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- output end -----
+push worker: definite reject backoff and cap ... ok (2s)
+push worker: definite rate backoff and cap ...
+------- output -------
+FALSIFIER: definite rejection retries immediately or exceeds three attempts
+----- output end -----
+push worker: definite rate backoff and cap ... ok (2s)
+push worker: permanent error disables the original enrollment ...
+------- output -------
+FALSIFIER: invalid token still enables the same tuple
+----- output end -----
+push worker: permanent error disables the original enrollment ... ok (1s)
+push worker: late receipt preserves a newer token generation ...
+------- output -------
+FALSIFIER: late DeviceNotRegistered disables a rotated token
+----- output end -----
+push worker: late receipt preserves a newer token generation ... ok (2s)
+push worker: disabled installation stays suppressed after enablement ...
+------- output -------
+FALSIFIER: renewal creates delivery for an already consumed event
+----- output end -----
+push worker: disabled installation stays suppressed after enablement ... ok (1s)
+push worker: closed-app age does not create a foreground lease ...
+------- output -------
+FALSIFIER: 90-day enrollment age alone prevents an authorized send
+----- output end -----
+push worker: closed-app age does not create a foreground lease ... ok (2s)
+push worker: final session authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final session authorization ... ok (2s)
+push worker: final permission authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final permission authorization ... ok (2s)
+push worker: final generation authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final generation authorization ... ok (2s)
+push worker: final credential authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final credential authorization ... ok (2s)
+push worker: final policy authorization ...
+------- output -------
+FALSIFIER: revoked eligibility still crosses the provider boundary
+----- output end -----
+push worker: final policy authorization ... ok (2s)
+push worker: provider budget fails closed and includes reserved existing senders ...
+------- output -------
+FALSIFIER: missing aggregate verification or exhausted shared capacity permits a send
+----- output end -----
+push worker: provider budget fails closed and includes reserved existing senders ... ok (2s)
+push worker: owned current task resolver rejects another account and removed task ...
+------- output -------
+FALSIFIER: a shared task identifier authorizes another account
+----- output end -----
+push worker: owned current task resolver rejects another account and removed task ... ok (2s)
+push worker: complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"action-first","intermediate":"pending","graph":[{"pid":1152,"blockers":[269]},{"pid":269,"blockers":[230]}]}
+----- output end -----
+push worker: complete action-first ... ok (1s)
+push worker: remove action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"action-first","intermediate":"pending","graph":[{"pid":269,"blockers":[1152]},{"pid":1142,"blockers":[269]}]}
+----- output end -----
+push worker: remove action-first ... ok (2s)
+push worker: cancel action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"action-first","intermediate":"pending","graph":[{"pid":1163,"blockers":[1142]},{"pid":230,"blockers":[1163]}]}
+----- output end -----
+push worker: cancel action-first ... ok (1s)
+push worker: legacy action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"legacy","order":"action-first","intermediate":"pending","graph":[{"pid":1152,"blockers":[269]},{"pid":269,"blockers":[1142]}]}
+----- output end -----
+push worker: legacy action-first ... ok (2s)
+push worker: content-complete action-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"action-first","intermediate":"pending","graph":[{"pid":1152,"blockers":[269]},{"pid":269,"blockers":[230]}]}
+----- output end -----
+push worker: content-complete action-first ... ok (2s)
+push worker: complete worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"complete","order":"worker-first","intermediate":"pending","graph":[{"pid":269,"blockers":[1152]}],"provider_calls":1}
+----- output end -----
+push worker: complete worker-first ... ok (1s)
+push worker: remove worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"remove","order":"worker-first","intermediate":"pending","graph":[{"pid":269,"blockers":[1152]}],"provider_calls":1}
+----- output end -----
+push worker: remove worker-first ... ok (2s)
+push worker: cancel worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"cancel","order":"worker-first","intermediate":"pending","graph":[{"pid":1163,"blockers":[1152]}],"provider_calls":1}
+----- output end -----
+push worker: cancel worker-first ... ok (1s)
+push worker: legacy worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"legacy","order":"worker-first","intermediate":"pending","graph":[{"pid":269,"blockers":[1152]}],"provider_calls":1}
+----- output end -----
+push worker: legacy worker-first ... ok (1s)
+push worker: content-complete worker-first ...
+------- output -------
+FALSIFIER: a committed earlier stop sends, or an overlapping stop does not wait on the accepted task boundary
+{"race":"content-complete","order":"worker-first","intermediate":"pending","graph":[{"pid":269,"blockers":[1142]}],"provider_calls":1}
+----- output end -----
+push worker: content-complete worker-first ... ok (2s)
+push worker: content headers total deadline ...
+------- output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-headers","ms":2210.1950419999994,"http_status":200,"public_reminder_rows":1,"graph":[{"pid":269,"blockers":[1142]}]}
+----- output end -----
+push worker: content headers total deadline ... ok (4s)
+push worker: content body total deadline ...
+------- output -------
+FALSIFIER: slow content retains the public task lock beyond 2.8 seconds or sends after expiry
+{"deadline":"content-body","ms":2212.5051660000026,"http_status":200,"public_reminder_rows":1,"graph":[{"pid":1163,"blockers":[1152]}]}
+----- output end -----
+push worker: content body total deadline ... ok (4s)
+push worker: provider hold total deadline ...
+------- output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-hold","ms":2213.5717920000025,"http_status":200,"public_reminder_rows":1,"graph":[{"pid":1163,"blockers":[1152]}]}
+----- output end -----
+push worker: provider hold total deadline ... ok (4s)
+push worker: provider body total deadline ...
+------- output -------
+FALSIFIER: slow provider holds cancellation beyond 2.8 seconds or permits resend
+{"deadline":"provider-body","ms":2212.8826659999904,"http_status":200,"public_reminder_rows":1,"graph":[{"pid":1163,"blockers":[230]}]}
+----- output end -----
+push worker: provider body total deadline ... ok (4s)
+push worker: enrollment renew waits behind dispatch ...
+------- output -------
+FALSIFIER: an enrollment update ignores the locked generation or a late receipt disables a new generation
+{"enrollment_race":"renew","intermediate_revision":1,"graph":[{"pid":269,"blockers":[1142]}]}
+----- output end -----
+push worker: enrollment renew waits behind dispatch ... ok (1s)
+push worker: enrollment disable waits behind dispatch ...
+------- output -------
+FALSIFIER: an enrollment update ignores the locked generation or a late receipt disables a new generation
+{"enrollment_race":"disable","intermediate_revision":1,"graph":[{"pid":1163,"blockers":[230]}]}
+----- output end -----
+push worker: enrollment disable waits behind dispatch ... ok (1s)
+push worker: enrollment revoke waits behind dispatch ...
+------- output -------
+FALSIFIER: an enrollment update ignores the locked generation or a late receipt disables a new generation
+{"enrollment_race":"revoke","intermediate_revision":1,"graph":[{"pid":269,"blockers":[230]}]}
+----- output end -----
+push worker: enrollment revoke waits behind dispatch ... ok (2s)
+push worker: receipt expiry never returns a sendable identity ...
+------- output -------
+FALSIFIER: an expired receipt resets an attempt or permits resend
+----- output end -----
+push worker: receipt expiry never returns a sendable identity ... ok (1s)
+push worker: final write timeout releases cancellation and keeps unknown intent ...
+------- output -------
+FALSIFIER: a blocked final write exceeds the action lock budget or enables resend
+{"deadline":"final-write","ms":2219.367665999991,"http_status":200,"public_reminder_rows":1,"graph":[{"pid":2407,"blockers":[1152]}]}
+----- output end -----
+push worker: final write timeout releases cancellation and keeps unknown intent ... ok (4s)
+push worker: fixture cleanup ...
+------- output -------
+{"kind":"provider_fixture_distribution","total":23,"modes":{"lost":1,"ok":5,"reject":3,"rate":3,"invalid":1,"hold":9,"body":1}}
+----- output end -----
+push worker: fixture cleanup ... ok (7ms)
+
+ok | 35 passed | 0 failed (1m18s)
+

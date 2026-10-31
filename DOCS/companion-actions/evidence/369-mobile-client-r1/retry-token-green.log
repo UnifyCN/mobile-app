@@ -1,0 +1,28 @@
+PASS __tests__/companionActions/pushDevice.test.ts
+  ✓ does not enroll on read; persists proof and exact intent before the first request (3 ms)
+  ✓ stops after account replacement during permission (1 ms)
+  ✓ stops after account replacement during token
+  ✓ stops after account replacement during read
+  ✓ stops after account replacement during write (1 ms)
+  ✓ does not restore a late receipt after batched sign-out and same-account sign-in
+  ✓ retains exact pending request on lost reply and looks up before any retry (1 ms)
+  ✓ denial leaves push off without a service request
+  ✓ storage failure sends nothing and remains unavailable
+  ✓ uses current revision for token rotation and disable and has no Undo (1 ms)
+  ✓ token refresh retains ownership while an enable waits
+  ✓ does not retry an old token after a confirmed unapplied operation (1 ms)
+  ✓ discards a held push_read response after ownership changes
+  ✓ discards a held status response after ownership changes (1 ms)
+  ✓ retains unknown pending storage across restart and never retries while a status is pending or failed
+  ✓ captures a pending revoke on sign-out without sending it as the next account
+  ✓ keeps HTTP 401 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 403 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 409 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 422 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 503 errors content-free and distinct from successful delivery
+
+Test Suites: 1 passed, 1 total
+Tests:       21 passed, 21 total
+Snapshots:   0 total
+Time:        0.581 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushDevice.test.ts/i.

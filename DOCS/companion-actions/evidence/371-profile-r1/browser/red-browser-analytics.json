@@ -1,0 +1,28 @@
+{
+  "label": "red-browser-analytics",
+  "actualPage": true,
+  "actualCookieProxy": true,
+  "localAuth": true,
+  "cmsFixture": true,
+  "hosted": false,
+  "modelAttempts": 0,
+  "checks": [],
+  "requests": [
+    {
+      "path": "/api/companion/actions",
+      "action": "plans",
+      "status": 200,
+      "bytes": 1078
+    },
+    {
+      "path": "/api/companion/actions",
+      "action": "read",
+      "status": 200,
+      "bytes": 498
+    }
+  ],
+  "matrix": [],
+  "pass": false,
+  "failure": "analytics positive control did not capture",
+  "pageErrorCount": 0
+}

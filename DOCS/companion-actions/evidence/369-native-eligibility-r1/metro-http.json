@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "name": "manifest",
+      "url": "http://127.0.0.1:8371",
+      "status": 200,
+      "bytes": 5275,
+      "seconds": 0.3971375410037581,
+      "sha256": "50ed4a93fcb0d3e62c58029d22d111911c30067ff842469e2da5a75ac9c52597"
+    },
+    {
+      "name": "bundle",
+      "url": "http://127.0.0.1:8371/node_modules/expo-router/entry.bundle?platform=ios&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable",
+      "status": 200,
+      "bytes": 29025551,
+      "seconds": 20.607025290999445,
+      "sha256": "bc4847ada1d6944c0f368fdd41c29bfc0939147146c7ccce41a2ac1c9e283da8"
+    }
+  ],
+  "passed": true,
+  "loaded_native_proof": false
+}

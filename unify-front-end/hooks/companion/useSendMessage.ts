@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { parseSuggestedReminder } from '@/services/companionActions/reminders';
+import { parseSuggestedProfile } from '@/services/companionActions/profile';
+import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import {
   AICompanionBusyError,
   AICompanionLimitError,
@@ -21,6 +24,117 @@ import {
   buildCompanionStreamResponseProperties,
 } from '@/helpers/companion/companionAnalytics';
 import { useAnalytics } from '@/utils/analytics';
+import {
+  AccountChangedError,
+  ownAccountWork,
+  stillOwned,
+} from '@/services/account/accountSession';
+import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+import {
+  parseCompanionContext,
+  savableCompanionContext,
+} from '@/helpers/companion/companionContext';
+import {
+  conversationActionsKey,
+  useTaskActionStore,
+} from '@/hooks/companion/useTaskActions';
+import { createMobileTaskActionClient } from '@/services/companionActions/transport';
+import {
+  DETAIL_TEXT_MAX,
+  TITLE_MAX,
+  createTaskOperation,
+  editDraftOf,
+  parseSuggestedDetail,
+  parseSuggestedEdit,
+  parseSuggestedSteps,
+  parseSuggestedTask,
+  type CommandResult,
+  titleKey,
+} from '@/services/companionActions/contract';
+import { parseSuggestedPlan } from '@/services/companionActions/planContract';
+import {
+  conversationPlansKey,
+  createMobilePlanClient,
+  plansKey,
+} from '@/hooks/companion/usePlans';
+import { normalizeSanityLanguage } from '@/services/sanity/i18n';
+
+/** The question for a command that was not clear enough to change anything (#363, #365, #367). */
+function clarifyQuestion(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  command: Extract<CommandResult, { kind: 'clarify' }>
+): string {
+  if (command.intent === 'remove')
+    return t(
+      command.reason === 'multiple'
+        ? 'taskRemove.clarifyMultiple'
+        : 'taskRemove.clarifyMissingTitle'
+    );
+  switch (command.reason) {
+    case 'missing_title':
+      return t('taskCreate.clarifyMissingTitle');
+    case 'multiple':
+      return t('taskCreate.clarifyMultiple');
+    case 'too_long':
+      return t('taskCreate.clarifyTooLong', { max: TITLE_MAX });
+    case 'task_ambiguous':
+      return t('taskEdit.clarify.task_ambiguous', {
+        title: command.candidates[0]?.title ?? '',
+        number: command.candidates.length,
+      });
+    default:
+      return t(`taskEdit.clarify.${command.reason}`);
+  }
+}
+
+/**
+ * The question or explanation Companion saves for a command that writes nothing (#363
+ * unclear task commands; #365 unclear edits; #370 unclear remember commands, a detail
+ * already saved, and a profile fact, which the profile owns).
+ */
+function commandReply(
+  t: (key: string, options?: Record<string, unknown>) => string,
+  command: Exclude<
+    CommandResult,
+    | { kind: 'none' }
+    | { kind: 'edit' }
+    | { kind: 'remove' }
+    | { kind: 'reminder' }
+    | { kind: 'profile' }
+  >
+): string {
+  switch (command.kind) {
+    case 'profile_clarify':
+      return t('profileActions.clarify');
+    case 'create':
+      return t('taskCreate.clarifyDuplicate', {
+        title: command.sameTitleTasks[0]?.title ?? command.operation.title,
+      });
+    case 'clarify':
+      return clarifyQuestion(t, command);
+    case 'remember':
+      return t('savedDetails.commandExists');
+    case 'remember_clarify':
+      return t(
+        command.reason === 'missing_detail'
+          ? 'savedDetails.clarifyMissing'
+          : command.reason === 'unclear_reference'
+            ? 'savedDetails.clarifyUnclear'
+            : command.reason === 'multiple'
+              ? 'savedDetails.clarifyMultiple'
+              : 'savedDetails.clarifyTooLong',
+        { max: DETAIL_TEXT_MAX }
+      );
+    case 'profile_fact':
+      return t(
+        command.field === 'province'
+          ? 'savedDetails.profileFactProvince'
+          : command.field === 'arrival_date'
+            ? 'savedDetails.profileFactArrival'
+            : 'savedDetails.profileFactPersona'
+      );
+  }
+}
 
 type SendMessageError = Error & {
   messagePersisted?: boolean;
@@ -33,6 +147,11 @@ interface UseSendMessageParams {
   isHistoryLoaded: boolean;
   setCurrentConversationId: (id: string | null) => void;
   isPremium: boolean;
+  /**
+   * #367: titles of the account's live Checklist tasks by task ref (a removal request
+   * names one); null while the Checklist read has not finished.
+   */
+  taskTitles?: ReadonlyMap<string, string> | null;
 }
 
 export const useSendMessage = ({
@@ -41,8 +160,14 @@ export const useSendMessage = ({
   isHistoryLoaded,
   setCurrentConversationId,
   isPremium,
+  taskTitles,
 }: UseSendMessageParams) => {
   const [isLoading, setIsLoading] = useState(false);
+  // #367: a send reads the latest titles, also ones that finish loading after it started.
+  const titlesRef = useRef(taskTitles ?? null);
+  useEffect(() => {
+    titlesRef.current = taskTitles ?? null;
+  }, [taskTitles]);
   const [isWaitingForBot, setIsWaitingForBot] = useState(false);
   const [lastSuggestedNextSteps, setLastSuggestedNextSteps] = useState<
     string[] | undefined
@@ -55,12 +180,28 @@ export const useSendMessage = ({
   // useSaveMessage (which inserts an optimistic copy on mutate).
   const [streamingBotMessage, setStreamingBotMessage] =
     useState<Message | null>(null);
+  // A send belongs to the account that started it (mobile-app#361). When
+  // another account signs in, this hook drops that send's on-screen state, and
+  // the send itself stops before its next request or result.
+  const { epoch } = useAccountSnapshot();
+  const [stateEpoch, setStateEpoch] = useState(epoch);
+  if (epoch !== stateEpoch) {
+    setStateEpoch(epoch);
+    setIsLoading(false);
+    setIsWaitingForBot(false);
+    setLastSuggestedNextSteps(undefined);
+    setLastVerified(undefined);
+    setStreamingBotMessage(null);
+  }
   const queryClient = useQueryClient();
   const { data: usage } = useChatbotUsage();
   const createConversation = useCreateConversation();
   const saveMessage = useSaveMessage();
   const { trackCompanionMessageSent, trackCompanionResponseReceived } =
     useAnalytics();
+  const { t, i18n } = useTranslation();
+  // The signed-in account's action store: a clear command's write is tracked there.
+  const actionStore = useTaskActionStore('companion');
 
   const sendMessage = async (
     messageText: string,
@@ -73,8 +214,16 @@ export const useSendMessage = ({
     setLastVerified(undefined);
     setStreamingBotMessage(null);
     let userMessagePersisted = false;
+    const owner = ownAccountWork();
+    const owned = () => stillOwned(owner);
+    const ensureOwned = () => {
+      if (!owned()) throw new AccountChangedError();
+    };
 
     try {
+      // Unknown ownership is not permission: nothing is sent until the
+      // session names the account (the screen keeps the text until then).
+      ensureOwned();
       let conversationIdToUse = currentConversationId;
       const isNewConversation = !currentConversationId;
 
@@ -83,10 +232,13 @@ export const useSendMessage = ({
         try {
           const newConversation = await createConversation.mutateAsync({
             firstMessage: messageText,
+            owner,
           });
+          ensureOwned();
           conversationIdToUse = newConversation.conversation_identifier;
           setCurrentConversationId(conversationIdToUse);
         } catch (error) {
+          ensureOwned();
           console.error('Failed to create conversation:', error);
           setIsLoading(false);
           throw error;
@@ -109,17 +261,124 @@ export const useSendMessage = ({
       );
 
       // Save user message to database
+      ensureOwned();
+      let savedUserId: number | null = null;
       try {
-        await saveMessage.mutateAsync({
+        const savedUser = await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
           role: 'user',
           content: messageText,
           clientId: optimisticClientId,
+          owner,
         });
         userMessagePersisted = true;
+        savedUserId = savedUser.id;
       } catch (error) {
         console.error('Failed to save user message:', error);
         // Continue anyway - message will be saved but might not show immediately
+      }
+
+      ensureOwned();
+      // #363: the action service reads the user's own saved message. A clear create
+      // command adds exactly its task (no AI answer, no allowance used); an unclear
+      // one gets a question and writes nothing. Otherwise the AI answers as before.
+      // An unavailable action service never blocks the answer.
+      // #370: a clear remember command saves exactly its detail the same way; an
+      // unclear one, a detail already saved or a profile fact gets a reply and writes
+      // nothing.
+      const actions = createMobileTaskActionClient(owner);
+      if (savedUserId !== null) {
+        const interpreted = await actions.interpret(savedUserId);
+        ensureOwned();
+        if (interpreted.kind === 'ok' && interpreted.command.kind !== 'none') {
+          const command = interpreted.command;
+          // #367: a removal request opens a review (never a removal) of the one live task
+          // with that title. No match or several matches: a reply, and nothing is prepared.
+          let removalReply: string | null = null;
+          if (command.kind === 'remove') {
+            setIsWaitingForBot(false);
+            // An unread Checklist is not "no such task": wait for it, briefly.
+            for (let i = 0; i < 50 && titlesRef.current === null; i++) {
+              await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            ensureOwned();
+            const titles = titlesRef.current;
+            const key = titleKey(command.title);
+            const matches = [...(titles ?? new Map<string, string>())].filter(
+              ([, title]) => titleKey(title) === key
+            );
+            if (titles === null) {
+              removalReply = t('taskRemove.commandFailed', {
+                title: command.title,
+              });
+            } else if (matches.length === 1) {
+              const prepared = await actions.prepareRemoval(
+                {
+                  type: 'task.remove',
+                  task_ref: matches[0][0],
+                  expected_revision: 0,
+                },
+                { conversationId: conversationIdToUse, messageId: savedUserId }
+              );
+              ensureOwned();
+              if (prepared.kind !== 'ok' && prepared.kind !== 'changed')
+                removalReply = t('taskRemove.commandFailed', {
+                  title: command.title,
+                });
+            } else {
+              removalReply = t(
+                matches.length === 0
+                  ? 'taskRemove.commandNoMatch'
+                  : 'taskRemove.commandSeveral',
+                { title: command.title }
+              );
+            }
+          }
+          if (command.kind === 'remove') {
+            if (removalReply)
+              await saveMessage.mutateAsync({
+                conversationIdentifier: conversationIdToUse,
+                role: 'assistant',
+                content: removalReply,
+                owner,
+              });
+            ensureOwned();
+          } else if (
+            (command.kind === 'create' &&
+              command.sameTitleTasks.length === 0) ||
+            command.kind === 'edit' ||
+            command.kind === 'profile' ||
+            command.kind === 'reminder' ||
+            (command.kind === 'remember' &&
+              command.sameTextDetails.length === 0)
+          ) {
+            // A clear command makes exactly its one change (#365 edits too). Its card
+            // shows the saved receipt, never assistant text.
+            setIsWaitingForBot(false);
+            await actionStore?.applyOperation(
+              `command:${savedUserId}`,
+              command.operation,
+              { kind: 'direct_command', message_id: savedUserId }
+            );
+            ensureOwned();
+          } else {
+            const question = commandReply(t, command);
+            await saveMessage.mutateAsync({
+              conversationIdentifier: conversationIdToUse,
+              role: 'assistant',
+              content: question,
+              owner,
+            });
+            ensureOwned();
+          }
+          queryClient.invalidateQueries({
+            queryKey: conversationActionsKey(
+              owner.accountId,
+              conversationIdToUse
+            ),
+          });
+          return;
+        }
       }
 
       // Format messages for RAG API (last 10 messages for context)
@@ -151,6 +410,7 @@ export const useSendMessage = ({
           {
             onMetadata: meta => {
               metadata = meta;
+              if (!owned()) return;
               // Hide the typing indicator — we now show the (empty) bot
               // bubble that will fill with tokens.
               setIsWaitingForBot(false);
@@ -163,10 +423,13 @@ export const useSendMessage = ({
                 queryType: meta.queryType,
                 disclaimer: meta.disclaimer,
                 lastVerified: meta.lastVerified,
+                // Shown while the answer streams; saved with it below.
+                companionContext: parseCompanionContext(meta.context),
               });
               if (meta.lastVerified) setLastVerified(meta.lastVerified);
             },
             onToken: delta => {
+              if (!owned()) return;
               setStreamingBotMessage(current => {
                 if (!current) {
                   // Metadata never arrived (shouldn't happen) — synthesize.
@@ -188,14 +451,15 @@ export const useSendMessage = ({
               streamFailure = err;
               finishOnce();
             },
-          }
+          },
+          owner
         ).catch(err => {
-          streamFailure =
-            err instanceof Error ? err : new Error(String(err));
+          streamFailure = err instanceof Error ? err : new Error(String(err));
           finishOnce();
         });
       });
 
+      ensureOwned();
       const responseTimeMs = Date.now() - apiStartTime;
 
       if (streamFailure) throw streamFailure;
@@ -232,22 +496,143 @@ export const useSendMessage = ({
       // Save bot message to database
       // Note: queryType, disclaimer, and suggestedNextSteps are not persisted to DB
       // They're only used for immediate UI display
+      ensureOwned();
+      let savedAnswerId: number | null = null;
       try {
-        await saveMessage.mutateAsync({
+        const savedAnswer = await saveMessage.mutateAsync({
           conversationIdentifier: conversationIdToUse,
           role: 'assistant',
           content: completion.cleanAnswer,
           sources: sources.length > 0 ? sources : undefined,
+          // Saved with the answer so a reopened conversation shows the same
+          // sources and context. Never sent to analytics.
+          companionContext: savableCompanionContext(metadata?.context),
+          owner,
         });
+        savedAnswerId = savedAnswer.id;
       } catch (error) {
         console.error('Failed to save bot message:', error);
         // Continue anyway - message will be saved but might not show immediately
       }
 
+      // #364: a suggested plan becomes a server-owned plan draft for review, tied to
+      // this answer. The action service checks every reused task again; preparing
+      // writes no task and no plan. A failure only means no plan card.
+      const suggestedPlan = parseSuggestedPlan(completion.actionProposal);
+      ensureOwned();
+      if (suggestedPlan && savedAnswerId !== null) {
+        await createMobilePlanClient(owner).prepare(
+          suggestedPlan.goal,
+          suggestedPlan.items,
+          {
+            conversationId: conversationIdToUse,
+            messageId: savedAnswerId,
+          }
+        );
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationPlansKey(owner.accountId, conversationIdToUse),
+        });
+        queryClient.invalidateQueries({
+          queryKey: plansKey(owner.accountId ?? null),
+        });
+      }
+
+      // #363: a suggested task becomes a server-owned draft for review, tied to this
+      // answer. #365: so does a suggested change to a listed task. Preparing writes no
+      // task; a failure only means no draft card.
+      const suggested = parseSuggestedTask(completion.actionProposal);
+      const suggestedEdit = parseSuggestedEdit(completion.actionProposal);
+      const editDraft = suggestedEdit ? editDraftOf(suggestedEdit) : null;
+      ensureOwned();
+      if ((suggested || editDraft) && savedAnswerId !== null) {
+        const source = {
+          conversationId: conversationIdToUse,
+          messageId: savedAnswerId,
+        };
+        await (suggested
+          ? actions.prepare(createTaskOperation(suggested.title), source)
+          : actions.prepare(editDraft!, source, {
+              language: normalizeSanityLanguage(i18n.language),
+            }));
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
+        });
+      }
+      // #366: suggested steps for one Checklist task become a server-owned draft too.
+      // The action service checks the task is this account's live task; nothing is saved.
+      const suggestedSteps = parseSuggestedSteps(completion.actionProposal);
+      if (suggestedSteps && savedAnswerId !== null) {
+        await actions.prepareSteps(
+          {
+            type: 'step.create',
+            task_ref: suggestedSteps.taskRef,
+            titles: suggestedSteps.titles,
+          },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId }
+        );
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
+        });
+      }
+
+      // #370: a detail the answer suggested saving becomes a server-owned draft, asked
+      // under this answer. Nothing is saved until the user approves it.
+      const suggestedDetail = parseSuggestedDetail(completion.actionProposal);
+      if (suggestedDetail && savedAnswerId !== null) {
+        await actions.prepareDetail(
+          { type: 'detail.create', text: suggestedDetail.text },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId }
+        );
+        ensureOwned();
+        queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
+        });
+      }
+
+      const suggestedReminder = parseSuggestedReminder(
+        completion.actionProposal
+      );
+      if (suggestedReminder && actions.prepareReminder) {
+        await actions.prepareReminder(suggestedReminder, {
+          conversationId: conversationIdToUse,
+          ...(savedAnswerId === null ? {} : { messageId: savedAnswerId }),
+        });
+        ensureOwned();
+        void queryClient.invalidateQueries({
+          queryKey: conversationActionsKey(
+            owner.accountId,
+            conversationIdToUse
+          ),
+        });
+      }
+
+      const suggestedProfile = parseSuggestedProfile(completion.actionProposal);
+      if (suggestedProfile && savedAnswerId !== null && actions.prepareProfile) {
+        await actions.prepareProfile({ ...suggestedProfile, expected_revision: 0 },
+          { conversationId: conversationIdToUse, messageId: savedAnswerId });
+        ensureOwned();
+        void queryClient.invalidateQueries({ queryKey: conversationActionsKey(owner.accountId, conversationIdToUse) });
+      }
+
       // The persisted (or RQ-optimistic) bot message now owns this bubble —
       // drop our local copy to avoid a duplicate.
+      ensureOwned();
       setStreamingBotMessage(null);
     } catch (error) {
+      // Another account signed in: nothing of this send may reach its screen.
+      if (!owned()) throw new AccountChangedError();
       console.error('Gemini API error:', error);
       console.error(
         'Error details:',
@@ -270,8 +655,10 @@ export const useSendMessage = ({
       }
       throw sendError;
     } finally {
-      setIsLoading(false);
-      setIsWaitingForBot(false);
+      if (owned()) {
+        setIsLoading(false);
+        setIsWaitingForBot(false);
+      }
     }
   };
 

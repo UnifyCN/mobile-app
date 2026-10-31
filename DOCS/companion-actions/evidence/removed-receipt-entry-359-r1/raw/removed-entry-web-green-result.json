@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "components/companion/tasks/RemovalReceiptEntry.test.tsx"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-removed-receipt-view-359",
+  "started": 1793292957.1577249,
+  "cleared_env_names": [],
+  "falsifier": "Unexpected nonzero exit, assertion failure, changed input, forced exit, or missing required output.",
+  "pid": 79002,
+  "exit": 0,
+  "seconds": 2.483881950378418,
+  "natural_exit": true
+}

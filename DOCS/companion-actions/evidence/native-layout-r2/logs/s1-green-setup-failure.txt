@@ -1,0 +1,4 @@
+The first green invocation used the repository root instead of unify-front-end.
+The output redirect failed before Jest started:
+zsh: no such file or directory: ../DOCS/companion-actions/evidence/native-layout-r2/logs/s1-green.log
+This is a setup failure. s1-green.log records the corrected invocation.

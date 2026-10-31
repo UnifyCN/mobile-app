@@ -1,0 +1,4 @@
+Starting database from backup...
+{"DB_URL": "postgresql://postgres:postgres@127.0.0.1:61792/postgres", "API_URL": "http://127.0.0.1:61791", "REST_URL": "http://127.0.0.1:61791/rest/v1", "GRAPHQL_URL": "http://127.0.0.1:61791/graphql/v1", "FUNCTIONS_URL": "http://127.0.0.1:61791/functions/v1", "PUBLISHABLE_KEY": "[REDACTED_LOCAL]", "SECRET_KEY": "[REDACTED_LOCAL]", "JWT_SECRET": "[REDACTED_LOCAL]", "ANON_KEY": "[REDACTED_LOCAL]", "SERVICE_ROLE_KEY": "[REDACTED_LOCAL]", "message": ""}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli

@@ -1,0 +1,2 @@
+hooks/useCompanion.ts(87,4): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+lib/companionActions/contract.ts(578,5): error TS2739: Type '{ operationId: string; createdAt: string; kind: "change" | "undo"; operationType: OperationType; title: null; changes: never[]; undoOf: string | null; taskRef: string; beforeState: "not_started"; ... 9 more ...; detail: { ...; }; }' is missing the following properties from type 'TaskReceipt': plans, stepsKept, remindersStopped

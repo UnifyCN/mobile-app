@@ -1,0 +1,19 @@
+PASS  keyboard: three steps added once each and read back
+PASS  typed step field is empty after its save
+PASS  focus stays on the same checkbox after saving "Review the official requirements"
+PASS  focus stays on the same checkbox after saving "Prepare the required documents"
+PASS  focus stays on the same checkbox after saving "Submit the application yourself"
+PASS  checking every step leaves the task Not started
+PASS  an explicit completion is offered
+PASS  Keep after Remove sends nothing
+PASS  a confirmed removal removes exactly that step
+PASS  each step Undo has its own accessible name
+PASS  Undo of the removal restores the step
+PASS  completion keeps the unfinished step unfinished
+PASS  another account reads none of these steps
+PASS  390px: no horizontal overflow
+PASS  390px: each step row is at least 44px tall
+PASS  edit and remove controls are at least 44x44
+PASS  Arabic: right to left, Arabic step copy, no overflow
+
+17 passed, 0 failed, 0 errors

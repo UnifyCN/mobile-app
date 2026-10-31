@@ -1,0 +1,146 @@
+{
+  "mobileMain": {
+    "suites": "1 skipped, 142 passed, 142 of 143 total",
+    "tests": "23 skipped, 1500 passed, 1523 total"
+  },
+  "mobileDst": {
+    "suites": "2 passed, 2 total",
+    "tests": "13 passed, 13 total"
+  },
+  "webFull": {
+    "numTotalTestSuites": 201,
+    "numPassedTestSuites": 201,
+    "numFailedTestSuites": 0,
+    "numPendingTestSuites": 0,
+    "numTotalTests": 723,
+    "numPassedTests": 710,
+    "numFailedTests": 0,
+    "numPendingTests": 13,
+    "numTodoTests": 0,
+    "success": true
+  },
+  "serviceRequired": {
+    "files": [
+      {
+        "file": "remove_test.ts",
+        "declared": 15,
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "file": "remove_plan_race_test.ts",
+        "declared": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "remove_rollback_test.ts",
+        "declared": 2,
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "file": "details_test.ts",
+        "declared": 12,
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "file": "details_language_test.ts",
+        "declared": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "details_rollback_test.ts",
+        "declared": 2,
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "file": "compose_365_370_test.ts",
+        "declared": 4,
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "file": "compose_367_370_test.ts",
+        "declared": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "file": "compose_rollback_test.ts",
+        "declared": 2,
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "file": "steps_test.ts",
+        "declared": 15,
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "file": "steps_parent_race_test.ts",
+        "declared": 11,
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "file": "edit_test.ts",
+        "declared": 9,
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "file": "edit_undo_test.ts",
+        "declared": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "undo_test.ts",
+        "declared": 8,
+        "passed": 8,
+        "failed": 0
+      }
+    ],
+    "totalPassed": 90,
+    "fileCount": 14
+  },
+  "additionalSchemaStages": {
+    "passed": 1,
+    "failed": 0
+  },
+  "additionalCombinedRecovery": {
+    "passed": 1,
+    "failed": 0
+  },
+  "mobile-mounted-full": [
+    "21 passed, 21 total"
+  ],
+  "web-mounted-locked": [
+    "4 passed (4)"
+  ],
+  "edge": {
+    "passed": 276,
+    "failed": 0,
+    "files": 19
+  },
+  "mobile-lint-changed": {
+    "files": 23,
+    "errors": 0,
+    "warnings": 47
+  },
+  "web-lint-changed": {
+    "files": 25,
+    "errors": 0,
+    "warnings": 0
+  },
+  "web-lint-full": {
+    "files": 572,
+    "errors": 12,
+    "warnings": 0
+  }
+}

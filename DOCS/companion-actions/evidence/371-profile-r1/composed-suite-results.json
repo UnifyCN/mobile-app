@@ -1,0 +1,85 @@
+[
+  {
+    "file": "actions_test.ts",
+    "exit": 0,
+    "seconds": 21.643,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "receipt_history_test.ts",
+    "exit": 0,
+    "seconds": 21.294,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "create_test.ts",
+    "exit": 0,
+    "seconds": 25.374,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "steps_test.ts",
+    "exit": 0,
+    "seconds": 25.784,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "edit_test.ts",
+    "exit": 0,
+    "seconds": 23.022,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "remove_test.ts",
+    "exit": 0,
+    "seconds": 27.316,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "details_test.ts",
+    "exit": 0,
+    "seconds": 25.433,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "reminders_test.ts",
+    "exit": 0,
+    "seconds": 21.057,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": [
+      "--filter",
+      "/^(?!reminders: rollback)/"
+    ]
+  },
+  {
+    "file": "push_delivery_test.ts",
+    "exit": 0,
+    "seconds": 24.828,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  },
+  {
+    "file": "push_isolation_test.ts",
+    "exit": 0,
+    "seconds": 23.855,
+    "baseline_reset": true,
+    "profile_371_applied": true,
+    "filter": []
+  }
+]

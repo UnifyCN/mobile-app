@@ -1,0 +1,525 @@
+[
+  {
+    "source": "/Users/savargupta/Library/Containers/com.docker.docker/Data/log/host/com.docker.backend.log.20261030-113318.143",
+    "private_copy": "private/host-startup-com.docker.backend.log.20261030-113318.143",
+    "sha256": "9d816fe786da2d8ab3a6624890d1e84a21fe1c5d701a465314fc82bf0b0cc81a",
+    "bytes": 1048473,
+    "lines": [
+      {
+        "line": 3560,
+        "text": "[2026-10-30T18:11:03.192347000Z][com.docker.backend.idle] starting VM",
+        "sha256": "4cbb6b8cda5152d18eb48574bbc0b9044ba0a69d973862d81088acb365617723"
+      },
+      {
+        "line": 3561,
+        "text": "[2026-10-30T18:11:03.192563000Z][com.docker.backend.engines] engine start requested",
+        "sha256": "669b7206fa6e70d20291cfd57e2b9b1deef2281769856eb8853caa8d30b911e4"
+      },
+      {
+        "line": 3562,
+        "text": "[2026-10-30T18:11:03.197465000Z][com.docker.backend.idle] idle -> busy (was idle for 30m56.017628417s; reason: [1 calls to /v1.55/images/public.ecr.aws/supabase/kong:2.8.1/json from Docker-Client/29.6.2 (darwin)])",
+        "sha256": "0edb061382fc0f57ddb44b589fc155c603314219c32a7cb968cc1764f896c8d5"
+      },
+      {
+        "line": 3563,
+        "text": "[2026-10-30T18:11:03.199062000Z][com.docker.backend.engines] starting engine linux/virtualization-framework",
+        "sha256": "8f33a32f27b36a7652de9d1d1b9c4082e97a86200e0d47ceffd014a4774b35d1"
+      },
+      {
+        "line": 3564,
+        "text": "[2026-10-30T18:11:03.199361000Z][com.docker.backend.engines] starting engine linux/virtualization-framework",
+        "sha256": "5df5a1e3508820bdc35864693ac6ad688c2073686a8a2fc4aa92ea874621feed"
+      },
+      {
+        "line": 3565,
+        "text": "[2026-10-30T18:11:03.199416000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state stopped -> starting",
+        "sha256": "bbfbcdda674d5b12e257eaf93a3d97d88ec88f4cf9b4bc1fac2c2b46c9dca9f1"
+      },
+      {
+        "line": 3566,
+        "text": "[2026-10-30T18:11:03.199733000Z][com.docker.backend.events] adding server timestamp to event (engines): 1793383863199487000 docker: starting",
+        "sha256": "368ea9fea69ed36da27144180ae8eccfa7e1cc4760038d746894318f0d976d90"
+      },
+      {
+        "line": 3567,
+        "text": "[2026-10-30T18:11:03.200497000Z][com.docker.backend.state] backend state changed to starting",
+        "sha256": "4321b375746ec47be2135622e350a00eeb9d2b429bee2607f7affbab5f6067c1"
+      },
+      {
+        "line": 3568,
+        "text": "[2026-10-30T18:11:03.200595000Z][com.docker.backend.state] sending desktop state:EngineStartingState",
+        "sha256": "c7da26a3bf30c8648d7d9a6b8e8a41ef130df40e35fa508e1c1444dc783dd29b"
+      },
+      {
+        "line": 3569,
+        "text": "[2026-10-30T18:11:03.200757000Z][com.docker.backend.statehandler] sending to Dashboard: starting",
+        "sha256": "32fd03c607e41f7b95879936e4ec4795125651a8ed10f0aeb60a69a670f888aa"
+      },
+      {
+        "line": 3570,
+        "text": "[2026-10-30T18:11:03.200950000Z][com.docker.backend.ipcstream] 64924325-BackendAPI /engine/state --> 2026-10-30T11:11:03.199487000-07:00 (09ca6517) engine starting:",
+        "sha256": "5d5f31efd8a7c796e0224e13fb2df6766f4dab1c3c3a8bd3012ab7832063cea7"
+      },
+      {
+        "line": 3573,
+        "text": "[2026-10-30T18:11:03.202504000Z][com.docker.backend.enginedependencies] resetting socket forwarder",
+        "sha256": "d346aa26c34dadc61b0b5825272ee775e1e8a39a27b81a6b2d79662dfa487d15"
+      },
+      {
+        "line": 3575,
+        "text": "[2026-10-30T18:11:03.204853000Z][com.docker.backend.socketforwarder] stop",
+        "sha256": "ee9ebe025f57ae3639704bacd96a4f644bf4a999bc251deca1a779dc14aac8f3"
+      },
+      {
+        "line": 3576,
+        "text": "[2026-10-30T18:11:03.205401000Z][com.docker.backend.socketforwarder] start",
+        "sha256": "aab36b4161207bb1babfed90b213ba36f52bf8a316f1e75f656a7fe28bcec956"
+      },
+      {
+        "line": 3577,
+        "text": "[2026-10-30T18:11:03.206247000Z][com.docker.backend.enginedependencies] closing all network connections",
+        "sha256": "8e0390d1330f07175c40887bf6cb6e95e4bfae49abd61082f502951033664afd"
+      },
+      {
+        "line": 3579,
+        "text": "[2026-10-30T18:11:03.208111000Z][com.docker.backend.idle] event handler 8ab73e65-b190-47cf-9ac0-9e951211423b: event streamer: error: EOF",
+        "sha256": "bde599281b85d33104b2c421453730e6cf93aa09656a42a47703f11693460958"
+      },
+      {
+        "line": 3581,
+        "text": "[2026-10-30T18:11:03.211011000Z][com.docker.backend.engines] engine linux/virtualization-framework log stream ready after 0s",
+        "sha256": "88f0d95ce2f64915c7965772a58d023d726958998a55c1334e5817bfd667c571"
+      },
+      {
+        "line": 3582,
+        "text": "[2026-10-30T18:11:03.212463000Z][com.docker.backend.engines.unix] VM will connect to host using connect://2/1999",
+        "sha256": "6b6416734d1b0c216afe1e5d5d740d7d4c87aed02c83eb31fe45a9b969308da2"
+      },
+      {
+        "line": 3583,
+        "text": "[2026-10-30T18:11:03.228755000Z][com.docker.backend] VM has started: /Applications/Docker.app/Contents/MacOS/com.docker.virtualization --kernel /Applications/Docker.app/Contents/Resources/linuxkit/kernel --cmdline init=/initd loglevel=1 root=/dev/vdb rootfstype=erofs ro vsyscall=emulate panic=0 eth0.dhcp eth1.dhcp linuxkit.unified_cgroup_hierarchy=1 console=hvc0   virtio_net.disable_csum=1 slub_min_order=2 page_reporting.page_reporting_order=2 vpnkit.connect=connect://2/1999 --boot /Applications/Docker.app/Contents/Resources/linuxkit/desktop.img --disk <HOME>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw --networkType gvisor --cpus 12 --memoryMiB 8192 --console-log <HOME>/Library/Containers/com.docker.docker/Data/log/vm/console.log --watchdog --virtiofs /Users --virtiofs /Volumes --virtiofs /private --virtiofs /tmp --virtiofs /var/folders --rosetta",
+        "sha256": "29aff527855ea4ab4504bc41761a1178254b77a2720e17f75d26c39779a2d60d"
+      },
+      {
+        "line": 3584,
+        "text": "[2026-10-30T18:11:03.293858000Z][com.docker.backend] [2026-10-30T18:11:03.291767000Z][com.docker.virtualization] starting with pid 28759",
+        "sha256": "8dc8772633152c4993ebb53f960d2ee8d3390356fa4d35f87c1ccea9d69d9110"
+      },
+      {
+        "line": 3585,
+        "text": "[2026-10-30T18:11:03.293957000Z][com.docker.backend] [2026-10-30T18:11:03.293820000Z][com.docker.virtualization] initialising paths",
+        "sha256": "ee07e0596d5373b48c51092c317675bc92bb6ac1910d94c4fc44f55a9f71a6c2"
+      },
+      {
+        "line": 3588,
+        "text": "[2026-10-30T18:11:03.295337000Z][com.docker.backend] [2026-10-30T18:11:03.295026000Z][com.docker.virtualization] starting watchdog",
+        "sha256": "eb13e90c27b05176f8d7e09d91bc4edb960eb6864daabfe2839819577bcc8b9a"
+      },
+      {
+        "line": 3591,
+        "text": "[2026-10-30T18:11:03.297120000Z][com.docker.backend] [2026-10-30T18:11:03.297104000Z][com.docker.virtualization] running VM",
+        "sha256": "7bd508981072250e6f41d05930aee465cea778c9a6171d2f43e76fee90eb1f6e"
+      },
+      {
+        "line": 3598,
+        "text": "[2026-10-30T18:11:03.326971000Z][com.docker.backend] [2026-10-30T18:11:03.326728000Z][com.docker.virtualization] Disk 1 (/Applications/Docker.app/Contents/Resources/linuxkit/desktop.img) caching is enabled",
+        "sha256": "798391737aef9abf3b63d793828bf61cfd89d996e9fd4056bbc99dd16027ae87"
+      },
+      {
+        "line": 3599,
+        "text": "[2026-10-30T18:11:03.341388000Z][com.docker.backend] add_rosetta_share: added with tag ROSETTA[2026-10-30T18:11:03.341338000Z][com.docker.virtualization] VM has started",
+        "sha256": "41b61b81ebadbd02993dc19ddb6dd7728ea51cc39d006b37fbee3211a4fd4c93"
+      },
+      {
+        "line": 3605,
+        "text": "[2026-10-30T18:11:03.894422000Z][com.docker.backend.socketforward] starting to forward dials",
+        "sha256": "3c3b024db634200a19be59d58985a710fdc351f6ade9d87c9a8ea70bd78d794a"
+      },
+      {
+        "line": 3607,
+        "text": "[2026-10-30T18:11:03.948344000Z][com.docker.backend.ipc] (8ceb3e4c-0) 64924325-BackendAPI S<-C 2e7f32a3-init GET /system/info",
+        "sha256": "3a7e80e6b54f5ed2074c93ca79d65b98372eccc1a47dd18bb8f6136e79a1e8d5"
+      },
+      {
+        "line": 3609,
+        "text": "[2026-10-30T18:11:03.948432000Z][com.docker.backend.procd] received state {Docker:starting DockerAPI:running HasNoVirtualization:false Idle:shutdown IsPaused:false Mode:linux PauseError: PauseText:Docker Desktop is running SessionID:d1257ce1-73de-4f1f-b7da-dd1b16be3e51 State:starting WslUpdateRequired:false}",
+        "sha256": "7049caacb6c5d1333a086b27317cbe1b0e945c5fcb61f9a67ad76f2edce80ede"
+      },
+      {
+        "line": 3613,
+        "text": "[2026-10-30T18:11:03.949701000Z][com.docker.backend.ipc] (8ceb3e4c-0) 64924325-BackendAPI S->C 2e7f32a3-init GET /system/info (1.346625ms): {\"goos\":\"darwin\",\"osMajorVersion\":\"26\"}",
+        "sha256": "c81c2606a1b4af1036ff40d7091a1e61f08101567b0265deb3699b71b5c10381"
+      },
+      {
+        "line": 3617,
+        "text": "[2026-10-30T18:11:03.954770000Z][com.docker.backend.ipc] (8ceb3e4c-1) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "c99bbdd40b67de88d78cc657616e47be54c8958c8356a15d55b2aca06d59d4c1"
+      },
+      {
+        "line": 3618,
+        "text": "[2026-10-30T18:11:03.955050000Z][com.docker.backend.ipc] (8ceb3e4c-2) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "6c9e20fa9ed099644b7cc11df9b785f6d6bb44a634d009ebe2fcfbc35896f08f"
+      },
+      {
+        "line": 3619,
+        "text": "[2026-10-30T18:11:03.955485000Z][com.docker.backend.ipc] (8ceb3e4c-3) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "dc2c2f943761f7910e9be1e8cdc5851d3098adc83adca9e9d6c0115217cb8e9d"
+      },
+      {
+        "line": 3621,
+        "text": "[2026-10-30T18:11:03.955937000Z][com.docker.backend.ipc] (8ceb3e4c-4) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "6281162b56f8144af92077588020a84ee3a470e4d717e9f8e5ab009953f73ee1"
+      },
+      {
+        "line": 3623,
+        "text": "[2026-10-30T18:11:03.956602000Z][com.docker.backend.ipc] (8ceb3e4c-5) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "dfb223c3ce7110d5d3fb4f5549e1d0a292ccd694e82ccd58be1d5fa37aa718b5"
+      },
+      {
+        "line": 3624,
+        "text": "[2026-10-30T18:11:03.956603000Z][com.docker.backend.ipc] (8ceb3e4c-13) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "b403cd37d5f1af74110cf5aad01ab6742bf3f56e0bc66e3a5da7cd4e18242933"
+      },
+      {
+        "line": 3625,
+        "text": "[2026-10-30T18:11:03.957033000Z][com.docker.backend.ipc] (8ceb3e4c-7) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "cadf8e56280eb85bc7bed17a46e913a9cf022ea149b1fe9d04d74e78f4533397"
+      },
+      {
+        "line": 3626,
+        "text": "[2026-10-30T18:11:03.957112000Z][com.docker.backend.ipc] (8ceb3e4c-8) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "083e0226d7b51c03610d480d56b4e2cd91e06f565f754135488c73aa1a594abf"
+      },
+      {
+        "line": 3627,
+        "text": "[2026-10-30T18:11:03.957081000Z][com.docker.backend.ipc] (8ceb3e4c-10) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "3fc112ae59fed41d657e2594ab5545dde21f89bffd798fcab6faed40e04bdc75"
+      },
+      {
+        "line": 3628,
+        "text": "[2026-10-30T18:11:03.957275000Z][com.docker.backend.ipc] (8ceb3e4c-9) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "db26a4a67990ead3428dad7637160def1ecb9124bfc2110d61bf8698e16ab94c"
+      },
+      {
+        "line": 3629,
+        "text": "[2026-10-30T18:11:03.958798000Z][com.docker.backend.ipc] (8ceb3e4c-2) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (3.74825ms)",
+        "sha256": "b23d33ddab901a7d11499774e26f8f41fb0f87549c86431ec1993d30c1ca95ec"
+      },
+      {
+        "line": 3630,
+        "text": "[2026-10-30T18:11:03.957426000Z][com.docker.backend.ipc] (8ceb3e4c-11) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "20af23e37a0794782f82a3cb3266d88a3c7971f45fd90aa91e576fedfeee20ac"
+      },
+      {
+        "line": 3631,
+        "text": "[2026-10-30T18:11:03.958877000Z][com.docker.backend.ipc] (8ceb3e4c-1) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (4.107416ms)",
+        "sha256": "0a255f866ec5e0775cf1ee703fc41e0148b56e9b39bc3539002911ec5d30edb7"
+      },
+      {
+        "line": 3632,
+        "text": "[2026-10-30T18:11:03.958959000Z][com.docker.backend.ipc] (8ceb3e4c-4) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (3.005959ms)",
+        "sha256": "53dd8bd404d3c7c21fa6d1f9fbd5b5586a5bd0832007b07d7f0cd55ffaacaf49"
+      },
+      {
+        "line": 3633,
+        "text": "[2026-10-30T18:11:03.958972000Z][com.docker.backend.ipc] (8ceb3e4c-5) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.370375ms)",
+        "sha256": "7da3a8b1a71fd02015902f7bdaa32fb3cacfb30c153e8e06e00eadd522d6406a"
+      },
+      {
+        "line": 3634,
+        "text": "[2026-10-30T18:11:03.959124000Z][com.docker.backend.ipc] (8ceb3e4c-7) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.091542ms)",
+        "sha256": "516823c0c43e7d91d16d8a149a40ad008570f66f7b0e30a936bd8fe513b53145"
+      },
+      {
+        "line": 3635,
+        "text": "[2026-10-30T18:11:03.959142000Z][com.docker.backend.ipc] (8ceb3e4c-10) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.062875ms)",
+        "sha256": "79d56a77b6c1fd0f2772c5dd1722731765fa4528d788d13bd3ede38d9e332d19"
+      },
+      {
+        "line": 3636,
+        "text": "[2026-10-30T18:11:03.959195000Z][com.docker.backend.ipc] (8ceb3e4c-9) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (1.922542ms)",
+        "sha256": "4db5719a7124927551aa198d71f897f185390f0d3824b88ecf840e6ee094b925"
+      },
+      {
+        "line": 3637,
+        "text": "[2026-10-30T18:11:03.959199000Z][com.docker.backend.ipc] (8ceb3e4c-8) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.086833ms)",
+        "sha256": "71180eb1455b9ef3fa00899bef6923f9e5a3d6e334be61677ca51793d05c6e56"
+      },
+      {
+        "line": 3638,
+        "text": "[2026-10-30T18:11:03.959304000Z][com.docker.backend.ipc] (8ceb3e4c-13) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.705167ms)",
+        "sha256": "ff751cdcdbaacb89426ab24ea86f0e5f4f5e8ce0d25aed983077786f9dd80b2d"
+      },
+      {
+        "line": 3639,
+        "text": "[2026-10-30T18:11:03.959921000Z][com.docker.backend.ipc] (8ceb3e4c-6) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "e481e80babfbf584ad2ad0aafab0546958377cd4b97329f72c43ee043b5bbd48"
+      },
+      {
+        "line": 3640,
+        "text": "[2026-10-30T18:11:03.960229000Z][com.docker.backend.ipc] (8ceb3e4c-12) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "6684b98d6304e803a23884f0a1654d8557d104a3fd84c2ca2c9e451e783e1b97"
+      },
+      {
+        "line": 3642,
+        "text": "[2026-10-30T18:11:03.960396000Z][com.docker.backend.ipc] (8ceb3e4c-3) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (4.910917ms)",
+        "sha256": "0fbfbe08a6836579a9ca62fc4961b9b1c5ea1d4c42ea8c822f793e962f823152"
+      },
+      {
+        "line": 3643,
+        "text": "[2026-10-30T18:11:03.960486000Z][com.docker.backend.ipc] (8ceb3e4c-6) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (571.167\u00b5s)",
+        "sha256": "db2894b9343a5bf85c27f1e30349d94e217baf77735e98f5f168e15882433cfb"
+      },
+      {
+        "line": 3644,
+        "text": "[2026-10-30T18:11:03.960333000Z][com.docker.backend.ipc] (8ceb3e4c-11) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (2.910209ms)",
+        "sha256": "848fe1bc9c6e435f7a69192d764c59018cbf38be55e0296fce7f0e02f815601c"
+      },
+      {
+        "line": 3645,
+        "text": "[2026-10-30T18:11:03.960800000Z][com.docker.backend.ipc] (8ceb3e4c-12) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (572.834\u00b5s)",
+        "sha256": "3bc64eec0d568ae560b8b27d2504b2b2f6b45fedec63af70dc26bde8b159ed6d"
+      },
+      {
+        "line": 3649,
+        "text": "[2026-10-30T18:11:03.990482000Z][com.docker.backend.ipc] (8ceb3e4c-14) 64924325-BackendAPI S<-C 2e7f32a3-init GET /system/info",
+        "sha256": "d4fcbc311b69583c15a90c1dd5b84614de3db219364fc1d4d047bfd6d99b4db8"
+      },
+      {
+        "line": 3650,
+        "text": "[2026-10-30T18:11:03.990624000Z][com.docker.backend.ipc] (8ceb3e4c-14) 64924325-BackendAPI S->C 2e7f32a3-init GET /system/info (132.459\u00b5s): {\"goos\":\"darwin\",\"osMajorVersion\":\"26\"}",
+        "sha256": "f8991a7fc372417d9770fa992482495f957428fd858e2abb0e534d920f5408f6"
+      },
+      {
+        "line": 3653,
+        "text": "[2026-10-30T18:11:04.000461000Z][com.docker.backend.ipc] (0e0f8f31-0) 64924325-BackendAPI S<-C a3aa9c13-metadata GET /engine/daemon.json",
+        "sha256": "dd32d187e833373525d957fdf9f58411d4196293295590e9361c6e18a9902ce6"
+      },
+      {
+        "line": 3654,
+        "text": "[2026-10-30T18:11:04.001254000Z][com.docker.backend.ipc] (0e0f8f31-0) 64924325-BackendAPI S->C a3aa9c13-metadata GET /engine/daemon.json (781.625\u00b5s): {\"builder\":{\"gc\":{\"defaultKeepStorage\":\"20GB\",\"enabled\":true}},\"experimental\":false}",
+        "sha256": "e74985df4e086f575b464624928cb189a24a6b4bb1d895c40ab9c09b1fc30a87"
+      },
+      {
+        "line": 3655,
+        "text": "[2026-10-30T18:11:04.019184000Z][com.docker.backend.ipc] (8ceb3e4c-15) 64924325-BackendAPI S<-C 2e7f32a3-init GET /features",
+        "sha256": "fd5e7a46c7cdf7567e91f95c84b9bcfc7c6559a34ae6ffa9ccbd4215254ad8fc"
+      },
+      {
+        "line": 3656,
+        "text": "[2026-10-30T18:11:04.019500000Z][com.docker.backend.ipc] (8ceb3e4c-15) 64924325-BackendAPI S->C 2e7f32a3-init GET /features (315.958\u00b5s)",
+        "sha256": "aab54ec7c0421be50d09887faafcf3ac1fea70c04a8ac3dfcfa9d4f647592ceb"
+      },
+      {
+        "line": 3657,
+        "text": "[2026-10-30T18:11:04.230276000Z][com.docker.backend.engines] engine linux/virtualization-framework hypervisor process up after 1.019s",
+        "sha256": "52134e382d89cc6e32b28ad5d3d7b94c831ae47f0ecfe6be4db2f81c116cca6b"
+      },
+      {
+        "line": 3658,
+        "text": "[2026-10-30T18:11:04.230388000Z][com.docker.backend.enginedependencies] waiting for docker daemon to be ready",
+        "sha256": "7357a4657307da5f6720a28916591d8ce7ff94b17b337b1634ddd0f10508b221"
+      },
+      {
+        "line": 3659,
+        "text": "[2026-10-30T18:11:04.230453000Z][com.docker.backend.ipc] (390dafec-7) 4c184224-engines C->S dockerd HEAD /_ping",
+        "sha256": "6323bddf355c090dc0d8acfc3078e3c9de6c56ac893a4fdd6d2a5725c659fee4"
+      },
+      {
+        "line": 3660,
+        "text": "[2026-10-30T18:11:04.230500000Z][com.docker.backend] com.docker.virtualization: Waiting for &exec.Cmd{Path:\"/Applications/Docker.app/Contents/MacOS/com.docker.virtualization\", Args:[]string{\"/Applications/Docker.app/Contents/MacOS/com.docker.virtualization\", \"--kernel\", \"/Applications/Docker.app/Contents/Resources/linuxkit/kernel\", \"--cmdline\", \"init=/initd loglevel=1 root=/dev/vdb rootfstype=erofs ro vsyscall=emulate panic=0 eth0.dhcp eth1.dhcp linuxkit.unified_cgroup_hierarchy=1 console=hvc0   virtio_net.disable_csum=1 slub_min_order=2 page_reporting.page_reporting_order=2 vpnkit.connect=connect://2/1999\", \"--boot\", \"/Applications/Docker.app/Contents/Resources/linuxkit/desktop.img\", \"--disk\", \"<HOME>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw\", \"--networkType\", \"gvisor\", \"--cpus\", \"12\", \"--memoryMiB\", \"8192\", \"--console-log\", \"<HOME>/Library/Containers/com.docker.docker/Data/log/vm/console.log\", \"--watchdog\", \"--virtiofs\", \"/Users\", \"--virtiofs\", \"/Volumes\", \"--virtiofs\", \"/private\", \"--virtiofs\", \"/tmp\", \"--virtiofs\", \"/var/folders\", \"--rosetta\"}, Env:[]string(nil), Dir:\"\", Stdin:(*os.File)(0x7e3fe4ca0430), Stdout:(*io.PipeWriter)(0x7e3fdfdd8c60), Stderr:(*io.PipeWriter)(0x7e3fdfdd8cc0), ExtraFiles:[]*os.File(nil), SysProcAttr:(*syscall.SysProcAttr)(nil), Process:(*os.Process)(0x7e3fde2f5680), ProcessState:(*os.ProcessState)(nil), ctx:(*context.valueCtx)(0x7e3fe31dba70), Err:error(nil), Cancel:(func() error)(0x1025bd880), WaitDelay:0, childIOFiles:[]io.Closer(nil), parentIOPipes:[]io.Closer{(*os.File)(0x7e3fe4ca0440), (*os.File)(0x7e3fe4ca0458)}, goroutine:[]func() error(nil), goroutineErr:(<-chan error)(0x7e3fe12c2bd0), ctxResult:(<-chan exec.ctxResult)(0x7e3fe15e1e30), createdByStack:[]uint8(nil), lookPathErr:error(nil), cachedLookExtensions:struct { in string; out string }{in:\"\", out:\"\"}, startCalled:1}",
+        "sha256": "fe4203defa65945dcb80c2c41e6d1607548fae793d24b909eeaed2cd3f320aad"
+      },
+      {
+        "line": 3661,
+        "text": "[2026-10-30T18:11:04.966448000Z][com.docker.backend.ipc] (390dafec-7) 4c184224-engines C<-S UnknownServer HEAD /_ping (735.993583ms): OK",
+        "sha256": "e461dab246ec8d47099166d7c9f40e1e90bd4dab3bc5a4fef4c21e2c49104544"
+      },
+      {
+        "line": 3662,
+        "text": "[2026-10-30T18:11:04.966538000Z][com.docker.backend.enginedependencies] docker daemon is ready after 736ms",
+        "sha256": "d327e680d034d7eb459808d5dd2d8ce7158ccf799f8701ab921eb26a23f0f5ce"
+      },
+      {
+        "line": 3663,
+        "text": "[2026-10-30T18:11:04.966599000Z][com.docker.backend.engines] engine linux/virtualization-framework docker daemon ready after 1.756s",
+        "sha256": "7b9ab44daa72205b34dff77a962be7cf48caf3376c770d6a3bd40831e957305e"
+      },
+      {
+        "line": 3664,
+        "text": "[2026-10-30T18:11:04.966658000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state starting -> running",
+        "sha256": "63cabda13e3c9c863895a33bdce754ad500c3c0914a75cfdb872624605f39902"
+      },
+      {
+        "line": 3665,
+        "text": "[2026-10-30T18:11:04.966864000Z][com.docker.backend.events] adding server timestamp to event (engines): 1793383864966861000 docker: running",
+        "sha256": "8e072b54e8daf286f7cc05b371d6ea7a6ec1430c1d44a9ee24ec02a4e2cabed4"
+      },
+      {
+        "line": 3666,
+        "text": "[2026-10-30T18:11:04.967041000Z][com.docker.backend.apiproxy] engine is running, clearing any previous engine error",
+        "sha256": "ae7336dca19fa48105118b9f5bdf982939f6ef28737ac7c576ad489b18f4c155"
+      },
+      {
+        "line": 3667,
+        "text": "[2026-10-30T18:11:04.967104000Z][com.docker.backend.statehandler] sending to Dashboard: running",
+        "sha256": "d969e2888020b61727f2e922ba44bfd75be5864302eb9f03e0f4477c18a99d45"
+      },
+      {
+        "line": 3668,
+        "text": "[2026-10-30T18:11:04.967158000Z][com.docker.backend.state] backend state changed to running",
+        "sha256": "d8fce7601cc039c698abfc778e09c5930ae11fb690697854eae47ed0f90cc2ba"
+      },
+      {
+        "line": 3669,
+        "text": "[2026-10-30T18:11:04.967303000Z][com.docker.backend.state] sending desktop state:EngineRunningState",
+        "sha256": "616b5eddd3830bfe9f1bb099b020e9bcbbcda8a9b8dc678b6450eaaab7feea95"
+      },
+      {
+        "line": 3670,
+        "text": "[2026-10-30T18:11:04.967197000Z][com.docker.backend.ipcstream] 64924325-BackendAPI /engine/state --> 2026-10-30T11:11:04.966861000-07:00 (93e04d75) engine running:",
+        "sha256": "65221ca7ec65e0f507943bd236530011d8c53195d8b5bfcd20285abcb88c8dd5"
+      },
+      {
+        "line": 3673,
+        "text": "[2026-10-30T18:11:04.967839000Z][com.docker.backend.enginedependencies] starting forwarding dials",
+        "sha256": "af54c808db466559ba6e0e160d93b160175a5b0154ce9a52be6e2f6d095b957b"
+      },
+      {
+        "line": 3674,
+        "text": "[2026-10-30T18:11:04.967873000Z][com.docker.backend.engines] engine linux/virtualization-framework is running after 1.757s",
+        "sha256": "be0ceddb9aa36bc83ac79991ed16442bd31633f46d303cefb2641d9356ba0e1c"
+      },
+      {
+        "line": 3675,
+        "text": "[2026-10-30T18:11:04.968176000Z][com.docker.backend.enginedependencies] starting metrics port exposure",
+        "sha256": "37a595d59c252492f1ed7d19d9ea4218ead2ba78bd5750492bfc060cf474491f"
+      },
+      {
+        "line": 3676,
+        "text": "[2026-10-30T18:11:04.968205000Z][com.docker.backend.enginedependencies] no metrics-addr in daemon.json: not exposing a metrics port",
+        "sha256": "b515def5d1e34ea1b56931ecbde695975232e10bdbfd09ad568e4b563b750946"
+      },
+      {
+        "line": 3677,
+        "text": "[2026-10-30T18:11:04.970400000Z][com.docker.backend.kubernetes] cluster is disabled by config - not starting",
+        "sha256": "d9eaf6374f47d31688ce2a675469a8e401df17da93e0831b03a0bc122091f972"
+      },
+      {
+        "line": 3680,
+        "text": "[2026-10-30T18:11:04.987408000Z][com.docker.backend.engines] engine start complete",
+        "sha256": "22e43260747a7b7d4fb702e730047dd342980958c5897e6130595ccff5811272"
+      },
+      {
+        "line": 3681,
+        "text": "[2026-10-30T18:11:04.987446000Z][com.docker.backend.idle] VM started",
+        "sha256": "8859c083eaa98345cc9a96999526be0b796aa8ea09674a2b551b9839ba0ec9cf"
+      },
+      {
+        "line": 3685,
+        "text": "[2026-10-30T18:11:05.004300000Z][com.docker.backend.resyncer] Resyncer: de-registering possibly-leaked resource 2dc487fc0e5e157413686e46c0fdceff1e6db18a0d0612f69d2cf273c49e29a1",
+        "sha256": "5ce9325cc5f17970ff1b21a1b1b88455b6d45bf8266fd78f4b869c4ca96b15c8"
+      },
+      {
+        "line": 3687,
+        "text": "[2026-10-30T18:11:05.004670000Z][com.docker.backend.resyncer] Resyncer: re-registering possibly-missed resource 05978b887d69221c18b4933006aabe733a939441e5142956fbec94bf95709738",
+        "sha256": "47a134793b3009b048dcdbb5e9e4d6ecb754e2e0c326fffc5d9e8b0669cddbe0"
+      },
+      {
+        "line": 3695,
+        "text": "[2026-10-30T18:11:05.123381000Z][com.docker.backend.idlemetrics] Compute time at run 2.37s / 2s added to 47m0.27s / 3h23m5s total 47m2.64s / 3h23m7s",
+        "sha256": "49124895fb9e37af8b0d8b5923bbbbcc8745b9b68180619f60739ad99fb1b575"
+      },
+      {
+        "line": 3696,
+        "text": "[2026-10-30T18:11:05.125589000Z][com.docker.backend.events] adding server timestamp to event (): 1793383865125541000 idle: running",
+        "sha256": "b9cf58f980a047b790d346865b9ea5890a3a13472a4a7a58830a6625a06f7b2b"
+      },
+      {
+        "line": 3697,
+        "text": "[2026-10-30T18:11:05.125679000Z][com.docker.backend.analytics.tracker] sending event: idle eae5e931-d920-4023-aab2-3a87fbd8c72f",
+        "sha256": "9300e7d9a19e880b8063aefadbcd584179da3e5faafb8628276f2010ff4f0a87"
+      },
+      {
+        "line": 3698,
+        "text": "[2026-10-30T18:11:05.125817000Z][com.docker.backend.statehandler] sending to Dashboard: running",
+        "sha256": "3aa887b324e36a1b9a99f5239fb1ce7ab91216f112c60221b8ed007cd6182db6"
+      },
+      {
+        "line": 3699,
+        "text": "[2026-10-30T18:11:05.125844000Z][com.docker.backend.analytics.tracker] sending event: idle eae5e931-d920-4023-aab2-3a87fbd8c72f",
+        "sha256": "54596c7324328cc0fe531090176f268d648a5696c710ed6ec94dbb3f22d66139"
+      },
+      {
+        "line": 3700,
+        "text": "[2026-10-30T18:11:05.187791000Z][com.docker.backend.idle] busy -> idle",
+        "sha256": "446a708043223dc735d5e954c0f2f84dba5c7c39a89022e23dca0ea8b3e51a1f"
+      },
+      {
+        "line": 3701,
+        "text": "[2026-10-30T18:11:05.187841000Z][com.docker.backend.idle] timer started (5m0s)",
+        "sha256": "7ae2215af93710ace90dcedaf816e623a72268aef7f55aa08abbfa37995b1a76"
+      },
+      {
+        "line": 3702,
+        "text": "[2026-10-30T18:11:05.239632000Z][com.docker.backend.idle] idle -> busy (was idle for 51.793667ms; reason: [1 calls to /v1.55/networks/create from Docker-Client/29.6.2 (darwin)])",
+        "sha256": "46a7c423c45c6ad93ffa73954f950596d8d54a4770c6d4d215bcaaa72f0e3a90"
+      },
+      {
+        "line": 3703,
+        "text": "[2026-10-30T18:11:05.252147000Z][com.docker.backend.idle] busy -> idle",
+        "sha256": "21aeb023cfe130d6825a094c7192c8104688b575628d4754c12dfeffa4be7c89"
+      },
+      {
+        "line": 3704,
+        "text": "[2026-10-30T18:11:05.252199000Z][com.docker.backend.idle] timer started (5m0s)",
+        "sha256": "547b08b282925e3fc7ea954a9d3ab9469665a4f523e5bd5ba8a42369e9a19009"
+      },
+      {
+        "line": 3706,
+        "text": "[2026-10-30T18:11:05.266376000Z][com.docker.backend.idle] idle -> busy (was idle for 14.177083ms; reason: [1 calls to /v1.55/volumes/create from Docker-Client/29.6.2 (darwin)])",
+        "sha256": "782556d6f98f3cf8291948b358d19fc71490cdb593667e683c7938139ca9a71b"
+      },
+      {
+        "line": 3707,
+        "text": "[2026-10-30T18:11:05.268692000Z][com.docker.backend.idle] busy -> idle",
+        "sha256": "4f7f470647dd9da8127b502efa4cc34ab53a100578789221d995725c9c1150bc"
+      },
+      {
+        "line": 3708,
+        "text": "[2026-10-30T18:11:05.268826000Z][com.docker.backend.idle] timer started (5m0s)",
+        "sha256": "575a2c451d94b801456649999ef83688f7d6edf047066e360aaff5302d4808ad"
+      },
+      {
+        "line": 3709,
+        "text": "[2026-10-30T18:11:05.288073000Z][com.docker.backend.idle] idle -> busy (was idle for 19.248709ms; reason: [timed activities: map[dial//run/guest-services/volume-contents.sock:59999949917]])",
+        "sha256": "455e3342b8eb5a022edb225769ba23bd29d69435a710d5889dfa92ac4f83083b"
+      },
+      {
+        "line": 3713,
+        "text": "[2026-10-30T18:11:05.407969000Z][com.docker.backend.apiproxy] usage ContainerStartCliLinux + 1",
+        "sha256": "140e51336eb93f46c70e3ad343c74375e11ca6f99028c61df8915a2b83d31bd4"
+      },
+      {
+        "line": 3724,
+        "text": "[2026-10-30T18:11:05.520496000Z][com.docker.backend.ipc] (d5298ce9-0) 64924325-BackendAPI S<-C 9368e08a-init PUT /forwards/expose-container",
+        "sha256": "3b2d239916fd820a741c94b48623cd48b1cf97281a4b626659ff5fb04da7ad88"
+      },
+      {
+        "line": 3725,
+        "text": "[2026-10-30T18:11:05.520595000Z][com.docker.backend.ipc] (d5298ce9-0) 64924325-BackendAPI S<-C 9368e08a-init bind: {\"containerId\":\"...\"}",
+        "sha256": "2fbbf564c09368aa8c569c50049d17410fd5268fa091ba9f6c0fbc5c2316026f"
+      },
+      {
+        "line": 3727,
+        "text": "[2026-10-30T18:11:05.521819000Z][com.docker.backend.gvisor] 0.0.0.0:63611->172.21.0.2:5432 started",
+        "sha256": "9bff8de5a41d64d68f64429c0de397b22554c4899e1da768cbcb3848a455f20b"
+      },
+      {
+        "line": 3728,
+        "text": "[2026-10-30T18:11:05.521912000Z][com.docker.backend.ipc] (d5298ce9-0) 64924325-BackendAPI S->C 9368e08a-init PUT /forwards/expose-container (1.415166ms): OK",
+        "sha256": "9faf1d9b92a9c2d585ecc8460f992ae960a38b3263390c06bda0b50836fd22a6"
+      }
+    ]
+  }
+]

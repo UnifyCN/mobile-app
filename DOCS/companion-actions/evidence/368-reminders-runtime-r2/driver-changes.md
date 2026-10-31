@@ -1,0 +1,2 @@
+Copied the seven r1 drivers into this primary evidence directory. All r1 evidence remains unchanged. The suite runs the three reminder files first. It excludes those files from the later regression sweep. Each file retains its own reset and five-reply REST readiness check. Runtime files and new evidence resolve under this primary.
+Both live-client guards accept ACTIONS_STACK_WORKDIR from the copied driver. They still assert exact project, DB/REST names, runtime state and content URL. This removes the fixed author-worktree dependency. No product source changed.

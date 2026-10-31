@@ -1,0 +1,11 @@
+ERROR:  column reference "kind" is ambiguous
+LINE 1: ...om probe368.barriers b where b.task_ref=ref and b.kind=kind)
+                                                                  ^
+DETAIL:  It could refer to either a PL/pgSQL variable or a table column.
+QUERY:  exists(select 1 from probe368.barriers b where b.task_ref=ref and b.kind=kind)
+CONTEXT:  PL/pgSQL function probe368.barrier() line 12 at IF
+SQL statement "insert into probe368.events(reminder_id)
+      select id from public.companion_task_reminders
+      where id=r.id and status='pending' and remind_at <= clock_timestamp()
+      on conflict do nothing"
+PL/pgSQL function probe368.tick() line 18 at SQL statement

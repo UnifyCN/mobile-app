@@ -1,0 +1,81 @@
+------- pre-test output -------
+{"name":"versions-clock","data":{"version":"PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit","zone":"UTC","cron":"1.6.4"}}
+----- pre-test output end -----
+running 11 tests from ./probe_test.ts
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ...
+------- output -------
+{"name":"duplicate-intermediate","data":{"reminders":0,"locks":[{"pid":272,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]},{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230,272]}]}}
+{"name":"duplicate-due-owner","data":{"statuses":[200,200],"replays":[false,true],"reminders":1,"events":1,"ownerPerPlatform":1,"foreignPerPlatform":0,"taskState":"not_started"}}
+----- output end -----
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ... ok (5s)
+02 persistence, stopped scheduler, scheduler error and read error stay separate ...
+------- output -------
+{"name":"failure-boundaries","data":{"invalidPersistence":422,"persistedWhileCronOff":true,"dueWhileCronOff":false,"cronFailedRun":true,"readFailure":500,"recoveredReadCount":1,"taskCompleted":false}}
+----- output end -----
+02 persistence, stopped scheduler, scheduler error and read error stay separate ... ok (4s)
+03 race complete, claim commits first, Undo does not restart ...
+------- output -------
+{"name":"race-complete-claim-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"transactionid","blockers":[549]},{"pid":549,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[283]}]}}
+{"name":"race-complete-claim-final","data":{"reminderStatus":"cancelled","reason":"task_completed","claimed":true,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race complete, claim commits first, Undo does not restart ... ok (3s)
+03 race complete, stop commits first, Undo does not restart ...
+------- output -------
+{"name":"race-complete-stop-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]},{"pid":632,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"transactionid","blockers":[304]}]}}
+{"name":"race-complete-stop-final","data":{"reminderStatus":"cancelled","reason":"task_completed","claimed":false,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race complete, stop commits first, Undo does not restart ... ok (2s)
+03 race remove, claim commits first, Undo does not restart ...
+------- output -------
+{"name":"race-remove-claim-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[705]},{"pid":705,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[283]}]}}
+{"name":"race-remove-claim-final","data":{"reminderStatus":"cancelled","reason":"task_removed","claimed":true,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race remove, claim commits first, Undo does not restart ... ok (3s)
+03 race remove, stop commits first, Undo does not restart ...
+------- output -------
+{"name":"race-remove-stop-intermediate","data":{"reminderStatus":"pending","claimed":false,"task":{"completed":false,"removed_at":null},"locks":[{"pid":304,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[230]},{"pid":805,"application_name":"pg_cron","wait_event_type":"Lock","wait_event":"advisory","blockers":[304]}]}}
+{"name":"race-remove-stop-final","data":{"reminderStatus":"cancelled","reason":"task_removed","claimed":false,"dueAfterStop":0,"dueAfterUndo":0}}
+----- output end -----
+03 race remove, stop commits first, Undo does not restart ... ok (2s)
+04 explicit cancel after claim, old retry, reopen and new explicit schedule ...
+------- output -------
+{"name":"explicit-cancel-reopen","data":{"oldReplay":true,"oldStatus":"cancelled","newExplicitEvent":1}}
+----- output end -----
+04 explicit cancel after claim, old retry, reopen and new explicit schedule ... ok (5s)
+05 UTC persistence, named zone, DST gap and both fold instants ... FAILED (164ms)
+
+ ERRORS
+
+05 UTC persistence, named zone, DST gap and both fold instants => ./probe_test.ts:215:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    Result(2) [
+      {
+        epoch: "1825565400",
+        time_zone: "America/New_York",
+      },
+      {
+        epoch: "1825569000",
+        time_zone: "America/New_York",
+      },
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/probe_test.ts:231:5
+    at async scope (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/deno-cache/npm/registry.npmjs.org/postgres/3.4.9/src/index.js:260:18)
+    at async sql.begin (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/.runtime/deno-cache/npm/registry.npmjs.org/postgres/3.4.9/src/index.js:243:14)
+    at async fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-9bddb06c/probes/reminder-368-r1/probe_test.ts:228:3)
+
+ FAILURES
+
+05 UTC persistence, named zone, DST gap and both fold instants => ./probe_test.ts:215:6
+
+FAILED | 7 passed | 1 failed (27s)
+
+error: Test failed

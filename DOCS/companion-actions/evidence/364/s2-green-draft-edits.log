@@ -1,0 +1,11 @@
+# 2026-10-27T18:44:07Z s2 green: revise/cancel added
+running 5 tests from ./plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (426ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... ok (313ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... ok (292ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... ok (290ms)
+cleanup ... ok (4ms)
+
+ok | 5 passed | 0 failed (1s)
+
+exit=0

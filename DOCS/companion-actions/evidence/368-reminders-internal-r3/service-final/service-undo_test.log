@@ -1,0 +1,24 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 8 tests from ./undo_test.ts
+Undo restores the exact earlier state and waiting reason of its own receipt ... ok (353ms)
+Undo of completion restores the earlier state and does not restart a stopped reminder ... ok (256ms)
+an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change ... ok (410ms)
+a compensating proposal goes stale when the task changes again; nothing is overwritten ... ok (294ms)
+a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review ... ok (268ms)
+concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay ... ok (308ms)
+Undo is scoped to the account and only to undoable receipts ... ok (488ms)
+cleanup ... ok (3ms)
+
+ok | 8 passed | 0 failed (2s)
+

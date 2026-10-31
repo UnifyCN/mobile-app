@@ -1,0 +1,48 @@
+[
+  {
+    "Id": "dd202f13699d947b87a9b2a587ada882cb2b9167c0919e8f7a94c18a1a694845",
+    "Name": "/supabase_db_unify-push-369-server-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-push-369-server-r1",
+      "com.supabase.cli.project": "unify-push-369-server-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/stack"
+    }
+  },
+  {
+    "Id": "6dddcea05686f22d49380dda84ed68fb0a501b93d3299ced4cd778da26b8e07d",
+    "Name": "/supabase_rest_unify-push-369-server-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-push-369-server-r1",
+      "com.supabase.cli.project": "unify-push-369-server-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/stack"
+    }
+  },
+  {
+    "Id": "835f65548f4206942e48027105b2e24997d15fb2fa8d479ecbc1010d59bcc4c2",
+    "Name": "/supabase_edge_runtime_unify-push-369-server-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-push-369-server-r1",
+      "com.supabase.cli.project": "unify-push-369-server-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/stack"
+    }
+  },
+  {
+    "Id": "52b9affde6bd097a80decad2420794bf532b98f03ffc324fb01e13de329f38a2",
+    "Name": "/supabase_auth_unify-push-369-server-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-push-369-server-r1",
+      "com.supabase.cli.project": "unify-push-369-server-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/stack"
+    }
+  },
+  {
+    "Id": "e3d6e2ec5f1dc5f5e7dfd472f6fe75f20c2158e1ca5dd46ffc3bcdc0fb5041fe",
+    "Name": "/supabase_kong_unify-push-369-server-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-push-369-server-r1",
+      "com.supabase.cli.project": "unify-push-369-server-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/stack",
+      "maintainer": "Kong <support@konghq.com>"
+    }
+  }
+]

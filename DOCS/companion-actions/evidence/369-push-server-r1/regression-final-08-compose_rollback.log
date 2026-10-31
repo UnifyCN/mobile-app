@@ -1,0 +1,6 @@
+running 2 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (5s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... ok (6s)
+
+ok | 2 passed | 0 failed (12s)
+

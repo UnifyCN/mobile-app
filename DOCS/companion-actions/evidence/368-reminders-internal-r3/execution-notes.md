@@ -1,0 +1,7 @@
+The first source check rejected the documented runtime config delta. The next driver call started before that failed check was read. It was interrupted during database reset. No test ran. Logs are retained as premature-suite-interrupted.log and premature-reset.log. The source check then verified 162 exact files and one documented project/port config delta. The corrected suite excludes the unchanged root-passed reminders_test.ts.
+
+A diagnostic count first assumed that all 18 protected volumes were mounted by the 33 protected containers. That assertion failed. Inspection found 10 mounted volume names. The saved root protection list includes 18 names. A separate volume-list check verified all 18 names. No resource changed during these read-only diagnostics.
+
+The first cleanup comparison used the raw order of Docker mount arrays and failed for one protected container. The saved objects differ only in array order. A complete sorted-object comparison verified the same mount set for every protected container. No protected resource was changed.
+
+The whole staged whitespace check reports preserved raw Deno/Jest/psql output, including blank lines and trailing spaces. Raw evidence bytes were retained. The separate authored Markdown/Python whitespace check passes. The repository ignores the DOCS parent, so the authorized evidence files were added by exact forced paths. Generated Python caches were excluded.

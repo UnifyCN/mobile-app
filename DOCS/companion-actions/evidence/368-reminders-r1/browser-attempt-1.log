@@ -1,0 +1,27 @@
+✘ [ERROR] No matching export in "fixture:hooks" for import "stepsFor"
+
+    components/companion/tasks/TaskStepsSection.tsx:27:2:
+      27 │   stepsFor,
+         ╵   ~~~~~~~~
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:1467
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 1 error:
+components/companion/tasks/TaskStepsSection.tsx:27:2: ERROR: No matching export in "fixture:hooks" for import "stepsFor"
+    at failureErrorWithLog (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:1467:15)
+    at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:926:25
+    at runOnEndCallbacks (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:1307:45)
+    at buildResponseToResult (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:924:7)
+    at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:951:16
+    at responseCallbacks.<computed> (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v22.23.1

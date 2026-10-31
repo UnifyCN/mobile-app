@@ -1,0 +1,80 @@
+{
+  "commands": {
+    "final-native-export-command": {
+      "exit": 0,
+      "seconds": 18.49
+    },
+    "final-ci-command": {
+      "exit": 0,
+      "seconds": 74.47
+    },
+    "green-adapter-command": {
+      "exit": 0,
+      "seconds": 2.43
+    },
+    "dependencies-command": {
+      "exit": 0,
+      "seconds": 12.99
+    },
+    "android-setup-1-prebuild-command": {
+      "exit": 1,
+      "seconds": 1.34
+    },
+    "ios-setup-1-pods-command": {
+      "exit": 0,
+      "seconds": 49.02
+    },
+    "final-lint-command": {
+      "exit": 0,
+      "seconds": 1.81
+    },
+    "final-focused-r2-command": {
+      "exit": 0,
+      "seconds": 12.25
+    },
+    "local-start-command": {
+      "exit": 0,
+      "seconds": 25.93
+    },
+    "final-focused-command": {
+      "exit": 1,
+      "seconds": 2.38
+    },
+    "red-virtual-native-command": {
+      "exit": 1,
+      "seconds": 2.95
+    },
+    "ios-setup-1-build-command": {
+      "exit": 0,
+      "seconds": 539.53
+    },
+    "final-i18n-command": {
+      "exit": 0,
+      "seconds": 0.16
+    },
+    "local-bootstrap-command": {
+      "exit": 0,
+      "seconds": 4.64
+    },
+    "final-types-command": {
+      "exit": 0,
+      "seconds": 8.81
+    },
+    "local-stop-command": {
+      "exit": 0,
+      "seconds": 2.48
+    },
+    "ios-setup-1-prebuild-command": {
+      "exit": 0,
+      "seconds": 1.49
+    }
+  },
+  "counts": {
+    "main_passed": 1614,
+    "main_skipped": 29,
+    "dst_passed": 13,
+    "focused_passed": 82,
+    "focused_skipped": 5,
+    "adapter_passed": 14
+  }
+}

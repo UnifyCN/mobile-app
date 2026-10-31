@@ -1,0 +1,12 @@
+PASS __tests__/companionActions/pushIntents.test.ts
+  ✓ retains one minimal signed-out warm+cold intent until normal authentication and current resolve (2 ms)
+  ✓ drops a late resolver after an account reset in one batch (1 ms)
+  ✓ does not use a stale authenticated SDK last-response read in a new account
+  ✓ does not clear a newer SDK response when an older intent completes
+  ✓ failed content resolution retains a retryable generic result without task data (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.511 s
+Ran all test suites matching /__tests__\/companionActions\/pushIntents.test.ts/i.

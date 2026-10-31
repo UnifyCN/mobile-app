@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 let mockProfileProvince: string | null = 'Ontario';
 let mockUserId = 'user-0';
@@ -111,6 +112,10 @@ jest.mock('@/lib/supabase', () => ({
       getSession: async () => ({
         data: { session: { user: { id: mockUserId } } },
       }),
+      // Task progress (mobile-app#361) follows auth changes.
+      onAuthStateChange: () => ({
+        data: { subscription: { unsubscribe: () => {} } },
+      }),
     },
   },
 }));
@@ -173,7 +178,7 @@ const mockFetch = sanityClient.fetch as jest.Mock;
 const fetchedProvinces = () => mockFetch.mock.calls.map(call => call[1].province);
 
 function renderScreen() {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   clients.push(client);

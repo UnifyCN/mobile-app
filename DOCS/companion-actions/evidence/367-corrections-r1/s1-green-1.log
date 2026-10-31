@@ -1,0 +1,22 @@
+[0m[38;5;245mrunning 3 tests from ./remove_plan_race_test.ts[0m
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":1,"blockers":["companion_apply_actions"],"middle":{"plans":["Transit only"],"removed":false}}
+{"removal":[200,null,[]],"plan":[409,"needs_review"]}
+[0m[38;5;245m----- output end -----[0m
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ... [0m[32mok[0m [0m[38;5;245m(602ms)[0m
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":1,"blockers":["companion_plan_apply"],"middle":{"plans":[],"removed":false}}
+{"plan":[200,null],"removal":[409,"needs_review",null]}
+[0m[38;5;245m----- output end -----[0m
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ... [0m[32mok[0m [0m[38;5;245m(495ms)[0m
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ...
+[0m[38;5;245m------- output -------[0m
+{"waiting":1,"blockers":["companion_apply_actions"]}
+{"removal":[200,[]],"retry":[409,"needs_review"]}
+[0m[38;5;245m----- output end -----[0m
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ... [0m[32mok[0m [0m[38;5;245m(447ms)[0m
+
+[0m[32mok[0m | 3 passed | 0 failed [0m[38;5;245m(1s)[0m
+

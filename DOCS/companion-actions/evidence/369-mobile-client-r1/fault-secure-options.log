@@ -1,0 +1,39 @@
+FAIL __tests__/companionActions/pushNative.test.ts
+  ✕ generates independent UUID and 32-byte proof and saves the exact intent with device-only options before dispatch (9 ms)
+  ✓ fails closed on missing SecureStore data without using an ID or token to recover
+  ✓ fails closed on partial SecureStore data without using an ID or token to recover (1 ms)
+  ✓ fails closed on corrupt SecureStore data without using an ID or token to recover
+  ✓ fails closed on locked SecureStore data without using an ID or token to recover
+  ✓ stops after a held SecureStore read when ownership becomes unknown
+  ✓ keeps tokens and proof out of runtime logs (1 ms)
+
+  ● generates independent UUID and 32-byte proof and saves the exact intent with device-only options before dispatch
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "keychainAccessible": 6,
+    -   "requireAuthentication": false,
+    +   "requireAuthentication": true,
+      }
+
+      101 |     value.pending.operation.installation_secret === value.installation_secret
+      102 |   ).toBe(true);
+    > 103 |   expect(options).toEqual({
+          |                   ^
+      104 |     keychainAccessible: 6,
+      105 |     requireAuthentication: false,
+      106 |   });
+
+      at Object.toEqual (__tests__/companionActions/pushNative.test.ts:103:19)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 6 passed, 7 total
+Snapshots:   0 total
+Time:        0.39 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushNative.test.ts/i.

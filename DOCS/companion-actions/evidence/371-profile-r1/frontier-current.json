@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-31T08:18:26.690465+00:00",
+  "authority_files": [
+    {
+      "path": "/tmp/unify-companion-359/SPEC.md",
+      "bytes": 32192,
+      "sha256": "ef0d767a2c66f37f681975e00e5ec82cc6677d1a0e3094475e60e88c0b872008"
+    },
+    {
+      "path": "/tmp/unify-companion-359/ticket-371.md",
+      "bytes": 2049,
+      "sha256": "57253c78f8081885adce5a45c86e1855cc18a52b3c654bf709231ca32cda657e"
+    },
+    {
+      "path": "/tmp/unify-companion-359/frontier-after-ios-r14/issue-snapshots.json",
+      "bytes": 42107,
+      "sha256": "487cdc9be2d41702e42450c1b642220ad635c6b722c0f1b0175ab5902839b289"
+    },
+    {
+      "path": "/tmp/unify-companion-359/frontier-after-ios-r14/github-dependencies.json",
+      "bytes": 2243,
+      "sha256": "f12293157b0ce91d745bf453b3f61626aeebacb38bb86d40abba61a043846101"
+    },
+    {
+      "path": "/tmp/unify-companion-359/frontier-after-ios-r14/code-prerequisite-ancestry.json",
+      "bytes": 713,
+      "sha256": "476b2821b5d8896f35e74ea4e450b40c8e0311f2e688f235ff2b2c803df363e6"
+    },
+    {
+      "path": "/tmp/unify-companion-359/frontier-after-ios-r14/pre-dispatch-ports.json",
+      "bytes": 3483,
+      "sha256": "5e9a2b223cef62965bffe4541706bd72eeb687747fcc3a5cae5f93e8620c2fae"
+    }
+  ],
+  "repos": [
+    {
+      "repo": "mobile",
+      "integration_path": "/Users/savargupta/.t3/worktrees/Unify/feat-companion-actions-359",
+      "integration_branch": "feat/companion-actions-359",
+      "integration_head": "7d711ae12f23005cb25a10ecc6be5040ddfb8752",
+      "integration_tree": "124176c7c2bfff2ede38f77d97457ef93db18d60",
+      "candidate_head": "286e941d47f57ecaa551ccde226dbcbe3de56098",
+      "prerequisites": [
+        {
+          "sha": "b15d7e4b86bd4384dab15a7ca8f86f9ede950694",
+          "ancestor": true
+        },
+        {
+          "sha": "eb61581f1ef3855646616564036ce94197f3a64c",
+          "ancestor": true
+        }
+      ],
+      "integration_is_candidate_ancestor": true,
+      "candidate_tree": "eaa8096c1cc7148397a476f75194e1fb0c46530d"
+    },
+    {
+      "repo": "web",
+      "integration_path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359",
+      "integration_branch": "feat/companion-actions-359",
+      "integration_head": "8f3720af36c50768ff05d25804a69d28d36fd5c4",
+      "integration_tree": "c05d364f28618edf949e7bbdf404fb99d1b2394e",
+      "candidate_head": "dd4aac9cc567cac13b5a4a987539f548a2dcb038",
+      "prerequisites": [
+        {
+          "sha": "a914019c74932486754ac16bbd591c30593d2703",
+          "ancestor": true
+        },
+        {
+          "sha": "05ab5299deeea43eee892e11ef1e98ff31f16d8b",
+          "ancestor": true
+        }
+      ],
+      "integration_is_candidate_ancestor": true,
+      "candidate_tree": "f1d2a191bfe9dcf05a9ebd21fea45a1b6bbc459d"
+    }
+  ],
+  "native_acceptance": false
+}

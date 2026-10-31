@@ -1,0 +1,9 @@
+running 1 test from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts
+push rollback: stops execution and preserves terminal history across reapply ...
+------- output -------
+FALSIFIER: rollback leaves enrollment enabled, removes history, or reapply restores execution
+----- output end -----
+push rollback: stops execution and preserves terminal history across reapply ... ok (763ms)
+
+ok | 1 passed | 0 failed (774ms)
+

@@ -1,0 +1,62 @@
+[
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 40,
+    "base_line": 40,
+    "source": "  const React = require('react');"
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 55,
+    "base_line": 55,
+    "source": "  const { View } = require('react-native');"
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 70,
+    "base_line": 70,
+    "source": "  const { View, TouchableOpacity } = require('react-native');"
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 84,
+    "base_line": 84,
+    "source": "  const { View } = require('react-native');"
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 96,
+    "base_line": 96,
+    "source": "    require('react').createElement("
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 97,
+    "base_line": 97,
+    "source": "      require('react-native').View,"
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 101,
+    "base_line": 101,
+    "source": "        require('react').createElement("
+  },
+  {
+    "rule": "@typescript-eslint/no-require-imports",
+    "line": 102,
+    "base_line": 102,
+    "source": "          require('react').Fragment,"
+  },
+  {
+    "rule": "import/first",
+    "line": 322,
+    "base_line": 322,
+    "source": "import CompanionScreen from '@/app/(tabs)/companion/index';"
+  },
+  {
+    "rule": "@typescript-eslint/array-type",
+    "line": 558,
+    "base_line": 553,
+    "source": "      commands: Array<{ receipt: { current: boolean } }>;"
+  }
+]

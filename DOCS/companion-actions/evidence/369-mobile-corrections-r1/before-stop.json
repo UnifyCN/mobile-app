@@ -1,0 +1,53 @@
+[
+  {
+    "Id": "6509bbe4738f62f2ca4e4cebd3553496366ad35f9db3a8401d01859264bc7d3e",
+    "Name": "/supabase_edge_runtime_unify-push-369-mobile-correction-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-corrections-r1/private/stack"
+    }
+  },
+  {
+    "Id": "fe55b026891788806c39b2b9843433d7573bf32e28c551f361ac278806ac37c0",
+    "Name": "/supabase_rest_unify-push-369-mobile-correction-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-corrections-r1/private/stack"
+    }
+  },
+  {
+    "Id": "1a8f93492b26054daea43d4a013de18e64557af49710ca29f3fdc88aefb79d4f",
+    "Name": "/supabase_auth_unify-push-369-mobile-correction-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-corrections-r1/private/stack"
+    }
+  },
+  {
+    "Id": "5f245e5ea6e9edd14c660a77b1291718194f5ab1e0c7fc6bb41d7ff6f861db88",
+    "Name": "/supabase_kong_unify-push-369-mobile-correction-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-corrections-r1/private/stack",
+      "maintainer": "Kong <support@konghq.com>"
+    }
+  },
+  {
+    "Id": "a51e9ba7200efe00178ebdc5de719b6b84a5a9f585940d59f205cbe999694049",
+    "Name": "/supabase_db_unify-push-369-mobile-correction-r1",
+    "State": "running",
+    "Labels": {
+      "com.docker.compose.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.project": "unify-push-369-mobile-correction-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-corrections-r1/private/stack"
+    }
+  }
+]

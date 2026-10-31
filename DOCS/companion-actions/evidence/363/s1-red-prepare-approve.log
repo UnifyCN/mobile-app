@@ -1,0 +1,49 @@
+Starting database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+╭ Warning
+│
+│  Ignored build scripts for packages:
+│  npm:sharp@0.34.5
+│  npm:core-js@3.51.0
+│  npm:fsevents@2.3.2
+│  npm:unrs-resolver@1.12.2
+│  npm:fsevents@2.3.3
+│  npm:@sentry/cli@2.58.6
+│
+│  Lifecycle scripts are only supported when using a `node_modules` directory.
+│  Enable it in your deno config file:
+│  "nodeModulesDir": "auto"
+╰─
+running 2 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... FAILED (1s)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt => ./create_test.ts:27:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:38:5)
+
+ FAILURES 
+
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt => ./create_test.ts:27:6
+
+FAILED | 1 passed | 1 failed (1s)
+
+error: Test failed

@@ -1,0 +1,92 @@
+[
+  {
+    "function": "companion_validate_operations",
+    "signature": "create or replace function public.companion_validate_operations(p_ops jsonb) returns void\nlanguage plpgsql as",
+    "priorSha256": "5f222cd1739c8f618c0e4d7a350831bfe65a1e0bc8d3976558789b53dab7eb20",
+    "composedSha256": "777568cfcb8e009b9b1c510b7616dbeea40aee8cd6c96e243465f1bd5bd47f23",
+    "downSha256": "5f222cd1739c8f618c0e4d7a350831bfe65a1e0bc8d3976558789b53dab7eb20",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_check_authorization",
+    "signature": "create or replace function public.companion_check_authorization(p_user uuid, p_ops jsonb, p_auth jsonb) returns uuid\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "796315f71e9bdaeb43f10a28aa075e1747c6dac440d50076e0ec8dd0532c578e",
+    "composedSha256": "c77212093a28a6abf92b124ce9cf250def447d61344a338ba894cda85af21fe8",
+    "downSha256": "796315f71e9bdaeb43f10a28aa075e1747c6dac440d50076e0ec8dd0532c578e",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_apply_one",
+    "signature": "create or replace function public.companion_apply_one(p_user uuid, p_op jsonb) returns jsonb\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "3140741625363655dc927b810438188c6edbb1b37588c60d98a7ad584ea58735",
+    "composedSha256": "da452a37d127fba42992728cca5de5b573ce211fd18d05eccd5f7f4a0f416c14",
+    "downSha256": "3140741625363655dc927b810438188c6edbb1b37588c60d98a7ad584ea58735",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_receipt_summary",
+    "signature": "create or replace function public.companion_receipt_summary(p_receipt public.companion_action_receipts) returns jsonb\nlanguage sql stable security definer set search_path = public, pg_temp as",
+    "priorSha256": "7f3ac4eb69189f07ea2c28e2a0d663166c51abcfe48dd4b6294f770f607a9a33",
+    "composedSha256": "fd37d2d81ee0683a7ce76940ea8ba42aaf6a65f2044f70ffb35df0a196849eb5",
+    "downSha256": "7f3ac4eb69189f07ea2c28e2a0d663166c51abcfe48dd4b6294f770f607a9a33",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_undo_action",
+    "signature": "create or replace function public.companion_undo_action(\n  p_user_id uuid, p_operation_id uuid, p_contract_version integer, p_authorization jsonb, p_receipt_operation_id uuid\n) returns jsonb\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "cd31d2bbc3df025606e469795fe66d5f40b77e6edeb0407b0d14f4b1365620e0",
+    "composedSha256": "9e19c344500a0943ee66379e0b32cc8e78623162af41754a2e1ad07c33338347",
+    "downSha256": "cd31d2bbc3df025606e469795fe66d5f40b77e6edeb0407b0d14f4b1365620e0",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_prepare_proposal",
+    "signature": "create or replace function public.companion_prepare_proposal(p_user_id uuid, p_operations jsonb, p_source jsonb) returns jsonb\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "c2181dd4101b71e8a41559ed10bd5f01cbbbd3a6e8bdfbb47ede6b69386ad68b",
+    "composedSha256": "34aa40ce844b8f25576ea2e7fb5d1698bbfa5deb9d9a7bb00213cc5439e36f2f",
+    "downSha256": "c2181dd4101b71e8a41559ed10bd5f01cbbbd3a6e8bdfbb47ede6b69386ad68b",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_recheck_proposal",
+    "signature": "create or replace function public.companion_recheck_proposal(p_user uuid, p_ops jsonb, p_auth jsonb) returns jsonb\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "7215f18dba888f542ed41eeb6433118e54f63c7f2f60bfd1dacdcd542d6d5e5e",
+    "composedSha256": "8624f6a8c731b91f1de2b27d549d91accfb9d8b91d0c1d0d54dc4623038d5903",
+    "downSha256": "7215f18dba888f542ed41eeb6433118e54f63c7f2f60bfd1dacdcd542d6d5e5e",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_conversation_actions",
+    "signature": "create or replace function public.companion_conversation_actions(p_user_id uuid, p_conversation_id uuid) returns jsonb\nlanguage plpgsql stable security definer set search_path = public, pg_temp as",
+    "priorSha256": "a3704dcad1accbb0e64a714281ad77685ac3e654d1df6510ba6344834608b2cb",
+    "composedSha256": "f2c0e9d8178aa5f3af06e1473b8982b1c5fed1a21ffd171cd0a22f7df68b5692",
+    "downSha256": "a3704dcad1accbb0e64a714281ad77685ac3e654d1df6510ba6344834608b2cb",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "370",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  },
+  {
+    "function": "companion_plan_apply",
+    "signature": "create or replace function public.companion_plan_apply(\n  p_user_id uuid, p_operation_id uuid, p_contract_version integer, p_authorization jsonb, p_items jsonb\n) returns jsonb\nlanguage plpgsql security definer set search_path = public, pg_temp as",
+    "priorSha256": "d5350afabb46b60156220dfe1d3c9a46b076347b920a6062e5e7ac21af38565d",
+    "composedSha256": "c968b9f885c1c07aa3c4d81f5b434330b55ea7f69a902feff116533e564fe4e1",
+    "downSha256": "d5350afabb46b60156220dfe1d3c9a46b076347b920a6062e5e7ac21af38565d",
+    "downMatchesActualPredecessor": true,
+    "predecessor": "364",
+    "privileges": "Existing shared ACLs retained by CREATE OR REPLACE. New helpers revoked from PUBLIC, anon and authenticated."
+  }
+]

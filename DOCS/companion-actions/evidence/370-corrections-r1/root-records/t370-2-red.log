@@ -1,0 +1,35 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ❯ components/companion/tasks/SavedDetails.test.tsx (9 tests | 1 failed | 7 skipped) 186ms
+   ↓ Saved personal details through Companion (web, #370) > a clear remember message saves exactly that detail once, with no AI answer; analytics never carries it
+   ↓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays
+   ↓ Saved personal details through Companion (web, #370) > edits at the revision shown and keeps typed text through close and reopen; the command receipt becomes history
+   ↓ Saved personal details through Companion (web, #370) > every removal asks first; Cancel sends nothing; Remove names the detail and its Undo restores it
+   ↓ Saved personal details through Companion (web, #370) > the Undo of a save asks first; offline, edits and removals are off and send nothing
+   ↓ Saved personal details through Companion (web, #370) > an account change drops the previous account's details and typed edits
+   ↓ a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt
+   × the detail editor uses immediate keyboard disclosure and pointer motion (click detail 0) 132ms
+     → expected '0' not to be '0' // Object.is equality
+   ✓ the detail editor uses immediate keyboard disclosure and pointer motion (click detail 1) 54ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/SavedDetails.test.tsx > the detail editor uses immediate keyboard disclosure and pointer motion (click detail 0)
+AssertionError: expected '0' not to be '0' // Object.is equality
+ ❯ components/companion/tasks/SavedDetails.test.tsx:538:69
+    536|   // Read before the first animation frame; keyboard input must be vis…
+    537|   const editor = within(drawer).getByLabelText("Saved detail");
+    538|   if (detail === 0) expect(editor.parentElement?.style.opacity).not.to…
+       |                                                                     ^
+    539|   else expect(editor.parentElement?.style.opacity).toBe("0");
+    540| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 7 skipped (9)
+   Start at  19:17:50
+   Duration  1.41s (transform 262ms, setup 0ms, collect 765ms, tests 186ms, environment 270ms, prepare 45ms)
+

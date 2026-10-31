@@ -1,0 +1,9 @@
+[
+  "Normal typecheck failed on retained generated service copies under build. Temporary config excluded build only; the clean reviewer must run the normal command.",
+  "The first result-focus tests used the wrong receipt wording. Those selector failures are not behavior RED proof. The valid red run has two assertion failures and one passing control.",
+  "The first green detail test pressed Edit before a fresh read enabled it. The corrected test waits for the enabled control. No product assertion was removed.",
+  "The first adb call ran before connect. The first network gate needed adb root. The app remained disabled until the positive and negative network controls passed.",
+  "One UI capture overlapped enabling TalkBack and was refused by the guard. It is not native proof.",
+  "The final reload driver reached the Android overlay Settings page and initially read a partial typed command. Two UIAutomator dump calls also overlapped; one exited 137. These are retained setup failures, not product results.",
+  "The final reload produced two user message rows. Only the current removal review is approved. This is not a one-message or duplicate-click proof."
+]

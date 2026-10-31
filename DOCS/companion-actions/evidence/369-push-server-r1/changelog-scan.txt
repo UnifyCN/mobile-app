@@ -1,0 +1,17 @@
+2026-10-23 · New Feature · documentation · [supabase.com/changelog/kb-launch](https://supabase.com/changelog/kb-launch)
+2026-10-14 · New Feature · supabase-dotnet · [supabase.com/changelog/dotnet-opentelemetry-support](https://supabase.com/changelog/dotnet-opentelemetry-support)
+## An outdated subset of TLS 1.2 ciphers will be disabled on project HTTP APIs
+2026-10-12 · Breaking Change · Auth, Data APIs, Storage, Realtime, Edge Functions · [supabase.com/changelog/cbc-tls-ciphers-deprecated](https://supabase.com/changelog/cbc-tls-ciphers-deprecated)
+Supabase will be disabling a subset of TLS 1.2 ciphers on project HTTP APIs on November 10, 2026. Clients that don't support modern standards (<0.0001% of Supabase traffic) will fail to connect.
+2026-10-12 · New Feature · supabase-dotnet · [supabase.com/changelog/dotnet-dependency-injection-extension](https://supabase.com/changelog/dotnet-dependency-injection-extension)
+2026-10-09 · New Feature · supabase-dotnet · [supabase.com/changelog/supabase-dotnet-official-support](https://supabase.com/changelog/supabase-dotnet-official-support)
+2026-10-08 · Improvement · Website · [supabase.com/changelog/status-page-migration](https://supabase.com/changelog/status-page-migration)
+2026-10-06 · New Feature · Platform, Security, CLI, AI · [supabase.com/changelog/scoped-personal-access-tokens-ga](https://supabase.com/changelog/scoped-personal-access-tokens-ga)
+2026-10-05 · Improvement · Platform, Studio, Security · [supabase.com/changelog/no-access-org-role](https://supabase.com/changelog/no-access-org-role)
+2026-10-05 · New Feature · supabase-go · [supabase.com/changelog/supabase-go-public-alpha](https://supabase.com/changelog/supabase-go-public-alpha)
+2026-10-05 · Deprecation · supabase-server · [supabase.com/changelog/supabase-server-adapters-deprecated](https://supabase.com/changelog/supabase-server-adapters-deprecated)
+2026-10-01 · New Feature · Database, Multigres · [supabase.com/changelog/multigres-private-alpha](https://supabase.com/changelog/multigres-private-alpha)
+2026-10-01 · Policy · Database, Studio, CLI, Auth, Storage, Realtime, Edge Functions · [supabase.com/changelog/orioledb-public-beta](https://supabase.com/changelog/orioledb-public-beta)
+2026-09-25 · Breaking Change · Database · [supabase.com/changelog/postgres-15-19-17-11-breaking-changes](https://supabase.com/changelog/postgres-15-19-17-11-breaking-changes)
+2026-07-23 · Breaking Change · Platform · [supabase.com/changelog/48235-migration-of-supabase-management-api-logs-all-analytics-endpoint-to-logs-endpoint](https://supabase.com/changelog/48235-migration-of-supabase-management-api-logs-all-analytics-endpoint-to-logs-endpoint)
+2026-07-22 · Breaking Change · Database, Security · [supabase.com/changelog/extension-version-pinning-ignored](https://supabase.com/changelog/extension-version-pinning-ignored)

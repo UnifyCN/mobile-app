@@ -1,0 +1,18 @@
+running 3 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/details_language_test.ts
+S370-3: every locale’s own help example saves its whole first-person detail ... ok (1s)
+S370-3: Arabic attached first-person forms keep their meaning; other attached forms ask ... ok (470ms)
+S370-2: a need that mentions a permit is saved; a statement of status stays with the profile ... ok (908ms)
+running 10 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_command_test.ts
+a clear rename command changes exactly the task it names, once ... ok (364ms)
+the documented command examples in every supported language make exactly their change ... ok (3s)
+an unclear target or meaning gets a question and writes nothing ... ok (615ms)
+a command line with more quoted text than one change uses asks one change at a time and writes nothing ... ok (553ms)
+a command never names a task it cannot see: published tasks unread, another account, an assistant message ... ok (382ms)
+naming Waiting keeps the reason a waiting task has, and a change in between is a conflict ... ok (465ms)
+a waiting reason change names both reasons in its receipt, kept after a later edit and through lookup, replay and Undo ... ok (392ms)
+a retry of a committed rename command replays its result instead of refusing or writing again ... ok (215ms)
+every priority label the mobile or web Checklist shows, in every language, names that priority ... ok (819ms)
+the database refuses a second write under one command message even at the current revision ... ok (153ms)
+
+ok | 13 passed | 0 failed (9s)
+

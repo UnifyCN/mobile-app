@@ -1,0 +1,16 @@
+{
+  "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+  "command": [
+    "npx",
+    "prettier",
+    "--ignore-path",
+    "/dev/null",
+    "--write",
+    "components/companion/tasks/CompanionPushControl.tsx",
+    "__tests__/companionActions/pushRootLifecycle.test.ts",
+    "__tests__/companionActions/pushReminderIndependence.test.tsx"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 0,
+  "seconds": 0.4505620002746582
+}

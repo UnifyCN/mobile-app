@@ -1,0 +1,128 @@
+{
+  "errors": [
+    "en-CA: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <RedirectBoundary>\n      <RedirectErrorBoundary router={{...}}>\n        <InnerLayoutRouter url=\"/companion\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>\n          <SegmentViewNode type=\"page\" pagePath=\"(main)/com...\">\n            <SegmentTrieNode>\n            <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>\n              <CompanionPage params={Promise} searchParams={Promise}>\n                <div className=\"flex h-[ca...\">\n                  <ConversationList>\n                  <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>\n                    <div className=\"h-full min...\">\n                      <header>\n                      <CompanionTasksEntry onOpen={function onOpen}>\n                        <div className=\"border-b b...\">\n                          <div className=\"mx-auto fl...\">\n                            <div className=\"min-w-0 fl...\">\n                              <p>\n                              <p\n+                               className=\"truncate text-xs text-ink-muted loading-delayed\"\n-                               className=\"truncate text-xs text-ink-muted\"\n                              >\n+                               Loading task progress…\n-                               In progress: 0 · Waiting: 0\n                            ...\n                      ...\n                  ...\n          ...\n        ...\n",
+    "ar: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <RedirectBoundary>\n      <RedirectErrorBoundary router={{...}}>\n        <InnerLayoutRouter url=\"/companion\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>\n          <SegmentViewNode type=\"page\" pagePath=\"(main)/com...\">\n            <SegmentTrieNode>\n            <ClientPageRoot Component={function CompanionPage} serverProvidedParams={{...}}>\n              <CompanionPage params={Promise} searchParams={Promise}>\n                <div className=\"flex h-[ca...\">\n                  <ConversationList>\n                  <ChatPanel conversation={null} messages={[...]} isTyping={false} freeTierRemaining={6} ...>\n                    <div className=\"h-full min...\">\n                      <header>\n                      <CompanionTasksEntry onOpen={function onOpen}>\n                        <div className=\"border-b b...\">\n                          <div className=\"mx-auto fl...\">\n                            <div className=\"min-w-0 fl...\">\n                              <p>\n                              <p\n+                               className=\"truncate text-xs text-ink-muted loading-delayed\"\n-                               className=\"truncate text-xs text-ink-muted\"\n                              >\n+                               جارٍ تحميل تقدّم المهام…\n-                               قيد التنفيذ: 0 · في الانتظار: 0\n                            ...\n                      ...\n                  ...\n          ...\n        ...\n"
+  ],
+  "desktop": {
+    "cardText": [
+      "Suggested change",
+      "",
+      "Get a phone plan",
+      "",
+      "Priority: Do now",
+      "",
+      "Draft · not saved yet",
+      "",
+      "Review"
+    ],
+    "focusOnOpen": "Review change",
+    "dialogText": [
+      "Review change",
+      "Draft · not saved yet",
+      "Get a phone plan",
+      "Priority",
+      "Now: Do soon",
+      "After you save: Do now",
+      "Save this change",
+      "Not now"
+    ],
+    "focusAfterEscape": "Review the suggested change to Get a phone plan",
+    "composerAfterEscape": "My next question",
+    "approveContrast": 18.06,
+    "approveSize": [
+      147,
+      40
+    ],
+    "nowContrast": 7.23,
+    "notNowSize": [
+      90,
+      40
+    ],
+    "reviewSize": [
+      75,
+      44
+    ],
+    "receipt": [
+      "Changed in Checklist: Get a phone plan",
+      "Priority: Do soon → Do now"
+    ],
+    "rowAfterApprove": {
+      "title": "Get a phone plan",
+      "priority": "Do now",
+      "revision": 2
+    },
+    "composerAfterApprove": "My next question",
+    "commandCard": [
+      "Changed in Checklist: Get a prepaid plan",
+      "",
+      "Title: “Get a phone plan” → “Get a prepaid plan”",
+      "",
+      "View task"
+    ],
+    "rowAfterCommand": {
+      "title": "Get a prepaid plan",
+      "priority": "Do now",
+      "revision": 3
+    },
+    "checklistShowsRename": true,
+    "checklistShowsOldTitle": 0,
+    "modelRequests": 0,
+    "actionCounts": {
+      "read": 6,
+      "conversation_actions": 4,
+      "proposal": 3,
+      "apply": 2,
+      "interpret": 1
+    }
+  },
+  "languageSaved": "ok",
+  "narrowArabic": {
+    "dir": "rtl",
+    "lang": "ar",
+    "buttonsBefore": [
+      "المحادثات",
+      "فتح",
+      "قبل وصولكما الذي يجب أن أجهّزه قبل الانتقال إلى كندا؟",
+      "الخدمات المحليةما هي خدمات الوافدين الجدد المتاحة في Vancouver؟",
+      "الاستقرارما هي الموارد المتاحة للوافدين الجدد المستقرين في كندا؟",
+      "الماليةكيف أفتح حسابًا مصرفيًا وأبني سجلًا ائتمانيًا في كندا؟",
+      "إرسال الرسالة",
+      "Open Tanstack query devtools",
+      "Open Next.js Dev Tools",
+      "Open issues overlay",
+      "Collapse issues badge"
+    ],
+    "cardText": [
+      "تغيير مقترح",
+      "",
+      "Get a phone plan",
+      "",
+      "الأولوية: افعله الآن",
+      "",
+      "حُفظ في القائمة",
+      "",
+      "عرض التغيير"
+    ],
+    "dialog": {
+      "left": 0,
+      "right": 390,
+      "overflow": false,
+      "docOverflow": false
+    },
+    "dialogText": [
+      "مراجعة التغيير",
+      "تغيير مقترح",
+      "Get a phone plan",
+      "تغيّرت في القائمة: Get a phone plan",
+      "الأولوية: افعله قريبًا ← افعله الآن",
+      "27 أكتوبر، 6:36 م · تغيّرت هذه المهمة بعد ذلك",
+      "التراجع عن هذا التغيير"
+    ],
+    "modelRequests": 0,
+    "actionCounts": {
+      "read": 2,
+      "conversation_actions": 1,
+      "proposal": 1
+    }
+  }
+}

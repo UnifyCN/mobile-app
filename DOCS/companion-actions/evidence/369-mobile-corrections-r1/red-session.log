@@ -1,0 +1,67 @@
+FAIL __tests__/companionActions/pushSessionRecovery.test.ts
+  ✕ fresh explicit consent renews retained proof for a after sign-out (3 ms)
+  ✕ fresh explicit consent renews retained proof for b after sign-out (1 ms)
+  ✕ a rejected transfer retains old cleanup and requires another explicit consent (1 ms)
+
+  ● fresh explicit consent renews retained proof for a after sign-out
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "on"
+    Received: "sessionEnded"
+
+      128 |     expect(s.transport.mock.calls.filter(c=>c[0].action==='push_apply')).toHaveLength(1);
+      129 |     await s.device.enable('en',true);
+    > 130 |     expect(s.device.snapshot().phase).toBe('on');
+          |                                       ^
+      131 |     const renewed=JSON.parse(s.saved()!);
+      132 |     expect(renewed.accountId).toBe(destination);
+      133 |     expect(renewed.sessionId).toBe('new-session');
+
+      at toBe (__tests__/companionActions/pushSessionRecovery.test.ts:130:39)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● fresh explicit consent renews retained proof for b after sign-out
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "on"
+    Received: "sessionEnded"
+
+      128 |     expect(s.transport.mock.calls.filter(c=>c[0].action==='push_apply')).toHaveLength(1);
+      129 |     await s.device.enable('en',true);
+    > 130 |     expect(s.device.snapshot().phase).toBe('on');
+          |                                       ^
+      131 |     const renewed=JSON.parse(s.saved()!);
+      132 |     expect(renewed.accountId).toBe(destination);
+      133 |     expect(renewed.sessionId).toBe('new-session');
+
+      at toBe (__tests__/companionActions/pushSessionRecovery.test.ts:130:39)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● a rejected transfer retains old cleanup and requires another explicit consent
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "forbidden"
+    Received: "sessionEnded"
+
+      151 |   s.transport.mockImplementation(async b=>b.action==='push_apply'?{status:403,body:{error:'active_session_required'}}:normal(b));
+      152 |   await s.device.enable('en',true);
+    > 153 |   expect(s.device.snapshot().phase).toBe('forbidden');
+          |                                     ^
+      154 |   expect(JSON.parse(s.saved()!).cleanup[0].pending).toEqual(retired.pending);
+      155 |   const count=s.transport.mock.calls.filter(c=>c[0].action==='push_apply').length;
+      156 |   await s.device.refresh('en');
+
+      at Object.toBe (__tests__/companionActions/pushSessionRecovery.test.ts:153:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        0.273 s
+Ran all test suites matching /__tests__\/companionActions\/pushSessionRecovery.test.ts/i.

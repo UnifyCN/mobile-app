@@ -1,0 +1,12 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    point: "50%,28%"
+- inputText: ${EMAIL}
+- tapOn:
+    point: "45%,37%"
+- inputText: ${PW}
+- hideKeyboard
+- tapOn: "Login"
+- waitForAnimationToEnd:
+    timeout: 20000

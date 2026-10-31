@@ -1,0 +1,28 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 5 tests from ./profile_races_test.ts
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ...
+------- output -------
+{"scenario":"duplicate-before-commit","profile":"British Columbia","receipts":0,"graph":[{"pid":3791,"wait_event":"advisory","blockers":[3789]},{"pid":3852,"wait_event":"advisory","blockers":[3789,3791]}]}
+----- output end -----
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ... ok (460ms)
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ...
+------- output -------
+{"scenario":"legacy-profile-first","plans":0,"tasks":1,"committedProvince":"British Columbia","graph":[{"pid":3863,"wait_event":"transactionid","blockers":[3789]}]}
+----- output end -----
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ... ok (248ms)
+profile races: simultaneous profile and task changes preserve progress and one profile revision wins ... ok (273ms)
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ...
+------- output -------
+{"scenario":"task-first-before-commit","profile":"British Columbia","plans":0,"graph":[{"pid":4076,"wait_event":"transactionid","blockers":[3791]}]}
+----- output end -----
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ... ok (304ms)
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ...
+------- output -------
+{"scenario":"legacy-update-upsert","graph":[{"pid":4125,"wait_event":"transactionid","blockers":[4124]},{"pid":4124,"wait_event":"advisory","blockers":[3789]}],"errors":[null,null]}
+----- output end -----
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ... ok (278ms)
+
+ok | 5 passed | 0 failed (1s)
+

@@ -1,0 +1,42 @@
+error[no-import-prefix]: Inline 'npm:', 'jsr:' or 'https:' dependency not allowed
+ --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_isolation_test.ts:1:30
+  | 
+1 | import { assertEquals } from 'jsr:@std/assert@1.0.19';
+  |                              ^^^^^^^^^^^^^^^^^^^^^^^^
+  = hint: Add it as a dependency in a deno.json or package.json instead and reference it here via its bare specifier
+
+  docs: https://docs.deno.com/lint/rules/no-import-prefix
+
+
+error[no-import-prefix]: Inline 'npm:', 'jsr:' or 'https:' dependency not allowed
+ --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_authority_races_test.ts:1:38
+  | 
+1 | import { assert, assertEquals } from 'jsr:@std/assert@1.0.19';
+  |                                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  = hint: Add it as a dependency in a deno.json or package.json instead and reference it here via its bare specifier
+
+  docs: https://docs.deno.com/lint/rules/no-import-prefix
+
+
+error[no-import-prefix]: Inline 'npm:', 'jsr:' or 'https:' dependency not allowed
+ --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:4:27
+  | 
+4 | import type postgres from 'npm:postgres@3.4.9';
+  |                           ^^^^^^^^^^^^^^^^^^^^
+  = hint: Add it as a dependency in a deno.json or package.json instead and reference it here via its bare specifier
+
+  docs: https://docs.deno.com/lint/rules/no-import-prefix
+
+
+error[no-explicit-any]: `any` type is not allowed
+  --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:50:38
+   | 
+50 | function budgetReady(p:Record<string,any>):boolean {
+   |                                      ^^^
+   = hint: Use a specific type other than `any`
+
+  docs: https://docs.deno.com/lint/rules/no-explicit-any
+
+
+Found 4 problems
+Checked 3 files

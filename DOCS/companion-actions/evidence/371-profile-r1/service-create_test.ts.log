@@ -1,0 +1,21 @@
+running 17 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (259ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (256ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (233ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (227ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (227ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (283ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (223ms)
+unrelated changes since review do not ask for approval again ... ok (195ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (212ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (323ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (309ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... ok (373ms)
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (879ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (328ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (246ms)
+reopening a conversation reads its drafts and command results with their current state ... ok (424ms)
+cleanup ... ok (2ms)
+
+ok | 17 passed | 0 failed (5s)
+
