@@ -1,0 +1,26 @@
+[
+  {
+    "root": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-corrections",
+    "branch": "fix/companion-profile-recovery-371",
+    "base": "586339c27a553a39157cc6661c8932f9f21c8cd8",
+    "changed_paths": [
+      "unify-front-end/__tests__/companionActions/companionTaskSheet.test.tsx",
+      "unify-front-end/components/companion/tasks/ProfilePanel.tsx",
+      "unify-front-end/hooks/companion/useProfileEditor.ts"
+    ],
+    "dependencies_unchanged": true,
+    "sql_unchanged": true
+  },
+  {
+    "root": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-profile371-corrections",
+    "branch": "fix/companion-profile-recovery-371-web",
+    "base": "dd4aac9cc567cac13b5a4a987539f548a2dcb038",
+    "changed_paths": [
+      "components/companion/tasks/ProfilePanel.tsx",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "hooks/useProfileEditor.ts"
+    ],
+    "dependencies_unchanged": true,
+    "sql_unchanged": true
+  }
+]

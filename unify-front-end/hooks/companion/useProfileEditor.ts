@@ -23,9 +23,12 @@ export function useProfileEditor(view: TaskProgressView, store: TaskActionStore 
   const scope = owned ? `${owned.owner.accountId}:${owned.owner.epoch}` : '';
   const [pending, setPending] = useState<string | null>(null);
   const [failure, setFailure] = useState<{ scope: string; key: string } | null>(null);
-  const busy = pending === scope || isUnresolved(phase);
-  const loadingKind = phase.phase === 'checking' ? 'checking' : 'saving';
-  const waits = busy || (Boolean(activeId) && query.isPending);
+  const localPending = pending === scope;
+  const busy = localPending || isUnresolved(phase);
+  const loadingKind = phase.phase === 'checking' ? 'checking'
+    : localPending || phase.phase === 'saving' ? 'saving' : 'loading';
+  const waits = localPending || phase.phase === 'saving' || phase.phase === 'checking'
+    || (Boolean(activeId) && query.isPending);
 
   const edit = (field: ProfileField) => {
     setFailure(null);

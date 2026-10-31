@@ -41,6 +41,6 @@ export function ProfilePanel({ view, store, proposalId = null }: Props) {
     {editor.receipt ? <ProfileReceipt receipt={editor.receipt} storeKey={editor.key} store={store} view={view} /> : null}
     {editor.waiting ? <DelayedStatus key={editor.loadingKind} text={t(`taskActions.${editor.loadingKind}`)} /> : null}
     {editor.failure || editor.queryFailed ? <Text accessibilityRole='alert'>{t(editor.failure ?? 'taskActions.unavailable')}</Text> : null}
-    <ProfileRecovery storeKey={editor.key} store={store} view={view} />
+    {!editor.receipt ? <ProfileRecovery storeKey={editor.key} store={store} view={view} /> : null}
   </View>;
 }

@@ -447,7 +447,127 @@ afterEach(() => {
   clients.splice(0).forEach(client => client.clear());
 });
 
+
+// The boundary fixture retains an applied proposal, so a later Undo uses its receipt.
+async function openProfileRecovery(mode: 'apply_unknown' | 'undo_unknown', waits: Record<string, Promise<void>> = {}) {
+  let province = 'British Columbia';
+  let revision = 1;
+  let proposal: Record<string, unknown> | null = null;
+  const requests: Record<string, unknown>[] = [];
+  server = scriptedServer({}, { override: body => {
+    requests.push(body);
+    if (body.action === 'read') return { status: 200, body: { tasks: [], details: [], steps: [], profile: {
+      province, arrival_date: '2026-11-07', city: 'Vancouver', revisions: { province: revision, arrival_date: 1, city: 1 },
+    } } };
+    if (body.action === 'prepare') {
+      proposal = { proposal_id: 'profile-recovery-371', proposal_revision: 1, kind: 'profile_update', status: 'draft',
+        operations: [body.operation], context: { field: 'province', value: province, revision }, source: null,
+        previous_context: null, review_reason: null, receipt: null };
+      return { status: 200, body: { proposal } };
+    }
+    if (body.action === 'proposal') return { status: 200, body: { proposal } };
+    if (body.action === 'status' || body.action === 'undo') return 'network-error';
+    if (body.action === 'apply') {
+      if (mode === 'apply_unknown') return 'network-error';
+      const before = province;
+      province = body.operations[0].value;
+      revision++;
+      const receipt = { operation_id: body.operation_id, operation_type: 'profile.update',
+        created_at: '2026-10-31T06:00:00Z', kind: 'change', undo_of: null, task_ref: null,
+        before_revision: revision - 1, after_revision: revision, undone_by: null, current: true, undoable: true,
+        profile: { field: 'province', before, after: province } };
+      if (proposal) { proposal.status = 'applied'; proposal.receipt = receipt; }
+      return { status: 200, body: { replayed: false, receipt } };
+    }
+  } });
+  global.fetch = (async (input: string, init: { body: string }) => {
+    const request = JSON.parse(init.body);
+    await waits[request.action];
+    return server.fetch(input, init);
+  }) as unknown as typeof fetch;
+  renderScreen();
+  await act(async () => {
+    for (const listener of [...mockAuthListeners]) listener('SIGNED_IN', {
+      user: { id: mockUserId }, access_token: `jwt-${mockUserId}`,
+    });
+  });
+  const composer = await screen.findByPlaceholderText('Ask anything...');
+  fireEvent.changeText(composer, 'Keep this draft during profile recovery');
+  fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+  const sheet = await screen.findByTestId('companion-task-sheet');
+  fireEvent.press(await within(sheet).findByRole('button', { name: 'Profile' }));
+  await within(sheet).findByText('British Columbia');
+  fireEvent.press(within(sheet).getByRole('button', { name: 'Edit province' }));
+  fireEvent.changeText(within(sheet).getByLabelText('Province'), 'Ontario');
+  const review = within(sheet).getByRole('button', { name: 'Review profile change' });
+  await waitFor(() => expect(review.props.accessibilityState?.disabled).toBe(false));
+  fireEvent.press(review);
+  await within(sheet).findByText('Current: British Columbia');
+  expect(within(sheet).getByText('Proposed: Ontario')).toBeTruthy();
+  expect(requests.filter(body => body.action === 'apply')).toHaveLength(0);
+  const save = within(sheet).getByRole('button', { name: 'Save profile change' });
+  await waitFor(() => expect(save.props.accessibilityState?.disabled).toBe(false));
+  fireEvent.press(save);
+  if (mode === 'undo_unknown') {
+    await within(sheet).findByText('Changed province from British Columbia to Ontario');
+    await waitFor(() => expect(requests.some(body => body.action === 'proposal' && proposal?.status === 'applied')).toBe(true));
+    const undo = within(sheet).getByRole('button', { name: 'Undo this change' });
+    await waitFor(() => expect(undo.props.accessibilityState?.disabled).toBe(false));
+    fireEvent.press(undo);
+  }
+  await within(sheet).findAllByText(en.taskActions.lookupFailed);
+  return { sheet, requests };
+}
+
 describe('Companion task entry and sheet (mobile)', () => {
+  it('371 recovery: labels an active proposal read, save and lookup separately', async () => {
+    // These held requests disprove a control that hides every loading state.
+    const releases: (() => void)[] = [];
+    const waits = Object.fromEntries(['proposal', 'apply', 'status'].map(action => [action,
+      new Promise<void>(resolve => { releases.push(resolve); })]));
+    const work = openProfileRecovery('apply_unknown', waits);
+    try {
+      await screen.findByText(en.taskActions.loading);
+      expect(screen.queryAllByText(en.taskActions.saving)).toHaveLength(0);
+      await act(async () => { releases[0](); });
+      await screen.findByText(en.taskActions.saving);
+      await act(async () => { releases[1](); });
+      await screen.findByText(en.taskActions.checking);
+      await act(async () => { releases[2](); });
+      const { sheet } = await work;
+      expect(within(sheet).queryAllByText(en.taskActions.saving)).toHaveLength(0);
+      expect(within(sheet).queryAllByText(en.taskActions.checking)).toHaveLength(0);
+    } finally { releases.forEach(release => release()); await work; }
+  });
+
+  it('371 recovery: stops loading after a failed result lookup and keeps approval locked', async () => {
+    // False if an idle unknown result still claims Saving or allows another approval.
+    const { sheet, requests } = await openProfileRecovery('apply_unknown');
+    await act(async () => { await new Promise(resolve => setTimeout(resolve, 350)); });
+    expect(within(sheet).queryAllByText(en.taskActions.saving)).toHaveLength(0);
+    expect(within(sheet).queryAllByText(en.taskActions.checking)).toHaveLength(0);
+    expect(within(sheet).getAllByRole('button', { name: 'Check again' })).toHaveLength(1);
+    expect(within(sheet).getByRole('button', { name: 'Save profile change' }).props.accessibilityState?.disabled).toBe(true);
+    expect(within(sheet).getByRole('button', { name: 'Edit province' }).props.accessibilityState?.disabled).toBe(true);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Save profile change' }));
+    expect(requests.filter(body => body.action === 'apply')).toHaveLength(1);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
+    expect(screen.getByPlaceholderText('Ask anything...').props.value).toBe('Keep this draft during profile recovery');
+  });
+
+  it('371 recovery: an unknown Undo has one recovery control and keeps its historical receipt', async () => {
+    // False if the panel and its receipt both render the same recovery action.
+    const { sheet, requests } = await openProfileRecovery('undo_unknown');
+    expect(within(sheet).getAllByRole('button', { name: 'Check again' })).toHaveLength(1);
+    expect(within(sheet).getAllByText(en.taskActions.lookupFailed)).toHaveLength(1);
+    expect(within(sheet).getByText('Changed province from British Columbia to Ontario')).toBeTruthy();
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    await waitFor(() => expect(requests.filter(body => body.action === 'status')).toHaveLength(2));
+    await within(sheet).findByText(en.taskActions.lookupFailed);
+    expect(requests.filter(body => body.action === 'undo')).toHaveLength(1);
+    expect(requests.filter(body => body.action === 'apply')).toHaveLength(1);
+  });
+
   it('371: reviews old and proposed profile values, refreshes saved values, and keeps the composer draft', async () => {
     // Wrong if the review hides its old value, saves before approval, or erases the composer.
     let province = 'British Columbia';
@@ -485,11 +605,15 @@ describe('Companion task entry and sheet (mobile)', () => {
     expect(await within(sheet).findByText('British Columbia')).toBeTruthy();
     fireEvent.press(within(sheet).getByRole('button', { name: 'Edit province' }));
     fireEvent.changeText(within(sheet).getByLabelText('Province'), 'Ontario');
-    fireEvent.press(within(sheet).getByRole('button', { name: 'Review profile change' }));
+    const review = within(sheet).getByRole('button', { name: 'Review profile change' });
+    await waitFor(() => expect(review.props.accessibilityState?.disabled).toBe(false));
+    fireEvent.press(review);
     expect(await within(sheet).findByText('Current: British Columbia')).toBeTruthy();
     expect(within(sheet).getByText('Proposed: Ontario')).toBeTruthy();
     expect(province).toBe('British Columbia');
-    fireEvent.press(within(sheet).getByRole('button', { name: 'Save profile change' }));
+    const save = within(sheet).getByRole('button', { name: 'Save profile change' });
+    await waitFor(() => expect(save.props.accessibilityState?.disabled).toBe(false));
+    fireEvent.press(save);
     expect(await within(sheet).findByText('Changed province from British Columbia to Ontario')).toBeTruthy();
     await waitFor(() => expect(province).toBe('Ontario'));
     fireEvent.press(within(sheet).getByRole('button', { name: 'Close' }));
