@@ -6,6 +6,7 @@ import React from 'react';
 import {
   act,
   fireEvent,
+  fireEventAsync,
   render,
   screen,
   waitFor,
@@ -407,7 +408,7 @@ async function send(text: string) {
     )
   );
   await waitFor(() => expect(sendButton().props.disabled).toBe(false));
-  fireEvent.press(sendButton());
+  await fireEventAsync.press(sendButton());
 }
 const creates = () =>
   server.sent.filter(
