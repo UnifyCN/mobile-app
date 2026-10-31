@@ -682,6 +682,13 @@ it('a checked-step receipt stays historical when a later client restores the sam
   await waitFor(() => expect(box).toBeEnabled());
   fireEvent.press(box);
   await screen.findByText('Checked step: Prepare the papers');
+  // The receipt can appear before the progress read finishes. Establish the
+  // saved checkbox revision before another client changes it.
+  await waitFor(() => {
+    const current = screen.getByRole('checkbox', { name: 'Prepare the papers' });
+    expect(current).toBeChecked();
+    expect(current).toBeEnabled();
+  });
   await waitFor(() => expect(screen.getAllByText(/This task changed after this/)).toHaveLength(1));
   const step = server.steps()[0];
   for (const [index, done] of [false, true].entries()) {
