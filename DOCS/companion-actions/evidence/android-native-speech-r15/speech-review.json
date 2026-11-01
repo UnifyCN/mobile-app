@@ -1,0 +1,604 @@
+{
+  "no_expected_text_prompt": true,
+  "model": "Retained cached MLX Whisper large-v3-turbo",
+  "unmodified_pcm": true,
+  "human_listening": false,
+  "records": [
+    {
+      "label": "final-named-task-control-r2",
+      "wav_sha256": "cf500423df1b76fc09208636e9d05685eb8a2d4b3d5d7c6ae6dd03309b0cae22",
+      "wav_bytes": 857960,
+      "asr": " native r8 reminder not started button double tap to activate",
+      "metadata": {
+        "audio_bytes": 857916,
+        "audio_errors": [],
+        "audio_packets": 759,
+        "audio_seconds": 8.936625,
+        "end_utc": "2026-11-01T04:31:14.008671+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/final-named-task-control-r2-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/final-named-task-control-r2-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/final-named-task-control-r2-com.google.android.tts-2391.log"
+        },
+        "mode": "explore",
+        "nonzero_samples": 181940,
+        "peak": 1080,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:31:00.316796+00:00",
+        "x": 450,
+        "y": 2220
+      },
+      "native_event_extract": [
+        "         1793507459.611  2979  5744 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_0\", returned true",
+        "         1793507459.622  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Your Checklist tasks\", utteranceId=talkback_1, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_WINDOW_STATE_CHANGED displayId:0 time:1894350",
+        "         1793507460.946  2979  5744 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_1\", returned false",
+        "         1793507461.351  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Native R8 reminder, Not started, Button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507461.361  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Native R8 reminder, Not started\", utteranceId=talkback_2, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1898894",
+        "         1793507464.114  2979  5744 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_2\", returned true",
+        "         1793507464.116  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Button\", utteranceId=talkback_2, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1898894",
+        "         1793507464.784  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_2\", returned true",
+        "         1793507465.187  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to activate\", utteranceId=talkback_3, TtsSpan=null, locale=null, event=null",
+        "         1793507466.731  2979  2990 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_3\", returned true"
+      ]
+    },
+    {
+      "label": "final-named-task-control",
+      "wav_sha256": "a1e03e70f8ae5f393d8b57b9e9aca8b7f93e13b7d9c4430e0bb8d6e448f44d1c",
+      "wav_bytes": 1146360,
+      "asr": " Talk back off. Talk back on. System permission blocks push. In-app reminders still work. Keyboard hidden. Back to tasks. Button. Double tap.",
+      "metadata": {
+        "audio_bytes": 1146316,
+        "audio_errors": [],
+        "audio_packets": 1006,
+        "audio_seconds": 11.940791666666666,
+        "end_utc": "2026-11-01T04:29:28.203911+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/final-named-task-control-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/final-named-task-control-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/final-named-task-control-com.google.android.tts-2391.log"
+        },
+        "mode": "explore",
+        "nonzero_samples": 336862,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:29:14.640288+00:00",
+        "x": 450,
+        "y": 2220
+      },
+      "native_event_extract": [
+        "         1793507354.799  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"TalkBack off\", utteranceId=talkback_50, TtsSpan=null, locale=null, event=null",
+        "         1793507356.093  2979  5573 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_50\", returned true",
+        "         1793507356.954  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"TalkBack on\", utteranceId=talkback_0, TtsSpan=null, locale=null, event=null",
+        "         1793507358.276  2979  5659 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_0\", returned true",
+        "         1793507358.921  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"System permission blocks push. In-app reminders still work.\", utteranceId=talkback_1, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1793768",
+        "         1793507358.957  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Back to tasks, Button    queueMode=0  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507362.881  2979  5679 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_1\", returned true",
+        "         1793507362.928  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"keyboard hidden\", utteranceId=talkback_2, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_WINDOW_STATE_CHANGED displayId:0 time:1794536",
+        "         1793507364.179  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_2\", returned true",
+        "         1793507364.179  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"\ue5cb\", utteranceId=talkback_3, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_WINDOW_STATE_CHANGED displayId:0 time:1794536",
+        "         1793507364.463  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_3\", returned true",
+        "         1793507364.465  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Back to tasks\", utteranceId=talkback_4, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1796497",
+        "         1793507365.829  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_4\", returned true",
+        "         1793507365.830  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Button\", utteranceId=talkback_4, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1796497",
+        "         1793507366.495  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_4\", returned true",
+        "         1793507366.496  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to activate\", utteranceId=talkback_5, TtsSpan=null, locale=null, event=null"
+      ]
+    },
+    {
+      "label": "named-task-control-r2",
+      "wav_sha256": "b09c8672b2c28308ad935d7a8112730900b32a2b35a2fc528e7ee796ef9d0af5",
+      "wav_bytes": 817544,
+      "asr": " native r8 reminder not started button double tap to activate",
+      "metadata": {
+        "audio_bytes": 817500,
+        "audio_errors": [],
+        "audio_packets": 726,
+        "audio_seconds": 8.515625,
+        "end_utc": "2026-11-01T04:05:47.825078+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/named-task-control-r2-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/named-task-control-r2-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/named-task-control-r2-com.google.android.tts-2391.log"
+        },
+        "mode": "explore",
+        "nonzero_samples": 170392,
+        "peak": 1084,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:05:35.344187+00:00",
+        "x": 450,
+        "y": 2220
+      },
+      "native_event_extract": [
+        "         1793505936.329  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Native R8 reminder, Not started, Button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793505936.345  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Native R8 reminder, Not started\", utteranceId=talkback_4, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:373862",
+        "         1793505939.211  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_4\", returned true",
+        "         1793505939.212  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Button\", utteranceId=talkback_4, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:373862",
+        "         1793505939.981  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_4\", returned true",
+        "         1793505940.385  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to activate\", utteranceId=talkback_5, TtsSpan=null, locale=null, event=null",
+        "         1793505941.943  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_5\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-save-fixed",
+      "wav_sha256": "cb0470cedd743bca3f2be44fc2c867ca5e52201849087b885e7b3705ab2406dc",
+      "wav_bytes": 783324,
+      "asr": " Back to tasks. Button. Double tap to activate.",
+      "metadata": {
+        "audio_bytes": 783280,
+        "audio_errors": [],
+        "audio_packets": 689,
+        "audio_seconds": 8.159166666666666,
+        "end_utc": "2026-11-01T04:23:09.685501+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-save-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-save-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-save-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 124700,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:22:56.207960+00:00",
+        "x": 400,
+        "y": 2270
+      },
+      "native_event_extract": [
+        "         1793506978.234  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Back to tasks, Button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017154  ",
+        "         1793506978.237  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Back to tasks\", utteranceId=talkback_19, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1415777",
+        "         1793506979.614  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_19\", returned true",
+        "         1793506979.615  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Button\", utteranceId=talkback_19, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1415777",
+        "         1793506980.268  2979  5659 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_19\", returned true",
+        "         1793506980.681  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to activate\", utteranceId=talkback_20, TtsSpan=null, locale=null, event=null",
+        "         1793506982.248  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_20\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-save-physical",
+      "wav_sha256": "4682869c976064c673d9a6ac0be66471243f7e95c92142e2bba25bf79cced96e",
+      "wav_bytes": 497306,
+      "asr": " Reminder saved.",
+      "metadata": {
+        "audio_bytes": 497262,
+        "audio_errors": [],
+        "audio_packets": 440,
+        "audio_seconds": 5.1798125,
+        "end_utc": "2026-11-01T04:25:45.095163+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-save-physical-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-save-physical-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-save-physical-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 64347,
+        "peak": 1634,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:25:31.284815+00:00",
+        "x": 450,
+        "y": 610
+      },
+      "native_event_extract": [
+        "         1793507130.550  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to activate\", utteranceId=talkback_39, TtsSpan=null, locale=null, event=null",
+        "         1793507131.896  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_39\", returned false",
+        "         1793507132.697  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Reminder saved.\", utteranceId=talkback_40, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1570135",
+        "         1793507132.758  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Reminder saved.    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507132.759  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Reminder saved.\", utteranceId=talkback_41, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1570305",
+        "         1793507132.760  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_40\", returned false",
+        "         1793507134.068  2979  5572 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_41\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-save-verified",
+      "wav_sha256": "38770dae0fffd3aa52a69fa92ac4b74d426c8d20cc6447577f24d6a347c0e73a",
+      "wav_bytes": 760160,
+      "asr": " Checked, not started. Radio button. Double tap to toggle.",
+      "metadata": {
+        "audio_bytes": 760116,
+        "audio_errors": [],
+        "audio_packets": 679,
+        "audio_seconds": 7.917875,
+        "end_utc": "2026-11-01T04:25:08.243583+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-save-verified-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-save-verified-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-save-verified-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 154020,
+        "peak": 1095,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:24:54.370018+00:00",
+        "x": 400,
+        "y": 2250
+      },
+      "native_event_extract": [
+        "         1793507095.704  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= checked, Not started, Radio button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507095.708  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"checked, \", utteranceId=talkback_35, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1533242",
+        "         1793507096.064  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= checked, Not started, Radio button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507096.078  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"checked, \", utteranceId=talkback_36, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1533555",
+        "         1793507096.100  2979  2992 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_35\", returned false",
+        "         1793507096.717  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_36\", returned true",
+        "         1793507096.718  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Not started\", utteranceId=talkback_36, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1533555",
+        "         1793507097.745  2979  5675 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_36\", returned true",
+        "         1793507097.745  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Radio button\", utteranceId=talkback_36, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1533555",
+        "         1793507098.881  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_36\", returned true",
+        "         1793507099.284  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Double-tap to toggle\", utteranceId=talkback_37, TtsSpan=null, locale=null, event=null",
+        "         1793507100.694  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_37\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-time-swipe-preserved",
+      "wav_sha256": "db2609595d1935ab398b17ab81b089fe4e59e6f9076e6158705c4aa3defb4933",
+      "wav_bytes": 1150486,
+      "asr": " November 3, 2026, 10.30am Greenwich Mean Time to 8 o'clock America, Vancouver",
+      "metadata": {
+        "audio_bytes": 1150442,
+        "audio_errors": [],
+        "audio_packets": 1001,
+        "audio_seconds": 11.983770833333333,
+        "end_utc": "2026-11-01T04:28:07.181534+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-time-swipe-preserved-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-time-swipe-preserved-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-time-swipe-preserved-com.google.android.tts-2391.log"
+        },
+        "mode": "next",
+        "nonzero_samples": 242278,
+        "peak": 1077,
+        "requested_seconds": 20,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:27:44.943441+00:00",
+        "x": 0,
+        "y": 0
+      },
+      "native_event_extract": [
+        "         1793507264.285  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Reminder saved.    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507264.292  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Reminder saved.\", utteranceId=talkback_45, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1701002",
+        "         1793507265.664  2979  5659 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_45\", returned true",
+        "         1793507268.055  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903141  earcon=2132017175  ",
+        "         1793507268.060  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver\", utteranceId=talkback_46, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1705476",
+        "         1793507274.705  2979  2992 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_46\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-time-touch-center",
+      "wav_sha256": "ce8e23d09c11ccd4421cd96e6cf279bc022bc701e8abbb56e32347c6350482d5",
+      "wav_bytes": 902106,
+      "asr": " November 3, 2026, 10.30 a.m. Greenwich Mean Time to 8 o'clock America, Vancouver.",
+      "metadata": {
+        "audio_bytes": 902062,
+        "audio_errors": [],
+        "audio_packets": 786,
+        "audio_seconds": 9.396479166666667,
+        "end_utc": "2026-11-01T04:26:26.641417+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-time-touch-center-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-time-touch-center-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-time-touch-center-com.google.android.tts-2391.log"
+        },
+        "mode": "explore",
+        "nonzero_samples": 246208,
+        "peak": 973,
+        "requested_seconds": 20,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:26:04.835747+00:00",
+        "x": 450,
+        "y": 850
+      },
+      "native_event_extract": [
+        "         1793507166.186  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903141  earcon=2132017175  ",
+        "         1793507166.190  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver\", utteranceId=talkback_42, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1603353",
+        "         1793507172.826  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_42\", returned true"
+      ]
+    },
+    {
+      "label": "reminder-time-touch-left",
+      "wav_sha256": "58d5cba8fd87074c1163d13d82e050a108268ae487da67a73a3e950850ba307d",
+      "wav_bytes": 961206,
+      "asr": " November 3, 2026, 10.30 a.m. Greenwich Mean Time to 8 o'clock America, Vancouver.",
+      "metadata": {
+        "audio_bytes": 961162,
+        "audio_errors": [],
+        "audio_packets": 842,
+        "audio_seconds": 10.012104166666667,
+        "end_utc": "2026-11-01T04:27:03.778231+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/reminder-time-touch-left-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/reminder-time-touch-left-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/reminder-time-touch-left-com.google.android.tts-2391.log"
+        },
+        "mode": "explore",
+        "nonzero_samples": 244622,
+        "peak": 965,
+        "requested_seconds": 20,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:26:38.212911+00:00",
+        "x": 180,
+        "y": 850
+      },
+      "native_event_extract": [
+        "         1793507197.615  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Reminder saved.    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793507197.619  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Reminder saved.\", utteranceId=talkback_43, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1634329",
+        "         1793507198.845  2979  5572 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_43\", returned false",
+        "         1793507199.265  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfSsbActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903141  earcon=2132017175  ",
+        "         1793507199.278  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Nov 3, 2026, 10:30\u202fAM GMT-08:00 \u00b7 America/Vancouver\", utteranceId=talkback_44, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1636740",
+        "         1793507205.807  2979  5572 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_44\", returned true"
+      ]
+    },
+    {
+      "label": "state-save-fixed",
+      "wav_sha256": "4fda2e15306be9806be592060de0f981682c4a58cd0c1008bfc482b4df326b8f",
+      "wav_bytes": 656460,
+      "asr": " Not changed from not started to in progress.",
+      "metadata": {
+        "audio_bytes": 656416,
+        "audio_errors": [],
+        "audio_packets": 585,
+        "audio_seconds": 6.837666666666666,
+        "end_utc": "2026-11-01T04:17:52.086771+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/state-save-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/state-save-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/state-save-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 116047,
+        "peak": 1632,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:17:39.308505+00:00",
+        "x": 780,
+        "y": 1335
+      },
+      "native_event_extract": [
+        "         1793506659.392  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_33\", returned true",
+        "         1793506660.523  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"not checked\", utteranceId=talkback_34, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_CLICKED displayId:0 time:1097820",
+        "         1793506660.878  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Changed from Not started to In progress\", utteranceId=talkback_35, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1098314",
+        "         1793506660.884  2979  5574 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_34\", returned false",
+        "         1793506661.066  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Changed from Not started to In progress    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506661.073  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Changed from Not started to In progress\", utteranceId=talkback_36, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1098435",
+        "         1793506661.076  2979  5574 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_35\", returned false",
+        "         1793506663.627  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_36\", returned true"
+      ]
+    },
+    {
+      "label": "state-save",
+      "wav_sha256": "b0b5bb2a2ae081addadb2a97ad7235b785a8033e91438c34d237e2ffdcddc199",
+      "wav_bytes": 559990,
+      "asr": " change from in progress",
+      "metadata": {
+        "audio_bytes": 559946,
+        "audio_errors": [],
+        "audio_packets": 501,
+        "audio_seconds": 5.832770833333333,
+        "end_utc": "2026-11-01T04:06:35.979989+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/state-save-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/state-save-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/state-save-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 75626,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:06:23.503834+00:00",
+        "x": 780,
+        "y": 1615
+      },
+      "native_event_extract": [
+        "         1793505983.778  2979  5648 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_11\", returned true",
+        "         1793505984.546  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"not checked\", utteranceId=talkback_12, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_CLICKED displayId:0 time:421915",
+        "         1793505984.768  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Changed from Not started to In progress\", utteranceId=talkback_13, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:422234",
+        "         1793505984.772  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_12\", returned false",
+        "         1793505984.799  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Changed from Not started to In progress    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793505984.800  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Changed from Not started to In progress\", utteranceId=talkback_14, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:422339",
+        "         1793505984.809  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_13\", returned false",
+        "         1793505985.524  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"\ue422\", utteranceId=talkback_15, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_SELECTED displayId:0 time:423031",
+        "         1793505985.529  2979  5574 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_14\", returned false",
+        "         1793505985.560  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"In progress\", utteranceId=talkback_16, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_SELECTED displayId:0 time:423031",
+        "         1793505985.587  2979  5573 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_15\", returned false",
+        "         1793505985.609  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"In progress\", utteranceId=talkback_17, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_SELECTED displayId:0 time:423031",
+        "         1793505985.613  2979  5573 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_16\", returned false",
+        "         1793505986.795  2979  5648 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_17\", returned true"
+      ]
+    },
+    {
+      "label": "state-undo-fixed",
+      "wav_sha256": "4efdc74d700d467ab9963cbf8ae9f6494b40ab8519b475ea00914159cefb95f3",
+      "wav_bytes": 710362,
+      "asr": " Undid a change. The task is back to not started.",
+      "metadata": {
+        "audio_bytes": 710318,
+        "audio_errors": [],
+        "audio_packets": 631,
+        "audio_seconds": 7.399145833333334,
+        "end_utc": "2026-11-01T04:18:20.981319+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/state-undo-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/state-undo-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/state-undo-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 128605,
+        "peak": 1634,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:18:08.074083+00:00",
+        "x": 350,
+        "y": 1865
+      },
+      "native_event_extract": [
+        "         1793506687.370  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_39\", returned true",
+        "         1793506689.617  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Undid a change. The task is back to Not started.\", utteranceId=talkback_40, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1126902",
+        "         1793506689.697  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Undid a change. The task is back to Not started.    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506689.700  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Undid a change. The task is back to Not started.\", utteranceId=talkback_41, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1127165",
+        "         1793506689.729  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_40\", returned false",
+        "         1793506692.978  2979  5633 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_41\", returned true"
+      ]
+    },
+    {
+      "label": "state-undo-retained",
+      "wav_sha256": "9f8f8d510d5c5ac839c89d37e4c88eb26c6a8d3beb2880f22fa6129b9e8ed0fa",
+      "wav_bytes": 775042,
+      "asr": " Undid a change. The task is back to not started.",
+      "metadata": {
+        "audio_bytes": 774998,
+        "audio_errors": [],
+        "audio_packets": 693,
+        "audio_seconds": 8.072895833333334,
+        "end_utc": "2026-11-01T04:17:22.238647+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/state-undo-retained-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/state-undo-retained-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/state-undo-retained-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 129975,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:17:09.395525+00:00",
+        "x": 350,
+        "y": 1865
+      },
+      "native_event_extract": [
+        "         1793506631.872  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Undid a change. The task is back to Not started.\", utteranceId=talkback_29, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1068395",
+        "         1793506631.888  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Open in Checklist, Button    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506631.891  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Open in Checklist\", utteranceId=talkback_30, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1069012",
+        "         1793506631.911  2979  5572 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_29\", returned false",
+        "         1793506631.994  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Undid a change. The task is back to Not started.    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506631.995  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Undid a change. The task is back to Not started.\", utteranceId=talkback_31, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1069215",
+        "         1793506632.013  2979  5572 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_30\", returned false",
+        "         1793506635.325  2979  2990 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_31\", returned true"
+      ]
+    },
+    {
+      "label": "step-add-fixed",
+      "wav_sha256": "d25b375025141d76a559969f2f04a27ab2091e649fd1cac59db1213d25fd9b8e",
+      "wav_bytes": 715890,
+      "asr": " Added Step Bring Synthetic Photo ID",
+      "metadata": {
+        "audio_bytes": 715846,
+        "audio_errors": [],
+        "audio_packets": 631,
+        "audio_seconds": 7.456729166666666,
+        "end_utc": "2026-11-01T04:19:45.702355+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/step-add-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/step-add-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/step-add-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 122172,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:19:32.723501+00:00",
+        "x": 900,
+        "y": 1080
+      },
+      "native_event_extract": [
+        "         1793506772.532  2979  5679 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_56\", returned true",
+        "         1793506773.992  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Added step: Bring synthetic photo ID\", utteranceId=talkback_57, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1211495",
+        "         1793506774.200  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Added step: Bring synthetic photo ID    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506774.201  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Added step: Bring synthetic photo ID\", utteranceId=talkback_58, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1211556",
+        "         1793506774.204  2979  5575 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_57\", returned false",
+        "         1793506777.680  2979  5679 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_58\", returned true"
+      ]
+    },
+    {
+      "label": "step-check-fixed",
+      "wav_sha256": "58ef081e50e340669792d239134dfff2cb1e511b48ffee76b0daa187f99b34c0",
+      "wav_bytes": 718994,
+      "asr": " not check check step bring synthetic photo ID",
+      "metadata": {
+        "audio_bytes": 718950,
+        "audio_errors": [],
+        "audio_packets": 628,
+        "audio_seconds": 7.4890625,
+        "end_utc": "2026-11-01T04:20:16.747931+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/step-check-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/step-check-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/step-check-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 125969,
+        "peak": 1634,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:20:03.775773+00:00",
+        "x": 400,
+        "y": 995
+      },
+      "native_event_extract": [
+        "         1793506803.972  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_60\", returned true",
+        "         1793506804.873  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"not checked\", utteranceId=talkback_61, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_CLICKED displayId:0 time:1242261",
+        "         1793506805.413  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Checked step: Bring synthetic photo ID\", utteranceId=talkback_62, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1242702",
+        "         1793506805.429  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_61\", returned false",
+        "         1793506805.616  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Checked step: Bring synthetic photo ID    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506805.617  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Checked step: Bring synthetic photo ID\", utteranceId=talkback_63, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1242953",
+        "         1793506805.623  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_62\", returned false",
+        "         1793506808.758  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_63\", returned true"
+      ]
+    },
+    {
+      "label": "step-undo-fixed",
+      "wav_sha256": "3b5bb6cb7e36b2c0e781df0e4a0666e41f13f7bf087e68d9ebe8a422122251e1",
+      "wav_bytes": 773602,
+      "asr": " Uncheck step, bring synthetic photo ID",
+      "metadata": {
+        "audio_bytes": 773558,
+        "audio_errors": [],
+        "audio_packets": 692,
+        "audio_seconds": 8.057895833333333,
+        "end_utc": "2026-11-01T04:20:50.757678+00:00",
+        "input_exit": 0,
+        "logs": {
+          "com.android.settings": "raw/step-undo-fixed-com.android.settings-1148.log",
+          "com.google.android.marvin.talkback": "raw/step-undo-fixed-com.google.android.marvin.talkback-2979.log",
+          "com.google.android.tts": "raw/step-undo-fixed-com.google.android.tts-2391.log"
+        },
+        "mode": "double",
+        "nonzero_samples": 117471,
+        "peak": 1633,
+        "requested_seconds": 12,
+        "sample_rate": 48000,
+        "start_utc": "2026-11-01T04:20:37.697501+00:00",
+        "x": 400,
+        "y": 1500
+      },
+      "native_event_extract": [
+        "         1793506840.297  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Unchecked step: Bring synthetic photo ID\", utteranceId=talkback_67, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:1276696",
+        "         1793506840.403  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Add a step, Edit box    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506840.404  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Add a step\", utteranceId=talkback_68, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1277568",
+        "         1793506840.405  2979  5677 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_67\", returned false",
+        "         1793506840.446  2979  2979 V talkback: TalkBackFeedbackProvider:  TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput= Unchecked step: Bring synthetic photo ID    queueMode=9  ttsAddToHistory  forceFeedbackEvenIfAudioPlaybackActive  forceFeedbackEvenIfMicrophoneActive  forceFeedbackEvenIfPhoneCallActive  advanceContinuousReading  preventDeviceSleep  haptic=2130903137  earcon=2132017176  ",
+        "         1793506840.446  2979  2979 V talkback: SpeechControllerImpl: Speaking fragment text=\"Unchecked step: Bring synthetic photo ID\", utteranceId=talkback_69, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:1277757",
+        "         1793506840.457  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_68\", returned true",
+        "         1793506843.603  2979  2991 D talkback: FailoverTextToSpeech: Received utterance completed for \"talkback_69\", returned true"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-i",
+      "supabase_db_unify-native-speech-374-r15",
+      "psql",
+      "-U",
+      "postgres",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-X",
+      "-q",
+      "-A",
+      "-t"
+    ],
+    "exit": 0,
+    "seconds": 0.056739124993328005,
+    "stderr": "",
+    "stderr_bytes": 0,
+    "stdout": "{\"id\" : 3698001, \"completed\" : false, \"revision\" : 1, \"removed\" : null}\n",
+    "stdout_bytes": 72
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-i",
+      "supabase_db_unify-native-speech-374-r15",
+      "psql",
+      "-U",
+      "postgres",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-X",
+      "-q",
+      "-A",
+      "-t"
+    ],
+    "exit": 0,
+    "seconds": 0.05357241700403392,
+    "stderr": "",
+    "stderr_bytes": 0,
+    "stdout": "{\"id\":3698001,\"user_id\":\"[SYNTHETIC_ID]\",\"revision\":1,\"completed\":false,\"removed_at\":null}\n",
+    "stdout_bytes": 113
+  }
+]

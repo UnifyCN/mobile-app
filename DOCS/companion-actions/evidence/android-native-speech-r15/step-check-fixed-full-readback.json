@@ -1,0 +1,254 @@
+{
+  "exit": 0,
+  "proof_class": "Independent complete row observer of native operations. No login or write.",
+  "result": {
+    "details": [],
+    "receipts": [
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:06:23.995833+00:00",
+        "inverse": [
+          {
+            "expected_revision": 2,
+            "state": "not_started",
+            "task_ref": "custom:3698001",
+            "type": "task.set_state"
+          }
+        ],
+        "operation_id": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 2,
+              "after_waiting_reason": null,
+              "before_revision": 1,
+              "before_state": "not_started",
+              "before_waiting_reason": null,
+              "state": "in_progress",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "request_hash": "b04f3d900ce5d647864e1a58235bd7b68615d0d9723a5b5e03107b0c33a87910",
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control",
+          "undo_of": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:17:10.127935+00:00",
+        "inverse": null,
+        "operation_id": "cf1785dd-b366-419b-ab6a-4917f76a6db4",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 3,
+              "after_waiting_reason": null,
+              "before_revision": 2,
+              "before_state": "in_progress",
+              "before_waiting_reason": null,
+              "state": "not_started",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "request_hash": "8166db0ad749ce233aea0e4036634c97af17ef2812b3131772c805ef436baa26",
+        "task_ref": "custom:3698001",
+        "undo_of": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf",
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:17:40.010491+00:00",
+        "inverse": [
+          {
+            "expected_revision": 4,
+            "state": "not_started",
+            "task_ref": "custom:3698001",
+            "type": "task.set_state"
+          }
+        ],
+        "operation_id": "8c1b085c-c1b7-4c37-9766-48a864e5e723",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 4,
+              "after_waiting_reason": null,
+              "before_revision": 3,
+              "before_state": "not_started",
+              "before_waiting_reason": null,
+              "state": "in_progress",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "request_hash": "2320c108b7f5eb0121b711527a355364e2fa17d9c640591f975e758ba8e0b06c",
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control",
+          "undo_of": "8c1b085c-c1b7-4c37-9766-48a864e5e723"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:18:08.62219+00:00",
+        "inverse": null,
+        "operation_id": "3c92048a-06d0-4823-8210-532717e9027c",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 5,
+              "after_waiting_reason": null,
+              "before_revision": 4,
+              "before_state": "in_progress",
+              "before_waiting_reason": null,
+              "state": "not_started",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "request_hash": "8b6831ed3f374c060f49b78a34e63a2efaccd56ceb3d4549153924086332c0f2",
+        "task_ref": "custom:3698001",
+        "undo_of": "8c1b085c-c1b7-4c37-9766-48a864e5e723",
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:19:33.185945+00:00",
+        "inverse": [
+          {
+            "steps": [
+              {
+                "expected_revision": 1,
+                "step_id": "6e314c32-7730-463c-8004-3719d595de7e"
+              }
+            ],
+            "task_ref": "custom:3698001",
+            "type": "step.remove_created"
+          }
+        ],
+        "operation_id": "81c22b6d-16bf-4af4-8612-699e00cd893a",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 1,
+              "before_revision": 0,
+              "before_state": "not_started",
+              "state": "not_started",
+              "steps": [
+                {
+                  "after_revision": 1,
+                  "before_done": false,
+                  "before_revision": 0,
+                  "done": false,
+                  "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+                  "title": "Bring synthetic photo ID"
+                }
+              ],
+              "task_ref": "custom:3698001",
+              "type": "step.create"
+            }
+          ]
+        },
+        "request_hash": "0e96b6c7117ab6aad4e255b0a051ec1d70e7f59d1e49b6920aa77065d8acb4b5",
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:20:04.330249+00:00",
+        "inverse": [
+          {
+            "done": false,
+            "expected_revision": 2,
+            "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+            "type": "step.set_done"
+          }
+        ],
+        "operation_id": "acd81eb6-6109-459a-9924-0042cd7f4d3b",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 2,
+              "before_revision": 1,
+              "before_state": "not_started",
+              "state": "not_started",
+              "steps": [
+                {
+                  "after_revision": 2,
+                  "before_done": false,
+                  "before_revision": 1,
+                  "before_title": "Bring synthetic photo ID",
+                  "done": true,
+                  "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+                  "title": "Bring synthetic photo ID"
+                }
+              ],
+              "task_ref": "custom:3698001",
+              "type": "step.set_done"
+            }
+          ]
+        },
+        "request_hash": "f9c7aa574d5603c494a74127f925c25168652e7067a2fbc7a2f1722b0bc47954",
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      }
+    ],
+    "reminders": [],
+    "steps": [
+      {
+        "completed": true,
+        "created_at": "2026-11-01T04:19:33.185945+00:00",
+        "id": "6e314c32-7730-463c-8004-3719d595de7e",
+        "position": 0,
+        "removed_at": null,
+        "revision": 2,
+        "task_ref": "custom:3698001",
+        "title": "Bring synthetic photo ID",
+        "user_id": "[SYNTHETIC_ID]"
+      }
+    ],
+    "task": [
+      {
+        "completed": false,
+        "completed_at": null,
+        "created_at": "2026-11-01T04:00:17.299592+00:00",
+        "description": "Owned synthetic native reminder task",
+        "id": 3698001,
+        "priority": "Do now",
+        "progress_state": null,
+        "removed_at": null,
+        "revision": 5,
+        "state_updated_at": "2026-11-01T04:18:08.62219+00:00",
+        "title": "Native R8 reminder",
+        "updated_at": "2026-11-01T04:18:08.62219+00:00",
+        "user_id": "[SYNTHETIC_ID]",
+        "waiting_reason": null
+      }
+    ]
+  }
+}

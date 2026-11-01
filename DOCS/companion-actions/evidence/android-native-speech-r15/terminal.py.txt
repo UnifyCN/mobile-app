@@ -1,0 +1,35 @@
+from pathlib import Path
+import json,hashlib,subprocess,socket,collections,datetime
+R=Path.cwd();E=R/'DOCS/companion-actions/evidence/android-native-speech-r15';before=json.loads((E/'preservation-before.json').read_text())
+def sha(p):
+ h=hashlib.sha256()
+ with Path(p).open('rb') as f:
+  while c:=f.read(1024*1024):h.update(c)
+ return h.hexdigest()
+changed=[n for n,h in before['files'].items() if not Path(n).is_file() or sha(n)!=h]
+roots=[Path('/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk'),Path('/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-74fd690f/build/369-android-native-bootstrap-r2/avd')];sets=[]
+for p in roots:
+ wanted={n for n in before['files'] if Path(n).is_relative_to(p)};actual={str(f) for f in p.rglob('*') if f.is_file()};sets.append(dict(path=str(p),before=len(wanted),after=len(actual),equal=wanted==actual))
+resources=[];diff=[]
+for c in before['resources']:
+ p=subprocess.run(['docker','inspect',c['Id']],capture_output=True)
+ if p.returncode:diff.append(dict(id=c['Id'],name=c['Name'],absent=True));continue
+ n=json.loads(p.stdout)[0];canonical=lambda a:collections.Counter(json.dumps(m,sort_keys=True) for m in a)
+ checks=dict(identity=n['Id']==c['Id'] and n['Name']==c['Name'],labels=n['Config']['Labels']==c['Labels'],complete_mount_objects=canonical(n['Mounts'])==canonical(c['Mounts']),runtime=all(n['State'][k]==c['State'][k] for k in ['Running','Pid','StartedAt']))
+ row=dict(id=c['Id'],name=c['Name'],checks=checks);resources.append(row)
+ if not all(checks.values()):diff.append(row)
+project='unify-native-speech-374-r15';owned=subprocess.check_output(['docker','ps','-aq','--filter','label=com.supabase.cli.project='+project]).decode().split();vols=[n for n in subprocess.check_output(['docker','volume','ls','--format','{{.Name}}']).decode().split() if n.endswith('_'+project)];nets=[n for n in subprocess.check_output(['docker','network','ls','--format','{{.Name}}']).decode().split() if project in n]
+o=json.loads((E/'runtime-owner.json').read_text());pids=[o[k] for k in ['controller','daemon','emulator']]+[r['pid'] for r in json.loads((E/'host-cleanup-precheck.json').read_text())]+[json.loads((E/'metro-restart-verified.json').read_text())['pid']];absent={str(p):subprocess.run(['ps','-p',str(p),'-o','comm='],capture_output=True).returncode!=0 for p in pids}
+binds=[]
+for port in [5590,5591,8580,63679,3530,65100,65101,65102,65103,3516,8351]:
+ for family,host in [(socket.AF_INET,'127.0.0.1'),(socket.AF_INET6,'::1')]:
+  with socket.socket(family) as s:
+   s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+   if family==socket.AF_INET6:s.setsockopt(socket.IPPROTO_IPV6,socket.IPV6_V6ONLY,1)
+   try:s.bind((host,port));ok=True;error=None
+   except OSError as e:ok=False;error=str(e)
+   binds.append(dict(port=port,host=host,passed=ok,error=error))
+model=json.loads(Path('/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-b9af151e/DOCS/companion-actions/evidence/android-speech-readiness-r13/transcription-model.json').read_text());models={k:Path(v['path']).stat().st_size==v['bytes'] and sha(v['path'])==v['sha256'] for k,v in model['files'].items()}
+record=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),protected_files=len(before['files']),changed_protected_files=changed,complete_file_sets=sets,impeccable_files=sum('impeccable' in n.lower() for n in before['files']),protected_container_count=len(resources),protected_containers=resources,protected_container_differences=diff,owned_containers=owned,owned_volumes=vols,owned_networks=nets,owned_processes_absent=absent,reusable_ipv4_ipv6_binds=binds,model_hashes=models,historical_sdk_gap='OPEN',historical_default_bridge_gap='OPEN; no initial full network snapshot')
+(E/'terminal-preservation.json').write_text(json.dumps(record,indent=2));assert not changed and all(x['equal'] for x in sets) and not diff and not owned and not vols and not nets and all(absent.values()) and all(x['passed'] for x in binds) and all(models.values()),'Read terminal-preservation.json'
+print('Terminal preservation passes:',len(before['files']),'files;',len(resources),'containers;',len(binds),'port binds;',len(models),'model hashes.')
