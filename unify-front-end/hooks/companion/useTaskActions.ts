@@ -225,6 +225,7 @@ function useTaskActionAccountScope(
       [PROFILE_PROPOSAL_ROOT, 1],
       ['onboardingProfile', 1],
       ['userInfo', 1],
+      ['chatbot-usage', 1],
     ] as const) {
       void queryClient.cancelQueries({
         queryKey: [root],

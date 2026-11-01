@@ -89,12 +89,6 @@ import type { RemovalProposal } from '@/services/companionActions/contract';
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 import { ownAccountWork, stillOwned } from '@/services/account/accountSession';
 
-// Daily message cap for non-premium users. This mirrors DAILY_MESSAGE_LIMIT in
-// the rag-query edge function (source of truth: UnifyCN/web-app,
-// supabase/functions/rag-query/index.ts), which is the authoritative server-side
-// check. This client constant only powers proactive UX (disabling the input);
-// keep the two in sync.
-const MESSAGE_LIMIT = 6;
 const OPTIMISTIC_MESSAGE_MATCH_WINDOW_MS = 5000;
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 const dottedLineTopOffset = -windowHeight * 0.001;
@@ -102,23 +96,11 @@ const dottedLineWidth = windowWidth * 2.2;
 const dottedLineHeight = windowHeight * 0.9;
 
 // Helper functions
-const getMessagesLeft = (
-  messageCount: number,
-  messageLimit: number
-): number => {
-  return Math.max(0, messageLimit - messageCount);
-};
-
-const canSendMessage = (isPremium: boolean, messagesLeft: number): boolean => {
-  return isPremium || messagesLeft > 0;
-};
-
 const isSendButtonDisabled = (
   inputText: string,
-  isLoading: boolean,
-  canSend: boolean
+  isLoading: boolean
 ): boolean => {
-  return !inputText.trim() || isLoading || !canSend;
+  return !inputText.trim() || isLoading;
 };
 
 export default function CompanionScreen() {
@@ -301,7 +283,6 @@ export default function CompanionScreen() {
   const isNearBottomRef = useRef<boolean>(true);
 
   const { data: usage } = useChatbotUsage();
-  const isPremium = currentUser?.isPremium ?? false;
   // Titles of the account's live Checklist tasks: suggestions name their task (#366) and a
   // removal request names the task to review (#367).
   const { titles: taskTitles, ready: taskTitlesReady } =
@@ -318,16 +299,13 @@ export default function CompanionScreen() {
     currentConversationId,
     isHistoryLoaded: isConversationHistoryLoaded(dbMessages),
     setCurrentConversationId,
-    isPremium,
     taskTitles: taskTitlesReady ? taskTitles : null,
   });
 
-  const messageCount = usage?.message_count ?? 0;
   useCompanionReviewPrompt(usage?.message_count);
-  const messagesLeft = getMessagesLeft(messageCount, MESSAGE_LIMIT);
-  const canSend = canSendMessage(isPremium, messagesLeft);
+  // Commands remain available at the generation limit. The server gates generation.
   const sendButtonDisabled =
-    isSendButtonDisabled(inputText, isLoading, canSend) || !accountKnown;
+    isSendButtonDisabled(inputText, isLoading) || !accountKnown;
   // Render the in-flight streaming bot bubble at the bottom of the list while
   // tokens are arriving. Once the message is persisted, useSendMessage clears
   // streamingBotMessage and the saved copy from the React Query cache takes
@@ -417,7 +395,7 @@ export default function CompanionScreen() {
   const handleSendMessage = useCallback(
     async (messageText?: string, source?: CompanionInputSource) => {
       const textToSend = messageText || inputText.trim();
-      if (!textToSend || isLoading || !canSend || !accountKnown) return;
+      if (!textToSend || isLoading || !accountKnown) return;
       const inputSource =
         source ?? resolveTypedInputSource(textToSend, inputOrigin);
 
@@ -453,17 +431,8 @@ export default function CompanionScreen() {
             current.filter(message => message.id !== optimisticMessageId)
           );
         }
-        if (
-          !(error instanceof Error) ||
-          !(error as Error & { messagePersisted?: boolean }).messagePersisted
-        ) {
-          if (clearedDraft) {
-            setDraft(
-              textToSend,
-              { text: textToSend, source: inputSource },
-              clearedDraft
-            );
-          }
+        if (clearedDraft) {
+          setDraft(textToSend, { text: textToSend, source: inputSource }, clearedDraft);
         }
         if (
           error instanceof AICompanionBusyError ||
@@ -478,7 +447,6 @@ export default function CompanionScreen() {
       inputOrigin,
       setDraft,
       isLoading,
-      canSend,
       accountKnown,
       sendMessage,
       currentConversationId,
@@ -900,6 +868,13 @@ export default function CompanionScreen() {
             </View>
           )}
 
+          <Text accessibilityLiveRegion='polite' style={{ color: Theme.textAlternateGray, fontSize: 12, textAlign: 'center' }}>
+            {usage
+              ? usage.is_premium
+                ? t('companion.allowancePremium')
+                : t('companion.allowanceRemaining', { remaining: usage.remaining, reset: new Date(usage.resets_at).toLocaleString(i18n.language, { timeZoneName: 'short' }) })
+              : t('companion.allowanceUnavailable')}
+          </Text>
           {/* Input */}
           <View style={styles.inputContainer}>
             <TextInput
@@ -915,19 +890,14 @@ export default function CompanionScreen() {
                     Math.ceil(typography.body.lineHeight * fontScale) + 24
                   ),
                 },
-                !canSend && styles.disabledInput,
               ]}
               value={inputText}
               onChangeText={text => setDraft(text)}
-              placeholder={
-                canSend
-                  ? t('companion.inputPlaceholder')
-                  : t('companion.dailyLimitReached')
-              }
+              placeholder={t('companion.inputPlaceholder')}
               placeholderTextColor='#999'
               multiline
               maxLength={500}
-              editable={!isLoading && canSend}
+              editable={!isLoading}
             />
             <TouchableOpacity
               style={[

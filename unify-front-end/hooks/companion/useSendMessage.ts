@@ -10,7 +10,6 @@ import {
   StreamComplete,
   StreamMetadata,
 } from '@/utils/gemini';
-import { useChatbotUsage } from '@/hooks/companion/useChatbotUsage';
 import { useCreateConversation } from '@/hooks/companion/useCreateConversation';
 import { useSaveMessage } from '@/hooks/companion/useSaveMessage';
 import {
@@ -146,7 +145,8 @@ interface UseSendMessageParams {
   /** Whether the current conversation's saved messages have loaded. */
   isHistoryLoaded: boolean;
   setCurrentConversationId: (id: string | null) => void;
-  isPremium: boolean;
+  /** Compatibility for older callers. Entitlement is read from the server. */
+  isPremium?: boolean;
   /**
    * #367: titles of the account's live Checklist tasks by task ref (a removal request
    * names one); null while the Checklist read has not finished.
@@ -159,7 +159,6 @@ export const useSendMessage = ({
   currentConversationId,
   isHistoryLoaded,
   setCurrentConversationId,
-  isPremium,
   taskTitles,
 }: UseSendMessageParams) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -194,7 +193,6 @@ export const useSendMessage = ({
     setStreamingBotMessage(null);
   }
   const queryClient = useQueryClient();
-  const { data: usage } = useChatbotUsage();
   const createConversation = useCreateConversation();
   const saveMessage = useSaveMessage();
   const { trackCompanionMessageSent, trackCompanionResponseReceived } =
@@ -656,6 +654,7 @@ export const useSendMessage = ({
       throw sendError;
     } finally {
       if (owned()) {
+        void queryClient.invalidateQueries({ queryKey: ['chatbot-usage'] });
         setIsLoading(false);
         setIsWaitingForBot(false);
       }

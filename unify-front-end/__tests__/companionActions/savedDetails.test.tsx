@@ -367,6 +367,7 @@ const sendButton = () => {
 };
 async function send(text: string) {
   fireEvent.changeText(await screen.findByPlaceholderText(/Ask anything|limit/i), text);
+  await waitFor(() => expect(sendButton().props.disabled).toBe(false));
   fireEvent.press(sendButton());
 }
 const enabled = (el: { props: { accessibilityState?: { disabled?: boolean } } }) =>
@@ -565,7 +566,8 @@ describe('Saved personal details through Companion (mobile, #370)', () => {
 
     answersDetail('Noted.', FRIDAYS);
     await send('Fridays are best for me.');
-    await waitFor(() => expect(screen.getAllByTestId('detail-draft-card')).toHaveLength(2));
+    await screen.findByText('Noted.');
+    await waitFor(() => expect(screen.getAllByTestId('detail-draft-card')).toHaveLength(2), { timeout: 5000 });
     fireEvent.changeText(composer(), 'My next question');
     fireEvent.press(
       within(screen.getAllByTestId('detail-draft-card')[1]).getByRole('button', {

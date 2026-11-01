@@ -196,8 +196,9 @@ jest.mock('@/services/companion/getConversationMessages', () => ({
 }));
 jest.mock('@/services/companion/getConversations', () => ({ getConversations: jest.fn(async () => []) }));
 let mockMessageCount = 0;
+let mockAllowance: Record<string, unknown> | undefined;
 jest.mock('@/hooks/companion/useChatbotUsage', () => ({
-  useChatbotUsage: () => ({ data: { message_count: mockMessageCount } }),
+  useChatbotUsage: () => ({ data: mockAllowance ?? { message_count: mockMessageCount } }),
 }));
 jest.mock('@/hooks/companion/useCompanionReviewPrompt', () => ({ useCompanionReviewPrompt: () => {} }));
 jest.mock('@/hooks/companion/usePersonalizedStarters', () => ({ usePersonalizedStarters: () => ({ data: undefined }) }));
@@ -1829,4 +1830,34 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
     }
   }, 60_000);
 
+});
+
+
+const describeAllowance = enabled && API_URL === 'http://127.0.0.1:65080' ? describe : describe.skip;
+describeAllowance('373 server allowance on the rendered Mobile client', () => {
+  beforeEach(() => { global.fetch=realFetch; mockStream.mockReset(); clearPlanStores(null); clearTaskActionStores(null); });
+  afterEach(() => { mockAllowance = undefined; clients.splice(0).forEach(client => client.clear()); });
+  it('keeps the draft and saved task controls at exhaustion', async () => {
+    expect(DB_CONTAINER).toBe('supabase_db_unify-allowance-373-r1');
+    const inspected = JSON.parse(execFileSync('docker', ['inspect', DB_CONTAINER], { encoding:'utf8' }))[0];
+    expect(inspected.Config.Labels['com.supabase.cli.project']).toBe('unify-allowance-373-r1');
+    const acc = await newAccount('allowance373'); mockUserId = acc.id;
+    psql(`insert into chatbot_usage(user_id,message_count,last_message_at) values('${acc.id}',6,now());`);
+    const allowance = await http('/rest/v1/rpc/get_chatbot_allowance',{method:'POST',jwt:acc.jwt,body:'{}'});
+    expect(allowance.status).toBe(200); mockAllowance = allowance.json;
+    const saved = await savedPlanFor(acc); mount();
+    await screen.findByText(/0 AI messages remaining/);
+    const input = composer(); fireEvent.changeText(input,'Keep my allowance draft');
+    fireEvent.press(await screen.findByRole('button',{ name:new RegExp(`Your plan, ${GOAL}`) },{timeout:10_000}));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button',{name:`${PHONE}, Not started`}));
+    await waitFor(() => expect(within(sheet).getByRole('radio',{name:'Completed'})).toBeEnabled());
+    fireEvent.press(within(sheet).getByRole('radio',{name:'Completed'}));
+    await within(sheet).findByText('Changed from Not started to Completed',{}, {timeout:10_000});
+    expect(composer().props.value).toBe('Keep my allowance draft');
+    expect(mockStream).not.toHaveBeenCalled();
+    const read = await actions(acc.jwt,{action:'read'});
+    expect(read.json.tasks.find((t: { task_ref: string }) => t.task_ref === saved.receipt.results[2].task_ref).state).toBe('completed');
+    expect((await http('/rest/v1/rpc/get_chatbot_allowance',{method:'POST',jwt:acc.jwt,body:'{}'})).json.message_count).toBe(6);
+  });
 });

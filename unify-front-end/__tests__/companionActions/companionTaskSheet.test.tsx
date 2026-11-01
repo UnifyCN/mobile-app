@@ -159,7 +159,7 @@ jest.mock('@/hooks/companion/useConversationMessages', () => ({
   useConversationMessages: () => ({ data: [], isLoading: false }),
 }));
 jest.mock('@/hooks/companion/useChatbotUsage', () => ({
-  useChatbotUsage: () => ({ data: { message_count: mockMessageCount } }),
+  useChatbotUsage: () => ({ data: { message_count: mockMessageCount, daily_limit: 6, remaining: 6 - mockMessageCount, is_premium: false, resets_at: '2026-11-02T00:00:00Z', observed_at: '2026-11-01T12:00:00Z' } }),
 }));
 jest.mock('@/hooks/companion/useCompanionReviewPrompt', () => ({
   useCompanionReviewPrompt: () => {},
@@ -667,9 +667,8 @@ describe('Companion task entry and sheet (mobile)', () => {
   it('at the AI limit, task controls still save and no model request is made', async () => {
     mockMessageCount = 6; // the daily allowance is used up
     renderScreen();
-    expect(
-      await screen.findByPlaceholderText(en.companion.dailyLimitReached)
-    ).toBeTruthy();
+    expect(await screen.findByText(/0 AI messages remaining/)).toBeTruthy();
+    expect((await screen.findByPlaceholderText(en.companion.inputPlaceholder)).props.editable).toBe(true);
     fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
     const sheet = await screen.findByTestId('companion-task-sheet');
     fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
