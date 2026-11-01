@@ -1,0 +1,53 @@
+from pathlib import Path
+import json,subprocess,hashlib,shutil,tarfile
+R=Path.cwd(); B=R/'build/android-native-speech-r15';E=R/'DOCS/companion-actions/evidence/android-native-speech-r15'
+old=Path('/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-df533785'); prior=old/'build/android-product-speech-r14'; helpers=prior/'runs/reuse-1'; r14=old/'DOCS/companion-actions/evidence/android-product-speech-r14'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+frozen=json.loads((r14/'preservation-before.json').read_text())['files']
+for p in r14.rglob('*'):
+ if p.is_file():frozen[str(p)]=sha(p)
+assert all(Path(n).is_file() and sha(Path(n))==h for n,h in frozen.items())
+ids=subprocess.check_output(['docker','ps','-aq']).decode().split(); cs=json.loads(subprocess.check_output(['docker','inspect',*ids])) if ids else []
+resources=[{k:c[k] for k in ['Id','Name','Mounts','State']}|{'Labels':c['Config']['Labels']} for c in cs]
+(E/'preservation-before.json').write_text(json.dumps(dict(files=frozen,resources=resources),indent=2))
+(E/'resources-before.json').write_text(json.dumps(dict(containers=resources)))
+for p in helpers.iterdir():
+ if p.is_file() and p.suffix in ['.py','.sb']:
+  s=p.read_text().replace('android-product-speech-r14','android-native-speech-r15').replace('unify-native-speech-374-r1','unify-native-speech-374-r15').replace(str(old),str(R))
+  (E/p.name).write_text(s)
+shutil.copytree(helpers/'proto',E/'proto',ignore=shutil.ignore_patterns('__pycache__'))
+(E/'raw').mkdir();(B/'private').mkdir()
+p=E/'outbound-sdk-readonly.sb';p.write_text(p.read_text()+'\n(deny file-write* (subpath "'+str(r14)+'"))\n')
+W=Path('/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359');pin='fff4a93ae58c9505f166b2188f7456e7435dc824';dest=B/'web';dest.mkdir()
+p=subprocess.Popen(['git','-C',str(W),'archive',pin],stdout=subprocess.PIPE)
+with tarfile.open(fileobj=p.stdout,mode='r|') as t:t.extractall(dest,filter='data')
+assert p.wait()==0
+records=[]
+for row in subprocess.check_output(['git','-C',str(W),'ls-tree','-r',pin]).decode().splitlines():
+ meta,name=row.split('\t');mode,kind,oid=meta.split()
+ if kind!='blob':continue
+ data=(dest/name).read_bytes();assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==oid
+ records.append(dict(path=name,blob=oid,sha256=hashlib.sha256(data).hexdigest()))
+(E/'web-export-inputs.json').write_text(json.dumps(dict(pin=pin,records=records),indent=2))
+shutil.copytree(prior/'stack/supabase',B/'stack/supabase',ignore=shutil.ignore_patterns('.temp','.branches'))
+p=B/'stack/supabase/config.toml';p.write_text(p.read_text().replace('unify-native-speech-374-r1','unify-native-speech-374-r15'))
+for p in (B/'stack/supabase/functions').rglob('*'):
+ if p.is_file():p.write_bytes((dest/'supabase/functions'/p.relative_to(B/'stack/supabase/functions')).read_bytes())
+# Include newly committed helper imports in the exact service export.
+for name in ['companion-actions','rag-query/lib']:
+ src=dest/'supabase/functions'/name;target=B/'stack/supabase/functions'/name
+ shutil.copytree(src,target,dirs_exist_ok=True)
+mobile=B/'mobile';mobile.mkdir();p=subprocess.Popen(['git','archive','HEAD','unify-front-end'],stdout=subprocess.PIPE)
+with tarfile.open(fileobj=p.stdout,mode='r|') as t:
+ for m in t:
+  m.name=m.name.removeprefix('unify-front-end').lstrip('/')
+  if m.name:t.extract(m,mobile,filter='data')
+assert p.wait()==0
+assert (mobile/'package-lock.json').read_bytes()==(prior/'mobile/package-lock.json').read_bytes()
+assert (mobile/'package.json').read_bytes()==(prior/'mobile/package.json').read_bytes()
+(mobile/'sanity-config.ts').write_bytes((prior/'mobile/sanity-config.ts').read_bytes())
+subprocess.run(['cp','-cR',str(prior/'mobile/node_modules'),str(mobile/'node_modules')],check=True)
+# Local tool-cache reuse does not resolve dependencies.
+shutil.copytree(prior/'deno',B/'deno',symlinks=True)
+(E/'setup.json').write_text(json.dumps(dict(base='17a12a7f75477f33f93805fe9894a61847ed538f',web=pin,project='unify-native-speech-374-r15',exported_blobs=len(records),fixture='sanity-config.ts: inherited local content transport on 3516',guest='CompanionSpeechR13B9afApi36'),indent=2))
+print('Preservation and exact export pass. Existing native helpers and locked dependencies copied.',flush=True)

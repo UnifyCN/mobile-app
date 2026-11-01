@@ -125,7 +125,8 @@ export function TaskStatePanel({
       // can be interrupted when the control it replaced loses accessibility focus.
       if (
         Platform.OS === 'android' &&
-        (receipt.operationType === 'task.remove' ||
+        (receipt.operationType === 'task.set_state' ||
+          receipt.operationType === 'task.remove' ||
           receipt.operationType === 'task.restore')
       )
         return;
@@ -186,11 +187,12 @@ export function TaskStatePanel({
             progress.revision === phase.receipt.afterRevision,
         }
       : progress.lastReceipt;
-  const focusRemovalResult =
+  const focusSavedResult =
     Platform.OS === 'android' &&
     phase.phase === 'saved' &&
     phase.receipt.operationId !== entryReceipt.current &&
-    (phase.receipt.operationType === 'task.remove' ||
+    (phase.receipt.operationType === 'task.set_state' ||
+      phase.receipt.operationType === 'task.remove' ||
       phase.receipt.operationType === 'task.restore');
 
   return (
@@ -232,7 +234,6 @@ export function TaskStatePanel({
               accessibilityRole='radio'
               accessibilityLabel={stateLabel(s)}
               accessibilityState={{
-                selected,
                 checked: selected,
                 disabled: !canWrite,
               }}
@@ -314,7 +315,7 @@ export function TaskStatePanel({
       )}
 
       <View
-        accessibilityLiveRegion={focusRemovalResult ? 'none' : 'polite'}
+        accessibilityLiveRegion={focusSavedResult ? 'none' : 'polite'}
         style={styles.statusBlock}
       >
         <PhaseMessage
@@ -337,7 +338,7 @@ export function TaskStatePanel({
                 : canWrite
             }
             taskTitle={taskTitle}
-            focusResult={focusRemovalResult}
+            focusResult={focusSavedResult}
           />
         )}
       </View>

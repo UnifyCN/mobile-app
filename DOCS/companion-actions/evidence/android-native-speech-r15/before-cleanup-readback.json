@@ -1,0 +1,282 @@
+{
+  "exit": 0,
+  "proof_class": "Independent SQL readback of the native account. This helper does not log in or write.",
+  "query": "select json_build_object(\n 'account_id', '[SYNTHETIC_ID]',\n 'auth_sessions',(select count(*) from auth.sessions where user_id='[SYNTHETIC_ID]'),\n 'consent',(select json_build_object('privacy',privacy_policy_accepted_at is not null,'guidelines',community_guidelines_accepted_at is not null) from public.users where id='[SYNTHETIC_ID]'),\n 'task',(select json_build_object('id',id,'user_id',user_id,'revision',revision,'progress_state',progress_state,'completed',completed,'waiting_reason',waiting_reason,'removed_at',removed_at,'state_updated_at',state_updated_at) from public.custom_checklist_tasks where id=3698001),\n 'receipts',(select coalesce(json_agg(json_build_object('user_id',user_id,'operation_id',operation_id,'contract_version',contract_version,'authorization_evidence',authorization_evidence,'outcome',outcome,'created_at',created_at,'task_ref',task_ref,'undo_of',undo_of)),'[]'::json) from public.companion_action_receipts where user_id='[SYNTHETIC_ID]'),\n 'reminders',(select coalesce(json_agg(json_build_object('id',id,'user_id',user_id,'task_ref',task_ref,'remind_at',remind_at,'time_zone',time_zone,'wall_time',wall_time,'status',status,'revision',revision,'cancelled_reason',cancelled_reason)),'[]'::json) from public.companion_task_reminders where user_id='[SYNTHETIC_ID]'),\n 'enrollments',(select count(*) from companion_push_private.enrollments),\n 'provider_attempts',(select count(*) from companion_push_private.attempts),\n 'delivery_states',(select json_agg(x) from (select state,count(*) from companion_push_private.deliveries group by state) x),\n 'dispatch_enabled',(select dispatch_enabled from companion_push_private.settings));",
+  "result": {
+    "account_id": "[SYNTHETIC_ID]",
+    "auth_sessions": 1,
+    "consent": {
+      "guidelines": true,
+      "privacy": true
+    },
+    "delivery_states": null,
+    "dispatch_enabled": false,
+    "enrollments": 0,
+    "provider_attempts": 0,
+    "receipts": [
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:06:23.995833+00:00",
+        "operation_id": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 2,
+              "after_waiting_reason": null,
+              "before_revision": 1,
+              "before_state": "not_started",
+              "before_waiting_reason": null,
+              "state": "in_progress",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control",
+          "undo_of": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:17:10.127935+00:00",
+        "operation_id": "cf1785dd-b366-419b-ab6a-4917f76a6db4",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 3,
+              "after_waiting_reason": null,
+              "before_revision": 2,
+              "before_state": "in_progress",
+              "before_waiting_reason": null,
+              "state": "not_started",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf",
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:17:40.010491+00:00",
+        "operation_id": "8c1b085c-c1b7-4c37-9766-48a864e5e723",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 4,
+              "after_waiting_reason": null,
+              "before_revision": 3,
+              "before_state": "not_started",
+              "before_waiting_reason": null,
+              "state": "in_progress",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control",
+          "undo_of": "8c1b085c-c1b7-4c37-9766-48a864e5e723"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:18:08.62219+00:00",
+        "operation_id": "3c92048a-06d0-4823-8210-532717e9027c",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 5,
+              "after_waiting_reason": null,
+              "before_revision": 4,
+              "before_state": "in_progress",
+              "before_waiting_reason": null,
+              "state": "not_started",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": "8c1b085c-c1b7-4c37-9766-48a864e5e723",
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:19:33.185945+00:00",
+        "operation_id": "81c22b6d-16bf-4af4-8612-699e00cd893a",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 1,
+              "before_revision": 0,
+              "before_state": "not_started",
+              "state": "not_started",
+              "steps": [
+                {
+                  "after_revision": 1,
+                  "before_done": false,
+                  "before_revision": 0,
+                  "done": false,
+                  "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+                  "title": "Bring synthetic photo ID"
+                }
+              ],
+              "task_ref": "custom:3698001",
+              "type": "step.create"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:20:04.330249+00:00",
+        "operation_id": "acd81eb6-6109-459a-9924-0042cd7f4d3b",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 2,
+              "before_revision": 1,
+              "before_state": "not_started",
+              "state": "not_started",
+              "steps": [
+                {
+                  "after_revision": 2,
+                  "before_done": false,
+                  "before_revision": 1,
+                  "before_title": "Bring synthetic photo ID",
+                  "done": true,
+                  "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+                  "title": "Bring synthetic photo ID"
+                }
+              ],
+              "task_ref": "custom:3698001",
+              "type": "step.set_done"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "ui_control",
+          "undo_of": "acd81eb6-6109-459a-9924-0042cd7f4d3b"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:20:38.385373+00:00",
+        "operation_id": "f0eae0ad-88ce-4b92-bb6a-1b5d36169ac2",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 3,
+              "before_revision": 2,
+              "before_state": "not_started",
+              "state": "not_started",
+              "steps": [
+                {
+                  "after_revision": 3,
+                  "before_done": true,
+                  "before_revision": 2,
+                  "before_title": "Bring synthetic photo ID",
+                  "done": false,
+                  "step_id": "6e314c32-7730-463c-8004-3719d595de7e",
+                  "title": "Bring synthetic photo ID"
+                }
+              ],
+              "task_ref": "custom:3698001",
+              "type": "step.set_done"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": "acd81eb6-6109-459a-9924-0042cd7f4d3b",
+        "user_id": "[SYNTHETIC_ID]"
+      },
+      {
+        "authorization_evidence": {
+          "kind": "approved_proposal",
+          "proposal_id": "c64d6934-fb7b-42a0-8faa-d76603b9c104",
+          "proposal_revision": 1
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:25:31.782232+00:00",
+        "operation_id": "54a79569-d407-40bd-8017-fc4d464965a6",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 5,
+              "before_reminder": null,
+              "before_revision": 5,
+              "before_state": "not_started",
+              "delivery": "not_observed",
+              "persistence": "saved",
+              "remind_at": "2026-11-03T10:30:00-08:00",
+              "reminder_id": "96411373-524c-4e25-aa6c-6740a272f21d",
+              "scheduling": "registered",
+              "state": "not_started",
+              "task_ref": "custom:3698001",
+              "time_zone": "America/Vancouver",
+              "type": "reminder.schedule",
+              "wall_time": "2026-11-03T10:30:00"
+            }
+          ]
+        },
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      }
+    ],
+    "reminders": [
+      {
+        "cancelled_reason": null,
+        "id": "96411373-524c-4e25-aa6c-6740a272f21d",
+        "remind_at": "2026-11-03T18:30:00+00:00",
+        "revision": 1,
+        "status": "pending",
+        "task_ref": "custom:3698001",
+        "time_zone": "America/Vancouver",
+        "user_id": "[SYNTHETIC_ID]",
+        "wall_time": "2026-11-03T10:30:00"
+      }
+    ],
+    "task": {
+      "completed": false,
+      "id": 3698001,
+      "progress_state": null,
+      "removed_at": null,
+      "revision": 5,
+      "state_updated_at": "2026-11-01T04:18:08.62219+00:00",
+      "user_id": "[SYNTHETIC_ID]",
+      "waiting_reason": null
+    }
+  },
+  "seconds": 0.08354704099474475,
+  "stderr_bytes": 0,
+  "stdout_bytes": 6049
+}

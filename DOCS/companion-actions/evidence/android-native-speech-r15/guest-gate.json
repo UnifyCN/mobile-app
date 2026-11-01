@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "responses": [
+    {
+      "body": "packager-status:running",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+        "-H",
+        "127.0.0.1",
+        "-P",
+        "63679",
+        "-s",
+        "emulator-5590",
+        "shell",
+        "-T",
+        "toybox nc -W 5 -w 5 127.0.0.1 8351"
+      ],
+      "exit": 0,
+      "headers": {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Connection": "close",
+        "Date": "Sun, 01 Nov 2026 04:01:16 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Surrogate-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+        "X-React-Native-Project-Root": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/mobile"
+      },
+      "request_input_held_until_response_eof": true,
+      "seconds": 0.04802520800149068,
+      "status": 200,
+      "stderr": ""
+    },
+    {
+      "body": "{\"native369\":true}",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+        "-H",
+        "127.0.0.1",
+        "-P",
+        "63679",
+        "-s",
+        "emulator-5590",
+        "shell",
+        "-T",
+        "toybox nc -W 5 -w 5 127.0.0.1 3516"
+      ],
+      "exit": 0,
+      "headers": {
+        "Content-Length": "18",
+        "Content-Type": "application/json",
+        "Date": "Sun, 01 Nov 2026 04:01:16 GMT",
+        "Server": "BaseHTTP/0.6 Python/3.14.6"
+      },
+      "request_input_held_until_response_eof": true,
+      "seconds": 0.0371251670003403,
+      "status": 200,
+      "stderr": ""
+    },
+    {
+      "body": "{\"version\":\"v2.197.0\",\"name\":\"GoTrue\",\"description\":\"GoTrue is a user registration and authentication API\"}",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+        "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+        "-H",
+        "127.0.0.1",
+        "-P",
+        "63679",
+        "-s",
+        "emulator-5590",
+        "shell",
+        "-T",
+        "toybox nc -W 5 -w 5 127.0.0.1 65100"
+      ],
+      "exit": 0,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Connection": "close",
+        "Content-Length": "107",
+        "Content-Type": "application/json",
+        "Date": "Sun, 01 Nov 2026 04:01:16 GMT",
+        "Vary": "Origin",
+        "Via": "kong/2.8.1",
+        "X-Kong-Proxy-Latency": "4",
+        "X-Kong-Upstream-Latency": "1"
+      },
+      "request_input_held_until_response_eof": true,
+      "seconds": 0.045052750007016584,
+      "status": 200,
+      "stderr": ""
+    }
+  ]
+}

@@ -1,12 +1,6 @@
 import { LiveText as Text } from '@/components/common/LiveText';
-import React, { useState } from 'react';
-import {
-  Platform,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { typography } from '@/constants/Typography';
@@ -159,7 +153,12 @@ export function TaskStepsSection({
       </View>
 
       {allDone && !completed && (
-        <View style={styles.offer} accessibilityLiveRegion='polite'>
+        <View
+          style={styles.offer}
+          accessibilityLiveRegion={
+            Platform.OS === 'android' ? 'none' : 'polite'
+          }
+        >
           <Text style={styles.offerText}>
             {t('taskSteps.allDone', { state: stateLabel(progress.state) })}
           </Text>
@@ -219,7 +218,14 @@ export function TaskStepsSection({
         </View>
       )}
 
-      <View accessibilityLiveRegion='polite' style={styles.status}>
+      <View
+        accessibilityLiveRegion={
+          Platform.OS === 'android' && listPhase.phase === 'saved'
+            ? 'none'
+            : 'polite'
+        }
+        style={styles.status}
+      >
         <StepPhase
           store={store}
           storeKey={stepsKey(taskRef)}
@@ -462,7 +468,13 @@ function StepRow({
         </View>
       )}
 
-      <View accessibilityLiveRegion='polite'>
+      <View
+        accessibilityLiveRegion={
+          Platform.OS === 'android' && phase.phase === 'saved'
+            ? 'none'
+            : 'polite'
+        }
+      >
         <StepPhase
           store={store}
           storeKey={stepKey(step.stepId)}
@@ -491,6 +503,9 @@ function StepPhase({
 }) {
   const { t } = useTranslation();
   const phase = useTaskActionPhase(store, storeKey);
+  const entryReceipt = useRef(
+    phase.phase === 'saved' ? phase.receipt.operationId : null
+  );
   const receipt =
     phase.phase === 'saved'
       ? {
@@ -552,6 +567,10 @@ function StepPhase({
           storeKey={storeKey}
           store={store}
           canWrite={writable && !isUnresolved(phase)}
+          focusResult={
+            Platform.OS === 'android' &&
+            receipt.operationId !== entryReceipt.current
+          }
         />
       )}
     </View>

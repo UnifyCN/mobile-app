@@ -1,0 +1,48 @@
+from pathlib import Path
+import sys,json,hashlib,gzip,shutil,re,collections,subprocess,ast
+R=Path.cwd();E=R/'DOCS/companion-actions/evidence/android-native-speech-r15';B=R/'build/android-native-speech-r15';sys.path.insert(0,str(E));from probe import redact
+# Retain small validation logs and the first failed loops.
+for p in sorted(B.glob('*.log')):
+ raw=p.read_bytes();(E/(p.name+'.redacted.txt')).write_text(redact(raw.decode(errors='replace')))
+for name in ['adb.log','emulator.log']:
+ p=B/'private'/name
+ if p.exists():(E/(name+'.redacted.txt')).write_text(redact(p.read_text(errors='replace')))
+for name in ['prepare.py','verify-deps.py','summarize.py','terminal.py','finalize.py']:
+ p=B/name
+ if p.exists():shutil.copyfile(p,E/(name+'.txt'))
+# A reusable entry writes only into its new run directory.
+reuse=B/'runs/reuse-1';reuse.mkdir(parents=True,exist_ok=False)
+for p in E.glob('*.py'):shutil.copyfile(p,reuse/p.name)
+shutil.copytree(E/'proto',reuse/'proto',ignore=shutil.ignore_patterns('__pycache__'));(reuse/'raw').mkdir()
+policy=(E/'outbound-sdk-readonly.sb').read_text()+'\n(deny file-write* (subpath "'+str(E)+'"))\n';(reuse/'outbound-sdk-readonly.sb').write_text(policy)
+for d in list(E.rglob('__pycache__')):shutil.rmtree(d)
+account=json.loads((B/'private/account.json').read_text());patterns=[re.compile(rb'eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+'),re.compile(rb'sb_(?:secret|publishable)_[A-Za-z0-9_-]{12,}'),re.compile(rb'(?:sk-proj-|sk-or-v1-)[A-Za-z0-9_-]+')];matches=[]
+for p in E.rglob('*'):
+ if not p.is_file() or p.suffix in ['.png','.wav']:continue
+ raw=p.read_bytes()
+ for k,v in account.items():
+  if k in ['email','password'] and v.encode() in raw:matches.append(dict(path=str(p.relative_to(E)),kind='exact synthetic '+k))
+ if any(rx.search(raw) for rx in patterns):matches.append(dict(path=str(p.relative_to(E)),kind='credential pattern'))
+(E/'privacy-scan.json').write_text(json.dumps(dict(matches=matches,exact_synthetic_values_scanned=True,png_ocr=False,audio_during_auth=False),indent=2));assert not matches,matches
+compressed=[]
+for p in sorted(E.rglob('*')):
+ if p.is_file() and (p.suffix in ['.log','.jsonl'] or p.name.endswith('.redacted.txt')):
+  raw=p.read_bytes();target=Path(str(p)+'.gz');assert not target.exists();target.write_bytes(gzip.compress(raw,compresslevel=9,mtime=0));assert gzip.decompress(target.read_bytes())==raw;compressed.append(dict(gzip=str(target.relative_to(E)),original_bytes=len(raw),original_sha256=hashlib.sha256(raw).hexdigest()));p.unlink()
+(E/'lossless-log-compression.json').write_text(json.dumps(compressed,indent=2))
+counts={}
+for name in ['android-commands.jsonl','commands.jsonl']:
+ rows=[json.loads(l) for l in gzip.decompress((E/(name+'.gz')).read_bytes()).decode().splitlines() if l.strip()];counts[name]=dict(total=len(rows),exit_distribution=dict(collections.Counter(str(r['exit']) for r in rows)))
+counts['recordings']=len(list((E/'raw').glob('*.wav')));counts['screenshots']=len(list((E/'screenshots').glob('*.png')));counts['persisted_receipts']=len(json.loads((E/'receipt-revision-matrix.json').read_text())['final_receipts']);(E/'command-counts.json').write_text(json.dumps(counts,indent=2))
+removed=[]
+for p in (B/'private').iterdir():
+ if p.is_file():removed.append(p.name);p.unlink()
+(E/'private-cleanup.json').write_text(json.dumps(dict(removed_owned_transient_files=removed,account_signed_out=True),indent=2))
+for p in E.rglob('*.json'):json.loads(p.read_text())
+for p in E.glob('*.py'):ast.parse(p.read_text())
+assert (E/'HANDOFF.md').read_text().count('COMPANION_ANDROID_SPEECH_R15_CORRECTION_DONE')==1
+assert '\u2014' not in (E/'HANDOFF.md').read_text()+(E/'REUSE.md').read_text()
+rows=[]
+for p in sorted(E.rglob('*')):
+ if p.is_file() and p.name!='evidence-manifest.json':rows.append(dict(path=str(p.relative_to(E)),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
+(E/'evidence-manifest.json').write_text(json.dumps(dict(records=rows,total_files=len(rows),total_bytes=sum(x['bytes'] for x in rows)),indent=2))
+print('Privacy and artifact checks pass.',json.dumps(counts));print('Manifest:',len(rows),'files;',sum(x['bytes'] for x in rows),'bytes; logs compressed losslessly:',len(compressed))

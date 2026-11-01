@@ -1395,7 +1395,7 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
     sheet = await openPhone();
     expect(await within(sheet).findByLabelText('What are you waiting for?')).toHaveProp('value', 'A phone appointment');
     expect(within(sheet).getByRole('checkbox', { name: 'Compare phone plans' })).toBeChecked();
-    expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeSelected();
+    expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeChecked();
     expect((await within(sheet).findAllByText(/America\/Vancouver/)).length).toBeGreaterThan(0);
     const resumed = (await actions(acc.jwt, { action: 'read' })).json;
     const resumedPlan = (await actions(acc.jwt, { action: 'plans' })).json.plans[0];
@@ -1527,7 +1527,7 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
       fireEvent.changeText(composer(), 'Private recovery question');
       fireEvent.press(within(sheet).getByRole('radio', { name: 'In progress' }));
       await within(sheet).findByText('Changed from Not started to In progress');
-      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeSelected());
+      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeChecked());
       const receiptId = writes[0].operation_id;
       offline = true;
       await foreground();
@@ -1536,7 +1536,7 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
       expect(waiting).toBeDisabled();
       fireEvent.press(waiting);
       expect(writes).toHaveLength(1);
-      expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeSelected();
+      expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeChecked();
       const read = (await actions(acc.jwt, { action: 'read' })).json;
       const current = read.tasks.find((task: { task_ref: string }) => task.task_ref === ref);
       const moved = await actions(acc.jwt, {
@@ -1546,7 +1546,7 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
       expect(moved.status).toBe(200);
       offline = false;
       await foreground();
-      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeSelected());
+      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeChecked());
       await within(sheet).findByDisplayValue('Changed on another device');
       expect(within(sheet).queryByText(en.taskActions.offline)).toBeNull();
       fireEvent.press(await enabledButton(within(sheet), 'Undo this change'));

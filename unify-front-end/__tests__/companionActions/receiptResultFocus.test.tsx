@@ -15,8 +15,10 @@ import { TaskStatePanel } from '@/components/companion/tasks/TaskStatePanel';
 
 jest.mock('@expo/vector-icons/MaterialIcons', () => () => null);
 let mockTaskPhase: TaskActionPhase = { phase: 'idle' };
+let mockStepPhase: TaskActionPhase = { phase: 'idle' };
+let mockStepStoreKey = 'steps:custom:1';
 jest.mock('@/hooks/companion/useTaskActions', () => ({
-  useTaskActionPhase: (_store: unknown, key: string) => key === 'custom:1' ? mockTaskPhase : { phase: 'idle' },
+  useTaskActionPhase: (_store: unknown, key: string) => key === 'custom:1' ? mockTaskPhase : key === mockStepStoreKey ? mockStepPhase : { phase: 'idle' },
   useTaskActionDraft: () => undefined,
   useTaskActionClient: () => null,
   progressFor: (key: string, view: TaskProgressView) => view.byRef.get(key),
@@ -82,7 +84,8 @@ function panel() {
     status: 'ready', byRef: new Map([['custom:1', {
       taskRef: 'custom:1', state: 'not_started', waitingReason: null,
       revision: 2, removed: true, lastReceipt: null,
-    }]]), stepsByRef: new Map(), details: [], stale: false, canWrite: true,
+    }]]), stepsByRef: new Map([['custom:1', [{ stepId: 'step-1', taskRef: 'custom:1',
+      title: 'Bring synthetic photo ID', done: false, revision: 3, position: 0 }]]]), details: [], stale: false, canWrite: true,
     readAt: Number.MAX_SAFE_INTEGER, refetch: () => {},
   };
   return <I18nextProvider i18n={i18n}>
@@ -105,6 +108,38 @@ it('the Android panel keeps focus when reopened on its retained saved receipt', 
   } finally { Platform.OS = platform; focus.mockRestore(); }
 });
 
+it.each([
+  ['steps:custom:1', 'step.create', false, 'Added step: Bring synthetic photo ID'],
+  ['step:step-1', 'step.set_done', true, 'Checked step: Bring synthetic photo ID'],
+  ['step:step-1', 'step.set_done', false, 'Unchecked step: Bring synthetic photo ID'],
+] as const)('focuses a fresh %s %s result with its saved step name', (key, type, done, label) => {
+  const platform = Platform.OS;
+  Platform.OS = 'android';
+  const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent').mockImplementation(() => {});
+  try {
+    mockTaskPhase = { phase: 'idle' }; mockStepPhase = { phase: 'idle' }; mockStepStoreKey = key;
+    const rendered = render(panel(), { createNodeMock: () => ({}) });
+    focus.mockClear();
+    mockStepPhase = { phase: 'saved', receipt: {
+      ...receipt('task.restore'), operationType: type,
+      steps: [{ stepId: 'step-1', title: 'Bring synthetic photo ID', done,
+        beforeTitle: null, beforeDone: !done, afterRevision: 3, removed: false }],
+    } };
+    rendered.rerender(panel());
+    fireEvent(screen.getByText(label), 'layout', {
+      nativeEvent: { layout: { x: 0, y: 0, width: 300, height: 48 } },
+    });
+    expect(focus).toHaveBeenCalledTimes(1);
+    // Reopening saved history must not steal focus.
+    rendered.unmount();
+    render(panel(), { createNodeMock: () => ({}) }); focus.mockClear();
+    fireEvent(screen.getByText(label), 'layout', {
+      nativeEvent: { layout: { x: 0, y: 0, width: 300, height: 48 } },
+    });
+    expect(focus).not.toHaveBeenCalled();
+  } finally { mockStepPhase = { phase: 'idle' }; Platform.OS = platform; focus.mockRestore(); }
+});
+
 it.each(['task.remove', 'task.restore'] as const)('the Android panel focuses a fresh %s result and sends no competing announcement', type => {
   const platform = Platform.OS;
   Platform.OS = 'android';
@@ -121,5 +156,37 @@ it.each(['task.remove', 'task.restore'] as const)('the Android panel focuses a f
     });
     expect(focus).toHaveBeenCalledTimes(1);
     expect(announce).not.toHaveBeenCalled();
+  } finally { Platform.OS = platform; focus.mockRestore(); announce.mockRestore(); }
+});
+
+it.each(['change', 'undo'] as const)('the Android panel focuses a fresh state %s result without competing speech', kind => {
+  const platform = Platform.OS;
+  Platform.OS = 'android';
+  const focus = jest.spyOn(AccessibilityInfo, 'sendAccessibilityEvent').mockImplementation(() => {});
+  const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => {});
+  try {
+    mockTaskPhase = { phase: 'idle' };
+    const rendered = render(panel(), { createNodeMock: () => ({}) });
+    focus.mockClear(); announce.mockClear();
+    mockTaskPhase = { phase: 'saved', receipt: {
+      ...receipt('task.restore'), operationType: 'task.set_state', kind,
+      beforeState: 'not_started', afterState: 'in_progress',
+    } };
+    rendered.rerender(panel());
+    const radio = screen.getByRole('radio', { name: 'Not started' });
+    expect(radio.props.accessibilityState.checked).toBe(true);
+    expect(radio.props.accessibilityState.selected).toBeUndefined();
+    const result = screen.getByText(kind === 'undo'
+      ? 'Undid a change. The task is back to In progress.'
+      : 'Changed from Not started to In progress');
+    fireEvent(result, 'layout', {
+      nativeEvent: { layout: { x: 0, y: 0, width: 300, height: 48 } },
+    });
+    expect(focus).toHaveBeenCalledTimes(1);
+    expect(announce).not.toHaveBeenCalled();
+    fireEvent(result, 'layout', {
+      nativeEvent: { layout: { x: 0, y: 0, width: 300, height: 48 } },
+    });
+    expect(focus).toHaveBeenCalledTimes(1);
   } finally { Platform.OS = platform; focus.mockRestore(); announce.mockRestore(); }
 });

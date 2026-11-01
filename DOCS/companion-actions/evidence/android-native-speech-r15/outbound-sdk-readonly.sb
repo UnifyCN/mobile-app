@@ -1,0 +1,10 @@
+(version 1)
+(allow default)
+(deny network-outbound (require-not (require-any (remote ip "localhost:63679") (remote ip "localhost:5590") (remote ip "localhost:5591") (remote ip "localhost:8580") (remote ip "localhost:3530") (remote ip "localhost:65100") (remote ip "localhost:65101") (remote ip "localhost:65102") (remote ip "localhost:65103") (remote ip "localhost:3516") (remote ip "localhost:8351"))))
+(deny file-write* (subpath "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk"))
+(deny file-write* (subpath "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-74fd690f/build/369-android-native-bootstrap-r2/avd"))
+(deny file-write* (subpath "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-34e3ae24/DOCS/companion-actions/evidence/android-tts-facility-r12"))
+
+(deny file-write* (subpath "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-b9af151e/DOCS/companion-actions/evidence/android-speech-readiness-r13"))
+
+(deny file-write* (subpath "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-df533785/DOCS/companion-actions/evidence/android-product-speech-r14"))

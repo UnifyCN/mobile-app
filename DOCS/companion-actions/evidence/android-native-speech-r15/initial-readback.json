@@ -1,0 +1,32 @@
+{
+  "exit": 0,
+  "proof_class": "Independent SQL readback of the native account. This helper does not log in or write.",
+  "query": "select json_build_object(\n 'account_id', '[SYNTHETIC_ID]',\n 'auth_sessions',(select count(*) from auth.sessions where user_id='[SYNTHETIC_ID]'),\n 'consent',(select json_build_object('privacy',privacy_policy_accepted_at is not null,'guidelines',community_guidelines_accepted_at is not null) from public.users where id='[SYNTHETIC_ID]'),\n 'task',(select json_build_object('id',id,'user_id',user_id,'revision',revision,'progress_state',progress_state,'completed',completed,'waiting_reason',waiting_reason,'removed_at',removed_at,'state_updated_at',state_updated_at) from public.custom_checklist_tasks where id=3698001),\n 'receipts',(select coalesce(json_agg(json_build_object('user_id',user_id,'operation_id',operation_id,'contract_version',contract_version,'authorization_evidence',authorization_evidence,'outcome',outcome,'created_at',created_at,'task_ref',task_ref,'undo_of',undo_of)),'[]'::json) from public.companion_action_receipts where user_id='[SYNTHETIC_ID]'),\n 'reminders',(select coalesce(json_agg(json_build_object('id',id,'user_id',user_id,'task_ref',task_ref,'remind_at',remind_at,'time_zone',time_zone,'wall_time',wall_time,'status',status,'revision',revision,'cancelled_reason',cancelled_reason)),'[]'::json) from public.companion_task_reminders where user_id='[SYNTHETIC_ID]'),\n 'enrollments',(select count(*) from companion_push_private.enrollments),\n 'provider_attempts',(select count(*) from companion_push_private.attempts),\n 'delivery_states',(select json_agg(x) from (select state,count(*) from companion_push_private.deliveries group by state) x),\n 'dispatch_enabled',(select dispatch_enabled from companion_push_private.settings));",
+  "result": {
+    "account_id": "[SYNTHETIC_ID]",
+    "auth_sessions": 1,
+    "consent": {
+      "guidelines": false,
+      "privacy": false
+    },
+    "delivery_states": null,
+    "dispatch_enabled": false,
+    "enrollments": 0,
+    "provider_attempts": 0,
+    "receipts": [],
+    "reminders": [],
+    "task": {
+      "completed": false,
+      "id": 3698001,
+      "progress_state": null,
+      "removed_at": null,
+      "revision": 1,
+      "state_updated_at": "2026-11-01T04:00:17.299592+00:00",
+      "user_id": "[SYNTHETIC_ID]",
+      "waiting_reason": null
+    }
+  },
+  "seconds": 0.08164229200338013,
+  "stderr_bytes": 0,
+  "stdout_bytes": 509
+}

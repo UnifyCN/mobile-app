@@ -1,0 +1,77 @@
+{
+  "child": {
+    "external": [
+      {
+        "errno": 1,
+        "ip": "1.1.1.1"
+      },
+      {
+        "errno": 1,
+        "ip": "8.8.8.8"
+      },
+      {
+        "errno": 1,
+        "ip": "2606:4700:4700::1111"
+      }
+    ],
+    "http": {
+      "body_bytes": 26,
+      "header_bytes": 92,
+      "seconds": 0.0014618330169469118,
+      "status": 200,
+      "total_bytes": 118
+    },
+    "no_write_or_truncate": true,
+    "sdk_write_open_errno": 1
+  },
+  "command": [
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/emulator/emulator",
+    "-avd",
+    "CompanionSpeechR13B9afApi36",
+    "-ports",
+    "5590,5591",
+    "-grpc",
+    "8580",
+    "-no-snapshot",
+    "-no-window",
+    "-no-audio",
+    "-no-boot-anim",
+    "-no-metrics",
+    "-gpu",
+    "swiftshader",
+    "-camera-back",
+    "none",
+    "-camera-front",
+    "none",
+    "-crash-report-mode",
+    "disabled"
+  ],
+  "exec_pid": 65142,
+  "inherited_connected_sockets": false,
+  "parent": {
+    "external": [
+      {
+        "errno": 1,
+        "ip": "1.1.1.1"
+      },
+      {
+        "errno": 1,
+        "ip": "8.8.8.8"
+      },
+      {
+        "errno": 1,
+        "ip": "2606:4700:4700::1111"
+      }
+    ],
+    "http": {
+      "body_bytes": 26,
+      "header_bytes": 92,
+      "seconds": 0.0028786250040866435,
+      "status": 200,
+      "total_bytes": 118
+    },
+    "no_write_or_truncate": true,
+    "sdk_write_open_errno": 1
+  },
+  "policy_sha256": "189d9b4309817aa6e3af9c29850e79849d8294cd0aefc2a9705f70927cc7bd04"
+}

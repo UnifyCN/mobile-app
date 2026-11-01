@@ -1,0 +1,26 @@
+[
+  {
+    "bytes": 5371,
+    "name": "manifest",
+    "seconds": 0.33632337499875575,
+    "sha256": "58275351b841440a6834d94bc87c8bff28225d568bca4e8328835b6d5ec81849",
+    "status": 200,
+    "url": "http://127.0.0.1:8351"
+  },
+  {
+    "bytes": 43552843,
+    "name": "source-map",
+    "seconds": 1.5652045419847127,
+    "sha256": "2055e49676d37ade06d6e26a22925089b445dd161c3afe4b264e8a5144322603",
+    "status": 200,
+    "url": "http://127.0.0.1:8351/node_modules/expo-router/entry.map?platform=android&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable"
+  },
+  {
+    "bytes": 29291003,
+    "name": "bundle",
+    "seconds": 0.10909549999632873,
+    "sha256": "ec7a7ae5aada16eca4519fe20885b6010aa76ce347b1aded7dee93db037860b5",
+    "status": 200,
+    "url": "http://127.0.0.1:8351/node_modules/expo-router/entry.bundle?platform=android&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.bytecode=1&transform.routerRoot=app&transform.reactCompiler=true&unstable_transformProfile=hermes-stable"
+  }
+]

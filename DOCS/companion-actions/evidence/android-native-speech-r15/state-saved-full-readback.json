@@ -1,0 +1,63 @@
+{
+  "exit": 0,
+  "proof_class": "Independent complete row observer of native operations. No login or write.",
+  "result": {
+    "details": [],
+    "receipts": [
+      {
+        "authorization_evidence": {
+          "kind": "ui_control"
+        },
+        "contract_version": 1,
+        "created_at": "2026-11-01T04:06:23.995833+00:00",
+        "inverse": [
+          {
+            "expected_revision": 2,
+            "state": "not_started",
+            "task_ref": "custom:3698001",
+            "type": "task.set_state"
+          }
+        ],
+        "operation_id": "8ef666e5-0807-4a7a-a29b-0f0e71c22ddf",
+        "outcome": {
+          "results": [
+            {
+              "after_revision": 2,
+              "after_waiting_reason": null,
+              "before_revision": 1,
+              "before_state": "not_started",
+              "before_waiting_reason": null,
+              "state": "in_progress",
+              "task_ref": "custom:3698001",
+              "type": "task.set_state"
+            }
+          ]
+        },
+        "request_hash": "b04f3d900ce5d647864e1a58235bd7b68615d0d9723a5b5e03107b0c33a87910",
+        "task_ref": "custom:3698001",
+        "undo_of": null,
+        "user_id": "[SYNTHETIC_ID]"
+      }
+    ],
+    "reminders": [],
+    "steps": [],
+    "task": [
+      {
+        "completed": false,
+        "completed_at": null,
+        "created_at": "2026-11-01T04:00:17.299592+00:00",
+        "description": "Owned synthetic native reminder task",
+        "id": 3698001,
+        "priority": "Do now",
+        "progress_state": "in_progress",
+        "removed_at": null,
+        "revision": 2,
+        "state_updated_at": "2026-11-01T04:06:23.995833+00:00",
+        "title": "Native R8 reminder",
+        "updated_at": "2026-11-01T04:06:23.995833+00:00",
+        "user_id": "[SYNTHETIC_ID]",
+        "waiting_reason": null
+      }
+    ]
+  }
+}

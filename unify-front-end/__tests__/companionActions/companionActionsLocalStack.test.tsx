@@ -430,7 +430,7 @@ describeStack('Task progress against the real local stack (mobile)', () => {
     fireEvent.press(await screen.findByText('Get a SIN'));
     fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
     const notStarted = await screen.findByRole('radio', { name: 'Not started' });
-    await waitFor(() => expect(notStarted).toBeSelected());
+    await waitFor(() => expect(notStarted).toBeChecked());
     await waitFor(() =>
       expect(screen.getByRole('radio', { name: 'Waiting' })).not.toBeDisabled()
     );
@@ -625,7 +625,7 @@ describeStack('Task steps against the real local stack (mobile, #366)', () => {
       await screen.findByText('All steps are done. This task stays Not started until you mark it complete.')
     ).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Mark task complete' })).toBeTruthy();
-    expect(screen.getByRole('radio', { name: 'Not started' })).toBeSelected();
+    expect(screen.getByRole('radio', { name: 'Not started' })).toBeChecked();
 
     await toggle(SIN_STEPS[2], false);
     expect(screen.queryByRole('button', { name: 'Mark task complete' })).toBeNull();
@@ -692,7 +692,7 @@ describeStack('Task steps against the real local stack (mobile, #366)', () => {
       timeout: 10_000,
     });
     fireEvent.press(screen.getByRole('button', { name: 'Mark task complete' }));
-    await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected(), { timeout: 10_000 });
+    await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeChecked(), { timeout: 10_000 });
     const after = await actions(owner.jwt, { action: 'read' });
     expect(after.json.tasks.find((t: any) => t.task_ref === 'sanity:sin')).toMatchObject({ state: 'completed' });
     expect(stepsOf(after.json, 'sanity:sin')).toEqual([

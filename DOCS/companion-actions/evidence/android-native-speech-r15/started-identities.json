@@ -1,0 +1,84 @@
+[
+  {
+    "Id": "77f76c130120e037f0d43145045002135e93bdd554b712f53db6f11fdacdebce",
+    "Name": "/supabase_db_unify-native-speech-374-r15",
+    "Labels": {
+      "com.docker.compose.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack"
+    },
+    "Mounts": [
+      {
+        "Type": "volume",
+        "Name": "supabase_db_unify-native-speech-374-r15",
+        "Source": "/var/lib/docker/volumes/supabase_db_unify-native-speech-374-r15/_data",
+        "Destination": "/var/lib/postgresql/data",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+      }
+    ]
+  },
+  {
+    "Id": "f2629624428711bd696458286c36c62201429446f3620f16a47feba61f2b72d4",
+    "Name": "/supabase_rest_unify-native-speech-374-r15",
+    "Labels": {
+      "com.docker.compose.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack"
+    },
+    "Mounts": []
+  },
+  {
+    "Id": "76340b1a393d2acfe27fc30418f3fc3808307b85b6eb18c1ad9e1420d944b1b2",
+    "Name": "/supabase_edge_runtime_unify-native-speech-374-r15",
+    "Labels": {
+      "com.docker.compose.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack"
+    },
+    "Mounts": [
+      {
+        "Type": "bind",
+        "Source": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack/supabase/functions",
+        "Destination": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack/supabase/functions",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "volume",
+        "Name": "supabase_edge_runtime_unify-native-speech-374-r15",
+        "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-speech-374-r15/_data",
+        "Destination": "/root/.cache/deno",
+        "Driver": "local",
+        "Mode": "rw",
+        "RW": true,
+        "Propagation": ""
+      }
+    ],
+    "content_url": "http://host.docker.internal:3516/content"
+  },
+  {
+    "Id": "234fc27f51889670e766b35d95ced9c1d81019432f2a8e1ff401042eb3efa909",
+    "Name": "/supabase_auth_unify-native-speech-374-r15",
+    "Labels": {
+      "com.docker.compose.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack"
+    },
+    "Mounts": []
+  },
+  {
+    "Id": "8d51adb2e474657677c8ac7bfe58c834c32561a1f0c84bdd0010a8c56d122fe4",
+    "Name": "/supabase_kong_unify-native-speech-374-r15",
+    "Labels": {
+      "com.docker.compose.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.project": "unify-native-speech-374-r15",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/build/android-native-speech-r15/stack",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "Mounts": []
+  }
+]

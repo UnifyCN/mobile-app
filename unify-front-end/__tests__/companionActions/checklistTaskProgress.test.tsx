@@ -291,7 +291,7 @@ async function openTaskProgress() {
   fireEvent.press(await screen.findByText('Get a SIN'));
   fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
   const notStarted = await screen.findByRole('radio', { name: 'Not started' });
-  await waitFor(() => expect(notStarted).toBeSelected());
+  await waitFor(() => expect(notStarted).toBeChecked());
   // Opening is an editing entry: controls turn on once its read has finished.
   await waitFor(() =>
     expect(screen.getByRole('radio', { name: 'Waiting' })).toBeEnabled()
@@ -360,7 +360,7 @@ describe('Checklist task progress (mobile)', () => {
     fireEvent.press(await screen.findByText('Get a SIN'));
     fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
     const waiting = await screen.findByRole('radio', { name: 'Waiting' });
-    await waitFor(() => expect(waiting).toBeSelected());
+    await waitFor(() => expect(waiting).toBeChecked());
 
     fireEvent.press(screen.getByRole('radio', { name: 'In progress' }));
     expect(await screen.findByText('Changed from Waiting to In progress')).toBeTruthy();
@@ -523,7 +523,7 @@ describe('Checklist task progress (mobile)', () => {
       await new Promise(resolve => setTimeout(resolve, 5_200));
     });
     const inProgress = await screen.findByRole('radio', { name: 'In progress' });
-    await waitFor(() => expect(inProgress).toBeSelected());
+    await waitFor(() => expect(inProgress).toBeChecked());
     await waitFor(() => expect(screen.getByRole('radio', { name: 'Waiting' })).not.toBeDisabled());
     fireEvent.press(screen.getByRole('radio', { name: 'Waiting' }));
     await waitFor(() => expect(server.writes()).toHaveLength(1));
@@ -605,7 +605,7 @@ describe('Checklist task progress (mobile)', () => {
     });
     await foreground();
     const completed = await screen.findByRole('radio', { name: 'Completed' });
-    await waitFor(() => expect(completed).toBeSelected());
+    await waitFor(() => expect(completed).toBeChecked());
     expect(
       await screen.findByText(/This task changed after this/)
     ).toBeTruthy();
@@ -867,7 +867,7 @@ describe('review r2 corrections (mobile)', () => {
     // Until the new read arrives, nothing can be changed.
     expect(screen.getByRole('radio', { name: 'Waiting' })).toBeDisabled();
     await waitFor(() =>
-      expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected()
+      expect(screen.getByRole('radio', { name: 'Completed' })).toBeChecked()
     );
     expect(server.sent.filter(b => b.action === 'read').length).toBeGreaterThan(
       reads

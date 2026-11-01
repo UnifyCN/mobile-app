@@ -1,0 +1,662 @@
+[
+  {
+    "gzip": "adb.log.redacted.txt.gz",
+    "original_bytes": 478,
+    "original_sha256": "2aa41af07abcfbba98e6992ba5ea324f5b03109f42a580a07a28f372f10853bd"
+  },
+  {
+    "gzip": "android-commands.jsonl.gz",
+    "original_bytes": 287178773,
+    "original_sha256": "f58da927ca389fb58bdc9ed03cec5727b6aed060055b75a10a9e90a9d3da3738"
+  },
+  {
+    "gzip": "before-cold-metro.redacted.txt.gz",
+    "original_bytes": 17320,
+    "original_sha256": "5cfe6066ae48c52479d5d3c11d7ec756ff47f1d560090a9e6ebc946487413b29"
+  },
+  {
+    "gzip": "bootstrap.log.redacted.txt.gz",
+    "original_bytes": 693,
+    "original_sha256": "1522df0d4e5d9673d6c91b5216ef5e238f7eb03284ea8a51e117e00cc67e0047"
+  },
+  {
+    "gzip": "client-tests-backdrop.log.redacted.txt.gz",
+    "original_bytes": 45984,
+    "original_sha256": "3d0cea03f9f31415de40a6b3f7f6e29a82b0e4274e879f2f6387fad0a32fd910"
+  },
+  {
+    "gzip": "client-tests-checked.log.redacted.txt.gz",
+    "original_bytes": 46001,
+    "original_sha256": "a063380d3cc88b0b0ad539e98717e8d7876c039e7328e978d59b84181b531a19"
+  },
+  {
+    "gzip": "client-tests-corrected.log.redacted.txt.gz",
+    "original_bytes": 54145,
+    "original_sha256": "58ea8a1dcd042da1d5d78c476f5449425b9ca22e88c5bae62c8d8cb474d5a2f3"
+  },
+  {
+    "gzip": "client-tests-final.log.redacted.txt.gz",
+    "original_bytes": 46000,
+    "original_sha256": "f05a707400cd0859bdd7afe2cb424fcda3d910e8d9795fcc40b16054b74e8956"
+  },
+  {
+    "gzip": "client-tests.log.redacted.txt.gz",
+    "original_bytes": 36812,
+    "original_sha256": "538b12cf1e736c1333cfe86571cf6a64c1822c6aefba232de718a0a311fb6992"
+  },
+  {
+    "gzip": "commands.jsonl.gz",
+    "original_bytes": 377831,
+    "original_sha256": "5918fe2579d181e1debe77131f89dc3a06cc6fa38d7ba638423ba8c518764d41"
+  },
+  {
+    "gzip": "emulator.log.redacted.txt.gz",
+    "original_bytes": 7587,
+    "original_sha256": "ebd5184db5d3cf73c8aee7bef8d5e2e0589be51346df6fb2e7be833a4ebdb876"
+  },
+  {
+    "gzip": "final-readback-redacted.log.redacted.txt.gz",
+    "original_bytes": 8128,
+    "original_sha256": "6973082182813b69816dd9c558ab0b1ca2b39dff6df7f3295395239bcca191db"
+  },
+  {
+    "gzip": "fixture-gate.log.redacted.txt.gz",
+    "original_bytes": 33,
+    "original_sha256": "5e4004ff13742064753beeaa1e217bda98b9373828c66ecdbc45759c165558a2"
+  },
+  {
+    "gzip": "fixtures.log.redacted.txt.gz",
+    "original_bytes": 717,
+    "original_sha256": "bbac93e5e98caf4041ef48176f3b89722f15389e09c51ce434c9c4b9f8c95593"
+  },
+  {
+    "gzip": "identity-cold.log.redacted.txt.gz",
+    "original_bytes": 781,
+    "original_sha256": "f83b0568f1ecf411241dfe5ba76f4a44fd29640719b7d5ac9a3f7e950b37c2ae"
+  },
+  {
+    "gzip": "identity-corrected.log.redacted.txt.gz",
+    "original_bytes": 781,
+    "original_sha256": "04e3e52d3e6776c03d63715e79b5934499a5ae8b286268138f99a6776ff77512"
+  },
+  {
+    "gzip": "identity-final.log.redacted.txt.gz",
+    "original_bytes": 781,
+    "original_sha256": "4829e15ffb990522453c67c601bf603370c77fe0a41c75d95c5d233af2c5bc0b"
+  },
+  {
+    "gzip": "identity.log.redacted.txt.gz",
+    "original_bytes": 781,
+    "original_sha256": "f6d4447177caee64e67c6387caef9fdae837b5c844307e15f99d600023b09b63"
+  },
+  {
+    "gzip": "lint-final.log.redacted.txt.gz",
+    "original_bytes": 1876,
+    "original_sha256": "1e51a395a3f41f24907b38464e9a4283ee049e1144d8e745754d975c823cf07d"
+  },
+  {
+    "gzip": "lint-final2.log.redacted.txt.gz",
+    "original_bytes": 7485,
+    "original_sha256": "4051cb2c2565787a1971d288e6b1be8aa9ff774ffe7635bc154fe04cf8d4ab9e"
+  },
+  {
+    "gzip": "lint.log.redacted.txt.gz",
+    "original_bytes": 1876,
+    "original_sha256": "1e51a395a3f41f24907b38464e9a4283ee049e1144d8e745754d975c823cf07d"
+  },
+  {
+    "gzip": "metro.redacted.txt.gz",
+    "original_bytes": 14262,
+    "original_sha256": "4674ccc86c533e0fdc2b531087cec0fe000973e88cf6a12feee45ff6306b771a"
+  },
+  {
+    "gzip": "n01-green.log.redacted.txt.gz",
+    "original_bytes": 999,
+    "original_sha256": "111be6c73b9175774f1d4906af28a207c50eb446d415a00d4d4da6741ffaa2e9"
+  },
+  {
+    "gzip": "n01-red.log.redacted.txt.gz",
+    "original_bytes": 2366,
+    "original_sha256": "b3008b53ad37fc41bf2b39d15eba54e00c62f06f80d8765200e35613e1558618"
+  },
+  {
+    "gzip": "n01-selection-green.log.redacted.txt.gz",
+    "original_bytes": 1265,
+    "original_sha256": "8242a8110d16ed6ef109b3fe75e0c122c67239d563b970dd92905bfcf60dbc0e"
+  },
+  {
+    "gzip": "n01-selection-red.log.redacted.txt.gz",
+    "original_bytes": 2743,
+    "original_sha256": "ad591268402c086d17a506a527a1d2dfb87513bed0801d1785a615b753e01111"
+  },
+  {
+    "gzip": "n02-green.log.redacted.txt.gz",
+    "original_bytes": 1252,
+    "original_sha256": "e16e983fa37b3a8f6fa5155b2b8400e11177c89aecfd8441449dc973440bfac4"
+  },
+  {
+    "gzip": "n02-red.log.redacted.txt.gz",
+    "original_bytes": 3296,
+    "original_sha256": "40664195ca0cdd9c01c5e85e5911fcf13b14114b4462c1075702ba31dd69f292"
+  },
+  {
+    "gzip": "n03-backdrop-green.log.redacted.txt.gz",
+    "original_bytes": 4661,
+    "original_sha256": "06c7fc0686be4d172087c1cd236735cf7b459054daf395c241f6017ee4335f65"
+  },
+  {
+    "gzip": "n03-backdrop-red.log.redacted.txt.gz",
+    "original_bytes": 29976,
+    "original_sha256": "c3c8d62ca58455e579b7630176dda6f147abe3bdbae45c8c1bc13d432d882f11"
+  },
+  {
+    "gzip": "n03-green.log.redacted.txt.gz",
+    "original_bytes": 900,
+    "original_sha256": "1a9dcbe18db83b2371945641ab62b34b6a4efd90f0b700b32d01421c79676d4c"
+  },
+  {
+    "gzip": "n03-red.log.redacted.txt.gz",
+    "original_bytes": 1941,
+    "original_sha256": "17fd4915d79eb1f2270994fde0324eddf68b6ba0cd832bd0afbe8afc4acb26e2"
+  },
+  {
+    "gzip": "raw/add-physical-target-reader.log.gz",
+    "original_bytes": 4630129,
+    "original_sha256": "763a3c2dcd34bb468cd671b3a452479ee2a9ff78fd8acb9b7c7affc375ca36ff"
+  },
+  {
+    "gzip": "raw/after-native-swipes-reader.log.gz",
+    "original_bytes": 2708204,
+    "original_sha256": "22abf78dc3194ca2443c3185c6d7bfd2037ba436da3dec2e792b02e3fe7d64ca"
+  },
+  {
+    "gzip": "raw/backdrop-named-task-reader.log.gz",
+    "original_bytes": 1304897,
+    "original_sha256": "f548e2cb8ea4ac4165459641f6eca433a41fb72573a9599d8fb808a8b3f0055e"
+  },
+  {
+    "gzip": "raw/checked-step-undo-target-reader.log.gz",
+    "original_bytes": 5056359,
+    "original_sha256": "ecd66452f3b1829caa32a15b9600e1876149d93c3348cc5bd72617cf1b816559"
+  },
+  {
+    "gzip": "raw/close-step-scene-reader.log.gz",
+    "original_bytes": 5188358,
+    "original_sha256": "2ee92b957a7ea2ac0e2bc0ffa33707d931e71987cce776464b2979ec7a48da49"
+  },
+  {
+    "gzip": "raw/corrected-scroll-reader.log.gz",
+    "original_bytes": 746211,
+    "original_sha256": "ed9078cc9619d5af1dfbf6de57b8bfba5feffe2e853df0cb1d6a99a6bc49b316"
+  },
+  {
+    "gzip": "raw/corrected-touch-reader.log.gz",
+    "original_bytes": 760191,
+    "original_sha256": "8f25957bd39f8da136d951c9795150f16789abbd658950ef5b2600ba3fd72243"
+  },
+  {
+    "gzip": "raw/final-named-task-control-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/final-named-task-control-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8927039,
+    "original_sha256": "e81beb9185662e9e1609162fce4e60b78251831659d7a3a08a57268d6fc5b00d"
+  },
+  {
+    "gzip": "raw/final-named-task-control-com.google.android.tts-2391.log.gz",
+    "original_bytes": 95920,
+    "original_sha256": "0cb41706527369bfbc2f240b74415c680ab90170185b94f6dc7fc1ef08c31883"
+  },
+  {
+    "gzip": "raw/final-named-task-control-r2-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/final-named-task-control-r2-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 9164441,
+    "original_sha256": "c90aa6a7a7f415b4cfab607f3974e0d0e8afe2ccef742d5592357c83d13d7ae2"
+  },
+  {
+    "gzip": "raw/final-named-task-control-r2-com.google.android.tts-2391.log.gz",
+    "original_bytes": 99573,
+    "original_sha256": "4a321a0b8eb613955b0355038dffdd42cf1696a650b7f6679e9157c7912a3589"
+  },
+  {
+    "gzip": "raw/fixed-in-progress-target-reader.log.gz",
+    "original_bytes": 3343905,
+    "original_sha256": "5f6c9d79f696b13922f6594bbc380660a2db5dd2091a92769a0112938dd1b123"
+  },
+  {
+    "gzip": "raw/fixed-undo-target-reader.log.gz",
+    "original_bytes": 3614646,
+    "original_sha256": "60cd49fed68f2ddc31bd296daee023d699881d5fa77d4d1c0eda8548f1d63883"
+  },
+  {
+    "gzip": "raw/historical-state-entry-reader.log.gz",
+    "original_bytes": 3139703,
+    "original_sha256": "47ed8401be9c89cb63856fbf970721fb6f220e57eae6cdbc9ec467291634db5f"
+  },
+  {
+    "gzip": "raw/historical-undo-target-reader.log.gz",
+    "original_bytes": 3193230,
+    "original_sha256": "10d88e7789fea209ee5e2395ad7adc886a79c0495710fad574ec95b158e52f50"
+  },
+  {
+    "gzip": "raw/named-control-r2-reader.log.gz",
+    "original_bytes": 193058,
+    "original_sha256": "91d9243365e4467c90f577d9e097f3408a809faa54af91b45cbf3f5adc975102"
+  },
+  {
+    "gzip": "raw/named-task-control-r2-com.android.settings-1148.log.gz",
+    "original_bytes": 273743,
+    "original_sha256": "faa2606311386c141a52ce4918d43aad2f11efe3bd136fd661501576ace3b963"
+  },
+  {
+    "gzip": "raw/named-task-control-r2-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 193058,
+    "original_sha256": "91d9243365e4467c90f577d9e097f3408a809faa54af91b45cbf3f5adc975102"
+  },
+  {
+    "gzip": "raw/named-task-control-r2-com.google.android.tts-2391.log.gz",
+    "original_bytes": 20170,
+    "original_sha256": "406c2865449f753d6ec08e2740f6d8a62515097ed9a668de03d3998305fdbe75"
+  },
+  {
+    "gzip": "raw/native-swipe-diagnostic-reader.log.gz",
+    "original_bytes": 821943,
+    "original_sha256": "117841d0108925cd505a7e599d3e216000516d35a787bc31ff26ead59fd33679"
+  },
+  {
+    "gzip": "raw/physical-input.jsonl.gz",
+    "original_bytes": 10717,
+    "original_sha256": "ada01f5696c500000703601ee55fc702beacf603077c9b68ded0deff4c2577d9"
+  },
+  {
+    "gzip": "raw/reader-now-reader.log.gz",
+    "original_bytes": 1117764,
+    "original_sha256": "bf9679f7c8091b1ee8f9806f6f6dfeaaacd4563f73161f23fe9d9932bb6c78a9"
+  },
+  {
+    "gzip": "raw/reminder-review-target-reader.log.gz",
+    "original_bytes": 6595666,
+    "original_sha256": "c4d24b07b9d82877020ac518689ef80c8008f28e94b2b117f27fa47bd82fa9e9"
+  },
+  {
+    "gzip": "raw/reminder-save-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 22350,
+    "original_sha256": "9d158156d92e59ad48827a26a76fb08047ee1c446339e0c36ed4cd1673b315f9"
+  },
+  {
+    "gzip": "raw/reminder-save-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 7035115,
+    "original_sha256": "085b00d7c33f72a0ed6ae64807d824563359a79ecd66ee4331e1681c71a249eb"
+  },
+  {
+    "gzip": "raw/reminder-save-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 80371,
+    "original_sha256": "c2f54936daa905d23645a38807e4a7bf690c4212262e8f28b8bd7ed500499ef0"
+  },
+  {
+    "gzip": "raw/reminder-save-physical-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/reminder-save-physical-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8135928,
+    "original_sha256": "db4542eab7d3720f6458cb7658437afc8275345ce4e111a69d36895d95c1ba0b"
+  },
+  {
+    "gzip": "raw/reminder-save-physical-com.google.android.tts-2391.log.gz",
+    "original_bytes": 92138,
+    "original_sha256": "09e2c22bf1e6ede55c81ae17e96c1e5b99269122b692432818486475b42812b9"
+  },
+  {
+    "gzip": "raw/reminder-save-physical-final-reader.log.gz",
+    "original_bytes": 8058260,
+    "original_sha256": "2a49edbcae9e00c15dca3af686db37901d15016ae2dea97135e8d1f9da21e5ed"
+  },
+  {
+    "gzip": "raw/reminder-save-result-reader.log.gz",
+    "original_bytes": 7035115,
+    "original_sha256": "085b00d7c33f72a0ed6ae64807d824563359a79ecd66ee4331e1681c71a249eb"
+  },
+  {
+    "gzip": "raw/reminder-save-target-confirmed-reader.log.gz",
+    "original_bytes": 7932236,
+    "original_sha256": "a10db5fbabb85f456651f7e7adae3146d42033640a094a282fd05f5e8f3a6811"
+  },
+  {
+    "gzip": "raw/reminder-save-target-r2-reader.log.gz",
+    "original_bytes": 6909554,
+    "original_sha256": "e39e0ce7aa56d2b9e59a507a3822f656e4c2d3fe82a49c964bd2703414778c84"
+  },
+  {
+    "gzip": "raw/reminder-save-target-reader.log.gz",
+    "original_bytes": 6741864,
+    "original_sha256": "c8a3863b9a03bc69d73bde7917f236e942b4bb84236df5ca212c14169b695aa2"
+  },
+  {
+    "gzip": "raw/reminder-save-verified-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/reminder-save-verified-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8021490,
+    "original_sha256": "8aa0cbc1b7d3edec67c6bcfbe283102d18a0c10612ddd0d60c60b838cf6cd64f"
+  },
+  {
+    "gzip": "raw/reminder-save-verified-com.google.android.tts-2391.log.gz",
+    "original_bytes": 90232,
+    "original_sha256": "6901ab724e04cfb5d9f5442f59b7a03f0e273390726a1749c76bf1162a65925a"
+  },
+  {
+    "gzip": "raw/reminder-saved-physical-reader.log.gz",
+    "original_bytes": 8137045,
+    "original_sha256": "18de73ae3bb0d974f996c5df05763882b16637e832c018ab286aa4ec99b6f098"
+  },
+  {
+    "gzip": "raw/reminder-saved-verified-reader.log.gz",
+    "original_bytes": 8021490,
+    "original_sha256": "8aa0cbc1b7d3edec67c6bcfbe283102d18a0c10612ddd0d60c60b838cf6cd64f"
+  },
+  {
+    "gzip": "raw/reminder-task-target-r2-reader.log.gz",
+    "original_bytes": 5765451,
+    "original_sha256": "3267a48fe11a75156f50c3b661cacf75eddeafe0e2f8a8f24a6597b527b47b83"
+  },
+  {
+    "gzip": "raw/reminder-task-target-reader.log.gz",
+    "original_bytes": 5719630,
+    "original_sha256": "6531147b0df549f04dc31b92eefce0b46e6c3a775407c44241d9f3a10f179fe7"
+  },
+  {
+    "gzip": "raw/reminder-time-input-target-reader.log.gz",
+    "original_bytes": 5973497,
+    "original_sha256": "925e77949ed0a6a5ac9cad6eeaead7099612b5eb5b96d5ff07a900f82ba2d11a"
+  },
+  {
+    "gzip": "raw/reminder-time-swipe-preserved-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/reminder-time-swipe-preserved-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8735121,
+    "original_sha256": "96de9ef75f9cfa208e1237e597ff9e3a507600fb7c8814abcd52b48c57a38c61"
+  },
+  {
+    "gzip": "raw/reminder-time-swipe-preserved-com.google.android.tts-2391.log.gz",
+    "original_bytes": 94354,
+    "original_sha256": "5a12e865b12639b6c5f4722e0bbe08f59ba9ccafa4477ef53fa8c2ef3915e315"
+  },
+  {
+    "gzip": "raw/reminder-time-swipe-preserved-reader.log.gz",
+    "original_bytes": 8765346,
+    "original_sha256": "c72b17511eb543b77403c3282eb3dbd519b69e36c1e63cd046638d425248b299"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-center-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-center-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8268772,
+    "original_sha256": "cce1071b9c9eb3f820c9a3530b4d0d9d3b6c20aaf9ade013e4a6ff746a7628cf"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-center-com.google.android.tts-2391.log.gz",
+    "original_bytes": 92456,
+    "original_sha256": "f2d0fdd250ef157b66761d4e68bdfd84e73bdf38a89a05a5a452281ed84e18d8"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-center-reader.log.gz",
+    "original_bytes": 8268772,
+    "original_sha256": "cce1071b9c9eb3f820c9a3530b4d0d9d3b6c20aaf9ade013e4a6ff746a7628cf"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-left-com.android.settings-1148.log.gz",
+    "original_bytes": 3861,
+    "original_sha256": "70f89528960147fa02c4143100bfbaa8aae0c4c0f229ab2eb4f55735d199ddb3"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-left-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 8441546,
+    "original_sha256": "e3d90e223b294ac96e76a47a43018babc636d138adc9147d894a30065d9b5dbb"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-left-com.google.android.tts-2391.log.gz",
+    "original_bytes": 93405,
+    "original_sha256": "8913d0f9376efca654a5478176c5c25e1ed02a6bf00d7a13af1c3669da458a21"
+  },
+  {
+    "gzip": "raw/reminder-time-touch-left-reader.log.gz",
+    "original_bytes": 8683128,
+    "original_sha256": "632fd6dedd5d2d65b70bf5c52e31138edb37afada0a265aa8bf274a38f4e12ef"
+  },
+  {
+    "gzip": "raw/reopen-your-tasks-reader.log.gz",
+    "original_bytes": 5546199,
+    "original_sha256": "b74147d39b5e9b9312ad68d376635857f35d1c38dd531923615e1cd41b391488"
+  },
+  {
+    "gzip": "raw/scroll-text-reader.log.gz",
+    "original_bytes": 1649743,
+    "original_sha256": "3fc108342040cff6a5759d52ba6140a85fcff6559ba7830efba11babaa8fe90f"
+  },
+  {
+    "gzip": "raw/state-result-reader.log.gz",
+    "original_bytes": 507107,
+    "original_sha256": "0290f29ef51d9fe45767fb225b751c33f98519e901fc15fdc0307bd164bd1f27"
+  },
+  {
+    "gzip": "raw/state-save-com.android.settings-1148.log.gz",
+    "original_bytes": 273743,
+    "original_sha256": "faa2606311386c141a52ce4918d43aad2f11efe3bd136fd661501576ace3b963"
+  },
+  {
+    "gzip": "raw/state-save-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 507107,
+    "original_sha256": "0290f29ef51d9fe45767fb225b751c33f98519e901fc15fdc0307bd164bd1f27"
+  },
+  {
+    "gzip": "raw/state-save-com.google.android.tts-2391.log.gz",
+    "original_bytes": 25390,
+    "original_sha256": "5768993d817b1d03ba1946b0822dc8dccfb390d4b5c8832e8b0b49f1043f60fd"
+  },
+  {
+    "gzip": "raw/state-save-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 273743,
+    "original_sha256": "faa2606311386c141a52ce4918d43aad2f11efe3bd136fd661501576ace3b963"
+  },
+  {
+    "gzip": "raw/state-save-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 3415610,
+    "original_sha256": "0f46c8c4fbf2424f6a76cc836ac84d1f26b57bd8a5f8b2d534b61bf16c857941"
+  },
+  {
+    "gzip": "raw/state-save-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 66535,
+    "original_sha256": "f5354ecc55827a64cdf97258615e037de85e016d4af885eec21313bd2bed81a5"
+  },
+  {
+    "gzip": "raw/state-save-fixed-result-reader.log.gz",
+    "original_bytes": 3415610,
+    "original_sha256": "0f46c8c4fbf2424f6a76cc836ac84d1f26b57bd8a5f8b2d534b61bf16c857941"
+  },
+  {
+    "gzip": "raw/state-target-reader.log.gz",
+    "original_bytes": 408854,
+    "original_sha256": "c3799bdbcb8d3ad657f8c3ff8b6ad8f9b5df85d3bdb19a1fd206c181ee7d054f"
+  },
+  {
+    "gzip": "raw/state-undo-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 270397,
+    "original_sha256": "5ae81fa920d0f3ca223c6695944000c4009b7481023e92acfda853554213f9fa"
+  },
+  {
+    "gzip": "raw/state-undo-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 3681609,
+    "original_sha256": "b1eaf413fbe1b42c7b9c1bbc015d37ab7c8a31190883bf6fc80c18058e70b74a"
+  },
+  {
+    "gzip": "raw/state-undo-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 68994,
+    "original_sha256": "7dafb78de2c02494eefff29ed06c2af95494ee81cdba0b34ed62d6e1a3f9a1aa"
+  },
+  {
+    "gzip": "raw/state-undo-retained-com.android.settings-1148.log.gz",
+    "original_bytes": 273743,
+    "original_sha256": "faa2606311386c141a52ce4918d43aad2f11efe3bd136fd661501576ace3b963"
+  },
+  {
+    "gzip": "raw/state-undo-retained-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 3308695,
+    "original_sha256": "bfbc753f4b76ad3304e82a4e3a0d066e37c57c9052afb66bb2cf0cbd1e881ba7"
+  },
+  {
+    "gzip": "raw/state-undo-retained-com.google.android.tts-2391.log.gz",
+    "original_bytes": 63985,
+    "original_sha256": "8ab5950fd46f0f8b74353c66988d737c46dbf3b78f987e8ce60b0531a8be953b"
+  },
+  {
+    "gzip": "raw/state-undo-retained-result-reader.log.gz",
+    "original_bytes": 3308695,
+    "original_sha256": "bfbc753f4b76ad3304e82a4e3a0d066e37c57c9052afb66bb2cf0cbd1e881ba7"
+  },
+  {
+    "gzip": "raw/step-add-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 267864,
+    "original_sha256": "5046dec2e015fe265e098cecf26b3fe7339605d7ac77afe31c6971a6b928a255"
+  },
+  {
+    "gzip": "raw/step-add-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 4712399,
+    "original_sha256": "ce9ea52691a2506192d6c9db18bb2bdde18b998493c8e0a4146dc7b8f6261211"
+  },
+  {
+    "gzip": "raw/step-add-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 74947,
+    "original_sha256": "c58981857ac95dd6a81141ad603b3f9e0b69c11ad71040ccfee6dff7592229de"
+  },
+  {
+    "gzip": "raw/step-add-fixed-result-reader.log.gz",
+    "original_bytes": 4712399,
+    "original_sha256": "ce9ea52691a2506192d6c9db18bb2bdde18b998493c8e0a4146dc7b8f6261211"
+  },
+  {
+    "gzip": "raw/step-add-target-r2-reader.log.gz",
+    "original_bytes": 4591859,
+    "original_sha256": "88a9f61a8b07fb00304fbe767a03b53486dee225f898978d9ce819c4380bb930"
+  },
+  {
+    "gzip": "raw/step-add-target-reader.log.gz",
+    "original_bytes": 4309878,
+    "original_sha256": "ff33a8f0170f515e9151ded9a9e4ab93b814585f910679de0b3540ce5bc232b1"
+  },
+  {
+    "gzip": "raw/step-check-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 267864,
+    "original_sha256": "5046dec2e015fe265e098cecf26b3fe7339605d7ac77afe31c6971a6b928a255"
+  },
+  {
+    "gzip": "raw/step-check-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 4854696,
+    "original_sha256": "60c1aeaee157e6caee1dcd8935a9715513ad24fc74b73cae007f6d95fc1481b9"
+  },
+  {
+    "gzip": "raw/step-check-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 77173,
+    "original_sha256": "97a45969afe9f1e731040b39af3e770af7b0ff03a1e723bfcbab0e98cf0afab3"
+  },
+  {
+    "gzip": "raw/step-check-fixed-result-reader.log.gz",
+    "original_bytes": 4854696,
+    "original_sha256": "60c1aeaee157e6caee1dcd8935a9715513ad24fc74b73cae007f6d95fc1481b9"
+  },
+  {
+    "gzip": "raw/step-checkbox-target-reader.log.gz",
+    "original_bytes": 4748050,
+    "original_sha256": "b50f1a7645cb187587cead7e48af8831d14e54e9a2f253d565e383e6791138cb"
+  },
+  {
+    "gzip": "raw/step-input-target-reader.log.gz",
+    "original_bytes": 3717327,
+    "original_sha256": "3bd7511ee3dee42083140b497877c6efaa799fc51a2fdb59d2a7ef1c7ec3106b"
+  },
+  {
+    "gzip": "raw/step-undo-fixed-com.android.settings-1148.log.gz",
+    "original_bytes": 267864,
+    "original_sha256": "5046dec2e015fe265e098cecf26b3fe7339605d7ac77afe31c6971a6b928a255"
+  },
+  {
+    "gzip": "raw/step-undo-fixed-com.google.android.marvin.talkback-2979.log.gz",
+    "original_bytes": 5143754,
+    "original_sha256": "6d2cfca56b34edc4ffae1a1577bfa2503ee977b329b7b15b3c825d6c3953e10c"
+  },
+  {
+    "gzip": "raw/step-undo-fixed-com.google.android.tts-2391.log.gz",
+    "original_bytes": 79413,
+    "original_sha256": "a48b2b68b663d4f9c3b26128fc31950ca291858a5f8fdffe51b71e42e0062bfe"
+  },
+  {
+    "gzip": "raw/step-undo-fixed-result-reader.log.gz",
+    "original_bytes": 5143754,
+    "original_sha256": "6d2cfca56b34edc4ffae1a1577bfa2503ee977b329b7b15b3c825d6c3953e10c"
+  },
+  {
+    "gzip": "raw/task-control-reader.log.gz",
+    "original_bytes": 154353,
+    "original_sha256": "b70276c1b67e1f7c9730d02427ab6a12b5b6dc7a298a2b460439ba469929f523"
+  },
+  {
+    "gzip": "raw/tools-hidden-focus-reader.log.gz",
+    "original_bytes": 983267,
+    "original_sha256": "6b0bcbd6a0c7a677b023fec9764333c13a2e6fa2c00261b05f7c5a3c7303b1bb"
+  },
+  {
+    "gzip": "raw/warning-target-reader.log.gz",
+    "original_bytes": 557584,
+    "original_sha256": "080b12b5c1892f75110f5d3b54d3a5faf06cd4197431723c6e9b32d432bbec48"
+  },
+  {
+    "gzip": "service-stop.log.redacted.txt.gz",
+    "original_bytes": 348,
+    "original_sha256": "bc8d1c081ad1b477fceef44d005bd66bbeade81d505fc0d07ee4f006c20a6d83"
+  },
+  {
+    "gzip": "stack-start.log.redacted.txt.gz",
+    "original_bytes": 456,
+    "original_sha256": "5a0c8ce498227d7ffb1bcf9ebdedb8070b08e372a8eca26288c28b4f2a25b3b7"
+  },
+  {
+    "gzip": "terminal-readback-redacted.log.redacted.txt.gz",
+    "original_bytes": 8128,
+    "original_sha256": "ff5974e8f1daadb642d69ece61acac2c3ce1fa6cbbc93a746b6eee616be16db8"
+  },
+  {
+    "gzip": "types-corrected.log.redacted.txt.gz",
+    "original_bytes": 51,
+    "original_sha256": "e0581e2aa8fa3e96da10002c54ad52951781fe8b7a8bb3fb58a42afd28801dc1"
+  },
+  {
+    "gzip": "types-final.log.redacted.txt.gz",
+    "original_bytes": 51,
+    "original_sha256": "e0581e2aa8fa3e96da10002c54ad52951781fe8b7a8bb3fb58a42afd28801dc1"
+  },
+  {
+    "gzip": "types-final2.log.redacted.txt.gz",
+    "original_bytes": 51,
+    "original_sha256": "e0581e2aa8fa3e96da10002c54ad52951781fe8b7a8bb3fb58a42afd28801dc1"
+  },
+  {
+    "gzip": "types.log.redacted.txt.gz",
+    "original_bytes": 51,
+    "original_sha256": "e0581e2aa8fa3e96da10002c54ad52951781fe8b7a8bb3fb58a42afd28801dc1"
+  }
+]

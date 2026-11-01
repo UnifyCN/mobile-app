@@ -1,0 +1,81 @@
+[
+  {
+    "label": "state-save-fixed",
+    "expected_receipt_text": "Changed from Not started to In progress",
+    "reader_utterance": "talkback_36",
+    "native_text_and_completion": true,
+    "asr": " Not changed from not started to in progress.",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "state-undo-fixed",
+    "expected_receipt_text": "Undid a change. The task is back to Not started.",
+    "reader_utterance": "talkback_41",
+    "native_text_and_completion": true,
+    "asr": " Undid a change. The task is back to not started.",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "step-add-fixed",
+    "expected_receipt_text": "Added step: Bring synthetic photo ID",
+    "reader_utterance": "talkback_58",
+    "native_text_and_completion": true,
+    "asr": " Added Step Bring Synthetic Photo ID",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "step-check-fixed",
+    "expected_receipt_text": "Checked step: Bring synthetic photo ID",
+    "reader_utterance": "talkback_63",
+    "native_text_and_completion": true,
+    "asr": " not check check step bring synthetic photo ID",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "step-undo-fixed",
+    "expected_receipt_text": "Unchecked step: Bring synthetic photo ID",
+    "reader_utterance": "talkback_69",
+    "native_text_and_completion": true,
+    "asr": " Uncheck step, bring synthetic photo ID",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "reminder-save-physical",
+    "expected_receipt_text": "Reminder saved.",
+    "reader_utterance": "talkback_41",
+    "native_text_and_completion": true,
+    "asr": " Reminder saved.",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "reminder-time-touch-center",
+    "expected_receipt_text": "Nov 3, 2026, 10:30",
+    "reader_utterance": "talkback_42",
+    "native_text_and_completion": true,
+    "asr": " November 3, 2026, 10.30 a.m. Greenwich Mean Time to 8 o'clock America, Vancouver.",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "reminder-time-touch-left",
+    "expected_receipt_text": "Nov 3, 2026, 10:30",
+    "reader_utterance": "talkback_44",
+    "native_text_and_completion": true,
+    "asr": " November 3, 2026, 10.30 a.m. Greenwich Mean Time to 8 o'clock America, Vancouver.",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "reminder-time-swipe-preserved",
+    "expected_receipt_text": "Nov 3, 2026, 10:30",
+    "reader_utterance": "talkback_46",
+    "native_text_and_completion": true,
+    "asr": " November 3, 2026, 10.30am Greenwich Mean Time to 8 o'clock America, Vancouver",
+    "human_words_review": "Read against recorded full result and name; ASR tense and UTC-offset limits retained"
+  },
+  {
+    "label": "final-named-task-control-r2",
+    "expected_receipt_text": "Native R8 reminder, Not started",
+    "reader_utterance": "talkback_2",
+    "native_text_and_completion": true,
+    "asr": " native r8 reminder not started button double tap to activate"
+  }
+]

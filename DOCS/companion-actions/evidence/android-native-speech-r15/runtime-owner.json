@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/emulator/emulator",
+    "-avd",
+    "CompanionSpeechR13B9afApi36",
+    "-ports",
+    "5590,5591",
+    "-grpc",
+    "8580",
+    "-no-snapshot",
+    "-no-window",
+    "-no-audio",
+    "-no-boot-anim",
+    "-no-metrics",
+    "-gpu",
+    "swiftshader",
+    "-camera-back",
+    "none",
+    "-camera-front",
+    "none",
+    "-crash-report-mode",
+    "disabled"
+  ],
+  "controller": 65114,
+  "daemon": 65116,
+  "emulator": 65142,
+  "policy_sha256": "189d9b4309817aa6e3af9c29850e79849d8294cd0aefc2a9705f70927cc7bd04"
+}
