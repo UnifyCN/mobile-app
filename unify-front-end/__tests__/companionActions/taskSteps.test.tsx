@@ -294,7 +294,7 @@ async function openTaskProgress() {
   fireEvent.press(await screen.findByText('Get a SIN'));
   fireEvent.press(await screen.findByRole('button', { name: 'Track progress' }));
   const notStarted = await screen.findByRole('radio', { name: 'Not started' });
-  await waitFor(() => expect(notStarted).toBeSelected());
+  await waitFor(() => expect(notStarted).toBeChecked());
   // Opening is an editing entry: controls turn on once its read has finished.
   await waitFor(() =>
     expect(screen.getByRole('radio', { name: 'Waiting' })).toBeEnabled()
@@ -652,7 +652,7 @@ it('completing the parent blocks the step-add receipt Undo', async () => {
   const complete = screen.getByRole('radio', { name: 'Completed' });
   await waitFor(() => expect(complete).toBeEnabled());
   fireEvent.press(complete);
-  await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeSelected());
+  await waitFor(() => expect(screen.getByRole('radio', { name: 'Completed' })).toBeChecked());
   const readonlyUndo = screen.queryByRole('button', { name });
   if (readonlyUndo) {
     expect(readonlyUndo).toBeDisabled();

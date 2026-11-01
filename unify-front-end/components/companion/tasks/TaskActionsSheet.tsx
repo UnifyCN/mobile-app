@@ -166,9 +166,12 @@ export function TaskActionsSheet({
     >
       <View style={styles.root}>
         <Pressable
+          testID='companion-sheet-backdrop'
           style={StyleSheet.absoluteFill}
           onPress={onClose}
           accessible={false}
+          focusable={false}
+          importantForAccessibility='no-hide-descendants'
         >
           <View style={styles.backdrop} />
         </Pressable>

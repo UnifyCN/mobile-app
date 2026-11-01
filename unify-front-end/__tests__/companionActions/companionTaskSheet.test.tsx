@@ -633,8 +633,11 @@ describe('Companion task entry and sheet (mobile)', () => {
 
     const sheet = await screen.findByTestId('companion-task-sheet');
     fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
+    const backdrop = screen.getByTestId('companion-sheet-backdrop', { includeHiddenElements: true });
+    expect(backdrop.props.importantForAccessibility).toBe('no-hide-descendants');
+    expect(backdrop.props.focusable).toBe(false);
     const inProgress = await within(sheet).findByRole('radio', { name: 'In progress' });
-    await waitFor(() => expect(inProgress).toBeSelected());
+    await waitFor(() => expect(inProgress).toBeChecked());
 
     fireEvent.press(within(sheet).getByRole('radio', { name: 'Waiting' }));
     expect(
@@ -673,7 +676,7 @@ describe('Companion task entry and sheet (mobile)', () => {
     const sheet = await screen.findByTestId('companion-task-sheet');
     fireEvent.press(await within(sheet).findByRole('button', { name: /Get a SIN/ }));
     const inProgress = await within(sheet).findByRole('radio', { name: 'In progress' });
-    await waitFor(() => expect(inProgress).toBeSelected());
+    await waitFor(() => expect(inProgress).toBeChecked());
     expect(within(sheet).getByLabelText(en.reminders.instant)).toBeTruthy();
     expect(within(sheet).getByRole('button', {name:en.reminders.review})).toBeEnabled();
     fireEvent.press(within(sheet).getByRole('radio', { name: 'Completed' }));
