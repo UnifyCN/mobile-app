@@ -36,6 +36,25 @@ test('configuration requires the dedicated login and verified TLS and rejects al
   }
 });
 
+test('session pooler accepts only the dedicated tenant login on the verified session endpoint', () => {
+  const pooler = 'postgres://companion_push_worker.wrbauxutkysljmsqojts:synthetic@aws-0-us-west-1.pooler.supabase.com:5432/postgres?sslmode=verify-full';
+  assert.equal(configurationStatus(request(), 'cycle', { ...valid, COMPANION_PUSH_DATABASE_URL: pooler }), 200);
+  for (const url of [
+    pooler.replace(':5432/', ':6543/'),
+    pooler.replace(':5432/', '/'),
+    pooler.replace('companion_push_worker.', 'postgres.'),
+    pooler.replace('companion_push_worker.', 'service_role.'),
+    pooler.replace('companion_push_worker.', 'companion_push_worker_admin.'),
+    pooler.replace('wrbauxutkysljmsqojts', 'short'),
+    pooler.replace('aws-0-us-west-1.pooler.supabase.com', 'db.wrbauxutkysljmsqojts.supabase.co'),
+    pooler.replace('pooler.supabase.com', 'pooler.supabase.com.attacker.invalid'),
+    pooler.replace('verify-full', 'require'),
+    pooler + '&sslmode=require',
+  ]) {
+    assert.equal(configurationStatus(request(), 'cycle', { ...valid, COMPANION_PUSH_DATABASE_URL: url }), 503);
+  }
+});
+
 test('readiness requires preview scope, an explicit flag, and the operator secret; it needs no database', () => {
   const env = { VERCEL_ENV: 'preview', COMPANION_PUSH_READINESS_ENABLED: 'true', COMPANION_PUSH_OPERATOR_SECRET: secret };
   assert.equal(configurationStatus(request(), 'readiness', env), 200);

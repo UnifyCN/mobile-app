@@ -26,8 +26,11 @@ export function configurationStatus(request, mode, env) {
   if (mode === 'cycle') {
     try {
       const url = new URL(env.COMPANION_PUSH_DATABASE_URL ?? '');
+      const username = decodeURIComponent(url.username);
+      const sessionPoolerLogin = /^companion_push_worker\.[a-z]{20}$/.test(username) &&
+        /^aws-\d+-[a-z0-9-]+\.pooler\.supabase\.com$/.test(url.hostname) && url.port === '5432';
       if (!['postgres:', 'postgresql:'].includes(url.protocol) || !url.hostname ||
-        decodeURIComponent(url.username) !== 'companion_push_worker' || !url.password ||
+        (username !== 'companion_push_worker' && !sessionPoolerLogin) || !url.password ||
         url.searchParams.getAll('sslmode').length !== 1 || url.searchParams.get('sslmode') !== 'verify-full' ||
         env.COMPANION_PUSH_FIXTURE !== undefined || env.COMPANION_PUSH_FIXTURE_URL !== undefined ||
         env.COMPANION_PUSH_FIXTURE_CONTENT_URL !== undefined) return 503;
