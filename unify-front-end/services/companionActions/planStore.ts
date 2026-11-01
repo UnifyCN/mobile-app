@@ -13,6 +13,7 @@
  */
 import type { PlanApplyResult, PlanClient, PlanStatusResult, PlanUndoResult } from './planClient';
 import type { PlanApplyReply, PlanProposal } from './planContract';
+import type { PlanRecovery } from './planRecovery';
 
 export interface PlanWrite {
   operationId: string;
@@ -20,10 +21,14 @@ export interface PlanWrite {
   proposal?: Pick<PlanProposal, 'id' | 'revision' | 'rawItems'>;
   receiptOperationId?: string;
   removalConfirmed?: boolean;
+  /** Restored references permit lookup only until an explicit retry re-reads the draft. */
+  restored?: boolean;
 }
 
 export type PlanPhase =
   | { phase: 'idle' }
+  | { phase: 'restoring' }
+  | { phase: 'recovery_failed' }
   | { phase: 'saving'; write: PlanWrite }
   | { phase: 'saved'; reply: PlanApplyReply }
   | { phase: 'refused'; reason: string }
@@ -64,6 +69,8 @@ export interface PlanResultEvent {
 
 export interface PlanStoreDeps {
   client: PlanClient;
+  recovery?: PlanRecovery;
+  ownerGeneration?: number;
   newOperationId: () => string;
   /** Called after anything that may have changed saved plans or tasks: re-read them. */
   onChanged: () => void;
@@ -72,7 +79,9 @@ export interface PlanStoreDeps {
 
 type Listener = () => void;
 const IDLE: PlanPhase = { phase: 'idle' };
-const UNRESOLVED = new Set(['saving', 'checking', 'pending', 'lookup_failed', 'not_applied']);
+const RESTORING: PlanPhase = { phase: 'restoring' };
+const RECOVERY_FAILED: PlanPhase = { phase: 'recovery_failed' };
+const UNRESOLVED = new Set(['restoring', 'recovery_failed', 'saving', 'checking', 'pending', 'lookup_failed', 'not_applied']);
 
 export const isPlanUnresolved = (p: PlanPhase) => UNRESOLVED.has(p.phase);
 export const proposalKey = (id: string) => `plan-proposal:${id}`;
@@ -82,7 +91,32 @@ export class PlanStore {
   private phases = new Map<string, PlanPhase>();
   private listeners = new Set<Listener>();
 
-  constructor(private deps: PlanStoreDeps) {}
+  private active = true;
+  private restored = false;
+  private restoreFailed = false;
+
+  readonly ownerGeneration: number | undefined;
+
+  constructor(private deps: PlanStoreDeps) {
+    this.ownerGeneration = deps.ownerGeneration;
+    if (!deps.recovery) this.restored = true;
+    else void deps.recovery.load().then(entries => {
+      if (!this.active) return;
+      for (const [key, write] of entries) this.phases.set(key, { phase: 'lookup_failed', write });
+      this.restored = true;
+      for (const listener of this.listeners) listener();
+    }).catch(() => {
+      if (!this.active) return;
+      this.restoreFailed = true;
+      for (const listener of this.listeners) listener();
+    });
+  }
+
+  dispose() {
+    this.active = false;
+    this.phases.clear();
+    this.listeners.clear();
+  }
 
   setDeps(deps: PlanStoreDeps) {
     this.deps = deps;
@@ -94,11 +128,15 @@ export class PlanStore {
   };
 
   get(key: string): PlanPhase {
+    if (this.restoreFailed) return RECOVERY_FAILED;
+    if (!this.restored) return RESTORING;
     return this.phases.get(key) ?? IDLE;
   }
 
   private set(key: string, phase: PlanPhase) {
+    if (!this.active) return;
     this.phases.set(key, phase);
+    if (!isPlanUnresolved(phase)) void this.deps.recovery?.remove(key).catch(() => {});
     for (const l of this.listeners) l();
   }
 
@@ -109,7 +147,7 @@ export class PlanStore {
   /** Approval of the displayed draft revision (or of a reviewed compensating change). */
   approve(proposal: PlanProposal, options: { removalConfirmed?: boolean } = {}) {
     const key = proposalKey(proposal.id);
-    if (isPlanUnresolved(this.get(key))) return Promise.resolve();
+    if (!this.active || isPlanUnresolved(this.get(key))) return Promise.resolve();
     // A removal needs the user's explicit confirmation; without it nothing is sent.
     if (proposal.kind === 'undo' && proposal.changeCount > 0 && options.removalConfirmed !== true)
       return Promise.resolve();
@@ -124,14 +162,14 @@ export class PlanStore {
   /** Retry of the failed additions of one plan receipt. */
   retryFailed(receiptOperationId: string) {
     const key = receiptKey(receiptOperationId);
-    if (isPlanUnresolved(this.get(key))) return Promise.resolve();
+    if (!this.active || isPlanUnresolved(this.get(key))) return Promise.resolve();
     return this.run(key, { operationId: this.deps.newOperationId(), kind: 'retry', receiptOperationId });
   }
 
   /** Undo of one plan receipt. Removing the tasks it added needs the user's confirmation. */
   undo(receiptOperationId: string, options: { removalConfirmed?: boolean } = {}) {
     const key = receiptKey(receiptOperationId);
-    if (isPlanUnresolved(this.get(key))) return Promise.resolve();
+    if (!this.active || isPlanUnresolved(this.get(key))) return Promise.resolve();
     return this.run(key, {
       operationId: this.deps.newOperationId(),
       kind: 'undo',
@@ -141,10 +179,26 @@ export class PlanStore {
   }
 
   /** Same identity, same payload. Allowed only after a confirmed "not applied". */
-  retrySame(key: string) {
+  async retrySame(key: string) {
     const p = this.get(key);
-    if (p.phase !== 'not_applied') return Promise.resolve();
-    return this.run(key, p.write);
+    if (!this.active || p.phase !== 'not_applied') return;
+    let write = p.write;
+    if (write.restored && write.kind === 'apply') {
+      this.set(key, { phase: 'checking', write });
+      const proposal = await this.deps.client.proposal(write.proposal!.id);
+      if (!this.active) return;
+      if (proposal.kind !== 'ok' && proposal.kind !== 'changed') {
+        this.set(key, { phase: 'lookup_failed', write });
+        return;
+      }
+      if (proposal.proposal.status !== 'draft' || proposal.proposal.revision !== write.proposal!.revision) {
+        this.set(key, { phase: 'changed', proposal: proposal.proposal });
+        this.deps.onChanged();
+        return;
+      }
+      write = { ...write, restored: false, proposal: proposal.proposal };
+    }
+    return this.run(key, write);
   }
 
   /** A saved draft edit is a new revision: an earlier not-applied approval can no longer apply. */
@@ -154,7 +208,7 @@ export class PlanStore {
 
   checkAgain(key: string) {
     const p = this.get(key);
-    if (p.phase !== 'pending' && p.phase !== 'lookup_failed') return Promise.resolve();
+    if (!this.active || (p.phase !== 'pending' && p.phase !== 'lookup_failed')) return Promise.resolve();
     return this.lookup(key, p.write);
   }
 
@@ -165,11 +219,19 @@ export class PlanStore {
   }
 
   private async run(key: string, write: PlanWrite) {
+    if (!this.active) return;
+    const { client } = this.deps;
     this.set(key, { phase: 'saving', write });
+    try {
+      await this.deps.recovery?.save(key, write);
+    } catch {
+      this.set(key, { phase: 'recovery_failed' });
+      return;
+    }
+    if (!this.active) return;
     const action = this.actionOf(write);
     // Every request of one operation, its lookup included, goes through the client it
     // started with, so it stays bound to that client's account and session.
-    const { client } = this.deps;
     const result: PlanApplyResult | PlanUndoResult =
       write.kind === 'undo'
         ? await client.undo(write.operationId, write.receiptOperationId!, {
@@ -180,6 +242,7 @@ export class PlanStore {
           : await client.apply(write.operationId, write.proposal!, {
               removalConfirmed: write.removalConfirmed,
             });
+    if (!this.active) return;
     const report = (outcome: PlanResultEvent['outcome'], changeCount?: number) =>
       this.deps.onResult?.({ action, outcome, ...(changeCount === undefined ? {} : { changeCount }) });
 
@@ -234,8 +297,10 @@ export class PlanStore {
   }
 
   private async lookup(key: string, write: PlanWrite, client = this.deps.client) {
+    if (!this.active) return;
     this.set(key, { phase: 'checking', write });
     const result: PlanStatusResult = await client.status(write.operationId);
+    if (!this.active) return;
     const report = (outcome: PlanResultEvent['outcome']) => this.deps.onResult?.({ action: 'lookup', outcome });
     switch (result.kind) {
       case 'applied':
@@ -271,6 +336,11 @@ const stores = new Map<string, PlanStore>();
 /** The plan store of one signed-in account. Another account never sees it. */
 export function planStoreFor(accountId: string, deps: PlanStoreDeps): PlanStore {
   let store = stores.get(accountId);
+  if (store && store.ownerGeneration !== deps.ownerGeneration) {
+    store.dispose();
+    stores.delete(accountId);
+    store = undefined;
+  }
   if (!store) {
     store = new PlanStore(deps);
     stores.set(accountId, store);
@@ -283,6 +353,9 @@ export function planStoreFor(accountId: string, deps: PlanStoreDeps): PlanStore 
 /** Drop every account's unresolved plan writes and messages except `keepAccountId`. */
 export function clearPlanStores(keepAccountId?: string | null) {
   for (const id of [...stores.keys()]) {
-    if (id !== keepAccountId) stores.delete(id);
+    if (id !== keepAccountId) {
+      stores.get(id)?.dispose();
+      stores.delete(id);
+    }
   }
 }

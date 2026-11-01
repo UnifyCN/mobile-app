@@ -4,12 +4,14 @@
  * Frozen "today": local 2026-10-23.
  */
 import { createElement, type PropsWithChildren } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
 const mockGetUserInfo = jest.fn();
 let mockAuthUser: { id: string; email: string } | null;
+let mockAuthError: Error | null = null;
 let mockAuthListener:
   | ((event: string, session: { user: { id: string; email: string } } | null) => void)
   | null = null;
@@ -17,7 +19,7 @@ let mockAuthListener:
 jest.mock('@/lib/supabase', () => ({
   supabase: {
     auth: {
-      getUser: async () => ({ data: { user: mockAuthUser } }),
+      getUser: async () => ({ data: { user: mockAuthUser }, error: mockAuthError }),
       onAuthStateChange: (listener: typeof mockAuthListener) => {
         mockAuthListener = listener;
         return { data: { subscription: { unsubscribe: jest.fn() } } };
@@ -80,6 +82,7 @@ beforeEach(() => {
   mockGetUserInfo.mockReset();
   mockAuthUser = { id: 'u1', email: 'sam@example.com' };
   mockAuthListener = null;
+  mockAuthError = null;
 });
 afterEach(() => {
   // Clear query GC timers so Jest can exit.
@@ -195,4 +198,33 @@ describe('UserProvider', () => {
     expect(result.current.currentUser?.username).toBe('riley');
     expect(result.current.currentUser?.stage).toBe(4);
   });
+  it('keeps durable recovery after a failed session read and clears it on confirmed sign-out without a plan screen', async () => {
+    // A failed read is not proof of sign-out. A confirmed Auth event is.
+    const key = 'companion-plan-recovery-v1';
+    const record = JSON.stringify({ accountId: '11111111-1111-1111-1111-111111111111', entries: {} });
+    await AsyncStorage.setItem(key, record);
+    mockAuthUser = null;
+    mockAuthError = new Error('Network unavailable');
+    renderUser(makeClient());
+    await act(async () => {});
+    expect(await AsyncStorage.getItem(key)).toBe(record);
+    await act(async () => { mockAuthListener!('SIGNED_OUT', null); });
+    await waitFor(async () => expect(await AsyncStorage.getItem(key)).toBeNull());
+  });
+
+  it('clears recovery across rapid account replacement even when the final account is the original one', async () => {
+    const id = '11111111-1111-1111-1111-111111111111';
+    mockAuthUser = { id, email: 'sam@example.com' };
+    mockGetUserInfo.mockResolvedValue(info());
+    const { result } = renderUser(makeClient());
+    await waitFor(() => expect(result.current.currentUser?.id).toBe(id));
+    const key = 'companion-plan-recovery-v1';
+    await AsyncStorage.setItem(key, JSON.stringify({ accountId: id, entries: {} }));
+    await act(async () => {
+      mockAuthListener!('SIGNED_IN', { user: { id: '22222222-2222-2222-2222-222222222222', email: 'riley@example.com' } });
+      mockAuthListener!('SIGNED_IN', { user: { id, email: 'sam@example.com' } });
+    });
+    await waitFor(async () => expect(await AsyncStorage.getItem(key)).toBeNull());
+  });
+
 });

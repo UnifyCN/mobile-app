@@ -6,6 +6,7 @@ import { CHECKLIST_TASKS_QUERY_ROOT } from '@/hooks/checklist/checklistQueryKeys
 import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
 import {
   ownAccountWork,
+  stillOwned,
   type AccountSnapshot,
 } from '@/services/account/accountSession';
 import { useAnalytics } from '@/utils/analytics';
@@ -21,6 +22,7 @@ import {
   type PlanPhase,
   type PlanStore,
 } from '@/services/companionActions/planStore';
+import { clearPlanRecoveryExcept, planRecoveryFor } from '@/services/companionActions/planRecovery';
 import { newOperationId } from '@/services/companionActions/operationId';
 import { mobileTransportFor } from '@/services/companionActions/transport';
 import { useTaskActionAccount, TASK_PROGRESS_ROOT } from './useTaskActions';
@@ -63,6 +65,7 @@ function usePlanAccountScope(userId: string | null | undefined) {
   useEffect(() => {
     if (userId === undefined) return;
     clearPlanStores(userId);
+    void clearPlanRecoveryExcept(userId).catch(() => {});
     for (const root of [PLANS_ROOT, PLAN_PROPOSAL_ROOT, CONVERSATION_PLANS_ROOT]) {
       const other = (q: { queryKey: readonly unknown[] }) => q.queryKey[1] !== userId;
       void queryClient.cancelQueries({ queryKey: [root], predicate: other });
@@ -167,7 +170,10 @@ export function usePlanStore(surface: TaskActionSurface): PlanStore | null {
   const { trackCompanionActionResult } = useAnalytics();
   return useMemo(() => {
     if (!userId) return null;
+    const owner = { accountId: userId, epoch };
     return planStoreFor(userId, {
+      ownerGeneration: epoch,
+      recovery: planRecoveryFor(userId, () => stillOwned(owner)),
       client: createMobilePlanClient({ accountId: userId, epoch }),
       newOperationId,
       onChanged: () => {

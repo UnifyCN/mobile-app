@@ -13,6 +13,7 @@
 // Enabled runs must explicitly name that project's ACTIONS_DB_CONTAINER and
 // ACTIONS_REST_CONTAINER. There is no default container selection.
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
@@ -45,6 +46,25 @@ let mockUserId = 'user-1';
 let mockCapture: jest.Mock = jest.fn();
 const mockAuthListeners = new Set<(event: string, session: unknown) => void>();
 const mockPush = jest.fn();
+// Native storage is a system boundary. The restart control uses a file so that
+// two separate Jest processes share bytes, but no in-memory module or query cache.
+jest.mock('@react-native-async-storage/async-storage', () => {
+  const storage = jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock');
+  const file = process.env.ACTIONS_RECOVERY_RESTART_STAGE
+    ? process.env.ACTIONS_RECOVERY_RESTART_DIR + '/mobile-storage.json' : null;
+  if (!file) return storage;
+  const fs = jest.requireActual<typeof import('fs')>('fs');
+  const read = () => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
+  return {
+    ...storage,
+    getItem: async (key: string) => read()[key] ?? null,
+    setItem: async (key: string, value: string) => {
+      fs.mkdirSync(jest.requireActual<typeof import('path')>('path').dirname(file), { recursive: true });
+      fs.writeFileSync(file, JSON.stringify({ ...read(), [key]: value }));
+    },
+    removeItem: async (key: string) => { const data = read(); delete data[key]; fs.writeFileSync(file, JSON.stringify(data)); },
+  };
+});
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: mockPush, replace: jest.fn() }),
   useLocalSearchParams: () => ({}),
@@ -618,7 +638,7 @@ describeStack('Settlement plans against the real local stack (mobile)', () => {
     const first = mount();
     fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
     let sheet = await screen.findByTestId('companion-task-sheet');
-    expect(await within(sheet).findByText(`Could not add: ${PHONE}. Everything else is saved.`)).toBeTruthy();
+    expect(await within(sheet).findByText(`Could not add: ${PHONE}.`)).toBeTruthy();
     const patched = await http(`/rest/v1/user_onboarding_profiles?id=eq.${acc.id}`, {
       method: 'PATCH', jwt: acc.jwt, body: JSON.stringify({ city: 'Surrey' }),
     });
@@ -1251,10 +1271,10 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
 // #372 reuses the mounted screen, Auth, HTTP, SQL and account helpers above.
 // These cases belong only to the assigned disposable runtime. The historical
 // reminder/profile suites retain their own exact runtime guards unchanged.
-const describeRecovery = enabled && API_URL === 'http://127.0.0.1:65040' ? describe : describe.skip;
+const describeRecovery = enabled && ['http://127.0.0.1:65040', 'http://127.0.0.1:65060'].includes(API_URL) ? describe : describe.skip;
 describeRecovery('372 complete recovery journey against owned persistence', () => {
   beforeAll(() => {
-    const project = 'unify-one-day-recovery-372-r1';
+    const project = API_URL.endsWith(':65060') ? 'unify-recovery-372-r2' : 'unify-one-day-recovery-372-r1';
     expect(DB_CONTAINER).toBe(`supabase_db_${project}`);
     expect(REST_CONTAINER).toBe(`supabase_rest_${project}`);
     const containers = JSON.parse(execFileSync('docker', ['inspect', DB_CONTAINER, REST_CONTAINER], { encoding: 'utf8' }));
@@ -1265,7 +1285,7 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
   });
   beforeEach(() => {
     global.fetch = realFetch;
-    clearPlanStores(null);
+    if (!process.env.ACTIONS_RECOVERY_RESTART_STAGE) clearPlanStores(null);
     clearTaskActionStores(null);
     mockStream.mockReset();
     mockChecklistRows.splice(0);
@@ -1583,10 +1603,18 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
     const independent = 'Book a bank appointment';
     const prepared = await actions(acc.jwt, {
       action: 'plan_prepare', goal: GOAL,
-      items: [...SUGGESTION.items, { kind: 'new', title: independent }],
+      items: [...SUGGESTION.items, { kind: 'new', title: independent }, { kind: 'new', title: 'Join a library' }],
     });
     expect(prepared.status).toBe(200);
-    const proposal = prepared.json.plan_proposal;
+    const original = prepared.json.plan_proposal;
+    const revised = await actions(acc.jwt, {
+      action: 'plan_revise', plan_proposal_id: original.plan_proposal_id, proposal_revision: original.proposal_revision,
+      items: original.items.map((item: { kind: string; task_ref?: string; key?: string; title?: string }) =>
+        item.kind === 'existing' ? { kind: item.kind, task_ref: item.task_ref }
+          : { kind: item.kind, key: item.key, include: item.title !== 'Join a library' }),
+    });
+    expect(revised.status).toBe(200);
+    const proposal = revised.json.plan_proposal;
     psql(`create function public.test372_mobile_fault() returns trigger language plpgsql as $f$
       begin if new.user_id = '${acc.id}' and new.title = '${PHONE}' then raise exception '372 controlled failure'; end if; return new; end $f$;
       create trigger test372_mobile_fault before insert on custom_checklist_tasks for each row execute function public.test372_mobile_fault();`);
@@ -1616,8 +1644,10 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
     mount();
     fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
     const sheet = await screen.findByTestId('companion-task-sheet');
-    await within(sheet).findByText(`Could not add: ${PHONE}. Everything else is saved.`);
+    await within(sheet).findByText(`Could not add: ${PHONE}.`);
     expect(within(sheet).getByRole('button', { name: `${independent}, Not started` })).toBeTruthy();
+    expect(await within(sheet).findByText('Left out after your review: Join a library.')).toBeTruthy();
+    expect(within(sheet).queryByRole('button', { name: 'Join a library, Not started' })).toBeNull();
     fireEvent.changeText(composer(), 'Keep partial recovery question');
     const retry = await enabledButton(within(sheet), 'Try adding 1 task again');
     fireEvent.press(retry);
@@ -1694,4 +1724,109 @@ describeRecovery('372 complete recovery journey against owned persistence', () =
       await closed;
     }
   }, 60_000);
+  it('clears unresolved recovery on account replacement and sign-out, and drops a late response', async () => {
+    // Wrong if a token refresh discards recovery, another account reads its
+    // references, or a request finishing after sign-out restores private state.
+    const storage = AsyncStorage;
+    const key = 'companion-plan-recovery-v1';
+    const acc = await newAccount('owner372'), other = await newAccount('ownerother372');
+    mockUserId = acc.id;
+    expect((await actions(acc.jwt, { action: 'plan_prepare', goal: GOAL, items: SUGGESTION.items })).status).toBe(200);
+    let held = false, release: (() => void) | undefined;
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'plan_apply') {
+        if (held) await new Promise<void>(resolve => { release = resolve; });
+        throw new TypeError('372 unavailable before send');
+      }
+      if (body.action === 'plan_status') throw new TypeError('372 lookup unavailable');
+      return realFetch(url, init);
+    }) as typeof fetch;
+    mount();
+    const open = async () => {
+      fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Draft plan, ${GOAL}`) }, { timeout: 10_000 }));
+      const sheet = await screen.findByTestId('companion-task-sheet');
+      fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+      return sheet;
+    };
+    const sheet = await open();
+    await within(sheet).findByText(en.taskActions.lookupFailed);
+    const record = await storage.getItem(key);
+    expect(record).not.toBeNull();
+    expect(record).not.toContain(PHONE); expect(record).not.toContain(GOAL); expect(record).not.toContain('rawItems');
+    act(() => { for (const listener of mockAuthListeners) listener('TOKEN_REFRESHED', { user: { id: acc.id }, access_token: acc.jwt }); });
+    expect(await storage.getItem(key)).toBe(record);
+    switchAccount(other.id);
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    await waitFor(async () => expect(await storage.getItem(key)).toBeNull());
+    expect(screen.queryByText(GOAL)).toBeNull();
+    switchAccount(acc.id);
+    held = true;
+    await open();
+    await waitFor(() => expect(release).toBeDefined());
+    expect(await storage.getItem(key)).not.toBeNull();
+    expect((await http('/auth/v1/logout', { method: 'POST', jwt: acc.jwt })).status).toBe(204);
+    mockUserId = '';
+    act(() => { for (const listener of mockAuthListeners) listener('SIGNED_OUT', null); });
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+    await waitFor(async () => expect(await storage.getItem(key)).toBeNull());
+    await act(async () => { release!(); });
+    expect(await storage.getItem(key)).toBeNull();
+    expect(sqlCount(acc.id)).toBe(0);
+  }, 60_000);
+
+  const itRestart = process.env.ACTIONS_RECOVERY_RESTART_STAGE ? it : it.skip;
+  itRestart('recovers a failed lookup after process restart before any receipt exists', async () => {
+    const file = path.join(process.env.ACTIONS_RECOVERY_RESTART_DIR!, 'mobile-intent.json');
+    const creating = process.env.ACTIONS_RECOVERY_RESTART_STAGE === 'create';
+    const acc = creating ? await newAccount('restart372') : JSON.parse(fs.readFileSync(file, 'utf8')).account;
+    mockUserId = acc.id;
+    mockJwts.set(acc.id, acc.jwt);
+    if (creating) expect((await actions(acc.jwt, { action: 'plan_prepare', goal: GOAL, items: SUGGESTION.items })).status).toBe(200);
+    const writes: string[] = [], lookups: string[] = [];
+    let failLookup = true;
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'plan_status') {
+        lookups.push(body.operation_id);
+        if (failLookup) throw new TypeError('372 result lookup unavailable');
+      }
+      if (body.action === 'plan_apply') {
+        writes.push(body.operation_id);
+        if (creating) throw new TypeError('372 transport failed before sending');
+      }
+      return realFetch(url, init);
+    }) as typeof fetch;
+    mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Draft plan, ${GOAL}`) }, { timeout: 10_000 }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    if (creating) {
+      fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+      await within(sheet).findByText(en.taskActions.lookupFailed, {}, { timeout: 10_000 });
+      expect(writes).toHaveLength(1);
+      fs.mkdirSync(path.dirname(file), { recursive: true });
+      fs.writeFileSync(file, JSON.stringify({ account: acc, operationId: writes[0] }));
+    } else {
+      const original = JSON.parse(fs.readFileSync(file, 'utf8')).operationId;
+      // Wrong if a fresh process exposes an executable approval instead of lookup.
+      await within(sheet).findByText(en.taskActions.lookupFailed, {}, { timeout: 10_000 });
+      expect(within(sheet).getByRole('button', { name: 'Approve and add 1 task' })).toBeDisabled();
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Approve and add 1 task' }));
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+      await within(sheet).findByText(en.taskActions.lookupFailed);
+      expect(writes).toEqual([]);
+      expect(lookups).toEqual([original]);
+      expect(sqlCount(acc.id)).toBe(0);
+      failLookup = false;
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+      await within(sheet).findByText(en.taskActions.notApplied, {}, { timeout: 10_000 });
+      expect(writes).toEqual([]);
+      fireEvent.press(await enabledButton(within(sheet), 'Try again'));
+      await within(sheet).findByText('Added 1 task. Reused 2 tasks you already had.', {}, { timeout: 10_000 });
+      expect(writes).toEqual([original]);
+      expect(lookups).toEqual([original, original]);
+      expect((await actions(acc.jwt, { action: 'plan_status', operation_id: original })).json.receipt.operation_id).toBe(original);
+    }
+  }, 60_000);
+
 });

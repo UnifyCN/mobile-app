@@ -398,6 +398,8 @@ function SavedPlan({
   // The current plan from the account's latest read; its progress is the shared tasks'.
   const plan = plans.plans.find(p => p.planId === planId) ?? fallback;
   const receipt = plan?.receipt ?? given;
+  const original = usePlanProposal(plan?.proposalId ?? null);
+  const excluded = original.data?.items.filter(item => item.kind === 'new' && !item.include) ?? [];
   const undoKey = receipt ? receiptKey(receipt.operationId) : null;
   const phase = usePlanPhase(store, undoKey);
   const compensation = phase.phase === 'undo_review' ? phase.proposal : null;
@@ -463,6 +465,11 @@ function SavedPlan({
         ) : receipt ? (
           <View style={styles.receiptBox}>
             <Text style={styles.receipt}>{planReceiptSummary(t, receipt)}</Text>
+            {excluded.map((item, index) => (
+              <Text key={index} style={styles.contextLine}>
+                {t('plans.receiptLeftOut', { titles: item.kind === 'new' ? item.title : '' })}
+              </Text>
+            ))}
             {retried && <Text style={styles.contextLine}>{planReceiptSummary(t, retried)}</Text>}
             {!receipt.undoneBy &&
               reviews.map(review => <RetryReview key={review.id} review={review} store={store} named={named} />)}
@@ -639,6 +646,7 @@ function PhaseLine({
   switch (phase.phase) {
     case 'saving':
       return line(t('taskActions.saving'));
+    case 'restoring':
     case 'checking':
       return line(t('taskActions.checking'));
     case 'pending':
@@ -669,6 +677,7 @@ function PhaseLine({
       return line(phase.reason === 'task_removed' ? t('taskActions.removed') : t('taskActions.refused'), true);
     case 'already_undone':
       return line(t('plans.alreadyUndone'));
+    case 'recovery_failed':
     case 'unavailable':
       return line(t('taskActions.unavailable'), true);
     case 'signed_out':
