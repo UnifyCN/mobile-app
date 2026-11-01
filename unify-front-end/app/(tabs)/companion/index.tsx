@@ -868,7 +868,7 @@ export default function CompanionScreen() {
             </View>
           )}
 
-          <Text accessibilityLiveRegion='polite' style={{ color: Theme.textAlternateGray, fontSize: 12, textAlign: 'center' }}>
+          <Text accessibilityLiveRegion='polite' style={[typography.caption, { color: Theme.textAlternateGray, textAlign: 'center' }]}>
             {usage
               ? usage.is_premium
                 ? t('companion.allowancePremium')
