@@ -1,0 +1,11 @@
+
+> unify-front-end@1.6.0 test:ci
+> npm run test:main && npm run test:dst
+
+
+> unify-front-end@1.6.0 test:main
+> jest __tests__ --runInBand --watchAll=false
+
+
+> unify-front-end@1.6.0 test:dst
+> TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/

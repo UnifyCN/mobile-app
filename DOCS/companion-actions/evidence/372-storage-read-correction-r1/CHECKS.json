@@ -1,0 +1,192 @@
+{
+  "mobile-ci-result": {
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 0,
+    "seconds": 61.57,
+    "actions_environment_cleared": true
+  },
+  "mobile-green-result": {
+    "command": [
+      "node_modules/.bin/jest",
+      "tmp/r372-storage-read/review-controls.test.tsx",
+      "__tests__/companionActions/planRecoveryStorage.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-green-tests.json"
+    ],
+    "exit": 0,
+    "seconds": 2.98
+  },
+  "mobile-lint-result": {
+    "command": [
+      "node_modules/.bin/eslint",
+      "services/companionActions/planRecovery.ts",
+      "__tests__/companionActions/planRecoveryStorage.test.tsx",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 1.32
+  },
+  "mobile-permanent-red-result": {
+    "command": [
+      "node_modules/.bin/jest",
+      "__tests__/companionActions/planRecoveryStorage.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-permanent-red-tests.json"
+    ],
+    "exit": 1,
+    "seconds": 1.85
+  },
+  "mobile-red-result": {
+    "label": "mobile",
+    "command": [
+      "node_modules/.bin/jest",
+      "tmp/r372-storage-read/review-controls.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-red-tests.json"
+    ],
+    "exit": 1,
+    "seconds": 6.61
+  },
+  "mobile-types-result": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "--incremental",
+      "false"
+    ],
+    "exit": 0,
+    "seconds": 7.3
+  },
+  "web-build-result": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 14.83
+  },
+  "web-green-result": {
+    "command": [
+      "node_modules/.bin/vitest",
+      "run",
+      "--config",
+      ".claude/r372-storage-read/vitest.config.mts",
+      "--reporter=json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/web-review-green-tests.json"
+    ],
+    "exit": 0,
+    "seconds": 1.44
+  },
+  "web-lint-result": {
+    "command": [
+      "node_modules/.bin/eslint",
+      "lib/companionActions/planRecovery.ts",
+      "components/companion/plans/PlanRecoveryStorage.test.tsx",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 2.31
+  },
+  "web-permanent-green-result": {
+    "command": [
+      "node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanRecoveryStorage.test.tsx",
+      "--reporter=json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/web-permanent-green-tests.json"
+    ],
+    "exit": 0,
+    "seconds": 1.07
+  },
+  "web-permanent-red-result": {
+    "command": [
+      "node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanRecoveryStorage.test.tsx",
+      "--reporter=json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/web-permanent-red-tests.json"
+    ],
+    "exit": 1,
+    "seconds": 1.14
+  },
+  "web-red-result": {
+    "label": "web",
+    "command": [
+      "node_modules/.bin/vitest",
+      "run",
+      "--config",
+      ".claude/r372-storage-read/vitest.config.mts",
+      "--reporter=json",
+      "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/web-red-tests.json"
+    ],
+    "exit": 1,
+    "seconds": 1.77
+  },
+  "web-tests-result": {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit": 0,
+    "seconds": 7.52,
+    "actions_environment_cleared": true
+  },
+  "web-types-result": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "--incremental",
+      "false"
+    ],
+    "exit": 0,
+    "seconds": 6.7
+  },
+  "mobile-red-tests": {
+    "passed": 10,
+    "failed": 1,
+    "pending": 0
+  },
+  "web-red-tests": {
+    "passed": 10,
+    "failed": 1,
+    "pending": 0
+  },
+  "mobile-permanent-red-tests": {
+    "passed": 0,
+    "failed": 1,
+    "pending": 0
+  },
+  "web-permanent-red-tests": {
+    "passed": 0,
+    "failed": 1,
+    "pending": 0
+  },
+  "mobile-green-tests": {
+    "passed": 12,
+    "failed": 0,
+    "pending": 0
+  },
+  "web-review-green-tests": {
+    "passed": 11,
+    "failed": 0,
+    "pending": 0
+  },
+  "web-permanent-green-tests": {
+    "passed": 1,
+    "failed": 0,
+    "pending": 0
+  }
+}

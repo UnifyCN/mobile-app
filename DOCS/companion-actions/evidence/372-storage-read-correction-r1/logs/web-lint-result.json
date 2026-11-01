@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node_modules/.bin/eslint",
+    "lib/companionActions/planRecovery.ts",
+    "components/companion/plans/PlanRecoveryStorage.test.tsx",
+    "--format",
+    "json"
+  ],
+  "exit": 0,
+  "seconds": 2.31
+}

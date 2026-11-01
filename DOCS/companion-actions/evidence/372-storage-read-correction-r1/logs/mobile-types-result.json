@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node_modules/.bin/tsc",
+    "--noEmit",
+    "--incremental",
+    "false"
+  ],
+  "exit": 0,
+  "seconds": 7.3
+}

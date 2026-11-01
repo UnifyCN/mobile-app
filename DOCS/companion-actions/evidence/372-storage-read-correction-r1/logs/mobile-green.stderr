@@ -1,0 +1,21 @@
+PASS tmp/r372-storage-read/review-controls.test.tsx
+  ● Console
+
+    console.log
+      {"control":"mounted restart","writes":1,"originalOperation":"44444444-4444-4444-8444-444444444444"}
+
+      at Object.log (tmp/r372-storage-read/review-controls.test.tsx:145:11)
+
+    console.log
+      {"control":"cleanup read failure","recordRetained":true,"approvalDisabled":true,"lookupCountBeforeApproval":0,"originalOperation":"44444444-4444-4444-8444-444444444444"}
+
+      at Object.log (tmp/r372-storage-read/review-controls.test.tsx:262:11)
+
+PASS __tests__/companionActions/planRecoveryStorage.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        1.46 s, estimated 3 s
+Ran all test suites matching /tmp\/r372-storage-read\/review-controls.test.tsx|__tests__\/companionActions\/planRecoveryStorage.test.tsx/i.
+Test results written to: ../../../../../../../tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-green-tests.json

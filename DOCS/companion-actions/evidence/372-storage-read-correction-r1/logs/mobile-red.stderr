@@ -1,0 +1,48 @@
+  console.log
+    {"control":"mounted restart","writes":1,"originalOperation":"44444444-4444-4444-8444-444444444444"}
+
+      at Object.log (tmp/r372-storage-read/review-controls.test.tsx:145:11)
+
+  console.log
+    {"control":"cleanup read failure","recordRetained":false,"approvalDisabled":false,"lookupCountBeforeApproval":0,"sentOperation":"c558bf19-53c1-4766-909b-0ad43701f2c0","originalOperation":"44444444-4444-4444-8444-444444444444"}
+
+      at Object.log (tmp/r372-storage-read/review-controls.test.tsx:262:11)
+
+FAIL tmp/r372-storage-read/review-controls.test.tsx
+  ✓ mounted restart permits only lookup, preserves identity, and re-reads the same revision for explicit retry (335 ms)
+  ✓ mounted changed draft returns to review without a resumed write (165 ms)
+  ✓ restored retry keeps the receipt, operation, and removal confirmation (54 ms)
+  ✓ restored undo keeps the receipt, operation, and removal confirmation (54 ms)
+  ✓ mounted storage read failure blocks writes and displays a failure state (55 ms)
+  ✓ mounted storage write failure blocks transport and displays a failure state (111 ms)
+  ✓ same-account cleanup preserves references; replacement and sign-out remove them (54 ms)
+  ✓ late request completion cannot restore a disposed account store (105 ms)
+  ✓ late storage load cannot repopulate a disposed store (2 ms)
+  ✓ late storage save cannot send a write after account disposal (54 ms)
+  ✕ account cleanup preserves a valid unresolved record after a temporary storage read failure (114 ms)
+
+  ● account cleanup preserves a valid unresolved record after a temporary storage read failure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "{\"accountId\":\"11111111-1111-4111-8111-111111111111\",\"entries\":{\"plan-proposal:33333333-3333-4333-8333-333333333333\":{\"operationId\":\"44444444-4444-4444-8444-444444444444\",\"kind\":\"apply\",\"proposalId\":\"33333333-3333-4333-8333-333333333333\",\"proposalRevision\":1}}}"
+    Received: null
+
+      263 |     approvalDisabled:wasDisabled,lookupCountBeforeApproval:beforeLookups,
+      264 |     sentOperation:writes()[0]?.operation_id, originalOperation:OP}));
+    > 265 |   expect(retained).toBe(record());
+          |                    ^
+      266 |   expect(disabled(approval)).toBe(true);
+      267 |   expect(screen.queryByText(en.taskActions.lookupFailed)).not.toBeNull();
+      268 |   expect(writes()).toHaveLength(0);
+
+      at Object.toBe (tmp/r372-storage-read/review-controls.test.tsx:265:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 10 passed, 11 total
+Snapshots:   0 total
+Time:        1.897 s
+Ran all test suites matching /tmp\/r372-storage-read\/review-controls.test.tsx/i.
+Test results written to: ../../../../../../../tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-red-tests.json
