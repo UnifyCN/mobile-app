@@ -1,0 +1,20 @@
+Check unify-front-end/supabase/workers/companion-push/role-and-session.test.ts
+Uncaught error from ./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts FAILED
+
+ ERRORS 
+
+./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts (uncaught error)
+error: (in promise) Error: owned_local_SQL_database_required
+  address.pathname !== '/postgres' || address.username !== 'postgres') throw Error('owned_local_SQL_database_required');
+                                                                             ^
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/role-and-session.test.ts:12:78
+This error was not caught from a test and caused the test runner to fail on the referenced module.
+It most likely originated from a dangling promise, event/timeout handler or top-level code.
+
+ FAILURES 
+
+./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts (uncaught error)
+
+FAILED | 0 passed | 1 failed (0ms)
+
+error: Test failed

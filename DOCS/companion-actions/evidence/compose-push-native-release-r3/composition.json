@@ -1,0 +1,30 @@
+{
+  "brief_sha256": "9cf118ce709841722a3ef9bb2da38126c21abac42dad5be53a37f9ac045e025d",
+  "merge": "150c759abe6bedf919eaf0b7559b59803a0adb30 d9d23632d9b09821b69618e30dd0ab18940e1793 4358432cdd02d0cc01fba6d15d7e9813dd44fb97 0e8af1dc8b4efb307047c364d186b0f178d1d732",
+  "mirrored_files": [
+    "unify-front-end/supabase/migrations/20261101042015_companion_push_worker_session_lock.sql",
+    "unify-front-end/supabase/rollbacks/20261101042015_companion_push_worker_session_lock.down.sql",
+    "unify-front-end/supabase/workers/companion-push/.gitignore",
+    "unify-front-end/supabase/workers/companion-push/README.md",
+    "unify-front-end/supabase/workers/companion-push/check-package.mjs",
+    "unify-front-end/supabase/workers/companion-push/content-source/context/appContext.ts",
+    "unify-front-end/supabase/workers/companion-push/content-source/context/contract.ts",
+    "unify-front-end/supabase/workers/companion-push/content-source/context/registry.ts",
+    "unify-front-end/supabase/workers/companion-push/content-source/dates.ts",
+    "unify-front-end/supabase/workers/companion-push/content-source/province.ts",
+    "unify-front-end/supabase/workers/companion-push/copy.ts",
+    "unify-front-end/supabase/workers/companion-push/node-adapter.d.mts",
+    "unify-front-end/supabase/workers/companion-push/node-adapter.mjs",
+    "unify-front-end/supabase/workers/companion-push/node-adapter.test.mjs",
+    "unify-front-end/supabase/workers/companion-push/owned-process.mjs",
+    "unify-front-end/supabase/workers/companion-push/owned-process.test.mjs",
+    "unify-front-end/supabase/workers/companion-push/prepare-runtime.mjs",
+    "unify-front-end/supabase/workers/companion-push/process.ts",
+    "unify-front-end/supabase/workers/companion-push/readiness.ts",
+    "unify-front-end/supabase/workers/companion-push/role-and-session.test.ts",
+    "unify-front-end/supabase/workers/companion-push/runtime-package.mjs",
+    "unify-front-end/supabase/workers/companion-push/runtime-pins.json",
+    "unify-front-end/supabase/workers/companion-push/supervisor.ts",
+    "unify-front-end/supabase/workers/companion-push/worker.ts"
+  ]
+}

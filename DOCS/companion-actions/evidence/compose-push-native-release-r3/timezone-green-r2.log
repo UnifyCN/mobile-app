@@ -1,0 +1,9 @@
+PASS __tests__/companionActions/reminderTimezone.test.ts
+  ✓ an explicit approved offset remains usable when device zone rules are old (10 ms)
+  ✓ explicit entry rejects impossible calendar values, offsets and zone names
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.313 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/reminderTimezone.test.ts/i.

@@ -1,0 +1,22 @@
+Check unify-front-end/supabase/workers/companion-push/tls-driver.test.ts
+TS2353 [ERROR]: Object literal may only specify known properties, and 'simple' does not exist in type 'UnsafeQueryOptions'.
+    await valid.unsafe('select 1', [], { simple: true });
+                                         ~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/tls-driver.test.ts:43:42
+
+TS2353 [ERROR]: Object literal may only specify known properties, and 'simple' does not exist in type 'UnsafeQueryOptions'.
+    await assert.rejects(pinned.unsafe('select 1', [], { simple: true }), /certificate|issuer|self.signed/i);
+                                                         ~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/tls-driver.test.ts:44:58
+
+TS2353 [ERROR]: Object literal may only specify known properties, and 'simple' does not exist in type 'UnsafeQueryOptions'.
+    await assert.rejects(wrongHost.unsafe('select 1', [], { simple: true }), /hostname|altname|certificate/i);
+                                                            ~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/tls-driver.test.ts:45:61
+
+Found 3 errors.
+
+error: Type checking failed.
+
+  [33minfo:[39m The program failed type-checking, but it still might work correctly.
+  [36mhint:[39m Re-run with [4m--no-check[24m to skip type-checking.

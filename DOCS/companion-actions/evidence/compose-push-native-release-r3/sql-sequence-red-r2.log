@@ -1,0 +1,10 @@
+running 1 test from ./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts
+exact worker login: allowed queries, denied queries, and concurrent Auth session locks ...
+------- output -------
+FALSIFIER: an allowed query fails, an ungranted query succeeds, or session deletion commits through the helper lock.
+PASS: exact-login queries and three concurrent session-lock orders
+----- output end -----
+exact worker login: allowed queries, denied queries, and concurrent Auth session locks ... ok (1s)
+
+ok | 1 passed | 0 failed (1s)
+

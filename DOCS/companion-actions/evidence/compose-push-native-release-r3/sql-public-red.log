@@ -1,0 +1,81 @@
+Download https://registry.npmjs.org/postgres
+Download https://jsr.io/@supabase/supabase-js/meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0_meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/constants.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/fetch.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/helpers.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/SupabaseAuthClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/rpc.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/common.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/version.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/tracingRegistry.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/create-extractor.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/parse.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/validate.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/defaults.ts
+Download https://registry.npmjs.org/@supabase%2fauth-js
+Download https://registry.npmjs.org/@supabase%2fpostgrest-js
+Download https://registry.npmjs.org/@supabase%2fstorage-js
+Download https://registry.npmjs.org/@supabase%2ffunctions-js
+Download https://registry.npmjs.org/@supabase%2frealtime-js
+Download https://registry.npmjs.org/tslib
+Download https://registry.npmjs.org/iceberg-js
+Download https://registry.npmjs.org/@supabase%2fphoenix
+error: The lockfile is out of date. Run `deno install --frozen=false`, or rerun with `--frozen=false` to update it.
+changes:
+ 1 | +{
+ 2 | +  "version": "5",
+ 3 | +  "specifiers": {
+ 4 | +    "npm:@supabase/auth-js@2.118.0": "2.118.0",
+ 5 | +    "npm:@supabase/functions-js@2.118.0": "2.118.0",
+ 6 | +    "npm:@supabase/postgrest-js@2.118.0": "2.118.0",
+ 7 | +    "npm:@supabase/realtime-js@2.118.0": "2.118.0",
+ 8 | +    "npm:@supabase/storage-js@2.118.0": "2.118.0",
+ 9 | +    "npm:postgres@3.4.9": "3.4.9"
+10 | +  },
+11 | +  "jsr": {
+12 | +    "@supabase/supabase-js@2.118.0": {
+13 | +      "integrity": "42009f9d5b35997f35bba560d509f42608057cae647bd5a25b9b4a06ec3ffad0"
+14 | +    }
+15 | +  },
+16 | +  "npm": {
+17 | +    "@supabase/auth-js@2.118.0": {
+18 | +      "integrity": "sha512-xWfPXyhS2KDSfAneMtI6p/tBnbdiz/5vaRKXEqUfzfC9WCniKr2Ds5o5G7RIGig0bom4z6wUY9zaV07WDVTfnQ==",
+19 | +      "dependencies": [
+20 | +        "tslib"
+21 | +      ]
+22 | +    },
+23 | +    "@supabase/functions-js@2.118.0": {
+24 | +      "integrity": "sha512-4ofletPa/noKAU6KHeqsd3FztGzRPUEJRey1MKY0o+PIHaVePqRPShIXtl37gcVyIWaFM+zNg6r9zh0uUSFOSA==",
+25 | +      "dependencies": [
+26 | +        "tslib"
+27 | +      ]
+28 | +    },
+29 | +    "@supabase/phoenix@0.4.5": {
+30 | +      "integrity": "sha512-aAn9H9ovVyeApKy11OWOrrOGq8DV68yWeH4ud2lN9fzn4aO8Zb5GLL9m1pUg9nLqIcT+ZDfAcsZe0E/nqdv2lw=="
+31 | +    },
+32 | +    "@supabase/postgrest-js@2.118.0": {
+33 | +      "integrity": "sha512-JXy+37KPApHsyotaQACovv/Jy9E22rfiWLRuT+2UjoEAcAIelDFIrsF/FY47Dy19mO7lI0Tq+zDCX8oJ2Ozfiw==",
+34 | +      "dependencies": [
+35 | +        "tslib"
+36 | +      ]
+37 | +    },
+38 | +    "@supabase/realtime-js@2.118.0": {
+39 | +      "integrity": "sha512-pzCIEWjqD5/xqEZQerpt+q9rsgYkcrkgCJgf0W2ULqC4fYUeB/p9CFa3t9vn+IVh6dMN9r4ZCE262lZvUC+Bfw==",
+40 | +      "dependencies": [
+41 | +        "@supabase/phoenix",
+42 | +        "tslib"
+43 | +      ]
+44 | +    },
+45 | +    "@supabase/storage-js@2.118.0": {
+46 | +      "integrity": "sha512-5MNkKt2Moy7Jud/sPX7/28BwdDxZMCVHGJT00b8op3KRa9LKSjOAYU5IcfGWIstaasAqY8GkbA6oI3IRDgB1YQ==",
+47 | +      "dependencies": [
+48 | +        "iceberg-js",
+49 | +        "tslib"
+50 | +      ]
+... 12 more lines omitted ...

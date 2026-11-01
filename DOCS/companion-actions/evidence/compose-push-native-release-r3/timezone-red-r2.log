@@ -1,0 +1,26 @@
+FAIL __tests__/companionActions/reminderTimezone.test.ts
+  ✕ an explicit approved offset remains usable when device zone rules are old (10 ms)
+  ✓ explicit entry rejects impossible calendar values, offsets and zone names (1 ms)
+
+  ● an explicit approved offset remains usable when device zone rules are old
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"instant": "2026-11-03T10:30:00-07:00", "wall": "2026-11-03T10:30:00"}
+    Received: null
+
+       8 |   Intl.DateTimeFormat = stale as typeof Intl.DateTimeFormat;
+       9 |   try {
+    > 10 |     expect(reminderTime('2026-11-03T10:30-07:00', 'America/Vancouver')).toEqual({ instant: '2026-11-03T10:30:00-07:00', wall: '2026-11-03T10:30:00' });
+         |                                                                         ^
+      11 |     expect(parseSuggestedReminder({ version: 1, type: 'reminder.schedule', task_ref: 'custom:1', remind_at: '2026-11-03T10:30:00-07:00', time_zone: 'America/Vancouver' })?.wall_time).toBe('2026-11-03T10:30:00');
+      12 |     const label = reminderLabel({ remindAt: '2026-11-03T17:30:00Z', timeZone: 'America/Vancouver', wallTime: '2026-11-03T10:30:00' }, 'en');
+      13 |     expect(label).toContain('10:30');
+
+      at Object.toEqual (__tests__/companionActions/reminderTimezone.test.ts:10:73)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        0.799 s
+Ran all test suites matching /__tests__\/companionActions\/reminderTimezone.test.ts/i.

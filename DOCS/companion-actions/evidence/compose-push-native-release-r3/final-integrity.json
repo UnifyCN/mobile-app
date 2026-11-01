@@ -1,0 +1,255 @@
+{
+  "worker": [
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/.gitignore",
+      "sha256": "c740db8c5771bc53deca3faf16465ffd78a57c5bc6df70143f0a8f422fb469ab"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/README.md",
+      "sha256": "ea81cc7ec0960c3495d31e4a5db0fc8685d06d4a4f089e4e2157ce08f39071c9"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/check-package.mjs",
+      "sha256": "48f7e7c8fdd8169b69c6c13929d1482aad7fa2f568b06815bb16d6b394dc541a"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/content-source/context/appContext.ts",
+      "sha256": "e6a3f2378b2c758946faa413e5e9a272f492006d0cb70537af736fe412f77a99"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/content-source/context/contract.ts",
+      "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/content-source/context/registry.ts",
+      "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/content-source/dates.ts",
+      "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/content-source/province.ts",
+      "sha256": "4460fa94c98ab7879b115ef0301ca466ce8122ce65f2486c1346e294c8848937"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/copy.ts",
+      "sha256": "a6647887d3e4d561e925a305b57043515fb09036d67c6cdf209a509ae7d15f03"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/database-tls.test.ts",
+      "sha256": "b17ae6466e6ae3895df2adc7cb32a138ac8d410099ee3c2aebbcf3881e06b19f"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/deno.lock",
+      "sha256": "7264c84a0808153ed2eec3db856de15423766c0c1f8379823cc7c6b556d51717"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/node-adapter.d.mts",
+      "sha256": "86ee733b593616300759993ef9dc8788053d3ed4e2fdfc94a520e7d94a9e69c5"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/node-adapter.mjs",
+      "sha256": "baabd184aa00c872605c6862dfb2ea403f163e1609bf13a0eb94a8ace3a8e1aa"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/node-adapter.test.mjs",
+      "sha256": "6316a5bb68b2714a7b4aed53b580ea6080e0d206555ed21e1e2377fbfc07a3e8"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/owned-process.mjs",
+      "sha256": "b10e74daa9a5ce01d65fc22df024307c36847b1fb37be72e82ac07d7d40ecb5f"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/owned-process.test.mjs",
+      "sha256": "87636e35b27ec7f8688e1e3d20b9d33916c36241f42b08081f4abb67915b1cb3"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/prepare-runtime.mjs",
+      "sha256": "5a9f0c79b4443d54e46238c3ed460a8753c1f71bb9f78c3079c17475eb8c1aad"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/process.ts",
+      "sha256": "b3cc168280a081915e362ae58f471f9d73d5acc42cf57042d08861b04e9c677b"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/readiness.ts",
+      "sha256": "bcca0b11a559d631b8bff429d95888bfff1ef3b12e5dc59ed533851b58b7683c"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/role-and-session.test.ts",
+      "sha256": "15ccba5ab6c2fbf5b1c32260a4510f2d0e83f01124dd3d6a650a023f3b1a8dd0"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/rollback-and-privileges.test.ts",
+      "sha256": "4a1ac91049f7c4ed511d74c3935be5689f6cbb646597340e5b68aa761917fa81"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/runtime-package.mjs",
+      "sha256": "5a5d9a5d037fdf1cebb20a6af0950251925ae0e1cc825056e0f4935cffb56a28"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/runtime-pins.json",
+      "sha256": "4a8b4ec3362bfd08a4e146a086338105ccf709e436e0e56ada943d4dc6ac4440"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/supabase-prod-ca-2021.crt",
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/supervisor.ts",
+      "sha256": "95b3215e326211bf5ab815f849be7fd516e20bdd61ad6a30b7a0262bdfa9262d"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/tls-driver.test.ts",
+      "sha256": "f679b59adabf1d7688820e2e1608062c301b7b283c2ae1fcf98c619eed6aafcc"
+    },
+    {
+      "path": "unify-front-end/supabase/workers/companion-push/worker.ts",
+      "sha256": "9451cb44e56aed36f14d7dce33249891891b0eb5510e89ea8a6a16ee0c4fd4aa"
+    }
+  ],
+  "migrations": [
+    {
+      "path": "20261025235536_companion_task_actions.sql",
+      "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111",
+      "deployed": true
+    },
+    {
+      "path": "20261026165156_companion_task_create.sql",
+      "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808",
+      "deployed": true
+    },
+    {
+      "path": "20261027183338_companion_settlement_plan.sql",
+      "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d",
+      "deployed": true
+    },
+    {
+      "path": "20261027183644_companion_task_steps.sql",
+      "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8",
+      "deployed": true
+    },
+    {
+      "path": "20261028001530_companion_task_edit.sql",
+      "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6",
+      "deployed": true
+    },
+    {
+      "path": "20261028004902_companion_saved_details.sql",
+      "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374",
+      "deployed": true
+    },
+    {
+      "path": "20261028025026_companion_task_remove.sql",
+      "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b",
+      "deployed": true
+    },
+    {
+      "path": "20261029175439_companion_task_reminders.sql",
+      "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7",
+      "deployed": true
+    },
+    {
+      "path": "20261030181040_companion_reminder_push.sql",
+      "sha256": "59b464552db6319b0e33497e5fa34ea2fe7e67c5a6f6059e198567ee1bb1999b",
+      "deployed": true
+    },
+    {
+      "path": "20261031055422_companion_profile_changes.sql",
+      "sha256": "3c90110c7c7c44f0ddadd45b5bc24f8874d8943a29761f9c7ff5b9e5f459e8be",
+      "deployed": true
+    },
+    {
+      "path": "20261101024721_companion_allowance_and_cohort.sql",
+      "sha256": "3dfb3c63cf27a21415cdc9388503585b06ce814f758bf87020e612ca2cd687c3",
+      "deployed": true
+    },
+    {
+      "path": "20261101042015_companion_push_worker_session_lock.sql",
+      "sha256": "f0c445ef45e85633c522d93588d7b0b4fcc415b13b22eaf6786370549444779d",
+      "deployed": false
+    }
+  ],
+  "rollbacks": [
+    {
+      "path": "20261025235536_companion_task_actions.down.sql",
+      "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001"
+    },
+    {
+      "path": "20261026165156_companion_task_create.down.sql",
+      "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332"
+    },
+    {
+      "path": "20261027183338_companion_settlement_plan.down.sql",
+      "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91"
+    },
+    {
+      "path": "20261027183644_companion_task_steps.down.sql",
+      "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967"
+    },
+    {
+      "path": "20261028001530_companion_task_edit.down.sql",
+      "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539"
+    },
+    {
+      "path": "20261028004902_companion_saved_details.down.sql",
+      "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6"
+    },
+    {
+      "path": "20261028025026_companion_task_remove.down.sql",
+      "sha256": "821398d146159a42cd31fb12acccd83e95899e6ea47ef1fae23d8e0a9208c6de"
+    },
+    {
+      "path": "20261029175439_companion_task_reminders.down.sql",
+      "sha256": "9282bc6a64bc4fa5a74c4e702e588191412a97934e00ca76caf2317b670d3049"
+    },
+    {
+      "path": "20261030181040_companion_reminder_push.down.sql",
+      "sha256": "dc9b0f2c6dfb507bafc66c9ce761576d42b8068a76f2f802f411ca4829cd4ce8"
+    },
+    {
+      "path": "20261031055422_companion_profile_changes.down.sql",
+      "sha256": "35c0da7108e3c845158f1c1e62b6681e803d66c6cba2532e9581f349aebc7365"
+    },
+    {
+      "path": "20261101024721_companion_allowance_and_cohort.down.sql",
+      "sha256": "68329ff1e7c4662a0cf6605d815a10c45038f7c93b21d724b0951fa00026ca0c"
+    },
+    {
+      "path": "20261101042015_companion_push_worker_session_lock.down.sql",
+      "sha256": "1bae77a944305a9869b11b7036d1fd2d1e6c15fa6f2120598dd253efb6eb24d6"
+    }
+  ],
+  "source_and_integration": [
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-c45760c0",
+      "branch": "t3/mobile-node-auth-adapter",
+      "pin": "4358432cdd02d0cc01fba6d15d7e9813dd44fb97 17dd9ed3d15023e5b9afa6ecc5c0751d98424f1b 17a12a7f75477f33f93805fe9894a61847ed538f",
+      "status": ""
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547",
+      "branch": "t3/android-native-speech-correction",
+      "pin": "0e8af1dc8b4efb307047c364d186b0f178d1d732 6b28d43f20add87b4c6fe5d335e7aab137badb35 95263a44d39635451351b2f589ea2d0da12b0e5f",
+      "status": ""
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/feat-companion-actions-359",
+      "branch": "feat/companion-actions-359",
+      "pin": "17a12a7f75477f33f93805fe9894a61847ed538f d33770a5abe253cf6b9de858a6fe142dd76105a0 e83ea83b344190cf26ce5a8103b838916b83a279",
+      "status": ""
+    },
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/feat-companion-actions-359",
+      "branch": "feat/companion-actions-359",
+      "pin": "fff4a93ae58c9505f166b2188f7456e7435dc824 fcc6d22f277129f45a27c8f59db528f5b383a1f4 a75747bc0f7a9bbe8684b19992fdf7ce4a11f007",
+      "status": ""
+    }
+  ],
+  "impeccable": {
+    "version": "3.9.1",
+    "unchanged_files": 99
+  },
+  "known_Web_lint_errors_in_unchanged_files": 12
+}

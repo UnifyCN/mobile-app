@@ -1,0 +1,14 @@
+running 2 tests from ./unify-front-end/supabase/workers/companion-push/rollback-and-privileges.test.ts
+worker rollback and reapply preserve unknown intents and suppression identities and restore PUBLIC ACLs ...
+------- output -------
+PASS: exact unknown, attempt, event and revoked-enrollment rows retained through rollback and reapply
+----- output end -----
+worker rollback and reapply preserve unknown intents and suppression identities and restore PUBLIC ACLs ... ok (103ms)
+server rejects a DST gap and any wall/instant disagreement ...
+------- output -------
+PASS: local server is authoritative for the zone/instant/wall tuple; no hosted tzdata result claimed
+----- output end -----
+server rejects a DST gap and any wall/instant disagreement ... ok (100ms)
+
+ok | 2 passed | 0 failed (209ms)
+
