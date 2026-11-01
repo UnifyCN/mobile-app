@@ -18,9 +18,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createTestQueryClient } from '@/testSupport/queryClient';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { AccessibilityInfo, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { AccessibilityInfo, AppState, StyleSheet, TouchableOpacity, View, Text, type AppStateStatus } from 'react-native';
 import en from '@/i18n/locales/en/translation.json';
-import { execFileSync } from 'child_process';
+import { execFileSync, spawn } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -206,9 +206,9 @@ jest.mock('@/lib/supabase', () => ({
       return sdk.from(table);
     },
     auth: {
-      getUser: async () => ({ data: { user: { id: mockUserId } } }),
+      getUser: async () => ({ data: { user: mockUserId ? { id: mockUserId } : null } }),
       getSession: async () => ({
-        data: { session: { user: { id: mockUserId }, access_token: mockJwts.get(mockUserId) } },
+        data: { session: mockUserId ? { user: { id: mockUserId }, access_token: mockJwts.get(mockUserId) } : null },
       }),
       onAuthStateChange: (listener: (event: string, session: unknown) => void) => {
         mockAuthListeners.add(listener);
@@ -1245,5 +1245,453 @@ describeStack('Task removal against the real local stack (mobile, #367)', () => 
     const proposal = psql(`select id from companion_proposals where user_id = '${a.id}' and kind = 'task_remove';`);
     const read = await actions(b.jwt, { action: 'proposal', proposal_id: proposal });
     expect(read.status).toBe(404);
+  }, 60_000);
+});
+
+// #372 reuses the mounted screen, Auth, HTTP, SQL and account helpers above.
+// These cases belong only to the assigned disposable runtime. The historical
+// reminder/profile suites retain their own exact runtime guards unchanged.
+const describeRecovery = enabled && API_URL === 'http://127.0.0.1:65040' ? describe : describe.skip;
+describeRecovery('372 complete recovery journey against owned persistence', () => {
+  beforeAll(() => {
+    const project = 'unify-one-day-recovery-372-r1';
+    expect(DB_CONTAINER).toBe(`supabase_db_${project}`);
+    expect(REST_CONTAINER).toBe(`supabase_rest_${project}`);
+    const containers = JSON.parse(execFileSync('docker', ['inspect', DB_CONTAINER, REST_CONTAINER], { encoding: 'utf8' }));
+    for (const container of containers) {
+      expect(container.Config.Labels['com.supabase.cli.project']).toBe(project);
+      expect(container.State.Running).toBe(true);
+    }
+  });
+  beforeEach(() => {
+    global.fetch = realFetch;
+    clearPlanStores(null);
+    clearTaskActionStores(null);
+    mockStream.mockReset();
+    mockChecklistRows.splice(0);
+  });
+  afterEach(() => {
+    global.fetch = realFetch;
+    clients.splice(0).forEach(client => client.clear());
+  });
+
+  const closeSheet = async () => {
+    fireEvent.press(screen.getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+  };
+  const openPhone = async () => {
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.press(await within(sheet).findByRole('button', { name: new RegExp(`^${PHONE},`) }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeEnabled());
+    return sheet;
+  };
+
+  it('keeps one Vancouver plan, checked step, Waiting reason, approved context and in-app reminder after a new mount', async () => {
+    // Wrong if any identity changes, the step completes its parent, a review writes
+    // before approval, the draft is lost, or the controls are replaced on save.
+    const acc = await newAccount('core372');
+    mockUserId = acc.id;
+    const app = mount();
+    await send('Remember that I prefer Friday appointments');
+    await screen.findByTestId('detail-command-card', {}, { timeout: 10_000 });
+    fireEvent.changeText(composer(), 'Keep my next question');
+    fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+    fireEvent.press(await screen.findByRole('button', { name: 'Profile' }));
+    fireEvent.press(await screen.findByRole('button', { name: 'Edit arrival date' }));
+    fireEvent.changeText(screen.getByLabelText('Arrival date'), '2026-11-09');
+    fireEvent.press(await enabledButton(within(screen.getByTestId('companion-task-sheet')), 'Review profile change'));
+    await screen.findByText('Proposed: 2026-11-09');
+    expect((await actions(acc.jwt, { action: 'read' })).json.profile.arrival_date).toBe('2026-11-02');
+    fireEvent.press(await enabledButton(within(screen.getByTestId('companion-task-sheet')), 'Save profile change'));
+    await screen.findByText('Changed arrival date from 2026-11-02 to 2026-11-09');
+    await closeSheet();
+    expect(composer().props.value).toBe('Keep my next question');
+
+    answersWithPlan();
+    await send('I arrive in Vancouver next week. Help me plan my first week.');
+    await screen.findByTestId('plan-card', {}, { timeout: 10_000 });
+    await waitFor(() => expect(composer().props.editable).toBe(true));
+    fireEvent.changeText(composer(), 'Keep my next question');
+    fireEvent.press(await screen.findByRole('button', { name: `Review plan: ${GOAL}` }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    expect(sqlCount(acc.id)).toBe(0);
+    fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+    await within(sheet).findByText('Added 1 task. Reused 2 tasks you already had.', {}, { timeout: 10_000 });
+    const plan = (await actions(acc.jwt, { action: 'plans' })).json.plans[0];
+    const phoneRef = plan.items[2].task_ref;
+    expect(plan.items.map((item: { task_ref: string }) => item.task_ref)).toEqual(['sanity:sin-number', 'sanity:bank-account', phoneRef]);
+    expect(phoneRef).toMatch(/^custom:/);
+    await closeSheet();
+    sheet = await openPhone();
+    expect(sheet.props.accessibilityViewIsModal).toBe(true);
+    fireEvent.changeText(await within(sheet).findByLabelText('New step'), 'Compare phone plans');
+    fireEvent.press(await enabledButton(within(sheet), 'Add step'));
+    const checkbox = await within(sheet).findByRole('checkbox', { name: 'Compare phone plans' });
+    await waitFor(() => expect(checkbox).toBeEnabled());
+    fireEvent.press(checkbox);
+    await within(sheet).findByText('Checked step: Compare phone plans', {}, { timeout: 10_000 });
+    await within(sheet).findByText('All steps are done. This task stays Not started until you mark it complete.');
+    const waiting = within(sheet).getByRole('radio', { name: 'Waiting' });
+    await waitFor(() => expect(waiting).toBeEnabled());
+    fireEvent.press(waiting);
+    await within(sheet).findByText('Changed from Not started to Waiting');
+    const reason = await within(sheet).findByLabelText('What are you waiting for?');
+    fireEvent.changeText(reason, 'A phone appointment');
+    fireEvent.press(await enabledButton(within(sheet), 'Save waiting reason'));
+    await waitFor(() => expect(within(sheet).getByRole('button', { name: 'Save waiting reason' })).toBeDisabled());
+    expect(within(sheet).getByLabelText('What are you waiting for?')).toBe(reason);
+    expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBe(waiting);
+
+    const instant = '2026-12-15T10:00-08:00';
+    fireEvent.changeText(within(sheet).getByLabelText(en.reminders.instant), instant);
+    fireEvent.changeText(within(sheet).getByLabelText(en.reminders.zone), 'America/Vancouver');
+    fireEvent.press(await enabledButton(within(sheet), en.reminders.review));
+    await enabledButton(within(sheet), en.reminders.save);
+    expect((await actions(acc.jwt, { action: 'read' })).json.reminders.items).toEqual([]);
+    fireEvent.press(within(sheet).getByRole('button', { name: en.reminders.save }));
+    await within(sheet).findByText(en.reminders.saved, {}, { timeout: 10_000 });
+    const read = (await actions(acc.jwt, { action: 'read' })).json;
+    expect(read.tasks.find((task: { task_ref: string }) => task.task_ref === phoneRef)).toMatchObject({ state: 'waiting', waiting_reason: 'A phone appointment' });
+    expect(read.steps).toHaveLength(1);
+    expect(read.steps[0]).toMatchObject({ task_ref: phoneRef, title: 'Compare phone plans', done: true });
+    expect(read.details.map((detail: { text: string }) => detail.text)).toEqual(['I prefer Friday appointments']);
+    expect(read.profile).toMatchObject({ province: 'British Columbia', arrival_date: '2026-11-09' });
+    expect(read.reminders.items).toHaveLength(1);
+    expect(read.reminders.items[0]).toMatchObject({ task_ref: phoneRef, time_zone: 'America/Vancouver', status: 'pending' });
+    const identities = [plan.plan_id, phoneRef, read.steps[0].step_id, read.reminders.items[0].reminder_id];
+    expect(psql(`select count(*) from companion_task_steps where user_id='${acc.id}';`)).toBe('1');
+    expect(sqlCount(acc.id)).toBe(1);
+    await closeSheet();
+    expect(composer().props.value).toBe('Keep my next question');
+
+    app.unmount();
+    clearPlanStores(null);
+    clearTaskActionStores(null);
+    clients.splice(0).forEach(client => client.clear());
+    mount();
+    sheet = await openPhone();
+    expect(await within(sheet).findByLabelText('What are you waiting for?')).toHaveProp('value', 'A phone appointment');
+    expect(within(sheet).getByRole('checkbox', { name: 'Compare phone plans' })).toBeChecked();
+    expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeSelected();
+    expect((await within(sheet).findAllByText(/America\/Vancouver/)).length).toBeGreaterThan(0);
+    const resumed = (await actions(acc.jwt, { action: 'read' })).json;
+    const resumedPlan = (await actions(acc.jwt, { action: 'plans' })).json.plans[0];
+    expect([resumedPlan.plan_id, resumedPlan.items[2].task_ref, resumed.steps[0].step_id, resumed.reminders.items[0].reminder_id]).toEqual(identities);
+    expect(psql(`select count(*) from companion_saved_details where user_id='${acc.id}';`)).toBe('1');
+  }, 90_000);
+
+  it('looks up a dropped committed approval, blocks a second write after lookup failure, and resumes its durable receipt after restart', async () => {
+    // Wrong if the transport drops an uncommitted response, approval writes twice,
+    // or a fresh client fails to recover the exact persisted operation and task.
+    const acc = await newAccount('drop372');
+    mockUserId = acc.id;
+    const prepared = await actions(acc.jwt, { action: 'plan_prepare', goal: GOAL, items: SUGGESTION.items });
+    expect(prepared.status).toBe(200);
+    const writes: string[] = [];
+    let failLookup = true;
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'plan_apply') {
+        writes.push(body.operation_id);
+        const response = await realFetch(url, init);
+        expect(response.status).toBe(200);
+        expect(sqlCount(acc.id)).toBe(1);
+        throw new TypeError('372 dropped after commit');
+      }
+      if (body.action === 'plan_status' && failLookup) throw new TypeError('372 lookup unavailable');
+      return realFetch(url, init);
+    }) as typeof fetch;
+    const app = mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Draft plan, ${GOAL}`) }, { timeout: 10_000 }));
+    let sheet = await screen.findByTestId('companion-task-sheet');
+    fireEvent.changeText(composer(), 'Keep recovery question');
+    fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+    await within(sheet).findByText(en.taskActions.lookupFailed, {}, { timeout: 10_000 });
+    const approve = within(sheet).getByRole('button', { name: 'Approve and add 1 task' });
+    expect(approve).toBeDisabled();
+    fireEvent.press(approve);
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    await within(sheet).findByText(en.taskActions.lookupFailed);
+    expect(writes).toHaveLength(1);
+    failLookup = false;
+    fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+    await within(sheet).findByText('Added 1 task. Reused 2 tasks you already had.', {}, { timeout: 10_000 });
+    const receipt = await actions(acc.jwt, { action: 'plan_status', operation_id: writes[0] });
+    expect(receipt.json.receipt.operation_id).toBe(writes[0]);
+    const planId = receipt.json.receipt.plan_id;
+    await closeSheet();
+    expect(composer().props.value).toBe('Keep recovery question');
+    app.unmount();
+    clearPlanStores(null);
+    clearTaskActionStores(null);
+    clients.splice(0).forEach(client => client.clear());
+    mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+    sheet = await screen.findByTestId('companion-task-sheet');
+    await within(sheet).findByRole('button', { name: `${PHONE}, Not started` });
+    expect((await actions(acc.jwt, { action: 'plans' })).json.plans[0].plan_id).toBe(planId);
+    expect(writes).toHaveLength(1);
+    expect(sqlCount(acc.id)).toBe(1);
+    expect(psql(`select count(*) from companion_action_receipts where user_id='${acc.id}' and operation_id='${writes[0]}';`)).toBe('1');
+  }, 60_000);
+
+  it('retries a confirmed unapplied change with the same identity and commits concurrent duplicate requests once', async () => {
+    // Wrong if lookup records a write, retry changes identity, or concurrent
+    // copies create two revisions or receipts. The status response is real HTTP.
+    const acc = await newAccount('retry372');
+    mockUserId = acc.id;
+    const saved = await savedPlanFor(acc);
+    const ref = saved.receipt.results[2].task_ref;
+    const requests: { operation_id: string; operations: unknown }[] = [];
+    let duplicateReplies: { status: number; replayed: boolean }[] = [];
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'apply') {
+        requests.push(body);
+        if (requests.length === 1) throw new TypeError('372 failed before send');
+        const responses = await Promise.all([realFetch(url, init), realFetch(url, init)]);
+        duplicateReplies = await Promise.all(responses.map(async response => ({ status: response.status, replayed: (await response.clone().json()).replayed })));
+        return responses[0];
+      }
+      return realFetch(url, init);
+    }) as typeof fetch;
+    mount();
+    const sheet = await openPhone();
+    fireEvent.press(within(sheet).getByRole('radio', { name: 'Waiting' }));
+    await within(sheet).findByText(en.taskActions.notApplied, {}, { timeout: 10_000 });
+    expect(psql(`select count(*) from companion_action_receipts where user_id='${acc.id}' and operation_id='${requests[0].operation_id}';`)).toBe('0');
+    const retry = await enabledButton(within(sheet), 'Try again');
+    fireEvent.press(retry);
+    fireEvent.press(retry);
+    await within(sheet).findByText('Changed from Not started to Waiting', {}, { timeout: 10_000 });
+    expect(requests).toHaveLength(2);
+    expect(requests[1].operation_id).toBe(requests[0].operation_id);
+    expect(requests[1].operations).toEqual(requests[0].operations);
+    expect(duplicateReplies.map(reply => reply.status)).toEqual([200, 200]);
+    expect(duplicateReplies.map(reply => reply.replayed).sort()).toEqual([false, true]);
+    const current = (await actions(acc.jwt, { action: 'read' })).json.tasks.find((task: { task_ref: string }) => task.task_ref === ref);
+    expect(current).toMatchObject({ state: 'waiting', revision: 2 });
+    expect(psql(`select count(*) from companion_action_receipts where user_id='${acc.id}' and operation_id='${requests[0].operation_id}';`)).toBe('1');
+    expect(sqlCount(acc.id)).toBe(1);
+  }, 60_000);
+
+  it('labels cached progress stale, blocks offline writes, refreshes another device edit, protects exact Undo, and clears private work on account change and sign-out', async () => {
+    // Wrong if an offline press writes, reconnect misses the newer revision,
+    // Undo overwrites it, removal leaves active controls, or private text survives.
+    const listeners = new Set<(state: AppStateStatus) => void>();
+    const originalAddEventListener = AppState.addEventListener;
+    AppState.addEventListener = (_name, callback) => {
+      listeners.add(callback);
+      return { remove: () => listeners.delete(callback) };
+    };
+    const foreground = () => act(async () => { listeners.forEach(callback => callback('active')); });
+    let app: ReturnType<typeof mount> | undefined;
+    try {
+      const acc = await newAccount('offline372'), other = await newAccount('other372');
+      mockUserId = acc.id;
+      const saved = await savedPlanFor(acc);
+      const ref = saved.receipt.results[2].task_ref;
+      let offline = false;
+      const writes: Record<string, unknown>[] = [];
+      global.fetch = (async (url, init) => {
+        const body = JSON.parse(String(init?.body ?? '{}'));
+        if (body.action === 'read' && offline) throw new TypeError('372 offline');
+        if (body.action === 'apply' || body.action === 'undo') writes.push(body);
+        return realFetch(url, init);
+      }) as typeof fetch;
+      app = mount();
+      let sheet = await openPhone();
+      fireEvent.changeText(composer(), 'Private recovery question');
+      fireEvent.press(within(sheet).getByRole('radio', { name: 'In progress' }));
+      await within(sheet).findByText('Changed from Not started to In progress');
+      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeSelected());
+      const receiptId = writes[0].operation_id;
+      offline = true;
+      await foreground();
+      await within(sheet).findByText(en.taskActions.offline, {}, { timeout: 10_000 });
+      const waiting = within(sheet).getByRole('radio', { name: 'Waiting' });
+      expect(waiting).toBeDisabled();
+      fireEvent.press(waiting);
+      expect(writes).toHaveLength(1);
+      expect(within(sheet).getByRole('radio', { name: 'In progress' })).toBeSelected();
+      const read = (await actions(acc.jwt, { action: 'read' })).json;
+      const current = read.tasks.find((task: { task_ref: string }) => task.task_ref === ref);
+      const moved = await actions(acc.jwt, {
+        action: 'apply', operation_id: (globalThis.crypto as Crypto).randomUUID(), authorization: { kind: 'ui_control' },
+        operations: [{ type: 'task.set_state', task_ref: ref, state: 'waiting', waiting_reason: 'Changed on another device', expected_revision: current.revision }],
+      });
+      expect(moved.status).toBe(200);
+      offline = false;
+      await foreground();
+      await waitFor(() => expect(within(sheet).getByRole('radio', { name: 'Waiting' })).toBeSelected());
+      await within(sheet).findByDisplayValue('Changed on another device');
+      expect(within(sheet).queryByText(en.taskActions.offline)).toBeNull();
+      fireEvent.press(await enabledButton(within(sheet), 'Undo this change'));
+      await within(sheet).findByText('This task changed after that action', {}, { timeout: 10_000 });
+      expect(writes[1].receipt_operation_id).toBe(receiptId);
+      expect((await actions(acc.jwt, { action: 'read' })).json.tasks.find((task: { task_ref: string }) => task.task_ref === ref))
+        .toMatchObject({ state: 'waiting', waiting_reason: 'Changed on another device', revision: current.revision + 1 });
+
+      const prepared = await actions(acc.jwt, { action: 'prepare', operation: { type: 'task.remove', task_ref: ref, expected_revision: current.revision + 1 } });
+      expect(prepared.status).toBe(200);
+      const proposal = prepared.json.proposal;
+      const removed = await actions(acc.jwt, {
+        action: 'apply', operation_id: (globalThis.crypto as Crypto).randomUUID(),
+        authorization: { kind: 'approved_proposal', proposal_id: proposal.proposal_id, proposal_revision: proposal.proposal_revision, removal_confirmed: true },
+        operations: proposal.operations,
+      });
+      expect(removed.status).toBe(200);
+      await foreground();
+      await within(sheet).findByText(en.taskActions.removed, {}, { timeout: 10_000 });
+      expect(within(sheet).getByRole('radio', { name: 'Completed' })).toBeDisabled();
+      const count = writes.length;
+      fireEvent.press(within(sheet).getByRole('radio', { name: 'Completed' }));
+      expect(writes).toHaveLength(count);
+      expect(sqlCount(acc.id)).toBe(1);
+      switchAccount(other.id);
+      await waitFor(() => expect(screen.queryByTestId('companion-task-sheet')).toBeNull());
+      expect(composer().props.value).toBe('');
+      expect(screen.queryByText('Private recovery question')).toBeNull();
+      const otherTasks = (await actions(other.jwt, { action: 'read' })).json.tasks;
+      expect(otherTasks).toHaveLength(2);
+      expect(otherTasks).toEqual(expect.arrayContaining([
+        expect.objectContaining({ task_ref: 'sanity:sin-number' }),
+        expect.objectContaining({ task_ref: 'sanity:bank-account' }),
+      ]));
+      switchAccount(acc.id);
+      await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 });
+      fireEvent.changeText(composer(), 'Clear on sign-out');
+      expect((await http('/auth/v1/logout', { method: 'POST', jwt: acc.jwt })).status).toBe(204);
+      mockUserId = '';
+      act(() => { for (const listener of mockAuthListeners) listener('SIGNED_OUT', null); });
+      await waitFor(() => expect(composer().props.value).toBe(''));
+      expect(screen.queryByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) })).toBeNull();
+      expect(screen.queryByTestId('companion-task-sheet')).toBeNull();
+    } finally {
+      app?.unmount();
+      AppState.addEventListener = originalAddEventListener;
+    }
+  }, 90_000);
+
+  it('keeps a successful independent addition while retrying only the failed addition with its original item identity', async () => {
+    // Wrong if partial success is rolled back, the failed item is reported saved,
+    // or retry repeats a successful addition or changes the failed item identity.
+    const acc = await newAccount('partial372');
+    mockUserId = acc.id;
+    const independent = 'Book a bank appointment';
+    const prepared = await actions(acc.jwt, {
+      action: 'plan_prepare', goal: GOAL,
+      items: [...SUGGESTION.items, { kind: 'new', title: independent }],
+    });
+    expect(prepared.status).toBe(200);
+    const proposal = prepared.json.plan_proposal;
+    psql(`create function public.test372_mobile_fault() returns trigger language plpgsql as $f$
+      begin if new.user_id = '${acc.id}' and new.title = '${PHONE}' then raise exception '372 controlled failure'; end if; return new; end $f$;
+      create trigger test372_mobile_fault before insert on custom_checklist_tasks for each row execute function public.test372_mobile_fault();`);
+    let partial: Awaited<ReturnType<typeof actions>>;
+    try {
+      partial = await actions(acc.jwt, {
+        action: 'plan_apply', operation_id: (globalThis.crypto as Crypto).randomUUID(),
+        authorization: { kind: 'approved_proposal', proposal_id: proposal.plan_proposal_id, proposal_revision: proposal.proposal_revision },
+        items: proposal.items,
+      });
+    } finally {
+      psql('drop trigger test372_mobile_fault on custom_checklist_tasks; drop function public.test372_mobile_fault();');
+    }
+    expect(partial.status).toBe(200);
+    expect(partial.json.status).toBe('partial');
+    const receipt = partial.json.receipt;
+    expect(receipt.results.map((result: { outcome: string }) => result.outcome)).toEqual(['reused', 'reused', 'failed', 'created']);
+    const failed = receipt.results[2], succeeded = receipt.results[3];
+    expect(sqlCount(acc.id)).toBe(1);
+    const successfulRow = psql(`select row_to_json(c) from custom_checklist_tasks c where user_id='${acc.id}' and id=${succeeded.task_ref.slice(7)};`);
+    let retryId = '';
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'plan_retry') retryId = body.operation_id;
+      return realFetch(url, init);
+    }) as typeof fetch;
+    mount();
+    fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Your plan, ${GOAL}`) }, { timeout: 10_000 }));
+    const sheet = await screen.findByTestId('companion-task-sheet');
+    await within(sheet).findByText(`Could not add: ${PHONE}. Everything else is saved.`);
+    expect(within(sheet).getByRole('button', { name: `${independent}, Not started` })).toBeTruthy();
+    fireEvent.changeText(composer(), 'Keep partial recovery question');
+    const retry = await enabledButton(within(sheet), 'Try adding 1 task again');
+    fireEvent.press(retry);
+    fireEvent.press(retry);
+    await within(sheet).findByRole('button', { name: `${PHONE}, Not started` }, { timeout: 10_000 });
+    expect(retryId).not.toBe('');
+    const retried = (await actions(acc.jwt, { action: 'plan_status', operation_id: retryId })).json.receipt;
+    expect(retried.results).toHaveLength(1);
+    expect(retried.results[0]).toMatchObject({ key: failed.key, item_operation_id: failed.item_operation_id, outcome: 'created' });
+    expect(sqlCount(acc.id)).toBe(2);
+    expect(psql(`select row_to_json(c) from custom_checklist_tasks c where user_id='${acc.id}' and id=${succeeded.task_ref.slice(7)};`)).toBe(successfulRow);
+    expect(psql(`select count(*) from companion_action_receipts where user_id='${acc.id}' and operation_id='${failed.item_operation_id}';`)).toBe('1');
+    await closeSheet();
+    expect(composer().props.value).toBe('Keep partial recovery question');
+  }, 60_000);
+
+  it('keeps a real locked operation pending, permits only lookup, and retries its unchanged approval only after confirmed not-applied', async () => {
+    // Wrong if a held Postgres operation lock is reported not-applied, another
+    // approval writes while pending, or the later authorized retry changes ID.
+    const acc = await newAccount('pending372');
+    mockUserId = acc.id;
+    expect((await actions(acc.jwt, { action: 'plan_prepare', goal: GOAL, items: SUGGESTION.items })).status).toBe(200);
+    const holder = spawn('docker', ['exec', '-i', DB_CONTAINER, 'psql', '-v', 'ON_ERROR_STOP=1', '-qAt', '-U', 'postgres', '-d', 'postgres']);
+    let output = '', errors = '';
+    holder.stderr.on('data', chunk => { errors += String(chunk); });
+    const closed = new Promise<number | null>((resolve, reject) => {
+      holder.once('close', resolve);
+      holder.once('error', reject);
+    });
+    const requests: string[] = [];
+    global.fetch = (async (url, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'));
+      if (body.action === 'plan_apply') {
+        requests.push(body.operation_id);
+        if (requests.length === 1) {
+          await new Promise<void>((resolve, reject) => {
+            const timer = setTimeout(() => reject(new Error(`Owned lock setup failed: ${errors}`)), 10_000);
+            holder.stdout.on('data', chunk => {
+              output += String(chunk);
+              if (output.includes('372_LOCK_HELD')) { clearTimeout(timer); resolve(); }
+            });
+            holder.stdin.write(`begin; select pg_advisory_xact_lock(public.companion_op_lock_key('${acc.id}', '${body.operation_id}'));\n\\echo 372_LOCK_HELD\n`);
+          });
+          throw new TypeError('372 response unavailable while operation is locked');
+        }
+      }
+      return realFetch(url, init);
+    }) as typeof fetch;
+    try {
+      mount();
+      fireEvent.press(await screen.findByRole('button', { name: new RegExp(`Draft plan, ${GOAL}`) }, { timeout: 10_000 }));
+      const sheet = await screen.findByTestId('companion-task-sheet');
+      fireEvent.press(await enabledButton(within(sheet), 'Approve and add 1 task'));
+      await within(sheet).findByText(en.taskActions.pending, {}, { timeout: 10_000 });
+      const approve = within(sheet).getByRole('button', { name: 'Approve and add 1 task' });
+      expect(approve).toBeDisabled();
+      fireEvent.press(approve);
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+      await within(sheet).findByText(en.taskActions.pending);
+      expect(requests).toHaveLength(1);
+      expect(sqlCount(acc.id)).toBe(0);
+      expect(psql(`select count(*) from companion_action_receipts where user_id='${acc.id}' and operation_id='${requests[0]}';`)).toBe('0');
+      holder.stdin.end('commit;\n');
+      expect(await closed).toBe(0);
+      fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+      await within(sheet).findByText(en.taskActions.notApplied, {}, { timeout: 10_000 });
+      fireEvent.press(await enabledButton(within(sheet), 'Try again'));
+      await within(sheet).findByText('Added 1 task. Reused 2 tasks you already had.', {}, { timeout: 10_000 });
+      expect(requests).toHaveLength(2);
+      expect(requests[1]).toBe(requests[0]);
+      expect(sqlCount(acc.id)).toBe(1);
+    } finally {
+      if (!holder.stdin.writableEnded) holder.stdin.end('rollback;\n');
+      await closed;
+    }
   }, 60_000);
 });
