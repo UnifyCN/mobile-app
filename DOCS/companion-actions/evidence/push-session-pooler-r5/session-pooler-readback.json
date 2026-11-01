@@ -1,0 +1,22 @@
+{
+  "provider_calls": 0,
+  "business_writes": 0,
+  "identity": {
+    "current_user": "companion_push_worker",
+    "current_database": "postgres",
+    "version": 170004
+  },
+  "session": {
+    "retained_backend": true,
+    "transaction_timeout": "2500ms",
+    "lock_timeout": "1s",
+    "invalid_session_refused": true
+  },
+  "authorization": {
+    "direct_auth_read_refused": true,
+    "settings_write_refused": true,
+    "deliveries": 0,
+    "attempts": 0
+  },
+  "pass": true
+}

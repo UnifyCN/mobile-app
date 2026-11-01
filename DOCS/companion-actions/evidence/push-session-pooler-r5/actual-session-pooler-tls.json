@@ -1,0 +1,83 @@
+{
+  "at": "2026-11-01T19:28:10.531397+00:00",
+  "host": "aws-0-us-west-1.pooler.supabase.com",
+  "port": 5432,
+  "authenticated": false,
+  "results": [
+    {
+      "trust": "pinned_direct_database_CA",
+      "tls": "TLSv1.3",
+      "verified": true,
+      "subject": [
+        [
+          [
+            "countryName",
+            "US"
+          ]
+        ],
+        [
+          [
+            "stateOrProvinceName",
+            "Delware"
+          ]
+        ],
+        [
+          [
+            "localityName",
+            "New Castle"
+          ]
+        ],
+        [
+          [
+            "organizationName",
+            "Supabase Inc"
+          ]
+        ],
+        [
+          [
+            "commonName",
+            "*.pooler.supabase.com"
+          ]
+        ]
+      ],
+      "issuer": [
+        [
+          [
+            "countryName",
+            "US"
+          ]
+        ],
+        [
+          [
+            "stateOrProvinceName",
+            "Delware"
+          ]
+        ],
+        [
+          [
+            "localityName",
+            "New Castle"
+          ]
+        ],
+        [
+          [
+            "organizationName",
+            "Supabase Inc"
+          ]
+        ],
+        [
+          [
+            "commonName",
+            "Supabase Intermediate 2021 CA"
+          ]
+        ]
+      ]
+    },
+    {
+      "trust": "system_CA",
+      "verified": false,
+      "error_type": "SSLCertVerificationError",
+      "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1082)"
+    }
+  ]
+}
