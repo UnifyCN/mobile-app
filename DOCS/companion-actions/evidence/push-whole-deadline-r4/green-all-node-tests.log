@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: configuration refuses missing, disabled, weak, and unauthorized inputs
+ok 1 - configuration refuses missing, disabled, weak, and unauthorized inputs
+  ---
+  duration_ms: 9.310875
+  type: 'test'
+  ...
+# Subtest: configuration requires the dedicated login and verified TLS and rejects all fixture overrides
+ok 2 - configuration requires the dedicated login and verified TLS and rejects all fixture overrides
+  ---
+  duration_ms: 0.350833
+  type: 'test'
+  ...
+# Subtest: readiness requires preview scope, an explicit flag, and the operator secret; it needs no database
+ok 3 - readiness requires preview scope, an explicit flag, and the operator secret; it needs no database
+  ---
+  duration_ms: 0.172667
+  type: 'test'
+  ...
+# Subtest: HTTP refusal never accesses a runtime and contains only fixed public metadata
+ok 4 - HTTP refusal never accesses a runtime and contains only fixed public metadata
+  ---
+  duration_ms: 37.74425
+  type: 'test'
+  ...
+# {"phase":"verification","cancel":false,"status":504,"returnedMs":45.939959,"afterAbortMs":0.6759170000000054,"secondStatus":200,"spawns":1,"leftovers":[]}
+# Subtest: HTTP deadline bounds stalled verification, directory creation, copying and cleanup
+    # Subtest: verification
+    ok 1 - verification
+      ---
+      duration_ms: 311.600958
+      type: 'test'
+      ...
+# {"phase":"directory","cancel":false,"status":504,"returnedMs":45.717125,"afterAbortMs":0.6942080000000033,"secondStatus":200,"spawns":1,"leftovers":[]}
+    # Subtest: directory
+    ok 2 - directory
+      ---
+      duration_ms: 323.320375
+      type: 'test'
+      ...
+# {"phase":"copy","cancel":false,"status":504,"returnedMs":46.558125000000004,"afterAbortMs":0.8274159999999995,"secondStatus":200,"spawns":1,"leftovers":[]}
+    # Subtest: copy
+    ok 3 - copy
+      ---
+      duration_ms: 319.194875
+      type: 'test'
+      ...
+# {"phase":"cleanup","cancel":false,"status":504,"returnedMs":44.548458,"afterAbortMs":0.15816600000000136,"secondStatus":200,"spawns":2,"leftovers":[]}
+    # Subtest: cleanup
+    ok 4 - cleanup
+      ---
+      duration_ms: 308.167333
+      type: 'test'
+      ...
+    1..4
+ok 5 - HTTP deadline bounds stalled verification, directory creation, copying and cleanup
+  ---
+  duration_ms: 1263.330125
+  type: 'test'
+  ...
+# {"phase":"verification","cancel":true,"status":499,"returnedMs":10.791250000000002,"afterAbortMs":0.6452920000000049,"secondStatus":200,"spawns":1,"leftovers":[]}
+# Subtest: request cancellation also bounds preparation and prevents a late process
+ok 6 - request cancellation also bounds preparation and prevents a late process
+  ---
+  duration_ms: 292.414291
+  type: 'test'
+  ...
+# Subtest: kills actual Deno descendants after tree
+ok 7 - kills actual Deno descendants after tree
+  ---
+  duration_ms: 918.665584
+  type: 'test'
+  ...
+# Subtest: kills actual Deno descendants after exit-parent
+ok 8 - kills actual Deno descendants after exit-parent
+  ---
+  duration_ms: 73.121292
+  type: 'test'
+  ...
+# Subtest: abort kills a process immediately after spawn
+ok 9 - abort kills a process immediately after spawn
+  ---
+  duration_ms: 0.894459
+  type: 'test'
+  ...
+# Subtest: abort kills the complete Deno tree after all descendants start
+ok 10 - abort kills the complete Deno tree after all descendants start
+  ---
+  duration_ms: 28.693083
+  type: 'test'
+  ...
+# Subtest: spawn failure returns only a fixed failure result
+ok 11 - spawn failure returns only a fixed failure result
+  ---
+  duration_ms: 0.446291
+  type: 'test'
+  ...
+1..11
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1592.5635

@@ -1,0 +1,378 @@
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      281 |   });
+      282 |   clients.push(client);
+    > 283 |   return render(
+          |                ^
+      284 |     <QueryClientProvider client={client}>
+      285 |       <I18nextProvider i18n={testI18n()}>
+      286 |         <CompanionScreen />
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3782:31)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6684:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at renderWithAct (node_modules/@testing-library/react-native/src/render-act.ts:13:11)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:69:33)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:44:10)
+      at renderScreen (__tests__/companionActions/reviewer368AccountCaller.test.tsx:283:16)
+      at Object.renderScreen (__tests__/companionActions/reviewer368AccountCaller.test.tsx:385:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      281 |   });
+      282 |   clients.push(client);
+    > 283 |   return render(
+          |                ^
+      284 |     <QueryClientProvider client={client}>
+      285 |       <I18nextProvider i18n={testI18n()}>
+      286 |         <CompanionScreen />
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at renderWithAct (node_modules/@testing-library/react-native/src/render-act.ts:13:11)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:69:33)
+      at renderInternal (node_modules/@testing-library/react-native/src/render.tsx:44:10)
+      at renderScreen (__tests__/companionActions/reviewer368AccountCaller.test.tsx:283:16)
+      at Object.renderScreen (__tests__/companionActions/reviewer368AccountCaller.test.tsx:385:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      384 |     }) as typeof fetch;
+      385 |     renderScreen();
+    > 386 |     fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+          |               ^
+      387 |     const sheet = await screen.findByTestId('companion-task-sheet');
+      388 |     fireEvent.press(await within(sheet).findByRole('button',{name:'Open task'}));
+      389 |     await within(sheet).findByLabelText(en.reminders.instant);
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at fireEvent (node_modules/@testing-library/react-native/src/fire-event.ts:122:11)
+      at Function.fireEvent [as press] (node_modules/@testing-library/react-native/src/fire-event.ts:130:3)
+      at Object.press (__tests__/companionActions/reviewer368AccountCaller.test.tsx:386:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      384 |     }) as typeof fetch;
+      385 |     renderScreen();
+    > 386 |     fireEvent.press(await screen.findByRole('button', { name: /Your tasks/ }));
+          |               ^
+      387 |     const sheet = await screen.findByTestId('companion-task-sheet');
+      388 |     fireEvent.press(await within(sheet).findByRole('button',{name:'Open task'}));
+      389 |     await within(sheet).findByLabelText(en.reminders.instant);
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at flushPendingEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14128:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2896:11)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at Object.<anonymous>.process.env.NODE_ENV.exports.act (node_modules/react/cjs/react.development.js:884:10)
+      at actImplementation (node_modules/@testing-library/react-native/src/act.ts:30:25)
+      at fireEvent (node_modules/@testing-library/react-native/src/fire-event.ts:122:11)
+      at Function.fireEvent [as press] (node_modules/@testing-library/react-native/src/fire-event.ts:130:3)
+      at Object.press (__tests__/companionActions/reviewer368AccountCaller.test.tsx:386:15)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2933:11
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performWorkOnRootViaSchedulerTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2908:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:590:34)
+      at node_modules/react/cjs/react.development.js:847:21
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.error
+    Encountered two children with the same key, `text-scale-2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3716:23
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnOnInvalidKey (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3715:13)
+      at reconcileChildrenArray (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3757:23)
+      at reconcileChildFibersImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4097:30)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4202:33
+      at reconcileChildren (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6685:13)
+      at beginWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:8576:13)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at performUnitOfWork (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13224:22)
+      at workLoopSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13068:41)
+      at renderRootSync (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13049:11)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12181:11)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+  console.log
+    {"probe":"368-account-replacement","account":"account-b","fetching":0,"priorTitleStillVisible":true,"newAccountCustomTasks":[]}
+
+      at Object.log (__tests__/companionActions/reviewer368AccountCaller.test.tsx:397:13)
+
+FAIL __tests__/companionActions/reviewer368AccountCaller.test.tsx
+  review r2 corrections (mobile sheet)
+    ✕ 368: a reminder opened in the task list removes the prior account title after account change (1789 ms)
+    ○ skipped F1: another account signing in clears the unsent message; the same account keeps it
+    ○ skipped F1: A's Checklist read that ends after B signed in never shows A's task
+
+  ● review r2 corrections (mobile sheet) › 368: a reminder opened in the task list removes the prior account title after account change
+
+    expect(received).toBeNull()
+
+    Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1793309597856, "alternate": [FiberNode], "child": [FiberNode], "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "Text", "flags": 4, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 262144, "tag": 5, "treeBaseDuration": 0, "type": "Text", "updateQueue": null}}
+
+      396 |     await waitFor(() => expect(clients[0].isFetching()).toBe(0));
+      397 |     console.log(JSON.stringify({probe:'368-account-replacement',account:mockUserId,fetching:clients[0].isFetching(),priorTitleStillVisible:Boolean(screen.queryByText('Private health appointment for A')),newAccountCustomTasks:await customTasks()('account-b')}));
+    > 398 |     expect(screen.queryByText('Private health appointment for A')).toBeNull();
+          |                                                                    ^
+      399 |   });
+      400 |
+      401 |   it("F1: A's Checklist read that ends after B signed in never shows A's task", async () => {
+
+      at Object.toBeNull (__tests__/companionActions/reviewer368AccountCaller.test.tsx:398:68)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 skipped, 3 total
+Snapshots:   0 total
+Time:        4.523 s
+Ran all test suites matching /__tests__\/companionActions\/reviewer368AccountCaller.test.tsx/i with tests matching "368:".

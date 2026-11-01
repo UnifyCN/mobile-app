@@ -1,0 +1,2550 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ❯ components/companion/plans/PlanLocalStack.test.tsx (9 tests | 9 failed) 32309ms
+   × Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page 308ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer 184ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept 10228ms
+     → Unable to find an element by: [data-testid="plan-card"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+   × Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task 200ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again 10188ms
+     → Unable to find role="button" and name `/Draft plan, Your first week in Vancouver/`
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placeholder"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m9 18 6-6-6-6"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mt-0.5 block text-xs leading-relaxed text-ink-muted"[39m
+                  [36m>[39m
+                    [0mWhat resources are available for newcomers settling in Canada?[0m
+                  [36m</span>[39m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+ ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placeholder"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m9 18 6-6-6-6"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mt-0.5 block text-xs leading-relaxed text-ink-muted"[39m
+                  [36m>[39m
+                    [0mWhat resources are available for newcomers settling in Canada?[0m
+                  [36m</span>[39m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+ ...
+   × Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task 377ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer 325ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it 332ms
+     → Cannot read properties of undefined (reading 'plan_proposal_id')
+   × Plan and task steps together against the real local stack (web) > a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step 10166ms
+     → Unable to find an element by: [data-testid="plan-card"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ savedPlanFor components/companion/plans/PlanLocalStack.test.tsx:272:64
+    270|     action: "plan_apply",
+    271|     operation_id: crypto.randomUUID(),
+    272|     authorization: { kind: "approved_proposal", proposal_id: d.plan_pr…
+       |                                                                ^
+    273|     items: d.items,
+    274|   });
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:338:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ savedPlanFor components/companion/plans/PlanLocalStack.test.tsx:272:64
+    270|     action: "plan_apply",
+    271|     operation_id: crypto.randomUUID(),
+    272|     authorization: { kind: "approved_proposal", proposal_id: d.plan_pr…
+       |                                                                ^
+    273|     items: d.items,
+    274|   });
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:359:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept
+TestingLibraryElementError: Unable to find an element by: [data-testid="plan-card"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:374:31
+    372|     await send("I arrive in Vancouver next week. Help me plan my first…
+    373| 
+    374|     const card = await screen.findByTestId("plan-card", {}, { timeout:…
+       |                               ^
+    375|     expect(within(card).getByText("Draft plan · not saved yet")).toBeT…
+    376|     expect(within(card).getByText("2 tasks you already have · 1 new ta…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ savedPlanFor components/companion/plans/PlanLocalStack.test.tsx:272:64
+    270|     action: "plan_apply",
+    271|     operation_id: crypto.randomUUID(),
+    272|     authorization: { kind: "approved_proposal", proposal_id: d.plan_pr…
+       |                                                                ^
+    273|     items: d.items,
+    274|   });
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:417:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again
+TestingLibraryElementError: Unable to find role="button" and name `/Draft plan, Your first week in Vancouver/`
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placeholder"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m9 18 6-6-6-6"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mt-0.5 block text-xs leading-relaxed text-ink-muted"[39m
+                  [36m>[39m
+                    [0mWhat resources are available for newcomers settling in Canada?[0m
+                  [36m</span>[39m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+ ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placeholder"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"m9 18 6-6-6-6"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"mt-0.5 block text-xs leading-relaxed text-ink-muted"[39m
+                  [36m>[39m
+                    [0mWhat resources are available for newcomers settling in Canada?[0m
+                  [36m</span>[39m
+                [36m</span>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+ ...
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:467:34
+    465|     };
+    466|     mount();
+    467|     fireEvent.click(await screen.findByRole("button", { name: new RegE…
+       |                                  ^
+    468|     const drawer = await screen.findByRole("dialog", { name: "Review p…
+    469|     fireEvent.click(await enabledButton(within(drawer), "Approve and a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ savedPlanFor components/companion/plans/PlanLocalStack.test.tsx:272:64
+    270|     action: "plan_apply",
+    271|     operation_id: crypto.randomUUID(),
+    272|     authorization: { kind: "approved_proposal", proposal_id: d.plan_pr…
+       |                                                                ^
+    273|     items: d.items,
+    274|   });
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:495:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:571:72
+    569|       const saved = await actions(acc.jwt, {
+    570|         action: "plan_apply", operation_id: crypto.randomUUID(),
+    571|         authorization: { kind: "approved_proposal", proposal_id: draft…
+       |                                                                        ^
+    572|         items: draft.items,
+    573|       });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it
+TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+ ❯ savedPlanFor components/companion/plans/PlanLocalStack.test.tsx:272:64
+    270|     action: "plan_apply",
+    271|     operation_id: crypto.randomUUID(),
+    272|     authorization: { kind: "approved_proposal", proposal_id: d.plan_pr…
+       |                                                                ^
+    273|     items: d.items,
+    274|   });
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:633:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Plan and task steps together against the real local stack (web) > a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+TestingLibraryElementError: Unable to find an element by: [data-testid="plan-card"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mFirst week[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"scrollbar-thin flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-3xl px-6 py-6"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex animate-message-in justify-end mt-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"[39m
+                [36m>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"whitespace-pre-wrap"[39m
+                    [33mdir[39m=[32m"auto"[39m
+                  [36m>[39m
+                    [0mI arrive in Vancouver next week. Help me plan my first week.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-4 flex animate-message-in justify-start"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-label[39m=[32m"Copy message"[39m
+                    [33mclass[39m=[32m"absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-copy h-4 w-4"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"14"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mry[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"14"[39m
+                        [33mx[39m=[32m"8"[39m
+                        [33my[39m=[32m"8"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"pe-8"[39m
+                  [36m>[39m
+                    [36m<p[39m
+                      [33mclass[39m=[32m"whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"[39m
+                      [33mdir[39m=[32m"auto"[39m
+                    [36m>[39m
+                      [0mYou already have your SIN and bank tasks. A phone plan helps with both.[0m
+                    [36m</p>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div />[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-t border-border-card px-6 py-3"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto w-full max-w-2xl space-y-1.5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex items-end gap-2 rounded-3xl bg-surface-gray p-2"[39m
+            [36m>[39m
+              [36m<textarea[39m
+                [33maria-label[39m=[32m"Message Companion"[39m
+                [33mclass[39m=[32m"max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"[39m
+                [33mplaceholder[39m=[32m"Ask anything..."[39m
+                [33mrows[39m=[32m"1"[39m
+              [36m/>[39m
+              [36m<button[39m
+                [33maria-label[39m=[32m"Send message"[39m
+                [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-send h-4 w-4 rtl:-scale-x-100"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"flex items-center justify-center gap-1 text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-sparkles lucide-stars h-3 w-3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M20 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M22 4h-4"[39m
+                [36m/>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"4"[39m
+                  [33mcy[39m=[32m"20"[39m
+                  [33mr[39m=[32m"2"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m6 messages/day remaining[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"text-center text-xs text-ink-placeholder"[39m
+            [36m>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"contents"[39m
+    [33mdata-dialog-layer[39m=[32m""[39m
+  [36m/>[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:662:31
+    660|     mount();
+    661|     await send("I arrive in Vancouver next week. Help me plan my first…
+    662|     const card = await screen.findByTestId("plan-card", {}, { timeout:…
+       |                               ^
+    663|     fireEvent.click(within(card).getByRole("button", { name: `Review p…
+    664|     const review = await screen.findByRole("dialog", { name: "Review p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed (9)
+   Start at  22:49:42
+   Duration  33.58s (transform 266ms, setup 0ms, collect 810ms, tests 32.31s, environment 264ms, prepare 32ms)
+

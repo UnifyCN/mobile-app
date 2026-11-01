@@ -1,0 +1,83 @@
+{
+  "base": "61a4134c786c37f65a02baca2364fd7e18ea2509",
+  "main": {
+    "passed": 1518,
+    "skipped": 23,
+    "suites_passed": 144,
+    "suites_skipped": 1
+  },
+  "dst": {
+    "passed": 13,
+    "suites_passed": 2
+  },
+  "test_ci": {
+    "command": "npm run test:ci",
+    "exit": 0,
+    "seconds": 55.619,
+    "natural_exit": true
+  },
+  "statics": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "i18n",
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "changed-lint",
+      "command": [
+        "npx",
+        "eslint",
+        "hooks/companion/useComposerDraft.ts",
+        "app/(tabs)/companion/index.tsx",
+        "components/companion/tasks/TaskRemovalSection.tsx",
+        "__tests__/companionActions/companionTaskSheet.test.tsx"
+      ],
+      "exit": 0
+    }
+  ],
+  "export": {
+    "command": "npx expo export --platform ios --platform android",
+    "exit": 0,
+    "seconds": 18.302,
+    "scope": "bundle export only; no native application launched"
+  },
+  "focused": {
+    "passed": 54,
+    "suites": 4
+  },
+  "final_baseline": {
+    "assertion_failures": 6,
+    "controls_passed": 10
+  },
+  "full_lint": {
+    "errors": 0,
+    "warnings": 85
+  },
+  "changed_lint": {
+    "errors": 0,
+    "warnings": 10
+  },
+  "native": "NOT RUN for this correction"
+}

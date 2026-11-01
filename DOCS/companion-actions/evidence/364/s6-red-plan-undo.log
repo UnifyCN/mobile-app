@@ -1,0 +1,110 @@
+# 2026-10-27T19:03:56Z s6 red: plan Undo
+running 6 tests from ./plan_undo_test.ts
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added ... FAILED (483ms)
+a plan that only reuses tasks is undone with a plain control and removes no task ... FAILED (325ms)
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change ... FAILED (275ms)
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is ... FAILED (271ms)
+two plan Undos with different ids, sent together, reverse the receipt once ... FAILED (260ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added => ./plan_undo_test.ts:28:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     "invalid_action",
++     403,
++     "removal_requires_confirmation",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_undo_test.ts:37:5)
+
+a plan that only reuses tasks is undone with a plain control and removes no task => ./plan_undo_test.ts:63:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_undo_test.ts:75:5)
+
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change => ./plan_undo_test.ts:82:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     "invalid_request",
++     409,
++     "undo_conflict",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_undo_test.ts:92:5)
+
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is => ./plan_undo_test.ts:111:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_undo_test.ts:121:5)
+
+two plan Undos with different ids, sent together, reverse the receipt once => ./plan_undo_test.ts:128:6
+error: AssertionError: Values are not equal: [{"error":"invalid_request","reason":"invalid_action"},{"error":"invalid_request","reason":"invalid_action"}]
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     400,
++     200,
++     409,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_undo_test.ts:135:5)
+
+ FAILURES 
+
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added => ./plan_undo_test.ts:28:6
+a plan that only reuses tasks is undone with a plain control and removes no task => ./plan_undo_test.ts:63:6
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change => ./plan_undo_test.ts:82:6
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is => ./plan_undo_test.ts:111:6
+two plan Undos with different ids, sent together, reverse the receipt once => ./plan_undo_test.ts:128:6
+
+FAILED | 1 passed | 5 failed (1s)
+
+error: Test failed
+exit=1

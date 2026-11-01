@@ -1,0 +1,549 @@
+Classfile jar:file:///opt/homebrew/Cellar/maestro/2.11.0/libexec/lib/maestro-cli-2.11.0.jar!/maestro/cli/App.class
+  Last modified Sep. 29, 2026; size 5500 bytes
+  SHA-256 checksum c707ff03f5456ee4b0e8e95f64cc73d92dcc4f6e7d22c170b709afd9facec442
+  Compiled from "App.kt"
+public final class maestro.cli.App
+  minor version: 0
+  major version: 61
+  flags: (0x0031) ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+  this_class: #2                          // maestro/cli/App
+  super_class: #4                         // java/lang/Object
+  interfaces: 0, fields: 9, methods: 19, attributes: 3
+Constant pool:
+    #1 = Utf8               maestro/cli/App
+    #2 = Class              #1            // maestro/cli/App
+    #3 = Utf8               java/lang/Object
+    #4 = Class              #3            // java/lang/Object
+    #5 = Utf8               <init>
+    #6 = Utf8               ()V
+    #7 = NameAndType        #5:#6         // "<init>":()V
+    #8 = Methodref          #4.#7         // java/lang/Object."<init>":()V
+    #9 = Utf8               java/lang/Boolean
+   #10 = Class              #9            // java/lang/Boolean
+   #11 = Utf8               valueOf
+   #12 = Utf8               (Z)Ljava/lang/Boolean;
+   #13 = NameAndType        #11:#12       // valueOf:(Z)Ljava/lang/Boolean;
+   #14 = Methodref          #10.#13       // java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+   #15 = Utf8               requestedVersion
+   #16 = Utf8               Ljava/lang/Boolean;
+   #17 = NameAndType        #15:#16       // requestedVersion:Ljava/lang/Boolean;
+   #18 = Fieldref           #2.#17        // maestro/cli/App.requestedVersion:Ljava/lang/Boolean;
+   #19 = Utf8               this
+   #20 = Utf8               Lmaestro/cli/App;
+   #21 = Utf8               getDisableANSIMixin
+   #22 = Utf8               ()Lmaestro/cli/DisableAnsiMixin;
+   #23 = Utf8               Lorg/jetbrains/annotations/Nullable;
+   #24 = Utf8               disableANSIMixin
+   #25 = Utf8               Lmaestro/cli/DisableAnsiMixin;
+   #26 = NameAndType        #24:#25       // disableANSIMixin:Lmaestro/cli/DisableAnsiMixin;
+   #27 = Fieldref           #2.#26        // maestro/cli/App.disableANSIMixin:Lmaestro/cli/DisableAnsiMixin;
+   #28 = Utf8               setDisableANSIMixin
+   #29 = Utf8               (Lmaestro/cli/DisableAnsiMixin;)V
+   #30 = Utf8               <set-?>
+   #31 = Utf8               getShowHelpMixin
+   #32 = Utf8               ()Lmaestro/cli/ShowHelpMixin;
+   #33 = Utf8               showHelpMixin
+   #34 = Utf8               Lmaestro/cli/ShowHelpMixin;
+   #35 = NameAndType        #33:#34       // showHelpMixin:Lmaestro/cli/ShowHelpMixin;
+   #36 = Fieldref           #2.#35        // maestro/cli/App.showHelpMixin:Lmaestro/cli/ShowHelpMixin;
+   #37 = Utf8               setShowHelpMixin
+   #38 = Utf8               (Lmaestro/cli/ShowHelpMixin;)V
+   #39 = Utf8               getRequestedVersion
+   #40 = Utf8               ()Ljava/lang/Boolean;
+   #41 = Utf8               setRequestedVersion
+   #42 = Utf8               (Ljava/lang/Boolean;)V
+   #43 = Utf8               getPlatform
+   #44 = Utf8               ()Ljava/lang/String;
+   #45 = Utf8               platform
+   #46 = Utf8               Ljava/lang/String;
+   #47 = NameAndType        #45:#46       // platform:Ljava/lang/String;
+   #48 = Fieldref           #2.#47        // maestro/cli/App.platform:Ljava/lang/String;
+   #49 = Utf8               setPlatform
+   #50 = Utf8               (Ljava/lang/String;)V
+   #51 = Utf8               getHost
+   #52 = Utf8               host
+   #53 = NameAndType        #52:#46       // host:Ljava/lang/String;
+   #54 = Fieldref           #2.#53        // maestro/cli/App.host:Ljava/lang/String;
+   #55 = Utf8               setHost
+   #56 = Utf8               getPort
+   #57 = Utf8               ()Ljava/lang/Integer;
+   #58 = Utf8               port
+   #59 = Utf8               Ljava/lang/Integer;
+   #60 = NameAndType        #58:#59       // port:Ljava/lang/Integer;
+   #61 = Fieldref           #2.#60        // maestro/cli/App.port:Ljava/lang/Integer;
+   #62 = Utf8               setPort
+   #63 = Utf8               (Ljava/lang/Integer;)V
+   #64 = Utf8               getDriverHostPort
+   #65 = Utf8               driverHostPort
+   #66 = NameAndType        #65:#59       // driverHostPort:Ljava/lang/Integer;
+   #67 = Fieldref           #2.#66        // maestro/cli/App.driverHostPort:Ljava/lang/Integer;
+   #68 = Utf8               setDriverHostPort
+   #69 = Utf8               getDeviceId
+   #70 = Utf8               deviceId
+   #71 = NameAndType        #70:#46       // deviceId:Ljava/lang/String;
+   #72 = Fieldref           #2.#71        // maestro/cli/App.deviceId:Ljava/lang/String;
+   #73 = Utf8               setDeviceId
+   #74 = Utf8               getVerbose
+   #75 = Utf8               ()Z
+   #76 = Utf8               verbose
+   #77 = Utf8               Z
+   #78 = NameAndType        #76:#77       // verbose:Z
+   #79 = Fieldref           #2.#78        // maestro/cli/App.verbose:Z
+   #80 = Utf8               setVerbose
+   #81 = Utf8               (Z)V
+   #82 = Utf8               Lpicocli/CommandLine$Mixin;
+   #83 = Utf8               Lpicocli/CommandLine$Option;
+   #84 = Utf8               names
+   #85 = Utf8               -v
+   #86 = Utf8               --version
+   #87 = Utf8               versionHelp
+   #88 = Integer            1
+   #89 = Utf8               description
+   #90 = Utf8               Display CLI version
+   #91 = Utf8               -p
+   #92 = Utf8               --platform
+   #93 = Utf8               (Optional) Select a platform to run on
+   #94 = Utf8               --host
+   #95 = Utf8               hidden
+   #96 = Utf8               --port
+   #97 = Utf8               --driver-host-port
+   #98 = Utf8               --device
+   #99 = Utf8               --udid
+  #100 = Utf8               (Optional) Device ID to run on explicitly, can be a comma separated list of IDs: --device \"Emulator_1,Emulator_2\"
+  #101 = Utf8               --verbose
+  #102 = Utf8               Enable verbose logging
+  #103 = Utf8               Lpicocli/CommandLine$Command;
+  #104 = Utf8               name
+  #105 = Utf8               maestro
+  #106 = Utf8               subcommands
+  #107 = Utf8               Lmaestro/cli/command/TestCommand;
+  #108 = Utf8               Lmaestro/cli/command/CloudCommand;
+  #109 = Utf8               Lmaestro/cli/command/RecordCommand;
+  #110 = Utf8               Lmaestro/cli/command/PrintHierarchyCommand;
+  #111 = Utf8               Lmaestro/cli/command/QueryCommand;
+  #112 = Utf8               Lmaestro/cli/command/DownloadSamplesCommand;
+  #113 = Utf8               Lmaestro/cli/command/LoginCommand;
+  #114 = Utf8               Lmaestro/cli/command/LogoutCommand;
+  #115 = Utf8               Lmaestro/cli/command/BugReportCommand;
+  #116 = Utf8               Lmaestro/cli/command/StudioCommand;
+  #117 = Utf8               Lmaestro/cli/command/StartDeviceCommand;
+  #118 = Utf8               Lmaestro/cli/command/ListDevicesCommand;
+  #119 = Utf8               Lmaestro/cli/command/ListCloudDevicesCommand;
+  #120 = Utf8               Lpicocli/AutoComplete$GenerateCompletion;
+  #121 = Utf8               Lmaestro/cli/command/ChatCommand;
+  #122 = Utf8               Lmaestro/cli/command/CheckSyntaxCommand;
+  #123 = Utf8               Lmaestro/cli/command/DriverCommand;
+  #124 = Utf8               Lmaestro/cli/command/McpCommand;
+  #125 = Utf8               Lkotlin/Metadata;
+  #126 = Utf8               mv
+  #127 = Integer            2
+  #128 = Integer            0
+  #129 = Utf8               k
+  #130 = Utf8               xi
+  #131 = Integer            48
+  #132 = Utf8               d1
+  #133 = Utf8               \u00004\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u000b\n\u0002\b\u0006\n\u0002\u0010\u000e\n\u0002\b\b\n\u0002\u0010\b\n\u0002\b\u0011\b\u0007\u0018\u00002\u00020\u0001B\u0007¢\u0006\u0004\b\u0002\u0010\u0003R \u0010\u0004\u001a\u0004\u0018\u00010\u00058\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0006\u0010\u0007\"\u0004\b\b\u0010\tR \u0010\n\u001a\u0004\u0018\u00010\u000b8\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\f\u0010\r\"\u0004\b\u000e\u0010\u000fR\"\u0010\u0010\u001a\u0004\u0018\u00010\u00118\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010\u0016\u001a\u0004\b\u0012\u0010\u0013\"\u0004\b\u0014\u0010\u0015R \u0010\u0017\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0019\u0010\u001a\"\u0004\b\u001b\u0010\u001cR \u0010\u001d\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u001e\u0010\u001a\"\u0004\b\u001f\u0010\u001cR\"\u0010 \u001a\u0004\u0018\u00010!8\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010&\u001a\u0004\b\"\u0010#\"\u0004\b$\u0010%R\"\u0010\'\u001a\u0004\u0018\u00010!8\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010&\u001a\u0004\b(\u0010#\"\u0004\b)\u0010%R \u0010*\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b+\u0010\u001a\"\u0004\b,\u0010\u001cR\u001e\u0010-\u001a\u00020\u00118\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b.\u0010/\"\u0004\b0\u00101¨\u00062
+  #134 = Utf8               d2
+  #135 = Utf8
+  #136 = Utf8               maestro-cli
+  #137 = Utf8               picocli/AutoComplete$GenerateCompletion
+  #138 = Class              #137          // picocli/AutoComplete$GenerateCompletion
+  #139 = Utf8               picocli/AutoComplete
+  #140 = Class              #139          // picocli/AutoComplete
+  #141 = Utf8               GenerateCompletion
+  #142 = Utf8               picocli/CommandLine$Command
+  #143 = Class              #142          // picocli/CommandLine$Command
+  #144 = Utf8               picocli/CommandLine
+  #145 = Class              #144          // picocli/CommandLine
+  #146 = Utf8               Command
+  #147 = Utf8               picocli/CommandLine$Mixin
+  #148 = Class              #147          // picocli/CommandLine$Mixin
+  #149 = Utf8               Mixin
+  #150 = Utf8               picocli/CommandLine$Option
+  #151 = Class              #150          // picocli/CommandLine$Option
+  #152 = Utf8               Option
+  #153 = Utf8               App.kt
+  #154 = Utf8               RuntimeVisibleAnnotations
+  #155 = Utf8               RuntimeInvisibleAnnotations
+  #156 = Utf8               Code
+  #157 = Utf8               LineNumberTable
+  #158 = Utf8               LocalVariableTable
+  #159 = Utf8               RuntimeInvisibleParameterAnnotations
+  #160 = Utf8               InnerClasses
+  #161 = Utf8               SourceFile
+{
+  public maestro.cli.App();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #8                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: iconst_0
+         6: invokestatic  #14                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+         9: putfield      #18                 // Field requestedVersion:Ljava/lang/Boolean;
+        12: return
+      LineNumberTable:
+        line 58: 0
+        line 89: 4
+        line 58: 12
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      13     0  this   Lmaestro/cli/App;
+
+  public final maestro.cli.DisableAnsiMixin getDisableANSIMixin();
+    descriptor: ()Lmaestro/cli/DisableAnsiMixin;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #27                 // Field disableANSIMixin:Lmaestro/cli/DisableAnsiMixin;
+         4: areturn
+      LineNumberTable:
+        line 82: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setDisableANSIMixin(maestro.cli.DisableAnsiMixin);
+    descriptor: (Lmaestro/cli/DisableAnsiMixin;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #27                 // Field disableANSIMixin:Lmaestro/cli/DisableAnsiMixin;
+         5: return
+      LineNumberTable:
+        line 82: 0
+        line 83: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Lmaestro/cli/DisableAnsiMixin;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final maestro.cli.ShowHelpMixin getShowHelpMixin();
+    descriptor: ()Lmaestro/cli/ShowHelpMixin;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #36                 // Field showHelpMixin:Lmaestro/cli/ShowHelpMixin;
+         4: areturn
+      LineNumberTable:
+        line 85: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setShowHelpMixin(maestro.cli.ShowHelpMixin);
+    descriptor: (Lmaestro/cli/ShowHelpMixin;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #36                 // Field showHelpMixin:Lmaestro/cli/ShowHelpMixin;
+         5: return
+      LineNumberTable:
+        line 85: 0
+        line 86: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Lmaestro/cli/ShowHelpMixin;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.Boolean getRequestedVersion();
+    descriptor: ()Ljava/lang/Boolean;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #18                 // Field requestedVersion:Ljava/lang/Boolean;
+         4: areturn
+      LineNumberTable:
+        line 88: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setRequestedVersion(java.lang.Boolean);
+    descriptor: (Ljava/lang/Boolean;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #18                 // Field requestedVersion:Ljava/lang/Boolean;
+         5: return
+      LineNumberTable:
+        line 88: 0
+        line 89: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/Boolean;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.String getPlatform();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #48                 // Field platform:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 91: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setPlatform(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #48                 // Field platform:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 91: 0
+        line 92: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/String;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.String getHost();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #54                 // Field host:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 94: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setHost(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #54                 // Field host:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 94: 0
+        line 95: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/String;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.Integer getPort();
+    descriptor: ()Ljava/lang/Integer;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #61                 // Field port:Ljava/lang/Integer;
+         4: areturn
+      LineNumberTable:
+        line 97: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setPort(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #61                 // Field port:Ljava/lang/Integer;
+         5: return
+      LineNumberTable:
+        line 97: 0
+        line 98: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/Integer;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.Integer getDriverHostPort();
+    descriptor: ()Ljava/lang/Integer;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #67                 // Field driverHostPort:Ljava/lang/Integer;
+         4: areturn
+      LineNumberTable:
+        line 100: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setDriverHostPort(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #67                 // Field driverHostPort:Ljava/lang/Integer;
+         5: return
+      LineNumberTable:
+        line 100: 0
+        line 101: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/Integer;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final java.lang.String getDeviceId();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #72                 // Field deviceId:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 103: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+    RuntimeInvisibleAnnotations:
+      0: #23()
+        org.jetbrains.annotations.Nullable
+
+  public final void setDeviceId(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #72                 // Field deviceId:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 103: 0
+        line 107: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Ljava/lang/String;
+    RuntimeInvisibleParameterAnnotations:
+      parameter 0:
+        0: #23()
+          org.jetbrains.annotations.Nullable
+
+  public final boolean getVerbose();
+    descriptor: ()Z
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #79                 // Field verbose:Z
+         4: ireturn
+      LineNumberTable:
+        line 109: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lmaestro/cli/App;
+
+  public final void setVerbose(boolean);
+    descriptor: (Z)V
+    flags: (0x0011) ACC_PUBLIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: iload_1
+         2: putfield      #79                 // Field verbose:Z
+         5: return
+      LineNumberTable:
+        line 109: 0
+        line 110: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lmaestro/cli/App;
+            0       6     1 <set-?>   Z
+}
+InnerClasses:
+  public static #141= #138 of #140;       // GenerateCompletion=class picocli/AutoComplete$GenerateCompletion of class picocli/AutoComplete
+  public static #146= #143 of #145;       // Command=class picocli/CommandLine$Command of class picocli/CommandLine
+  public static #149= #148 of #145;       // Mixin=class picocli/CommandLine$Mixin of class picocli/CommandLine
+  public static #152= #151 of #145;       // Option=class picocli/CommandLine$Option of class picocli/CommandLine
+SourceFile: "App.kt"
+RuntimeVisibleAnnotations:
+  0: #103(#104=s#105,#106=[c#107,c#108,c#109,c#110,c#111,c#112,c#113,c#114,c#115,c#116,c#117,c#118,c#119,c#120,c#121,c#122,c#123,c#124])
+    picocli.CommandLine$Command(
+      name="maestro"
+      subcommands=[class Lmaestro/cli/command/TestCommand;,class Lmaestro/cli/command/CloudCommand;,class Lmaestro/cli/command/RecordCommand;,class Lmaestro/cli/command/PrintHierarchyCommand;,class Lmaestro/cli/command/QueryCommand;,class Lmaestro/cli/command/DownloadSamplesCommand;,class Lmaestro/cli/command/LoginCommand;,class Lmaestro/cli/command/LogoutCommand;,class Lmaestro/cli/command/BugReportCommand;,class Lmaestro/cli/command/StudioCommand;,class Lmaestro/cli/command/StartDeviceCommand;,class Lmaestro/cli/command/ListDevicesCommand;,class Lmaestro/cli/command/ListCloudDevicesCommand;,class Lpicocli/AutoComplete$GenerateCompletion;,class Lmaestro/cli/command/ChatCommand;,class Lmaestro/cli/command/CheckSyntaxCommand;,class Lmaestro/cli/command/DriverCommand;,class Lmaestro/cli/command/McpCommand;]
+    )
+  1: #125(#126=[I#127,I#127,I#128],#129=I#88,#130=I#131,#132=[s#133],#134=[s#20,s#135,s#5,s#6,s#24,s#25,s#21,s#22,s#28,s#29,s#33,s#34,s#31,s#32,s#37,s#38,s#15,s#135,s#39,s#40,s#41,s#42,s#16,s#45,s#135,s#43,s#44,s#49,s#50,s#52,s#51,s#55,s#58,s#135,s#56,s#57,s#62,s#63,s#59,s#65,s#64,s#68,s#70,s#69,s#73,s#76,s#74,s#75,s#80,s#81,s#136])
+    kotlin.Metadata(
+      mv=[2,2,0]
+      k=1
+      xi=48
+      d1=["\u00004\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u000b\n\u0002\b\u0006\n\u0002\u0010\u000e\n\u0002\b\b\n\u0002\u0010\b\n\u0002\b\u0011\b\u0007\u0018\u00002\u00020\u0001B\u0007¢\u0006\u0004\b\u0002\u0010\u0003R \u0010\u0004\u001a\u0004\u0018\u00010\u00058\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0006\u0010\u0007\"\u0004\b\b\u0010\tR \u0010\n\u001a\u0004\u0018\u00010\u000b8\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\f\u0010\r\"\u0004\b\u000e\u0010\u000fR\"\u0010\u0010\u001a\u0004\u0018\u00010\u00118\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010\u0016\u001a\u0004\b\u0012\u0010\u0013\"\u0004\b\u0014\u0010\u0015R \u0010\u0017\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u0019\u0010\u001a\"\u0004\b\u001b\u0010\u001cR \u0010\u001d\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b\u001e\u0010\u001a\"\u0004\b\u001f\u0010\u001cR\"\u0010 \u001a\u0004\u0018\u00010!8\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010&\u001a\u0004\b\"\u0010#\"\u0004\b$\u0010%R\"\u0010\'\u001a\u0004\u0018\u00010!8\u0006@\u0006X\u0087\u000e¢\u0006\u0010\n\u0002\u0010&\u001a\u0004\b(\u0010#\"\u0004\b)\u0010%R \u0010*\u001a\u0004\u0018\u00010\u00188\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b+\u0010\u001a\"\u0004\b,\u0010\u001cR\u001e\u0010-\u001a\u00020\u00118\u0006@\u0006X\u0087\u000e¢\u0006\u000e\n\u0000\u001a\u0004\b.\u0010/\"\u0004\b0\u00101¨\u00062"]
+      d2=["Lmaestro/cli/App;","","<init>","()V","disableANSIMixin","Lmaestro/cli/DisableAnsiMixin;","getDisableANSIMixin","()Lmaestro/cli/DisableAnsiMixin;","setDisableANSIMixin","(Lmaestro/cli/DisableAnsiMixin;)V","showHelpMixin","Lmaestro/cli/ShowHelpMixin;","getShowHelpMixin","()Lmaestro/cli/ShowHelpMixin;","setShowHelpMixin","(Lmaestro/cli/ShowHelpMixin;)V","requestedVersion","","getRequestedVersion","()Ljava/lang/Boolean;","setRequestedVersion","(Ljava/lang/Boolean;)V","Ljava/lang/Boolean;","platform","","getPlatform","()Ljava/lang/String;","setPlatform","(Ljava/lang/String;)V","host","getHost","setHost","port","","getPort","()Ljava/lang/Integer;","setPort","(Ljava/lang/Integer;)V","Ljava/lang/Integer;","driverHostPort","getDriverHostPort","setDriverHostPort","deviceId","getDeviceId","setDeviceId","verbose","getVerbose","()Z","setVerbose","(Z)V","maestro-cli"]
+    )

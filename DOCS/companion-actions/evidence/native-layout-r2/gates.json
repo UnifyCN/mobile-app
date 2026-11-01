@@ -1,0 +1,44 @@
+{
+  "code_head": "dee8d770323f9082f1aaf830d3de256eb030c01e",
+  "commands_completed_naturally_before_native_cleanup": true,
+  "focused": {
+    "passed": 20,
+    "log": "logs/s2-green-2.log"
+  },
+  "test_ci": {
+    "exit": 0,
+    "main": {
+      "suites_passed": 140,
+      "suites_skipped": 1,
+      "tests_passed": 1479,
+      "tests_skipped": 16
+    },
+    "dst": {
+      "suites_passed": 2,
+      "tests_passed": 13
+    },
+    "log": "logs/test-ci.log"
+  },
+  "typecheck": {
+    "exit": 0,
+    "log": "logs/typecheck.log"
+  },
+  "i18n": {
+    "exit": 0,
+    "log": "logs/i18n.log"
+  },
+  "changed_file_lint": {
+    "exit": 0,
+    "errors": 0,
+    "warnings": 11,
+    "log": "logs/lint.log"
+  },
+  "ios_android_export": {
+    "exit": 0,
+    "log": "logs/export.log"
+  },
+  "native_observation_verifier": {
+    "exit": 0,
+    "log": "logs/native-validation.log"
+  }
+}

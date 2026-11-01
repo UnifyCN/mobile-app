@@ -1,0 +1,11 @@
+PASS __tests__/companionActions/pushSessionRecovery.test.ts
+  ✓ fresh explicit consent renews retained proof for a after sign-out (3 ms)
+  ✓ fresh explicit consent renews retained proof for b after sign-out (1 ms)
+  ✓ a rejected transfer retains old cleanup and requires another explicit consent (1 ms)
+  ✓ uses the latest saved revision when a rotated installation transfers (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.491 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushSessionRecovery.test.ts/i.

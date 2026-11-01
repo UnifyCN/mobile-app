@@ -1,0 +1,27 @@
+Download https://jsr.io/@supabase/supabase-js/meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0_meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/constants.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/fetch.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/helpers.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/SupabaseAuthClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/rpc.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/version.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/tracingRegistry.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/create-extractor.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/parse.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/validate.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/defaults.ts
+running 5 tests from ./edit_published_test.ts
+a command names a published task by the title the Checklist shows, in the command's language, and changes only its state ... ok (294ms)
+a published task's shared title, description and priority are never edited for one account ... ok (264ms)
+a published task and a custom task with the same title, another province's task or a removed one are not guessed ... ok (220ms)
+an edit draft for a published task is prepared only for a task the Checklist shows, and shows its title ... ok (249ms)
+when published content cannot be read, no command or draft names a task ... ok (183ms)
+
+ok | 5 passed | 0 failed (1s)
+

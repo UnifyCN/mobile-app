@@ -1,0 +1,7 @@
+running 3 tests from ./create_test.ts
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (969ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (310ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (236ms)
+
+ok | 3 passed | 0 failed | 13 filtered out (1s)
+

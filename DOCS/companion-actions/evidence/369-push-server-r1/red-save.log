@@ -1,0 +1,40 @@
+running 2 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts
+push enrollment: disabled server retains no enrollment or token ...
+------- output -------
+FALSIFIER: disabled enrollment writes or does not return push_disabled
+----- output end -----
+push enrollment: disabled server retains no enrollment or token ... ok (194ms)
+push enrollment: authenticated save replays one revision and a content-free receipt ...
+------- output -------
+FALSIFIER: enabled save fails, duplicate requests rotate twice, or proof/token enters receipt
+----- output end -----
+push enrollment: authenticated save replays one revision and a content-free receipt ... FAILED (43ms)
+
+ ERRORS 
+
+push enrollment: authenticated save replays one revision and a content-free receipt => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:21:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     503,
+-     503,
++     200,
++     200,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:31:3)
+
+ FAILURES 
+
+push enrollment: authenticated save replays one revision and a content-free receipt => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:21:6
+
+FAILED | 1 passed | 1 failed (242ms)
+
+error: Test failed

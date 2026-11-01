@@ -1,0 +1,37 @@
+{
+  "finding": "S365-003",
+  "boundary": "Rendered actual mobile and web Companion screens with scripted auth/services/action server",
+  "red": "One new behavior test fails on each unchanged candidate. Both reach the historical-label assertion after the query cache reports current:false.",
+  "intermediate": "The first change selected the whole fresh receipt. It exposed the stand-in returning the current task title for the old receipt. Both tests failed on duplicated new title. Those logs are retained. The final change copies only current, undoable and undoneBy for the same operation identity; it keeps immutable recorded values.",
+  "green": "Six mounted tests pass per platform with natural exit 0. Types and changed-file lint exit 0 on both.",
+  "counts": {
+    "history-web-red": [
+      "Tests  1 failed | 5 skipped (6)"
+    ],
+    "history-mobile-red": [
+      "Tests:       1 failed, 5 skipped, 6 total"
+    ],
+    "history-web-green": [
+      "Tests  1 failed | 5 passed (6)"
+    ],
+    "history-mobile-green": [
+      "Tests:       1 failed, 5 passed, 6 total"
+    ],
+    "history-web-green-final": [
+      "Tests  6 passed (6)"
+    ],
+    "history-mobile-green-final": [
+      "Tests:       6 passed, 6 total"
+    ]
+  },
+  "T365-001": "Restored the five content-fixture secret lines from accepted #366. Full fresh-stack proof remains for the implementation worker. No stack or hosted operation ran in this root correction.",
+  "open": [
+    "S365-001 compound quoted command",
+    "S365-002 immutable waiting-reason receipt"
+  ],
+  "limits": [
+    "Client stand-ins only. No server authorization or real session proof.",
+    "No native device, browser, hosted or live-model run.",
+    "Partial corrections only; no ticket acceptance."
+  ]
+}

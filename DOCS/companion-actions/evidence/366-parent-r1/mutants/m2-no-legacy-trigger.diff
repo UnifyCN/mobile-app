@@ -1,0 +1,18 @@
+@@ -152,7 +152,7 @@
+ -- too (companion_user_tasks_step_order below), because such a task may have no progress
+ -- row yet, and a new row has no row lock a step write could wait for.
+ create function public.companion_step_parent_lock(p_user uuid, p_ref text) returns void
+-language sql set search_path = public, pg_temp as $$
++language sql as $$
+   select pg_advisory_xact_lock(hashtextextended(p_user::text || ':' || p_ref, 366))
+ $$;
+ 
+@@ -222,7 +222,7 @@
+   return new;
+ end $$;
+ create trigger companion_user_tasks_step_order before insert or update on public.user_tasks
+-  for each row execute function public.companion_user_tasks_step_order();
++  for each row when (false) execute function public.companion_user_tasks_step_order();
+ 
+ -- One step of this account, locked. Raises step_not_found for any other account's step.
+ create function public.companion_step_row(p_user uuid, p_step jsonb) returns public.companion_task_steps

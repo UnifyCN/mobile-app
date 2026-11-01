@@ -1,0 +1,9 @@
+10-28 17:23:14.176  2747  5417 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_9", returned false
+10-28 17:23:14.444  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Remove saved detail: I can attend appointments on Fridays", utteranceId=talkback_10, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_FOCUSED displayId:0 time:632987
+10-28 17:23:14.468  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Remove saved detail: I can attend appointments on Fridays", utteranceId=talkback_11, TtsSpan=null, locale=en_US, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:632995
+10-28 17:23:14.472  2747  5417 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_10", returned false
+10-28 17:23:14.482  2747  2747 V talkback: SpeechControllerImpl: Interrupted 10 with talkback_11
+10-28 17:23:18.343  2747  2835 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_11", returned true
+10-28 17:23:18.343  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Button", utteranceId=talkback_11, TtsSpan=null, locale=null, event=type:EVENT_TYPE_ACCESSIBILITY subtype:TYPE_VIEW_ACCESSIBILITY_FOCUSED displayId:0 time:632995
+10-28 17:23:18.981  2747  5533 D talkback: FailoverTextToSpeech: Received utterance completed for "talkback_11", returned true
+10-28 17:23:19.383  2747  2747 V talkback: SpeechControllerImpl: Speaking fragment text="Double-tap to activate", utteranceId=talkback_12, TtsSpan=null, locale=null, event=null

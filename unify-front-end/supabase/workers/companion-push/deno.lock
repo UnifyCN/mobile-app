@@ -1,0 +1,120 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@supabase/supabase-js@2": "2.118.0",
+    "npm:@supabase/auth-js@2.118.0": "2.118.0",
+    "npm:@supabase/functions-js@2.118.0": "2.118.0",
+    "npm:@supabase/postgrest-js@2.118.0": "2.118.0",
+    "npm:@supabase/realtime-js@2.118.0": "2.118.0",
+    "npm:@supabase/storage-js@2.118.0": "2.118.0",
+    "npm:postgres@3.4.9": "3.4.9"
+  },
+  "jsr": {
+    "@supabase/supabase-js@2.118.0": {
+      "integrity": "42009f9d5b35997f35bba560d509f42608057cae647bd5a25b9b4a06ec3ffad0",
+      "dependencies": [
+        "npm:@supabase/auth-js",
+        "npm:@supabase/functions-js",
+        "npm:@supabase/postgrest-js",
+        "npm:@supabase/realtime-js",
+        "npm:@supabase/storage-js"
+      ]
+    }
+  },
+  "npm": {
+    "@supabase/auth-js@2.118.0": {
+      "integrity": "sha512-xWfPXyhS2KDSfAneMtI6p/tBnbdiz/5vaRKXEqUfzfC9WCniKr2Ds5o5G7RIGig0bom4z6wUY9zaV07WDVTfnQ==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "@supabase/functions-js@2.118.0": {
+      "integrity": "sha512-4ofletPa/noKAU6KHeqsd3FztGzRPUEJRey1MKY0o+PIHaVePqRPShIXtl37gcVyIWaFM+zNg6r9zh0uUSFOSA==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "@supabase/phoenix@0.4.5": {
+      "integrity": "sha512-aAn9H9ovVyeApKy11OWOrrOGq8DV68yWeH4ud2lN9fzn4aO8Zb5GLL9m1pUg9nLqIcT+ZDfAcsZe0E/nqdv2lw=="
+    },
+    "@supabase/postgrest-js@2.118.0": {
+      "integrity": "sha512-JXy+37KPApHsyotaQACovv/Jy9E22rfiWLRuT+2UjoEAcAIelDFIrsF/FY47Dy19mO7lI0Tq+zDCX8oJ2Ozfiw==",
+      "dependencies": [
+        "tslib"
+      ]
+    },
+    "@supabase/realtime-js@2.118.0": {
+      "integrity": "sha512-pzCIEWjqD5/xqEZQerpt+q9rsgYkcrkgCJgf0W2ULqC4fYUeB/p9CFa3t9vn+IVh6dMN9r4ZCE262lZvUC+Bfw==",
+      "dependencies": [
+        "@supabase/phoenix",
+        "tslib"
+      ]
+    },
+    "@supabase/storage-js@2.118.0": {
+      "integrity": "sha512-5MNkKt2Moy7Jud/sPX7/28BwdDxZMCVHGJT00b8op3KRa9LKSjOAYU5IcfGWIstaasAqY8GkbA6oI3IRDgB1YQ==",
+      "dependencies": [
+        "iceberg-js",
+        "tslib"
+      ]
+    },
+    "iceberg-js@0.8.1": {
+      "integrity": "sha512-1dhVQZXhcHje7798IVM+xoo/1ZdVfzOMIc8/rgVSijRK38EDqOJoGula9N/8ZI5RD8QTxNQtK/Gozpr+qUqRRA=="
+    },
+    "postgres@3.4.9": {
+      "integrity": "sha512-GD3qdB0x1z9xgFI6cdRD6xu2Sp2WCOEoe3mtnyB5Ee0XrrL5Pe+e4CCnJrRMnL1zYtRDZmQQVbvOttLnKDLnaw=="
+    },
+    "tslib@2.8.1": {
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
+    }
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@dnd-kit/core@^6.3.1",
+        "npm:@dnd-kit/sortable@10",
+        "npm:@dnd-kit/utilities@^3.2.2",
+        "npm:@portabletext/react@^6.2.0",
+        "npm:@sanity/client@^7.22.0",
+        "npm:@sanity/image-url@^2.1.1",
+        "npm:@sentry/nextjs@^10.59.0",
+        "npm:@supabase/ssr@~0.10.3",
+        "npm:@supabase/supabase-js@^2.105.4",
+        "npm:@tailwindcss/postcss@4",
+        "npm:@tanstack/react-query-devtools@^5.100.10",
+        "npm:@tanstack/react-query@^5.100.10",
+        "npm:@testing-library/dom@^10.4.2",
+        "npm:@testing-library/react@^16.3.3",
+        "npm:@types/canvas-confetti@^1.9.0",
+        "npm:@types/node@20",
+        "npm:@types/react-dom@19",
+        "npm:@types/react@19",
+        "npm:@vercel/analytics@^2.0.1",
+        "npm:@vercel/speed-insights@2",
+        "npm:canvas-confetti@^1.9.4",
+        "npm:clsx@^2.1.1",
+        "npm:docx@^9.7.1",
+        "npm:eslint-config-next@16.2.6",
+        "npm:eslint@9",
+        "npm:file-type@^22.0.1",
+        "npm:framer-motion@^12.40.0",
+        "npm:i18next@^23.16.8",
+        "npm:jsdom@^26.1.0",
+        "npm:jszip@^3.10.1",
+        "npm:lucide-react@^1.16.0",
+        "npm:mammoth@1.12.2",
+        "npm:next@16.2.6",
+        "npm:playwright@1.59.1",
+        "npm:posthog-js@^1.391.2",
+        "npm:react-dom@19.2.4",
+        "npm:react-i18next@^15.7.4",
+        "npm:react@19.2.4",
+        "npm:sharp@~0.34.5",
+        "npm:tailwind-merge@^3.6.0",
+        "npm:tailwindcss@4",
+        "npm:typescript@5",
+        "npm:unpdf@^1.8.1",
+        "npm:vitest@^3.2.7"
+      ]
+    }
+  }
+}

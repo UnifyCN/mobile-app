@@ -1,0 +1,15 @@
+{
+  "command": [
+    "bash",
+    "run.sh",
+    "compose_367_370_rollback_test.ts"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-881f2449/DOCS/companion-actions/evidence/command-ci-359-r1/runtime/supabase/tests/companion-actions",
+  "project": "unify-recover-367-370-ci-r1",
+  "started": 1793230086.281224,
+  "falsifier": "Any missing input, wrong local target, or failed service assertion.",
+  "pid": 75355,
+  "exit": 0,
+  "seconds": 37.34559202194214,
+  "natural_exit": true
+}

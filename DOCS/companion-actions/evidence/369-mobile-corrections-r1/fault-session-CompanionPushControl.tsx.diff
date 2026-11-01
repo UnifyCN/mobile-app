@@ -1,0 +1,18 @@
+--- fixed/CompanionPushControl.tsx
++++ fault/CompanionPushControl.tsx
+@@ -80,11 +80,12 @@
+                 t('companionPush.disable'),
+                 () => void device.disable(locale)
+               )
+-            : !['unsupported', 'revoked', 'busy'].includes(view.phase)
++            : !['unsupported', 'revoked', 'sessionEnded', 'busy'].includes(
++                  view.phase
++                )
+               ? button(
+                   t('companionPush.enable'),
+-                  () =>
+-                    void device.enable(locale, view.phase === 'sessionEnded')
++                  () => void device.enable(locale)
+                 )
+               : null}
+       {button(t('companionPush.refresh'), () => void device.refresh(locale))}

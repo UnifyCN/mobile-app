@@ -1,0 +1,106 @@
+{
+  "file": "__tests__/companionActions/savedDetails.test.tsx",
+  "base": "81a14014a7119c4c64b28ffa1ca277baae41a82f",
+  "baseMatcherCalls": 70,
+  "currentMatcherCalls": 87,
+  "removed": [],
+  "added": [
+    {
+      "call": "expect(within(sheet).getByText(FRIDAYS)).not.toBe(detail)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(sheet).getByText('Saved from your message')).not.toBe(caption)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(edit).getByText('Edit')).not.toBe(editLabel)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(sheet).getByRole('button', {\n  name: `Edit saved detail: ${FRIDAYS}`\n})).toBe(edit)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(sheet).getByRole('button', {\n  name: `Remove saved detail: ${FRIDAYS}`\n})).toBe(remove)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(enabled(edit)).toBe(true)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(sheet).getByLabelText('Saved detail')).toBe(input)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(input.props.value).toBe('Retained native edit draft')",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(sheet).getByRole('button', {\n  name: 'Cancel'\n})).toBe(cancel)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(within(cancel).getByText('Cancel')).not.toBe(cancelLabel)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(detailWrites()).toHaveLength(1)",
+      "before": 1,
+      "after": 2,
+      "added": 1
+    },
+    {
+      "call": "expect(focus).toHaveBeenCalledTimes(cycle)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(focus).toHaveBeenCalledTimes(cycle + 1)",
+      "before": 0,
+      "after": 2,
+      "added": 2
+    },
+    {
+      "call": "expect(focus).toHaveBeenLastCalledWith(expect.anything(), 'focus')",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(detailWrites()).toHaveLength(before)",
+      "before": 3,
+      "after": 4,
+      "added": 1
+    },
+    {
+      "call": "expect(server.details()[0].removed).toBe(false)",
+      "before": 1,
+      "after": 2,
+      "added": 1
+    }
+  ],
+  "limit": "Syntax preservation only. Review must assess the changed interaction order and semantics."
+}

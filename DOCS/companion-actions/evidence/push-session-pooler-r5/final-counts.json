@@ -1,0 +1,46 @@
+{
+  "node_reported": 16,
+  "node_pass": 16,
+  "node_fail": 0,
+  "new_config_scenario": 1,
+  "new_rejection_controls": 10,
+  "base_config_assertion_failures": 1,
+  "web_summary": [
+    "Test Files  82 passed (82)",
+    "Tests  847 passed | 19 skipped (866)"
+  ],
+  "web_gates": [
+    {
+      "name": "web-test",
+      "exit": 0,
+      "seconds": 30.084
+    },
+    {
+      "name": "web-build",
+      "exit": 0,
+      "seconds": 50.837
+    },
+    {
+      "name": "web-locale",
+      "exit": 0,
+      "seconds": 0.401
+    }
+  ],
+  "faults": [
+    {
+      "fault": "wrong-role",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "fault": "wrong-host",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "fault": "transaction-port",
+      "exit": 1,
+      "assertion_failure": true
+    }
+  ]
+}

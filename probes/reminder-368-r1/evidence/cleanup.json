@@ -1,0 +1,40 @@
+{
+  "owned_project": "unify-reminder-probe-368-r1",
+  "remaining_owned_containers": 0,
+  "remaining_owned_volumes": 0,
+  "remaining_owned_networks": 0,
+  "ports_released": [
+    63061,
+    63062,
+    63063,
+    63064,
+    3383
+  ],
+  "retained_native_resources": [
+    {
+      "name": "supabase_edge_runtime_unify-native-a11y359-r1-r2-copy",
+      "state": "created"
+    },
+    {
+      "name": "supabase_edge_runtime_unify-native-a11y359-r1",
+      "state": "exited"
+    },
+    {
+      "name": "supabase_rest_unify-native-a11y359-r1",
+      "state": "exited"
+    },
+    {
+      "name": "supabase_auth_unify-native-a11y359-r1",
+      "state": "exited"
+    },
+    {
+      "name": "supabase_kong_unify-native-a11y359-r1",
+      "state": "exited"
+    },
+    {
+      "name": "supabase_db_unify-native-a11y359-r1",
+      "state": "exited"
+    }
+  ],
+  "private_runtime": "retained under ignored .runtime; containers and data volumes removed"
+}

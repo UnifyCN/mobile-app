@@ -1,0 +1,191 @@
+
+> unify-front-end@1.6.0 lint
+> expo lint
+
+Using legacy ESLint config. Consider upgrading to flat config.
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Gather/GroupDetailScreen.tsx
+  112:6  warning  React Hook useEffect has missing dependencies: 'groupData' and 'isMember'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Gather/PostCommentItem.tsx
+  54:25  warning  Component definition is missing display name  react/display-name
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/intro/[pageNum].tsx
+    5:27  warning  'useEffect' is defined but never used                    @typescript-eslint/no-unused-vars
+   11:3   warning  'ScrollView' is defined but never used                   @typescript-eslint/no-unused-vars
+   13:3   warning  'Dimensions' is defined but never used                   @typescript-eslint/no-unused-vars
+   19:10  warning  'Feather' is defined but never used                      @typescript-eslint/no-unused-vars
+   23:8   warning  'RichTextRenderer' is defined but never used             @typescript-eslint/no-unused-vars
+   65:17  warning  'moduleData' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  165:9   warning  'renderBlockContent' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  214:9   warning  'renderSection' is assigned a value but never used       @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/activities/[pageNum].tsx
+  21:10  warning  'Feather' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/ending/[pageNum].tsx
+  28:10  warning  'MaterialIcons' is defined but never used           @typescript-eslint/no-unused-vars
+  29:10  warning  'AntDesign' is defined but never used               @typescript-eslint/no-unused-vars
+  30:10  warning  'MaterialCommunityIcons' is defined but never used  @typescript-eslint/no-unused-vars
+  39:8   warning  'RichTextRenderer' is defined but never used        @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId].tsx
+  1:8  warning  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/lessons/[lessonId]/quizzes/[quizId]/pages/[questionNum].tsx
+  100:17  warning  'moduleData' is assigned a value but never used                                                                                            @typescript-eslint/no-unused-vars
+  111:10  warning  'matchedPairs' is assigned a value but never used                                                                                          @typescript-eslint/no-unused-vars
+  168:6   warning  React Hook useEffect has missing dependencies: 'currentQuestionIndex' and 'questions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  356:9   warning  'getPreviousLesson' is assigned a value but never used                                                                                     @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/map.tsx
+  242:9  warning  'nextLesson' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/[practiceId]/pages/[questionNum].tsx
+   76:17  warning  'moduleData' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  111:10  warning  'isCorrect' is assigned a value but never used      @typescript-eslint/no-unused-vars
+  116:10  warning  'matchedPairs' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  133:11  warning  'startPractice' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/practice/index.tsx
+  56:6  warning  React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Learn/modules/[moduleId]/[submoduleId]/tasks/index.tsx
+  52:6  warning  React Hook useEffect has a missing dependency: 'router'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/Social.tsx
+   62:18  warning  Component definition is missing display name  react/display-name
+  116:24  warning  Component definition is missing display name  react/display-name
+  238:28  warning  Component definition is missing display name  react/display-name
+  246:31  warning  Component definition is missing display name  react/display-name
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)/_layout.tsx
+  34:9  warning  'getTabDisplayName' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/ReportScreen.tsx
+  29:11  warning  'trackScreen' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/_layout.tsx
+  4:10  warning  'Platform' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/community-matching/circle/[circleId]/chat.tsx
+  311:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/edit-name.tsx
+  93:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/giveaway.tsx
+  142:9  warning  'isFinalStep' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/reset-password.tsx
+  72:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/saved-lessons.tsx
+  26:7  warning  'DEFAULT_COLOR' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/AnimatedSplash.tsx
+  52:6  warning  React Hook useEffect has missing dependencies: 'containerOpacity', 'onAnimationComplete', 'rotation', and 'scale'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/AuthComponents/Components.tsx
+  38:10  warning  'TextField' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/AuthComponents/OTPConfirmation.tsx
+   20:3   warning  'SimpleTextField' is defined but never used  @typescript-eslint/no-unused-vars
+  122:14  warning  'error' is defined but never used            @typescript-eslint/no-unused-vars
+  148:14  warning  'error' is defined but never used            @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/AuthComponents/SignUp.tsx
+  165:15  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  181:14  warning  'error' is defined but never used          @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/checklist/ArrivalDateSheet.tsx
+  50:64  warning  React Hook useMemo has an unnecessary dependency: 'visible'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/common/BottomSheet.tsx
+  13:3  warning  'withSpring' is defined but never used                                                                                                          @typescript-eslint/no-unused-vars
+  72:6  warning  React Hook useEffect has missing dependencies: 'opacity', 'shouldRender', and 'translateY'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/companion/TypingIndicator.tsx
+  47:6  warning  React Hook React.useEffect has missing dependencies: 'dot1Opacity', 'dot2Opacity', and 'dot3Opacity'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/companion/tasks/ProfilePanel.tsx
+  26:8   error  disallow literal string: ['province','arrival_date']  i18next/no-literal-string
+  26:19  error  disallow literal string: ['province','arrival_date']  i18next/no-literal-string
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/giveaway/SuccessCelebration.tsx
+  8:3  warning  'withSequence' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/groups/GroupCard.tsx
+  13:19  warning  Component definition is missing display name  react/display-name
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/groups/GroupMemberAvatarStack.tsx
+  23:9  warning  'remaining' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/home/DoubleTapHeart.tsx
+   2:22  warning  'View' is defined but never used                                                                                                               @typescript-eslint/no-unused-vars
+  59:6   warning  React Hook React.useEffect has missing dependencies: 'onComplete', 'opacity', and 'scale'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/home/ImageViewerModal.tsx
+  230:5  warning  React Hook useCallback has a missing dependency: 'slideStyle'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/home/PostItem.tsx
+   76:27  warning  Component definition is missing display name  react/display-name
+  184:25  warning  Component definition is missing display name  react/display-name
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/learn/ExplainTermModal.tsx
+  70:6  warning  React Hook useEffect has missing dependencies: 'fetchExplanation', 'lessonId', and 'trackLessonAskAiUsed'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/learn/PopupModal.tsx
+  2:17  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/learn/PracticeFeedbackModal.tsx
+  80:6  warning  React Hook useEffect has a missing dependency: 'fetchFeedback'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/learn/SelectableText.tsx
+  237:6  warning  React Hook useEffect has a missing dependency: 'selectionCtx'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/onboarding/FloatingTagSelect.tsx
+  165:6   warning  React Hook useEffect has missing dependencies: 'entrance', 'floatAmpX', 'floatAmpY', 'floatSpeedX', 'floatSpeedY', 'floatX', 'floatY', 'index', and 'prefersReducedMotion'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  182:6   warning  React Hook useCallback has missing dependencies: 'bounce' and 'scale'. Either include them or remove the dependency array                                                                                                       react-hooks/exhaustive-deps
+  257:18  warning  'screenWidth' is assigned a value but never used                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  266:5   warning  React Hook useMemo has a missing dependency: 'options'. Either include it or remove the dependency array                                                                                                                        react-hooks/exhaustive-deps
+  277:6   warning  React Hook useEffect has a missing dependency: 'otherInputAnim'. Either include it or remove the dependency array                                                                                                               react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/onboarding/LocationStep.tsx
+  11:3  warning  'ActivityIndicator' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/onboarding/MonthPicker.tsx
+  9:3  warning  'Platform' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/onboarding/OnboardingQuiz.tsx
+  12:3  warning  'TextInput' is defined but never used  @typescript-eslint/no-unused-vars
+  13:3  warning  'Platform' is defined but never used   @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/posts/CreatePostForm.tsx
+  161:16  warning  'e' is defined but never used      @typescript-eslint/no-unused-vars
+  250:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  278:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/profile/Profile.tsx
+  36:19  warning  Component definition is missing display name                                                                react/display-name
+  77:28  warning  React Hook useCallback received a function whose dependencies are unknown. Pass an inline function instead  react-hooks/exhaustive-deps
+  80:31  warning  React Hook useCallback received a function whose dependencies are unknown. Pass an inline function instead  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/sanity/DropdownBlock.tsx
+  3:16  warning  'Text' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/sanity/ImageViewerModal.tsx
+  46:6  warning  React Hook useEffect has missing dependencies: 'savedScale', 'savedTranslateX', 'savedTranslateY', 'scale', 'translateX', and 'translateY'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/sanity/RichTextRenderer.tsx
+   18:10  warning  'AlignJustify' is defined but never used                @typescript-eslint/no-unused-vars
+   18:24  warning  'AlignVerticalJustifyCenter' is defined but never used  @typescript-eslint/no-unused-vars
+   19:10  warning  'Feather' is defined but never used                     @typescript-eslint/no-unused-vars
+  399:9   warning  'currentNesting' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  400:9   warning  'listStack' is assigned a value but never used          @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/components/tips/DailyTipCard.tsx
+  80:6  warning  React Hook useEffect has missing dependencies: 'tip.category', 'tip.date', 'tip.persona', 'tip.stage', and 'trackTipViewed'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 87 problems (2 errors, 85 warnings)
+

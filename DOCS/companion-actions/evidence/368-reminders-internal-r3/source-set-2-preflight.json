@@ -1,0 +1,654 @@
+[
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/embeddings.ts",
+    "sha256": "1671e2f7cc819c9b17d136549506db30de06e1877dc37b4aa9d7fb54eed06f2a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/fetchWithRetry.ts",
+    "sha256": "82e38394e3ab2ecf896b215b6446c459aefab6133d0f220b21ecf1250f10eba7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/openrouter.ts",
+    "sha256": "f1f6ef3d2483faa1025e0de2e40e866d813b0fb7037649fa16278145e9281be6"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/pexels.ts",
+    "sha256": "93b1900bdd7bfcdb9e8d7852bdcf5010dea8385a841216d63b08389593f9f8d9"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/platform.ts",
+    "sha256": "a5b200b9f59dd06acf8028f786944cdd42b90c48df2f6af4212b517f6f4de722"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/platform_test.ts",
+    "sha256": "e8b206c5bf80b1d76c0f652ac3b1ec4e6a73d818d312d7dfff02c7029324b73d"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/posthogCapture.ts",
+    "sha256": "37663df86ab5b34f7c61db9376e27e53438f1d2d04951518a370679523c4ca75"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/ssrf.ts",
+    "sha256": "67ce414bdf8735d134ca4c73342ca0fd176b688c5515e25d3f50502fb7d9caf7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/testEmbeddingFixtures.ts",
+    "sha256": "ad077c9b392bf9b61161e93244f9978908c413fefa9ecdd8462870d7fec75a44"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/testHarness.ts",
+    "sha256": "011e16b7ff49b15e0f7fe6276bb6e4e720a6ed8c6d0be5349fc0b1adc7fa4767"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/_shared/topics.ts",
+    "sha256": "c024efc96b69243a276db36e6e25d9908853cd86f1d8dfd58ae3f305823a9f28"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/commands.ts",
+    "sha256": "b7bd17ba25f6eafdd22c35004c86588cb046d1453274e00a966330b5fa853a72"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/contract.ts",
+    "sha256": "d986530a867e1c4d09f434c0120713af23fa0bd30d1d04cbca782c4f54e6f912"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/handler.ts",
+    "sha256": "62d041c8cf6b2eb157cc3bab78d927c562f885aa9789e5f80ea88e5836b5e56e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/index.ts",
+    "sha256": "7fdbcf5ddc8ce3513cb393e4b93d5421fb6dd9f51baff1297c3c60efac51fa82"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/planHandler.ts",
+    "sha256": "a41ebc53ca2ec0e1cba47f6e615bf992cc456fc0861273634a5af786a792970d"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/plans.ts",
+    "sha256": "ae0ebb1ba1266e5c20babe955d6e929cf77b00ee04f5e1631fafa7832f275939"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/reminders.ts",
+    "sha256": "516b423c217267185bc964b28db1f426f0f86c53d5dbf6d60a6622511bba7183"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/companion-actions/targets.ts",
+    "sha256": "1e5031c2234499fdcfd3220ac9f70c2b547b35a301b49dc1401e9a15c13a878b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/cover-letter-chat/index.ts",
+    "sha256": "072bb60d2af5b86932c0e44e334f51acde266e3388d00503ca1e02e7106b3d27"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/cover-letter-chat/index_test.ts",
+    "sha256": "beb7ca45fc254fde5c5b1965af8a06dba9fdc5f61ce9abcb69411b64c4bb7ef8"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/bibliocommons.ts",
+    "sha256": "f7192adb1a1bfa9d1203e0a77c4ed2c279138f8b3b7d519b007db29c7394f432"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/capilano.ts",
+    "sha256": "7b65af27997773e1f2a807b7f27596093824f355c87c138626bf73c071832b1b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/communico.ts",
+    "sha256": "375a1908951dbd6dc783dc4390aff700958ce45a7b93758174fd4f671141b1a4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/livewhale.ts",
+    "sha256": "a6a558a1b2799498a13d1644fffabf5da1e426209af80d3c1729dc1bf399e6bd"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/nvcl.ts",
+    "sha256": "1dde3ac9161d97647bda5d1d9ff8a986dbdada53bf2b68b357a92bc19ce8c0ee"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/surrey.ts",
+    "sha256": "5cefc65067a0125060afd0cea4ebc10ad55a8ab3167bdbbc4622b6dd86a9efa7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/adapters/tribe.ts",
+    "sha256": "b1b45b5a5d06bd3285a3abd959e05a790cd198214b633983eda3d19d5668cb92"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/dryrun.ts",
+    "sha256": "790059490a1ba22256d1b8679255e3393781fa8605f526964a1372f8393dc6ee"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/index.ts",
+    "sha256": "bcee0a477f5a7daebb22733851f36fd93db214f2d2391f28bd0efcd5249adb8a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/constants.ts",
+    "sha256": "90662e5c384958d3f6152137e34662184e76eebb0a91462beda6fe984530c2a1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/dates.ts",
+    "sha256": "2a86eeb13b94b00fc98db474c8bb88018580688d501dbe48f99c1d794c330a9c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/genre.ts",
+    "sha256": "d5d7ceec2a24db349178f174f8960bbbb793878ed096aa76db0c9507f8dfdc7f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/images.ts",
+    "sha256": "ecf5cf7fbd57641b90949a563bc1b49cdbb4aa9fa2aa283c0ed1a7311f494cd1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/relevance.ts",
+    "sha256": "9f233573a76fea701af2a72394f341b455b0ae3bc434a93db1c3e561de778f8f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/relevance_test.ts",
+    "sha256": "b223977a2455d24f94b664da3282c9bb461d6b73e1a250a787fa158bfd953d75"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/sources.ts",
+    "sha256": "786bba5ea15d308266479d519503f8fdb99fb44fb5ea56ef8e85af9937172bae"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/text.ts",
+    "sha256": "b2b50308805918a6e2a32836cb7f2be6753ca2b32030307b9032ab315e4ed337"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/events-crawler/lib/types.ts",
+    "sha256": "bc7bfbe0584f17b66db1319da9b098fbcd4a1b7aa7d57241d90d8398ab542fad"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/explain-term/index.ts",
+    "sha256": "b212effe35235ff3364bdc4a09c3c7bc8c870d92d8c7e056f31a2c52ecb7f58f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/get-daily-tip/index.ts",
+    "sha256": "aa2ea8931de894af4e1da647fe05d3f91ff98224f2f664853b0185db6a964dd8"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/news-crawler/index.ts",
+    "sha256": "1c854eb60d428b911a76bf5766828d0ebd9cc0191dc612b0d09968d66f4f9959"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/practice-feedback/index.ts",
+    "sha256": "95bc2c9717c99616c03ab48acb3d28ecebf8f5b858f2e1c25b9b899b05ec9e45"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/fixtures/rag-query-context-place-unclear.json",
+    "sha256": "24bf5f3bd23899b5dda8c74a4795cbc7f2a70824203c28c5ba8b5f16a804143a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/fixtures/rag-query-context-province-conflict.json",
+    "sha256": "f26b7765f4841511e3823ca3a80592c5d599a48958b4b960df452dc61fb699f1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/fixtures/rag-query-context-unavailable.json",
+    "sha256": "2943c7f063a7f0d8efa9e408b2fabacdaa8713a0127d70b4e887be468817d07a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/fixtures/rag-query-context-vancouver.json",
+    "sha256": "66929d7a0834642b9ab67b1f99381b8cecfce30151558ce4b8407bbf80364bb9"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/fixtures/rag-query-context-vancouver.sse.json",
+    "sha256": "ee636c0053e8c09353ff0b01153be576c7fcf877f262b4a63c9c9c3a1328805f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index.ts",
+    "sha256": "d715af6411a45a77abf8081cee67f68373352168e5e3d902b1708c268bc0f68e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index_companion_context_test.ts",
+    "sha256": "642aea57e94b1c5f10743d795773eb79c413912053b2b232d3185f31dfa26064"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index_concurrent_test.ts",
+    "sha256": "b330675622fa25e7acb4b41782daf9af87efc1ec8650f03ddddbce157638755f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index_context_test.ts",
+    "sha256": "18dcccd24d325fa5d03ccd78d0c5e392691dce4d262e2e1090b07358fe224b2a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index_embedding_test.ts",
+    "sha256": "6cd4c4408013a9862ecac38b029af076ecf9dd24d6df485ed601677e02ba2068"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/index_test.ts",
+    "sha256": "95547be3a2c939b0759aa57efb142813fa14c66d103d762e2bb26cf084303e1e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/actions/proposals.ts",
+    "sha256": "3f11958a29ad1fb24bf0f3a88b3c3da459205e6c3f320cc19e5f9afdbddf6a9c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/appContext.ts",
+    "sha256": "a8aabc4bff48bc68ab0ecdf5f222e847d5b9606c69d18291c7e87a91645c8094"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/companionContext.ts",
+    "sha256": "41ac1ebed1ce19f3a63c662cfd2fe1d4ccb3904960e9d118ab03a585a142b9d7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/contract.ts",
+    "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/conversationDetails.ts",
+    "sha256": "bb2ad98f401fe7bc3b52e3d392b08a6d9542aa0f01f741ad4d8c9e3c2849d1d9"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/guidance.ts",
+    "sha256": "7d275c07d59e3173626232e08f6a72e2664b1751976d6be02dcda50c10c2d03b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/placeNames.ts",
+    "sha256": "1dd7be7d830e45b0fef628b16184eedd08e50176013fd41d4af3bd6033031389"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/placeNames_test.ts",
+    "sha256": "661e6e018232c4e882ec85348f4f93400260f16f62ce3357b2fe089a58905099"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/profileFacts.ts",
+    "sha256": "2f8c9d19f0d3a37329b14fbc7508e9278627034580ab33423bfcb58ed77dedab"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/promptBlocks.ts",
+    "sha256": "c3f23734328eded09a55d0b06ee029097072d8eda87a3867be2d10c6e32b3bec"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/context/registry.ts",
+    "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/currentFacts.ts",
+    "sha256": "c250ece6a91d67fddb196a7ea39ff912f6254b9b3b35fe7c454359369130c1a5"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/dates.ts",
+    "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/dates_test.ts",
+    "sha256": "08763692934a86d3df62aac201f1b4b3bf09bf93d96af26ecc5244d9dcefa212"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/profile.ts",
+    "sha256": "86c22b063591c0e6651bd25a317d4bdf5d6a37561a05a6fbab1d083e2ba69af2"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/profile_test.ts",
+    "sha256": "13adfbb2dee07e88a977a82d00327e83748ecb142cd74e3fcfc5feff64bff35e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/province.ts",
+    "sha256": "feb5503282f5b9bedadfe70b35bf100ba334cf67c416ff6a5e55d4d72acddcc8"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/provincePointer.ts",
+    "sha256": "3a9e7b1be98b3c39c0d1920c3fc61a3c73fb79eae97197d6b58fdd0b02e8b121"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/provincePointer_test.ts",
+    "sha256": "8c528e08d9e782e10a9db911f77c26cd7129d4185fdeb7278c53a99382910f27"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/province_test.ts",
+    "sha256": "31d82889fc3568755d5374694d3b39a9e42a942cfd718fa0c2a20d66c669e13e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/retrieval.ts",
+    "sha256": "0f71f72c3ddd3da0b2ad50873c1f46442828deda65369984ad6c35d410caccd1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/retrieval_test.ts",
+    "sha256": "ebe2631a178301b4a5fd873514819d4ef2a43937f3ef570413d012a844381c44"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/retrievedContext.ts",
+    "sha256": "d4899bb11cb8f2aa871e936067f7f4628e8fc891ac4114c3e3c416b49e439843"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/retrievedContext_test.ts",
+    "sha256": "0104c8db31c4a86b8ce6ec5dcee9ef29f73fb27e91f044746287618b489609fb"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/topic.ts",
+    "sha256": "1c3436e8009477c57c8a3a909dd93104cf60bd0d66203df152fa23c777307dca"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/rag-query/lib/topic_test.ts",
+    "sha256": "e9b198b0dfd9088e97fefce89d6dcc6b20b90bfa8e6c883f8bca7b87f392155a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/resume-chat/index.ts",
+    "sha256": "f59d7a21c000943711e2a26c3631d5d313ab775fcac02988609da51d0be19f3e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/resume-chat/index_test.ts",
+    "sha256": "800d43eceedca578bff452f192933a242a69b77502017b9031a56b4f379fc34e"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/translate-content/index.ts",
+    "sha256": "8a02de2ea2d73383fa1c054d90fa30baa4b856c13a9238326e5f08b86fb0414a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/translate-content/index_test.ts",
+    "sha256": "bede1e788d4e4eb819234283453cd02b714dba88159e06159b13b595f0984db2"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/translate-content/lib/contentTypes.ts",
+    "sha256": "b427d66e1fbd2983ddccce976ffaebc3bf083e50dfb60ab3489cd92ed5a39486"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/functions/translate-content/lib/contentTypes_test.ts",
+    "sha256": "ee0a7bb989f8359055462e00464214efb8db524cfe682136145cca136f77d6d0"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/.gitignore",
+    "sha256": "86caf9395aff45154e9e631b2ea230b616f369c19116248e8a3f2ea9ca7010b9"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/README.md",
+    "sha256": "afbe8a666f5bce758b0965ef6ddb3f96de2a6a24a045ee0870f29a42a6b75f5c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/actions_test.ts",
+    "sha256": "88f071e838ee2283f43c4cec356dde136125d5d931539b1778928581f873afb7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/boundary_test.ts",
+    "sha256": "020730ab5121f1807e2117b83422af8bec6b18a3386a679bc5bcebf0db0b2d71"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/command_test.ts",
+    "sha256": "43c91da07e58ec6a976e37643e59b07d2a85be700ec7271dc40cdd504fcb49de"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/compose_365_370_test.ts",
+    "sha256": "39c276d82eb9242e8d097e357b12103ea3978592769234c557861463924984d1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/compose_367_370_recovery_test.ts",
+    "sha256": "c97c1a6a8afc0940c8ceafc0cf1c553a7b6652582418df59d437a1fcf7cb7fb2"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/compose_367_370_rollback_test.ts",
+    "sha256": "d2909bdc7df43eb54286e19ac717bf103b8dae8f3c233b42c2d2174bc62af9a5"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/compose_367_370_test.ts",
+    "sha256": "5a529382c223574d6e1db06535a5fedadf08f28cab6ae3637f164bb122ef54e7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/compose_rollback_test.ts",
+    "sha256": "1b073284910a0c71afc77fded2e582f42ca61c4000dab3598da29b76c0a893e6"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/create_rollback_test.ts",
+    "sha256": "cc7343cdb1d553f288c18146d5bfa93abc2eb6d80a56543dee96987e1751c886"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/create_test.ts",
+    "sha256": "5cf1e10e2e9f03825d01da6f5d16873a7628ca0d13ef6049cee2cee7367e3cbb"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/details_language_test.ts",
+    "sha256": "a5a7693098d7bd839a620ee94e0ac71da00338b2143cb8d5f0208af9928f36f4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/details_rollback_test.ts",
+    "sha256": "580657f95996c081439504a01addcf9985468711a46e46ee1c0e7c9bc86bb3bc"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/details_test.ts",
+    "sha256": "358a3ceb14c3c5f009f3a28569cad297b1f1f799b0a7dafbfad7fe8b3731ffd4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/edit_command_test.ts",
+    "sha256": "d8d3030ce3b5ede752d325fdcb54f29d0f835b162df518fe7695b2565fdc96f0"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/edit_published_test.ts",
+    "sha256": "f7817ba52824f919428da121cd5790664ce2748409b2943c9791ca080a944cd0"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/edit_rollback_test.ts",
+    "sha256": "80c3f5be3969136eeefcbb6c41fb9b9b902331fc2c7273970cfc18295fc84d95"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/edit_test.ts",
+    "sha256": "86a1edd31c566d18b4da6a25ed467828d9cdabdfcde5b2013a14206f378603da"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/edit_undo_test.ts",
+    "sha256": "c287a50e64c15a6d22a77934ffe1fbde24d08416d0b202da42fc73d1d8b0b3af"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/mutation_check.py",
+    "sha256": "724a16690da8b9ca7abb72efe1966c497b54ad695b0c0b0345711873c7a636a7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/planSupport.ts",
+    "sha256": "e3ebb6944d36e4fbc210fc61d233913eacb8b009542f96597ee0034adcdab616"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_access_test.ts",
+    "sha256": "be1228f01eaaf628b620dffaccbf58aab2c12428c98667c05a5810d336e3aae7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_multiple_reviews_test.ts",
+    "sha256": "8f3122f5d8b11c847f3596217506de170453e6faf3900c9b2fe0bd8e62dde1c4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_recovery_test.ts",
+    "sha256": "6709f6c1cc83e6e66c686be9450e84afad107fbca28a8aa7fbc1506c53c1a4f7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_retry_review_test.ts",
+    "sha256": "a27a55a3cd70746b88718d9f067f0f88eb38cf223a6c0b6d14097af3ef3480da"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_rollback_test.ts",
+    "sha256": "3978e755e85f27a88a2d358454003aa3377e653421c167a53e3e07b661d86640"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_test.ts",
+    "sha256": "65538167991498a9a9594c4a0c1723311bac8983dd79123cdc09ca56d3bf1fb0"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/plan_undo_test.ts",
+    "sha256": "225af82560c5c1e1c184a241483b9ad308ff3a56cf38f994c3d6d3c6a202404a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/receipt_history_test.ts",
+    "sha256": "90e71dbfe9406b1d0de38c4b35ab3385d5218ceec90f4d94a12a1cf5d27c4cfb"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/reminders_commands_test.ts",
+    "sha256": "bc469be0cb47b238edbf4ff040d63614e95edf3cd3744a01ac3afc5bb8e04df0"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/reminders_races_test.ts",
+    "sha256": "f9f4f1f0a7fc055182e52d85f5773f30bf5cafffc5763652aec1751de9294c97"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/reminders_test.ts",
+    "sha256": "e72d80df0b168b0ecedfd2eef30daba6fa203437b96990b329ad45b9c38ceb9f"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/remove_plan_race_test.ts",
+    "sha256": "59f3c230369c358c2ee9aaca2a96acb6df765b0f745de16f2c1477c08caf652c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/remove_rollback_test.ts",
+    "sha256": "0bb9741becbf5f30736850dc0940f0394d5760aa36428bfc1fd48e14f0ecd230"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/remove_test.ts",
+    "sha256": "ac2fe2694677151d8ad0c3d71678c827e8f5548b223637a75d9cc2317cedab11"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/rollback_test.ts",
+    "sha256": "398b254f7e37b96123e908b75549836d4697f80806589740082256858d6bdc4a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/run.sh",
+    "sha256": "335cb18743e88cb0352bcdf6eeb4cc8854540f16d4c7c287b940b2fc00bdded5"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/steps_context_race_test.ts",
+    "sha256": "5ac5876ea968bd4e675cf5b3cba461d52a931bd2f318b8cfe17cec7feead5205"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/steps_parent_race_test.ts",
+    "sha256": "86eb673fb915b2ab125a14960a2ebf6adfd1a576a5c3a49331022ed86e1a6271"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/steps_rollback_test.ts",
+    "sha256": "8c28785e9f1316793a099ee00abf814d56f3b6e0086f040371772fffcfaef24a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/steps_test.ts",
+    "sha256": "1d8f2eb230b25cee0f302f625220698c17c3ce1d557fd0990f5ff6e2bb43697a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/config.toml",
+    "sha256": "164074825cb3aaa71999a2ca975cb9091383ff6daee17f215b0fd5b52b936aec"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+    "sha256": "071b5a982342b0f08b97f4eddc1fea6ecc2fde9457b5eacc0a195533567b567b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/supabase/migrations/20260101000001_generation_quota_tripwire.sql",
+    "sha256": "41d96ef29f95fbb2a1b926c64417931cb29850c09fcf78bfa0796fd902605126"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/support.ts",
+    "sha256": "d61674fc8173631bf7c7c9936f797f28a3c8f487924febbd4fc820f5afe40e9c"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/undo_test.ts",
+    "sha256": "538ab0793cb5bfa4583b0a1d01adbbaddfd4669f21785133d22d6066e7661999"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/ar/translation.json",
+    "sha256": "bec07b018da9d132f4d21087fdc1646df8d286c3bd072849096491e2f45210ae"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/en/translation.json",
+    "sha256": "4d434cd98fbbfd83dda535be48e774f970b0d96b76843881713e9e78898a4624"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/es/translation.json",
+    "sha256": "2e290e7d0159e8d6e9c581a6f7c7d154df6fa79d39d748d7c39bae9c1e325f5d"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/fr-CA/translation.json",
+    "sha256": "b9ef9d33744114ffced679531d12dcd6bb3f2f86356189feed847b21561ffae7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/hi/translation.json",
+    "sha256": "1481d7ad9f59c0150539a3aa752c715cac0464cb6237b4061632075f8568e31b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/pa/translation.json",
+    "sha256": "158d4da0a9c9bd520e54a1659e992140dcbb8402d837d43ee48c977cdfd310d1"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/lib/i18n/locales/vi/translation.json",
+    "sha256": "765ae5d71fef93f35afa1f2a03ad56e8023b28fb00ae61a66486fbd822991088"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/ar/translation.json",
+    "sha256": "2e0f46d0bcb586750a38e66a935b794e8ff69f1ce4ed3e2edfc28e494293103a"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/en/translation.json",
+    "sha256": "aae3f8cfe6d2a09bf789adbe375a4e9d0890a91fecca2f16321f292affe471a4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/es/translation.json",
+    "sha256": "961a284ff6679658d19547e6c525da842297e41ab6471fdcacac9272a55b01c4"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/fr-CA/translation.json",
+    "sha256": "882024fc56880161a6e56b85f6c499e5a608617d0785ee5e05bed4193a937363"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/hi/translation.json",
+    "sha256": "c5007ba29315727db64b64931a86d3bf06f741092dd24dc667d171abab17a6c9"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/pa/translation.json",
+    "sha256": "e3496323587b1997631e23762c6fef8e25e001d9d4e5c1d374b89d128a4758fb"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/unify-front-end/i18n/locales/vi/translation.json",
+    "sha256": "5f52343e9037c3947735ef6a99b224ac6071040861ab088e8bc3555b663a8870"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261025235536_companion_task_actions.sql",
+    "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261026165156_companion_task_create.sql",
+    "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+    "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261027183644_companion_task_steps.sql",
+    "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261028001530_companion_task_edit.sql",
+    "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261028004902_companion_saved_details.sql",
+    "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261028025026_companion_task_remove.sql",
+    "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/migrations/20261029175439_companion_task_reminders.sql",
+    "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261025235536_companion_task_actions.down.sql",
+    "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261026165156_companion_task_create.down.sql",
+    "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261027183338_companion_settlement_plan.down.sql",
+    "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261027183644_companion_task_steps.down.sql",
+    "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261028001530_companion_task_edit.down.sql",
+    "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261028004902_companion_saved_details.down.sql",
+    "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261028025026_companion_task_remove.down.sql",
+    "sha256": "821398d146159a42cd31fb12acccd83e95899e6ea47ef1fae23d8e0a9208c6de"
+  },
+  {
+    "path": "/private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/rollbacks/20261029175439_companion_task_reminders.down.sql",
+    "sha256": "9282bc6a64bc4fa5a74c4e702e588191412a97934e00ca76caf2317b670d3049"
+  }
+]

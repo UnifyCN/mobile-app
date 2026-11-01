@@ -1,0 +1,50 @@
+[
+  {
+    "name": "actions_test.ts",
+    "label": "regression-fixed-01-actions",
+    "exit": 0,
+    "seconds": 17.619343042373657
+  },
+  {
+    "name": "boundary_test.ts",
+    "label": "regression-fixed-02-boundary",
+    "exit": 1,
+    "seconds": 13.685809850692749
+  },
+  {
+    "name": "command_test.ts",
+    "label": "regression-fixed-03-command",
+    "exit": 1,
+    "seconds": 15.385074853897095
+  },
+  {
+    "name": "compose_365_370_test.ts",
+    "label": "regression-fixed-04-compose_365_370",
+    "exit": 1,
+    "seconds": 13.893573760986328
+  },
+  {
+    "name": "compose_367_370_recovery_test.ts",
+    "label": "regression-fixed-05-compose_367_370_recovery",
+    "exit": 1,
+    "seconds": 13.535669565200806
+  },
+  {
+    "name": "compose_367_370_rollback_test.ts",
+    "label": "regression-fixed-06-compose_367_370_rollback",
+    "exit": 1,
+    "seconds": 13.88370394706726
+  },
+  {
+    "name": "compose_367_370_test.ts",
+    "label": "regression-fixed-07-compose_367_370",
+    "exit": 1,
+    "seconds": 13.685216188430786
+  },
+  {
+    "name": "compose_rollback_test.ts",
+    "label": "regression-fixed-08-compose_rollback",
+    "exit": 1,
+    "seconds": 13.653616905212402
+  }
+]

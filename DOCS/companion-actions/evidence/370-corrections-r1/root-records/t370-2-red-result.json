@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npx",
+    "vitest",
+    "run",
+    "components/companion/tasks/SavedDetails.test.tsx",
+    "-t",
+    "the detail editor uses immediate keyboard"
+  ],
+  "exit": 1,
+  "seconds": 2.093
+}

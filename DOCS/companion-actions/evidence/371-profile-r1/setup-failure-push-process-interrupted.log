@@ -1,0 +1,15 @@
+running 5 tests from ./push_process_test.ts
+push process: kill after durable intent retains unknown identity without resend ...
+------- output -------
+FALSIFIER: killing the sender after intent loses the attempt or a restart sends it
+----- output end -----
+push process: kill after durable intent retains unknown identity without resend ... FAILED (13s)
+push process: forced database close is recovered in an independent connection ...
+------- output -------
+FALSIFIER: driver close prevents process exit/recovery or permits another provider request
+'push process: forced database close is recovered in an independent connection' has been running for over (1m0s)
+
+SIGINT The following tests were pending:
+
+push process: forced database close is recovered in an independent connection => ./push_process_test.ts:26:6
+

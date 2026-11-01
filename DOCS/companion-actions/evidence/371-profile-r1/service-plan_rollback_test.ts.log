@@ -1,0 +1,7 @@
+running 3 tests from ./plan_rollback_test.ts
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans ... ok (4s)
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing ... ok (7s)
+cleanup ... ok (5ms)
+
+ok | 3 passed | 0 failed (11s)
+

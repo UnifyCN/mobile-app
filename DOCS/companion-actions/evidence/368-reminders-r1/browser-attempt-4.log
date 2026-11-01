@@ -1,0 +1,14 @@
+browser page error No QueryClient set, use QueryClientProvider to set one
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.fill: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByLabel('Date and time with UTC offset')[22m
+
+    at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/scripts/verify-companion-reminders.mjs:63:41 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.1

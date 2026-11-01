@@ -1,0 +1,584 @@
+
+ RUN  v3.2.7 /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root
+
+ ❯ components/companion/tasks/TaskActions.test.tsx (20 tests | 1 failed | 19 skipped) 1098ms
+   ↓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it
+   ↓ Checklist task progress (web) > Undo names its own receipt and restores the earlier state and waiting reason
+   ↓ Checklist task progress (web) > Undo after a newer edit elsewhere keeps the newer state and offers a reviewed change
+   ↓ Checklist task progress (web) > a lost response is looked up before any retry and shows the recorded receipt
+   ↓ Checklist task progress (web) > pending and failed lookups stay unresolved and never write; not applied retries the same operation
+   ↓ Checklist task progress (web) > offline: controls are off and nothing is sent; reconnecting reads current progress first
+   ↓ Checklist task progress (web) > an account change drops the previous account's drafts and receipts
+   ↓ Checklist task progress (web) > a shown receipt becomes historical after a newer change elsewhere, and its Undo stays tied to it
+   ↓ Checklist task progress (web) > sign-out clears unsaved drafts and results; signing in again does not bring them back
+   ↓ Checklist task progress (web) > reports allowlisted action results without private text
+   × Companion task entry and drawer (web) > 371: reviews authoritative profile values, keeps focus after save, and preserves the message draft 1097ms
+     → Unable to find role="button" and name "Profile"
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-labelledby[39m=[32m"task-drawer-title"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"[39m
+  [36m>[39m
+    [36m<h2[39m
+      [33mclass[39m=[32m"min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"[39m
+      [33mid[39m=[32m"task-drawer-title"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [0mYour Checklist tasks[0m
+    [36m</h2>[39m
+    [36m<button[39m
+      [33maria-label[39m=[32m"Close"[39m
+      [33mclass[39m=[32m"press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"lucide lucide-x h-5 w-5"[39m
+        [33mfill[39m=[32m"none"[39m
+        [33mheight[39m=[32m"24"[39m
+        [33mstroke[39m=[32m"currentColor"[39m
+        [33mstroke-linecap[39m=[32m"round"[39m
+        [33mstroke-linejoin[39m=[32m"round"[39m
+        [33mstroke-width[39m=[32m"2"[39m
+        [33mviewBox[39m=[32m"0 0 24 24"[39m
+        [33mwidth[39m=[32m"24"[39m
+        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+      [36m>[39m
+        [36m<path[39m
+          [33md[39m=[32m"M18 6 6 18"[39m
+        [36m/>[39m
+        [36m<path[39m
+          [33md[39m=[32m"m6 6 12 12"[39m
+        [36m/>[39m
+      [36m</svg>[39m
+    [36m</button>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded border-b border-border-card py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+          [36m>[39m
+            [0mSaved details[0m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+          [36m>[39m
+            [0mDetails Companion uses in later conversations[0m
+          [36m</span>[39m
+        [36m</span>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"m9 18 6-6-6-6"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+      [36m<ul[39m
+        [33maria-label[39m=[32m"Your Checklist tasks"[39m
+        [33mclass[39m=[32m"divide-y divide-border-card"[39m
+      [36m>[39m
+        [36m<li>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+              [36m>[39m
+                [0mGet a SIN[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+              [36m>[39m
+                [0mNot started[0m
+              [36m</span>[39m
+            [36m</span>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m9 18 6-6-6-6"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</li>[39m
+      [36m</ul>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-labelledby[39m=[32m"task-drawer-title"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"[39m
+  [36m>[39m
+    [36m<h2[39m
+      [33mclass[39m=[32m"min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"[39m
+      [33mid[39m=[32m"task-drawer-title"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [0mYour Checklist tasks[0m
+    [36m</h2>[39m
+    [36m<button[39m
+      [33maria-label[39m=[32m"Close"[39m
+      [33mclass[39m=[32m"press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"lucide lucide-x h-5 w-5"[39m
+        [33mfill[39m=[32m"none"[39m
+        [33mheight[39m=[32m"24"[39m
+        [33mstroke[39m=[32m"currentColor"[39m
+        [33mstroke-linecap[39m=[32m"round"[39m
+        [33mstroke-linejoin[39m=[32m"round"[39m
+        [33mstroke-width[39m=[32m"2"[39m
+        [33mviewBox[39m=[32m"0 0 24 24"[39m
+        [33mwidth[39m=[32m"24"[39m
+        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+      [36m>[39m
+        [36m<path[39m
+          [33md[39m=[32m"M18 6 6 18"[39m
+        [36m/>[39m
+        [36m<path[39m
+          [33md[39m=[32m"m6 6 12 12"[39m
+        [36m/>[39m
+      [36m</svg>[39m
+    [36m</button>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded border-b border-border-card py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+          [36m>[39m
+            [0mSaved details[0m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+          [36m>[39m
+            [0mDetails Companion uses in later conversations[0m
+          [36m</span>[39m
+        [36m</span>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"m9 18 6-6-6-6"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+      [36m<ul[39m
+        [33maria-label[39m=[32m"Your Checklist tasks"[39m
+        [33mclass[39m=[32m"divide-y divide-border-card"[39m
+      [36m>[39m
+        [36m<li>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+              [36m>[39m
+                [0mGet a SIN[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+              [36m>[39m
+                [0mNot started[0m
+              [36m</span>[39m
+            [36m</span>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m9 18 6-6-6-6"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</li>[39m
+      [36m</ul>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m
+   ↓ Companion task entry and drawer (web) > opens saved tasks from a compact entry, changes one in the drawer, keeps the typed message, and can open Checklist
+   ↓ review corrections (web) > F1: after an account change, neither Checklist nor Companion shows the previous account's tasks or message draft
+   ↓ review corrections (web) > F2: offline, Try again and Apply this change send nothing
+   ↓ review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+   ↓ review corrections (web) > F4: a refused waiting-reason save keeps the typed reason
+   ↓ review corrections (web) > F5: focus stays inside the drawer after keyboard task selection and after a compensating change
+   ↓ review corrections (web) > F6: completing a task in Checklist refreshes its progress before the controls allow a change
+   ↓ review r2 corrections (web) > F4: a save reply that arrives after newer typing keeps the newer waiting draft
+   ↓ review r2 corrections (web) > F5: a task opened before the drawer's first frame keeps focus on the task heading
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskActions.test.tsx > Companion task entry and drawer (web) > 371: reviews authoritative profile values, keeps focus after save, and preserves the message draft
+TestingLibraryElementError: Unable to find role="button" and name "Profile"
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-labelledby[39m=[32m"task-drawer-title"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"[39m
+  [36m>[39m
+    [36m<h2[39m
+      [33mclass[39m=[32m"min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"[39m
+      [33mid[39m=[32m"task-drawer-title"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [0mYour Checklist tasks[0m
+    [36m</h2>[39m
+    [36m<button[39m
+      [33maria-label[39m=[32m"Close"[39m
+      [33mclass[39m=[32m"press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"lucide lucide-x h-5 w-5"[39m
+        [33mfill[39m=[32m"none"[39m
+        [33mheight[39m=[32m"24"[39m
+        [33mstroke[39m=[32m"currentColor"[39m
+        [33mstroke-linecap[39m=[32m"round"[39m
+        [33mstroke-linejoin[39m=[32m"round"[39m
+        [33mstroke-width[39m=[32m"2"[39m
+        [33mviewBox[39m=[32m"0 0 24 24"[39m
+        [33mwidth[39m=[32m"24"[39m
+        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+      [36m>[39m
+        [36m<path[39m
+          [33md[39m=[32m"M18 6 6 18"[39m
+        [36m/>[39m
+        [36m<path[39m
+          [33md[39m=[32m"m6 6 12 12"[39m
+        [36m/>[39m
+      [36m</svg>[39m
+    [36m</button>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded border-b border-border-card py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+          [36m>[39m
+            [0mSaved details[0m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+          [36m>[39m
+            [0mDetails Companion uses in later conversations[0m
+          [36m</span>[39m
+        [36m</span>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"m9 18 6-6-6-6"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+      [36m<ul[39m
+        [33maria-label[39m=[32m"Your Checklist tasks"[39m
+        [33mclass[39m=[32m"divide-y divide-border-card"[39m
+      [36m>[39m
+        [36m<li>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+              [36m>[39m
+                [0mGet a SIN[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+              [36m>[39m
+                [0mNot started[0m
+              [36m</span>[39m
+            [36m</span>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m9 18 6-6-6-6"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</li>[39m
+      [36m</ul>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33maria-labelledby[39m=[32m"task-drawer-title"[39m
+  [33maria-modal[39m=[32m"true"[39m
+  [33mclass[39m=[32m"flex h-full w-full flex-col bg-surface shadow-xl md:max-w-md pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"[39m
+  [33mrole[39m=[32m"dialog"[39m
+  [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-1 border-b border-border-card px-2"[39m
+  [36m>[39m
+    [36m<h2[39m
+      [33mclass[39m=[32m"min-w-0 flex-1 truncate px-2 text-sm font-semibold text-ink-secondary focus-visible:outline-none"[39m
+      [33mid[39m=[32m"task-drawer-title"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [0mYour Checklist tasks[0m
+    [36m</h2>[39m
+    [36m<button[39m
+      [33maria-label[39m=[32m"Close"[39m
+      [33mclass[39m=[32m"press flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted hover:bg-surface-gray hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+      [33mtype[39m=[32m"button"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"lucide lucide-x h-5 w-5"[39m
+        [33mfill[39m=[32m"none"[39m
+        [33mheight[39m=[32m"24"[39m
+        [33mstroke[39m=[32m"currentColor"[39m
+        [33mstroke-linecap[39m=[32m"round"[39m
+        [33mstroke-linejoin[39m=[32m"round"[39m
+        [33mstroke-width[39m=[32m"2"[39m
+        [33mviewBox[39m=[32m"0 0 24 24"[39m
+        [33mwidth[39m=[32m"24"[39m
+        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+      [36m>[39m
+        [36m<path[39m
+          [33md[39m=[32m"M18 6 6 18"[39m
+        [36m/>[39m
+        [36m<path[39m
+          [33md[39m=[32m"m6 6 12 12"[39m
+        [36m/>[39m
+      [36m</svg>[39m
+    [36m</button>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"scrollbar-thin min-h-0 flex-1 overflow-y-auto px-5 py-5"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded border-b border-border-card py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+          [36m>[39m
+            [0mSaved details[0m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+          [36m>[39m
+            [0mDetails Companion uses in later conversations[0m
+          [36m</span>[39m
+        [36m</span>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"m9 18 6-6-6-6"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+      [36m<ul[39m
+        [33maria-label[39m=[32m"Your Checklist tasks"[39m
+        [33mclass[39m=[32m"divide-y divide-border-card"[39m
+      [36m>[39m
+        [36m<li>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"press-dim flex min-h-12 w-full cursor-pointer items-center gap-3 rounded py-2.5 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"block break-words text-sm font-medium text-ink-secondary"[39m
+              [36m>[39m
+                [0mGet a SIN[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"mt-0.5 block text-xs text-ink-muted"[39m
+              [36m>[39m
+                [0mNot started[0m
+              [36m</span>[39m
+            [36m</span>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 shrink-0 text-ink-placeholder rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m9 18 6-6-6-6"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</li>[39m
+      [36m</ul>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/tasks/TaskActions.test.tsx:669:41
+    667|     opener.focus(); fireEvent.click(opener);
+    668|     const panel = await dialog();
+    669|     fireEvent.click(await within(panel).findByRole("button", { name: "…
+       |                                         ^
+    670|     expect(await within(panel).findByText("British Columbia")).toBeTru…
+    671|     fireEvent.click(within(panel).getByRole("button", { name: "Edit pr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 skipped (20)
+   Start at  23:10:38
+   Duration  3.36s (transform 311ms, setup 0ms, collect 913ms, tests 1.10s, environment 374ms, prepare 34ms)
+

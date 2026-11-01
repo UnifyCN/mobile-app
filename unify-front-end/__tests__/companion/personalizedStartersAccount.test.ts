@@ -9,6 +9,7 @@
 import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 let mockSessionUserId: string | null = 'user-a';
 
@@ -72,7 +73,7 @@ beforeEach(() => {
   requestedAccounts = [];
   heldResponses = [];
   holdNextResponse = false;
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest
     .spyOn(global, 'fetch')
     .mockImplementation(async (_url, init?: RequestInit) => {

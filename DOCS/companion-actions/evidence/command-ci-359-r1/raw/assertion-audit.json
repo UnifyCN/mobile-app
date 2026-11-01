@@ -1,0 +1,34 @@
+{
+  "file": "__tests__/companionActions/taskEdit.test.tsx",
+  "base": "5c00c5d35fbfcaf1e8aab76b3fd0b0026651ebab",
+  "baseMatcherCalls": 65,
+  "currentMatcherCalls": 69,
+  "removed": [],
+  "added": [
+    {
+      "call": "expect(screen.getByPlaceholderText(/Ask anything|limit/i).props.editable).toBe(true)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(sendButton().props.disabled).toBe(false)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    },
+    {
+      "call": "expect(writes()).toHaveLength(1)",
+      "before": 3,
+      "after": 4,
+      "added": 1
+    },
+    {
+      "call": "expect(composer().props.editable).toBe(false)",
+      "before": 0,
+      "after": 1,
+      "added": 1
+    }
+  ],
+  "limit": "Syntax preservation only. Review must assess the changed interaction order and semantics."
+}

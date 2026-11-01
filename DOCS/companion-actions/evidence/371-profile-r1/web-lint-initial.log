@@ -1,0 +1,42 @@
+
+> web-app@0.1.0 lint
+> eslint
+
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/probes/companion-context-362/context_rls_test.ts
+   59:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  246:78  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  249:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  369:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/profile_races_test.ts
+  2:17   warning  'approved' is defined but never used  @typescript-eslint/no-unused-vars
+  2:27   warning  'call' is defined but never used      @typescript-eslint/no-unused-vars
+  2:151  warning  'prepare' is defined but never used   @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts
+  2:27  warning  'call' is defined but never used      @typescript-eslint/no-unused-vars
+  2:39  warning  'sleep' is defined but never used     @typescript-eslint/no-unused-vars
+  3:52  warning  'envelope' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts
+  1:23   warning  'read' is defined but never used            @typescript-eslint/no-unused-vars
+  1:29   warning  'uuid' is defined but never used            @typescript-eslint/no-unused-vars
+  1:85   warning  'undo' is defined but never used            @typescript-eslint/no-unused-vars
+  1:103  warning  'sleep' is defined but never used           @typescript-eslint/no-unused-vars
+  1:110  warning  'holdParentLock' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/rollback_test.ts
+  77:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/support.ts
+   85:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  387:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  390:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 23 problems (12 errors, 11 warnings)
+

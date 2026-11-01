@@ -1,0 +1,340 @@
+{
+  "status": "implementation_complete_for_independent_review",
+  "created_at": "2026-10-30T21:27:01.318213+00:00",
+  "source_candidate": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158",
+    "logical_path": "/Users/savargupta/.t3/worktrees/Unify/t3-1f65b158",
+    "branch": "t3/mobile-client-implementation",
+    "head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+    "tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+    "parent": "3b03a675a1287e1f212e77fe956863f5db8e2132"
+  },
+  "evidence_commit_parent": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+  "final_identity_note": "The final reply pins the evidence-only child commit. This saved report pins its exact code parent to avoid a self-referencing commit hash.",
+  "approved_mobile_parent": "3b03a675a1287e1f212e77fe956863f5db8e2132",
+  "approved_mobile_parent_tree": "ff68e12229b653a47f3863036b6862571ac77877",
+  "approved_web_head": "8f3720af36c50768ff05d25804a69d28d36fd5c4",
+  "approved_web_tree": "c05d364f28618edf949e7bbdf404fb99d1b2394e",
+  "integrations": {
+    "mobile": "19c2d0d6ea9d7b90d1bb0b10ae345cf6f2cbe83c",
+    "web": "623179cee615057de2c20c8c6216e192891dab4b"
+  },
+  "gates": {
+    "test-ci-final": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "test:ci"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 57.31316614151001
+    },
+    "types-final-r2": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 6.995598793029785
+    },
+    "i18n-final": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 0.1626110076904297
+    },
+    "lint-final": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "eslint",
+        "__tests__/auth/supabaseAuthLock.test.ts",
+        "__tests__/companionActions/pushAccountRestart.test.ts",
+        "__tests__/companionActions/pushDevice.test.ts",
+        "__tests__/companionActions/pushIntents.test.ts",
+        "__tests__/companionActions/pushLocal.test.ts",
+        "__tests__/companionActions/pushLocalization.test.tsx",
+        "__tests__/companionActions/pushNative.test.ts",
+        "__tests__/companionActions/pushNavigation.test.tsx",
+        "__tests__/companionActions/pushParsing.test.ts",
+        "__tests__/companionActions/pushReminderControl.test.ts",
+        "__tests__/companionActions/pushReminderIndependence.test.tsx",
+        "__tests__/companionActions/receiptResultFocus.test.tsx",
+        "__tests__/companionActions/reminders.test.tsx",
+        "__tests__/companionActions/remindersLocalStack.test.tsx",
+        "__tests__/matching/circlesPause.test.ts",
+        "app/(tabs)/companion/index.tsx",
+        "components/companion/tasks/CompanionPushControl.tsx",
+        "components/companion/tasks/ReminderSection.tsx",
+        "components/companion/tasks/TaskActionsSheet.tsx",
+        "hooks/companion/useCompanionPush.ts",
+        "hooks/usePushNotifications.ts",
+        "services/account/accountSession.ts",
+        "services/companionActions/pushClient.ts",
+        "services/companionActions/pushDevice.ts",
+        "services/companionActions/pushIntents.ts",
+        "services/companionActions/pushNative.ts",
+        "services/companionActions/pushParsing.ts",
+        "services/companionActions/transport.ts",
+        "services/push/pushNotifications.ts",
+        "__tests__/companionActions/pushRootLifecycle.test.ts"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 2.3004019260406494
+    },
+    "export-native-final": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "expo",
+        "export",
+        "--platform",
+        "ios",
+        "--platform",
+        "android"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 17.286174774169922
+    },
+    "focused-terminal": {
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "jest",
+        "__tests__/companionActions/push",
+        "--runInBand",
+        "--watchAll=false",
+        "--json",
+        "--outputFile",
+        "../DOCS/companion-actions/evidence/369-mobile-client-r1/focused-terminal-results.json"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 6.572330951690674
+    },
+    "local-client-final": {
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "jest",
+        "__tests__/companionActions/pushLocal.test.ts",
+        "--runInBand",
+        "--watchAll=false"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 5.235980033874512
+    }
+  },
+  "full_mobile": {
+    "main_passed": 1597,
+    "main_skipped": 25,
+    "dst_passed": 13,
+    "natural_exit": true,
+    "force_exit": false
+  },
+  "focused_new_tests": {
+    "passed": 65,
+    "skipped_local_opt_in": 1,
+    "test_files": 11
+  },
+  "real_local_service": {
+    "final_cases_passed": 1,
+    "real_jwts": true,
+    "approved_edge": true,
+    "persisted_readbacks": true,
+    "sdk_or_secure_store_native": false,
+    "provider_sends": 0
+  },
+  "sensitivity": {
+    "faults": 4,
+    "binding_failures": 4,
+    "survivors": 0,
+    "exact_restore": true
+  },
+  "lint": {
+    "exit": 0,
+    "errors": 0,
+    "warnings": 68
+  },
+  "locales": [
+    "ar",
+    "en",
+    "es",
+    "fr-CA",
+    "hi",
+    "pa",
+    "vi"
+  ],
+  "new_translation_leaves_per_locale": 35,
+  "cleanup": {
+    "passed": true,
+    "protected_containers": 33,
+    "full_mount_objects_equal": true,
+    "mount_order_only_differences": 4,
+    "protected_volumes": 18,
+    "protected_nondefault_networks": 7,
+    "ports_free_ipv4_ipv6": 14,
+    "owned_containers": 0,
+    "owned_volumes": 0,
+    "owned_networks": 0,
+    "strict_network_ids_unchanged": false,
+    "bounded_bridge_disposition": "Resource Saver startup and resync in the fresh captured interval. The replacement bridge creation falls inside engine startup. This is not a strict network identity claim or continuous process observation.",
+    "startup": "2026-10-30T20:59:21.758423+00:00",
+    "engine_ready": "2026-10-30T20:59:23.435979+00:00",
+    "bridge_created": "2026-10-30T20:59:23.316159+00:00",
+    "old_bridge": "61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403",
+    "new_bridge": "04d2df6d8dd1aad594b0903ff2324148c47a87de444e421df4fc02bcc0a20e26",
+    "input_hashes": {
+      "preflight.json": "856a23c6ae258fbb0ff1dacab90987f421f9bceac55efb41416594029f001918",
+      "cleanup.json": "5c7ad90a0f1f62647276b8fbb92030efa8c512118d9949cbf59f341ba29f3e37",
+      "host-cleanup-tail.txt": "0732f1d40287a48bb9a96b8f74e09928af49890c783591dcb6f4250f93e4e2ab",
+      "startup-network-lines.txt": "9829ac0f1fbd4c976150f6f876185cf60f77513dbaafa062a34d2970c34901df"
+    }
+  },
+  "retained_ignored": {
+    "node_modules_kib": 2276040,
+    "dist_kib": 40252,
+    "expo_directory_present": false
+  },
+  "unchanged_contract_dependencies_config": {
+    "unify-front-end/package.json": "cfcbc66eaed49ee981b9faedca02947b3330254b2fbc8a3a6ef6fcf156f9c2d7",
+    "unify-front-end/package-lock.json": "3abc45f933d88b6df9d53919e36e70c5eb23816c81eca7ecb1106185f563b1ac",
+    "unify-front-end/services/companionActions/pushContract.ts": "19a5e235d870ccf16a955fae51bc51e55caa3cc6c766363e7094d837ae856aa6",
+    "unify-front-end/app.config.js": "38e287587043f8f63170a375030681ab694211b0b947c4f305fcfe616f75afa8"
+  },
+  "impeccable": "3.9.1",
+  "ticket_369_accepted": false,
+  "native_criterion_8_accepted": false,
+  "hosted_or_real_provider_qualification": false,
+  "limits": [
+    "SDK stand-ins do not prove native permission, Keychain/Keystore persistence, native layout, focus or screen-reader behavior.",
+    "No actual Expo/APNs/FCM send or device delivery/navigation was attempted.",
+    "A retired installation or pending operation from a previous sign-in fails closed. No automatic transfer, reclaim or replay under the next sign-in is implemented. An old pending cleanup intent remains secure and does not claim server revocation.",
+    "No hosted write, deployment, integration update, PR, push or ticket acceptance.",
+    "The complete suite retains existing React act/SDK warnings. Lint passes with 68 warnings.",
+    "Three setup/tool diagnostics retain excerpts and tool-chunk provenance; behavior/compiler and command gates retain their raw files. The successful startup log is redacted and its raw local credentials are removed.",
+    "The real local client case uses custom-task delivery fixture rows. The approved broader server suite, published-content cases and worker/provider cases were not rerun.",
+    "The evidence-only whitespace check fails on retained raw output. The implementation source passed its own whitespace check."
+  ],
+  "evidence_whitespace_exit": 2,
+  "pinned_gates": {
+    "pinned-test-ci": {
+      "source_head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+      "source_tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "test:ci"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 59.88483500480652
+    },
+    "pinned-types": {
+      "source_head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+      "source_tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 8.731851816177368
+    },
+    "pinned-exports": {
+      "source_head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+      "source_tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "expo",
+        "export",
+        "--platform",
+        "ios",
+        "--platform",
+        "android"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 19.296011924743652
+    },
+    "pinned-lint": {
+      "source_head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+      "source_tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "eslint",
+        "__tests__/auth/supabaseAuthLock.test.ts",
+        "__tests__/companionActions/pushAccountRestart.test.ts",
+        "__tests__/companionActions/pushDevice.test.ts",
+        "__tests__/companionActions/pushIntents.test.ts",
+        "__tests__/companionActions/pushLocal.test.ts",
+        "__tests__/companionActions/pushLocalization.test.tsx",
+        "__tests__/companionActions/pushNative.test.ts",
+        "__tests__/companionActions/pushNavigation.test.tsx",
+        "__tests__/companionActions/pushParsing.test.ts",
+        "__tests__/companionActions/pushReminderControl.test.ts",
+        "__tests__/companionActions/pushReminderIndependence.test.tsx",
+        "__tests__/companionActions/receiptResultFocus.test.tsx",
+        "__tests__/companionActions/reminders.test.tsx",
+        "__tests__/companionActions/remindersLocalStack.test.tsx",
+        "__tests__/matching/circlesPause.test.ts",
+        "app/(tabs)/companion/index.tsx",
+        "components/companion/tasks/CompanionPushControl.tsx",
+        "components/companion/tasks/ReminderSection.tsx",
+        "components/companion/tasks/TaskActionsSheet.tsx",
+        "hooks/companion/useCompanionPush.ts",
+        "hooks/usePushNotifications.ts",
+        "services/account/accountSession.ts",
+        "services/companionActions/pushClient.ts",
+        "services/companionActions/pushDevice.ts",
+        "services/companionActions/pushIntents.ts",
+        "services/companionActions/pushNative.ts",
+        "services/companionActions/pushParsing.ts",
+        "services/companionActions/transport.ts",
+        "services/push/pushNotifications.ts",
+        "__tests__/companionActions/pushRootLifecycle.test.ts"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 2.7088451385498047
+    },
+    "pinned-i18n": {
+      "source_head": "964990d7d5e0891a089c97909c2d7b1c99f768b4",
+      "source_tree": "6657e6d3c9240247725eacae1a2f5476433c2b5d",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 0.18906593322753906
+    }
+  },
+  "final_application_tree_checked": true
+}

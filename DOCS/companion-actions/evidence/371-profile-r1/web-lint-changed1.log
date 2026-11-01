@@ -1,0 +1,21 @@
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/hooks/useProfileEditor.ts
+  31:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/hooks/useProfileEditor.ts:31:5
+  29 |   const waits = busy || (Boolean(activeId) && query.isPending);
+  30 |   useEffect(() => {
+> 31 |     setLoading(false);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |     if (!waits) return;
+  33 |     const timer = setTimeout(() => setLoading(true), 300);
+  34 |     return () => clearTimeout(timer);  react-hooks/set-state-in-effect
+
+✖ 1 problem (1 error, 0 warnings)
+

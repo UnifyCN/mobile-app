@@ -1,0 +1,61 @@
+FAIL __tests__/companionActions/pushParsing.test.ts
+  ✕ parses push receipts separately and strips additive fields (2 ms)
+  ✕ validates current read and status without treating pending as not applied
+  ✕ accepts only delivery UUID intents and stable resolved task references
+
+  ● parses push receipts separately and strips additive fields
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"operation_id": "11111111-1111-4111-8111-111111111111", "receipt": {"current": null, "operation_id": "11111111-1111-4111-8111-111111111111", "operation_type": "push.enroll", "undoable": false}, "replayed": false, "results": [{"after_revision": 1, "before_revision": 0, "enabled": true, "generation": "22222222-2222-4222-8222-222222222222", "installation_id": "11111111-1111-4111-8111-111111111111", "locale": "en", "revision": 1, "revoked": false, "type": "push.enroll"}], "status": "applied"}
+    Received: null
+
+      10 | };
+      11 | it('parses push receipts separately and strips additive fields', () => {
+    > 12 |  expect(parse('parsePushReceipt', { ...receipt, privateExtra: 'drop' })).toEqual(receipt);
+         |                                                                          ^
+      13 |  expect(parse('parsePushReceipt', { ...receipt, receipt: { ...receipt.receipt, undoable: true } })).toBeNull();
+      14 |  expect(parse('parsePushReceipt', { ...receipt, operation_id: generation })).toBeNull();
+      15 |  expect(parse('parsePushReceipt', { ...receipt, results: [] })).toBeNull();
+
+      at Object.toEqual (__tests__/companionActions/pushParsing.test.ts:12:74)
+
+  ● validates current read and status without treating pending as not applied
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"enrollment": {"enabled": true, "generation": "22222222-2222-4222-8222-222222222222", "installation_id": "11111111-1111-4111-8111-111111111111", "locale": "en", "revision": 1, "revoked": false}}
+    Received: null
+
+      16 | });
+      17 | it('validates current read and status without treating pending as not applied', () => {
+    > 18 |  expect(parse('parsePushRead', { enrollment, extra: true })).toEqual({ enrollment });
+         |                                                              ^
+      19 |  expect(parse('parsePushRead', { enrollment: { ...enrollment, revision: -1 } })).toBeNull();
+      20 |  expect(parse('parsePushStatus', { status: 'pending', operation_id: id })).toEqual({ status: 'pending', operation_id: id });
+      21 |  expect(parse('parsePushStatus', { status: 'failed', operation_id: id })).toBeNull();
+
+      at Object.toEqual (__tests__/companionActions/pushParsing.test.ts:18:62)
+
+  ● accepts only delivery UUID intents and stable resolved task references
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: {"delivery_id": "11111111-1111-4111-8111-111111111111", "type": "companion_reminder"}
+    Received: null
+
+      22 | });
+      23 | it('accepts only delivery UUID intents and stable resolved task references', () => {
+    > 24 |  expect(parse('parsePushIntent', { type: 'companion_reminder', delivery_id: id, task_id: 'untrusted', url: '/wrong' })).toEqual({ type: 'companion_reminder', delivery_id: id });
+         |                                                                                                                         ^
+      25 |  expect(parse('parsePushIntent', { type: 'companion_reminder', delivery_id: '../../a' })).toBeNull();
+      26 |  expect(parse('parsePushTarget', { target: 'available', task_ref: 'custom:17', title: 'discard' })).toEqual({ target: 'available', task_ref: 'custom:17' });
+      27 |  expect(parse('parsePushTarget', { target: 'available', task_ref: '/private' })).toBeNull();
+
+      at Object.toEqual (__tests__/companionActions/pushParsing.test.ts:24:121)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        0.385 s
+Ran all test suites matching /__tests__\/companionActions\/pushParsing.test.ts/i.

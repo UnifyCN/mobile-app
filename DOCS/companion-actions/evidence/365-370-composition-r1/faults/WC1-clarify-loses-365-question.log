@@ -1,0 +1,1372 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ❯ components/companion/tasks/TaskEdit.test.tsx (8 tests | 1 failed | 7 skipped) 1163ms
+   ↓ Edit existing tasks through Companion (web) > a clear rename command saves exactly that change without an AI answer, names it in the card, and Checklist reads the new title
+   ↓ Edit existing tasks through Companion (web) > a state command names a published task by its Checklist title and saves only its state
+   ↓ Edit existing tasks through Companion (web) > an ambiguous or unknown target asks a question and writes nothing
+   ↓ Edit existing tasks through Companion (web) > a suggested change is a draft until approved; approval saves the reviewed change once, and the typed message and focus stay
+   ↓ Edit existing tasks through Companion (web) > a newer edit elsewhere gives a revised draft that shows the old and current values and needs its own approval
+   ↓ keeps the first direct edit receipt and marks it historical after a second edit
+   ↓ a waiting reason change names the reason before and after on the command card, and keeps them after a later edit
+   × in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question 1154ms
+     → Unable to find an element with the text: 2 tasks are called “Get a phone plan”, so I did not change any of them. Open the one you mean in Checklist and change it there.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  <p
+                    class="break-words text-sm text-ink-secondary"
+                  >
+                    Get a phone plan: Not started → Waiting
+                  </p>
+                  <p
+                    class="break-words text-xs text-ink-tertiary"
+                  >
+                    Waiting for: (empty) → “Appointment on Friday”
+                  </p>
+                </div>
+                <button
+                  aria-disabled="false"
+                  aria-label="View task Get a phone plan"
+                  class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  type="button"
+                >
+                  View task
+                </button>
+              </article>
+            </div>
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-1"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-tr-md rtl:rounded-tl-md rtl:rounded-tr-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Set priority of task "Get a phone plan" to Do now
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="mt-4 flex animate-message-in justify-start"
+              >
+                <div
+                  class="relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"
+                >
+                  <button
+                    aria-label="Copy message"
+                    class="absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-copy h-4 w-4"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        height="14"
+                        rx="2"
+                        ry="2"
+                        width="14"
+                        x="8"
+                        y="8"
+                      />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="pe-8"
+                  >
+                    <p
+                      class="whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"
+                      dir="auto"
+                    >
+                      I can add one task at a time. Send one message for each task, like this: Add task: Set up phone service
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="border-t border-border-card px-6 py-3"
+        >
+          <div
+            class="mx-auto w-full max-w-2xl space-y-1.5"
+          >
+            <div
+              class="flex items-end gap-2 rounded-3xl bg-surface-gray p-2"
+            >
+              <textarea
+                aria-label="Message Companion"
+                class="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"
+                placeholder="Ask anything..."
+                rows="1"
+              />
+              <button
+                aria-label="Send message"
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-send h-4 w-4 rtl:-scale-x-100"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"
+                  />
+                  <path
+                    d="m21.854 2.147-10.94 10.939"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p
+              class="flex items-center justify-center gap-1 text-xs text-ink-placeholder"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-sparkles lucide-stars h-3 w-3"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+                />
+                <path
+                  d="M20 2v4"
+                />
+                <path
+                  d="M22 4h-4"
+                />
+                <circle
+                  cx="4"
+                  cy="20"
+                  r="2"
+                />
+              </svg>
+              6 message/day remaining
+            </p>
+            <p
+              class="text-center text-xs text-ink-placeholder"
+            >
+              Companion can make mistakes. Verify important info.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  <p
+                    class="break-words text-sm text-ink-secondary"
+                  >
+                    Get a phone plan: Not started → Waiting
+                  </p>
+                  <p
+                    class="break-words text-xs text-ink-tertiary"
+                  >
+                    Waiting for: (empty) → “Appointment on Friday”
+                  </p>
+                </div>
+                <button
+                  aria-disabled="false"
+                  aria-label="View task Get a phone plan"
+                  class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  type="button"
+                >
+                  View task
+                </button>
+              </article>
+            </div>
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-1"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-tr-md rtl:rounded-tl-md rtl:rounded-tr-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Set priority of task "Get a phone plan" to Do now
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="mt-4 flex animate-message-in justify-start"
+              >
+                <div
+                  class="relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"
+                >
+                  <button
+                    aria-label="Copy message"
+                    class="absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-copy h-4 w-4"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        height="14"
+                        rx="2"
+                        ry="2"
+                        width="14"
+                        x="8"
+                        y="8"
+                      />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="pe-8"
+                  >
+                    <p
+                      class="whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"
+                      dir="auto"
+                    >
+                      I can add one task at a time. Send one message for each task, like this: Add task: Set up phone service
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="border-t border-border-card px-6 py-3"
+        >
+          <div
+            class="mx-auto w-full max-w-2xl space-y-1.5"
+          >
+            <div
+              class="flex items-end gap-2 rounded-3xl bg-surface-gray p-2"
+            >
+              <textarea
+                aria-label="Message Companion"
+                class="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"
+                placeholder="Ask anything..."
+                rows="1"
+              />
+              <button
+                aria-label="Send message"
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-send h-4 w-4 rtl:-scale-x-100"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"
+                  />
+                  <path
+                    d="m21.854 2.147-10.94 10.939"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p
+              class="flex items-center justify-center gap-1 text-xs text-ink-placeholder"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-sparkles lucide-stars h-3 w-3"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+                />
+                <path
+                  d="M20 2v4"
+                />
+                <path
+                  d="M22 4h-4"
+                />
+                <circle
+                  cx="4"
+                  cy="20"
+                  r="2"
+                />
+              </svg>
+              6 message/day remaining
+            </p>
+            <p
+              class="text-center text-xs text-ink-placeholder"
+            >
+              Companion can make mistakes. Verify important info.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+</body>
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  23:46:59
+   Duration  3.05s (transform 431ms, setup 0ms, collect 1.02s, tests 1.16s, environment 395ms, prepare 119ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskEdit.test.tsx > in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question
+TestingLibraryElementError: Unable to find an element with the text: 2 tasks are called “Get a phone plan”, so I did not change any of them. Open the one you mean in Checklist and change it there.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  <p
+                    class="break-words text-sm text-ink-secondary"
+                  >
+                    Get a phone plan: Not started → Waiting
+                  </p>
+                  <p
+                    class="break-words text-xs text-ink-tertiary"
+                  >
+                    Waiting for: (empty) → “Appointment on Friday”
+                  </p>
+                </div>
+                <button
+                  aria-disabled="false"
+                  aria-label="View task Get a phone plan"
+                  class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  type="button"
+                >
+                  View task
+                </button>
+              </article>
+            </div>
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-1"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-tr-md rtl:rounded-tl-md rtl:rounded-tr-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Set priority of task "Get a phone plan" to Do now
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="mt-4 flex animate-message-in justify-start"
+              >
+                <div
+                  class="relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"
+                >
+                  <button
+                    aria-label="Copy message"
+                    class="absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-copy h-4 w-4"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        height="14"
+                        rx="2"
+                        ry="2"
+                        width="14"
+                        x="8"
+                        y="8"
+                      />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="pe-8"
+                  >
+                    <p
+                      class="whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"
+                      dir="auto"
+                    >
+                      I can add one task at a time. Send one message for each task, like this: Add task: Set up phone service
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="border-t border-border-card px-6 py-3"
+        >
+          <div
+            class="mx-auto w-full max-w-2xl space-y-1.5"
+          >
+            <div
+              class="flex items-end gap-2 rounded-3xl bg-surface-gray p-2"
+            >
+              <textarea
+                aria-label="Message Companion"
+                class="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"
+                placeholder="Ask anything..."
+                rows="1"
+              />
+              <button
+                aria-label="Send message"
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-send h-4 w-4 rtl:-scale-x-100"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"
+                  />
+                  <path
+                    d="m21.854 2.147-10.94 10.939"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p
+              class="flex items-center justify-center gap-1 text-xs text-ink-placeholder"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-sparkles lucide-stars h-3 w-3"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+                />
+                <path
+                  d="M20 2v4"
+                />
+                <path
+                  d="M22 4h-4"
+                />
+                <circle
+                  cx="4"
+                  cy="20"
+                  r="2"
+                />
+              </svg>
+              6 message/day remaining
+            </p>
+            <p
+              class="text-center text-xs text-ink-placeholder"
+            >
+              Companion can make mistakes. Verify important info.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  <p
+                    class="break-words text-sm text-ink-secondary"
+                  >
+                    Get a phone plan: Not started → Waiting
+                  </p>
+                  <p
+                    class="break-words text-xs text-ink-tertiary"
+                  >
+                    Waiting for: (empty) → “Appointment on Friday”
+                  </p>
+                </div>
+                <button
+                  aria-disabled="false"
+                  aria-label="View task Get a phone plan"
+                  class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  type="button"
+                >
+                  View task
+                </button>
+              </article>
+            </div>
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-1"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-tr-md rtl:rounded-tl-md rtl:rounded-tr-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Set priority of task "Get a phone plan" to Do now
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="mt-4 flex animate-message-in justify-start"
+              >
+                <div
+                  class="relative w-full rounded-2xl border border-border-card bg-surface px-4 py-3.5 shadow-sm"
+                >
+                  <button
+                    aria-label="Copy message"
+                    class="absolute end-2.5 top-2.5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-ink-placeholder transition-colors hover:bg-surface-gray hover:text-ink-muted"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-copy h-4 w-4"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        height="14"
+                        rx="2"
+                        ry="2"
+                        width="14"
+                        x="8"
+                        y="8"
+                      />
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="pe-8"
+                  >
+                    <p
+                      class="whitespace-pre-wrap text-[15px] leading-relaxed text-ink-secondary"
+                      dir="auto"
+                    >
+                      I can add one task at a time. Send one message for each task, like this: Add task: Set up phone service
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="border-t border-border-card px-6 py-3"
+        >
+          <div
+            class="mx-auto w-full max-w-2xl space-y-1.5"
+          >
+            <div
+              class="flex items-end gap-2 rounded-3xl bg-surface-gray p-2"
+            >
+              <textarea
+                aria-label="Message Companion"
+                class="max-h-32 min-h-9 flex-1 resize-none bg-transparent px-2 py-1.5 text-base text-ink-muted placeholder:text-ink-placeholder focus-visible:outline-none"
+                placeholder="Ask anything..."
+                rows="1"
+              />
+              <button
+                aria-label="Send message"
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors cursor-not-allowed bg-surface-input text-ink-placeholder"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-send h-4 w-4 rtl:-scale-x-100"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"
+                  />
+                  <path
+                    d="m21.854 2.147-10.94 10.939"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p
+              class="flex items-center justify-center gap-1 text-xs text-ink-placeholder"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-sparkles lucide-stars h-3 w-3"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+                />
+                <path
+                  d="M20 2v4"
+                />
+                <path
+                  d="M22 4h-4"
+                />
+                <circle
+                  cx="4"
+                  cy="20"
+                  r="2"
+                />
+              </svg>
+              6 message/day remaining
+            </p>
+            <p
+              class="text-center text-xs text-ink-placeholder"
+            >
+              Companion can make mistakes. Verify important info.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+  <div
+    class="contents"
+    data-dialog-layer=""
+  />
+</body>
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/tasks/TaskEdit.test.tsx:493:18
+    491|   await send(`Set priority of task "${PHONE}" to Do now`);
+    492|   expect(
+    493|     await screen.findByText(
+       |                  ^
+    494|       `2 tasks are called “${PHONE}”, so I did not change any of them.…
+    495|     ),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

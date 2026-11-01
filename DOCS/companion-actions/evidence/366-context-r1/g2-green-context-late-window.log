@@ -1,0 +1,118 @@
+running 23 tests from ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/steps_context_race_test.ts
+F3 serial control: a matching step saved before the approval needs a new review ... ok (249ms)
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["3688f921-e451-439e-a2bb-e606730c1ce5"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["3688f921-e451-439e-a2bb-e606730c1ce5"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ... ok (323ms)
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["47a8601b-b897-48b8-bf6b-ac6baaad0f68","75569ebe-3282-45b6-af29-11db9e208ee8"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ... ok (271ms)
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ...
+------- output -------
+{"case":"a direct add of the same title (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["791d17fd-de56-437b-b829-1ec0d18ce4aa"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["791d17fd-de56-437b-b829-1ec0d18ce4aa"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ... ok (311ms)
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ...
+------- output -------
+{"case":"a direct add of the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["09d6e856-7852-464f-9d0e-a2290eeb4329","241ae0fd-fd48-499e-b4a3-779b59d4c7cd"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ... ok (318ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) ...
+------- output -------
+{"case":"a rename of another step to the same title (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["b6c798ff-9635-4034-afc1-eaa107c6f835"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["b6c798ff-9635-4034-afc1-eaa107c6f835"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) ... ok (408ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ...
+------- output -------
+{"case":"a rename of another step to the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["0d9ff98a-c470-433e-8da4-3dd848333fce","11b02434-4f93-4127-8845-87b62ebc3fdd"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ... ok (352ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ...
+------- output -------
+{"case":"a rename of another step to the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["468deeee-70bb-4a4d-bd06-66a476fb041a"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["468deeee-70bb-4a4d-bd06-66a476fb041a"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ... ok (341ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ...
+------- output -------
+{"case":"a rename of another step to the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["13a88c13-87d1-4323-835c-95df99c655ec","40416618-1c39-43dd-a404-3779d7fd9ee6"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ... ok (287ms)
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) ...
+------- output -------
+{"case":"a rename of the matching step to another title (custom task)","order":"change-first","reviewed":["eb7acd5f-31ab-4caa-ad9d-f309cae003f5"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) ... ok (331ms)
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ...
+------- output -------
+{"case":"a rename of the matching step to another title (custom task)","order":"approval-first","reviewed":["3012704b-bae0-4e23-8e24-53e3b010b2c9"],"changeWaited":"blocked","mid":["3012704b-bae0-4e23-8e24-53e3b010b2c9"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["b4f34df9-65d5-4ad6-9672-fd741009ca99"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ... ok (359ms)
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"change-first","reviewed":["68d214d4-a047-4f00-b8ac-b9ad2cf3936d"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ... ok (328ms)
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"approval-first","reviewed":["4adf4173-d69f-453e-9ad6-71e8dd574ea2"],"changeWaited":"blocked","mid":["4adf4173-d69f-453e-9ad6-71e8dd574ea2"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["26e01184-8778-4beb-bcf6-f5fbabdcd83d"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ... ok (313ms)
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) ...
+------- output -------
+{"case":"an Undo that restores a removed matching step (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["d3690509-ec1f-40e3-9234-dc33e62f9d06"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["d3690509-ec1f-40e3-9234-dc33e62f9d06"]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) ... ok (350ms)
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ...
+------- output -------
+{"case":"an Undo that restores a removed matching step (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["24e8a04b-2d62-4979-87a1-b255a9bed7cd","99c36f64-2cfb-4a21-8683-0f0f0747ff2a"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ... ok (424ms)
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"change-first","reviewed":["9d2c3de1-a583-4e10-a0b4-d868911a5c48"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+----- output end -----
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ... ok (357ms)
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ...
+------- output -------
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"approval-first","reviewed":["b09c10a3-2035-4ead-9250-2f3d07cffe20"],"changeWaited":"blocked","mid":["b09c10a3-2035-4ead-9250-2f3d07cffe20"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["003203c4-bd62-4662-b897-c36757d51636"]}
+----- output end -----
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ... ok (326ms)
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["1f2ab703-147f-4ed3-bfb2-f633783f3322","e87f0516-d20c-4bb6-a036-73711da6f6b9"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ... ok (281ms)
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ...
+------- output -------
+{"case":"a rename of another step to the same title (custom task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["bcd4a0f1-f907-4a31-bffb-62083cea66c8","dfa38c4b-cc50-4f93-b9a0-70a68dc5c371"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ... ok (297ms)
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ...
+------- output -------
+{"case":"an Undo that restores a removed matching step (custom task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["063fb98f-3955-49f8-91e8-bac0453fa437","d53e8e62-dc04-4b3b-9d0a-743090c2a326"]}
+----- output end -----
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ... ok (314ms)
+F3 unrelated changes while an approval waits do not force a new review ...
+------- output -------
+{"case":"another title on the same task","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["7082b03a-2b22-405e-aed1-6780da1a17f7"]}
+{"case":"another title on the same task","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["6b3e49a9-9adc-4f5f-adbc-b3245285f33c"]}
+{"case":"checking the matching step","order":"change-first","reviewed":["76ac50d4-780c-4400-9711-6a79eccd07e2"],"changeWaited":"blocked","mid":["76ac50d4-780c-4400-9711-6a79eccd07e2"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["76ac50d4-780c-4400-9711-6a79eccd07e2","8fab05c3-ab36-4e72-913a-ddec75b59fc0"]}
+{"case":"checking the matching step","order":"approval-first","reviewed":["d16dd936-8cae-490b-9dcf-5a8ae89dce4f"],"changeWaited":"blocked","mid":["d16dd936-8cae-490b-9dcf-5a8ae89dce4f"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["8b9f9aac-d0bc-4382-9529-17567ef2ca13","d16dd936-8cae-490b-9dcf-5a8ae89dce4f"]}
+----- output end -----
+F3 unrelated changes while an approval waits do not force a new review ... ok (1s)
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ...
+------- output -------
+{"mid":["3910ec0f-4061-422f-9f5f-8276dff2d636"],"openAtMid":true,"r1":[409,"needs_review",null],"r2":[403,"forbidden","invalid_authorization"],"final":["3910ec0f-4061-422f-9f5f-8276dff2d636"]}
+----- output end -----
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ... ok (437ms)
+F3 rolling back and re-applying #366 keeps the approval context check ordered ...
+------- output -------
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["f4671336-51eb-4959-8276-0e6719d7dca2"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["f4671336-51eb-4959-8276-0e6719d7dca2"]}
+----- output end -----
+F3 rolling back and re-applying #366 keeps the approval context check ordered ... ok (442ms)
+
+ok | 23 passed | 0 failed (9s)
+

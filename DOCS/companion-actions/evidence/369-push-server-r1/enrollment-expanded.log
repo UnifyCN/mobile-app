@@ -1,0 +1,87 @@
+running 9 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts
+push enrollment: disabled server retains no enrollment or token ...
+------- output -------
+FALSIFIER: disabled enrollment writes or does not return push_disabled
+----- output end -----
+push enrollment: disabled server retains no enrollment or token ... ok (198ms)
+push enrollment: authenticated save replays one revision and a content-free receipt ...
+------- output -------
+FALSIFIER: enabled save fails, duplicate requests rotate twice, or proof/token enters receipt
+----- output end -----
+push enrollment: authenticated save replays one revision and a content-free receipt ... ok (36ms)
+push enrollment: known installation requires proof even for the current account ...
+------- output -------
+FALSIFIER: missing or wrong proof mutates a known installation
+----- output end -----
+push enrollment: known installation requires proof even for the current account ... ok (158ms)
+push enrollment: transfer needs possession and removal of the earlier server session ...
+------- output -------
+FALSIFIER: active-session transfer succeeds, or signed-out known id is reclaimed without proof
+----- output end -----
+push enrollment: transfer needs possession and removal of the earlier server session ... FAILED (700ms)
+push enrollment: different-token transfer preserves the earlier social and learn token ...
+------- output -------
+FALSIFIER: verified transfer deletes or reassigns an unrelated old shared token
+----- output end -----
+push enrollment: different-token transfer preserves the earlier social and learn token ... ok (374ms)
+push enrollment: token collision is atomic for same-account and cross-account races ...
+------- output -------
+FALSIFIER: a collision creates two bindings or an orphan token mutation
+----- output end -----
+push enrollment: token collision is atomic for same-account and cross-account races ... ok (474ms)
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ...
+------- output -------
+FALSIFIER: retry rotates twice, stale revision changes state, or revoked credentials can enroll
+----- output end -----
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ... ok (180ms)
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ...
+------- output -------
+FALSIFIER: an old JWT creates enrollment after session authorization expires
+----- output end -----
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ... FAILED (879ms)
+push enrollment: RLS grants and the common operation namespace reject bypass ...
+------- output -------
+FALSIFIER: a normal JWT calls the privileged RPC, reads private storage, or reuses another action identity
+----- output end -----
+push enrollment: RLS grants and the common operation namespace reject bypass ... ok (251ms)
+
+ ERRORS 
+
+push enrollment: transfer needs possession and removal of the earlier server session => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:52:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   401
++   403
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:58:2)
+
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:97:6
+error: AssertionError: Values are not equal: deleted
+
+
+    [Diff] Actual / Expected
+
+
+-   401
++   403
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:106:3)
+
+ FAILURES 
+
+push enrollment: transfer needs possession and removal of the earlier server session => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:52:6
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_enrollment_test.ts:97:6
+
+FAILED | 7 passed | 2 failed (3s)
+
+error: Test failed

@@ -1,0 +1,13 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'Open task controls' })[22m
+
+    at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/scripts/verify-companion-reminders.mjs:59:62 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.1

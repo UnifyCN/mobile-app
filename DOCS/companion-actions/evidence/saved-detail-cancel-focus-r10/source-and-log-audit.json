@@ -1,0 +1,81 @@
+{
+  "base": "1f736dd2dc2a543cf10803a8a8069834d62becaf",
+  "sources": [
+    {
+      "path": "unify-front-end/components/companion/tasks/SavedDetails.tsx",
+      "bytes": 22080,
+      "sha256": "de0f0b954242a186802a04e3ac216d42bf435666443e0322aa47661846986939"
+    },
+    {
+      "path": "unify-front-end/__tests__/companionActions/savedDetails.test.tsx",
+      "bytes": 37471,
+      "sha256": "ad20b8f29fb46b84a5930dbedb14eda5e7a8e0f7e83121ebf7048ad87ac23316"
+    }
+  ],
+  "prior_native_report": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1824098c/DOCS/companion-actions/evidence/android-native-a11y-r9/HANDOFF.md",
+    "sha256": "27083914cb976cd64415ee0c1af964ef03f42d6e6d2004386bd29547773631fb"
+  },
+  "log_scan": {
+    "changed-lint.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "focused.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "green-attempt-1-oom.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "green-final-test.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "i18n.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "native-export.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "red-final-test.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "red.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "test-ci.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    },
+    "typecheck.log": {
+      "jwt": 0,
+      "expo_token": 0,
+      "supabase_secret": 0,
+      "private_key": 0
+    }
+  }
+}

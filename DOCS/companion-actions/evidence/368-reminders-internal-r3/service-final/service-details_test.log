@@ -1,0 +1,28 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 12 tests from ./details_test.ts
+a clear remember message saves exactly that detail once, with owner, scope, provenance and revision ... ok (487ms)
+interpret resolves the documented remember grammar in every supported language and writes nothing ... ok (602ms)
+a profile fact is never saved as a detail: by command, approved draft or edit ... ok (218ms)
+an inferred detail is a draft until the shown revision is approved; Not now saves nothing ... ok (477ms)
+an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite ... ok (305ms)
+every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once ... ok (406ms)
+Undo after a newer edit keeps the newer text and offers a reviewed change ... ok (281ms)
+another account can neither read, change, remove nor look up a detail ... ok (423ms)
+a lost reply is looked up; the same id replays once; a held operation is pending ... ok (307ms)
+a command and an approval of the same text, applied concurrently, save one detail ... ok (448ms)
+with the feature gate off, saved details can be neither read nor changed through the action service ... ok (195ms)
+malformed detail operations are refused before any write ... ok (280ms)
+
+ok | 12 passed | 0 failed (4s)
+

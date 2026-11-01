@@ -1,0 +1,21 @@
+--- /Users/savargupta/.t3/worktrees/Unify/t3-8e4ba83b/unify-front-end/supabase/migrations/20261027183644_companion_task_steps.sql	2026-10-27 14:41:46
++++ /tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql	2026-10-27 14:42:28
+@@ -178,9 +178,8 @@
+   if p_ref is null or not public.companion_task_ref_valid(p_ref) then
+     perform public.companion_fail('CA422', 'invalid_task_ref');
+   end if;
+-  -- Lock order: parent lock, then the task row (as an upsert takes them).
+-  perform public.companion_step_parent_lock(p_user, p_ref);
+   if split_part(p_ref, ':', 1) = 'sanity' then
++    perform public.companion_step_parent_lock(p_user, p_ref);
+     select * into v_us from public.user_tasks
+      where user_id = p_user and sanity_checklist_id = substr(p_ref, 8) for share;
+     if not found then return 'not_started'; end if;
+@@ -272,6 +271,7 @@
+     v_ref := p_op->>'task_ref';
+     -- The parent lock (held from here) orders the positions of concurrent additions.
+     v_parent := public.companion_step_parent(p_user, v_ref);
++    perform public.companion_step_parent_lock(p_user, v_ref);
+     if (select count(*) from public.companion_task_steps
+          where user_id = p_user and task_ref = v_ref and removed_at is null)
+        + jsonb_array_length(p_op->'titles') > 50 then

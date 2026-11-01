@@ -1,0 +1,74 @@
+running 4 tests from ./compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... FAILED (789ms)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... FAILED (330ms)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... FAILED (345ms)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... FAILED (224ms)
+
+ ERRORS 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+error: AssertionError: Values are not equal: remember: {"error":"invalid_request","reason":"invalid_task_ref"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:85:5)
+
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both => ./compose_365_370_test.ts:116:6
+error: Error: remember failed: 422 {"error":"invalid_request","reason":"invalid_task_ref"}
+  if (w.status !== 200) throw new Error(`remember failed: ${w.status} ${JSON.stringify(w.json)}`);
+                              ^
+    at rememberedBy (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/support.ts:578:31)
+    at async fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:138:15)
+
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts => ./compose_365_370_test.ts:163:6
+error: Error: remember failed: 422 {"error":"invalid_request","reason":"invalid_task_ref"}
+  if (w.status !== 200) throw new Error(`remember failed: ${w.status} ${JSON.stringify(w.json)}`);
+                              ^
+    at rememberedBy (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/support.ts:578:31)
+    at async fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:175:15)
+
+concurrent edit commands, remember commands, detail edits and retries each apply once => ./compose_365_370_test.ts:197:6
+error: AssertionError: {"error":"invalid_request","reason":"invalid_task_ref"}
+    throw new AssertionError(msg);
+          ^
+    at assert (https://jsr.io/@std/assert/1.0.19/assert.ts:22:11)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_365_370_test.ts:219:30)
+
+ FAILURES 
+
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains => ./compose_365_370_test.ts:30:6
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both => ./compose_365_370_test.ts:116:6
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts => ./compose_365_370_test.ts:163:6
+concurrent edit commands, remember commands, detail edits and retries each apply once => ./compose_365_370_test.ts:197:6
+
+FAILED | 0 passed | 4 failed (1s)
+
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (4s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... FAILED (421ms)
+
+ ERRORS 
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:64:6
+error: Error: remember failed: 422 {"error":"invalid_request","reason":"invalid_task_ref"}
+  if (w.status !== 200) throw new Error(`remember failed: ${w.status} ${JSON.stringify(w.json)}`);
+                              ^
+    at rememberedBy (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/support.ts:578:31)
+    at async fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_rollback_test.ts:86:24)
+
+ FAILURES 
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:64:6
+
+FAILED | 1 passed | 1 failed (5s)
+
+error: Test failed
+error: Test failed

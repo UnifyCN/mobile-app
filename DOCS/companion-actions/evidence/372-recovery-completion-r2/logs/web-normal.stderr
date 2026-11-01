@@ -1,0 +1,115 @@
+stderr | components/companion/accountOwnershipRequests.test.tsx > web service requests belong to the account that started them > a creation whose tagged insert fails after B signed in does not retry as B
+[companion] conversations.source/lesson_id columns not present - falling back to an untagged insert (apply the source-tag migration). { code: '42703', message: 'column' }
+
+stderr | components/companion/accountOwnershipRequests.test.tsx > web hooks keep one owner for every request and cache write > a send whose account changes while its cache is prepared saves nothing as B
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: 'NO_I18NEXT_INSTANCE' }
+
+stderr | components/companion/tasks/TaskSelectionAccountSession.test.tsx > keeps the Checklist control and focus through hydration at an existing epoch
+A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <motion.div className={undefined} initial={{opacity:0,y:-4}} animate={{opacity:1,y:0, ...}}>
+      <div className={undefined} style={{opacity:1, ...}} ref={function}>
+        <DndContext sensors={[...]} collisionDetection={function closestCenter} onDragStart={function onDragStart} ...>
+          <SortableContext items={[...]} strategy={function verticalListSortingStrategy}>
+            <div className="divide-y d...">
+              <SortableTaskRow task={{id:"1",title:"...", ...}} onToggle={function handleToggle} ...>
+                <div ref={function} style={{...}} className="bg-surface">
+                  <TaskRow task={{id:"1",title:"...", ...}} onToggle={function handleToggle} ...>
+                    <div className="flex gap-3...">
+                      <button>
+                      <div>
+                      <button>
+                      <button>
+                      <button
+                        type="button"
+                        ref={function}
+                        aria-label="Reorder task: Private drawer task"
+                        className="mt-0.5 flex h-5 w-5 shrink-0 cursor-grab touch-none items-center justify-center tex..."
+                        role="button"
+                        tabIndex={0}
+                        aria-disabled={false}
+                        aria-pressed={undefined}
+                        aria-roledescription="sortable"
++                       aria-describedby="DndDescribedBy-4"
+-                       aria-describedby="DndDescribedBy-0"
+                        onPointerDown={function}
+                        onKeyDown={function}
+                      >
+          ...
+          ...
+
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a newer revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted - the behavior is unsupported and could change in a future version.
+
+stderr | proxy.learningDestination.test.ts > proxy learning destination flow > keeps the existing gate-query error behavior without consuming intent
+proxy: consent gate query failed Error: test outage
+    at Object.maybeSingle (proxy.learningDestination.test.ts:9:33)
+    at Module.proxy (proxy.ts:117:113)
+    at async (proxy.learningDestination.test.ts:224:22)
+
+stderr | hooks/useCompanion.analytics.test.ts > useSendMessage analytics > first message of a new conversation: turn 1, with its input source
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: 'NO_I18NEXT_INSTANCE' }
+
+stderr | components/companion/companionContext.acceptance.test.ts > Companion context on web: Vancouver arrival > saves the answer's context with it, unchanged, and makes no other write
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: 'NO_I18NEXT_INSTANCE' }
+
+stderr | components/companion/tasks/TaskActions.test.tsx > review corrections (web) > F3: the composer draft survives opening Checklist from the drawer and coming back
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:80:7)
+    at listOnTimeout (node:internal/timers:585:17)
+    at processTimers (node:internal/timers:521:7) undefined
+
+stderr | components/learn/StructuredLessonContent.test.ts > sections whose arrays Sanity omitted render without throwing
+react-i18next:: useTranslation: You will need to pass in an i18next instance by using initReactI18next { code: 'NO_I18NEXT_INSTANCE' }
+

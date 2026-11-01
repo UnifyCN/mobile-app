@@ -1,0 +1,132 @@
+{
+  "answer": "Start with your SIN, then your bank account.",
+  "queryType": "immigration",
+  "topic": "settling_in",
+  "disclaimer": "This may not be covered in Unify's internal resources; please double-check with IRCC or a licensed immigration professional. This is general information, not legal advice. For decisions about your specific situation, please check the official IRCC website or talk to a licensed immigration professional.",
+  "suggestedNextSteps": [
+    "How do I get a SIN?",
+    "Which bank should I pick?"
+  ],
+  "context": {
+    "version": 1,
+    "items": [
+      {
+        "kind": "profile",
+        "id": "profile",
+        "revision": "2026-09-01T00:00:00Z",
+        "fields": [
+          {
+            "key": "persona",
+            "value": "skilled_worker"
+          },
+          {
+            "key": "city",
+            "value": "Toronto"
+          },
+          {
+            "key": "province",
+            "value": "Ontario"
+          },
+          {
+            "key": "arrival_date",
+            "value": "2025-02-01"
+          }
+        ]
+      },
+      {
+        "kind": "conversation_detail",
+        "saved": false,
+        "fields": [
+          {
+            "key": "city",
+            "value": "Vancouver"
+          },
+          {
+            "key": "province",
+            "value": "British Columbia"
+          },
+          {
+            "key": "arrival",
+            "value": "next_week"
+          }
+        ]
+      },
+      {
+        "kind": "conversation",
+        "id": "22222222-2222-4222-8222-222222222222",
+        "revision": "2026-10-24T09:00:00Z"
+      },
+      {
+        "kind": "checklist_task",
+        "id": "sanity:checklist-credit",
+        "revision": null,
+        "contentRevision": "rev-credit-2",
+        "title": "Build your credit history",
+        "state": "not_started"
+      },
+      {
+        "kind": "checklist_task",
+        "id": "custom:77",
+        "revision": "legacy:2026-09-02T00:00:00Z",
+        "contentRevision": null,
+        "title": "Renew my lease",
+        "state": "completed"
+      }
+    ],
+    "reads": [
+      {
+        "capability": "context.profile",
+        "status": "ok"
+      },
+      {
+        "capability": "context.checklist",
+        "status": "ok"
+      },
+      {
+        "capability": "context.conversation",
+        "status": "ok"
+      },
+      {
+        "capability": "guidance.search",
+        "status": "ok"
+      },
+      {
+        "capability": "guidance.read",
+        "status": "ok"
+      },
+      {
+        "capability": "content.knowledge",
+        "status": "ok"
+      }
+    ],
+    "guidance": {
+      "status": "checked",
+      "sources": [
+        {
+          "id": "S1",
+          "url": "https://www.canada.ca/en/employment-social-development/services/sin.html",
+          "title": "Social Insurance Number - Canada.ca",
+          "publisher": "Government of Canada",
+          "jurisdiction": "federal",
+          "checkedAt": "2026-10-25T17:30:00.000Z",
+          "status": "checked"
+        },
+        {
+          "id": "S2",
+          "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp",
+          "title": "Medical Services Plan - Province of British Columbia",
+          "publisher": "Government of British Columbia",
+          "jurisdiction": "British Columbia",
+          "checkedAt": "2026-10-25T17:30:00.000Z",
+          "status": "checked"
+        }
+      ]
+    },
+    "clarification": {
+      "kind": "profile_conflict",
+      "field": "province",
+      "profileValue": "Ontario",
+      "conversationValue": "British Columbia"
+    }
+  }
+}

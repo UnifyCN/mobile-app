@@ -1,0 +1,86 @@
+{
+  "files": [
+    {
+      "file": "./supabase/functions/_shared/platform_test.ts",
+      "tests": 8
+    },
+    {
+      "file": "./supabase/functions/cover-letter-chat/index_test.ts",
+      "tests": 3
+    },
+    {
+      "file": "./supabase/functions/events-crawler/lib/relevance_test.ts",
+      "tests": 4
+    },
+    {
+      "file": "./supabase/functions/rag-query/index_companion_context_test.ts",
+      "tests": 44
+    },
+    {
+      "file": "./supabase/functions/rag-query/index_concurrent_test.ts",
+      "tests": 1
+    },
+    {
+      "file": "./supabase/functions/rag-query/index_context_test.ts",
+      "tests": 17
+    },
+    {
+      "file": "./supabase/functions/rag-query/index_embedding_test.ts",
+      "tests": 82
+    },
+    {
+      "file": "./supabase/functions/rag-query/index_test.ts",
+      "tests": 13
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/context/placeNames_test.ts",
+      "tests": 3
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/dates_test.ts",
+      "tests": 4
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/profile_test.ts",
+      "tests": 17
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/provincePointer_test.ts",
+      "tests": 7
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/province_test.ts",
+      "tests": 5
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/retrieval_test.ts",
+      "tests": 6
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/retrievedContext_test.ts",
+      "tests": 16
+    },
+    {
+      "file": "./supabase/functions/rag-query/lib/topic_test.ts",
+      "tests": 18
+    },
+    {
+      "file": "./supabase/functions/resume-chat/index_test.ts",
+      "tests": 3
+    },
+    {
+      "file": "./supabase/functions/translate-content/index_test.ts",
+      "tests": 3
+    },
+    {
+      "file": "./supabase/functions/translate-content/lib/contentTypes_test.ts",
+      "tests": 23
+    }
+  ],
+  "file_count": 19,
+  "passed": 277,
+  "failed": 0,
+  "executed_test_count": 277,
+  "proof": "network fixtures; no permissions for net/env/file; exact complete workflow test command",
+  "provider_calls": 0
+}

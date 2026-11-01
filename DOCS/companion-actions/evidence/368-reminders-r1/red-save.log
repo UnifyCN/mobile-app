@@ -1,0 +1,88 @@
+Download https://jsr.io/@std/assert/meta.json
+Download https://registry.npmjs.org/@supabase%2fsupabase-js
+Download https://registry.npmjs.org/postgres
+Download https://jsr.io/@std/assert/1.0.19_meta.json
+Download https://jsr.io/@std/internal/meta.json
+Download https://jsr.io/@std/internal/1.0.14_meta.json
+Download https://jsr.io/@std/assert/1.0.19/mod.ts
+Download https://jsr.io/@std/assert/1.0.19/almost_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/array_includes.ts
+Download https://jsr.io/@std/assert/1.0.19/equals.ts
+Download https://jsr.io/@std/assert/1.0.19/exists.ts
+Download https://jsr.io/@std/assert/1.0.19/false.ts
+Download https://jsr.io/@std/assert/1.0.19/greater_or_equal.ts
+Download https://jsr.io/@std/assert/1.0.19/greater.ts
+Download https://jsr.io/@std/assert/1.0.19/instance_of.ts
+Download https://jsr.io/@std/assert/1.0.19/is_error.ts
+Download https://jsr.io/@std/assert/1.0.19/less_or_equal.ts
+Download https://jsr.io/@std/assert/1.0.19/less.ts
+Download https://jsr.io/@std/assert/1.0.19/match.ts
+Download https://jsr.io/@std/assert/1.0.19/not_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/not_instance_of.ts
+Download https://jsr.io/@std/assert/1.0.19/not_match.ts
+Download https://jsr.io/@std/assert/1.0.19/not_strict_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/object_match.ts
+Download https://jsr.io/@std/assert/1.0.19/rejects.ts
+Download https://jsr.io/@std/assert/1.0.19/strict_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/string_includes.ts
+Download https://jsr.io/@std/assert/1.0.19/throws.ts
+Download https://jsr.io/@std/assert/1.0.19/assert.ts
+Download https://jsr.io/@std/assert/1.0.19/assertion_error.ts
+Download https://jsr.io/@std/assert/1.0.19/equal.ts
+Download https://jsr.io/@std/assert/1.0.19/fail.ts
+Download https://jsr.io/@std/assert/1.0.19/unimplemented.ts
+Download https://jsr.io/@std/assert/1.0.19/unreachable.ts
+Download https://jsr.io/@std/internal/1.0.14/format.ts
+Download https://jsr.io/@std/internal/1.0.14/build_message.ts
+Download https://jsr.io/@std/internal/1.0.14/diff.ts
+Download https://jsr.io/@std/internal/1.0.14/diff_str.ts
+Download https://jsr.io/@std/internal/1.0.14/styles.ts
+Download https://registry.npmjs.org/@opentelemetry%2fapi
+Download https://registry.npmjs.org/@supabase%2fauth-js
+Download https://registry.npmjs.org/@supabase%2ffunctions-js
+Download https://registry.npmjs.org/@supabase%2fpostgrest-js
+Download https://registry.npmjs.org/@supabase%2frealtime-js
+Download https://registry.npmjs.org/@supabase%2fstorage-js
+Download https://registry.npmjs.org/tslib
+Download https://registry.npmjs.org/@supabase%2fphoenix
+Download https://registry.npmjs.org/iceberg-js
+Download https://registry.npmjs.org/postgres/-/postgres-3.4.9.tgz
+Download https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.118.0.tgz
+Download https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz
+Download https://registry.npmjs.org/@supabase/phoenix/-/phoenix-0.4.5.tgz
+Download https://registry.npmjs.org/iceberg-js/-/iceberg-js-0.8.1.tgz
+running 2 tests from ./reminders_test.ts
+reminders: concurrent authenticated saves replay one immutable schedule and receipt ... FAILED (994ms)
+reminders: cleanup client connections ... ok (3ms)
+
+ ERRORS 
+
+reminders: concurrent authenticated saves replay one immutable schedule and receipt => ./reminders_test.ts:14:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at ok (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/.runtime/supabase/tests/companion-actions/reminders_test.ts:9:20)
+    at Array.map (<anonymous>)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e/DOCS/companion-actions/evidence/368-reminders-r1/.runtime/supabase/tests/companion-actions/reminders_test.ts:17:92)
+
+ FAILURES 
+
+reminders: concurrent authenticated saves replay one immutable schedule and receipt => ./reminders_test.ts:14:6
+
+FAILED | 1 passed | 1 failed (1s)
+
+error: Test failed

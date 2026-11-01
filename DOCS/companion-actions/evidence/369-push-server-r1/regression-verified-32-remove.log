@@ -1,0 +1,19 @@
+running 15 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/remove_test.ts
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing ... ok (599ms)
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores ... ok (586ms)
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it ... ok (330ms)
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes ... ok (371ms)
+a relevant change between review and approval needs a new review; an unrelated change does not ... ok (857ms)
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins ... ok (437ms)
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review ... ok (469ms)
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere ... ok (487ms)
+Undo restores the task into plans that still exist and never brings back a plan removed separately ... ok (381ms)
+another account cannot review, approve, undo or look up a removal ... ok (574ms)
+an unknown outcome is looked up before retry; a retry with the same identity removes once ... ok (288ms)
+old messages, receipts and drafts cannot recreate a removed task ... ok (318ms)
+removal commands in every supported language ask for a review and never write ... ok (436ms)
+legacy dismissal and account deletion keep their behavior ... ok (488ms)
+a removal review from a conversation is listed there and reads as removed on another device ... ok (315ms)
+
+ok | 15 passed | 0 failed (6s)
+

@@ -1,0 +1,73 @@
+# 2026-10-27T18:41:58Z s2 red: draft edits before revise/cancel exist
+running 5 tests from ./plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (525ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... FAILED (267ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... FAILED (214ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... FAILED (230ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only => ./plan_test.ts:100:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:112:5)
+
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name => ./plan_test.ts:133:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     "invalid_action",
++     422,
++     "item_not_in_draft",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:144:5)
+
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved => ./plan_test.ts:160:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     400,
+-     "invalid_request",
++     409,
++     "proposal_changed",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_test.ts:170:5)
+
+ FAILURES 
+
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only => ./plan_test.ts:100:6
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name => ./plan_test.ts:133:6
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved => ./plan_test.ts:160:6
+
+FAILED | 2 passed | 3 failed (1s)
+
+error: Test failed
+exit=1

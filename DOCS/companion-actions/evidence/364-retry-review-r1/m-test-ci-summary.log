@@ -1,0 +1,11 @@
+> unify-front-end@1.6.0 test:ci
+> npm run test:main && npm run test:dst
+> unify-front-end@1.6.0 test:main
+> jest __tests__ --runInBand --watchAll=false
+Test Suites: 1 skipped, 134 passed, 134 of 135 total
+Tests:       10 skipped, 1413 passed, 1423 total
+> unify-front-end@1.6.0 test:dst
+> TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/
+Test Suites: 2 passed, 2 total
+Tests:       13 passed, 13 total
+exit=0

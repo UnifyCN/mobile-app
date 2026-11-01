@@ -1,0 +1,61 @@
+running 4 tests from ./compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... ok (1s)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... ok (526ms)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... ok (712ms)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... ok (406ms)
+
+ok | 4 passed | 0 failed (2s)
+
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... FAILED (4s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... FAILED (1s)
+
+ ERRORS 
+
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly => ./compose_rollback_test.ts:46:6
+error: AssertionError: Values are not equal: the #370 rollback did not restore the #365 schema
+
+
+    [Diff] Actual / Expected
+
+
+-   [
+-     "companion_apply_one(uuid,jsonb)",
+-     "companion_cancel_proposal(uuid,uuid,integer)",
+-     "companion_check_authorization(uuid,jsonb,jsonb)",
+-     "companion_conversation_actions(uuid,uuid)",
+-     "companion_receipt_summary(companion_action_receipts)",
+-     "companion_undo_action(uuid,uuid,integer,jsonb,uuid)",
+-     "companion_validate_operations(jsonb)",
+-     "constraint companion_proposals_kind_check",
+-   ]
++   []
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_rollback_test.ts:65:5)
+
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:72:6
+error: AssertionError: Values are not equal: the #370 rollback failed with #365 data present
+
+
+    [Diff] Actual / Expected
+
+
+-   'PostgresError: check constraint "companion_proposals_kind_check" of relation "companion_proposals" is violated by some row'
++   null
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/tests/companion-actions/compose_rollback_test.ts:106:5)
+
+ FAILURES 
+
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly => ./compose_rollback_test.ts:46:6
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application => ./compose_rollback_test.ts:72:6
+
+FAILED | 0 passed | 2 failed (6s)
+
+error: Test failed

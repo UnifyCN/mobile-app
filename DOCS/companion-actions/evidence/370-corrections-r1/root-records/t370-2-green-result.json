@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npx",
+    "vitest",
+    "run",
+    "components/companion/tasks/SavedDetails.test.tsx",
+    "-t",
+    "Saved personal details through Companion|the detail editor uses immediate keyboard"
+  ],
+  "exit": 0,
+  "seconds": 2.379
+}

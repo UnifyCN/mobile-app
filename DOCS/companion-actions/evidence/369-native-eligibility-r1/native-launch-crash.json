@@ -1,0 +1,25 @@
+{
+  "file": "Unify-2026-10-30-160358.ips",
+  "record": {
+    "procName": "Unify",
+    "procPath": "/Users/USER/Library/Developer/CoreSimulator/Devices/B9D97093-BA2C-4418-9AD5-229C3CCFD5DC/data/Containers/Bundle/Application/B5E9F26A-53CD-4DF2-90C0-EEF02B82B88D/Unify.app/Unify",
+    "exception": {
+      "codes": "0x0000000000000032, 0x0000000103e98000",
+      "rawCodes": [
+        50,
+        4360601600
+      ],
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGKILL (Code Signature Invalid)",
+      "subtype": "UNKNOWN_0x32 at 0x0000000103e98000"
+    },
+    "termination": {
+      "flags": 0,
+      "code": 2,
+      "namespace": "CODESIGNING",
+      "indicator": "Invalid Page"
+    },
+    "asi": null,
+    "faultingThread": 0
+  }
+}

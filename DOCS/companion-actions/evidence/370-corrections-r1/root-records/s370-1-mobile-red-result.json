@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npx",
+    "jest",
+    "__tests__/companionActions/savedDetails.test.tsx",
+    "--runInBand",
+    "--watchAll=false",
+    "--testNamePattern=a conflicting detail removal names"
+  ],
+  "exit": 1,
+  "seconds": 5.111
+}

@@ -1,0 +1,14 @@
+PASS  keyboard: Remove task opens the review and focus moves to its heading
+PASS  opening the review sends no write
+PASS  Cancel sends nothing and returns focus to Remove task
+PASS  the confirmation removes once and reads back removed
+FAIL  focus stays inside the panel after the removal  {"tag":"BODY","text":"Checklist taskGet a SINThis task was removed. Changes are turned off.StepsChecking steps does not complete the task.No steps yet. Add the ones that help you prepare.Add stepTask stateNot startedIn progressWaitingCompletedSelect Completed when the whole task is done. Your steps do not complete it.Saved.Removed from your Checklist: Get a SINSaved plans: 0 · Steps kept: 0 · Reminders stopped: 0Oct 27, 9:07 PMUndo removal","label":null}
+PASS  390px: no horizontal overflow after removal; Undo at least 44px tall
+PASS  keyboard: the Undo of the removal receipt restores the task
+PASS  another account reads none of it
+PASS  Remove task is at least 44px tall
+FAIL  review buttons are at least 44px tall  [32,32]
+PASS  Arabic: the review is right to left with Arabic copy and no overflow
+PASS  Arabic: opening the review sends no write
+
+10 passed, 2 failed, 0 errors

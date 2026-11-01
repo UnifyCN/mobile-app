@@ -1,0 +1,10 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    text: "Dismiss.*"
+    optional: true
+- tapOn:
+    text: "Dismiss.*"
+    optional: true
+- tapOn: "Companion, tab.*"
+- assertVisible: "Open history"

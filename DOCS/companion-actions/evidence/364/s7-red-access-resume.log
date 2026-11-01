@@ -1,0 +1,50 @@
+# 2026-10-27T19:06:35Z s7 red: access, resume, allowance
+running 6 tests from ./plan_access_test.ts
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks ... FAILED (986ms)
+forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing ... ok (788ms)
+a new conversation and another platform resume the same plan with current progress; receipts stay historical ... FAILED (317ms)
+a removed task stays a disabled reference in the plan and is never recreated ... ok (386ms)
+prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance ... ok (451ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks => ./plan_access_test.ts:14:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   404
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_access_test.ts:36:5)
+
+a new conversation and another platform resume the same plan with current progress; receipts stay historical => ./plan_access_test.ts:81:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_access_test.ts:106:5)
+
+ FAILURES 
+
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks => ./plan_access_test.ts:14:6
+a new conversation and another platform resume the same plan with current progress; receipts stay historical => ./plan_access_test.ts:81:6
+
+FAILED | 4 passed | 2 failed (2s)
+
+error: Test failed
+exit=1

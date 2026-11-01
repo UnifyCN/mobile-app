@@ -1,0 +1,1238 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f
+
+ ❯ components/companion/tasks/TaskSteps.test.tsx (6 tests | 2 failed) 2985ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  391ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  414ms
+   ✓ Task steps (web) > a lost step reply is looked up, never resent; pending and failed lookups stay unresolved; not applied retries the same operation 89ms
+   ✓ Task steps (web) > offline blocks every step write and keeps the typed step; an account change drops the steps and typed step 61ms
+   × Task steps (web) > suggested steps are a draft card; excluding one is a new revision; approval adds the selected steps once; Not now writes nothing 1017ms
+     → Unable to find an element by: [data-testid="step-draft-card"]
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-b border-border-card px-4 py-2 md:px-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-3xl items-center gap-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+              [36m>[39m
+                [0mYour tasks[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"truncate text-xs text-ink-muted loading-delayed"[39m
+              [36m>[39m
+                [0mLoading task progress…[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mOpen[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placehol...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-b border-border-card px-4 py-2 md:px-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-3xl items-center gap-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+              [36m>[39m
+                [0mYour tasks[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"truncate text-xs text-ink-muted loading-delayed"[39m
+              [36m>[39m
+                [0mLoading task progress…[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mOpen[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placehol...
+   × Task steps (web) > step results reach analytics as allowlisted categories only, never the step text 1011ms
+     → Unable to find role="button" and name "Task progress for Get a SIN"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-[720px] px-6 py-6"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"text-xl font-semibold text-ink-secondary"[39m
+      [36m>[39m
+        [0mChecklist[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+      [36m>[39m
+        [0mYour step-by-step guide to settling into Canada.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid grid-cols-[minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"[grid-area:1/1]"[39m
+          [33mstyle[39m=[32m"opacity: 1;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-5 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"rounded-card border border-border-card bg-surface p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex items-center justify-between text-sm"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mYour progress[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-ink-muted"[39m
+                [36m>[39m
+                  [0m0/0 complete · 0%[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-input"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"h-full w-full rounded-full bg-primary transition-transform duration-[var(--motion-slow)] ease-out"[39m
+                  [33mstyle[39m=[32m"transform: translateX(-100%);"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"overflow-hidden rounded-card border border-border-card bg-surface"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"flex w-full cursor-pointer items-center gap-3 px-4 py-3"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-priority-do-now-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-circle-alert lucide-alert-circle h-4 w-4 text-priority-do-now"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12"[39m
+                      [33my1[39m=[32m"8"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12.01"[39m
+                      [33my1[39m=[32m"16"[39m
+                      [33my2[39m=[32m"16"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex-1 text-left text-sm font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mDo now[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"rounded-full bg-surface-gray px-2 py-0.5 text-xs font-medium text-ink-muted"[39m
+                [36m>[39m
+                  [0m0[0m
+                  [0m/[0m
+                  [0m0[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-chevron-down h-4 w-4 text-ink-placeholder transition-transform duration-200 rotate-180"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"divide-y divide-border-card border-t border-border-card"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"DndDescribedBy-16"[39m
+                  [33mstyle[39m=[32m"display: none;"[39m
+                [36m>[39m
+                  [0m
+    To pick up a draggable item, press the space bar.
+    While dragging, use the arrow keys to move the item.
+    Press space again to drop the item in its new position, or press escape to cancel.
+  [0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-atomic[39m=[32m"true"[39m
+                  [33maria-live[39m=[32m"assertive"[39m
+                  [33mid[39m=[32m"DndLiveRegion-16"[39m
+                  [33mrole[39m=[32m"status"[39m
+                  [33mstyle[39m=[32m"position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; cl...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-[720px] px-6 py-6"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"text-xl font-semibold text-ink-secondary"[39m
+      [36m>[39m
+        [0mChecklist[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+      [36m>[39m
+        [0mYour step-by-step guide to settling into Canada.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid grid-cols-[minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"[grid-area:1/1]"[39m
+          [33mstyle[39m=[32m"opacity: 1;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-5 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"rounded-card border border-border-card bg-surface p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex items-center justify-between text-sm"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mYour progress[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-ink-muted"[39m
+                [36m>[39m
+                  [0m0/0 complete · 0%[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-input"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"h-full w-full rounded-full bg-primary transition-transform duration-[var(--motion-slow)] ease-out"[39m
+                  [33mstyle[39m=[32m"transform: translateX(-100%);"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"overflow-hidden rounded-card border border-border-card bg-surface"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"flex w-full cursor-pointer items-center gap-3 px-4 py-3"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-priority-do-now-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-circle-alert lucide-alert-circle h-4 w-4 text-priority-do-now"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12"[39m
+                      [33my1[39m=[32m"8"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12.01"[39m
+                      [33my1[39m=[32m"16"[39m
+                      [33my2[39m=[32m"16"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex-1 text-left text-sm font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mDo now[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"rounded-full bg-surface-gray px-2 py-0.5 text-xs font-medium text-ink-muted"[39m
+                [36m>[39m
+                  [0m0[0m
+                  [0m/[0m
+                  [0m0[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-chevron-down h-4 w-4 text-ink-placeholder transition-transform duration-200 rotate-180"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"divide-y divide-border-card border-t border-border-card"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"DndDescribedBy-16"[39m
+                  [33mstyle[39m=[32m"display: none;"[39m
+                [36m>[39m
+                  [0m
+    To pick up a draggable item, press the space bar.
+    While dragging, use the arrow keys to move the item.
+    Press space again to drop the item in its new position, or press escape to cancel.
+  [0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-atomic[39m=[32m"true"[39m
+                  [33maria-live[39m=[32m"assertive"[39m
+                  [33mid[39m=[32m"DndLiveRegion-16"[39m
+                  [33mrole[39m=[32m"status"[39m
+                  [33mstyle[39m=[32m"position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; cl...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskSteps.test.tsx > Task steps (web) > suggested steps are a draft card; excluding one is a new revision; approval adds the selected steps once; Not now writes nothing
+TestingLibraryElementError: Unable to find an element by: [data-testid="step-draft-card"]
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-b border-border-card px-4 py-2 md:px-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-3xl items-center gap-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+              [36m>[39m
+                [0mYour tasks[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"truncate text-xs text-ink-muted loading-delayed"[39m
+              [36m>[39m
+                [0mLoading task progress…[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mOpen[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placehol...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Conversations"[39m
+            [33mclass[39m=[32m"-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mrx[39m=[32m"2"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M9 3v18"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"truncate text-sm font-semibold text-ink-secondary"[39m
+          [36m>[39m
+            [0mNew conversation[0m
+          [36m</h1>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"border-b border-border-card px-4 py-2 md:px-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-3xl items-center gap-3"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"min-w-0 flex-1"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+              [36m>[39m
+                [0mYour tasks[0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"truncate text-xs text-ink-muted loading-delayed"[39m
+              [36m>[39m
+                [0mLoading task progress…[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mOpen[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex-1 overflow-y-auto"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center"[39m
+          [36m>[39m
+            [36m<h1[39m
+              [33mclass[39m=[32m"text-2xl font-bold text-ink-secondary"[39m
+            [36m>[39m
+              [0mAsk me anything.[0m
+            [36m</h1>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+            [36m>[39m
+              [0mFact-checked answers about anything in Canada.[0m
+            [36m</p>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"mb-3 mt-8 self-start text-xs font-medium text-ink-placeholder"[39m
+            [36m>[39m
+              [0mTry one of these[0m
+            [36m</p>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid w-full grid-cols-1 gap-3 sm:grid-cols-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"flex cursor-pointer items-start gap-3 rounded-card border border-border-card bg-surface p-3 text-left press hover:shadow-md"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-priority-optional-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-compass h-5 w-5 text-priority-optional"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"min-w-0 flex-1"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"flex items-center justify-between"[39m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-sm font-semibold text-ink-secondary"[39m
+                    [36m>[39m
+                      [0mSettlement[0m
+                    [36m</span>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-chevron-right h-4 w-4 text-ink-placehol...
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/tasks/TaskSteps.test.tsx:424:31
+    422|     mount(<CompanionPage />);
+    423|     await send("How do I get my SIN?");
+    424|     const card = await screen.findByTestId("step-draft-card");
+       |                               ^
+    425|     expect(await within(card).findByText("Steps for Get a SIN")).toBeT…
+    426|     expect(within(card).getByText("Draft · not saved yet")).toBeTruthy…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  components/companion/tasks/TaskSteps.test.tsx > Task steps (web) > step results reach analytics as allowlisted categories only, never the step text
+TestingLibraryElementError: Unable to find role="button" and name "Task progress for Get a SIN"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-[720px] px-6 py-6"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"text-xl font-semibold text-ink-secondary"[39m
+      [36m>[39m
+        [0mChecklist[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+      [36m>[39m
+        [0mYour step-by-step guide to settling into Canada.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid grid-cols-[minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"[grid-area:1/1]"[39m
+          [33mstyle[39m=[32m"opacity: 1;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-5 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"rounded-card border border-border-card bg-surface p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex items-center justify-between text-sm"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mYour progress[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-ink-muted"[39m
+                [36m>[39m
+                  [0m0/0 complete · 0%[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-input"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"h-full w-full rounded-full bg-primary transition-transform duration-[var(--motion-slow)] ease-out"[39m
+                  [33mstyle[39m=[32m"transform: translateX(-100%);"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"overflow-hidden rounded-card border border-border-card bg-surface"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"flex w-full cursor-pointer items-center gap-3 px-4 py-3"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-priority-do-now-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-circle-alert lucide-alert-circle h-4 w-4 text-priority-do-now"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12"[39m
+                      [33my1[39m=[32m"8"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12.01"[39m
+                      [33my1[39m=[32m"16"[39m
+                      [33my2[39m=[32m"16"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex-1 text-left text-sm font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mDo now[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"rounded-full bg-surface-gray px-2 py-0.5 text-xs font-medium text-ink-muted"[39m
+                [36m>[39m
+                  [0m0[0m
+                  [0m/[0m
+                  [0m0[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-chevron-down h-4 w-4 text-ink-placeholder transition-transform duration-200 rotate-180"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"divide-y divide-border-card border-t border-border-card"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"DndDescribedBy-16"[39m
+                  [33mstyle[39m=[32m"display: none;"[39m
+                [36m>[39m
+                  [0m
+    To pick up a draggable item, press the space bar.
+    While dragging, use the arrow keys to move the item.
+    Press space again to drop the item in its new position, or press escape to cancel.
+  [0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-atomic[39m=[32m"true"[39m
+                  [33maria-live[39m=[32m"assertive"[39m
+                  [33mid[39m=[32m"DndLiveRegion-16"[39m
+                  [33mrole[39m=[32m"status"[39m
+                  [33mstyle[39m=[32m"position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; cl...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-[720px] px-6 py-6"[39m
+    [36m>[39m
+      [36m<h1[39m
+        [33mclass[39m=[32m"text-xl font-semibold text-ink-secondary"[39m
+      [36m>[39m
+        [0mChecklist[0m
+      [36m</h1>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"mt-1 text-sm text-ink-muted"[39m
+      [36m>[39m
+        [0mYour step-by-step guide to settling into Canada.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid grid-cols-[minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"[grid-area:1/1]"[39m
+          [33mstyle[39m=[32m"opacity: 1;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-5 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"rounded-card border border-border-card bg-surface p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex items-center justify-between text-sm"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mYour progress[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"text-ink-muted"[39m
+                [36m>[39m
+                  [0m0/0 complete · 0%[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"mt-2 h-2 w-full overflow-hidden rounded-full bg-surface-input"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"h-full w-full rounded-full bg-primary transition-transform duration-[var(--motion-slow)] ease-out"[39m
+                  [33mstyle[39m=[32m"transform: translateX(-100%);"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"overflow-hidden rounded-card border border-border-card bg-surface"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33maria-expanded[39m=[32m"true"[39m
+                [33mclass[39m=[32m"flex w-full cursor-pointer items-center gap-3 px-4 py-3"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-priority-do-now-bg"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-circle-alert lucide-alert-circle h-4 w-4 text-priority-do-now"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"10"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12"[39m
+                      [33my1[39m=[32m"8"[39m
+                      [33my2[39m=[32m"12"[39m
+                    [36m/>[39m
+                    [36m<line[39m
+                      [33mx1[39m=[32m"12"[39m
+                      [33mx2[39m=[32m"12.01"[39m
+                      [33my1[39m=[32m"16"[39m
+                      [33my2[39m=[32m"16"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"flex-1 text-left text-sm font-semibold text-ink-secondary"[39m
+                [36m>[39m
+                  [0mDo now[0m
+                [36m</span>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"rounded-full bg-surface-gray px-2 py-0.5 text-xs font-medium text-ink-muted"[39m
+                [36m>[39m
+                  [0m0[0m
+                  [0m/[0m
+                  [0m0[0m
+                [36m</span>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-chevron-down h-4 w-4 text-ink-placeholder transition-transform duration-200 rotate-180"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m6 9 6 6 6-6"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+              [36m<div[39m
+                [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"divide-y divide-border-card border-t border-border-card"[39m
+                [36m/>[39m
+                [36m<div[39m
+                  [33mid[39m=[32m"DndDescribedBy-16"[39m
+                  [33mstyle[39m=[32m"display: none;"[39m
+                [36m>[39m
+                  [0m
+    To pick up a draggable item, press the space bar.
+    While dragging, use the arrow keys to move the item.
+    Press space again to drop the item in its new position, or press escape to cancel.
+  [0m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-atomic[39m=[32m"true"[39m
+                  [33maria-live[39m=[32m"assertive"[39m
+                  [33mid[39m=[32m"DndLiveRegion-16"[39m
+                  [33mrole[39m=[32m"status"[39m
+                  [33mstyle[39m=[32m"position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; cl...
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ openSteps components/companion/tasks/TaskSteps.test.tsx:247:31
+    245| 
+    246| async function openSteps() {
+    247|   const opener = await screen.findByRole("button", { name: "Task progr…
+       |                               ^
+    248|   opener.focus();
+    249|   fireEvent.click(opener);
+ ❯ components/companion/tasks/TaskSteps.test.tsx:470:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+   Start at  12:19:10
+   Duration  4.09s (transform 226ms, setup 0ms, collect 640ms, tests 2.98s, environment 245ms, prepare 53ms)
+

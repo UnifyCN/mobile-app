@@ -1,0 +1,12 @@
+running 8 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (519ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... ok (326ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... ok (299ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... ok (296ms)
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add ... ok (472ms)
+content tasks are reused by published identity only; a named content match is offered, never merged ... ok (270ms)
+a relevant change since review asks for a new review; an unrelated progress change does not ... ok (942ms)
+cleanup ... ok (1ms)
+
+ok | 8 passed | 0 failed (3s)
+

@@ -1,0 +1,36 @@
+REDACTED LOG. Credential patterns removed.
+- Creating native directory (./android)
+✔ Created native directory | reusing /android
+- Updating package.json
+✔ Updated package.json | no changes
+- Running prebuild
+Error: ENOENT: no such file or directory, open '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/google-services.json'
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.readFile (node:internal/fs/promises:1252:14)
+    at async copyFilePathToPathAsync (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/utils/fs.js:25:19)
+    at async setGoogleServicesFile (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/android/GoogleServices.js:97:5)
+    at async /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/android/GoogleServices.js:81:5
+    at async action (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:199:23)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async action (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/createBaseMod.js:60:21) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/google-services.json'
+}
+- Running prebuild
+✖ Prebuild failed
+Error: [android.dangerous]: withAndroidDangerousBaseMod: Cannot copy google-services.json from /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/google-services.json to /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/android/app/google-services.json. Ensure the source and destination paths exist.
+Error: [android.dangerous]: withAndroidDangerousBaseMod: Cannot copy google-services.json from /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/google-services.json to /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/mobile/android/app/google-services.json. Ensure the source and destination paths exist.
+    at setGoogleServicesFile (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/android/GoogleServices.js:100:11)
+    at async /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/android/GoogleServices.js:81:5
+    at async action (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:199:23)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async action (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/createBaseMod.js:60:21)
+    at async interceptingMod (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/withMod.js:104:21)
+    at async evalModsAsync (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/mod-compiler.js:206:25)
+    at async compileModsAsync (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/unify-front-end/node_modules/@expo/config-plugins/build/plugins/mod-compiler.js:123:10)

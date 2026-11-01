@@ -1,0 +1,10 @@
+running 6 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/plan_undo_test.ts
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added ... ok (837ms)
+a plan that only reuses tasks is undone with a plain control and removes no task ... ok (375ms)
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change ... ok (431ms)
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is ... ok (303ms)
+two plan Undos with different ids, sent together, reverse the receipt once ... ok (251ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (2s)
+

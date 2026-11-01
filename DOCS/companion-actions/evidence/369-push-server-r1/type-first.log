@@ -1,0 +1,79 @@
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/common.ts
+Check supabase/workers/companion-push/worker.ts
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+      await inTime(tx`select public.companion_step_parent_lock(${d.user_id}::uuid,${d.task_ref})`);
+                                                                   ~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:110:68
+
+TS2339 [ERROR]: Property 'task_ref' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+      await inTime(tx`select public.companion_step_parent_lock(${d.user_id}::uuid,${d.task_ref})`);
+                                                                                      ~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:110:87
+
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+      try {await inTime(tx.savepoint(t=>t`select public.companion_step_parent(${d.user_id}::uuid,${d.task_ref})`));}
+                                                                                  ~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:112:83
+
+TS2339 [ERROR]: Property 'task_ref' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+      try {await inTime(tx.savepoint(t=>t`select public.companion_step_parent(${d.user_id}::uuid,${d.task_ref})`));}
+                                                                                                     ~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:112:102
+
+TS2339 [ERROR]: Property 'reminder_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:114:92
+
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:114:127
+
+TS2339 [ERROR]: Property 'installation_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        where n.installation_id=${d.installation_id}::uuid and n.user_id=${d.user_id}::uuid and n.generation=${d.generation}::uuid
+                                    ~~~~~~~~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:120:37
+
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        where n.installation_id=${d.installation_id}::uuid and n.user_id=${d.user_id}::uuid and n.generation=${d.generation}::uuid
+                                                                             ~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:120:78
+
+TS2339 [ERROR]: Property 'generation' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        where n.installation_id=${d.installation_id}::uuid and n.user_id=${d.user_id}::uuid and n.generation=${d.generation}::uuid
+                                                                                                                 ~~~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:120:114
+
+TS2339 [ERROR]: Property 'token_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        and n.token_id=${d.token_id}::uuid and n.enabled and n.revoked_at is null
+                           ~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:121:28
+
+TS2339 [ERROR]: Property 'task_ref' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+      if(d.task_ref.startsWith('sanity:')) {
+           ~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:130:12
+
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        const [profile]=await inTime(tx`select * from public.user_onboarding_profiles where id=${d.user_id}::uuid for share`);
+                                                                                                   ~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:132:100
+
+TS2339 [ERROR]: Property 'task_ref' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+        const access=await inTime(publishedTaskAvailable(profile??null,d.task_ref.slice(7),config.projectId?
+                                                                         ~~~~~~~~
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:133:74
+
+TS2339 [ERROR]: Property 'installation_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:160:35
+
+TS2339 [ERROR]: Property 'user_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:160:74
+
+TS2339 [ERROR]: Property 'generation' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:160:108
+
+TS2339 [ERROR]: Property 'token_id' does not exist on type '{ attempt: `${string}-${string}-${string}-${string}-${string}`; attempt_count: any; retry_seconds: any; attempt_cap: any; }'.
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/workers/companion-push/worker.ts:160:143
+
+Found 17 errors.
+
+Check supabase/functions/companion-actions/index.ts
+error: Type checking failed.

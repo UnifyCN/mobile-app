@@ -10,6 +10,7 @@ import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 let mockAuthUserId = 'user-a';
 const mockGetOnboardingProfile = jest.fn();
@@ -100,7 +101,7 @@ beforeEach(() => {
   mockGetOnboardingProfile.mockResolvedValue(profile('2026-12-02', '0'));
   mockUpdateArrivalDate.mockReset();
   mockTrackChanged.mockReset();
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
   jest.spyOn(console, 'error').mockImplementation(() => undefined);
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);

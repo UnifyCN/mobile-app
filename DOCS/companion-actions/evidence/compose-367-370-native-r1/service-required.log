@@ -1,0 +1,198 @@
+running 15 tests from ./remove_test.ts
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing ... ok (629ms)
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores ... ok (593ms)
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it ... ok (326ms)
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes ... ok (378ms)
+a relevant change between review and approval needs a new review; an unrelated change does not ... ok (952ms)
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins ... ok (500ms)
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review ... ok (567ms)
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere ... ok (657ms)
+Undo restores the task into plans that still exist and never brings back a plan removed separately ... ok (499ms)
+another account cannot review, approve, undo or look up a removal ... ok (646ms)
+an unknown outcome is looked up before retry; a retry with the same identity removes once ... ok (355ms)
+old messages, receipts and drafts cannot recreate a removed task ... ok (383ms)
+removal commands in every supported language ask for a review and never write ... ok (510ms)
+legacy dismissal and account deletion keep their behavior ... ok (563ms)
+a removal review from a conversation is listed there and reads as removed on another device ... ok (405ms)
+
+ok | 15 passed | 0 failed (7s)
+
+running 3 tests from ./remove_plan_race_test.ts
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"],"middle":{"plans":["Transit only"],"removed":false}}
+{"removal":[200,null,[]],"plan":[409,"needs_review"]}
+----- output end -----
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ... ok (533ms)
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ...
+------- output -------
+{"waiting":1,"blockers":["companion_plan_apply"],"middle":{"plans":[],"removed":false}}
+{"plan":[200,null],"removal":[409,"needs_review",null]}
+----- output end -----
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ... ok (490ms)
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"]}
+{"removal":[200,[]],"retry":[409,"needs_review"]}
+----- output end -----
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ... ok (450ms)
+
+ok | 3 passed | 0 failed (1s)
+
+running 2 tests from ./remove_rollback_test.ts
+rolling back #367 alone keeps removed tasks removed and restores the preceding #370 functions; re-applying restores receipts and reviews ... ok (520ms)
+after a full rollback and re-application a removed custom task is still removed and its Undo is a reviewed restore ... ok (4s)
+
+ok | 2 passed | 0 failed (4s)
+
+running 12 tests from ./details_test.ts
+a clear remember message saves exactly that detail once, with owner, scope, provenance and revision ... ok (652ms)
+interpret resolves the documented remember grammar in every supported language and writes nothing ... ok (691ms)
+a profile fact is never saved as a detail: by command, approved draft or edit ... ok (221ms)
+an inferred detail is a draft until the shown revision is approved; Not now saves nothing ... ok (485ms)
+an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite ... ok (316ms)
+every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once ... ok (392ms)
+Undo after a newer edit keeps the newer text and offers a reviewed change ... ok (279ms)
+another account can neither read, change, remove nor look up a detail ... ok (387ms)
+a lost reply is looked up; the same id replays once; a held operation is pending ... ok (301ms)
+a command and an approval of the same text, applied concurrently, save one detail ... ok (467ms)
+with the feature gate off, saved details can be neither read nor changed through the action service ... ok (211ms)
+malformed detail operations are refused before any write ... ok (290ms)
+
+ok | 12 passed | 0 failed (4s)
+
+running 3 tests from ./details_language_test.ts
+S370-3: every locale’s own help example saves its whole first-person detail ... ok (528ms)
+S370-3: Arabic attached first-person forms keep their meaning; other attached forms ask ... ok (404ms)
+S370-2: a need that mentions a permit is saved; a statement of status stays with the profile ... ok (777ms)
+
+ok | 3 passed | 0 failed (1s)
+
+running 2 tests from ./details_rollback_test.ts
+rolling back stops every use of saved details; re-applying restores them, their receipts and a re-review ... ok (1s)
+the full schema rollback (all four migrations) and re-application still work with #370 first ... ok (3s)
+
+ok | 2 passed | 0 failed (5s)
+
+running 4 tests from ./compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... ok (733ms)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... ok (466ms)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... ok (633ms)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... ok (374ms)
+
+ok | 4 passed | 0 failed (2s)
+
+running 1 test from ./compose_367_370_test.ts
+approved saved detail and plan task removal retain exact receipts, replay, steps and account boundaries together ... ok (1s)
+
+ok | 1 passed | 0 failed (1s)
+
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (5s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... ok (5s)
+
+ok | 2 passed | 0 failed (10s)
+
+running 15 tests from ./steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... ok (273ms)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... ok (248ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... ok (384ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... ok (318ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... ok (334ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... ok (271ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... ok (624ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... ok (325ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... ok (321ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... ok (446ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... ok (410ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... ok (428ms)
+another account cannot read, change, look up or undo my steps ... ok (634ms)
+step controls, lookup and Undo never touch the AI allowance ... ok (407ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... ok (280ms)
+
+ok | 15 passed | 0 failed (5s)
+
+running 11 tests from ./steps_parent_race_test.ts
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ...
+------- output -------
+{"mode":"completion","legacyFirst":"blocked","legacyWhileStepHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held completion step","step_id":"ee237c4a-3cf0-4cdf-b8f1-341fd5a4d624","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T20:18:23.419187+00:00","after_state":"not_started","before_state":"not_started","operation_id":"38b7922d-b44c-4d77-9a61-6edbc806d016","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held completion step","step_id":"ee237c4a-3cf0-4cdf-b8f1-341fd5a4d624","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"38b7922d-b44c-4d77-9a61-6edbc806d016"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:23.454621+00:00"}],"steps":[{"done":false,"title":"held completion step","step_id":"ee237c4a-3cf0-4cdf-b8f1-341fd5a4d624","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+----- output end -----
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ... ok (363ms)
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ...
+------- output -------
+{"mode":"completion","legacyState":"blocked","stepState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_completed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:23.710839+00:00"}],"steps":[],"details":[]}}
+----- output end -----
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ... ok (230ms)
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ...
+------- output -------
+{"mode":"dismissal","legacyFirst":"blocked","legacyWhileStepHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held dismissal step","step_id":"3406a2ad-56b8-4e3f-81e9-c5c35e9e2f8a","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T20:18:23.976684+00:00","after_state":"not_started","before_state":"not_started","operation_id":"712a0ff3-f129-4f4b-ac7a-1160f0980d6e","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held dismissal step","step_id":"3406a2ad-56b8-4e3f-81e9-c5c35e9e2f8a","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"712a0ff3-f129-4f4b-ac7a-1160f0980d6e"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:23.994971+00:00"}],"steps":[{"done":false,"title":"held dismissal step","step_id":"3406a2ad-56b8-4e3f-81e9-c5c35e9e2f8a","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+----- output end -----
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ... ok (275ms)
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ...
+------- output -------
+{"mode":"dismissal","legacyState":"blocked","stepState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_removed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:24.214523+00:00"}],"steps":[],"details":[]}}
+----- output end -----
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ... ok (221ms)
+absent progress row: a legacy completion sent after the step add passed its parent check waits for that step ...
+------- output -------
+{"mode":"completion","legacyState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"late completion step","step_id":"b4319913-e42f-4892-8098-3b267593cadc","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T20:18:24.448224+00:00","after_state":"not_started","before_state":"not_started","operation_id":"68a7638b-c717-4c1f-8408-cd3c993b3fdc","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"late completion step","step_id":"b4319913-e42f-4892-8098-3b267593cadc","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"68a7638b-c717-4c1f-8408-cd3c993b3fdc"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:24.468867+00:00"}],"steps":[{"done":false,"title":"late completion step","step_id":"b4319913-e42f-4892-8098-3b267593cadc","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+----- output end -----
+absent progress row: a legacy completion sent after the step add passed its parent check waits for that step ... ok (239ms)
+absent progress row: a legacy dismissal sent after the step add passed its parent check waits for that step ...
+------- output -------
+{"mode":"dismissal","legacyState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"late dismissal step","step_id":"dde7155f-57d2-4e8e-9a59-be7c64168f4b","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T20:18:24.690884+00:00","after_state":"not_started","before_state":"not_started","operation_id":"7c420691-15b9-48e3-85e9-404e9973e1f0","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"late dismissal step","step_id":"dde7155f-57d2-4e8e-9a59-be7c64168f4b","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"7c420691-15b9-48e3-85e9-404e9973e1f0"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:24.708795+00:00"}],"steps":[{"done":false,"title":"late dismissal step","step_id":"dde7155f-57d2-4e8e-9a59-be7c64168f4b","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+----- output end -----
+absent progress row: a legacy dismissal sent after the step add passed its parent check waits for that step ... ok (229ms)
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ...
+------- output -------
+{"checkState":"blocked","legacyFirst":"blocked","legacyWhileCheckHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[{"done":false,"title":"check me","step_id":"b4b2cf91-c3c4-4a73-b38e-ab7ae4f33f49","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[{"done":false,"title":"check me","step_id":"b4b2cf91-c3c4-4a73-b38e-ab7ae4f33f49","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]},"check":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":true,"title":"check me","step_id":"b4b2cf91-c3c4-4a73-b38e-ab7ae4f33f49","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T20:18:24.962263+00:00","after_state":"not_started","before_state":"not_started","operation_id":"cc3551fb-d167-4fbb-93eb-e5d31e2c1a7c","after_revision":2,"operation_type":"step.set_done","before_revision":1},"results":[{"type":"step.set_done","state":"not_started","steps":[{"done":true,"title":"check me","step_id":"b4b2cf91-c3c4-4a73-b38e-ab7ae4f33f49","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":2,"before_revision":1}],"replayed":false,"operation_id":"cc3551fb-d167-4fbb-93eb-e5d31e2c1a7c"},"headers":{}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:24.982142+00:00"}],"steps":[{"done":true,"title":"check me","step_id":"b4b2cf91-c3c4-4a73-b38e-ab7ae4f33f49","position":0,"revision":2,"task_ref":"sanity:sin-number"}],"details":[]}}
+----- output end -----
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ... ok (295ms)
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ...
+------- output -------
+{"shape":"upsert","legacyState":"blocked","stepState":"blocked","legacyWhileStepHeld":["advisory"],"mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:25.202879+00:00"}],"steps":[],"details":[]},"step":{"status":200},"legacy":{"status":200,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:25.236674+00:00"}],"steps":[{"done":false,"title":"existing upsert","step_id":"6e474682-a2d1-4f85-bdcf-20d7d7089bc4","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+{"shape":"update","legacyState":"settled","stepState":"settled","legacyWhileStepHeld":[],"mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:25.477064+00:00"}],"steps":[],"details":[]},"step":{"status":422,"reason":"task_completed"},"legacy":{"status":204,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T20:18:25.477064+00:00"}],"steps":[],"details":[]}}
+----- output end -----
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ... ok (509ms)
+independent parents and accounts are not serialized behind a held parent ... ok (298ms)
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ...
+------- output -------
+[{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"}]
+----- output end -----
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ... ok (253ms)
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again ... ok (1s)
+
+ok | 11 passed | 0 failed (4s)
+
+running 9 tests from ./edit_test.ts
+a suggested edit is a draft until approved, and approval applies exactly the reviewed change once ... ok (243ms)
+a renamed or re-described task keeps its identity, and the old receipt keeps the old title ... ok (261ms)
+a suggested state change shows the state it changes from and applies only that state and reason ... ok (291ms)
+a draft that changes nothing, names a removed task or another account's task, or carries a revision is refused ... ok (528ms)
+an edit of a task's details needs a reviewed proposal or a clear command, never a control or a model flag ... ok (243ms)
+a newer edit of the field a proposal changes gives a revised proposal and writes nothing ... ok (254ms)
+a change to another field of the same task does not need a new approval ... ok (224ms)
+a newer state change elsewhere gives a state proposal a new review ... ok (251ms)
+two approvals of one edit released together from a held task lock apply once ... ok (269ms)
+
+ok | 9 passed | 0 failed (2s)
+
+running 3 tests from ./edit_undo_test.ts
+Undo of an edit restores exactly the earlier values, once ... ok (270ms)
+Undo after a newer edit keeps the newer values and offers a reviewed compensating change ... ok (227ms)
+Undo of a state command restores the earlier state and reason, and competing Undos reverse it once ... ok (293ms)
+
+ok | 3 passed | 0 failed (794ms)
+
+running 8 tests from ./undo_test.ts
+Undo restores the exact earlier state and waiting reason of its own receipt ... ok (283ms)
+Undo of completion restores the earlier state and does not restart a stopped reminder ... ok (243ms)
+an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change ... ok (454ms)
+a compensating proposal goes stale when the task changes again; nothing is overwritten ... ok (277ms)
+a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review ... ok (235ms)
+concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay ... ok (305ms)
+Undo is scoped to the account and only to undoable receipts ... ok (466ms)
+cleanup ... ok (4ms)
+
+ok | 8 passed | 0 failed (2s)
+

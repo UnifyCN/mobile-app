@@ -1,0 +1,12 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    point: "10%,36%"
+- waitForAnimationToEnd:
+    timeout: 8000
+- repeat:
+    times: 3
+    commands:
+      - tapOn:
+          text: "Dismiss"
+          optional: true

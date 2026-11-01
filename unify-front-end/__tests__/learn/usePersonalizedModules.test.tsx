@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 let mockProvince: string | null = null;
 let mockUserLoading = false;
@@ -84,7 +85,7 @@ function wrapperFor(client: QueryClient) {
 }
 
 function setup() {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   clients.push(client);

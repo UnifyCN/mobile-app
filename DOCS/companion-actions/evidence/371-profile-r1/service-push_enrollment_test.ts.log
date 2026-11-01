@@ -1,0 +1,49 @@
+running 9 tests from ./push_enrollment_test.ts
+push enrollment: disabled server retains no enrollment or token ...
+------- output -------
+FALSIFIER: disabled enrollment writes or does not return push_disabled
+----- output end -----
+push enrollment: disabled server retains no enrollment or token ... ok (31ms)
+push enrollment: authenticated save replays one revision and a content-free receipt ...
+------- output -------
+FALSIFIER: enabled save fails, duplicate requests rotate twice, or proof/token enters receipt
+----- output end -----
+push enrollment: authenticated save replays one revision and a content-free receipt ... ok (31ms)
+push enrollment: known installation requires proof even for the current account ...
+------- output -------
+FALSIFIER: missing or wrong proof mutates a known installation
+----- output end -----
+push enrollment: known installation requires proof even for the current account ... ok (134ms)
+push enrollment: transfer needs possession and removal of the earlier server session ...
+------- output -------
+FALSIFIER: active-session transfer succeeds, or signed-out known id is reclaimed without proof
+----- output end -----
+push enrollment: transfer needs possession and removal of the earlier server session ... ok (388ms)
+push enrollment: different-token transfer preserves the earlier social and learn token ...
+------- output -------
+FALSIFIER: verified transfer deletes or reassigns an unrelated old shared token
+----- output end -----
+push enrollment: different-token transfer preserves the earlier social and learn token ... ok (339ms)
+push enrollment: token collision is atomic for same-account and cross-account races ...
+------- output -------
+FALSIFIER: a collision creates two bindings or an orphan token mutation
+----- output end -----
+push enrollment: token collision is atomic for same-account and cross-account races ... ok (416ms)
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ...
+------- output -------
+FALSIFIER: retry rotates twice, stale revision changes state, or revoked credentials can enroll
+----- output end -----
+push enrollment: lost replies, revision conflict, rotation, disable, and terminal revocation ... ok (167ms)
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ...
+------- output -------
+FALSIFIER: an old JWT creates enrollment after session authorization expires
+----- output end -----
+push enrollment: unknown, expired, revoked, maximum-lifetime and inactive sessions fail closed ... ok (779ms)
+push enrollment: RLS grants and the common operation namespace reject bypass ...
+------- output -------
+FALSIFIER: a normal JWT calls the privileged RPC, reads private storage, or reuses another action identity
+----- output end -----
+push enrollment: RLS grants and the common operation namespace reject bypass ... ok (224ms)
+
+ok | 9 passed | 0 failed (2s)
+

@@ -1,0 +1,21 @@
+{
+  "bytes": 254831901,
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+    "-H",
+    "127.0.0.1",
+    "-P",
+    "63679",
+    "-s",
+    "emulator-5590",
+    "exec-out",
+    "cat",
+    "/data/app/~~gCaB0RIlaGhUNtgKAcdACg==/com.anonymous.unifyfrontend-n2nZZRufb3bX5VHtlER5Qg==/base.apk"
+  ],
+  "matches_retained_R14": true,
+  "rebuilt": false,
+  "sha256": "db7fae2a7306e79215adfda8534782fed10c34a5e96fc7a1168ece43ecfaf10f"
+}

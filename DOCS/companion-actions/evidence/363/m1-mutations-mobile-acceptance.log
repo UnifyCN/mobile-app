@@ -1,0 +1,13 @@
+Mutation 1: TaskProposalPanel canApprove ignores an unsaved title edit
+Mutation 2: useSendMessage never acts on an interpreted command
+1
+1
+    ✕ an edited title and a changed profile each need a new approval of the shown revision (317 ms)
+Tests:       1 failed, 7 skipped, 8 total
+1
+    ✕ a clear command adds exactly its task without an AI answer; an unclear one asks and writes nothing (1220 ms)
+Tests:       1 failed, 7 skipped, 8 total
+ 1 file changed, 88 insertions(+), 2 deletions(-)
+
+[exited with code 0]
+(second run held open handles after its summary; stopped; both files restored, cmp/grep verified)

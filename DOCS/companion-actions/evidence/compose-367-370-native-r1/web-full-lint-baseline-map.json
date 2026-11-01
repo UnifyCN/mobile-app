@@ -1,0 +1,122 @@
+[
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 59,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "): Promise<{ status: number; json: any }> {",
+    "acceptedLines": [
+      59
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 71,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  let parsed: any = text;",
+    "acceptedLines": [
+      71
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 246,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  return { status: res.status, body, context: body.context as Record<string, any>, answer, calls, writes };",
+    "acceptedLines": [
+      246
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 249,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "const tasksOf = (context: Record<string, any>) =>",
+    "acceptedLines": [
+      249
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 250,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  (context.items as Array<Record<string, any>>)",
+    "acceptedLines": [
+      250
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 271,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "    const profile = (a.context.items as Array<Record<string, any>>).find(i => i.kind === 'profile');",
+    "acceptedLines": [
+      271
+    ]
+  },
+  {
+    "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "line": 369,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "      let context: Record<string, any>;",
+    "acceptedLines": [
+      369
+    ]
+  },
+  {
+    "file": "supabase/tests/companion-actions/rollback_test.ts",
+    "line": 77,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  const state = (ref: string) => tasks.find((t: any) => t.task_ref === ref)?.state;",
+    "acceptedLines": [
+      77
+    ]
+  },
+  {
+    "file": "supabase/tests/companion-actions/support.ts",
+    "line": 85,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  json: any;",
+    "acceptedLines": [
+      75
+    ]
+  },
+  {
+    "file": "supabase/tests/companion-actions/support.ts",
+    "line": 101,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  let json: any = text;",
+    "acceptedLines": [
+      91
+    ]
+  },
+  {
+    "file": "supabase/tests/companion-actions/support.ts",
+    "line": 387,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "export async function taskOf(who: Account, ref: string, platform?: Platform): Promise<any | undefined> {",
+    "acceptedLines": [
+      333
+    ]
+  },
+  {
+    "file": "supabase/tests/companion-actions/support.ts",
+    "line": 390,
+    "rule": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "text": "  return r.json.tasks.find((t: any) => t.task_ref === ref);",
+    "acceptedLines": [
+      336
+    ]
+  }
+]

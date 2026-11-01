@@ -1,0 +1,20 @@
+{
+  "merge": "3191fc770e4112f01bbfe8beaff2fb930c3fd13e",
+  "parents": [
+    "cd90fbd58a33d583872a46c3b4dc0d65c006d46c",
+    "50db7fb1a093330bf614a9256cb79ff34bc398c9"
+  ],
+  "native_exact_inputs": [
+    {
+      "path": "unify-front-end/components/companion/tasks/TaskRemovalSection.tsx",
+      "sha256": "465432d609b1369ae4e83ede13ca932f8503ef0bc18df4e3b8599cf829d0a54e",
+      "exact_native_candidate_bytes": true
+    },
+    {
+      "path": "unify-front-end/hooks/companion/useComposerDraft.ts",
+      "sha256": "2da39e872ddf4f8fdc0497db3e1fb4450adeb691b276790aadce57c3026d1456",
+      "exact_native_candidate_bytes": true
+    }
+  ],
+  "backend_equal_to_reminder_candidate": true
+}

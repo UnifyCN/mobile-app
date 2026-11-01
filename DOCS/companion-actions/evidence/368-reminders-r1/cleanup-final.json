@@ -1,0 +1,14 @@
+{
+  "project": "unify-reminders-368-r1",
+  "containers": [],
+  "volumes": [],
+  "networks": [],
+  "ports": {
+    "63081": "COMMAND     PID       USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\ncom.docke 52315 savargupta  122u  IPv6 0xdbed03d735d69758      0t0  TCP *:63081 (LISTEN)",
+    "63082": "COMMAND     PID       USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\ncom.docke 52315 savargupta   17u  IPv6 0xd23934f012cc70f3      0t0  TCP *:63082 (LISTEN)",
+    "63083": "free",
+    "63084": "free",
+    "3385": "free",
+    "3390": "free"
+  }
+}

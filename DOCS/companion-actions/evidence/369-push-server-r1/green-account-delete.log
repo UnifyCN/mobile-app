@@ -1,0 +1,10 @@
+running 1 test from ./supabase/tests/companion-actions/push_account_delete_test.ts
+push account deletion: new attempt history does not block Auth account deletion ...
+------- output -------
+FALSIFIER: retained attempt foreign keys prevent deletion of the synthetic Auth account
+{"kind":"provider_fixture_distribution","total":1,"modes":{"ok":1}}
+----- output end -----
+push account deletion: new attempt history does not block Auth account deletion ... ok (1s)
+
+ok | 1 passed | 0 failed (1s)
+

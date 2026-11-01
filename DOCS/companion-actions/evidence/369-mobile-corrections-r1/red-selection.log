@@ -1,0 +1,53 @@
+  console.log
+    CHECKLIST READS before=11 after=11
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:497:11)
+
+FAIL __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ✓ review control: approved current target opens through the root hook and actual sheet (199 ms)
+  ✓ review control: unavailable resolution replaces an open task with a generic result (88 ms)
+  ✓ review: a new notification preserves the open task edit draft (175 ms)
+  ✕ review: a notification selects its task while saved details are open inside the sheet (739 ms)
+  ✕ review: fresh available notification revalidates an already open cached checklist (210 ms)
+
+  ● review: a notification selects its task while saved details are open inside the sheet
+
+    expect(received).toBeNull()
+
+    Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1793397406813, "alternate": [FiberNode], "child": [FiberNode], "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "Text", "flags": 4, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 262144, "tag": 5, "treeBaseDuration": 0, "type": "Text", "updateQueue": null}}
+
+      479 |   expect(mockPush).toHaveBeenCalledTimes(1);
+      480 |   expect(mockClear).toHaveBeenCalledTimes(1);
+    > 481 |   expect(within(sheet).queryByText(en.savedDetails.title)).toBeNull();
+          |                                                            ^
+      482 |   expect(within(sheet).getByText('Get a SIN')).toBeTruthy();
+      483 | });
+      484 | it('review: fresh available notification revalidates an already open cached checklist', async () => {
+
+      at Object.toBeNull (__tests__/companionActions/pushSelectionRecovery.test.tsx:481:60)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● review: fresh available notification revalidates an already open cached checklist
+
+    expect(received).toBeNull()
+
+    Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1793397407567, "alternate": null, "child": [FiberNode], "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "Text", "flags": 0, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 0, "tag": 5, "treeBaseDuration": 0, "type": "Text", "updateQueue": null}}
+
+      496 |   await waitFor(()=>expect(within(sheet).queryByText(en.taskActions.loading)).toBeNull());
+      497 |   console.log('CHECKLIST READS before='+before+' after='+sanity.mock.calls.length);
+    > 498 |   expect(within(sheet).queryByText(en.companionPush.targetUnavailable)).toBeNull();
+          |                                                                         ^
+      499 |   expect(within(sheet).getByText('New accessible task')).toBeTruthy();
+      500 | });
+      501 |
+
+      at Object.toBeNull (__tests__/companionActions/pushSelectionRecovery.test.tsx:498:73)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        2.456 s
+Ran all test suites matching /__tests__\/companionActions\/pushSelectionRecovery.test.tsx/i.

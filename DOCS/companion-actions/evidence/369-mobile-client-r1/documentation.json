@@ -1,0 +1,11 @@
+{
+  "checked_official_docs": [
+    "https://docs.expo.dev/versions/v55.0.0/sdk/notifications/",
+    "https://docs.expo.dev/versions/v55.0.0/sdk/securestore/",
+    "https://supabase.com/docs/reference/javascript/auth-getsession",
+    "https://supabase.com/changelog.md"
+  ],
+  "changelog_sha256": "0dac5c21d2b0041087f0af0284a414fdc37fdc79cff255f941c7967930af8d88",
+  "changelog_note": "The index names the October 12 CBC TLS cipher removal. This client check uses the fixed local HTTP stack. No server or SDK upgrade is made.",
+  "sdk_interpretation": "The native token listener supplies a device token. The adapter retrieves an Expo token. The installed SDK supplies synchronous last-response check and clear. SecureStore device-only accessibility and Android exclusions are configured; actual native storage and delivery are not observed."
+}

@@ -1,0 +1,27 @@
+{
+  "bounded_resource_cleanup": "PASS_WITH_EXPLAINED_DEFAULT_BRIDGE_CHANGE",
+  "strict_resource_equality": false,
+  "strict_network_ids_unchanged": false,
+  "before_bridge": {
+    "Id": "7f1c2b98dffc51d67daa777401732f3512cf03dae8723cdcd723f3b493f01140",
+    "Name": "bridge",
+    "Created": "2026-10-30T22:14:39.725115625Z",
+    "Labels": {},
+    "Containers": {}
+  },
+  "after_bridge": {
+    "Id": "28e6805207ba42516ea6b03c04033c4a4df26e4a8cfe68621b927b6fee7dd871",
+    "Name": "bridge",
+    "Created": "2026-10-30T22:53:04.103816833Z",
+    "Labels": {},
+    "Containers": {}
+  },
+  "changed_network_names": [
+    "bridge"
+  ],
+  "explanation": "Docker host log records an engine start from Idle:shutdown, followed by de-registration of the exact old bridge and registration of the exact new bridge. This is an engine startup/resync disposition. No global Docker restart command ran.",
+  "evidence": "docker-current-startup-interval.redacted.txt",
+  "new_resource_snapshots_taken": 0,
+  "nondefault_resource_changes": false,
+  "external_cache_confinement_proven": false
+}

@@ -1,0 +1,18 @@
+proname | security_definer | config | anon_exec | auth_exec | service_exec | acl
+companion_plan_apply | t | {"search_path=public, pg_temp"} | f | f | t | {postgres=X/postgres,service_role=X/postgres}
+companion_plan_apply_review | t | {"search_path=public, pg_temp"} | f | f | t | {postgres=X/postgres,service_role=X/postgres}
+companion_plan_retry | t | {"search_path=public, pg_temp"} | f | f | t | {postgres=X/postgres,service_role=X/postgres}
+companion_plan_view | t | {"search_path=public, pg_temp"} | f | f | t | {postgres=X/postgres,service_role=X/postgres}
+companion_plans_read | t | {"search_path=public, pg_temp"} | f | f | t | {postgres=X/postgres,service_role=X/postgres}
+(5 rows)
+defaclrole | defaclnamespace | defaclobjtype | defaclacl
+postgres | public | f | {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+supabase_admin | public | f | {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+postgres | storage | f | {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+supabase_auth_admin | auth | f | {postgres=X/supabase_auth_admin,dashboard_user=X/supabase_auth_admin}
+supabase_admin | realtime | f | {postgres=X/supabase_admin,dashboard_user=X/supabase_admin}
+supabase_admin | graphql_public | f | {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+supabase_admin | extensions | f | {postgres=X*/supabase_admin}
+supabase_admin | graphql | f | {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+supabase_admin | supabase_functions | f | {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+(9 rows)

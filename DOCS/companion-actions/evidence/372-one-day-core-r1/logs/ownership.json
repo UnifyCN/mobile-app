@@ -1,0 +1,48 @@
+[
+  {
+    "name": "/supabase_db_unify-one-day-recovery-372-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/tmp/372-one-day-core-r1/harness"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_auth_unify-one-day-recovery-372-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/tmp/372-one-day-core-r1/harness"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_rest_unify-one-day-recovery-372-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/tmp/372-one-day-core-r1/harness"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_kong_unify-one-day-recovery-372-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/tmp/372-one-day-core-r1/harness",
+      "maintainer": "Kong <support@konghq.com>"
+    },
+    "running": true
+  },
+  {
+    "name": "/supabase_edge_runtime_unify-one-day-recovery-372-r1",
+    "labels": {
+      "com.docker.compose.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.project": "unify-one-day-recovery-372-r1",
+      "com.supabase.cli.workdir": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/tmp/372-one-day-core-r1/harness"
+    },
+    "running": true
+  }
+]

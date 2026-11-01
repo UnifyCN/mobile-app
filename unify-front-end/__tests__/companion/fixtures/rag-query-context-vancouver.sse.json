@@ -1,0 +1,157 @@
+[
+  {
+    "name": "metadata",
+    "data": {
+      "queryType": "immigration",
+      "disclaimer": "This may not be covered in Unify's internal resources; please double-check with IRCC or a licensed immigration professional. This is general information, not legal advice. For decisions about your specific situation, please check the official IRCC website or talk to a licensed immigration professional.",
+      "context": {
+        "version": 1,
+        "items": [
+          {
+            "kind": "profile",
+            "id": "profile",
+            "revision": "2026-10-20T10:00:00Z",
+            "fields": [
+              {
+                "key": "persona",
+                "value": "other"
+              },
+              {
+                "key": "city",
+                "value": "Vancouver"
+              },
+              {
+                "key": "province",
+                "value": "British Columbia"
+              },
+              {
+                "key": "arrival_date",
+                "value": "2026-10-31"
+              }
+            ]
+          },
+          {
+            "kind": "conversation_detail",
+            "saved": false,
+            "fields": [
+              {
+                "key": "city",
+                "value": "Vancouver"
+              },
+              {
+                "key": "province",
+                "value": "British Columbia"
+              },
+              {
+                "key": "arrival",
+                "value": "next_week"
+              }
+            ]
+          },
+          {
+            "kind": "conversation",
+            "id": "11111111-1111-4111-8111-111111111111",
+            "revision": "2026-10-25T09:00:00Z"
+          },
+          {
+            "kind": "checklist_task",
+            "id": "sanity:checklist-sin",
+            "revision": null,
+            "contentRevision": "rev-sin-3",
+            "title": "Get your SIN",
+            "state": "not_started"
+          },
+          {
+            "kind": "checklist_task",
+            "id": "sanity:checklist-bank",
+            "revision": "r4",
+            "contentRevision": "rev-bank-1",
+            "title": "Open a bank account",
+            "state": "in_progress"
+          },
+          {
+            "kind": "checklist_task",
+            "id": "custom:41",
+            "revision": "legacy:2026-10-21T00:00:00Z",
+            "contentRevision": null,
+            "title": "Find a family doctor",
+            "state": "not_started"
+          }
+        ],
+        "reads": [
+          {
+            "capability": "context.profile",
+            "status": "ok"
+          },
+          {
+            "capability": "context.checklist",
+            "status": "ok"
+          },
+          {
+            "capability": "context.conversation",
+            "status": "ok"
+          },
+          {
+            "capability": "guidance.search",
+            "status": "ok"
+          },
+          {
+            "capability": "guidance.read",
+            "status": "ok"
+          },
+          {
+            "capability": "content.knowledge",
+            "status": "ok"
+          }
+        ],
+        "guidance": {
+          "status": "checked",
+          "sources": [
+            {
+              "id": "S1",
+              "url": "https://www.canada.ca/en/employment-social-development/services/sin.html",
+              "title": "Social Insurance Number - Canada.ca",
+              "publisher": "Government of Canada",
+              "jurisdiction": "federal",
+              "checkedAt": "2026-10-25T17:30:00.000Z",
+              "status": "checked"
+            },
+            {
+              "id": "S2",
+              "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp",
+              "title": "Medical Services Plan - Province of British Columbia",
+              "publisher": "Government of British Columbia",
+              "jurisdiction": "British Columbia",
+              "checkedAt": "2026-10-25T17:30:00.000Z",
+              "status": "checked"
+            }
+          ]
+        },
+        "clarification": null
+      }
+    }
+  },
+  {
+    "name": "token",
+    "data": {
+      "delta": "Start with your SIN,"
+    }
+  },
+  {
+    "name": "token",
+    "data": {
+      "delta": " then your bank account.\n[SUGGESTIONS]: How do I get a SIN? | Which bank should I pick?\n"
+    }
+  },
+  {
+    "name": "complete",
+    "data": {
+      "cleanAnswer": "Start with your SIN, then your bank account.",
+      "suggestedNextSteps": [
+        "How do I get a SIN?",
+        "Which bank should I pick?"
+      ],
+      "topic": "settling_in"
+    }
+  }
+]

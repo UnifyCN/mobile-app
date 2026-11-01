@@ -1,0 +1,1193 @@
+FAIL __tests__/companionActions/savedDetails.test.tsx (6.8 s)
+  ✕ a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt (360 ms)
+  Saved personal details through Companion (mobile, #370)
+    ○ skipped a clear remember message saves exactly that detail once, with no AI answer, and its receipt names it
+    ○ skipped an inferred detail is only a draft: Not now saves nothing, and approval saves it once
+    ○ skipped edits at the revision shown and keeps typed text through close and reopen; its receipt names before and after
+    ○ skipped every removal asks first; Cancel sends nothing; Remove names the detail and Undo restores it
+    ○ skipped the Undo of a save removes it only after confirmation; an Undo after a newer edit offers a reviewed change
+    ○ skipped a lost reply is looked up and shown from its receipt; the edit is never sent again
+    ○ skipped an account change drops the previous account's details and typed edits before the next account renders
+  the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1)
+    ✕ a newer edit read while the review is open withholds approval and names nothing stale (119 ms)
+    ✕ current_detail absent: approval stays unavailable and nothing is removed (1120 ms)
+    ✕ current_detail a different detail: approval stays unavailable and nothing is removed (1141 ms)
+    ✕ current_detail an older revision: approval stays unavailable and nothing is removed (1208 ms)
+    ✕ current_detail a removed detail: approval stays unavailable and nothing is removed (1132 ms)
+    ✕ current_detail malformed text: approval stays unavailable and nothing is removed (1123 ms)
+
+  ● a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt
+
+    Unable to find an element with text: “I can attend appointments on Saturdays” will no longer be used in later conversations.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mRemove this saved detail?[0m
+                          [36m</Text>[39m
+                          [36m<Text>[39m
+                            [0m“I can attend appointments on Fridays” will no longer be used in later conversations.[0m
+                          [36m</Text>[39m
+                          [36m<View>[39m
+                            [36m<View[39m
+                              [33maccessibilityLabel[39m=[32m"Remove detail"[39m
+                              [33maccessibilityRole[39m=[32m"button"[39m
+                              [33maccessibilityState[39m=[32m{
+                                {
+                                  "disabled": false,
+                                }
+                              }[39m
+                              [33maccessible[39m=[32m{true}[39m
+                            [36m>[39m
+                              [36m<Text>[39m
+                                [0mRemove detail[0m
+                              [36m</Text>[39m
+                            [36m</View>[39m
+                            [36m<View[39m
+                              [33maccessibilityLabel[39m=[32m"Cancel"[39m
+                              [33maccessibilityRole[39m=[32m"button"[39m
+                              [33maccessibilityState[39m=[32m{
+                                {
+                                  "disabled": false,
+                                }
+                              }[39m
+                              [33maccessible[39m=[32m{true}[39m
+                            [36m>[39m
+                              [36m<Text>[39m
+                                [0mCancel[0m
+                              [36m</Text>[39m
+                            [36m</View>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      640 |   await waitFor(() => expect(enabled(review)).toBe(true));
+      641 |   fireEvent.press(review);
+    > 642 |   expect(within(card).getByText(`“${current}” will no longer be used in later conversations.`)).toBeTruthy();
+          |                       ^
+      643 |   fireEvent.press(within(card).getByRole('button', { name: 'Cancel' }));
+      644 |   expect(server.details()[0]).toMatchObject({ text: current, removed: false });
+      645 |   fireEvent.press(within(card).getByRole('button', { name: `Remove “${current}”` }));
+
+      at Object.getByText (__tests__/companionActions/savedDetails.test.tsx:642:23)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › a newer edit read while the review is open withholds approval and names nothing stale
+
+    Unable to find an element with role: button, name: Remove “I can attend appointments on Saturdays”
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      688 |     renderScreen();
+      689 |     const card = await conflictingUndo();
+    > 690 |     const review = within(card).getByRole('button', { name: `Remove “${SATURDAYS}”` });
+          |                                 ^
+      691 |     await waitFor(() => expect(enabled(review)).toBe(true));
+      692 |     fireEvent.press(review);
+      693 |     expect(within(card).getByText(`“${SATURDAYS}” will no longer be used in later conversations.`)).toBeTruthy();
+
+      at Object.getByRole (__tests__/companionActions/savedDetails.test.tsx:690:33)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › current_detail absent: approval stays unavailable and nothing is removed
+
+    Unable to find an element with text: The current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      715 |     renderScreen();
+      716 |     const card = await conflictingUndo();
+    > 717 |     await within(card).findByText(en.savedDetails.reviewUnverified);
+          |                        ^
+      718 |     expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+      719 |     expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+      720 |     expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+
+      at findByText (__tests__/companionActions/savedDetails.test.tsx:717:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › current_detail a different detail: approval stays unavailable and nothing is removed
+
+    Unable to find an element with text: The current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      715 |     renderScreen();
+      716 |     const card = await conflictingUndo();
+    > 717 |     await within(card).findByText(en.savedDetails.reviewUnverified);
+          |                        ^
+      718 |     expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+      719 |     expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+      720 |     expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+
+      at findByText (__tests__/companionActions/savedDetails.test.tsx:717:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › current_detail an older revision: approval stays unavailable and nothing is removed
+
+    Unable to find an element with text: The current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      715 |     renderScreen();
+      716 |     const card = await conflictingUndo();
+    > 717 |     await within(card).findByText(en.savedDetails.reviewUnverified);
+          |                        ^
+      718 |     expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+      719 |     expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+      720 |     expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+
+      at findByText (__tests__/companionActions/savedDetails.test.tsx:717:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › current_detail a removed detail: approval stays unavailable and nothing is removed
+
+    Unable to find an element with text: The current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      715 |     renderScreen();
+      716 |     const card = await conflictingUndo();
+    > 717 |     await within(card).findByText(en.savedDetails.reviewUnverified);
+          |                        ^
+      718 |     expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+      719 |     expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+      720 |     expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+
+      at findByText (__tests__/companionActions/savedDetails.test.tsx:717:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) › current_detail malformed text: approval stays unavailable and nothing is removed
+
+    Unable to find an element with text: The current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mtestID[39m=[32m"detail-command-card"[39m
+              [36m>[39m
+                [36m<View>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mSaved: “I can attend appointments on Fridays”.[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mSaved earlier. This detail has changed since.[0m
+                      [36m</Text>[39m
+                      [36m<View>[39m
+                        [36m<Text>[39m
+                          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+                        [36m</Text>[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Remove “I can attend appointments on Fridays”"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mRemove “I can attend appointments on Fridays”[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Keep current"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mKeep current[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+                [36m<View[39m
+                  [33maccessibilityLabel[39m=[32m"View saved details"[39m
+                  [33maccessibilityRole[39m=[32m"button"[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": false,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<Text>[39m
+                    [0mView saved details[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mRemember that I can attend appointments on Fridays[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      715 |     renderScreen();
+      716 |     const card = await conflictingUndo();
+    > 717 |     await within(card).findByText(en.savedDetails.reviewUnverified);
+          |                        ^
+      718 |     expect(within(card).queryByRole('button', { name: /^Remove “/ })).toBeNull();
+      719 |     expect(within(card).queryByRole('button', { name: 'Remove detail' })).toBeNull();
+      720 |     expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+
+      at findByText (__tests__/companionActions/savedDetails.test.tsx:717:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 7 skipped, 14 total
+Snapshots:   0 total
+Time:        6.998 s, estimated 11 s
+Ran all test suites matching /__tests__\/companionActions\/savedDetails.test.tsx/i with tests matching "conflict".

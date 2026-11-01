@@ -1,0 +1,125 @@
+Starting project at /Users/savargupta/.t3/worktrees/Unify/t3-a768fdfa/unify-front-end
+React Compiler enabled
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8197
+Logs for your project will appear below.
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+Could not parse Expo config: android.googleServicesFile: "./google-services.json"
+iOS node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 93.6% (5493/5678)
+iOS Bundled 3794ms node_modules/expo-router/entry.js (5867 modules)
+ LOG  hasSupabaseUrl: true
+ LOG  hasSupabaseAnonKey: true
+ LOG  expoConfigExtraPresent: true
+ WARN  Require cycle: components/companion/tasks/TaskStatePanel.tsx -> components/companion/tasks/TaskStepsSection.tsx -> components/companion/tasks/TaskStatePanel.tsx
+
+Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+ ERROR  [expo-notifications] Error reading persisted server registration info:  [Error: Calling the 'getRegistrationInfoAsync' function has failed
+→ Caused by: Keychain access failed: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  Auto refresh tick failed with error. This is likely a transient error. [Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Either a PostHog client or an apiKey is required. If you want to use the PostHogProvider without a client, please provide an apiKey and the options={ disabled: true }.] 
+
+Code: _layout.tsx
+[0m [90m 122 |[39m   [36mreturn[39m (
+ [90m 123 |[39m     [33m<[39m[33mQueryClientProvider[39m client[33m=[39m{queryClient}[33m>[39m
+[31m[1m>[22m[39m[90m 124 |[39m       [33m<[39m[33mPostHogProvider[39m
+ [90m     |[39m       [31m[1m^[22m[39m
+ [90m 125 |[39m         apiKey[33m=[39m{process[33m.[39menv[33m.[39m[33mEXPO_PUBLIC_POSTHOG_API_KEY[39m [33m||[39m [32m''[39m}
+ [90m 126 |[39m         options[33m=[39m{[33mPOSTHOG_OPTIONS[39m}
+ [90m 127 |[39m         autocapture[33m=[39m{{ captureScreens[33m:[39m [36mfalse[39m }}[0m
+Call Stack
+  RootLayout (app/_layout.tsx:124:7)
+ ERROR  [Error: Uncaught (in promise, id: 0) Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)
+ ERROR  [Error: Uncaught (in promise, id: 1) Error: Calling the 'getValueWithKeyAsync' function has failed
+→ Caused by: A required entitlement isn't present.] 
+
+Code: construct.js
+[0m [90m 2 |[39m [36mvar[39m setPrototypeOf [33m=[39m require([32m"./setPrototypeOf.js"[39m)[33m;[39m
+ [90m 3 |[39m [36mfunction[39m _construct(t[33m,[39m e[33m,[39m r) {
+[31m[1m>[22m[39m[90m 4 |[39m   [36mif[39m (isNativeReflectConstruct()) [36mreturn[39m [33mReflect[39m[33m.[39mconstruct[33m.[39mapply([36mnull[39m[33m,[39m arguments)[33m;[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m
+ [90m 5 |[39m   [36mvar[39m o [33m=[39m [[36mnull[39m][33m;[39m
+ [90m 6 |[39m   o[33m.[39mpush[33m.[39mapply(o[33m,[39m e)[33m;[39m
+ [90m 7 |[39m   [36mvar[39m p [33m=[39m [36mnew[39m (t[33m.[39mbind[33m.[39mapply(t[33m,[39m o))()[33m;[39m[0m
+Call Stack
+  construct (<native>)
+  apply (<native>)
+  _construct (node_modules/@babel/runtime/helpers/construct.js:4:65)
+  Wrapper (node_modules/@babel/runtime/helpers/wrapNativeSuper.js:15:23)
+  construct (<native>)
+  _callSuper (node_modules/@babel/runtime/helpers/callSuper.js:5:108)
+  constructor (node_modules/expo-modules-core/src/errors/CodedError.ts:11:5)

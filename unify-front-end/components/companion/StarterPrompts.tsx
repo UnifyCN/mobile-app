@@ -34,6 +34,16 @@ interface StarterPromptsProps {
     starter: CompanionStarterRef
   ) => void;
   personalizedStarters?: PersonalizedStarter[];
+  /**
+   * 'row' (default): a horizontal strip of fixed-width cards. 'stack': full-width cards
+   * in a column, for large text, where a fixed-width card would break words.
+   */
+  layout?: 'row' | 'stack';
+  /**
+   * Changes when the system text size changes, so the cards are created again and
+   * measured at the new size; the chosen starters stay (see textScaleKey).
+   */
+  textKey?: string;
 }
 
 interface StaticCard {
@@ -227,6 +237,8 @@ function pickReplacement(
 export const StarterPrompts: React.FC<StarterPromptsProps> = ({
   onPromptSelect,
   personalizedStarters,
+  layout = 'row',
+  textKey = '',
 }) => {
   const { t } = useTranslation();
   const topicStarterDefs = useMemo(() => selectRandomTopicStarterDefs(), []);
@@ -348,102 +360,114 @@ export const StarterPrompts: React.FC<StarterPromptsProps> = ({
     [pool, onPromptSelect, personalizedText]
   );
 
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {displayed.map((starter, index) => {
-          const localized = personalizedText(starter);
-          const pressHandlers = createTapOnlyPressHandlers(() =>
-            handlePersonalizedPress(starter, index)
-          );
-          return (
-            <View key={starter.id}>
-              <Animated.View
-                entering={FadeIn.duration(200)}
-                exiting={FadeOut.duration(150)}
+  const stacked = layout === 'stack';
+  const cardStyle = stacked ? [styles.card, styles.cardStacked] : styles.card;
+  const cards = (
+    <>
+      {displayed.map((starter, index) => {
+        const localized = personalizedText(starter);
+        const pressHandlers = createTapOnlyPressHandlers(() =>
+          handlePersonalizedPress(starter, index)
+        );
+        return (
+          <View key={`${starter.id}${textKey}`}>
+            <Animated.View
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(150)}
+            >
+              <TouchableOpacity
+                style={[cardStyle, !stacked && styles.cardPersonalized]}
+                {...pressHandlers}
+                delayLongPress={400}
+                activeOpacity={0.8}
               >
-                <TouchableOpacity
-                  style={[styles.card, styles.cardPersonalized]}
-                  {...pressHandlers}
-                  delayLongPress={400}
-                  activeOpacity={0.8}
-                >
-                  <View style={styles.cardHeader}>
-                    <View
-                      style={[
-                        styles.iconBadge,
-                        { backgroundColor: starter.iconBackground },
-                      ]}
-                    >
-                      <Feather
-                        name={starter.iconName as keyof typeof Feather.glyphMap}
-                        size={16}
-                        color={Theme.white}
-                      />
-                    </View>
-                    <Text style={styles.cardLabel} numberOfLines={1}>
-                      {localized.category}
-                    </Text>
+                <View style={styles.cardHeader}>
+                  <View
+                    style={[
+                      styles.iconBadge,
+                      { backgroundColor: starter.iconBackground },
+                    ]}
+                  >
                     <Feather
-                      name='chevron-right'
+                      name={starter.iconName as keyof typeof Feather.glyphMap}
                       size={16}
-                      color={Theme.textInactiveTab}
+                      color={Theme.white}
                     />
                   </View>
-                  <Text style={styles.cardDescription} numberOfLines={3}>
-                    {localized.prompt}
+                  <Text style={styles.cardLabel} numberOfLines={1}>
+                    {localized.category}
                   </Text>
-                </TouchableOpacity>
-              </Animated.View>
-            </View>
-          );
-        })}
-
-        {[...MODE_CARD_DEFS, ...topicStarterDefs].map(def => {
-          const card = translateDef(def);
-          const pressHandlers = createTapOnlyPressHandlers(() =>
-            onPromptSelect(card.prompt, card.mode, {
-              // Internal analytics discriminator, never shown to the user.
-              // eslint-disable-next-line i18next/no-literal-string
-              kind: 'static',
-              id: card.id,
-            })
-          );
-          return (
-            <TouchableOpacity
-              key={card.id}
-              style={styles.card}
-              {...pressHandlers}
-              delayLongPress={400}
-              activeOpacity={0.8}
-            >
-              <View style={styles.cardHeader}>
-                <View
-                  style={[
-                    styles.iconBadge,
-                    { backgroundColor: card.iconBackground },
-                  ]}
-                >
-                  <Feather name={card.iconName} size={16} color={Theme.white} />
+                  <Feather
+                    name='chevron-right'
+                    size={16}
+                    color={Theme.textInactiveTab}
+                  />
                 </View>
-                <Text style={styles.cardLabel}>{card.label}</Text>
-                <Feather
-                  name='chevron-right'
-                  size={16}
-                  color={Theme.textInactiveTab}
-                />
+                <Text style={styles.cardDescription} numberOfLines={3}>
+                  {localized.prompt}
+                </Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
+        );
+      })}
+
+      {[...MODE_CARD_DEFS, ...topicStarterDefs].map(def => {
+        const card = translateDef(def);
+        const pressHandlers = createTapOnlyPressHandlers(() =>
+          onPromptSelect(card.prompt, card.mode, {
+            // Internal analytics discriminator, never shown to the user.
+            // eslint-disable-next-line i18next/no-literal-string
+            kind: 'static',
+            id: card.id,
+          })
+        );
+        return (
+          <TouchableOpacity
+            key={`${card.id}${textKey}`}
+            style={cardStyle}
+            {...pressHandlers}
+            delayLongPress={400}
+            activeOpacity={0.8}
+          >
+            <View style={styles.cardHeader}>
+              <View
+                style={[
+                  styles.iconBadge,
+                  { backgroundColor: card.iconBackground },
+                ]}
+              >
+                <Feather name={card.iconName} size={16} color={Theme.white} />
               </View>
-              <Text style={styles.cardDescription} numberOfLines={2}>
-                {card.description}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+              <Text style={styles.cardLabel}>{card.label}</Text>
+              <Feather
+                name='chevron-right'
+                size={16}
+                color={Theme.textInactiveTab}
+              />
+            </View>
+            <Text style={styles.cardDescription} numberOfLines={2}>
+              {card.description}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </>
+  );
+
+  return (
+    <View style={styles.container}>
+      {stacked ? (
+        <View style={styles.stackContent}>{cards}</View>
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {cards}
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -455,6 +479,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.white,
   },
   scrollContent: { paddingHorizontal: 20, paddingRight: 32 },
+  stackContent: { paddingHorizontal: 20, gap: 12 },
   card: {
     width: 170,
     minHeight: 108,
@@ -466,6 +491,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   cardPersonalized: { width: 210 },
+  cardStacked: { width: 'auto', marginRight: 0 },
   cardHeader: { flexDirection: 'row', alignItems: 'center' },
   iconBadge: {
     width: 26,

@@ -1,0 +1,46 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+    "exit": 1,
+    "seconds": 10.645,
+    "log": "web-quality-1.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+    "exit": 0,
+    "seconds": 0.134,
+    "log": "web-quality-2.log"
+  },
+  {
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+    "exit": 0,
+    "seconds": 6.744,
+    "log": "web-quality-3.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+    "exit": 0,
+    "seconds": 19.798,
+    "log": "web-quality-4.log"
+  }
+]

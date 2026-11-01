@@ -1,0 +1,29 @@
+running 3 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (294ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... FAILED (190ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (343ms)
+
+ ERRORS 
+
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change => ./profile_test.ts:39:6
+error: AssertionError: Values are not equal: {"error":"internal"}
+
+
+    [Diff] Actual / Expected
+
+
+-   500
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:51:5)
+
+ FAILURES 
+
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change => ./profile_test.ts:39:6
+
+FAILED | 2 passed | 1 failed (831ms)
+
+error: Test failed

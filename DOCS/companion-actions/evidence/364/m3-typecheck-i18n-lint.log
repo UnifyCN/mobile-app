@@ -1,0 +1,10 @@
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+typecheck exit=0
+i18n parity OK: 1857 keys per locale.
+i18n exit=0
+
+✖ 85 problems (0 errors, 85 warnings)
+
+lint exit=0

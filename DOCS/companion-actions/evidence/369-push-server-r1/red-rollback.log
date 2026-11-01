@@ -1,0 +1,31 @@
+running 1 test from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts
+push rollback: stops execution and preserves terminal history across reapply ...
+------- output -------
+FALSIFIER: rollback leaves enrollment enabled, removes history, or reapply restores execution
+----- output end -----
+push rollback: stops execution and preserves terminal history across reapply ... FAILED (313ms)
+
+ ERRORS 
+
+push rollback: stops execution and preserves terminal history across reapply => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts:6:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   true
++   false
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts:14:2)
+
+ FAILURES 
+
+push rollback: stops execution and preserves terminal history across reapply => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_recovery_test.ts:6:6
+
+FAILED | 0 passed | 1 failed (319ms)
+
+error: Test failed

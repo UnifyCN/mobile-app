@@ -1,0 +1,5 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn: "Open your Canadian bank account this week if not done before arrival"
+- waitForAnimationToEnd:
+    timeout: 8000

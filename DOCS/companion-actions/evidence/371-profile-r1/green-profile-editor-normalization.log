@@ -1,0 +1,7 @@
+running 3 tests from ./profile_validation_test.ts
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing ... ok (678ms)
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes ... ok (611ms)
+profile preparation: existing province aliases and localized values resolve before review without saving a fact ... ok (233ms)
+
+ok | 3 passed | 0 failed (1s)
+

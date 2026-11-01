@@ -35,6 +35,10 @@ jest.mock('react-native-gesture-handler', () => {
     GestureHandlerRootView: View,
   };
 });
+// The sheet avoids the keyboard for the task progress form (mobile-app#361).
+jest.mock('react-native-keyboard-controller', () => ({
+  KeyboardAvoidingView: require('react-native').View,
+}));
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));

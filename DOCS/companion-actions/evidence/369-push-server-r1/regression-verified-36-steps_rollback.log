@@ -1,0 +1,6 @@
+running 2 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/steps_rollback_test.ts
+the #366 rollback waits for the step RPC to leave the cache while plan setup accepts installed steps ... ok (2s)
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts ... ok (2s)
+
+ok | 2 passed | 0 failed (4s)
+

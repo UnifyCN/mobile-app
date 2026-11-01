@@ -1,0 +1,124 @@
+
+> web-app@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359
+
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (14 tests | 13 skipped) 2ms
+ ✓ components/companion/tasks/TaskRemovalLocalStack.test.tsx (5 tests | 4 skipped) 1ms
+ ✓ components/companion/accountOwnershipRequests.test.tsx (12 tests) 255ms
+ ✓ components/companion/tasks/ReminderAccountSession.test.tsx (11 tests) 757ms
+ ✓ hooks/profileLearnRefresh.test.tsx (7 tests) 184ms
+ ✓ components/companion/tasks/Reminders.test.tsx (5 tests) 235ms
+ ✓ components/companion/tasks/ComposerPendingSession.test.tsx (16 tests) 926ms
+ ✓ components/companion/tasks/TaskEdit.test.tsx (8 tests) 1066ms
+   ✓ Edit existing tasks through Companion (web) > a suggested change is a draft until approved; approval saves the reviewed change once, and the typed message and focus stay  304ms
+ ✓ components/companion/tasks/TaskSelectionAccountSession.test.tsx (15 tests) 1230ms
+ ✓ components/companion/accountOwnership.test.tsx (7 tests) 628ms
+ ✓ components/companion/tasks/RemovedReceiptPage.test.tsx (2 tests) 200ms
+ ✓ components/companion/plans/PlanPanelMotion.test.tsx (4 tests) 119ms
+ ✓ components/companion/tasks/ReminderPresentation.test.tsx (12 tests) 218ms
+ ✓ components/companion/tasks/TaskProgressHydration.test.tsx (2 tests) 57ms
+ ✓ components/companion/tasks/SavedDetails.test.tsx (16 tests) 2127ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  614ms
+   ✓ Saved personal details through Companion (web, #370) > edits at the revision shown and keeps typed text through close and reopen; the command receipt becomes history  318ms
+ ✓ components/companion/tasks/ReminderNavigation.test.tsx (2 tests) 72ms
+ ✓ lib/admin/eventForm.test.ts (67 tests) 72ms
+ ✓ components/learn/help/inLessonAccountOwnership.test.tsx (6 tests) 341ms
+ ✓ components/learn/practice/reflectionGrading.test.ts (52 tests) 10ms
+ ✓ lib/admin/eventCover.test.ts (27 tests) 5ms
+ ✓ lib/pii/scrubEmail.test.ts (22 tests) 3ms
+ ✓ components/companion/tasks/RemovalReceiptEntry.test.tsx (1 test) 66ms
+ ✓ lib/analytics.test.ts (14 tests) 4ms
+ ✓ proxy.learningDestination.test.ts (47 tests) 29ms
+ ✓ components/learn/practice/reflectionControllers.test.ts (27 tests) 24ms
+ ✓ lib/admin/eventList.test.ts (23 tests) 3ms
+ ✓ lib/admin/eventVisibility.test.ts (18 tests) 7ms
+ ✓ services/checklist.profileComposition.test.ts (21 tests) 8ms
+ ✓ services/profile.stageCache.test.ts (7 tests) 13ms
+ ✓ components/companion/tasks/TaskCreate.test.tsx (22 tests) 2718ms
+   ✓ Add one task through Companion (web) > shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task  492ms
+ ✓ lib/whatsNew.test.ts (13 tests) 3ms
+ ✓ lib/authEmailHandoff.test.ts (10 tests) 5ms
+ ✓ components/learn/practice/reflectionRender.test.ts (37 tests) 275ms
+ ✓ app/api/cron/sentry-snapshot/route.test.ts (8 tests) 17ms
+ ✓ components/companion/CompanionContextDrawer.test.ts (8 tests) 56ms
+ ✓ lib/resources/filters.test.ts (14 tests) 9ms
+ ✓ app/fonts/fonts.test.ts (7 tests) 13ms
+ ✓ app/api/companion/actions/route.test.ts (5 tests) 10ms
+ ✓ lib/resources/partners.test.ts (11 tests) 6ms
+ ✓ lib/i18n/groupText.test.ts (17 tests) 10ms
+ ✓ lib/onboarding/calculateUserStage.test.ts (10 tests) 3ms
+ ✓ hooks/useCompanion.analytics.test.ts (4 tests) 11ms
+ ✓ lib/supabase/imageUrl.test.ts (10 tests) 3ms
+ ✓ app/api/aiPlatform.test.ts (7 tests) 6ms
+ ✓ hooks/drafts/createDraftHooks.test.ts (6 tests) 9ms
+ ✓ lib/companionAnalytics.test.ts (9 tests) 2ms
+ ✓ lib/documents/documentLanguage.test.ts (9 tests) 190ms
+ ✓ lib/companionActions/taskActionStore.detailReview.test.ts (5 tests) 3ms
+ ✓ lib/recoveryPending.test.ts (5 tests) 2ms
+ ✓ lib/jobPosting/handler.test.ts (4 tests) 7ms
+ ✓ components/companion/companionContext.acceptance.test.ts (8 tests) 75ms
+ ✓ lib/learn/highlightRange.test.ts (4 tests) 4ms
+ ✓ services/companion.generateReply.test.ts (3 tests) 6ms
+ ✓ app/api/learning-destination/route.test.ts (6 tests) 5ms
+ ✓ components/learn/StructuredLessonContent.test.ts (4 tests) 13ms
+ ✓ lib/companionActions/receiptReasons.test.ts (1 test) 2ms
+ ✓ lib/resources/search.test.ts (10 tests) 34ms
+ ✓ lib/resources/partnerCopy.test.ts (4 tests) 10ms
+ ✓ lib/supabase/storageHost.test.ts (5 tests) 3ms
+ ✓ services/checklist.dismissal.test.ts (3 tests) 5ms
+ ✓ lib/seo/routes.test.ts (4 tests) 12ms
+ ✓ lib/province.test.ts (4 tests) 2ms
+ ✓ lib/admin/eventPartners.test.ts (8 tests) 2ms
+ ✓ lib/companionActions/taskActionStore.session.test.ts (2 tests) 2ms
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: absent
+{"label":"absent","expected":"ok","actual":"ok","ids":["last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: empty
+{"label":"empty","expected":"ok","actual":"ok","ids":[]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: two
+{"label":"two","expected":"ok","actual":"ok","ids":["first","last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: null
+{"label":"null","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: object
+{"label":"object","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: string
+{"label":"string","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: number
+{"label":"number","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: bad member
+{"label":"bad member","expected":"unknown","actual":"unknown","ids":null}
+
+ ✓ lib/companionActions/planReviewCollection.test.ts (8 tests) 4ms
+ ✓ lib/posthog.test.ts (4 tests) 2ms
+ ✓ lib/motion.test.ts (3 tests) 1ms
+ ✓ services/auth.signOut.test.ts (1 test) 1ms
+ ✓ services/coverLetter.jobPosting.test.ts (3 tests) 7ms
+ ✓ lib/appLinks.test.ts (2 tests) 1ms
+ ✓ lib/admin/access.test.ts (5 tests) 3ms
+ ✓ lib/resources/plurals.test.ts (2 tests) 9ms
+ ✓ lib/news/thumbnail.test.ts (2 tests) 1ms
+ ✓ lib/search.test.ts (4 tests) 1ms
+ ✓ lib/onboarding/arrivalPrompt.test.ts (3 tests) 1ms
+ ✓ components/companion/tasks/TaskActions.test.tsx (24 tests) 4066ms
+   ✓ Checklist task progress (web) > 371 recovery: labels an active proposal read, save and lookup separately  334ms
+   ✓ Checklist task progress (web) > saves Waiting with a reason from explicit controls, shows the exact receipt, restores focus, and the row shows it  364ms
+ ✓ proxy.matcher.test.ts (9 tests) 4ms
+ ✓ components/companion/tasks/TaskSteps.test.tsx (29 tests) 5243ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  800ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  762ms
+   ✓ Task steps (web) > suggested steps are a draft card; excluding one is a new revision; approval adds the selected steps once; Not now writes nothing  359ms
+
+ Test Files  78 passed (78)
+      Tests  839 passed | 17 skipped (856)
+   Start at  18:49:42
+   Duration  6.75s (transform 3.86s, setup 0ms, collect 20.11s, tests 21.54s, environment 6.17s, prepare 2.87s)
+

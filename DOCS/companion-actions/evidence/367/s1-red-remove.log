@@ -1,0 +1,290 @@
+running 15 tests from ./remove_test.ts
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing ... FAILED (459ms)
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores ... FAILED (282ms)
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it ... FAILED (142ms)
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes ... FAILED (151ms)
+a relevant change between review and approval needs a new review; an unrelated change does not ... FAILED (420ms)
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins ... FAILED (148ms)
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review ... FAILED (150ms)
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere ... FAILED (149ms)
+Undo restores the task into plans that still exist and never brings back a plan removed separately ... FAILED (244ms)
+another account cannot review, approve, undo or look up a removal ... FAILED (272ms)
+an unknown outcome is looked up before retry; a retry with the same identity removes once ... FAILED (148ms)
+old messages, receipts and drafts cannot recreate a removed task ... FAILED (196ms)
+removal commands in every supported language ask for a review and never write ... FAILED (153ms)
+legacy dismissal and account deletion keep their behavior ... FAILED (160ms)
+a removal review from a conversation is listed there and reads as removed on another device ... FAILED (154ms)
+
+ ERRORS 
+
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing => ./remove_test.ts:70:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:79:15)
+
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores => ./remove_test.ts:100:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:109:15)
+
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it => ./remove_test.ts:151:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:159:15)
+
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes => ./remove_test.ts:181:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:190:15)
+
+a relevant change between review and approval needs a new review; an unrelated change does not => ./remove_test.ts:215:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:228:15)
+
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins => ./remove_test.ts:272:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:280:15)
+
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review => ./remove_test.ts:311:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:319:15)
+
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere => ./remove_test.ts:353:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:362:15)
+
+Undo restores the task into plans that still exist and never brings back a plan removed separately => ./remove_test.ts:401:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:410:15)
+
+another account cannot review, approve, undo or look up a removal => ./remove_test.ts:424:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     422,
+-     "unsupported_operation",
++     404,
++     "task_not_found",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:435:5)
+
+an unknown outcome is looked up before retry; a retry with the same identity removes once => ./remove_test.ts:454:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:462:15)
+
+old messages, receipts and drafts cannot recreate a removed task => ./remove_test.ts:484:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:499:15)
+
+removal commands in every supported language ask for a review and never write => ./remove_test.ts:519:6
+error: AssertionError: Values are not equal: Remove task: Get a phone plan
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      200,
+      {
++       kind: "remove",
++       title: "Get a phone plan",
+-       kind: "none",
+      },
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:540:7)
+
+legacy dismissal and account deletion keep their behavior => ./remove_test.ts:552:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      422,
+-     "unsupported_operation",
++     "task_removed",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:564:5)
+
+a removal review from a conversation is listed there and reads as removed on another device => ./remove_test.ts:585:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at review (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:48:3)
+    at async fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/remove_test.ts:595:22)
+
+ FAILURES 
+
+a removal review names the task and its effects on plans, steps and reminders, and writes nothing => ./remove_test.ts:70:6
+a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores => ./remove_test.ts:100:6
+a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it => ./remove_test.ts:151:6
+every removal needs the reviewed draft and the user's confirmation; no other evidence removes => ./remove_test.ts:181:6
+a relevant change between review and approval needs a new review; an unrelated change does not => ./remove_test.ts:215:6
+an edit committed while the approval waits is read and needs review; an approval that holds the task first wins => ./remove_test.ts:272:6
+concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review => ./remove_test.ts:311:6
+Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere => ./remove_test.ts:353:6
+Undo restores the task into plans that still exist and never brings back a plan removed separately => ./remove_test.ts:401:6
+another account cannot review, approve, undo or look up a removal => ./remove_test.ts:424:6
+an unknown outcome is looked up before retry; a retry with the same identity removes once => ./remove_test.ts:454:6
+old messages, receipts and drafts cannot recreate a removed task => ./remove_test.ts:484:6
+removal commands in every supported language ask for a review and never write => ./remove_test.ts:519:6
+legacy dismissal and account deletion keep their behavior => ./remove_test.ts:552:6
+a removal review from a conversation is listed there and reads as removed on another device => ./remove_test.ts:585:6
+
+FAILED | 0 passed | 15 failed (3s)
+
+error: Test failed

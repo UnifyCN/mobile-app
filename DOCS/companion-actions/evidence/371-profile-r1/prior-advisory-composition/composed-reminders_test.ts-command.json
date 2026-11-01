@@ -1,0 +1,21 @@
+{
+  "command": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=none",
+    "--allow-net=127.0.0.1:64510,127.0.0.1:64511,127.0.0.1:64514,127.0.0.1:64515,127.0.0.1:64516,127.0.0.1:3456",
+    "--allow-run=deno,docker",
+    "--allow-env",
+    "--allow-read",
+    "--allow-write=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/DOCS/companion-actions/evidence/371-profile-r1,/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1",
+    "reminders_test.ts",
+    "--filter",
+    "/^(?!reminders: rollback)/"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions",
+  "exit": 0,
+  "seconds": 0.387,
+  "db_container": "supabase_db_unify-profile-371-r1",
+  "rest_container": "supabase_rest_unify-profile-371-r1"
+}

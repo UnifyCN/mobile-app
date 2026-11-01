@@ -1,0 +1,48 @@
+FAIL __tests__/companionActions/pushDevice.test.ts
+  ✓ does not enroll on read; persists proof and exact intent before the first request (3 ms)
+  ✓ stops after account replacement during permission (1 ms)
+  ✓ stops after account replacement during token
+  ✓ stops after account replacement during read (1 ms)
+  ✓ stops after account replacement during write
+  ✓ does not restore a late receipt after batched sign-out and same-account sign-in
+  ✓ retains exact pending request on lost reply and looks up before any retry (1 ms)
+  ✓ denial leaves push off without a service request (1 ms)
+  ✓ storage failure sends nothing and remains unavailable
+  ✓ uses current revision for token rotation and disable and has no Undo (1 ms)
+  ✓ token refresh retains ownership while an enable waits
+  ✕ does not retry an old token after a confirmed unapplied operation (1 ms)
+  ✓ discards a held push_read response after ownership changes
+  ✓ discards a held status response after ownership changes (1 ms)
+  ✓ retains unknown pending storage across restart and never retries while a status is pending or failed
+  ✓ captures a pending revoke on sign-out without sending it as the next account
+  ✓ keeps HTTP 401 errors content-free and distinct from successful delivery (1 ms)
+  ✓ keeps HTTP 403 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 409 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 422 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 503 errors content-free and distinct from successful delivery
+
+  ● does not retry an old token after a confirmed unapplied operation
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [[{"action": "push_apply", "authorization": {"kind": "ui_control"}, "client": {"app_version": "9.9.9", "platform": "ios"}, "contract_version": 1, "operation": {"enabled": true, "expected_revision": 0, "installation_id": "11111111-1111-4111-8111-111111111111", "installation_secret": "abababababababababababababababababababababababababababababababab", "locale": "en", "token": "ExponentPushToken[synthetic369-client]", "type": "push.enroll"}, "operation_id": "33333333-3333-4333-8333-000000000001"}], [{"action": "push_apply", "authorization": {"kind": "ui_control"}, "client": {"app_version": "9.9.9", "platform": "ios"}, "contract_version": 1, "operation": {"enabled": true, "expected_revision": 0, "installation_id": "11111111-1111-4111-8111-111111111111", "installation_secret": "abababababababababababababababababababababababababababababababab", "locale": "en", "token": "ExponentPushToken[synthetic369-client]", "type": "push.enroll"}, "operation_id": "33333333-3333-4333-8333-000000000001"}]]
+
+      91 |  const s=setup();s.transport.mockRejectedValueOnce(new TypeError('lost'));await s.device.enable('en');await s.device.check('en');
+      92 |  s.deps.token.mockResolvedValueOnce('ExponentPushToken[synthetic369-new-token]');
+    > 93 |  await s.device.retry('en');expect(s.transport.mock.calls.filter(c=>c[0].action==='push_apply')).toHaveLength(1);
+         |                                                                                                  ^
+      94 |  expect(s.device.snapshot().phase).toBe('conflict');
+      95 |  await s.device.enable('en');const writes=s.transport.mock.calls.filter(c=>c[0].action==='push_apply');
+      96 |  expect(writes).toHaveLength(2);expect(writes[0][0].operation_id===writes[1][0].operation_id).toBe(false);
+
+      at Object.toHaveLength (__tests__/companionActions/pushDevice.test.ts:93:98)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 20 passed, 21 total
+Snapshots:   0 total
+Time:        0.522 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushDevice.test.ts/i.

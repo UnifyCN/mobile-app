@@ -1,0 +1,51 @@
+[
+  {
+    "case": "neither",
+    "passed": true,
+    "jest_exit": 1,
+    "intercepted_commands": []
+  },
+  {
+    "case": "db-only",
+    "passed": true,
+    "jest_exit": 1,
+    "intercepted_commands": []
+  },
+  {
+    "case": "rest-only",
+    "passed": true,
+    "jest_exit": 1,
+    "intercepted_commands": []
+  },
+  {
+    "case": "both",
+    "passed": true,
+    "jest_exit": 1,
+    "intercepted_commands": [
+      {
+        "command": "docker",
+        "args": [
+          "exec",
+          "-i",
+          "probe_db_owned",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-q",
+          "-U",
+          "postgres",
+          "-d",
+          "postgres"
+        ]
+      },
+      {
+        "command": "docker",
+        "args": [
+          "kill",
+          "--signal=SIGUSR1",
+          "probe_rest_owned"
+        ]
+      }
+    ]
+  }
+]

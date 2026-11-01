@@ -1,0 +1,25 @@
+FAIL __tests__/helpers/queryClientCleanup.test.ts
+  ✕ stops collection timers for a query removed while its observer was mounted (3 ms)
+
+  ● stops collection timers for a query removed while its observer was mounted
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      31 |
+      32 |   // Dispose only fixture resources. The unrelated application timer stays.
+    > 33 |   expect(jest.getTimerCount()).toBe(1);
+         |                                ^
+      34 |   clearTimeout(outsideTimer);
+      35 | });
+      36 |
+
+      at Object.toBe (__tests__/helpers/queryClientCleanup.test.ts:33:32)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.523 s
+Ran all test suites within paths "__tests__/helpers/queryClientCleanup.test.ts".

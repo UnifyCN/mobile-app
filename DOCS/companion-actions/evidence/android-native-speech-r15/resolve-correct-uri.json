@@ -1,0 +1,21 @@
+{
+  "label": "resolve-correct-uri",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+    "-H",
+    "127.0.0.1",
+    "-P",
+    "63679",
+    "-s",
+    "emulator-5590",
+    "shell",
+    "cmd package resolve-activity --brief -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -p com.anonymous.unifyfrontend -d 'exp+unify-front-end://expo-development-client/?url=http%3A%2F%2F127.0.0.1%3A8351'"
+  ],
+  "exit": 0,
+  "seconds": 0.07961904199328274,
+  "stdout_bytes": 117,
+  "stderr_bytes": 0
+}

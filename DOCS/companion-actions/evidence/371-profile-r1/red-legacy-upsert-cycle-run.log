@@ -1,0 +1,38 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 1 test from ./profile_races_test.ts
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ...
+------- output -------
+{"scenario":"legacy-update-upsert","graph":[{"pid":3620,"wait_event":"advisory","blockers":[3619]},{"pid":3621,"wait_event":"transactionid","blockers":[3620]}],"errors":[null,"40P01"]}
+----- output end -----
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ... FAILED (1s)
+
+ ERRORS 
+
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle => ./profile_races_test.ts:119:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      null,
+-     "40P01",
++     null,
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_races_test.ts:139:5)
+
+ FAILURES 
+
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle => ./profile_races_test.ts:119:6
+
+FAILED | 0 passed | 1 failed | 4 filtered out (1s)
+
+error: Test failed
+

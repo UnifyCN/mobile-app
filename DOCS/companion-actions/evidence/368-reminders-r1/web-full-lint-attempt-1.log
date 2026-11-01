@@ -1,0 +1,87 @@
+
+> web-app@0.1.0 lint
+> eslint
+
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/components/companion/tasks/ReminderSection.tsx
+  100:15  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/components/companion/tasks/ReminderSection.tsx:100:15
+   98 |                     : "reminders.save",
+   99 |               ),
+> 100 |               ()=>{e.save();if(e.isOwned())reviewButton.current?.focus();},
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  101 |               !e.canWrite,
+  102 |             )}
+  103 |             {button(t("reminders.keepEditing"), ()=>{e.clearReview();if(e.isOwned())reviewButton.current?.focus();})}  react-hooks/refs
+  103:49  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/components/companion/tasks/ReminderSection.tsx:103:49
+  101 |               !e.canWrite,
+  102 |             )}
+> 103 |             {button(t("reminders.keepEditing"), ()=>{e.clearReview();if(e.isOwned())reviewButton.current?.focus();})}
+      |                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  104 |           </div>
+  105 |         ) : null}
+  106 |       </Reveal>                                           react-hooks/refs
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/probes/companion-context-362/context_rls_test.ts
+   59:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  246:78  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  249:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  369:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/reminders_races_test.ts
+   2:10   warning  'assert' is defined but never used             @typescript-eslint/no-unused-vars
+   2:32   warning  'AssertionError' is defined but never used     @typescript-eslint/no-unused-vars
+   3:22   warning  'admin' is defined but never used              @typescript-eslint/no-unused-vars
+   3:82   warning  'status' is defined but never used             @typescript-eslint/no-unused-vars
+   3:105  warning  'approved' is defined but never used           @typescript-eslint/no-unused-vars
+   3:181  warning  'holdOperationLock' is defined but never used  @typescript-eslint/no-unused-vars
+   3:212  warning  'migrate' is defined but never used            @typescript-eslint/no-unused-vars
+   3:221  warning  'conversationWith' is defined but never used   @typescript-eslint/no-unused-vars
+   3:239  warning  'interpret' is defined but never used          @typescript-eslint/no-unused-vars
+   3:250  warning  'call' is defined but never used               @typescript-eslint/no-unused-vars
+   8:7    warning  'b' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  12:13   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  48:23   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  65:58   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/reminders_test.ts
+    3:115  warning  'confirmedApproval' is defined but never used  @typescript-eslint/no-unused-vars
+    3:181  warning  'holdOperationLock' is defined but never used  @typescript-eslint/no-unused-vars
+    3:200  warning  'taskRemove' is defined but never used         @typescript-eslint/no-unused-vars
+    3:221  warning  'conversationWith' is defined but never used   @typescript-eslint/no-unused-vars
+    3:239  warning  'interpret' is defined but never used          @typescript-eslint/no-unused-vars
+    3:250  warning  'call' is defined but never used               @typescript-eslint/no-unused-vars
+   12:13   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   34:78   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   39:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   41:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   61:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   66:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  135:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  157:160  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  163:45   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  178:40   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  179:57   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  179:101  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/rollback_test.ts
+  77:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359/supabase/tests/companion-actions/support.ts
+   85:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  387:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  390:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 46 problems (29 errors, 17 warnings)
+

@@ -1,0 +1,1 @@
+The first GREEN attempt stopped before an assertion. The restarted Edge worker did not reach authentication. Docker then refused its restart because PID 4136 was a zombie. This is a setup failure, not assertion RED or GREEN. Only the exact owned Edge container was selected for removal. No Docker Desktop action is authorized.

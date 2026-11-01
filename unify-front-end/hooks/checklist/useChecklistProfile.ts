@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getOnboardingProfile } from '@/services/onboarding/getOnboardingProfile';
+import { subscribeArrivalReconciliation } from '@/services/onboarding/arrivalReconciliation';
 
 /**
  * The onboarding-profile fields that decide which checklist a user gets.
@@ -25,6 +26,7 @@ export function useChecklistProfile() {
     province: null,
   });
   const requestSequence = useRef(0);
+  const account = useRef<string | null | undefined>(undefined);
 
   const load = useCallback(async () => {
     const requestId = ++requestSequence.current;
@@ -35,6 +37,8 @@ export function useChecklistProfile() {
       } = await supabase.auth.getUser();
       if (!isLatestRequest()) return true;
       if (!user) return false;
+      if (account.current !== undefined && account.current !== user.id) return true;
+      account.current = user.id;
 
       const profile = await getOnboardingProfile(user.id);
       if (!isLatestRequest()) return true;
@@ -57,7 +61,23 @@ export function useChecklistProfile() {
 
   useEffect(() => {
     load().catch(error => console.error('Error fetching persona:', error));
+    const unsubscribe = subscribeArrivalReconciliation(userId => {
+      if (account.current === userId) void load();
+    });
+    const auth = supabase.auth.onAuthStateChange?.((_event, session) => {
+      const next = session?.user.id ?? null;
+      if (next === account.current) return;
+      requestSequence.current++;
+      account.current = next;
+      current.current = { persona: null, province: null };
+      setPersona(null);
+      setProvince(null);
+      setIsLoading(Boolean(next));
+      if (next) void load();
+    });
     return () => {
+      unsubscribe();
+      auth?.data.subscription.unsubscribe();
       // Replaces any read still in flight, so nothing is written after unmount.
       requestSequence.current += 1;
     };

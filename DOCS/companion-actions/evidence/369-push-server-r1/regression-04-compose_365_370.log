@@ -1,0 +1,8 @@
+running 4 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/compose_365_370_test.ts
+one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains ... ok (1s)
+an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both ... ok (524ms)
+another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts ... ok (718ms)
+concurrent edit commands, remember commands, detail edits and retries each apply once ... ok (443ms)
+
+ok | 4 passed | 0 failed (2s)
+

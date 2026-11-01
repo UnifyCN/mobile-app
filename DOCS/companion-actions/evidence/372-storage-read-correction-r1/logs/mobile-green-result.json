@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node_modules/.bin/jest",
+    "tmp/r372-storage-read/review-controls.test.tsx",
+    "__tests__/companionActions/planRecoveryStorage.test.tsx",
+    "--runInBand",
+    "--watchAll=false",
+    "--json",
+    "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-green-tests.json"
+  ],
+  "exit": 0,
+  "seconds": 2.98
+}

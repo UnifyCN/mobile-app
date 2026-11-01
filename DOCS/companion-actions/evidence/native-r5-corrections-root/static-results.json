@@ -1,0 +1,41 @@
+[
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "i18n",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "changed-lint",
+    "command": [
+      "npx",
+      "eslint",
+      "hooks/companion/useComposerDraft.ts",
+      "app/(tabs)/companion/index.tsx",
+      "components/companion/tasks/TaskRemovalSection.tsx",
+      "__tests__/companionActions/companionTaskSheet.test.tsx"
+    ],
+    "exit": 0
+  }
+]

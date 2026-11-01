@@ -1,0 +1,26 @@
+PASS __tests__/companionActions/planLocalStack.test.tsx (8.071 s)
+  Settlement plans against the real local stack (mobile)
+    ✓ a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task (3826 ms)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+  Independent retained mobile Checklist completion
+    ○ skipped Checklist completion refreshes the retained Companion plan entry
+  Plan and task steps together against the real local stack (mobile)
+    ○ skipped a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+  Task removal against the real local stack (mobile, #367)
+    ○ skipped composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account
+    ○ skipped a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+    ○ skipped a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+    ○ skipped a removal request card turns historical after another device removed the task; its review cannot remove again
+    ○ skipped another account sees none of a removal review, card or receipt
+
+Test Suites: 1 passed, 1 total
+Tests:       14 skipped, 1 passed, 15 total
+Snapshots:   0 total
+Time:        8.358 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "a suggested plan is a draft".

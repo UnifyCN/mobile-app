@@ -1,0 +1,201 @@
+{
+  "results": [
+    {
+      "name": "keyboard: three steps added once each and read back",
+      "ok": true,
+      "detail": [
+        [
+          "Review the official requirements",
+          false
+        ],
+        [
+          "Prepare the required documents",
+          false
+        ],
+        [
+          "Submit the application yourself",
+          false
+        ]
+      ]
+    },
+    {
+      "name": "typed step field is empty after its save",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "focus stays on the same checkbox after saving \"Review the official requirements\"",
+      "ok": true,
+      "detail": {
+        "same": true,
+        "checked": true
+      }
+    },
+    {
+      "name": "focus stays on the same checkbox after saving \"Prepare the required documents\"",
+      "ok": true,
+      "detail": {
+        "same": true,
+        "checked": true
+      }
+    },
+    {
+      "name": "focus stays on the same checkbox after saving \"Submit the application yourself\"",
+      "ok": true,
+      "detail": {
+        "same": true,
+        "checked": true
+      }
+    },
+    {
+      "name": "checking every step leaves the task Not started",
+      "ok": true,
+      "detail": {
+        "state": "not_started"
+      }
+    },
+    {
+      "name": "an explicit completion is offered",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Keep after Remove sends nothing",
+      "ok": true,
+      "detail": {
+        "before": 6,
+        "after": 6
+      }
+    },
+    {
+      "name": "a confirmed removal removes exactly that step",
+      "ok": true,
+      "detail": [
+        [
+          "Prepare the required documents",
+          true
+        ],
+        [
+          "Submit the application yourself",
+          true
+        ]
+      ]
+    },
+    {
+      "name": "each step Undo has its own accessible name",
+      "ok": true,
+      "detail": 1
+    },
+    {
+      "name": "Undo of the removal restores the step",
+      "ok": true,
+      "detail": [
+        [
+          "Review the official requirements",
+          true
+        ],
+        [
+          "Prepare the required documents",
+          true
+        ],
+        [
+          "Submit the application yourself",
+          true
+        ]
+      ]
+    },
+    {
+      "name": "completion keeps the unfinished step unfinished",
+      "ok": true,
+      "detail": {
+        "state": "completed",
+        "steps": [
+          [
+            "Review the official requirements",
+            true
+          ],
+          [
+            "Prepare the required documents",
+            true
+          ],
+          [
+            "Submit the application yourself",
+            false
+          ]
+        ]
+      }
+    },
+    {
+      "name": "another account reads none of these steps",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "390px: no horizontal overflow",
+      "ok": true,
+      "detail": {
+        "overflow": 0,
+        "rows": [
+          44,
+          44,
+          44
+        ]
+      }
+    },
+    {
+      "name": "390px: each step row is at least 44px tall",
+      "ok": true,
+      "detail": [
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "name": "edit and remove controls are at least 44x44",
+      "ok": true,
+      "detail": [
+        {
+          "label": "Edit step: Review the official requirements",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "label": "Remove step: Review the official requirements",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "label": "Edit step: Prepare the required documents",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "label": "Remove step: Prepare the required documents",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "label": "Edit step: Submit the application yourself",
+          "w": 44,
+          "h": 44
+        },
+        {
+          "label": "Remove step: Submit the application yourself",
+          "w": 44,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "Arabic: right to left, Arabic step copy, no overflow",
+      "ok": true,
+      "detail": {
+        "dir": "rtl",
+        "overflow": 0,
+        "inputDir": "rtl"
+      }
+    }
+  ],
+  "errors": []
+}

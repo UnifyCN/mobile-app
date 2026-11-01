@@ -1,10 +1,10 @@
-import { typography } from '@/constants/Typography';
 import React from 'react';
 import { Tabs, useRouter, usePathname } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { HIDDEN_TAB_BAR_ROUTES } from '@/constants/Routes';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { View, Text, StyleSheet } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+import { TabIcon } from '@/components/navigation/TabIcon';
 import * as Haptics from 'expo-haptics';
 import { useTranslation } from 'react-i18next';
 import LearnIcon from '@/components/icons/LearnPageIcon';
@@ -16,26 +16,7 @@ import ChecklistIcon from '@/components/icons/ChecklistIcon';
 import { useHapticsPreference } from '@/context/HapticsContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTabBarBottomPadding } from '@/utils/safeAreaSpacing';
-
-const TabIcon = ({ IconComponent, title, focused }: any) => {
-  return (
-    <View style={styles.tab}>
-      <IconComponent
-        height={styles.tabIcon.height}
-        width={styles.tabIcon.width}
-        color={focused ? styles.activeTab.color : styles.inactiveTab.color}
-      />
-      <Text
-        style={[
-          styles.tabText,
-          focused ? styles.activeTab : styles.inactiveTab,
-        ]}
-      >
-        {title}
-      </Text>
-    </View>
-  );
-};
+import { getTabBarHeight } from '@/utils/textScale';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -46,6 +27,9 @@ export default function TabLayout() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const tabBarBottomPadding = getTabBarBottomPadding(insets.bottom);
+  // The label row grows with the system text size up to the bar maximum.
+  const { fontScale } = useWindowDimensions();
+  const tabBarHeight = getTabBarHeight(insets.bottom, fontScale);
 
   const getTabDisplayName = (routeName: string) => {
     switch (routeName) {
@@ -109,7 +93,7 @@ export default function TabLayout() {
                 flexDirection: 'row',
                 paddingTop: 12,
                 paddingBottom: tabBarBottomPadding,
-                height: 56 + tabBarBottomPadding,
+                height: tabBarHeight,
                 borderTopWidth: 1,
                 borderTopColor: '#F0F0F0',
               },
@@ -212,31 +196,3 @@ export default function TabLayout() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  tab: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    gap: 4,
-    width: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexShrink: 0,
-  },
-  tabText: {
-    ...typography.tab,
-  },
-  tabIcon: {
-    height: 24,
-    width: 24,
-    paddingVertical: 2,
-    paddingHorizontal: 3,
-  },
-  activeTab: {
-    color: '#000',
-  },
-  inactiveTab: {
-    color: '#62605B',
-  },
-});

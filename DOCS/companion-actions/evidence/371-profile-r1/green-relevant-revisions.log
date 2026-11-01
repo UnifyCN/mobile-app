@@ -1,0 +1,30 @@
+running 4 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (479ms)
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives ... FAILED (372ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... ok (745ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (590ms)
+
+ ERRORS 
+
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives => ./profile_test.ts:39:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:59:5)
+
+ FAILURES 
+
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives => ./profile_test.ts:39:6
+
+FAILED | 3 passed | 1 failed (2s)
+
+error: Test failed

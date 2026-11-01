@@ -1,0 +1,64 @@
+running 5 tests from ./plan_multiple_reviews_test.ts
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity ... FAILED (489ms)
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review ... FAILED (315ms)
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review ... FAILED (331ms)
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task ... FAILED (489ms)
+cleanup ... ok (4ms)
+
+ ERRORS 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+error: AssertionError: Values are not equal: an unfinished review is not reachable from the saved plan
+
+
+    [Diff] Actual / Expected
+
+
+    [
++     "7efb8ad5-80c9-47ec-82d2-43d7c099be38",
+      "e170d2f5-9cc6-4ec2-83b1-2711552b3691",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:88:5)
+
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review => ./plan_multiple_reviews_test.ts:134:6
+error: TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+    const closed = await planCancel(f.a, library.plan_proposal_id, library.proposal_revision);
+                                                 ^
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:143:50)
+
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review => ./plan_multiple_reviews_test.ts:161:6
+error: AssertionError: Values are not equal: {"plan":{"goal":"Two remaining additions","items":[{"state":"not_started","exists":true,"source":"sanity","removed":false,"position":1,"revision":1,"task_ref":"sanity:sin-number","waiting_reason":null},{"state":"not_started","title":"Arrange transport","exists":true,"source":"custom","removed":false,"position":2,"revision":1,"task_ref":"custom:11","waiting_reason":null},{"state":"not_started","title":"Get a library card","exists":true,"source":"custom","removed":false,"position":4,"revision":1,"task_ref":"custom:16","waiting_reason":null}],"review":{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}],"tasks":[],"source":null,"status":"applied","context":{"matches":{"n3":[]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","receipt":{"kind":"plan_retry","status":"applied","plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","results":[{"key":"n3","kind":"new","title":"Get a library card","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"5ba62589-45ce-3e79-cc73-4a4a8782f3f2"}],"undo_of":null,"retry_of":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:02:42.070414+00:00","operation_id":"e15c6084-ad61-4814-b25f-c5349adc4776","removal_count":0,"plan_proposal_id":"b112031c-43c1-4135-a088-c6336ff42489"},"undo_of":null,"retry_of":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","created_at":"2026-10-27T23:02:42.010137+00:00","unresolved":[],"updated_at":"2026-10-27T23:02:42.070414+00:00","change_count":1,"review_reason":"context_changed","plan_proposal_id":"b112031c-43c1-4135-a088-c6336ff42489","previous_context":{"matches":{"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"proposal_revision":1},"source":null,"context":{"matches":{"n1":[],"n2":[],"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[{"task_ref":"sanity:sin-number","available":true}]},"plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","receipt":{"kind":"plan","status":"partial","plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","results":[{"kind":"existing","outcome":"reused","task_ref":"sanity:sin-number"},{"key":"n1","kind":"new","title":"Arrange transport","outcome":"created","task_ref":"custom:11","after_revision":1,"item_operation_id":"a988fec6-5107-433d-034f-803ea41386d7"},{"key":"n2","kind":"new","title":"Set up phone service","reason":"write_failed","outcome":"failed","item_operation_id":"8f99ddf9-604f-4287-97a5-094fb9ec4cba"},{"key":"n3","kind":"new","title":"Get a library card","reason":"write_failed","outcome":"failed","item_operation_id":"5ba62589-45ce-3e79-cc73-4a4a8782f3f2"}],"undo_of":null,"retry_of":null,"undoable":true,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:02:41.952953+00:00","operation_id":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","removal_count":1,"plan_proposal_id":null},"removed":false,"reviews":[{"goal":"Two remaining additions","kind":"retry","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}],"tasks":[],"source":null,"status":"applied","context":{"matches":{"n3":[]},"profile":{"city":"Surrey","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","receipt":{"kind":"plan_retry","status":"applied","plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","results":[{"key":"n3","kind":"new","title":"Get a library card","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"5ba62589-45ce-3e79-cc73-4a4a8782f3f2"}],"undo_of":null,"retry_of":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:02:42.070414+00:00","operation_id":"e15c6084-ad61-4814-b25f-c5349adc4776","removal_count":0,"plan_proposal_id":"b112031c-43c1-4135-a088-c6336ff42489"},"undo_of":null,"retry_of":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","created_at":"2026-10-27T23:02:42.010137+00:00","unresolved":[],"updated_at":"2026-10-27T23:02:42.070414+00:00","change_count":1,"review_reason":"context_changed","plan_proposal_id":"b112031c-43c1-4135-a088-c6336ff42489","previous_context":{"matches":{"n3":[]},"profile":{"city":"Vancouver","province":"British Columbia","arrival_date":"2026-11-02T00:00:00+00:00"},"existing":[]},"proposal_revision":1}],"revision":2,"created_at":"2026-10-27T23:02:41.952953+00:00","updated_at":"2026-10-27T23:02:42.070414+00:00","proposal_id":"4b8d26e7-d6f2-43be-b05f-cafd2388a8ce"},"status":"applied","receipt":{"kind":"plan_retry","status":"applied","plan_id":"b8708491-96ed-4425-a08d-e158939ac0c5","results":[{"key":"n3","kind":"new","title":"Get a library card","outcome":"created","task_ref":"custom:16","after_revision":1,"item_operation_id":"5ba62589-45ce-3e79-cc73-4a4a8782f3f2"}],"undo_of":null,"retry_of":"ac033ef1-0479-4ade-bf06-bd14d32d5de3","undoable":false,"retryable":[],"undone_by":null,"created_at":"2026-10-27T23:02:42.070414+00:00","operation_id":"e15c6084-ad61-4814-b25f-c5349adc4776","removal_count":0,"plan_proposal_id":"b112031c-43c1-4135-a088-c6336ff42489"},"replayed":false,"operation_id":"e15c6084-ad61-4814-b25f-c5349adc4776"}
+
+
+    [Diff] Actual / Expected
+
+
+-   200
++   409
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:172:5)
+
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+error: TypeError: Cannot read properties of undefined (reading 'plan_proposal_id')
+      assertEquals((await planProposal(b, r.plan_proposal_id)).status, 404);
+                                            ^
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_multiple_reviews_test.ts:218:45)
+
+ FAILURES 
+
+a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity => ./plan_multiple_reviews_test.ts:76:6
+Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review => ./plan_multiple_reviews_test.ts:134:6
+two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review => ./plan_multiple_reviews_test.ts:161:6
+a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task => ./plan_multiple_reviews_test.ts:206:6
+
+FAILED | 1 passed | 4 failed (1s)
+
+error: Test failed
+mf-m1-latest-only exit=1

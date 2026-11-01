@@ -1,0 +1,10 @@
+Check unify-front-end/supabase/workers/companion-push/tls-driver.test.ts
+running 1 test from ./unify-front-end/supabase/workers/companion-push/tls-driver.test.ts
+real driver TLS accepts a trusted certificate and rejects untrusted certificates and wrong hostnames ...
+------- output -------
+PASS: trusted fixture certificate accepted; pinned production CA rejects fixture; wrong hostname rejected
+----- output end -----
+real driver TLS accepts a trusted certificate and rejects untrusted certificates and wrong hostnames ... ok (49ms)
+
+ok | 1 passed | 0 failed (51ms)
+

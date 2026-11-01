@@ -1,0 +1,9 @@
+running 1 test from ./push_published_test.ts
+push target: owner first, same published task across accounts, current profile access and removal ...
+------- output -------
+FALSIFIER: B resolves A delivery for the same published id, or a removed/inaccessible target is returned
+----- output end -----
+push target: owner first, same published task across accounts, current profile access and removal ... ok (692ms)
+
+ok | 1 passed | 0 failed (699ms)
+

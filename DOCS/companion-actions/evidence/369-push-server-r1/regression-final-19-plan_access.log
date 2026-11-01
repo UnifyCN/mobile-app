@@ -1,0 +1,10 @@
+running 6 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/plan_access_test.ts
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks ... ok (1s)
+forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing ... ok (855ms)
+a new conversation and another platform resume the same plan with current progress; receipts stay historical ... ok (413ms)
+a removed task stays a disabled reference in the plan and is never recreated ... ok (410ms)
+prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance ... ok (486ms)
+cleanup ... ok (4ms)
+
+ok | 6 passed | 0 failed (3s)
+

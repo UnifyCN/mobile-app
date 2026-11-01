@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node_modules/.bin/vitest",
+    "run",
+    "components/companion/plans/PlanRecoveryStorage.test.tsx",
+    "--reporter=json",
+    "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/web-permanent-green-tests.json"
+  ],
+  "exit": 0,
+  "seconds": 1.07
+}

@@ -1,0 +1,176 @@
+--- fixed/pushDevice.ts
++++ fault/pushDevice.ts
+@@ -53,12 +53,6 @@
+   pending: PushApplyRequest | null;
+   retired: boolean;
+   receiptId?: string | null;
+-  knownRevision?: number;
+-  cleanup?: {
+-    accountId: string;
+-    sessionId: string;
+-    pending: PushApplyRequest;
+-  }[];
+ }
+ export interface PushDeviceDependencies {
+   read(owner?: AccountSnapshot): Promise<string | null>;
+@@ -90,7 +84,6 @@
+     typeof v.sessionId !== 'string' ||
+     !v.sessionId ||
+     typeof v.retired !== 'boolean' ||
+-    !(v.knownRevision === undefined || pushRevision(v.knownRevision)) ||
+     !(v.token === null || pushToken(v.token))
+   )
+     throw new Error('storage');
+@@ -147,27 +140,6 @@
+       throw new Error('storage');
+     pending = p as unknown as PushApplyRequest;
+   }
+-  const cleanup = v.cleanup === undefined ? [] : v.cleanup;
+-  if (!Array.isArray(cleanup)) throw new Error('storage');
+-  const retained = cleanup.map(raw => {
+-    const item = pushObject(raw);
+-    // Apply the same proof and envelope checks. Archives are never dispatched.
+-    const parsed = stored(
+-      JSON.stringify({
+-        ...v,
+-        accountId: item.accountId,
+-        sessionId: item.sessionId,
+-        pending: item.pending,
+-        cleanup: undefined,
+-      })
+-    );
+-    if (!parsed.pending) throw new Error('storage');
+-    return {
+-      accountId: parsed.accountId,
+-      sessionId: parsed.sessionId,
+-      pending: parsed.pending,
+-    };
+-  });
+   return {
+     version: 1,
+     installation_id: v.installation_id,
+@@ -179,8 +151,6 @@
+     pending,
+     retired: v.retired,
+     receiptId: v.receiptId as string | null | undefined,
+-    knownRevision: v.knownRevision as number | undefined,
+-    cleanup: retained,
+   };
+ }
+ /** One serialized secure record per installation. No task state, model or analytics access. */
+@@ -290,20 +260,14 @@
+     assertOwned(owner);
+     this.record = value;
+   }
+-  private async load(
+-    owner: AccountSnapshot,
+-    freshConsent = false
+-  ): Promise<RecordValue | null> {
++  private async load(owner: AccountSnapshot): Promise<RecordValue | null> {
+     assertOwned(owner);
+     const raw = await this.deps.read(owner);
+     assertOwned(owner);
+     const value = raw === null ? null : stored(raw);
+     if (value && (value.accountId !== owner.accountId || value.retired)) {
+-      if (!freshConsent) {
+-        this.show(owner, 'sessionEnded');
+-        return null;
+-      }
+-      return value;
++      this.show(owner, 'sessionEnded');
++      return null;
+     }
+     this.record = value;
+     this.receiptSaved = Boolean(value?.receiptId);
+@@ -399,22 +363,11 @@
+           : 'off'
+     );
+   }
+-  enable = (locale: PushLocale, freshConsent = false) =>
++  enable = (locale: PushLocale) =>
+     this.run(async (owner, client) => {
+-      const existing = await this.load(owner, freshConsent);
++      const existing = await this.load(owner);
+       if (this.view.phase === 'sessionEnded') return;
+-      const recovering = Boolean(
+-        existing &&
+-        freshConsent &&
+-        (existing.retired ||
+-          existing.accountId !== owner.accountId ||
+-          existing.sessionId !== this.deps.session())
+-      );
+-      if (recovering) {
+-        this.record = null;
+-        this.receiptSaved = false;
+-      }
+-      if (existing?.pending && !recovering) {
++      if (existing?.pending) {
+         this.show(owner, 'unknown');
+         return;
+       }
+@@ -452,46 +405,17 @@
+         retired: false,
+       };
+       if (existing) {
+-        // Read only this account's current enrollment. A transfer can return null;
+-        // its last known revision is checked atomically by the service apply.
+-        const read = await client.read(this.proofOf(existing));
+-        assertOwned(owner);
+-        if (read.kind !== 'ok') {
+-          this.show(owner, read.kind);
+-          return;
+-        }
+-        const enrollment = read.value.enrollment;
+-        value = {
+-          ...existing,
+-          accountId: owner.accountId!,
+-          sessionId,
+-          retired: false,
+-          pending: null,
+-          enrollment,
+-          knownRevision:
+-            enrollment?.revision ??
+-            existing.knownRevision ??
+-            existing.enrollment?.revision ??
+-            0,
+-          cleanup: [
+-            ...(existing.cleanup ?? []),
+-            ...(recovering && existing.pending
+-              ? [
+-                  {
+-                    accountId: existing.accountId,
+-                    sessionId: existing.sessionId,
+-                    pending: existing.pending,
+-                  },
+-                ]
+-              : []),
+-          ],
+-          ...(recovering ? { receiptId: null } : {}),
+-        };
++        const current = await this.current(owner, client, existing);
++        if (!current) return;
++        value = { ...current, sessionId };
+         if (
+-          (!recovering && existing.enrollment && !enrollment) ||
+-          enrollment?.revoked
++          (existing.enrollment && !current.enrollment) ||
++          current.enrollment?.revoked
+         ) {
+-          this.show(owner, enrollment?.revoked ? 'revoked' : 'unavailable');
++          this.show(
++            owner,
++            current.enrollment?.revoked ? 'revoked' : 'unavailable'
++          );
+           return;
+         }
+       }
+@@ -503,8 +427,7 @@
+       const operation: PushOperation = {
+         type: 'push.enroll',
+         ...this.proofOf(value),
+-        expected_revision:
+-          value.enrollment?.revision ?? value.knownRevision ?? 0,
++        expected_revision: value.enrollment?.revision ?? 0,
+         token,
+         enabled: true,
+         locale,

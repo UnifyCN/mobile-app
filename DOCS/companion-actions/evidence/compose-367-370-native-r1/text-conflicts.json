@@ -1,0 +1,25 @@
+{
+  "mobile": {
+    "unify-front-end/app/(tabs)/companion/index.tsx": 2,
+    "unify-front-end/components/companion/tasks/TaskActionCards.tsx": 8,
+    "unify-front-end/components/companion/tasks/TaskActionsSheet.tsx": 1,
+    "unify-front-end/components/companion/tasks/TaskProposalPanel.tsx": 2,
+    "unify-front-end/services/companionActions/analytics.ts": 1,
+    "unify-front-end/services/companionActions/client.ts": 10,
+    "unify-front-end/services/companionActions/contract.ts": 12,
+    "unify-front-end/services/companionActions/taskActionStore.ts": 2
+  },
+  "web": {
+    "app/(main)/companion/page.tsx": 1,
+    "components/companion/tasks/TaskActionCards.tsx": 5,
+    "components/companion/tasks/TaskProposalPanel.tsx": 2,
+    "lib/companionActions/analytics.ts": 1,
+    "lib/companionActions/client.ts": 11,
+    "lib/companionActions/contract.ts": 14,
+    "lib/companionActions/taskActionStore.ts": 2,
+    "supabase/functions/companion-actions/contract.ts": 3,
+    "supabase/functions/companion-actions/handler.ts": 1,
+    "supabase/tests/companion-actions/README.md": 1,
+    "supabase/tests/companion-actions/support.ts": 6
+  }
+}

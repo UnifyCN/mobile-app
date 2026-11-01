@@ -2,6 +2,7 @@ import React from 'react';
 import { act, renderHook } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 const mockUpdateArrivalDate = jest.fn();
 jest.mock('@/services/onboarding/updateArrivalDate', () => ({
@@ -67,7 +68,7 @@ const deferred = <T>() => {
 beforeEach(() => {
   jest.useFakeTimers().setSystemTime(TODAY);
   jest.clearAllMocks();
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   mockUpdateArrivalDate.mockResolvedValue({
     id: 'u1',
     arrival_date: '2026-12-15',

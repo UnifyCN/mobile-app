@@ -1,0 +1,18 @@
+{
+  "cmd": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=none",
+    "--lock=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno.lock",
+    "--frozen",
+    "--allow-net=127.0.0.1:63610,127.0.0.1:63611,127.0.0.1:63614,127.0.0.1:63615,127.0.0.1:63616",
+    "--allow-env",
+    "--allow-read=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root,/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac",
+    "--allow-run",
+    "--allow-write=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/plan_multiple_reviews_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 5.506863117218018
+}

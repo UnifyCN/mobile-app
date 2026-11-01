@@ -1,0 +1,206 @@
+{
+  "changed-lint": {
+    "label": "changed-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/companion/useTaskActions.ts",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 1.899,
+    "utc": "2026-10-31T09:19:57.697610+00:00"
+  },
+  "export": {
+    "label": "export",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/expo/bin/cli",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "exit_code": 0,
+    "seconds": 19.107,
+    "utc": "2026-10-31T09:23:51.609200+00:00"
+  },
+  "full-ci": {
+    "label": "full-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit_code": 0,
+    "seconds": 78.631,
+    "utc": "2026-10-31T09:24:18.862929+00:00"
+  },
+  "i18n": {
+    "label": "i18n",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit_code": 0,
+    "seconds": 0.299,
+    "utc": "2026-10-31T09:23:00.548068+00:00"
+  },
+  "lint-final": {
+    "label": "lint-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "hooks/companion/useTaskActions.ts",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx"
+    ],
+    "exit_code": 0,
+    "seconds": 2.889,
+    "utc": "2026-10-31T09:23:03.129798+00:00"
+  },
+  "mounted-controls-final": {
+    "label": "mounted-controls-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 0,
+    "seconds": 3.207,
+    "utc": "2026-10-31T09:20:47.206686+00:00"
+  },
+  "mounted-final": {
+    "label": "mounted-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 1,
+    "seconds": 2.53,
+    "utc": "2026-10-31T09:19:58.329301+00:00"
+  },
+  "mounted-green": {
+    "label": "mounted-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 0,
+    "seconds": 7.472,
+    "utc": "2026-10-31T09:18:26.423324+00:00"
+  },
+  "mounted-lifecycle-corrected-driver": {
+    "label": "mounted-lifecycle-corrected-driver",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 1,
+    "seconds": 2.31,
+    "utc": "2026-10-31T09:20:20.039419+00:00"
+  },
+  "mounted-lifecycle-green": {
+    "label": "mounted-lifecycle-green",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 1,
+    "seconds": 4.529,
+    "utc": "2026-10-31T09:19:29.026293+00:00"
+  },
+  "mounted-red-corrected-driver": {
+    "label": "mounted-red-corrected-driver",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 1,
+    "seconds": 8.573,
+    "utc": "2026-10-31T09:17:34.230749+00:00"
+  },
+  "mounted-red": {
+    "label": "mounted-red",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false"
+    ],
+    "exit_code": 1,
+    "seconds": 6.617,
+    "utc": "2026-10-31T09:17:09.691116+00:00"
+  },
+  "owner-guard-mutation": {
+    "label": "owner-guard-mutation",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "__tests__/companionActions/profileReadReconciliation.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "-t",
+      "does not restart"
+    ],
+    "exit_code": 1,
+    "seconds": 4.078,
+    "utc": "2026-10-31T09:21:54.994519+00:00"
+  },
+  "types-final": {
+    "label": "types-final",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 11.323,
+    "utc": "2026-10-31T09:23:11.555130+00:00"
+  },
+  "types": {
+    "label": "types",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/root-companion-profile371-read-reconciliation/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 14.322,
+    "utc": "2026-10-31T09:20:10.118506+00:00"
+  }
+}

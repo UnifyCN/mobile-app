@@ -1,0 +1,22 @@
+running 10 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/reminders_test.ts
+reminders: concurrent authenticated saves replay one immutable schedule and receipt ...
+------- output -------
+{"name":"duplicate-intermediate","reminders":0,"graph":[{"pid":271,"blockers":[230]},{"pid":303,"blockers":[230,271]}]}
+----- output end -----
+reminders: concurrent authenticated saves replay one immutable schedule and receipt ... ok (399ms)
+reminders: actual Cron, not early, one event, owner isolation, unknown-outcome lookup ... ok (3s)
+reminders: published parent without progress, invalid content and content outage ... ok (4s)
+reminders: proposal approval, revision conflict, schedule change and receipt-specific Undo ... ok (530ms)
+reminders: DST gap, explicit fold offsets and stable saved instant after zone change ... ok (194ms)
+reminders: stopped job, item failure isolation, bounded batch and recovered read failure ... ok (4s)
+reminders: actual failed Cron run is observable without changing progress ... ok (999ms)
+reminders: binding owner, cancellation and due-time mutations fail at assertions ...
+------- output -------
+{"mutations":[{"name":"owner","verdict":"assertion RED"},{"name":"cancelled due","verdict":"assertion RED"},{"name":"due time","verdict":"assertion RED"}]}
+----- output end -----
+reminders: binding owner, cancellation and due-time mutations fail at assertions ... ok (3s)
+reminders: rollback/reapply stops schedules, preserves history/receipts and never restarts old work ... ok (4s)
+reminders: cleanup client connections ... ok (2ms)
+
+ok | 10 passed | 0 failed (22s)
+

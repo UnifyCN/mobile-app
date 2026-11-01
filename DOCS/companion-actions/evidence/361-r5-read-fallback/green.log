@@ -1,0 +1,18 @@
+PASS __tests__/companionActions/accountOwnershipReadFallback.test.ts
+  the thread read retries without companion_context only for its account
+    ✓ when another account signs in during the first read, no retry is requested (2 ms)
+    ✓ when the account signs out during the first read, no retry is requested
+    ✓ when the session becomes unknown during the first read, no retry is requested (2 ms)
+    ✓ positive control: a token refresh of the same account keeps the retry (1 ms)
+  the answer save retries without companion_context only for its account
+    ✓ when another account signs in during the first insert, no retry is requested
+    ✓ when the account signs out during the first insert, no retry is requested (1 ms)
+    ✓ when the session becomes unknown during the first insert, no retry is requested
+    ✓ positive control: a token refresh of the same account keeps the retry
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.455 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/accountOwnershipReadFallback.test.ts/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

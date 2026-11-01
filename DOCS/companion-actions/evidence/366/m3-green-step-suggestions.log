@@ -1,0 +1,11 @@
+PASS __tests__/companionActions/taskStepSuggestions.test.tsx
+  Suggested steps through Companion (mobile, #366)
+    ✓ suggested steps are a draft card; excluding one makes a new revision; approval adds exactly the selected steps once (373 ms)
+    ✓ Not now closes the draft and writes no step; at the AI limit a draft can still be added without a model request (713 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.751 s, estimated 3 s
+Ran all test suites matching /__tests__\/companionActions\/taskStepSuggestions.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

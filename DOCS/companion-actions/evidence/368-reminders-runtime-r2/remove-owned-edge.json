@@ -1,0 +1,19 @@
+{
+  "startup_client": {
+    "pid": 84639,
+    "signal": "SIGKILL",
+    "reason": "SIGTERM cleanup did not finish"
+  },
+  "edge_remove": {
+    "command": [
+      "docker",
+      "rm",
+      "-f",
+      "supabase_edge_runtime_unify-reminders-368-r1"
+    ],
+    "timeout": 10,
+    "stdout": "",
+    "stderr": ""
+  },
+  "seconds": 10.008830374999889
+}

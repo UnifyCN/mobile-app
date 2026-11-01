@@ -1,0 +1,16 @@
+
+> unify-front-end@1.6.0 test:main
+> jest __tests__ --runInBand --watchAll=false --runTestsByPath __tests__/companionActions/reminders.test.tsx
+
+PASS __tests__/companionActions/reminders.test.tsx
+  ✓ reviews offset and named zone, saves only the exact approved revision and preserves its editing draft (173 ms)
+  ✓ rejects a DST gap and an offset-free fold without making a write or draft request (8 ms)
+  ✓ looks up an unknown save and retries only a confirmed unapplied operation with its original identity (163 ms)
+  ✓ blocks offline writes and discards a delayed approval response after account change (8 ms)
+  ✓ opens the full stable task reference and hides a due claim after a read failure (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.85 s
+Ran all test suites within paths "__tests__", "__tests__/companionActions/reminders.test.tsx".

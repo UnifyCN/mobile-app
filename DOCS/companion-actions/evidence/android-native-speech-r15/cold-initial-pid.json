@@ -1,0 +1,21 @@
+{
+  "label": "cold-initial-pid",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-bb8e7547/DOCS/companion-actions/evidence/android-native-speech-r15/outbound-sdk-readonly.sb",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-decc7ebc/build/369-android-test-build-r1/sdk/platform-tools/adb",
+    "-H",
+    "127.0.0.1",
+    "-P",
+    "63679",
+    "-s",
+    "emulator-5590",
+    "shell",
+    "pidof com.anonymous.unifyfrontend"
+  ],
+  "exit": 1,
+  "seconds": 0.046545416000299156,
+  "stdout_bytes": 0,
+  "stderr_bytes": 0
+}

@@ -1,0 +1,241 @@
+[
+  {
+    "name": "/supabase_edge_runtime_unify-native-remove-367-r1",
+    "changes": {
+      "mounts": {
+        "before": [
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "volume",
+            "Name": "supabase_edge_runtime_unify-native-remove-367-r1",
+            "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-remove-367-r1/_data",
+            "Destination": "/root/.cache/deno",
+            "Driver": "local",
+            "Mode": "rw",
+            "RW": true,
+            "Propagation": ""
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+            "Destination": "/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          }
+        ],
+        "after": [
+          {
+            "Type": "volume",
+            "Name": "supabase_edge_runtime_unify-native-remove-367-r1",
+            "Source": "/var/lib/docker/volumes/supabase_edge_runtime_unify-native-remove-367-r1/_data",
+            "Destination": "/root/.cache/deno",
+            "Driver": "local",
+            "Mode": "rw",
+            "RW": true,
+            "Propagation": ""
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+            "Destination": "/tmp/unify-merge-361-web/build/native367-stack/supabase/functions",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/commands.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/contract.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/index.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/plans.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/targets.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/province.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/handler.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/companion-actions/planHandler.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/appContext.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/contract.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/context/registry.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/host_mnt/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+            "Destination": "/private/tmp/unify-merge-361-web/build/native367-stack/supabase/functions/rag-query/lib/dates.ts",
+            "Mode": "ro",
+            "RW": false,
+            "Propagation": "rprivate"
+          }
+        ]
+      }
+    }
+  }
+]

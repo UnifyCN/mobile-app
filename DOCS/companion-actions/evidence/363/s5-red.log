@@ -1,0 +1,76 @@
+running 3 tests from ./create_test.ts
+Undo of an added task removes it only after confirmation, once, with its own receipt ... FAILED (310ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... FAILED (234ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... FAILED (280ms)
+
+ ERRORS 
+
+Undo of an added task removes it only after confirmation, once, with its own receipt => ./create_test.ts:276:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     500,
+-     undefined,
++     403,
++     "removal_requires_confirmation",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:284:5)
+
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision => ./create_test.ts:305:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      {
+        expected_revision: 2,
+-       state: null,
+        task_ref: "custom:2",
+-       type: "task.set_state",
++       type: "task.remove_created",
+      },
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:319:5)
+
+a reviewed removal is refused after another edit, and cannot remove any other task => ./create_test.ts:333:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_state"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     422,
+-     "invalid_request",
++     409,
++     "revision_conflict",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:346:5)
+
+ FAILURES 
+
+Undo of an added task removes it only after confirmation, once, with its own receipt => ./create_test.ts:276:6
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision => ./create_test.ts:305:6
+a reviewed removal is refused after another edit, and cannot remove any other task => ./create_test.ts:333:6
+
+FAILED | 0 passed | 3 failed | 10 filtered out (829ms)
+
+error: Test failed

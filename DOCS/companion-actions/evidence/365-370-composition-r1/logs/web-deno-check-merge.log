@@ -1,0 +1,64 @@
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/meta.json
+[0m[32mDownload[0m https://jsr.io/@supabase/functions-js/meta.json
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0_meta.json
+[0m[32mDownload[0m https://jsr.io/@supabase/functions-js/2.118.0_meta.json
+[0m[32mDownload[0m https://registry.npmjs.org/@supabase%2fauth-js
+[0m[32mDownload[0m https://registry.npmjs.org/@supabase%2fpostgrest-js
+[0m[32mDownload[0m https://registry.npmjs.org/@supabase%2fstorage-js
+[0m[32mDownload[0m https://registry.npmjs.org/@supabase%2ffunctions-js
+[0m[32mDownload[0m https://registry.npmjs.org/@supabase%2frealtime-js
+[0m[32mDownload[0m https://registry.npmjs.org/openai
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/index.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/functions-js/2.118.0/src/edge-runtime.d.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/types.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/constants.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/fetch.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/helpers.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/SupabaseAuthClient.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/rpc.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/common.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/version.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/index.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/tracingRegistry.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/types.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/create-extractor.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/parse.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/validate.ts
+[0m[32mDownload[0m https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/defaults.ts
+[0m[32mDownload[0m https://jsr.io/@std/internal/1.0.14/types.ts
+[0m[32mDownload[0m https://registry.npmjs.org/eslint
+[0m[32mCheck[0m supabase/functions/companion-actions/index.ts
+[0m[32mCheck[0m supabase/functions/cover-letter-chat/index.ts
+[0m[32mCheck[0m supabase/functions/events-crawler/index.ts
+[0m[32mCheck[0m supabase/functions/explain-term/index.ts
+[0m[32mCheck[0m supabase/functions/get-daily-tip/index.ts
+[0m[32mCheck[0m supabase/functions/news-crawler/index.ts
+[0m[32mCheck[0m supabase/functions/practice-feedback/index.ts
+[0m[32mCheck[0m supabase/functions/rag-query/index.ts
+[0m[32mCheck[0m supabase/functions/resume-chat/index.ts
+[0m[32mCheck[0m supabase/functions/translate-content/index.ts
+[0m[32mCheck[0m supabase/functions/_shared/embeddings.ts
+[0m[32mCheck[0m supabase/functions/_shared/fetchWithRetry.ts
+[0m[32mCheck[0m supabase/functions/_shared/openrouter.ts
+[0m[32mCheck[0m supabase/functions/_shared/pexels.ts
+[0m[32mCheck[0m supabase/functions/_shared/platform.ts
+[0m[32mCheck[0m supabase/functions/_shared/platform_test.ts
+[0m[32mCheck[0m supabase/functions/_shared/posthogCapture.ts
+[0m[32mCheck[0m supabase/functions/_shared/ssrf.ts
+[0m[32mCheck[0m supabase/functions/_shared/testEmbeddingFixtures.ts
+[0m[32mCheck[0m supabase/functions/_shared/testHarness.ts
+[0m[32mCheck[0m supabase/functions/_shared/topics.ts
+[0m[1mTS2451 [0m[ERROR]: Cannot redeclare block-scoped variable 'END'.
+const END = '[.!।]?$';
+[0m[31m      ~~~[0m
+    at [0m[36mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/functions/companion-actions/commands.ts[0m:[0m[33m171[0m:[0m[33m7[0m
+
+[0m[1mTS2451 [0m[ERROR]: Cannot redeclare block-scoped variable 'END'.
+const END = '[.!?।؟]*';
+[0m[31m      ~~~[0m
+    at [0m[36mfile:///private/tmp/unify-review-actions-361-web-r5-deno-base-9d05/supabase/functions/companion-actions/commands.ts[0m:[0m[33m342[0m:[0m[33m7[0m
+
+Found 2 errors.
+
+[0m[1m[31merror[0m: Type checking failed.

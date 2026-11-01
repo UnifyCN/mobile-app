@@ -1,0 +1,13 @@
+diff --git a/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-adapter.mjs b/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/.runtime/deadline-faults-r4/without-whole-race/node-adapter.mjs
+index 70cf99dd6..eebda26e8 100644
+--- a/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-adapter.mjs
++++ b/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/.runtime/deadline-faults-r4/without-whole-race/node-adapter.mjs
+@@ -132,7 +132,7 @@ export async function handlePush(request, mode = 'cycle') {
+     }
+   };
+   try {
+-    return await Promise.race([cancelled, work()]);
++    return await work();
+   } catch {
+     // No exception, driver message, path, provider payload, or token enters HTTP.
+     return response(request.signal.aborted ? 499 : signal.aborted ? 504 : 503, { ok: false });

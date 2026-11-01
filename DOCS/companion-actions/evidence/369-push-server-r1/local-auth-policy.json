@@ -1,0 +1,18 @@
+{
+  "container": "/supabase_auth_unify-push-369-server-r1",
+  "id": "52b9affde6bd097a80decad2420794bf532b98f03ffc324fb01e13de329f38a2",
+  "image": "public.ecr.aws/supabase/gotrue:v2.197.0",
+  "settings": {
+    "GOTRUE_SESSIONS_TIMEBOX": null,
+    "GOTRUE_SESSIONS_INACTIVITY_TIMEOUT": null,
+    "GOTRUE_SESSIONS_SINGLE_PER_USER": null,
+    "GOTRUE_JWT_EXP": "3600"
+  },
+  "config_sha256": "13c16e639be48ae096d33c5163b344502330acc385a8f2a7d538959f2a3fdc3c",
+  "local_policy": {
+    "maximum_seconds": 0,
+    "inactivity_seconds": 0
+  },
+  "basis": "No configured local session-limit overrides. Supabase default sessions are unlimited. Tests explicitly configure this local policy.",
+  "production_unqueried": true
+}

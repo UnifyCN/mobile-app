@@ -1,0 +1,35 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ❯ components/companion/plans/PlanLocalStack.test.tsx (8 tests | 1 failed | 7 skipped) 1015ms
+   ↓ Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page
+   ↓ Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer
+   ↓ Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept
+   ↓ Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task
+   ↓ Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again
+   ↓ Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task
+   × Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer 1015ms
+     → the first unfinished review has no route after a reload: expected null not to be null
+   ↓ Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx > Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer
+AssertionError: the first unfinished review has no route after a reload: expected null not to be null
+ ❯ components/companion/plans/PlanLocalStack.test.tsx:601:143
+    599|       drawer = await screen.findByRole("dialog", { name: "Your plan" }…
+    600|       await within(drawer).findByRole("checkbox", { name: `Add ${LIBRA…
+    601|       expect(within(drawer).queryByRole("checkbox", { name: `Add ${PHO…
+       |                                                                                                                                               ^
+    602|       expect(within(drawer).queryByRole("button", { name: /Try adding/…
+    603|       const phoneReview = within(drawer).getByRole("region", { name: `…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  16:12:06
+   Duration  1.73s (transform 189ms, setup 0ms, collect 414ms, tests 1.02s, environment 128ms, prepare 29ms)
+
+c3-legacy-field exit=1

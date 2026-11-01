@@ -1,0 +1,338 @@
+[2026-10-30T20:43:17.795708000Z][com.docker.backend.apicache] cache << GET /containers/66b2741d8a6f7b5fd157e23e1b5cee486a046c4b5005f3afab6b9f3da419c8ad/json
+[2026-10-30T20:43:17.796587000Z][com.docker.backend.apicache] cache << GET /containers/476e3d8d4ac4fcf478e62b8d38a6a5a2a72d2509c12bb314edc9ccce6cc1b3bd/json
+[2026-10-30T20:43:17.796587000Z][com.docker.backend.apicache] cache << GET /containers/e0efa988293511361f2a3428b5e0f28039c6ad5dce13bd81d0a67f2f856d63f0/json
+[2026-10-30T20:43:17.796589000Z][com.docker.backend.apicache] cache << GET /containers/b3dce422536523ef477ebc321faa5e9946e2c0d9ef24e99218559b9aed7f303e/json
+[2026-10-30T20:43:17.796591000Z][com.docker.backend.apicache] cache << GET /containers/34a683c95654a27331c2189f8785418c9818b58fe3a28dd271b40cc48e9dce89/json
+[2026-10-30T20:43:17.796592000Z][com.docker.backend.apicache] cache << GET /containers/fc7c7a8fcd837a42432156ffd3436a7531139720831f2e53a7deec14ecf5e01a/json
+[2026-10-30T20:43:17.797786000Z][com.docker.backend.apicache] cache << GET /containers/json?all=REDACTED
+[2026-10-30T20:43:18.443563000Z][com.docker.backend.ipc] fd7cf354-PauseHDL /pause/events <-- 2026-10-30T13:43:18.443546000-07:00 (c4729fb4) ipc connecting:
+[2026-10-30T20:43:18.443754000Z][com.docker.backend.procd] received state {Docker:stopped DockerAPI:running HasNoVirtualization:false Idle:shutdown IsPaused:false Mode:linux PauseError: PauseText:Docker Desktop is running SessionID:6c583b41-5ba0-4a66-8cb1-1b50157c329d State:stopped WslUpdateRequired:false}
+[2026-10-30T20:43:31.433201000Z][com.docker.backend.ipc] (7eb8928f-9846) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:43:31.434019000Z][com.docker.backend.ipc][W] (7eb8928f-9846) 57ea983f-stats C<-S ConnectionClosed GET /ping (860.417µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:43:41.434860000Z][com.docker.backend.ipc] (7eb8928f-9849) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:43:41.437495000Z][com.docker.backend.ipc][W] (7eb8928f-9849) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.63625ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:43:51.439298000Z][com.docker.backend.ipc] (7eb8928f-9851) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:43:51.439996000Z][com.docker.backend.ipc][W] (7eb8928f-9851) 57ea983f-stats C<-S ConnectionClosed GET /ping (713.458µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:01.441787000Z][com.docker.backend.ipc] (7eb8928f-9853) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:01.442356000Z][com.docker.backend.ipc][W] (7eb8928f-9853) 57ea983f-stats C<-S ConnectionClosed GET /ping (601.75µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:11.444084000Z][com.docker.backend.ipc] (7eb8928f-9855) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:11.445858000Z][com.docker.backend.ipc][W] (7eb8928f-9855) 57ea983f-stats C<-S ConnectionClosed GET /ping (919.875µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:17.728396000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:44:17.732433000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:44:17.732457000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:44:17.732459000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:44:17.732603000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:44:17.732461000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:44:17.732551000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:44:17.732577000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:44:17.732717000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:44:21.449389000Z][com.docker.backend.ipc] (7eb8928f-9857) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:21.449929000Z][com.docker.backend.ipc][W] (7eb8928f-9857) 57ea983f-stats C<-S ConnectionClosed GET /ping (570.333µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:31.451452000Z][com.docker.backend.ipc] (7eb8928f-9859) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:31.452314000Z][com.docker.backend.ipc][W] (7eb8928f-9859) 57ea983f-stats C<-S ConnectionClosed GET /ping (874µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:41.453650000Z][com.docker.backend.ipc] (7eb8928f-9861) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:41.454453000Z][com.docker.backend.ipc][W] (7eb8928f-9861) 57ea983f-stats C<-S ConnectionClosed GET /ping (812.5µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:44:51.458135000Z][com.docker.backend.ipc] (7eb8928f-9863) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:44:51.459312000Z][com.docker.backend.ipc][W] (7eb8928f-9863) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.190208ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:01.461918000Z][com.docker.backend.ipc] (7eb8928f-9865) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:01.462641000Z][com.docker.backend.ipc][W] (7eb8928f-9865) 57ea983f-stats C<-S ConnectionClosed GET /ping (733.792µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:11.464331000Z][com.docker.backend.ipc] (7eb8928f-9867) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:11.464985000Z][com.docker.backend.ipc][W] (7eb8928f-9867) 57ea983f-stats C<-S ConnectionClosed GET /ping (674.416µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:17.728892000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:45:17.732648000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:45:17.732829000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:45:17.732975000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:45:17.733244000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:45:17.733108000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:45:17.733121000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:45:17.732829000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:45:17.733001000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:45:21.467072000Z][com.docker.backend.ipc] (7eb8928f-9869) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:21.468001000Z][com.docker.backend.ipc][W] (7eb8928f-9869) 57ea983f-stats C<-S ConnectionClosed GET /ping (954.583µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:31.470849000Z][com.docker.backend.ipc] (7eb8928f-9871) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:31.472700000Z][com.docker.backend.ipc][W] (7eb8928f-9871) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.914583ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:41.477402000Z][com.docker.backend.ipc] (7eb8928f-9873) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:41.478925000Z][com.docker.backend.ipc][W] (7eb8928f-9873) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.48825ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:45:51.480711000Z][com.docker.backend.ipc] (7eb8928f-9875) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:45:51.482231000Z][com.docker.backend.ipc][W] (7eb8928f-9875) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.686083ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:01.484407000Z][com.docker.backend.ipc] (7eb8928f-9877) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:01.485389000Z][com.docker.backend.ipc][W] (7eb8928f-9877) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.001583ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:11.486231000Z][com.docker.backend.ipc] (7eb8928f-9879) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:11.487483000Z][com.docker.backend.ipc][W] (7eb8928f-9879) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.250625ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:17.731605000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:46:17.736400000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:46:17.736402000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:46:17.736438000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:46:17.736482000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:46:17.736498000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:46:17.736512000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:46:17.736545000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:46:17.736569000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:46:21.490032000Z][com.docker.backend.ipc] (7eb8928f-9881) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:21.491708000Z][com.docker.backend.ipc][W] (7eb8928f-9881) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.882542ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:31.492633000Z][com.docker.backend.ipc] (7eb8928f-9883) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:31.494600000Z][com.docker.backend.ipc][W] (7eb8928f-9883) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.949ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:41.497484000Z][com.docker.backend.ipc] (7eb8928f-9885) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:41.498707000Z][com.docker.backend.ipc][W] (7eb8928f-9885) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.187208ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:46:51.500388000Z][com.docker.backend.ipc] (7eb8928f-9887) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:46:51.501743000Z][com.docker.backend.ipc][W] (7eb8928f-9887) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.373167ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:01.503479000Z][com.docker.backend.ipc] (7eb8928f-9889) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:01.504526000Z][com.docker.backend.ipc][W] (7eb8928f-9889) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.133334ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:09.274441000Z][com.docker.backend.analytics.marlin] processing batch of 4 records
+[2026-10-30T20:47:09.640989000Z][com.docker.backend.analytics.marlin] sent message 200 OK (364 ms)
+[2026-10-30T20:47:11.506298000Z][com.docker.backend.ipc] (7eb8928f-9891) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:11.506958000Z][com.docker.backend.ipc][W] (7eb8928f-9891) 57ea983f-stats C<-S ConnectionClosed GET /ping (703.875µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:17.735146000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:47:17.740918000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:47:17.741021000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:47:17.741023000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:47:17.740918000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:47:17.740946000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:47:17.740973000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:47:17.740996000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:47:17.740940000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:47:21.508968000Z][com.docker.backend.ipc] (7eb8928f-9893) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:21.509865000Z][com.docker.backend.ipc][W] (7eb8928f-9893) 57ea983f-stats C<-S ConnectionClosed GET /ping (934.458µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:31.511890000Z][com.docker.backend.ipc] (7eb8928f-9895) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:31.512900000Z][com.docker.backend.ipc][W] (7eb8928f-9895) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.064375ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:41.513977000Z][com.docker.backend.ipc] (7eb8928f-9897) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:41.514611000Z][com.docker.backend.ipc][W] (7eb8928f-9897) 57ea983f-stats C<-S ConnectionClosed GET /ping (664.917µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:47:51.516399000Z][com.docker.backend.ipc] (7eb8928f-9899) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:47:51.517225000Z][com.docker.backend.ipc][W] (7eb8928f-9899) 57ea983f-stats C<-S ConnectionClosed GET /ping (865.25µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:01.520535000Z][com.docker.backend.ipc] (7eb8928f-9901) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:01.521260000Z][com.docker.backend.ipc][W] (7eb8928f-9901) 57ea983f-stats C<-S ConnectionClosed GET /ping (734.583µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:11.523426000Z][com.docker.backend.ipc] (7eb8928f-9903) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:11.525137000Z][com.docker.backend.ipc][W] (7eb8928f-9903) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.794584ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:17.749585000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:48:17.755795000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:48:17.755813000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:48:17.756278000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:48:17.756382000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:48:17.756394000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:48:17.756536000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:48:17.756561000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:48:17.757333000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:48:21.527749000Z][com.docker.backend.ipc] (7eb8928f-9905) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:21.528585000Z][com.docker.backend.ipc][W] (7eb8928f-9905) 57ea983f-stats C<-S ConnectionClosed GET /ping (950.208µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:31.531131000Z][com.docker.backend.ipc] (7eb8928f-9907) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:31.532196000Z][com.docker.backend.ipc][W] (7eb8928f-9907) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.129875ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:41.430149000Z][com.docker.backend.ipc] (7eb8928f-9909) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:41.430542000Z][com.docker.backend.ipc][W] (7eb8928f-9909) 57ea983f-stats C<-S ConnectionClosed GET /ping (409.708µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:41.533937000Z][com.docker.backend.ipc] (7eb8928f-9911) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:41.535978000Z][com.docker.backend.ipc][W] (7eb8928f-9911) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.115125ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:48:51.537841000Z][com.docker.backend.ipc] (7eb8928f-9913) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:48:51.538327000Z][com.docker.backend.ipc][W] (7eb8928f-9913) 57ea983f-stats C<-S ConnectionClosed GET /ping (494.792µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:01.540431000Z][com.docker.backend.ipc] (7eb8928f-9915) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:01.542630000Z][com.docker.backend.ipc][W] (7eb8928f-9915) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.508083ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:11.544594000Z][com.docker.backend.ipc] (7eb8928f-9917) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:11.545961000Z][com.docker.backend.ipc][W] (7eb8928f-9917) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.335041ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:17.740443000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:49:17.748526000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:49:17.748526000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:49:17.748560000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:49:17.748552000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:49:17.748560000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:49:17.748583000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:49:17.748596000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:49:17.748590000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:49:21.548357000Z][com.docker.backend.ipc] (7eb8928f-9919) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:21.548927000Z][com.docker.backend.ipc][W] (7eb8928f-9919) 57ea983f-stats C<-S ConnectionClosed GET /ping (653.166µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:31.561558000Z][com.docker.backend.ipc] (7eb8928f-9921) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:31.565305000Z][com.docker.backend.ipc][W] (7eb8928f-9921) 57ea983f-stats C<-S ConnectionClosed GET /ping (6.016625ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:41.568615000Z][com.docker.backend.ipc] (7eb8928f-9923) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:41.570090000Z][com.docker.backend.ipc][W] (7eb8928f-9923) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.452458ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:49:51.572699000Z][com.docker.backend.ipc] (7eb8928f-9925) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:49:51.573337000Z][com.docker.backend.ipc][W] (7eb8928f-9925) 57ea983f-stats C<-S ConnectionClosed GET /ping (652.791µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:01.575420000Z][com.docker.backend.ipc] (7eb8928f-9927) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:01.576614000Z][com.docker.backend.ipc][W] (7eb8928f-9927) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.205334ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:11.577744000Z][com.docker.backend.ipc] (7eb8928f-9929) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:11.580589000Z][com.docker.backend.ipc][W] (7eb8928f-9929) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.849958ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:17.737222000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:50:17.741181000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:50:17.741181000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:50:17.741734000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:50:17.741797000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:50:17.741849000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:50:17.741855000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:50:17.741827000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:50:17.742108000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:50:21.582452000Z][com.docker.backend.ipc] (7eb8928f-9931) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:21.583571000Z][com.docker.backend.ipc][W] (7eb8928f-9931) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.144958ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:31.585855000Z][com.docker.backend.ipc] (7eb8928f-9933) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:31.586698000Z][com.docker.backend.ipc][W] (7eb8928f-9933) 57ea983f-stats C<-S ConnectionClosed GET /ping (850.334µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:41.588093000Z][com.docker.backend.ipc] (7eb8928f-9935) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:41.589025000Z][com.docker.backend.ipc][W] (7eb8928f-9935) 57ea983f-stats C<-S ConnectionClosed GET /ping (943.542µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:50:51.590515000Z][com.docker.backend.ipc] (7eb8928f-9937) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:50:51.591162000Z][com.docker.backend.ipc][W] (7eb8928f-9937) 57ea983f-stats C<-S ConnectionClosed GET /ping (670.834µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:01.592664000Z][com.docker.backend.ipc] (7eb8928f-9939) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:01.593386000Z][com.docker.backend.ipc][W] (7eb8928f-9939) 57ea983f-stats C<-S ConnectionClosed GET /ping (766.834µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:11.594425000Z][com.docker.backend.ipc] (7eb8928f-9941) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:11.595222000Z][com.docker.backend.ipc][W] (7eb8928f-9941) 57ea983f-stats C<-S ConnectionClosed GET /ping (807.083µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:17.736022000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:51:17.739828000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:51:17.740023000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:51:17.739863000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:51:17.739828000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:51:17.739958000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:51:17.739987000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:51:17.740005000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:51:17.740095000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:51:21.597766000Z][com.docker.backend.ipc] (7eb8928f-9943) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:21.599366000Z][com.docker.backend.ipc][W] (7eb8928f-9943) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.61825ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:31.600844000Z][com.docker.backend.ipc] (7eb8928f-9945) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:31.601654000Z][com.docker.backend.ipc][W] (7eb8928f-9945) 57ea983f-stats C<-S ConnectionClosed GET /ping (816.458µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:41.603420000Z][com.docker.backend.ipc] (7eb8928f-9947) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:41.604029000Z][com.docker.backend.ipc][W] (7eb8928f-9947) 57ea983f-stats C<-S ConnectionClosed GET /ping (610.625µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:51:51.606633000Z][com.docker.backend.ipc] (7eb8928f-9949) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:51:51.607384000Z][com.docker.backend.ipc][W] (7eb8928f-9949) 57ea983f-stats C<-S ConnectionClosed GET /ping (784.666µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:01.608543000Z][com.docker.backend.ipc] (7eb8928f-9951) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:01.609367000Z][com.docker.backend.ipc][W] (7eb8928f-9951) 57ea983f-stats C<-S ConnectionClosed GET /ping (866.208µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:11.610729000Z][com.docker.backend.ipc] (7eb8928f-9953) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:11.611701000Z][com.docker.backend.ipc][W] (7eb8928f-9953) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.010916ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:17.738911000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:52:17.741890000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:52:17.742021000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:52:17.742135000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:52:17.741925000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:52:17.742184000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:52:17.741906000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:52:17.742024000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:52:17.742392000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:52:21.616020000Z][com.docker.backend.ipc] (7eb8928f-9955) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:21.616952000Z][com.docker.backend.ipc][W] (7eb8928f-9955) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.221958ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:31.618756000Z][com.docker.backend.ipc] (7eb8928f-9957) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:31.620265000Z][com.docker.backend.ipc][W] (7eb8928f-9957) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.547291ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:41.621635000Z][com.docker.backend.ipc] (7eb8928f-9959) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:41.622556000Z][com.docker.backend.ipc][W] (7eb8928f-9959) 57ea983f-stats C<-S ConnectionClosed GET /ping (934.292µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:52:51.624419000Z][com.docker.backend.ipc] (7eb8928f-9961) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:52:51.625262000Z][com.docker.backend.ipc][W] (7eb8928f-9961) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.021125ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:01.626581000Z][com.docker.backend.ipc] (7eb8928f-9963) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:01.627070000Z][com.docker.backend.ipc][W] (7eb8928f-9963) 57ea983f-stats C<-S ConnectionClosed GET /ping (511.583µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:11.628435000Z][com.docker.backend.ipc] (7eb8928f-9965) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:11.629328000Z][com.docker.backend.ipc][W] (7eb8928f-9965) 57ea983f-stats C<-S ConnectionClosed GET /ping (951.125µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:17.739059000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:53:17.742668000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:53:17.742738000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:53:17.742754000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:53:17.742920000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:53:17.742931000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:53:17.742669000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:53:17.743056000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:53:17.743399000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:53:21.630756000Z][com.docker.backend.ipc] (7eb8928f-9967) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:21.631000000Z][com.docker.backend.ipc][W] (7eb8928f-9967) 57ea983f-stats C<-S ConnectionClosed GET /ping (254.958µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:31.632921000Z][com.docker.backend.ipc] (7eb8928f-9969) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:31.638186000Z][com.docker.backend.ipc][W] (7eb8928f-9969) 57ea983f-stats C<-S ConnectionClosed GET /ping (5.29ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:41.431397000Z][com.docker.backend.ipc] (7eb8928f-9971) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:41.432238000Z][com.docker.backend.ipc][W] (7eb8928f-9971) 57ea983f-stats C<-S ConnectionClosed GET /ping (857.042µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:41.639797000Z][com.docker.backend.ipc] (7eb8928f-9973) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:41.640415000Z][com.docker.backend.ipc][W] (7eb8928f-9973) 57ea983f-stats C<-S ConnectionClosed GET /ping (628.042µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:53:51.641907000Z][com.docker.backend.ipc] (7eb8928f-9975) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:53:51.642514000Z][com.docker.backend.ipc][W] (7eb8928f-9975) 57ea983f-stats C<-S ConnectionClosed GET /ping (619.25µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:01.643956000Z][com.docker.backend.ipc] (7eb8928f-9977) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:01.644691000Z][com.docker.backend.ipc][W] (7eb8928f-9977) 57ea983f-stats C<-S ConnectionClosed GET /ping (750.584µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:11.646411000Z][com.docker.backend.ipc] (7eb8928f-9979) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:11.646970000Z][com.docker.backend.ipc][W] (7eb8928f-9979) 57ea983f-stats C<-S ConnectionClosed GET /ping (579.334µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:17.740068000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:54:17.743079000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:54:17.743177000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:54:17.743178000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:54:17.743079000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:54:17.743178000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:54:17.743079000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:54:17.743243000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:54:17.743275000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:54:21.648767000Z][com.docker.backend.ipc] (7eb8928f-9981) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:21.649210000Z][com.docker.backend.ipc][W] (7eb8928f-9981) 57ea983f-stats C<-S ConnectionClosed GET /ping (461.958µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:31.650708000Z][com.docker.backend.ipc] (7eb8928f-9983) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:31.651030000Z][com.docker.backend.ipc][W] (7eb8928f-9983) 57ea983f-stats C<-S ConnectionClosed GET /ping (334.833µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:41.652151000Z][com.docker.backend.ipc] (7eb8928f-9985) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:41.654084000Z][com.docker.backend.ipc][W] (7eb8928f-9985) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.984917ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:54:51.655771000Z][com.docker.backend.ipc] (7eb8928f-9987) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:54:51.656376000Z][com.docker.backend.ipc][W] (7eb8928f-9987) 57ea983f-stats C<-S ConnectionClosed GET /ping (619.625µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:01.657031000Z][com.docker.backend.ipc] (7eb8928f-9989) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:01.657639000Z][com.docker.backend.ipc][W] (7eb8928f-9989) 57ea983f-stats C<-S ConnectionClosed GET /ping (613.209µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:11.659157000Z][com.docker.backend.ipc] (7eb8928f-9991) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:11.659556000Z][com.docker.backend.ipc][W] (7eb8928f-9991) 57ea983f-stats C<-S ConnectionClosed GET /ping (414.583µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:17.741697000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:55:17.744949000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:55:17.744978000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:55:17.745015000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:55:17.745030000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:55:17.745083000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:55:17.745099000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:55:17.745121000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:55:17.745161000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:55:21.661590000Z][com.docker.backend.ipc] (7eb8928f-9993) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:21.662185000Z][com.docker.backend.ipc][W] (7eb8928f-9993) 57ea983f-stats C<-S ConnectionClosed GET /ping (628.959µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:31.663966000Z][com.docker.backend.ipc] (7eb8928f-9995) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:31.664927000Z][com.docker.backend.ipc][W] (7eb8928f-9995) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.034ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:41.668394000Z][com.docker.backend.ipc] (7eb8928f-9997) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:41.669138000Z][com.docker.backend.ipc][W] (7eb8928f-9997) 57ea983f-stats C<-S ConnectionClosed GET /ping (749.292µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:55:51.670360000Z][com.docker.backend.ipc] (7eb8928f-9999) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:55:51.670861000Z][com.docker.backend.ipc][W] (7eb8928f-9999) 57ea983f-stats C<-S ConnectionClosed GET /ping (560.5µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:01.675508000Z][com.docker.backend.ipc] (7eb8928f-10001) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:01.678665000Z][com.docker.backend.ipc][W] (7eb8928f-10001) 57ea983f-stats C<-S ConnectionClosed GET /ping (5.750041ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:11.680609000Z][com.docker.backend.ipc] (7eb8928f-10003) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:11.681499000Z][com.docker.backend.ipc][W] (7eb8928f-10003) 57ea983f-stats C<-S ConnectionClosed GET /ping (980.917µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:17.744854000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:56:17.747920000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:56:17.748100000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:56:17.747932000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:56:17.748267000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:56:17.748299000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:56:17.748346000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:56:17.748385000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:56:17.748420000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:56:21.683060000Z][com.docker.backend.ipc] (7eb8928f-10005) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:21.683524000Z][com.docker.backend.ipc][W] (7eb8928f-10005) 57ea983f-stats C<-S ConnectionClosed GET /ping (487.959µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:31.686228000Z][com.docker.backend.ipc] (7eb8928f-10007) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:31.687408000Z][com.docker.backend.ipc][W] (7eb8928f-10007) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.242708ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:41.689197000Z][com.docker.backend.ipc] (7eb8928f-10009) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:41.689711000Z][com.docker.backend.ipc][W] (7eb8928f-10009) 57ea983f-stats C<-S ConnectionClosed GET /ping (524.291µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:56:51.690917000Z][com.docker.backend.ipc] (7eb8928f-10011) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:56:51.692283000Z][com.docker.backend.ipc][W] (7eb8928f-10011) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.419875ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:01.694025000Z][com.docker.backend.ipc] (7eb8928f-10013) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:01.695762000Z][com.docker.backend.ipc][W] (7eb8928f-10013) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.748834ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:11.697836000Z][com.docker.backend.ipc] (7eb8928f-10015) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:11.698889000Z][com.docker.backend.ipc][W] (7eb8928f-10015) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.145958ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:12.146081000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T20:57:12.146082000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T20:57:17.746274000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:57:17.752045000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:57:17.752048000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:57:17.752080000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:57:17.752088000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:57:17.752145000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:57:17.752171000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:57:17.752237000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:57:17.752242000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:57:21.700712000Z][com.docker.backend.ipc] (7eb8928f-10017) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:21.701552000Z][com.docker.backend.ipc][W] (7eb8928f-10017) 57ea983f-stats C<-S ConnectionClosed GET /ping (908.334µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:27.156961000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T20:57:27.157897000Z][com.docker.backend.apicache] cache << HEAD /_ping
+[2026-10-30T20:57:27.158006000Z][com.docker.backend.apicache] 404 << GET /v1.54/containers/buildx_buildkit_default/json
+[2026-10-30T20:57:27.158149000Z][com.docker.backend.apicache] 404 << GET /v1.54/containers/buildx_buildkit_desktop-linux/json
+[2026-10-30T20:57:31.703155000Z][com.docker.backend.ipc] (7eb8928f-10019) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:31.703721000Z][com.docker.backend.ipc][W] (7eb8928f-10019) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.124291ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:41.705248000Z][com.docker.backend.ipc] (7eb8928f-10021) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:41.705771000Z][com.docker.backend.ipc][W] (7eb8928f-10021) 57ea983f-stats C<-S ConnectionClosed GET /ping (550.666µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:57:51.706489000Z][com.docker.backend.ipc] (7eb8928f-10023) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:57:51.707204000Z][com.docker.backend.ipc][W] (7eb8928f-10023) 57ea983f-stats C<-S ConnectionClosed GET /ping (718.541µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:58:01.709563000Z][com.docker.backend.ipc] (7eb8928f-10025) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:58:01.710344000Z][com.docker.backend.ipc][W] (7eb8928f-10025) 57ea983f-stats C<-S ConnectionClosed GET /ping (806.125µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:58:11.711062000Z][com.docker.backend.ipc] (7eb8928f-10027) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:58:11.711622000Z][com.docker.backend.ipc][W] (7eb8928f-10027) 57ea983f-stats C<-S ConnectionClosed GET /ping (574.792µs): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:58:17.746200000Z][com.docker.backend.apicache] cache << GET /networks
+[2026-10-30T20:58:17.749698000Z][com.docker.backend.apicache] cache << GET /networks/f50f9ddc0398cf0c7ab8b60a228c33cd053ba77c27357fae3a8e01344ba477cc
+[2026-10-30T20:58:17.749857000Z][com.docker.backend.apicache] cache << GET /networks/61e1119a437dba7993c3be287db56c871fcf0e611d78835a32e1593bdc4d9403
+[2026-10-30T20:58:17.749952000Z][com.docker.backend.apicache] cache << GET /networks/3b775737d6040d60c84bbdf0e16947642fbdde334b0c851bfb6de1016f073f87
+[2026-10-30T20:58:17.749804000Z][com.docker.backend.apicache] cache << GET /networks/995ea85c34d7b30133b496e4c5a4587befb738e1baffa2fa4146e321c14d4d9b
+[2026-10-30T20:58:17.749992000Z][com.docker.backend.apicache] cache << GET /networks/f6a27dde4b36cd0e443e2fc6001a93075fd338a9ee8f5d7d401e9dc8e5dec670
+[2026-10-30T20:58:17.749711000Z][com.docker.backend.apicache] cache << GET /networks/75e2622b54979c164e70010a3e21434ec25bc31f5df276f3aef7c3040e9f32d1
+[2026-10-30T20:58:17.750057000Z][com.docker.backend.apicache] cache << GET /networks/f6426d01b98ae68362f6698d3c6930b992217967679d422f0a05ab5fca4609ad
+[2026-10-30T20:58:17.749901000Z][com.docker.backend.apicache] cache << GET /networks/3d2e037d1f515d3f3669edd2ffa7612534933e74e77e9e23f2a085eda8e27dfe
+[2026-10-30T20:58:21.712275000Z][com.docker.backend.ipc] (7eb8928f-10029) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:58:21.713785000Z][com.docker.backend.ipc][W] (7eb8928f-10029) 57ea983f-stats C<-S ConnectionClosed GET /ping (1.511834ms): Get "http://ipc/ping": context deadline exceeded
+[2026-10-30T20:58:31.715116000Z][com.docker.backend.ipc] (7eb8928f-10031) 57ea983f-stats C->S stats GET /ping
+[2026-10-30T20:58:31.717389000Z][com.docker.backend.ipc][W] (7eb8928f-10031) 57ea983f-stats C<-S ConnectionClosed GET /ping (2.284292ms): Get "http://ipc/ping": context deadline exceeded

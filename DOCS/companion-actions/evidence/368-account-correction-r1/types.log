@@ -1,0 +1,8 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/companionTaskSheet.test.tsx(450,40): error TS2345: Argument of type 'string | URL | Request' is not assignable to parameter of type 'string'.
+  Type 'URL' is not assignable to type 'string'.
+__tests__/companionActions/companionTaskSheet.test.tsx(455,7): error TS18046: 'data' is of type 'unknown'.
+__tests__/companionActions/reviewer368AccountCaller.test.tsx(377,7): error TS18046: 'data' is of type 'unknown'.

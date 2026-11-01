@@ -1,0 +1,42 @@
+running 13 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (331ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (219ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (237ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (222ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (217ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (259ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (222ms)
+unrelated changes since review do not ask for approval again ... ok (184ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (194ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (316ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (265ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... FAILED (266ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a reviewed removal is refused after another edit, and cannot remove any other task => ./create_test.ts:333:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     "Set up phone service",
+      "Find a family doctor",
++     "Set up phone service",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:347:5)
+
+ FAILURES 
+
+a reviewed removal is refused after another edit, and cannot remove any other task => ./create_test.ts:333:6
+
+FAILED | 12 passed | 1 failed (2s)
+
+error: Test failed

@@ -1,0 +1,46 @@
+PASS owned labels, workdir, content URL, database and REST containers
+{"file": "push_account_delete_test.ts", "exit": 0, "seconds": 20.889, "baseline_reset": true}
+{"file": "push_authority_races_test.ts", "exit": 0, "seconds": 22.021, "baseline_reset": true}
+{"file": "push_commit_test.ts", "exit": 0, "seconds": 19.685, "baseline_reset": true}
+{"file": "push_delivery_test.ts", "exit": 0, "seconds": 21.761, "baseline_reset": true}
+{"file": "push_enrollment_test.ts", "exit": 0, "seconds": 21.026, "baseline_reset": true}
+{"file": "push_expiry_test.ts", "exit": 0, "seconds": 20.866, "baseline_reset": true}
+{"file": "push_isolation_test.ts", "exit": 0, "seconds": 20.161, "baseline_reset": true}
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/DOCS/companion-actions/evidence/371-profile-r1/run.py", line 49, in <module>
+    result = subprocess.run(command, cwd=STACK, env=env, stdout=log, stderr=subprocess.STDOUT)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1213, in communicate
+    self.wait()
+    ~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2084, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2042, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/DOCS/companion-actions/evidence/371-profile-r1/suite.py", line 55, in <module>
+    result=subprocess.run([sys.executable,str(HERE/'run.py'),'service-'+name,name],stdout=subprocess.DEVNULL)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1213, in communicate
+    self.wait()
+    ~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2084, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2042, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

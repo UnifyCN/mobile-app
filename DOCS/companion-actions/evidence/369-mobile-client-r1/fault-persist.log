@@ -1,0 +1,148 @@
+FAIL __tests__/companionActions/pushDevice.test.ts
+  ✕ does not enroll on read; persists proof and exact intent before the first request (3 ms)
+  ✓ stops after account replacement during permission
+  ✓ stops after account replacement during token
+  ✓ stops after account replacement during read
+  ✕ stops after account replacement during write
+  ✓ does not restore a late receipt after batched sign-out and same-account sign-in
+  ✕ retains exact pending request on lost reply and looks up before any retry (1 ms)
+  ✓ denial leaves push off without a service request
+  ✕ storage failure sends nothing and remains unavailable (1 ms)
+  ✓ uses current revision for token rotation and disable and has no Undo (1 ms)
+  ✓ token refresh retains ownership while an enable waits
+  ✕ does not retry an old token after a confirmed unapplied operation (1 ms)
+  ✓ discards a held push_read response after ownership changes
+  ✓ discards a held status response after ownership changes
+  ✕ retains unknown pending storage across restart and never retries while a status is pending or failed
+  ✓ captures a pending revoke on sign-out without sending it as the next account (1 ms)
+  ✓ keeps HTTP 401 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 403 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 409 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 422 errors content-free and distinct from successful delivery
+  ✓ keeps HTTP 503 errors content-free and distinct from successful delivery (1 ms)
+
+  ● does not enroll on read; persists proof and exact intent before the first request
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: {"action": "push_apply", "authorization": {"kind": "ui_control"}, "client": {"app_version": "9.9.9", "platform": "ios"}, "contract_version": 1, "operation": {"enabled": true, "expected_revision": 0, "installation_id": "11111111-1111-4111-8111-111111111111", "installation_secret": "abababababababababababababababababababababababababababababababab", "locale": "en", "token": "ExponentPushToken[synthetic369-client]", "type": "push.enroll"}, "operation_id": "33333333-3333-4333-8333-000000000001"}
+
+      121 |   const action = s.device.enable('en');
+      122 |   await flush();
+    > 123 |   expect(s.transport).not.toHaveBeenCalled();
+          |                           ^
+      124 |   wait.resolve();
+      125 |   await action;
+      126 |   expect(s.device.snapshot().phase).toBe('on');
+
+      at Object.toHaveBeenCalled (__tests__/companionActions/pushDevice.test.ts:123:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● stops after account replacement during write
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: {"action": "push_apply", "authorization": {"kind": "ui_control"}, "client": {"app_version": "9.9.9", "platform": "ios"}, "contract_version": 1, "operation": {"enabled": true, "expected_revision": 0, "installation_id": "11111111-1111-4111-8111-111111111111", "installation_secret": "abababababababababababababababababababababababababababababababab", "locale": "en", "token": "ExponentPushToken[synthetic369-client]", "type": "push.enroll"}, "operation_id": "33333333-3333-4333-8333-000000000001"}
+
+      149 |     );
+      150 |     await action;
+    > 151 |     expect(s.transport).not.toHaveBeenCalled();
+          |                             ^
+      152 |     expect(s.device.snapshot().phase).not.toBe('on');
+      153 |   }
+      154 | );
+
+      at toHaveBeenCalled (__tests__/companionActions/pushDevice.test.ts:151:29)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● retains exact pending request on lost reply and looks up before any retry
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "not_applied"
+    Received: "off"
+
+      173 |   const original = s.transport.mock.calls[0][0];
+      174 |   await s.device.check('en');
+    > 175 |   expect(s.device.snapshot().phase).toBe('not_applied');
+          |                                     ^
+      176 |   await s.device.retry('en');
+      177 |   const writes = s.transport.mock.calls
+      178 |     .map(c => c[0])
+
+      at Object.toBe (__tests__/companionActions/pushDevice.test.ts:175:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● storage failure sends nothing and remains unavailable
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: {"action": "push_apply", "authorization": {"kind": "ui_control"}, "client": {"app_version": "9.9.9", "platform": "ios"}, "contract_version": 1, "operation": {"enabled": true, "expected_revision": 0, "installation_id": "11111111-1111-4111-8111-111111111111", "installation_secret": "abababababababababababababababababababababababababababababababab", "locale": "en", "token": "ExponentPushToken[synthetic369-client]", "type": "push.enroll"}, "operation_id": "33333333-3333-4333-8333-000000000001"}
+
+      191 |   s.deps.write.mockRejectedValueOnce(new Error('locked'));
+      192 |   await s.device.enable('en');
+    > 193 |   expect(s.transport).not.toHaveBeenCalled();
+          |                           ^
+      194 |   expect(s.device.snapshot().phase).toBe('unavailable');
+      195 | });
+      196 | it('uses current revision for token rotation and disable and has no Undo', async () => {
+
+      at Object.toHaveBeenCalled (__tests__/companionActions/pushDevice.test.ts:193:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● does not retry an old token after a confirmed unapplied operation
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "conflict"
+    Received: "off"
+
+      235 |     s.transport.mock.calls.filter(c => c[0].action === 'push_apply')
+      236 |   ).toHaveLength(1);
+    > 237 |   expect(s.device.snapshot().phase).toBe('conflict');
+          |                                     ^
+      238 |   await s.device.enable('en');
+      239 |   const writes = s.transport.mock.calls.filter(
+      240 |     c => c[0].action === 'push_apply'
+
+      at Object.toBe (__tests__/companionActions/pushDevice.test.ts:237:37)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● retains unknown pending storage across restart and never retries while a status is pending or failed
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "unknown"
+    Received: "off"
+
+      281 |   const restarted = new CompanionPushDevice(s.deps);
+      282 |   await restarted.refresh('en');
+    > 283 |   expect(restarted.snapshot().phase).toBe('unknown');
+          |                                      ^
+      284 |   const op = JSON.parse(s.saved()!).pending.operation_id;
+      285 |   s.transport.mockResolvedValueOnce({
+      286 |     status: 200,
+
+      at Object.toBe (__tests__/companionActions/pushDevice.test.ts:283:38)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 15 passed, 21 total
+Snapshots:   0 total
+Time:        0.405 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushDevice.test.ts/i.

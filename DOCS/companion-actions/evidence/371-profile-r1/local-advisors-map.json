@@ -1,0 +1,419 @@
+{
+  "exit": 1,
+  "errors": 2,
+  "warnings": 26,
+  "hosted": false,
+  "results": [
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_plan_unresolved",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183338_companion_settlement_plan.sql",
+          "line": 279,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_title_key",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261026165156_companion_task_create.sql",
+          "line": 90,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_before368_validate",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028004902_companion_saved_details.sql",
+          "line": 426,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261026165156_companion_task_create.sql",
+          "line": 130,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261028025026_companion_task_remove.sql",
+          "line": 377,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 402,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+          "line": 171,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+          "line": 490,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+          "line": 78,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+          "line": 79,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+          "line": 378,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+          "line": 383,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_ops_hash",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 363,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_op_lock_key",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 368,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_fail",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 373,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_nonneg_int",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 380,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_task_ref_valid",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 387,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_set_state_op",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 394,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "set_updated_at_custom_checklist_tasks",
+      "prior_source": [
+        {
+          "path": "supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+          "line": 74,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+          "line": 78,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_task_state",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 478,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_user_tasks_before",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 271,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 293,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_custom_tasks_before",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 295,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+          "line": 317,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_create_op",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261026165156_companion_task_create.sql",
+          "line": 123,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_plan_plain",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183338_companion_settlement_plan.sql",
+          "line": 114,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_plan_item_operation",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183338_companion_settlement_plan.sql",
+          "line": 554,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_step_title_ok",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+          "line": 66,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_uuid_ok",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+          "line": 72,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_step_validate",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+          "line": 80,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_step_conflict",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+          "line": 245,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_valid_title",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+          "line": 65,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_valid_description",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+          "line": 72,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_edit_relevant",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+          "line": 112,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_detail_text_ok",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028004902_companion_saved_details.sql",
+          "line": 108,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_detail_validate",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028004902_companion_saved_details.sql",
+          "line": 115,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "name": "function_search_path_mutable",
+      "object": "companion_plan_ref_key",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20261028025026_companion_task_remove.sql",
+          "line": 101,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "ERROR",
+      "name": "rls_disabled_in_public",
+      "object": "users",
+      "prior_source": [
+        {
+          "path": "supabase/migrations/20260701120000_add_signup_source.sql",
+          "line": 19,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20260518100000_users.sql",
+          "line": 7,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/migrations/20260518100000_users.sql",
+          "line": 56,
+          "present_in_starting_integration": true
+        },
+        {
+          "path": "supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+          "line": 7,
+          "present_in_starting_integration": true
+        }
+      ]
+    },
+    {
+      "level": "ERROR",
+      "name": "rls_disabled_in_public",
+      "object": "quota_tripwire_calls",
+      "prior_source": [
+        {
+          "path": "supabase/tests/companion-actions/supabase/migrations/20260101000001_generation_quota_tripwire.sql",
+          "line": 13,
+          "present_in_starting_integration": true
+        }
+      ]
+    }
+  ]
+}

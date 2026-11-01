@@ -1,0 +1,17 @@
+PASS __tests__/context/userContextStage.test.ts
+  useUserInfo cached reads
+    ✓ recomputes the stage of a cached entry from its arrival date (8 ms)
+    ✓ gives unknown for a cached entry without a date (1 ms)
+  UserProvider
+    ✓ exposes a recomputed stage for a stale cached user (53 ms)
+    ✓ exposes the plain date and stage 0 for a cached raw timestamp (52 ms)
+    ✓ refreshUser reloads the profile after a date update (104 ms)
+    ✓ refreshUser resolves with no signed-in user (1 ms)
+    ✓ does not show the old account after an account change (103 ms)
+    ✓ keeps durable recovery after a failed session read and clears it on confirmed sign-out without a plan screen (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        0.729 s, estimated 1 s
+Ran all test suites matching /__tests__\/context\/userContextStage.test.ts/i.

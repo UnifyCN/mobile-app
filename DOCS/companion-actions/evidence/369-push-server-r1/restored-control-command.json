@@ -1,0 +1,21 @@
+{
+  "cmd": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=none",
+    "--frozen",
+    "--lock=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno.lock",
+    "--allow-env",
+    "--allow-run",
+    "--allow-net=127.0.0.1:63610,127.0.0.1:63611,127.0.0.1:63614,127.0.0.1:63615,127.0.0.1:63616",
+    "--allow-read=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac,/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+    "--filter",
+    "unknown transport",
+    "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_worker_test.ts"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+  "exit": 0,
+  "seconds": 2.470093011856079,
+  "worker_sha256": "17e8ed651f3ba69d27e13337719bb3afe6821f509c6a26f7e691ef43a33201c0"
+}

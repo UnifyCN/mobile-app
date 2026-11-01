@@ -1,0 +1,13 @@
+{
+  "label": "mobile",
+  "command": [
+    "node_modules/.bin/jest",
+    "tmp/r372-storage-read/review-controls.test.tsx",
+    "--runInBand",
+    "--watchAll=false",
+    "--json",
+    "--outputFile=/tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-red-tests.json"
+  ],
+  "exit": 1,
+  "seconds": 6.61
+}

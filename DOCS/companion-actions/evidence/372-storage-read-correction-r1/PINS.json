@@ -1,0 +1,24 @@
+{
+  "mobile": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed",
+    "branch": "t3/companion-recovery-completion-372",
+    "code_commit": "a807b6446cc79e682970bdd23ded57a5e0297dad",
+    "code_tree": "45c398d3c7a3d276cc7d1d42bac88bf452faa14b",
+    "parent": "3c6d05ec9cc48166cba411fb565c9a7326ddd24f",
+    "files": {
+      "unify-front-end/services/companionActions/planRecovery.ts": "56d2bda4bf554233aa8fde3093f06bc90a5a0b47f7fa013148b71e2378169b09",
+      "unify-front-end/__tests__/companionActions/planRecoveryStorage.test.tsx": "f68aa4a3e60acdb482d1d11282e4a728382bee984cbe4077836f5716e63f9126"
+    }
+  },
+  "web": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "branch": "fix/companion-release-359-root",
+    "code_commit": "54423880dbd135c2e17b56804239f8997893d847",
+    "code_tree": "c2a77d248f9bd10d1d808eaf4d35db1219f41dad",
+    "parent": "e3a57c623342d43eabff7e1bc42065dbf31f26c6",
+    "files": {
+      "lib/companionActions/planRecovery.ts": "6fd0200c92b199c93e66b6ac2b7b7d3e4997489851ad4159f568638eb2e4c68c",
+      "components/companion/plans/PlanRecoveryStorage.test.tsx": "ed41478c2f42ec75be66414fe10a9c2f2d8f36c3f862bd2c3eee159dd1ae2200"
+    }
+  }
+}

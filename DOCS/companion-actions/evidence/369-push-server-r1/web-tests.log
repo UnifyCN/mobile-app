@@ -1,0 +1,151 @@
+
+> web-app@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root
+
+ ✓ components/companion/plans/PlanPanelMotion.test.tsx (4 tests) 123ms
+ ✓ lib/documents/documentLanguage.test.ts (9 tests) 188ms
+ ✓ lib/admin/eventForm.test.ts (67 tests) 40ms
+ ✓ components/companion/tasks/Reminders.test.tsx (5 tests) 371ms
+ ✓ components/companion/tasks/ReminderPresentation.test.tsx (12 tests) 319ms
+ ✓ components/companion/tasks/RemovedReceiptPage.test.tsx (2 tests) 275ms
+ ✓ components/companion/tasks/RemovalReceiptEntry.test.tsx (1 test) 50ms
+ ✓ lib/resources/plurals.test.ts (2 tests) 3ms
+stderr | proxy.learningDestination.test.ts > proxy learning destination flow > keeps the existing gate-query error behavior without consuming intent
+proxy: consent gate query failed Error: test outage
+    at Object.maybeSingle (proxy.learningDestination.test.ts:9:33)
+    at Module.proxy (proxy.ts:117:113)
+    at async (proxy.learningDestination.test.ts:224:22)
+
+ ✓ hooks/drafts/createDraftHooks.test.ts (6 tests) 19ms
+ ✓ proxy.learningDestination.test.ts (47 tests) 36ms
+ ✓ app/api/cron/sentry-snapshot/route.test.ts (8 tests) 8ms
+ ✓ lib/resources/search.test.ts (10 tests) 29ms
+ ✓ proxy.matcher.test.ts (9 tests) 5ms
+ ✓ lib/admin/eventPartners.test.ts (8 tests) 7ms
+ ✓ app/fonts/fonts.test.ts (7 tests) 17ms
+ ✓ lib/admin/eventVisibility.test.ts (18 tests) 9ms
+ ✓ lib/seo/routes.test.ts (4 tests) 7ms
+ ✓ components/companion/CompanionContextDrawer.test.ts (8 tests) 160ms
+ ✓ lib/resources/filters.test.ts (14 tests) 23ms
+ ✓ lib/authEmailHandoff.test.ts (10 tests) 5ms
+ ✓ app/api/companion/actions/route.test.ts (5 tests) 10ms
+ ✓ lib/resources/partners.test.ts (5 tests) 5ms
+ ✓ lib/posthog.test.ts (4 tests) 2ms
+ ✓ lib/i18n/groupText.test.ts (17 tests) 9ms
+ ✓ lib/resources/partnerCopy.test.ts (4 tests) 4ms
+ ✓ lib/admin/eventCover.test.ts (27 tests) 31ms
+ ✓ app/api/learning-destination/route.test.ts (6 tests) 23ms
+ ✓ lib/jobPosting/handler.test.ts (4 tests) 9ms
+ ✓ services/coverLetter.jobPosting.test.ts (3 tests) 8ms
+ ✓ lib/admin/eventList.test.ts (23 tests) 3ms
+ ✓ lib/learn/highlightRange.test.ts (4 tests) 5ms
+ ✓ lib/analytics.test.ts (14 tests) 15ms
+ ✓ lib/pii/scrubEmail.test.ts (22 tests) 5ms
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: absent
+{"label":"absent","expected":"ok","actual":"ok","ids":["last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: empty
+{"label":"empty","expected":"ok","actual":"ok","ids":[]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: two
+{"label":"two","expected":"ok","actual":"ok","ids":["first","last"]}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: null
+{"label":"null","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: object
+{"label":"object","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: string
+{"label":"string","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: number
+{"label":"number","expected":"unknown","actual":"unknown","ids":null}
+
+stdout | lib/companionActions/planReviewCollection.test.ts > independent parser: bad member
+{"label":"bad member","expected":"unknown","actual":"unknown","ids":null}
+
+ ✓ lib/companionActions/planReviewCollection.test.ts (8 tests) 4ms
+ ✓ services/companion.generateReply.test.ts (3 tests) 9ms
+ ✓ lib/supabase/imageUrl.test.ts (10 tests) 4ms
+ ✓ app/api/aiPlatform.test.ts (7 tests) 7ms
+ ✓ lib/recoveryPending.test.ts (5 tests) 3ms
+ ✓ services/checklist.dismissal.test.ts (3 tests) 6ms
+ ✓ lib/companionAnalytics.test.ts (9 tests) 2ms
+ ✓ lib/companionActions/taskActionStore.detailReview.test.ts (5 tests) 4ms
+ ✓ lib/whatsNew.test.ts (13 tests) 32ms
+ ✓ lib/admin/access.test.ts (5 tests) 3ms
+ ✓ lib/appLinks.test.ts (2 tests) 4ms
+ ✓ lib/news/thumbnail.test.ts (2 tests) 3ms
+ ✓ lib/companionActions/taskActionStore.session.test.ts (2 tests) 2ms
+ ✓ lib/supabase/storageHost.test.ts (5 tests) 2ms
+ ✓ lib/motion.test.ts (3 tests) 2ms
+ ✓ lib/search.test.ts (4 tests) 2ms
+ ✓ services/auth.signOut.test.ts (1 test) 2ms
+ ✓ lib/companionActions/receiptReasons.test.ts (1 test) 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 21 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  hooks/useCompanion.analytics.test.ts [ hooks/useCompanion.analytics.test.ts ]
+ FAIL  components/companion/accountOwnershipRequests.test.tsx [ components/companion/accountOwnershipRequests.test.tsx ]
+ FAIL  components/companion/companionContext.acceptance.test.ts [ components/companion/companionContext.acceptance.test.ts ]
+ FAIL  components/learn/StructuredLessonContent.test.ts [ components/learn/StructuredLessonContent.test.ts ]
+ FAIL  components/companion/tasks/ReminderAccountSession.test.tsx [ components/companion/tasks/ReminderAccountSession.test.tsx ]
+ FAIL  components/companion/tasks/ReminderNavigation.test.tsx [ components/companion/tasks/ReminderNavigation.test.tsx ]
+ FAIL  components/companion/tasks/TaskProgressHydration.test.tsx [ components/companion/tasks/TaskProgressHydration.test.tsx ]
+ FAIL  components/learn/help/inLessonAccountOwnership.test.tsx [ components/learn/help/inLessonAccountOwnership.test.tsx ]
+ FAIL  components/learn/practice/reflectionControllers.test.ts [ components/learn/practice/reflectionControllers.test.ts ]
+ FAIL  components/learn/practice/reflectionGrading.test.ts [ components/learn/practice/reflectionGrading.test.ts ]
+ FAIL  components/learn/practice/reflectionRender.test.ts [ components/learn/practice/reflectionRender.test.ts ]
+Error: Configuration must contain `projectId`
+ ❯ initConfig node_modules/@sanity/client/src/config.ts:82:11
+ ❯ SanityClient.config node_modules/@sanity/client/src/SanityClient.ts:1221:26
+ ❯ new SanityClient node_modules/@sanity/client/src/SanityClient.ts:1157:10
+ ❯ createClient node_modules/@sanity/client/src/defineCreateClient.ts:53:12
+ ❯ lib/sanity.ts:34:29
+     32|   process.env.NEXT_PUBLIC_SANITY_PREVIEW_DRAFTS === "true";
+     33| 
+     34| export const sanityClient = createClient({
+       |                             ^
+     35|   projectId: PROJECT_ID,
+     36|   dataset: DATASET,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+
+ FAIL  components/companion/accountOwnership.test.tsx [ components/companion/accountOwnership.test.tsx ]
+ FAIL  components/companion/plans/PlanLocalStack.test.tsx [ components/companion/plans/PlanLocalStack.test.tsx ]
+ FAIL  components/companion/tasks/ComposerPendingSession.test.tsx [ components/companion/tasks/ComposerPendingSession.test.tsx ]
+ FAIL  components/companion/tasks/SavedDetails.test.tsx [ components/companion/tasks/SavedDetails.test.tsx ]
+ FAIL  components/companion/tasks/TaskActions.test.tsx [ components/companion/tasks/TaskActions.test.tsx ]
+ FAIL  components/companion/tasks/TaskCreate.test.tsx [ components/companion/tasks/TaskCreate.test.tsx ]
+ FAIL  components/companion/tasks/TaskEdit.test.tsx [ components/companion/tasks/TaskEdit.test.tsx ]
+ FAIL  components/companion/tasks/TaskRemovalLocalStack.test.tsx [ components/companion/tasks/TaskRemovalLocalStack.test.tsx ]
+ FAIL  components/companion/tasks/TaskSelectionAccountSession.test.tsx [ components/companion/tasks/TaskSelectionAccountSession.test.tsx ]
+ FAIL  components/companion/tasks/TaskSteps.test.tsx [ components/companion/tasks/TaskSteps.test.tsx ]
+Error: [vitest] There was an error when mocking a module. If you are using "vi.mock" factory, make sure there are no top level variables inside, since this call is hoisted to top of the file. Read more: https://vitest.dev/api/vi.html#vi-mock
+ ❯ hooks/useChecklist.ts:8:1
+      6|   type QueryClient,
+      7| } from "@tanstack/react-query";
+      8| import * as checklist from "@/services/checklist";
+       | ^
+      9| import {
+     10|   trackChecklistTaskCompleted,
+
+Caused by: Error: Configuration must contain `projectId`
+ ❯ initConfig node_modules/@sanity/client/src/config.ts:82:11
+ ❯ SanityClient.config node_modules/@sanity/client/src/SanityClient.ts:1221:26
+ ❯ new SanityClient node_modules/@sanity/client/src/SanityClient.ts:1157:10
+ ❯ createClient node_modules/@sanity/client/src/defineCreateClient.ts:53:12
+ ❯ lib/sanity.ts:34:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+
+
+ Test Files  21 failed | 51 passed (72)
+      Tests  477 passed (477)
+   Start at  11:27:25
+   Duration  5.23s (transform 4.63s, setup 0ms, collect 9.40s, tests 1.92s, environment 11.55s, prepare 4.38s)
+

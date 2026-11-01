@@ -1,0 +1,156 @@
+running 4 tests from ./actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (337ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (388ms)
+read returns only the caller's tasks ... ok (319ms)
+cleanup ... ok (2ms)
+
+ok | 4 passed | 0 failed (1s)
+
+running 11 tests from ./boundary_test.ts
+wrong account: no token, project key, forged token, or another account's task ... ok (531ms)
+forged or model-made approval is refused and writes nothing ... ok (590ms)
+invalid contract versions and platforms are refused before any write ... ok (352ms)
+invalid payloads are 4xx, never 500, and write nothing ... ok (676ms)
+a stale revision is a conflict that names expected and actual, and writes nothing ... ok (264ms)
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... ok (471ms)
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... ok (3s)
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... ok (251ms)
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... ok (226ms)
+only POST is served ... ok (125ms)
+cleanup ... ok (3ms)
+
+ok | 11 passed | 0 failed (6s)
+
+running 7 tests from ./command_test.ts
+a clear command adds exactly the task it names, once, however often it is sent ... ok (300ms)
+two operations racing on one command message, released together from a held use, add one task ... ok (225ms)
+unclear requests are answered with a question and authorize nothing ... ok (496ms)
+a command naming a task that already exists asks which is meant and writes nothing ... ok (206ms)
+only the caller's own user message is command evidence ... ok (513ms)
+the command phrasing taught in each supported language adds exactly its task ... ok (509ms)
+cleanup ... ok (2ms)
+
+ok | 7 passed | 0 failed (2s)
+
+running 3 tests from ./create_rollback_test.ts
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it ... ok (1s)
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing ... ok (1s)
+cleanup ... ok (4ms)
+
+ok | 3 passed | 0 failed (2s)
+
+running 17 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (269ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (228ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (242ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (228ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (241ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (287ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (235ms)
+unrelated changes since review do not ask for approval again ... ok (186ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (211ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (323ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (275ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... ok (366ms)
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (874ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (339ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (274ms)
+reopening a conversation reads its drafts and command results with their current state ... ok (414ms)
+cleanup ... ok (2ms)
+
+ok | 17 passed | 0 failed (5s)
+
+running 6 tests from ./plan_access_test.ts
+another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks ... ok (596ms)
+forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing ... ok (480ms)
+a new conversation and another platform resume the same plan with current progress; receipts stay historical ... ok (302ms)
+a removed task stays a disabled reference in the plan and is never recreated ... ok (265ms)
+prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance ... ok (303ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (1s)
+
+running 8 tests from ./plan_recovery_test.ts
+repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt ... ok (249ms)
+two approvals of one draft with different operation ids, released together from a held lock, save once ... ok (238ms)
+a reply lost after commit is found by lookup, and a retry with the same id replays it ... ok (242ms)
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once ... ok (257ms)
+an operation id reused with different items is refused and writes nothing ... ok (238ms)
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one ... ok (339ms)
+when the plan itself cannot be saved, no addition is written ... ok (251ms)
+cleanup ... ok (2ms)
+
+ok | 8 passed | 0 failed (1s)
+
+running 8 tests from ./plan_retry_review_test.ts
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task ... ok (384ms)
+concurrent retries open one review; replays, a second context change, competing and lost approvals add one task ... ok (500ms)
+an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review ... ok (300ms)
+a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none ... ok (379ms)
+Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review ... ok (763ms)
+another account cannot read, edit, approve, close or retry a revised review ... ok (549ms)
+rolling back #364 and applying it again keeps an open revised review reachable; its earlier approval is not used ... ok (803ms)
+cleanup ... ok (4ms)
+
+ok | 8 passed | 0 failed (3s)
+
+running 3 tests from ./plan_rollback_test.ts
+rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans ... ok (1s)
+a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing ... ok (1s)
+cleanup ... ok (4ms)
+
+ok | 3 passed | 0 failed (3s)
+
+running 8 tests from ./plan_test.ts
+the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one ... ok (382ms)
+excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only ... ok (431ms)
+edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name ... ok (471ms)
+Not now cancels only the displayed draft revision; a cancelled draft cannot be approved ... ok (575ms)
+a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add ... ok (493ms)
+content tasks are reused by published identity only; a named content match is offered, never merged ... ok (281ms)
+a relevant change since review asks for a new review; an unrelated progress change does not ... ok (1s)
+cleanup ... ok (2ms)
+
+ok | 8 passed | 0 failed (3s)
+
+running 6 tests from ./plan_undo_test.ts
+Undo of a plan asks for removal confirmation, then removes the plan and only the task it added ... ok (459ms)
+a plan that only reuses tasks is undone with a plain control and removes no task ... ok (324ms)
+Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change ... ok (368ms)
+a plan Undo never reverses another receipt: an added task already undone on its own is left as it is ... ok (279ms)
+two plan Undos with different ids, sent together, reverse the receipt once ... ok (236ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (1s)
+
+running 4 tests from ./receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... ok (316ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... ok (257ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... ok (300ms)
+cleanup ... ok (2ms)
+
+ok | 4 passed | 0 failed (882ms)
+
+running 6 tests from ./rollback_test.ts
+legacy Checklist calls and existing rows are identical on the baseline, after up, after down and after up again ... ok (3s)
+the migration ships the feature off; API roles cannot execute the action SQL ... ok (1s)
+receipts, waiting reasons and Undo survive a rollback and re-application; held revisions go stale ... ok (1s)
+a full rollback stops every pending reminder; re-application restarts none; history stays exact ... ok (2s)
+account deletion removes receipts and proposals with the account ... ok (222ms)
+cleanup ... ok (5ms)
+
+ok | 6 passed | 0 failed (8s)
+
+running 8 tests from ./undo_test.ts
+Undo restores the exact earlier state and waiting reason of its own receipt ... ok (299ms)
+Undo of completion restores the earlier state and does not restart a stopped reminder ... ok (258ms)
+an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change ... ok (390ms)
+a compensating proposal goes stale when the task changes again; nothing is overwritten ... ok (286ms)
+a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review ... ok (251ms)
+concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay ... ok (299ms)
+Undo is scoped to the account and only to undoable receipts ... ok (479ms)
+cleanup ... ok (5ms)
+
+ok | 8 passed | 0 failed (2s)
+
+exit=0

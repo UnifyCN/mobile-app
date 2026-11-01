@@ -1,0 +1,62 @@
+running 9 tests from ./supabase/tests/companion-actions/push_authority_races_test.ts
+push authority: committed sign_out prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: sign_out
+{"kind":"enrollment_authority_intermediate","stop":"sign_out","graph":[{"pid":448,"blockers":[447]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"sign_out","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed sign_out prevents enrollment after installation contention ... ok (429ms)
+push authority: committed gate_stop prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: gate_stop
+{"kind":"enrollment_authority_intermediate","stop":"gate_stop","graph":[{"pid":448,"blockers":[463]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"gate_stop","status":503,"persisted_enrollments":0}
+----- output end -----
+push authority: committed gate_stop prevents enrollment after installation contention ... ok (179ms)
+push authority: committed expired_policy prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: expired_policy
+{"kind":"enrollment_authority_intermediate","stop":"expired_policy","graph":[{"pid":448,"blockers":[447]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"expired_policy","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed expired_policy prevents enrollment after installation contention ... ok (183ms)
+push authority: committed banned_account prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: banned_account
+{"kind":"enrollment_authority_intermediate","stop":"banned_account","graph":[{"pid":448,"blockers":[463]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"banned_account","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed banned_account prevents enrollment after installation contention ... ok (179ms)
+push authority: enrollment holds sign_out until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: sign_out
+{"kind":"enrollment_authority_first","stop":"sign_out","graph":[{"pid":595,"blockers":[583]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds sign_out until its write commits ... ok (237ms)
+push authority: enrollment holds gate_stop until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: gate_stop
+{"kind":"enrollment_authority_first","stop":"gate_stop","graph":[{"pid":463,"blockers":[621]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds gate_stop until its write commits ... ok (200ms)
+push authority: enrollment holds banned_account until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: banned_account
+{"kind":"enrollment_authority_first","stop":"banned_account","graph":[{"pid":447,"blockers":[648]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds banned_account until its write commits ... ok (200ms)
+push authority: clock expiry is checked after operation_replay ...
+------- output -------
+FALSIFIER: a policy expires during a later lock wait, but a write or historical reply is returned: operation_replay
+{"kind":"enrollment_clock_expiry","stage":"operation_replay","graph":[{"pid":673,"blockers":[622]}],"policy_expired":true}
+----- output end -----
+push authority: clock expiry is checked after operation_replay ... ok (990ms)
+push authority: clock expiry is checked after token_lock ...
+------- output -------
+FALSIFIER: a policy expires during a later lock wait, but a write or historical reply is returned: token_lock
+{"kind":"enrollment_clock_expiry","stage":"token_lock","graph":[{"pid":673,"blockers":[622]}],"policy_expired":true}
+----- output end -----
+push authority: clock expiry is checked after token_lock ... ok (969ms)
+
+ok | 9 passed | 0 failed (3s)
+

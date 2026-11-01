@@ -1,0 +1,294 @@
+  console.error
+    An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionScreen inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionScreen inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionTasksEntry inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+  console.error
+    An update to CompanionScreen inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:73:11
+      at notifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:21:5)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:44:13
+          at Array.forEach (<anonymous>)
+      at node_modules/@tanstack/query-core/src/notifyManager.ts:43:25
+      at batchNotifyFn (node_modules/@tanstack/query-core/src/notifyManager.ts:24:5)
+      at Timeout._onTimeout (node_modules/@tanstack/query-core/src/notifyManager.ts:42:9)
+
+FAIL __tests__/companionActions/taskCreate.test.tsx (5.166 s)
+  Add one task through Companion (mobile)
+    ○ skipped shows a suggested task as a draft, reviews its exact title and context, adds it once, and Checklist reads the same task
+    ○ skipped a clear command adds exactly its task without an AI answer; an unclear one asks and writes nothing
+    ○ skipped a lost reply is looked up first; pending and failed lookups never write; not applied retries the same operation
+    ○ skipped an edited title and a changed profile each need a new approval of the shown revision
+    ○ skipped Undo of an added task asks first; Keep changes nothing; after a newer edit it offers a reviewed removal
+    ○ skipped at the AI limit a draft can still be added and no model request is made
+    ○ skipped an account change hides the previous account's cards, and a late draft reply reaches nobody
+    ○ skipped reports only allowlisted action results, never the task title or message
+  late Save title and Not now replies stay with their account
+    ✕ revise: a reply after another account signed in does not restore the draft (2030 ms)
+    ✕ revise: a reply after sign-out does not restore the draft (142 ms)
+    ✕ revise: a reply after sign-out and the same account signing back in is not written under the new session (148 ms)
+    ✓ revise: a token refresh of the same account keeps the reply and shows it (141 ms)
+    ✕ cancel: a reply after another account signed in does not restore the draft (145 ms)
+    ✕ cancel: a reply after sign-out does not restore the draft (137 ms)
+    ✕ cancel: a reply after sign-out and the same account signing back in is not written under the new session (144 ms)
+    ✓ cancel: a token refresh of the same account keeps the reply and shows it (131 ms)
+    ✓ a late refusal after a token refresh of the same account is still shown (175 ms)
+
+  ● late Save title and Not now replies stay with their account › revise: a reply after another account signed in does not restore the draft
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Private revised task A", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 2, "receipt": null, "reviewReason": "edited", "source": {"conversationId": "conv-1", "messageId": 101}, "status": "draft"}
+
+      730 |       await release();
+      731 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 732 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      733 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      734 |       expect(proposalEntries(client, 'create-user-B')).toHaveLength(0);
+      735 |       expect(screen.queryByText(REVISED)).toBeNull();
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:732:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● late Save title and Not now replies stay with their account › revise: a reply after sign-out does not restore the draft
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Private revised task A", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 2, "receipt": null, "reviewReason": "edited", "source": {"conversationId": "conv-1", "messageId": 101}, "status": "draft"}
+
+      743 |       await release();
+      744 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 745 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      746 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      747 |       expect(screen.queryByText(REVISED)).toBeNull();
+      748 |     });
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:745:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● late Save title and Not now replies stay with their account › revise: a reply after sign-out and the same account signing back in is not written under the new session
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Private revised task A", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 2, "receipt": null, "reviewReason": "edited", "source": {"conversationId": "conv-1", "messageId": 101}, "status": "draft"}
+
+      755 |       await release();
+      756 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 757 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      758 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      759 |     });
+      760 |
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:757:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● late Save title and Not now replies stay with their account › cancel: a reply after another account signed in does not restore the draft
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Set up phone service", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 1, "receipt": null, "reviewReason": null, "source": {"conversationId": "conv-1", "messageId": 101}, "status": "cancelled"}
+
+      730 |       await release();
+      731 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 732 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      733 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      734 |       expect(proposalEntries(client, 'create-user-B')).toHaveLength(0);
+      735 |       expect(screen.queryByText(REVISED)).toBeNull();
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:732:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● late Save title and Not now replies stay with their account › cancel: a reply after sign-out does not restore the draft
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Set up phone service", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 1, "receipt": null, "reviewReason": null, "source": {"conversationId": "conv-1", "messageId": 101}, "status": "cancelled"}
+
+      743 |       await release();
+      744 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 745 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      746 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      747 |       expect(screen.queryByText(REVISED)).toBeNull();
+      748 |     });
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:745:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● late Save title and Not now replies stay with their account › cancel: a reply after sign-out and the same account signing back in is not written under the new session
+
+    expect(received).toBeUndefined()
+
+    Received: {"context": {"profile": {"arrivalDate": "2026-11-02", "city": "Vancouver", "province": "British Columbia"}, "sameTitleTasks": []}, "operation": {"priority": "Do soon", "title": "Set up phone service", "type": "task.create_custom"}, "previousContext": null, "proposalId": "7e1f1f6c-2222-4222-8222-000000000001", "proposalRevision": 1, "receipt": null, "reviewReason": null, "source": {"conversationId": "conv-1", "messageId": 101}, "status": "cancelled"}
+
+      755 |       await release();
+      756 |       for (let i = 0; i < 4; i += 1) await act(async () => {});
+    > 757 |       expect(client.getQueryData(taskProposalKey(owner, proposalId))).toBeUndefined();
+          |                                                                       ^
+      758 |       expect(proposalEntries(client, owner)).toHaveLength(0);
+      759 |     });
+      760 |
+
+      at Object.toBeUndefined (__tests__/companionActions/taskCreate.test.tsx:757:71)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 8 skipped, 3 passed, 17 total
+Snapshots:   0 total
+Time:        5.391 s
+Ran all test suites matching /__tests__\/companionActions\/taskCreate.test.tsx/i with tests matching "late Save title".
+Test results written to: ../DOCS/companion-actions/evidence/363/corrections-r1/mobile-red.json
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

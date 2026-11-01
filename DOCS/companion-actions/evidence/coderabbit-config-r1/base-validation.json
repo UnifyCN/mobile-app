@@ -1,0 +1,11 @@
+{
+  "source": "exact base .coderabbit.yaml at 91dd836ce",
+  "valid": false,
+  "errors": [
+    {
+      "path": [],
+      "validator": "additionalProperties",
+      "message": "Additional properties are not allowed ('skip_files' was unexpected)"
+    }
+  ]
+}

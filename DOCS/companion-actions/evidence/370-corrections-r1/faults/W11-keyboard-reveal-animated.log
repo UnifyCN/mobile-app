@@ -1,0 +1,103 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ❯ components/companion/tasks/SavedDetails.test.tsx (15 tests | 1 failed) 1026ms
+   ✓ Saved personal details through Companion (web, #370) > a clear remember message saves exactly that detail once, with no AI answer; analytics never carries it 86ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  448ms
+   ✓ Saved personal details through Companion (web, #370) > edits at the revision shown and keeps typed text through close and reopen; the command receipt becomes history 90ms
+   ✓ Saved personal details through Companion (web, #370) > every removal asks first; Cancel sends nothing; Remove names the detail and its Undo restores it 59ms
+   ✓ Saved personal details through Companion (web, #370) > the Undo of a save asks first; offline, edits and removals are off and send nothing 42ms
+   ✓ Saved personal details through Companion (web, #370) > an account change drops the previous account's details and typed edits 43ms
+   ✓ a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt 36ms
+   × the detail editor uses immediate keyboard disclosure and pointer motion (click detail 0) 30ms
+     → expected '0' not to be '0' // Object.is equality
+   ✓ the detail editor uses immediate keyboard disclosure and pointer motion (click detail 1) 29ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale 34ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed 25ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed 25ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed 25ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed 25ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/SavedDetails.test.tsx > the detail editor uses immediate keyboard disclosure and pointer motion (click detail 0)
+AssertionError: expected '0' not to be '0' // Object.is equality
+ ❯ components/companion/tasks/SavedDetails.test.tsx:539:69
+    537|   // Read before the first animation frame; keyboard input must be vis…
+    538|   const editor = within(drawer).getByLabelText("Saved detail");
+    539|   if (detail === 0) expect(editor.parentElement?.style.opacity).not.to…
+       |                                                                     ^
+    540|   else expect(editor.parentElement?.style.opacity).toBe("0");
+    541| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  20:44:05
+   Duration  2.27s (transform 232ms, setup 0ms, collect 712ms, tests 1.03s, environment 269ms, prepare 39ms)
+
+COMMAND ['reset']
+COMMAND ['migrate']
+COMMAND ['node', 'build/s370c-stack/browser-370c.mjs']
+PASS  the saved detail is shown
+PASS  pointer: the editor opens with the shared entrance motion
+FAIL  keyboard Enter: the editor opens without entrance motion  {"firstAfterAct":7,"n":86,"sample":[{"t":0,"o":0.0631842,"tr":"matrix(1, 0, 0, 1, 0, -3.68354)","v":"visible"},{"t":50,"o":0.728233,"tr":"matrix(1, 0, 0, 1, 0, -1.08937)","v":"visible"},{"t":100,"o":0.968076,"tr":"matrix(1, 0, 0, 1, 0, -0.129363)","v":"visible"},{"t":150,"o":1,"tr":"none","v":"visible"},{"t":200,"o":1,"tr":"none","v":"visible"},{"t":248,"o":1,"tr":"none","v":"visible"},{"t":300,"o":1,"tr":"none","v":"visible"},{"t":349,"o":1,"tr":"none","v":"visible"},{"t":402,"o":1,"tr":"none","v":"visible"},{"t":449,"o":1,"tr":"none","v":"visible"},{"t":500,"o":1,"tr":"none","v":"visible"},{"t":550,"o":1,"tr":"none","v":"visible"},{"t":600,"o":1,"tr":"none","v":"visible"},{"t":651,"o":1,"tr":"none","v":"visible"}]}
+PASS  keyboard Space: the editor opens without entrance motion
+PASS  saving: hidden before 300ms, then visible (loading delay)
+PASS  keyboard edit saves once at the shown revision
+PASS  a later answer reads the edited text
+PASS  checking: hidden before 300ms, then visible (loading delay)
+PASS  a lost reply is looked up, never sent twice
+PASS  pointer: the removal confirmation opens with the shared entrance motion
+PASS  keyboard: the removal confirmation opens without entrance motion
+PASS  Cancel after Remove sends nothing
+PASS  the confirmed removal carries the confirmation
+PASS  a removed detail is no longer read by a later answer
+PASS  Undo of the removal restores the detail for later answers
+PASS  390px: no horizontal overflow
+PASS  detail controls are at least 44px tall
+PASS  CSS 200 percent zoom has no horizontal overflow
+PASS  another account reads none of it
+PASS  pointer: the Undo-of-save confirmation opens with the shared entrance motion
+PASS  keyboard: the Undo-of-save confirmation opens without entrance motion
+PASS  Cancel of the Undo-of-save confirmation keeps the detail
+PASS  Arabic: right to left, Arabic copy, no overflow
+INFO  reduced motion, pointer: editor frames  {"name":"reduced motion, pointer: editor frames","instant":false,"detail":{"firstAfterAct":48,"n":87,"sample":[{"t":0,"o":0,"tr":"matrix(1, 0, 0, 1, 0, -4)","v":"visible"},{"t":39,"o":0.784993,"tr":"matrix(1, 0, 0, 1, 0, -1.08937)","v":"visible"},{"t":89,"o":0.981062,"tr":"matrix(1, 0, 0, 1, 0, -0.146096)","v":"visible"},{"t":139,"o":1,"tr":"none","v":"visible"},{"t":189,"o":1,"tr":"none","v":"visible"},{"t":239,"o":1,"tr":"none","v":"visible"},{"t":291,"o":1,"tr":"none","v":"visible"},{"t":339,"o":1,"tr":"none","v":"visible"},{"t":389,"o":1,"tr":"none","v":"visible"},{"t":441,"o":1,"tr":"none","v":"visible"},{"t":489,"o":1,"tr":"none","v":"visible"},{"t":539,"o":1,"tr":"none","v":"visible"},{"t":589,"o":1,"tr":"none","v":"visible"},{"t":639,"o":1,"tr":"none","v":"visible"}]}}
+
+22 passed, 1 failed, 0 errors

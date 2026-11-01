@@ -1,0 +1,19 @@
+running 15 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... ok (1s)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... ok (415ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... ok (430ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... ok (408ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... ok (358ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... ok (296ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... ok (666ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... ok (331ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... ok (332ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... ok (489ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... ok (424ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... ok (475ms)
+another account cannot read, change, look up or undo my steps ... ok (494ms)
+step controls, lookup and Undo never touch the AI allowance ... ok (280ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... ok (287ms)
+
+ok | 15 passed | 0 failed (6s)
+

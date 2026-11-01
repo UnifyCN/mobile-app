@@ -1,0 +1,50 @@
+running 5 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (317ms)
+profile: legacy custom province remains recoverable by a reviewed Undo without widening new supported values ... FAILED (232ms)
+profile: relevant revisions invalidate old plan approval even after return to the same value; unrelated progress survives ... ok (294ms)
+profile: arrival date preserves calendar stage; Undo keeps a newer edit and offers a reviewed change ... ok (426ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... ok (341ms)
+running 2 tests from ./profile_validation_test.ts
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing ... ok (517ms)
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes ... FAILED (527ms)
+
+ ERRORS 
+
+profile: legacy custom province remains recoverable by a reviewed Undo without widening new supported values => ./profile_test.ts:39:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_profile_value"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:51:3)
+
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes => ./profile_validation_test.ts:32:6
+error: AssertionError: Values are not equal: {"type":"profile.update","field":"arrival_date","value":"1800-01-01","expected_revision":1}
+
+
+    [Diff] Actual / Expected
+
+
+-   200
++   422
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_validation_test.ts:47:57)
+
+ FAILURES 
+
+profile: legacy custom province remains recoverable by a reviewed Undo without widening new supported values => ./profile_test.ts:39:6
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes => ./profile_validation_test.ts:32:6
+
+FAILED | 5 passed | 2 failed (2s)
+
+error: Test failed

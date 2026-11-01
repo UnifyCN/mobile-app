@@ -1,0 +1,51 @@
+running 17 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... FAILED (353ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (216ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (267ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (574ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (235ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (276ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (265ms)
+unrelated changes since review do not ask for approval again ... ok (221ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (214ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (340ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (278ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... ok (372ms)
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (862ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (333ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (256ms)
+reopening a conversation reads its drafts and command results with their current state ... ok (440ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt => ./create_test.ts:28:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    {
+-     _revisions: {
+-       arrival_date: 1,
+-       city: 1,
+-       province: 1,
+-     },
+      arrival_date: "2026-11-02T00:00:00+00:00",
+      city: "Vancouver",
+      province: "British Columbia",
+    }
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/create_test.ts:45:5)
+
+ FAILURES 
+
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt => ./create_test.ts:28:6
+
+FAILED | 16 passed | 1 failed (5s)
+
+error: Test failed

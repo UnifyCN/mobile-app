@@ -1,0 +1,21 @@
+PASS __tests__/companionActions/pushNative.test.ts
+  ✓ lets the native SDK determine push availability on a virtual ios installation (4 ms)
+  ✓ lets the native SDK determine push availability on a virtual android installation
+  ✓ rejects a nonnative platform before any native permission or token request
+  ✓ keeps denied native ios permission from enrolling
+  ✓ keeps denied native android permission from enrolling (1 ms)
+  ✓ stops after account loss during a native permission wait
+  ✓ stops after account loss during a native token wait (1 ms)
+  ✓ generates independent UUID and 32-byte proof and saves the exact intent with device-only options before dispatch
+  ✓ fails closed on missing SecureStore data without using an ID or token to recover (1 ms)
+  ✓ fails closed on partial SecureStore data without using an ID or token to recover
+  ✓ fails closed on corrupt SecureStore data without using an ID or token to recover (1 ms)
+  ✓ fails closed on locked SecureStore data without using an ID or token to recover
+  ✓ stops after a held SecureStore read when ownership becomes unknown
+  ✓ keeps tokens and proof out of runtime logs
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        0.613 s, estimated 1 s
+Ran all test suites matching /__tests__\/companionActions\/pushNative.test.ts/i.

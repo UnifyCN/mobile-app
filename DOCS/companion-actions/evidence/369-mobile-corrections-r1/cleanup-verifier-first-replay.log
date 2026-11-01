@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end/../DOCS/companion-actions/evidence/369-mobile-corrections-r1/verify_cleanup.py", line 25, in <module>
+    oldline=next(x for x in stamped if oldnet['bridge']['Id'] in x[1] and 'de-registering' in x[1] and end[0]<=x[0]<=end[0]+datetime.timedelta(seconds=2))
+StopIteration

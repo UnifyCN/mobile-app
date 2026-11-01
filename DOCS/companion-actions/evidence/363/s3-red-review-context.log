@@ -1,0 +1,76 @@
+running 10 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (396ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (216ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (238ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (222ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (220ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... FAILED (176ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... FAILED (180ms)
+unrelated changes since review do not ask for approval again ... ok (185ms)
+a task with the same title added elsewhere since review needs a new review that names it ... FAILED (178ms)
+cleanup ... ok (4ms)
+
+ ERRORS 
+
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title => ./create_test.ts:175:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"invalid_action"}
+
+
+    [Diff] Actual / Expected
+
+
+-   400
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:184:5)
+
+a relevant profile change since review needs a new review; approving the refreshed revision applies => ./create_test.ts:204:6
+error: AssertionError: Values are not equal: {"status":"applied","receipt":{"kind":"change","title":"Set up phone service","current":true,"undo_of":null,"task_ref":"custom:6","undoable":true,"undone_by":null,"created_at":"2026-10-26T16:57:51.867923+00:00","after_state":"not_started","before_state":"not_started","operation_id":"5ade1599-872f-48c6-a3d2-3a7e49dbfcb5","after_revision":1,"operation_type":"task.create_custom","before_revision":0},"results":[{"type":"task.create_custom","state":"not_started","task_ref":"custom:6","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"5ade1599-872f-48c6-a3d2-3a7e49dbfcb5"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:214:5)
+
+a task with the same title added elsewhere since review needs a new review that names it => ./create_test.ts:246:6
+error: AssertionError: Values are not equal: {"status":"applied","receipt":{"kind":"change","title":"Set up phone service","current":true,"undo_of":null,"task_ref":"custom:10","undoable":true,"undone_by":null,"created_at":"2026-10-26T16:57:52.23276+00:00","after_state":"not_started","before_state":"not_started","operation_id":"33e8ae60-1ef3-44f5-a1bb-1a6e2f5a67d1","after_revision":1,"operation_type":"task.create_custom","before_revision":0},"results":[{"type":"task.create_custom","state":"not_started","task_ref":"custom:10","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"33e8ae60-1ef3-44f5-a1bb-1a6e2f5a67d1"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     200,
+-     undefined,
++     409,
++     "needs_review",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/companion-task-create-363/supabase/tests/companion-actions/create_test.ts:255:5)
+
+ FAILURES 
+
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title => ./create_test.ts:175:6
+a relevant profile change since review needs a new review; approving the refreshed revision applies => ./create_test.ts:204:6
+a task with the same title added elsewhere since review needs a new review that names it => ./create_test.ts:246:6
+
+FAILED | 7 passed | 3 failed (2s)
+
+error: Test failed

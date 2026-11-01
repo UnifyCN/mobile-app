@@ -1,0 +1,656 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed
+Encountered two children with the same key, `undo_review`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ❯ components/companion/tasks/SavedDetails.test.tsx (15 tests | 2 failed) 964ms
+   ✓ Saved personal details through Companion (web, #370) > a clear remember message saves exactly that detail once, with no AI answer; analytics never carries it 79ms
+   ✓ Saved personal details through Companion (web, #370) > an inferred detail is only a draft: Not now saves nothing; approval saves it once; the typed message stays  422ms
+   ✓ Saved personal details through Companion (web, #370) > edits at the revision shown and keeps typed text through close and reopen; the command receipt becomes history 77ms
+   ✓ Saved personal details through Companion (web, #370) > every removal asks first; Cancel sends nothing; Remove names the detail and its Undo restores it 55ms
+   ✓ Saved personal details through Companion (web, #370) > the Undo of a save asks first; offline, edits and removals are off and send nothing 40ms
+   ✓ Saved personal details through Companion (web, #370) > an account change drops the previous account's details and typed edits 46ms
+   × a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt 39ms
+     → Unable to find an accessible element with the role "button" and name `/Remove “/`
+
+Here are the accessible roles:
+
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Keep current":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------button:
+
+  Name "View saved details":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<article[39m
+  [33maria-label[39m=[32m"Saved details"[39m
+  [33mclass[39m=[32m"mt-2 flex gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5 items-start"[39m
+  [33mdata-testid[39m=[32m"detail-command-card"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"[39m
+  [36m>[39m
+    [36m<svg[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"lucide lucide-list-checks h-4 w-4 text-ink-secondary"[39m
+      [33mfill[39m=[32m"none"[39m
+      [33mheight[39m=[32m"24"[39m
+      [33mstroke[39m=[32m"currentColor"[39m
+      [33mstroke-linecap[39m=[32m"round"[39m
+      [33mstroke-linejoin[39m=[32m"round"[39m
+      [33mstroke-width[39m=[32m"2"[39m
+      [33mviewBox[39m=[32m"0 0 24 24"[39m
+      [33mwidth[39m=[32m"24"[39m
+      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+    [36m>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 5h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 12h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 19h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 17 2 2 4-4"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 7 2 2 4-4"[39m
+      [36m/>[39m
+    [36m</svg>[39m
+  [36m</span>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"min-w-0 flex-1"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+      [36m>[39m
+        [0mSaved: “I can attend appointments on Fridays”.[0m
+      [36m</p>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+      [36m>[39m
+        [0mSaved earlier. This detail has changed since.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-2"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+        [36m>[39m
+          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+        [36m>[39m
+          [0mThe current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-disabled[39m=[32m"false"[39m
+            [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mKeep current[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mView saved details[0m
+  [36m</button>[39m
+[36m</article>[39m
+   ✓ the detail editor uses immediate keyboard disclosure and pointer motion (click detail 0) 27ms
+   ✓ the detail editor uses immediate keyboard disclosure and pointer motion (click detail 1) 31ms
+   × the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale 32ms
+     → Unable to find an accessible element with the role "button" and name "Remove “I can attend appointments on Saturdays”"
+
+Here are the accessible roles:
+
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Keep current":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------button:
+
+  Name "View saved details":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<article[39m
+  [33maria-label[39m=[32m"Saved details"[39m
+  [33mclass[39m=[32m"mt-2 flex gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5 items-start"[39m
+  [33mdata-testid[39m=[32m"detail-command-card"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"[39m
+  [36m>[39m
+    [36m<svg[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"lucide lucide-list-checks h-4 w-4 text-ink-secondary"[39m
+      [33mfill[39m=[32m"none"[39m
+      [33mheight[39m=[32m"24"[39m
+      [33mstroke[39m=[32m"currentColor"[39m
+      [33mstroke-linecap[39m=[32m"round"[39m
+      [33mstroke-linejoin[39m=[32m"round"[39m
+      [33mstroke-width[39m=[32m"2"[39m
+      [33mviewBox[39m=[32m"0 0 24 24"[39m
+      [33mwidth[39m=[32m"24"[39m
+      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+    [36m>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 5h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 12h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 19h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 17 2 2 4-4"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 7 2 2 4-4"[39m
+      [36m/>[39m
+    [36m</svg>[39m
+  [36m</span>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"min-w-0 flex-1"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+      [36m>[39m
+        [0mSaved: “I can attend appointments on Fridays”.[0m
+      [36m</p>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+      [36m>[39m
+        [0mSaved earlier. This detail has changed since.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-2"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+        [36m>[39m
+          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+        [36m>[39m
+          [0mThe current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-disabled[39m=[32m"false"[39m
+            [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mKeep current[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mView saved details[0m
+  [36m</button>[39m
+[36m</article>[39m
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail absent: approval stays unavailable and nothing is removed 24ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a different detail: approval stays unavailable and nothing is removed 24ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail an older revision: approval stays unavailable and nothing is removed 22ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail a removed detail: approval stays unavailable and nothing is removed 22ms
+   ✓ the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > current_detail malformed text: approval stays unavailable and nothing is removed 23ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/SavedDetails.test.tsx > a conflicting detail removal names the current revision, allows Cancel and preserves the historical receipt
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name `/Remove “/`
+
+Here are the accessible roles:
+
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Keep current":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------button:
+
+  Name "View saved details":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<article[39m
+  [33maria-label[39m=[32m"Saved details"[39m
+  [33mclass[39m=[32m"mt-2 flex gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5 items-start"[39m
+  [33mdata-testid[39m=[32m"detail-command-card"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"[39m
+  [36m>[39m
+    [36m<svg[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"lucide lucide-list-checks h-4 w-4 text-ink-secondary"[39m
+      [33mfill[39m=[32m"none"[39m
+      [33mheight[39m=[32m"24"[39m
+      [33mstroke[39m=[32m"currentColor"[39m
+      [33mstroke-linecap[39m=[32m"round"[39m
+      [33mstroke-linejoin[39m=[32m"round"[39m
+      [33mstroke-width[39m=[32m"2"[39m
+      [33mviewBox[39m=[32m"0 0 24 24"[39m
+      [33mwidth[39m=[32m"24"[39m
+      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+    [36m>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 5h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 12h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 19h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 17 2 2 4-4"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 7 2 2 4-4"[39m
+      [36m/>[39m
+    [36m</svg>[39m
+  [36m</span>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"min-w-0 flex-1"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+      [36m>[39m
+        [0mSaved: “I can attend appointments on Fridays”.[0m
+      [36m</p>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+      [36m>[39m
+        [0mSaved earlier. This detail has changed since.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-2"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+        [36m>[39m
+          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+        [36m>[39m
+          [0mThe current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-disabled[39m=[32m"false"[39m
+            [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mKeep current[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mView saved details[0m
+  [36m</button>[39m
+[36m</article>[39m
+ ❯ Object.getElementError node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ components/companion/tasks/SavedDetails.test.tsx:515:31
+    513|   await within(card).findByText("This detail changed after that. Nothi…
+    514|   expect(within(card).getByText(`Saved: “${FRIDAYS}”.`)).toBeTruthy();
+    515|   const review = within(card).getByRole("button", { name: /Remove “/ }…
+       |                               ^
+    516|   await waitFor(() => expect(enabled(review)).toBe(true));
+    517|   fireEvent.click(review);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  components/companion/tasks/SavedDetails.test.tsx > the reviewed change of a conflicting detail Undo is bound to the server’s current detail (S370-1) > a newer edit read while the review is open withholds approval and names nothing stale
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Remove “I can attend appointments on Saturdays”"
+
+Here are the accessible roles:
+
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Keep current":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------button:
+
+  Name "View saved details":
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<article[39m
+  [33maria-label[39m=[32m"Saved details"[39m
+  [33mclass[39m=[32m"mt-2 flex gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5 items-start"[39m
+  [33mdata-testid[39m=[32m"detail-command-card"[39m
+[36m>[39m
+  [36m<span[39m
+    [33mclass[39m=[32m"flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"[39m
+  [36m>[39m
+    [36m<svg[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"lucide lucide-list-checks h-4 w-4 text-ink-secondary"[39m
+      [33mfill[39m=[32m"none"[39m
+      [33mheight[39m=[32m"24"[39m
+      [33mstroke[39m=[32m"currentColor"[39m
+      [33mstroke-linecap[39m=[32m"round"[39m
+      [33mstroke-linejoin[39m=[32m"round"[39m
+      [33mstroke-width[39m=[32m"2"[39m
+      [33mviewBox[39m=[32m"0 0 24 24"[39m
+      [33mwidth[39m=[32m"24"[39m
+      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+    [36m>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 5h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 12h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"M13 19h8"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 17 2 2 4-4"[39m
+      [36m/>[39m
+      [36m<path[39m
+        [33md[39m=[32m"m3 7 2 2 4-4"[39m
+      [36m/>[39m
+    [36m</svg>[39m
+  [36m</span>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"min-w-0 flex-1"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"space-y-2"[39m
+    [36m>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"break-words text-sm text-ink-secondary"[39m
+      [36m>[39m
+        [0mSaved: “I can attend appointments on Fridays”.[0m
+      [36m</p>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"text-xs text-ink-muted"[39m
+      [36m>[39m
+        [0mSaved earlier. This detail has changed since.[0m
+      [36m</p>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"space-y-2"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-ink-tertiary"[39m
+        [36m>[39m
+          [0mThis detail changed after that. Nothing was undone. Review the change below before saving it.[0m
+        [36m</p>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-destructive-label"[39m
+        [36m>[39m
+          [0mThe current text of this detail could not be confirmed, so nothing was saved. Open Saved details to see it.[0m
+        [36m</p>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-disabled[39m=[32m"false"[39m
+            [33mclass[39m=[32m"inline-flex items-center justify-center rounded-lg font-semibold press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed bg-surface text-ink-secondary border border-border-card hover:bg-surface-gray disabled:opacity-60 h-8 px-3 text-xs gap-1.5 min-h-11"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [0mKeep current[0m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<button[39m
+    [33maria-disabled[39m=[32m"false"[39m
+    [33maria-label[39m=[32m"View saved details"[39m
+    [33mclass[39m=[32m"press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mView saved details[0m
+  [36m</button>[39m
+[36m</article>[39m
+ ❯ Object.getElementError node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ components/companion/tasks/SavedDetails.test.tsx:572:33
+    570|     useServer(scriptedServer());
+    571|     const card = await conflictingUndo();
+    572|     const review = within(card).getByRole("button", { name: `Remove “$…
+       |                                 ^
+    573|     await waitFor(() => expect(enabled(review)).toBe(true));
+    574|     fireEvent.click(review);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 13 passed (15)
+   Start at  20:40:25
+   Duration  1.82s (transform 219ms, setup 0ms, collect 519ms, tests 964ms, environment 139ms, prepare 26ms)
+

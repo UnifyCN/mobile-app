@@ -1,0 +1,58 @@
+{
+  "mobile": {
+    "test_ci": {
+      "exit": 0,
+      "seconds": 63.312,
+      "natural_exit": true
+    },
+    "main": {
+      "passed": 1523,
+      "skipped": 24,
+      "passed_suites": 145,
+      "skipped_suites": 2
+    },
+    "dst": {
+      "passed": 13,
+      "passed_suites": 2
+    },
+    "types": 0,
+    "i18n": 0,
+    "changed_lint": {
+      "exit": 0,
+      "errors": 0,
+      "warnings": 11
+    },
+    "export": {
+      "exit": 0,
+      "seconds": 36.671,
+      "scope": "bundle export only"
+    }
+  },
+  "web": {
+    "tests": {
+      "passed": 734,
+      "skipped": 13,
+      "files": 69,
+      "exit": 0
+    },
+    "build": {
+      "exit": 0,
+      "seconds": 15.373
+    },
+    "types": 0,
+    "i18n": 0,
+    "changed_lint": 0,
+    "full_lint": {
+      "exit": 1,
+      "old_errors": 12,
+      "unchanged_files": 3
+    }
+  },
+  "fresh_selected": {
+    "mobile": 30,
+    "mobile_unique_count_not_claimed": true,
+    "web": 21
+  },
+  "runtime": "not run; all163 prior service input hashes unchanged",
+  "native": "not run for this correction"
+}

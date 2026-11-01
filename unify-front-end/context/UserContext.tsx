@@ -6,6 +6,7 @@ import type { UserInfo } from '@/services/users/getUserInfo';
 import { useQueryClient } from '@tanstack/react-query';
 import { StageNumber } from '@/types/checklist';
 import { Persona } from '@/types/onboardingProfile';
+import { clearPlanRecoveryExcept } from '@/services/companionActions/planRecovery';
 
 interface CurrentUser {
   id: string;
@@ -46,9 +47,24 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   // Get user ID and email from auth
   useEffect(() => {
+    let active = true;
+    let authVersion = 0;
+    let recoveryAccount: string | null | undefined;
+    const clearRecovery = (accountId: string | null) => {
+      const changed = recoveryAccount !== undefined && recoveryAccount !== accountId;
+      recoveryAccount = accountId;
+      // Auth events enqueue this reset before the next account can save a record.
+      if (changed || accountId === null)
+        void clearPlanRecoveryExcept(null, () => active).catch(() => {});
+      else
+        void clearPlanRecoveryExcept(accountId, () => active && recoveryAccount === accountId).catch(() => {});
+    };
     const getAuthUser = async () => {
+      const version = authVersion;
       try {
-        const { data } = await supabase.auth.getUser();
+        const { data, error } = await supabase.auth.getUser();
+        if (!active || version !== authVersion) return;
+        if (data?.user || !error) clearRecovery(data?.user?.id ?? null);
         if (data?.user) {
           setUserId(data.user.id);
           setUserEmail(data.user.email || null);
@@ -57,6 +73,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           setUserEmail(null);
         }
       } catch (err) {
+        if (!active || version !== authVersion) return;
         // Stale session in SecureStore (e.g. refresh token rotated, expired,
         // or invalidated server-side). Clear it locally so subsequent calls
         // return a clean null user and stop throwing on every app launch.
@@ -78,6 +95,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      authVersion++;
+      clearRecovery(session?.user.id ?? null);
       if (session?.user) {
         setUserId(session.user.id);
         setUserEmail(session.user.email || null);
@@ -87,7 +106,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => { active = false; subscription.unsubscribe(); };
   }, []);
 
   // Refetch the signed-in user's profile (for example after the arrival date

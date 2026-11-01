@@ -1,0 +1,10 @@
+running 1 test from ./push_isolation_test.ts
+push isolation: a deleted shared token cannot stop another account or restart an old event ...
+------- output -------
+FALSIFIER: deleting one shared token aborts the batch, skips a healthy account, or later enrollment revives the consumed event
+{"kind":"deleted_token_isolation","jwt_delete_status":200,"deleted_rows":1,"sqlstate":null,"consumed_events":2,"healthy_queued":1}
+----- output end -----
+push isolation: a deleted shared token cannot stop another account or restart an old event ... ok (1s)
+
+ok | 1 passed | 0 failed (1s)
+

@@ -1,0 +1,203 @@
+{
+  "code_head": "1cc35ab83e4f90a3630afc8c95f15dd7cd1d0a73",
+  "code_tree": "5d04d63ee3185931353e7067c8e65d653507bef7",
+  "correction_base": "116ce513803e6646d02dd394c8b76342d2b98624",
+  "source_path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158",
+  "branch": "t3/mobile-client-implementation",
+  "findings": {
+    "R369-MC-SPEC-01": "corrected; review pending",
+    "R369-MC-SPEC-02": "corrected; review pending",
+    "R369-MC-SPEC-03": "corrected; review pending"
+  },
+  "full_ci": {
+    "main_passed": 1607,
+    "main_skipped": 29,
+    "dst_passed": 13,
+    "natural_exit": true
+  },
+  "focused": {
+    "passed": 75,
+    "skipped": 5,
+    "files": 14
+  },
+  "real_local": {
+    "cases": 4,
+    "provider_calls": 0,
+    "real_auth_and_edge": true,
+    "native_sdk_and_storage": false
+  },
+  "gates": {
+    "ci-final": {
+      "source_head": "1cc35ab83e4f90a3630afc8c95f15dd7cd1d0a73",
+      "source_tree": "5d04d63ee3185931353e7067c8e65d653507bef7",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "env",
+        "PUSH_CLIENT_LOCAL=0",
+        "npm",
+        "run",
+        "test:ci"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 60.34309720993042
+    },
+    "export-final": {
+      "source_head": "1cc35ab83e4f90a3630afc8c95f15dd7cd1d0a73",
+      "source_tree": "5d04d63ee3185931353e7067c8e65d653507bef7",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "expo",
+        "export",
+        "--platform",
+        "ios",
+        "--platform",
+        "android"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 18.45905303955078
+    },
+    "types-final": {
+      "source_head": "116ce513803e6646d02dd394c8b76342d2b98624",
+      "source_tree": "bf5be7bda5a59f82749decde186ed7c4ebdcd8ff",
+      "product_dirty": "M unify-front-end/app/(tabs)/companion/index.tsx\n M unify-front-end/components/companion/tasks/CompanionPushControl.tsx\n M unify-front-end/components/companion/tasks/TaskActionsSheet.tsx\n M unify-front-end/hooks/checklist/useChecklistTasks.ts\n M unify-front-end/services/companionActions/pushDevice.ts\n?? unify-front-end/__tests__/companionActions/pushSessionRecovery.test.ts",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 7.149017810821533
+    },
+    "i18n-final": {
+      "source_head": "1cc35ab83e4f90a3630afc8c95f15dd7cd1d0a73",
+      "source_tree": "5d04d63ee3185931353e7067c8e65d653507bef7",
+      "product_dirty": "",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 0.18197989463806152
+    },
+    "lint-final": {
+      "source_head": "116ce513803e6646d02dd394c8b76342d2b98624",
+      "source_tree": "bf5be7bda5a59f82749decde186ed7c4ebdcd8ff",
+      "product_dirty": "M unify-front-end/app/(tabs)/companion/index.tsx\n M unify-front-end/components/companion/tasks/CompanionPushControl.tsx\n M unify-front-end/components/companion/tasks/TaskActionsSheet.tsx\n M unify-front-end/hooks/checklist/useChecklistTasks.ts\n M unify-front-end/services/companionActions/pushDevice.ts\n?? unify-front-end/__tests__/companionActions/pushSessionRecovery.test.ts",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "eslint",
+        "services/companionActions/pushDevice.ts",
+        "components/companion/tasks/CompanionPushControl.tsx",
+        "components/companion/tasks/TaskActionsSheet.tsx",
+        "hooks/checklist/useChecklistTasks.ts",
+        "app/(tabs)/companion/index.tsx",
+        "__tests__/companionActions/pushSessionRecovery.test.ts",
+        "__tests__/companionActions/pushSelectionRecovery.test.tsx",
+        "__tests__/companionActions/pushSessionLocal.test.tsx"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 2.386280059814453
+    },
+    "focused-final": {
+      "source_head": "116ce513803e6646d02dd394c8b76342d2b98624",
+      "source_tree": "bf5be7bda5a59f82749decde186ed7c4ebdcd8ff",
+      "product_dirty": "M unify-front-end/app/(tabs)/companion/index.tsx\n M unify-front-end/components/companion/tasks/CompanionPushControl.tsx\n M unify-front-end/components/companion/tasks/TaskActionsSheet.tsx\n M unify-front-end/hooks/checklist/useChecklistTasks.ts\n M unify-front-end/services/companionActions/pushDevice.ts\n?? unify-front-end/__tests__/companionActions/pushSessionRecovery.test.ts",
+      "falsifier": "A nonzero exit, a failed assertion, a compiler error or incomplete natural completion rejects this gate.",
+      "command": [
+        "npx",
+        "jest",
+        "__tests__/companionActions/push",
+        "--runInBand",
+        "--watchAll=false",
+        "--json",
+        "--outputFile",
+        "../DOCS/companion-actions/evidence/369-mobile-corrections-r1/focused-final-results.json"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 8.166710138320923
+    },
+    "local-final": {
+      "command": [
+        "npm",
+        "exec",
+        "--",
+        "jest",
+        "__tests__/companionActions/pushSessionLocal.test.tsx",
+        "--runInBand",
+        "--watchAll=false"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+      "exit": 0,
+      "seconds": 5.552883148193359
+    }
+  },
+  "faults": {
+    "session": {
+      "test_exit": 1,
+      "restored": true,
+      "sources": {
+        "unify-front-end/services/companionActions/pushDevice.ts": "9cec7cb5d6b483eab3784ab67954630b7be2aa9c02ccb01fceed2477af1a9499",
+        "unify-front-end/components/companion/tasks/CompanionPushControl.tsx": "eb2fb572ceec9fa0bdb97ec07a4badcb6f0d992cda9237da976c990881c12025"
+      }
+    },
+    "details": {
+      "test_exit": 1,
+      "restored": true,
+      "sources": {
+        "unify-front-end/components/companion/tasks/TaskActionsSheet.tsx": "692f9b2c6e41eac188ca8905b37cebc461541281d9b84c03576a94249837baeb"
+      }
+    },
+    "freshness": {
+      "test_exit": 1,
+      "restored": true,
+      "sources": {
+        "unify-front-end/components/companion/tasks/TaskActionsSheet.tsx": "692f9b2c6e41eac188ca8905b37cebc461541281d9b84c03576a94249837baeb"
+      }
+    }
+  },
+  "source_inputs": 42,
+  "lint": {
+    "errors": 0,
+    "warnings": 27
+  },
+  "cleanup": {
+    "passed": true,
+    "protected_containers": 33,
+    "full_mount_objects_equal": true,
+    "mount_order_only_differences": 2,
+    "protected_volumes": 18,
+    "protected_nondefault_networks": 7,
+    "ports_free_ipv4_ipv6": 14,
+    "owned_containers": 0,
+    "owned_volumes": 0,
+    "owned_networks": 0,
+    "strict_network_ids_unchanged": false,
+    "bounded_bridge_disposition": "Resource Saver startup and resync in the fresh captured interval. The replacement bridge creation falls inside engine startup. This is not a strict network identity claim or continuous process observation.",
+    "startup": "2026-10-30T21:59:40.676772+00:00",
+    "engine_ready": "2026-10-30T21:59:42.060527+00:00",
+    "bridge_created": "2026-10-30T21:59:41.927440+00:00",
+    "old_bridge": "b638ea163d884b6db3bb8861ed050611b43dccd48c691595bf4f9ed4741fb8c8",
+    "new_bridge": "aa827fc2f2a06ccaa49cf13324c5af6daeea476dd0a5f6608e3d5bd50a208ac3",
+    "input_hashes": {
+      "preflight.json": "417fa9a366586ac20034e26f28643f88c2366423d6180a2f7645ee0afd7bd608",
+      "cleanup.json": "8003484d12a77ceddd9faaa0099b708cab31547b89454f318e706c781fbc8110",
+      "host-cleanup-tail.txt": "0492b47dd7a11eebe6c23bfbbe50e279d8fd2a3d8f88764bd503a1155ac936d2",
+      "startup-network-lines.txt": "d720f770d2c435cc0896f9cb6aba01c522c9600c47dffe075a6101fc5172a6f2"
+    }
+  },
+  "acceptance": false,
+  "native_or_hosted_qualification": false
+}

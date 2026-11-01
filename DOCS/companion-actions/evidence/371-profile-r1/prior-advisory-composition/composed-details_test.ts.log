@@ -1,0 +1,16 @@
+running 12 tests from ./details_test.ts
+a clear remember message saves exactly that detail once, with owner, scope, provenance and revision ... ok (663ms)
+interpret resolves the documented remember grammar in every supported language and writes nothing ... ok (686ms)
+a profile fact is never saved as a detail: by command, approved draft or edit ... ok (237ms)
+an inferred detail is a draft until the shown revision is approved; Not now saves nothing ... ok (642ms)
+an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite ... ok (442ms)
+every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once ... ok (418ms)
+Undo after a newer edit keeps the newer text and offers a reviewed change ... ok (298ms)
+another account can neither read, change, remove nor look up a detail ... ok (414ms)
+a lost reply is looked up; the same id replays once; a held operation is pending ... ok (319ms)
+a command and an approval of the same text, applied concurrently, save one detail ... ok (463ms)
+with the feature gate off, saved details can be neither read nor changed through the action service ... ok (202ms)
+malformed detail operations are refused before any write ... ok (300ms)
+
+ok | 12 passed | 0 failed (5s)
+

@@ -1,0 +1,92 @@
+running 2 tests from ./index_companion_context_test.ts
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"801a976f-3fb4-494d-b4e6-1af7d4a5ffda","identity":"canonical"}
+{"event":"embedding_checked","call_id":"801a976f-3fb4-494d-b4e6-1af7d4a5ffda","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need in my first week in Vancouver?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":1,"profile_ms":5,"classify_ms":0,"embedding_ms":3,"vector_search_ms":4,"generation_ms":0,"total_ms":62}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5de3e862-a77c-4ea5-9dfb-6920ab979249","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5de3e862-a77c-4ea5-9dfb-6920ab979249","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need in my first week in Vancouver?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":1,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":1,"generation_ms":1,"total_ms":7}
+----- output end -----
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ... ok (89ms)
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"53739aee-1c0d-4047-b15d-a8b21076b53c","identity":"canonical"}
+{"event":"embedding_checked","call_id":"53739aee-1c0d-4047-b15d-a8b21076b53c","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":3}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"378e0e9d-6b0d-4fef-ac8b-ea1775fba5a5","identity":"canonical"}
+{"event":"embedding_checked","call_id":"378e0e9d-6b0d-4fef-ac8b-ea1775fba5a5","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":3}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9a59763b-e2b8-4244-a538-0ff1c2dcf08a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9a59763b-e2b8-4244-a538-0ff1c2dcf08a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3e6bb50d-ebb7-4043-82fb-f93f8a1a9ca5","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3e6bb50d-ebb7-4043-82fb-f93f8a1a9ca5","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":3}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2d380071-1750-49ee-a41c-e0b71b1313cb","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2d380071-1750-49ee-a41c-e0b71b1313cb","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6426887a-bb1c-473d-bfe4-5b59e9d675c7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6426887a-bb1c-473d-bfe4-5b59e9d675c7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ... ok (13ms)
+
+ok | 2 passed | 0 failed | 28 filtered out (105ms)
+

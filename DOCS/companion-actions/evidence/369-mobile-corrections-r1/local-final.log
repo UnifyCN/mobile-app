@@ -1,0 +1,36 @@
+  console.log
+    FALSIFIER: wrong project identity, duplicate revision on lost reply, foreign access, failed persisted disable or obsolete target resolution.
+
+      at Object.log (__tests__/companionActions/pushSessionLocal.test.tsx:146:13)
+
+  console.log
+    Persisted readbacks: revision 1 after lost reply+status+replay; revision 3 disabled; completed available; foreign and removed unavailable. No provider call.
+
+      at Object.log (__tests__/companionActions/pushSessionLocal.test.tsx:336:13)
+
+  console.log
+    Fresh user consent renewed retained proof at revision2; old cleanup remained secure; destination=same account
+
+      at log (__tests__/companionActions/pushSessionLocal.test.tsx:480:13)
+
+  console.log
+    Fresh user consent renewed retained proof at revision2; old cleanup remained secure; destination=another account
+
+      at log (__tests__/companionActions/pushSessionLocal.test.tsx:480:13)
+
+  console.log
+    Fresh user consent renewed retained proof at revision2; old cleanup remained secure; destination=another account after rotation
+
+      at log (__tests__/companionActions/pushSessionLocal.test.tsx:480:13)
+
+PASS __tests__/companionActions/pushSessionLocal.test.tsx
+  ✓ client enables, reconciles a lost reply, rotates, disables, isolates and resolves current delivery access (1362 ms)
+  ✓ review: explicit normal enable remains available after online sign-out and return to same account (619 ms)
+  ✓ review: explicit normal enable remains available after online sign-out and return to another account (634 ms)
+  ✓ review: explicit normal enable remains available after online sign-out and return to another account after rotation (704 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        4.144 s
+Ran all test suites matching /__tests__\/companionActions\/pushSessionLocal.test.tsx/i.

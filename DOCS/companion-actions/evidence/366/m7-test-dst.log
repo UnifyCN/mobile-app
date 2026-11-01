@@ -1,0 +1,12 @@
+
+> unify-front-end@1.6.0 test:dst
+> TZ=America/Toronto jest __tests__/dst --runInBand --watchAll=false --testPathIgnorePatterns /node_modules/
+
+PASS __tests__/dst/arrivalDateDst.test.ts
+PASS __tests__/dst/storedArrivalDateDst.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        0.8 s
+Ran all test suites matching /__tests__\/dst/i.

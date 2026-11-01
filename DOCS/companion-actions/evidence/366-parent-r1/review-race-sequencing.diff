@@ -1,0 +1,21 @@
+12c12
+<  let pending: ReturnType<typeof apply> | undefined;
+---
+>  let pending: ReturnType<typeof apply> | undefined; let legacyP: Promise<any> | undefined; let midChanged=false;
+19,20c19,21
+<   const legacy=await who.client.from('user_tasks').upsert(row,{onConflict:'user_id,sanity_checklist_id'}).select('completed,dismissed_at,revision');assertEquals(legacy.error,null);timeline.push({event:'legacy-committed',status:legacy.status,data:legacy.data});
+<   const mid=await read(who);assertEquals(mid.status,200);assertEquals(mid.json.steps,[]);const parent=mid.json.tasks.find((t:any)=>t.task_ref===ref);assert(parent);assertEquals(mode==='completion'?parent.state:parent.removed,mode==='completion'?'completed':true);timeline.push({event:'public-read-before-release',status:mid.status,json:mid.json});
+---
+>   legacyP=Promise.resolve(who.client.from('user_tasks').upsert(row,{onConflict:'user_id,sanity_checklist_id'}).select('completed,dismissed_at,revision'));
+>   const legacyBlocked=await waitForBlocked(1,'%"user_tasks"%',1500);timeline.push({event:'legacy-started',legacyBlocked});
+>   const mid=await read(who);assertEquals(mid.status,200);assertEquals(mid.json.steps,[]);const parent=mid.json.tasks.find((t:any)=>t.task_ref===ref);midChanged=!!parent&&(mode==='completion'?parent.state==='completed':parent.removed===true);timeline.push({event:'public-read-before-release',status:mid.status,json:mid.json});
+22a24
+>  const legacy=await legacyP!;assertEquals(legacy.error,null);timeline.push({event:'legacy-committed',status:legacy.status,data:legacy.data});
+24a27
+>  if(midChanged){
+26a30,34
+>  } else {
+>  // The legacy write waited for the held parent: the step committed first and is history.
+>  assertEquals(result.status,200);assertEquals(after.json.steps.length,1);
+>  const p=after.json.tasks.find((t:any)=>t.task_ref===ref);assert(mode==='completion'?p.state==='completed':p.removed===true);
+>  }

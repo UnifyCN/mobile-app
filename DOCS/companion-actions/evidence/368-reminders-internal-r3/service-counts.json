@@ -1,0 +1,664 @@
+{
+  "fresh_files": 37,
+  "fresh_passed": 244,
+  "fresh_failed": 0,
+  "files": [
+    {
+      "file": "reminders_commands_test.ts",
+      "exit": 0,
+      "seconds": 19.832,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "reminder authorization: exact own user command, unknown outcome, foreign and assistant message refusal",
+        "reminder proposal: registry produces data only and the exact approved server revision authorizes the change",
+        "reminder command cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "d64230d058bb9a2cd421ab583100c3eb168e4d023fa35aa2ce05e6bdd870fbf1"
+    },
+    {
+      "file": "reminders_races_test.ts",
+      "exit": 0,
+      "seconds": 48.847,
+      "passed": 11,
+      "failed": 0,
+      "case_lines": [
+        "reminders race: complete, claim commits first",
+        "reminders race: complete, stop commits first",
+        "reminders race: remove, claim commits first",
+        "reminders race: remove, stop commits first",
+        "reminders race: cancel, claim commits first",
+        "reminders race: cancel, stop commits first",
+        "reminders race: legacy, claim commits first",
+        "reminders race: legacy, stop commits first",
+        "reminders race: content_complete, claim commits first",
+        "reminders race: content_complete, stop commits first",
+        "reminder races: cleanup barriers and connections"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "354e3b50c0de883e92fa66075c7d3e49c1d66c4cecaf5d85a84643687b2811b5"
+    },
+    {
+      "file": "actions_test.ts",
+      "exit": 0,
+      "seconds": 19.65,
+      "passed": 4,
+      "failed": 0,
+      "case_lines": [
+        "an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it",
+        "all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads",
+        "read returns only the caller's tasks",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "6fbe244db62287cb1a09c2eb44ae0b92dc9eb5256378b139f0451c78fef1f3c8"
+    },
+    {
+      "file": "boundary_test.ts",
+      "exit": 0,
+      "seconds": 25.697,
+      "passed": 11,
+      "failed": 0,
+      "case_lines": [
+        "wrong account: no token, project key, forged token, or another account's task",
+        "forged or model-made approval is refused and writes nothing",
+        "invalid contract versions and platforms are refused before any write",
+        "invalid payloads are 4xx, never 500, and write nothing",
+        "a stale revision is a conflict that names expected and actual, and writes nothing",
+        "one operation identity: repeat taps and concurrent retries produce one write and one outcome",
+        "result lookup: applied after a lost response, pending while in flight, not applied otherwise",
+        "task controls, lookup and Undo work at the AI limit and never touch the generation quota",
+        "gate: off refuses and writes nothing; a gate-only toggle stops no reminder",
+        "only POST is served",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "0e7f55c39910ee4b877b059102bc22613d826142a05275ba89f91cb831627628"
+    },
+    {
+      "file": "command_test.ts",
+      "exit": 0,
+      "seconds": 20.701,
+      "passed": 7,
+      "failed": 0,
+      "case_lines": [
+        "a clear command adds exactly the task it names, once, however often it is sent",
+        "two operations racing on one command message, released together from a held use, add one task",
+        "unclear requests are answered with a question and authorize nothing",
+        "a command naming a task that already exists asks which is meant and writes nothing",
+        "only the caller's own user message is command evidence",
+        "the command phrasing taught in each supported language adds exactly its task",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "fd68a3c92bb65d5902a39d224fdb8ee59b68636cc8a8031d0fd3d59d9f1a8548"
+    },
+    {
+      "file": "compose_365_370_test.ts",
+      "exit": 0,
+      "seconds": 23.375,
+      "passed": 4,
+      "failed": 0,
+      "case_lines": [
+        "one account edits a task, changes a waiting reason and saves a detail through the same service; receipts, lookup, replay and Undo keep both domains",
+        "an eligible Undo of a #365 edit and of a #370 save applies; plans and steps of the account are unchanged by both",
+        "another account cannot interpret, apply, look up or undo the owner's edit commands, edit drafts, details or receipts",
+        "concurrent edit commands, remember commands, detail edits and retries each apply once"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "d2b8f41c79d6cc1b49a787508d95f4e030cf37d727723442fca64821ebce8f96"
+    },
+    {
+      "file": "compose_367_370_recovery_test.ts",
+      "exit": 0,
+      "seconds": 23.17,
+      "passed": 1,
+      "failed": 0,
+      "case_lines": [
+        "combined detail and removal receipts, retained steps and open drafts survive the full reverse rollback without restarting reminders"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "799761d97e93e32202ec11eb9c6e3440ad7ab0c8cf867f803ab5f42d67c14e88"
+    },
+    {
+      "file": "compose_367_370_rollback_test.ts",
+      "exit": 0,
+      "seconds": 24.622,
+      "passed": 1,
+      "failed": 0,
+      "case_lines": [
+        "#367 down restores #370 definitions and grants; #370 down restores #365; both up stages restore exact definitions and grants"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "8311b1b05b94b47250bbccd3f8c356d96732ea90f14fd2747a6ff01643ecc9ad"
+    },
+    {
+      "file": "compose_367_370_test.ts",
+      "exit": 0,
+      "seconds": 20.865,
+      "passed": 1,
+      "failed": 0,
+      "case_lines": [
+        "approved saved detail and plan task removal retain exact receipts, replay, steps and account boundaries together"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "95bb6b0d695a9f63522ffd83baa4f6b195ecd4e78d49dcb0fdaa5dabf95e158d"
+    },
+    {
+      "file": "compose_rollback_test.ts",
+      "exit": 0,
+      "seconds": 30.476,
+      "passed": 2,
+      "failed": 0,
+      "case_lines": [
+        "the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly",
+        "data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "940ff1f1247f1f5e15e2cfc700ff7b351bbf3a889bd76fceb3a063be970fd4cc"
+    },
+    {
+      "file": "create_rollback_test.ts",
+      "exit": 0,
+      "seconds": 27.566,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it",
+        "a full rollback and re-application keeps operation identity: a retried create replays and adds nothing",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "d3cdee71b77aad3bcfde42bb7a7b9fa2f560d81b84649aae799c9ea420c5330d"
+    },
+    {
+      "file": "create_test.ts",
+      "exit": 0,
+      "seconds": 24.062,
+      "passed": 17,
+      "failed": 0,
+      "case_lines": [
+        "a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt",
+        "repeated taps and concurrent retries of one approval add one task and replay one receipt",
+        "two approvals of one proposal with different operation ids, released together from a held lock, add one task",
+        "a reply lost after commit is recovered by lookup; the retry replays and writes nothing",
+        "while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once",
+        "editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title",
+        "a relevant profile change since review needs a new review; approving the refreshed revision applies",
+        "unrelated changes since review do not ask for approval again",
+        "a task with the same title added elsewhere since review needs a new review that names it",
+        "Undo of an added task removes it only after confirmation, once, with its own receipt",
+        "Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision",
+        "a reviewed removal is refused after another edit, and cannot remove any other task",
+        "another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing",
+        "prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance",
+        "a cancelled draft cannot be approved and stays visible as cancelled",
+        "reopening a conversation reads its drafts and command results with their current state",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "836178574289c4d3088d7b2799d676d275304a26212821fa300eab3810149cda"
+    },
+    {
+      "file": "details_language_test.ts",
+      "exit": 0,
+      "seconds": 20.993,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "S370-3: every locale\u2019s own help example saves its whole first-person detail",
+        "S370-3: Arabic attached first-person forms keep their meaning; other attached forms ask",
+        "S370-2: a need that mentions a permit is saved; a statement of status stays with the profile"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "2d986e73c7256fd78ae54766f3d749dbf7aa310125421c529e850d415619df08"
+    },
+    {
+      "file": "details_rollback_test.ts",
+      "exit": 0,
+      "seconds": 24.385,
+      "passed": 2,
+      "failed": 0,
+      "case_lines": [
+        "rolling back stops every use of saved details; re-applying restores them, their receipts and a re-review",
+        "the full schema rollback (all four migrations) and re-application still work with #370 first"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "4668da0c3e211faaa1941670348d29f32e6671667e30132d9a527fc6a929f58d"
+    },
+    {
+      "file": "details_test.ts",
+      "exit": 0,
+      "seconds": 22.744,
+      "passed": 12,
+      "failed": 0,
+      "case_lines": [
+        "a clear remember message saves exactly that detail once, with owner, scope, provenance and revision",
+        "interpret resolves the documented remember grammar in every supported language and writes nothing",
+        "a profile fact is never saved as a detail: by command, approved draft or edit",
+        "an inferred detail is a draft until the shown revision is approved; Not now saves nothing",
+        "an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite",
+        "every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once",
+        "Undo after a newer edit keeps the newer text and offers a reviewed change",
+        "another account can neither read, change, remove nor look up a detail",
+        "a lost reply is looked up; the same id replays once; a held operation is pending",
+        "a command and an approval of the same text, applied concurrently, save one detail",
+        "with the feature gate off, saved details can be neither read nor changed through the action service",
+        "malformed detail operations are refused before any write"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "9913dfed23544021bc50b286ccf0961120958f9cd96ddc4c08ddbdcac4d193cf"
+    },
+    {
+      "file": "edit_command_test.ts",
+      "exit": 0,
+      "seconds": 26.097,
+      "passed": 10,
+      "failed": 0,
+      "case_lines": [
+        "a clear rename command changes exactly the task it names, once",
+        "the documented command examples in every supported language make exactly their change",
+        "an unclear target or meaning gets a question and writes nothing",
+        "a command line with more quoted text than one change uses asks one change at a time and writes nothing",
+        "a command never names a task it cannot see: published tasks unread, another account, an assistant message",
+        "naming Waiting keeps the reason a waiting task has, and a change in between is a conflict",
+        "a waiting reason change names both reasons in its receipt, kept after a later edit and through lookup, replay and Undo",
+        "a retry of a committed rename command replays its result instead of refusing or writing again",
+        "every priority label the mobile or web Checklist shows, in every language, names that priority",
+        "the database refuses a second write under one command message even at the current revision"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "eedd2b3fbd01632d81d28c3d33a048a6e83cae33860a2d73256068361eaa0f20"
+    },
+    {
+      "file": "edit_published_test.ts",
+      "exit": 0,
+      "seconds": 20.228,
+      "passed": 5,
+      "failed": 0,
+      "case_lines": [
+        "a command names a published task by the title the Checklist shows, in the command's language, and changes only its state",
+        "a published task's shared title, description and priority are never edited for one account",
+        "a published task and a custom task with the same title, another province's task or a removed one are not guessed",
+        "an edit draft for a published task is prepared only for a task the Checklist shows, and shows its title",
+        "when published content cannot be read, no command or draft names a task"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "43765ac333ed4300a4e60ffccd9d1172e0ca36902c81a4c8c4d982c0b73191ca"
+    },
+    {
+      "file": "edit_rollback_test.ts",
+      "exit": 0,
+      "seconds": 25.667,
+      "passed": 2,
+      "failed": 0,
+      "case_lines": [
+        "rolling back only #365 keeps saved edits and #361/#363 controls, refuses edit work, and re-application restores it",
+        "a full rollback and re-application keeps saved edits and restores the edit receipts"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "67d159c31a5ce2adb32e976850343fd3c72cf79446c381b9d6bb79bbdf152093"
+    },
+    {
+      "file": "edit_test.ts",
+      "exit": 0,
+      "seconds": 22.494,
+      "passed": 9,
+      "failed": 0,
+      "case_lines": [
+        "a suggested edit is a draft until approved, and approval applies exactly the reviewed change once",
+        "a renamed or re-described task keeps its identity, and the old receipt keeps the old title",
+        "a suggested state change shows the state it changes from and applies only that state and reason",
+        "a draft that changes nothing, names a removed task or another account's task, or carries a revision is refused",
+        "an edit of a task's details needs a reviewed proposal or a clear command, never a control or a model flag",
+        "a newer edit of the field a proposal changes gives a revised proposal and writes nothing",
+        "a change to another field of the same task does not need a new approval",
+        "a newer state change elsewhere gives a state proposal a new review",
+        "two approvals of one edit released together from a held task lock apply once"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "654e74bb252a0775da96597b2ab62347befc05459500ab3697e417ae0374aaa1"
+    },
+    {
+      "file": "edit_undo_test.ts",
+      "exit": 0,
+      "seconds": 19.669,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "Undo of an edit restores exactly the earlier values, once",
+        "Undo after a newer edit keeps the newer values and offers a reviewed compensating change",
+        "Undo of a state command restores the earlier state and reason, and competing Undos reverse it once"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "a230144ecd238b5e7db0aed1670bcc48bf96f7585335e2b2e5ec7c8707fb7d42"
+    },
+    {
+      "file": "plan_access_test.ts",
+      "exit": 0,
+      "seconds": 20.492,
+      "passed": 6,
+      "failed": 0,
+      "case_lines": [
+        "another account cannot read, edit, approve, look up, retry or undo a plan, or reference its tasks",
+        "forged approval, a model flag, a bare control, invalid shapes and unsupported versions write nothing",
+        "a new conversation and another platform resume the same plan with current progress; receipts stay historical",
+        "a removed task stays a disabled reference in the plan and is never recreated",
+        "prepare, review, approval, lookup, retry, Undo and plan reads never touch the AI-generation allowance",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "7855392ae5f173228a0807e3095360c288ad7c9be4a6523faf15706604806662"
+    },
+    {
+      "file": "plan_multiple_reviews_test.ts",
+      "exit": 0,
+      "seconds": 20.69,
+      "passed": 5,
+      "failed": 0,
+      "case_lines": [
+        "a second retry review keeps the first reachable after a fresh read; each is approved on its own with its original identity",
+        "Not now on one review keeps the other open; only the closed addition returns to Retry, which opens one new review",
+        "two reviews approved at once each add their own task once; replays and a lost reply add nothing; an old Retry replay opens no review",
+        "a plan Undo closes every open review; another account reaches neither; an item Undo removes only its own task",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "f4f4680e8a18a8fce373e1ae6c15daebc1992c059ca6625f64b6fd9a67021ad4"
+    },
+    {
+      "file": "plan_recovery_test.ts",
+      "exit": 0,
+      "seconds": 20.61,
+      "passed": 8,
+      "failed": 0,
+      "case_lines": [
+        "repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt",
+        "two approvals of one draft with different operation ids, released together from a held lock, save once",
+        "a reply lost after commit is found by lookup, and a retry with the same id replays it",
+        "while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once",
+        "an operation id reused with different items is refused and writes nothing",
+        "a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one",
+        "when the plan itself cannot be saved, no addition is written",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "67d605033edc2a5dcaa33d14a7365fbeb8c37fcbd5f8aa8dfb9eedb478ce4a0a"
+    },
+    {
+      "file": "plan_retry_review_test.ts",
+      "exit": 0,
+      "seconds": 23.11,
+      "passed": 8,
+      "failed": 0,
+      "case_lines": [
+        "a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task",
+        "concurrent retries open one review; replays, a second context change, competing and lost approvals add one task",
+        "an unrelated change since approval (reused task progress, a profile field the plan does not use) retries without a review",
+        "a same-title task that appeared before the retry is offered in the review; choosing it references that task and adds none",
+        "Not now returns the addition to Retry; leaving it out closes it; a plan Undo closes an open review",
+        "another account cannot read, edit, approve, close or retry a revised review",
+        "rolling back #364 and applying it again keeps an open revised review reachable; its earlier approval is not used",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "f96570b5465784369c33b93f34be2e7be49a0034d6d5728613a771dec359d181"
+    },
+    {
+      "file": "plan_rollback_test.ts",
+      "exit": 0,
+      "seconds": 25.787,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "rolling back only #364 refuses plan actions, keeps #361/#363 working and keeps added tasks; re-application restores plans",
+        "a full rollback and re-application keeps plan identity: a retried approval replays and adds nothing",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "8f14cb493447545137d10fbff0aea7be22b53edcbb15ef7bc382ba3ab6073f0f"
+    },
+    {
+      "file": "plan_test.ts",
+      "exit": 0,
+      "seconds": 22.037,
+      "passed": 8,
+      "failed": 0,
+      "case_lines": [
+        "the reference plan reuses SIN and bank tasks, proposes one phone task, and approval adds exactly that one",
+        "excluding the addition is a new revision: the old approval is refused and the plan saves with existing tasks only",
+        "edits may reorder, drop a reference or re-include, but cannot introduce a task the preparation did not name",
+        "Not now cancels only the displayed draft revision; a cancelled draft cannot be approved",
+        "a custom task with the same title is an uncertain match: approval waits until the user picks reuse or add",
+        "content tasks are reused by published identity only; a named content match is offered, never merged",
+        "a relevant change since review asks for a new review; an unrelated progress change does not",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "efbb63b381198ffac837e739a05fe1db6d3dd292d83da5b3bd41127213006779"
+    },
+    {
+      "file": "plan_undo_test.ts",
+      "exit": 0,
+      "seconds": 20.482,
+      "passed": 6,
+      "failed": 0,
+      "case_lines": [
+        "Undo of a plan asks for removal confirmation, then removes the plan and only the task it added",
+        "a plan that only reuses tasks is undone with a plain control and removes no task",
+        "Undo after a newer edit of the added task keeps the edit and offers a reviewed compensating change",
+        "a plan Undo never reverses another receipt: an added task already undone on its own is left as it is",
+        "two plan Undos with different ids, sent together, reverse the receipt once",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "7d66d5b50c4c89e24387691c9e41c95f78de44f4c87452ae70c684c2e8f1ed6c"
+    },
+    {
+      "file": "receipt_history_test.ts",
+      "exit": 0,
+      "seconds": 19.581,
+      "passed": 4,
+      "failed": 0,
+      "case_lines": [
+        "an approved creation receipt keeps the reviewed title after the owner renames the task",
+        "a command creation receipt keeps the commanded title after a rename, in status and in its conversation",
+        "after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "81ab5addc519fcb18754316a0b4382f96af296b7ee7c49eca699b237300cad50"
+    },
+    {
+      "file": "remove_plan_race_test.ts",
+      "exit": 0,
+      "seconds": 19.787,
+      "passed": 3,
+      "failed": 0,
+      "case_lines": [
+        "a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait",
+        "a removal approval waits for a plan approval naming the task, then needs a new review that names the plan",
+        "an approved plan retry review that references an existing task waits for its removal, then needs a new review"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "ec7c4edb36f2590f95a2b9e907b9791954d1b47ccc4affb4edf6c7d6122f9079"
+    },
+    {
+      "file": "remove_rollback_test.ts",
+      "exit": 0,
+      "seconds": 22.97,
+      "passed": 2,
+      "failed": 0,
+      "case_lines": [
+        "rolling back #367 alone keeps removed tasks removed and restores the preceding #370 functions; re-applying restores receipts and reviews",
+        "after a full rollback and re-application a removed custom task is still removed and its Undo is a reviewed restore"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "2a382e9e96ccae5888608a8917cdedec3cc64e3ac325e237aa893bab4136665f"
+    },
+    {
+      "file": "remove_test.ts",
+      "exit": 0,
+      "seconds": 25.365,
+      "passed": 15,
+      "failed": 0,
+      "case_lines": [
+        "a removal review names the task and its effects on plans, steps and reminders, and writes nothing",
+        "a confirmed removal soft-removes a custom task, keeps steps and plan references, stops reminders; Undo restores",
+        "a content-backed task is removed by dismissal, also when it has no progress row, and Undo clears it",
+        "every removal needs the reviewed draft and the user's confirmation; no other evidence removes",
+        "a relevant change between review and approval needs a new review; an unrelated change does not",
+        "an edit committed while the approval waits is read and needs review; an approval that holds the task first wins",
+        "concurrent removal, edit and Undo: one outcome each, never a removed task that was edited after review",
+        "Undo keeps newer edits and never recreates a task that was restored or removed again elsewhere",
+        "Undo restores the task into plans that still exist and never brings back a plan removed separately",
+        "another account cannot review, approve, undo or look up a removal",
+        "an unknown outcome is looked up before retry; a retry with the same identity removes once",
+        "old messages, receipts and drafts cannot recreate a removed task",
+        "removal commands in every supported language ask for a review and never write",
+        "legacy dismissal and account deletion keep their behavior",
+        "a removal review from a conversation is listed there and reads as removed on another device"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "1c9764f95206032a65e14473de1f3912c1cd47aedbaebde63da45ad396946703"
+    },
+    {
+      "file": "rollback_test.ts",
+      "exit": 0,
+      "seconds": 40.966,
+      "passed": 6,
+      "failed": 0,
+      "case_lines": [
+        "legacy Checklist calls and existing rows are identical on the baseline, after up, after down and after up again",
+        "the migration ships the feature off; API roles cannot execute the action SQL",
+        "receipts, waiting reasons and Undo survive a rollback and re-application; held revisions go stale",
+        "a full rollback stops every pending reminder; re-application restarts none; history stays exact",
+        "account deletion removes receipts and proposals with the account",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "3841860976bcd9b7a197269a96bd2961df3e64bdb634c5fb10ab6a111e1c129a"
+    },
+    {
+      "file": "steps_context_race_test.ts",
+      "exit": 0,
+      "seconds": 30.379,
+      "passed": 23,
+      "failed": 0,
+      "case_lines": [
+        "F3 serial control: a matching step saved before the approval needs a new review",
+        "F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task)",
+        "F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task)",
+        "F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task)",
+        "F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task)",
+        "F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task)",
+        "F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task)",
+        "F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task)",
+        "F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task)",
+        "F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task)",
+        "F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task)",
+        "F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task)",
+        "F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task)",
+        "F3 unrelated changes while an approval waits do not force a new review",
+        "F3 competing approvals of one draft and their replays: no stale save, one new review, then one save",
+        "F3 rolling back and re-applying #366 keeps the approval context check ordered"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "2ce5ef76613a229974d8c922e4ee41537ddc53f8ece8755c3e98afe92a98e953"
+    },
+    {
+      "file": "steps_parent_race_test.ts",
+      "exit": 0,
+      "seconds": 23.587,
+      "passed": 11,
+      "failed": 0,
+      "case_lines": [
+        "absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step",
+        "absent progress row: a legacy completion queued before the step add commits first and the step add is refused",
+        "absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step",
+        "absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused",
+        "absent progress row: a legacy completion sent after the step add passed its parent check waits for that step",
+        "absent progress row: a legacy dismissal sent after the step add passed its parent check waits for that step",
+        "absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read",
+        "existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add",
+        "independent parents and accounts are not serialized behind a held parent",
+        "simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors",
+        "rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "26747d358ebdf291603a7ef09e0e44e88aea018b01f46871d2332dd88a474081"
+    },
+    {
+      "file": "steps_rollback_test.ts",
+      "exit": 0,
+      "seconds": 23.674,
+      "passed": 2,
+      "failed": 0,
+      "case_lines": [
+        "the #366 rollback waits for the step RPC to leave the cache while plan setup accepts installed steps",
+        "rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "78d7c051021484fafa86c51294cc1972423261f068de1a331bbe6900e6434371"
+    },
+    {
+      "file": "steps_test.ts",
+      "exit": 0,
+      "seconds": 24.15,
+      "passed": 15,
+      "failed": 0,
+      "case_lines": [
+        "a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task",
+        "a content-backed parent needs its published task: unknown, removed and failed reads write no step",
+        "no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing",
+        "one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused",
+        "repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused",
+        "edits are revision-checked: a stale edit and the loser of two competing edits change nothing",
+        "checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically",
+        "removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title",
+        "Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead",
+        "Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state",
+        "suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order",
+        "a relevant change since review needs a new approval; a removed or completed parent refuses the draft",
+        "another account cannot read, change, look up or undo my steps",
+        "step controls, lookup and Undo never touch the AI allowance",
+        "while one step write holds a parent, a parent removal and a step write are ordered, never interleaved"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "b86cffd1cd77a4f7dd35b9a47f69b6eef548d75d7def40db516ecba7fbd9242d"
+    },
+    {
+      "file": "undo_test.ts",
+      "exit": 0,
+      "seconds": 21.05,
+      "passed": 8,
+      "failed": 0,
+      "case_lines": [
+        "Undo restores the exact earlier state and waiting reason of its own receipt",
+        "Undo of completion restores the earlier state and does not restart a stopped reminder",
+        "an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change",
+        "a compensating proposal goes stale when the task changes again; nothing is overwritten",
+        "a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review",
+        "concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay",
+        "Undo is scoped to the account and only to undoable receipts",
+        "cleanup"
+      ],
+      "rest_observations": 6,
+      "log_sha256": "7aae38608d3c74d60b8422c1bec948d45f80cb93635afd3d65f7478a86610c88"
+    }
+  ],
+  "root_supplied_files": 1,
+  "root_supplied_passed": 10,
+  "root_supplied_failed": 0,
+  "root_supplied_assertion_mutations": 3,
+  "combined_files": 38,
+  "combined_passed": 254
+}

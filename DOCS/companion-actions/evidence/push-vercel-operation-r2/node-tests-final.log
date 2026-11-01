@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: configuration refuses missing, disabled, weak, and unauthorized inputs
+ok 1 - configuration refuses missing, disabled, weak, and unauthorized inputs
+  ---
+  duration_ms: 10.122333
+  type: 'test'
+  ...
+# Subtest: configuration requires the dedicated login and verified TLS and rejects all fixture overrides
+ok 2 - configuration requires the dedicated login and verified TLS and rejects all fixture overrides
+  ---
+  duration_ms: 0.374083
+  type: 'test'
+  ...
+# Subtest: readiness requires preview scope, an explicit flag, and the operator secret; it needs no database
+ok 3 - readiness requires preview scope, an explicit flag, and the operator secret; it needs no database
+  ---
+  duration_ms: 0.179125
+  type: 'test'
+  ...
+# Subtest: HTTP refusal never accesses a runtime and contains only fixed public metadata
+ok 4 - HTTP refusal never accesses a runtime and contains only fixed public metadata
+  ---
+  duration_ms: 40.097833
+  type: 'test'
+  ...
+# Subtest: kills actual Deno descendants after tree
+ok 5 - kills actual Deno descendants after tree
+  ---
+  duration_ms: 905.620625
+  type: 'test'
+  ...
+# Subtest: kills actual Deno descendants after exit-parent
+ok 6 - kills actual Deno descendants after exit-parent
+  ---
+  duration_ms: 58.116625
+  type: 'test'
+  ...
+# Subtest: abort kills a process immediately after spawn
+ok 7 - abort kills a process immediately after spawn
+  ---
+  duration_ms: 1.239667
+  type: 'test'
+  ...
+# Subtest: abort kills the complete Deno tree after all descendants start
+ok 8 - abort kills the complete Deno tree after all descendants start
+  ---
+  duration_ms: 57.123375
+  type: 'test'
+  ...
+# Subtest: spawn failure returns only a fixed failure result
+ok 9 - spawn failure returns only a fixed failure result
+  ---
+  duration_ms: 0.605625
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1059.911125

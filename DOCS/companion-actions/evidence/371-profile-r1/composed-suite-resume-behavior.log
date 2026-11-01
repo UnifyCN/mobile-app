@@ -1,0 +1,5 @@
+PASS owned labels, workdir, content URL, database and REST containers
+{"file": "reminders_test.ts", "exit": 0, "seconds": 21.218, "baseline_reset": true, "profile_371_applied": true, "filter": ["--filter", "/^(?!reminders: rollback)/"]}
+{"file": "push_delivery_test.ts", "exit": 0, "seconds": 26.323, "baseline_reset": true, "profile_371_applied": true, "filter": []}
+{"file": "push_isolation_test.ts", "exit": 0, "seconds": 23.651, "baseline_reset": true, "profile_371_applied": true, "filter": []}
+{"files": 10, "failed": 0}

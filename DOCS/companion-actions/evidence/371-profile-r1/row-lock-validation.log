@@ -1,0 +1,10 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 3 tests from ./profile_validation_test.ts
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing ... ok (533ms)
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes ... ok (605ms)
+profile preparation: existing province aliases and localized values resolve before review without saving a fact ... ok (229ms)
+
+ok | 3 passed | 0 failed (1s)
+

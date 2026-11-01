@@ -1,0 +1,31 @@
+[
+  {
+    "source": "docker-host-preflight-before.private.log",
+    "lines": []
+  },
+  {
+    "source": "docker-host-preflight-after.private.log",
+    "lines": []
+  },
+  {
+    "source": "docker-host-postflight.private.log",
+    "lines": [
+      "[2026-10-30T22:53:02.548046000Z][com.docker.backend.engines] engine start requested",
+      "[2026-10-30T22:53:02.555749000Z][com.docker.backend.engines] starting engine linux/virtualization-framework",
+      "[2026-10-30T22:53:02.556145000Z][com.docker.backend.engines] starting engine linux/virtualization-framework",
+      "[2026-10-30T22:53:02.556275000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state stopped -> starting",
+      "[2026-10-30T22:53:02.556677000Z][com.docker.backend.events] adding server timestamp to event (engines): 1793400782556345000 docker: starting",
+      "[2026-10-30T22:53:02.557587000Z][com.docker.backend.state] sending desktop state:EngineStartingState",
+      "[2026-10-30T22:53:02.558608000Z][com.docker.backend.ipcstream] 64924325-BackendAPI /engine/state --> 2026-10-30T15:53:02.556345000-07:00 (789a9f73) engine starting:",
+      "[2026-10-30T22:53:03.189016000Z][com.docker.backend] [2026-10-30T22:53:03.188715000Z][com.docker.virtualization] accepted connection on AF_VSOCK, forwarding fd to <HOME>/Library/Containers/com.docker.docker/Data/vpnkit-bridge-fd.sock",
+      "[2026-10-30T22:53:03.189349000Z][com.docker.backend] [2026-10-30T22:53:03.188862000Z][com.docker.virtualization] sending file descriptor 21 to <HOME>/Library/Containers/com.docker.docker/Data/vpnkit-bridge-fd.sock",
+      "[2026-10-30T22:53:03.248087000Z][com.docker.backend.procd] received state {Docker:starting DockerAPI:running HasNoVirtualization:false Idle:shutdown IsPaused:false Mode:linux PauseError: PauseText:Docker Desktop is running SessionID:c43ce5c4-30b8-400c-bbf9-1f0e07b1d3a0 State:starting WslUpdateRequired:false}",
+      "[2026-10-30T22:53:04.199616000Z][com.docker.backend.engines] setting engine linux/virtualization-framework state starting -> running",
+      "[2026-10-30T22:53:04.201566000Z][com.docker.backend.enginedependencies] starting forwarding dials",
+      "[2026-10-30T22:53:04.201747000Z][com.docker.backend.enginedependencies] starting metrics port exposure",
+      "[2026-10-30T22:53:04.218197000Z][com.docker.backend.engines] engine start complete",
+      "[2026-10-30T22:53:04.236357000Z][com.docker.backend.resyncer] Resyncer: de-registering possibly-leaked resource 7f1c2b98dffc51d67daa777401732f3512cf03dae8723cdcd723f3b493f01140",
+      "[2026-10-30T22:53:04.236592000Z][com.docker.backend.resyncer] Resyncer: re-registering possibly-missed resource 28e6805207ba42516ea6b03c04033c4a4df26e4a8cfe68621b927b6fee7dd871"
+    ]
+  }
+]

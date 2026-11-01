@@ -1,0 +1,19 @@
+Uncaught error from ./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts FAILED
+
+ ERRORS 
+
+./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts (uncaught error)
+error: (in promise) Error: separate_local_SQL_lease_required
+if (lease !== 'unify-companion-push-vercel-r2' || !raw) throw Error('separate_local_SQL_lease_required');
+                                                              ^
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-c45760c0/unify-front-end/supabase/workers/companion-push/role-and-session.test.ts:9:63
+This error was not caught from a test and caused the test runner to fail on the referenced module.
+It most likely originated from a dangling promise, event/timeout handler or top-level code.
+
+ FAILURES 
+
+./unify-front-end/supabase/workers/companion-push/role-and-session.test.ts (uncaught error)
+
+FAILED | 0 passed | 1 failed (0ms)
+
+error: Test failed

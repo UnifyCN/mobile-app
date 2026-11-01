@@ -1,0 +1,283 @@
+{
+  "local_http_200": true,
+  "nonlocal_connection_rejected": true,
+  "shell_and_app_uid": true,
+  "rules_ipv4_ipv6": true,
+  "records": [
+    {
+      "args": [
+        "shell",
+        "getprop",
+        "ro.boot.qemu.avd_name"
+      ],
+      "exit": 0,
+      "out": "unify-native-remove367-r2\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "pm",
+        "list",
+        "packages",
+        "-d"
+      ],
+      "exit": 0,
+      "out": "package:com.google.android.nfc\npackage:com.google.android.gms.supervision\npackage:com.android.nfc\npackage:com.android.devicelockcontroller\npackage:com.anonymous.unifyfrontend\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "am",
+        "force-stop",
+        "com.anonymous.unifyfrontend"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-N",
+        "COMBINED359"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-A",
+        "COMBINED359",
+        "-o",
+        "lo",
+        "-d",
+        "127.0.0.1/32",
+        "-j",
+        "ACCEPT"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-A",
+        "COMBINED359",
+        "-j",
+        "REJECT"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-I",
+        "OUTPUT",
+        "1",
+        "-j",
+        "COMBINED359"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-S"
+      ],
+      "exit": 0,
+      "out": "-P INPUT ACCEPT\n-P FORWARD ACCEPT\n-P OUTPUT ACCEPT\n-N COMBINED359\n-N bw_FORWARD\n-N bw_INPUT\n-N bw_OUTPUT\n-N bw_costly_eth0\n-N bw_costly_shared\n-N bw_data_saver\n-N bw_global_alert\n-N bw_happy_box\n-N bw_penalty_box\n-N fw_FORWARD\n-N fw_INPUT\n-N fw_OUTPUT\n-N oem_fwd\n-N oem_in\n-N oem_out\n-N st_OUTPUT\n-N st_clear_caught\n-N st_clear_detect\n-N st_penalty_log\n-N st_penalty_reject\n-N tetherctrl_FORWARD\n-N tetherctrl_counters\n-A INPUT -j oem_in\n-A INPUT -j bw_INPUT\n-A INPUT -j fw_INPUT\n-A FORWARD -j oem_fwd\n-A FORWARD -j fw_FORWARD\n-A FORWARD -j bw_FORWARD\n-A FORWARD -j tetherctrl_FORWARD\n-A OUTPUT -j COMBINED359\n-A OUTPUT -j oem_out\n-A OUTPUT -j fw_OUTPUT\n-A OUTPUT -j st_OUTPUT\n-A OUTPUT -j bw_OUTPUT\n-A COMBINED359 -d 127.0.0.1/32 -o lo -j ACCEPT\n-A COMBINED359 -j REJECT --reject-with icmp-port-unreachable\n-A bw_FORWARD -i eth0 -j bw_costly_eth0\n-A bw_FORWARD -o eth0 -j bw_costly_eth0\n-A bw_INPUT -j bw_global_alert\n-A bw_INPUT -i eth0 -j bw_costly_eth0\n-A bw_INPUT -p esp -j RETURN\n-A bw_INPUT -m mark --mark 0x100000/0x100000 -j RETURN\n-A bw_INPUT -j MARK --set-xmark 0x100000/0x100000\n-A bw_OUTPUT -j bw_global_alert\n-A bw_OUTPUT -o eth0 -j bw_costly_eth0\n-A bw_costly_eth0 -j bw_penalty_box\n-A bw_costly_eth0 -m quota2 ! --name eth0  --quota 9223372036854775807  -j REJECT --reject-with icmp-port-unreachable\n-A bw_costly_shared -j bw_penalty_box\n-A bw_data_saver -j RETURN\n-A bw_global_alert -m quota2 ! --name globalAlert  --quota 2097152 \n-A bw_happy_box -m bpf --object-pinned /sys/fs/bpf/netd_shared/prog_netd_skfilter_allowlist_xtbpf -j RETURN\n-A bw_happy_box -j bw_data_saver\n-A bw_penalty_box -m bpf --object-pinned /sys/fs/bpf/netd_shared/prog_netd_skfilter_denylist_xtbpf -j REJECT --reject-with icmp-port-unreachable\n-A bw_penalty_box -j bw_happy_box\n-A st_clear_detect -m connmark --mark 0x2000000/0x2000000 -j REJECT --reject-with icmp-port-unreachable\n-A st_clear_detect -m connmark --mark 0x1000000/0x1000000 -j RETURN\n-A st_clear_detect -p tcp -m u32 --u32 \"0x0>>0x16&0x3c@0xc>>0x1a&0x3c@0x0&0xffff0000=0x16030000&&0x0>>0x16&0x3c@0xc>>0x1a&0x3c@0x4&0xff0000=0x10000\" -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_clear_detect -p udp -m u32 --u32 \"0x0>>0x16&0x3c@0x8&0xffff0000=0x16fe0000&&0x0>>0x16&0x3c@0x14&0xff0000=0x10000\" -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_clear_detect -m connmark --mark 0x1000000/0x1000000 -j RETURN\n-A st_clear_detect -p tcp -m state --state ESTABLISHED -m u32 --u32 \"0x0>>0x16&0x3c@0xc>>0x1a&0x3c@0x0&0x0=0x0\" -j st_clear_caught\n-A st_clear_detect -p udp -j st_clear_caught\n-A st_penalty_log -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_penalty_log -j NFLOG\n-A st_penalty_reject -j CONNMARK --set-xmark 0x2000000/0x2000000\n-A st_penalty_reject -j NFLOG\n-A st_penalty_reject -j REJECT --reject-with icmp-port-unreachable\n-A tetherctrl_FORWARD -j DROP\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "iptables",
+        "-L",
+        "COMBINED359",
+        "-nv"
+      ],
+      "exit": 0,
+      "out": "Chain COMBINED359 (1 references)\n pkts bytes target     prot opt in     out     source               destination         \n    0     0 ACCEPT     all  --  *      lo      0.0.0.0/0            127.0.0.1           \n    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-N",
+        "COMBINED359"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-A",
+        "COMBINED359",
+        "-o",
+        "lo",
+        "-d",
+        "::1/128",
+        "-j",
+        "ACCEPT"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-A",
+        "COMBINED359",
+        "-j",
+        "REJECT"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-I",
+        "OUTPUT",
+        "1",
+        "-j",
+        "COMBINED359"
+      ],
+      "exit": 0,
+      "out": "",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-S"
+      ],
+      "exit": 0,
+      "out": "-P INPUT ACCEPT\n-P FORWARD ACCEPT\n-P OUTPUT ACCEPT\n-N COMBINED359\n-N bw_FORWARD\n-N bw_INPUT\n-N bw_OUTPUT\n-N bw_costly_eth0\n-N bw_costly_shared\n-N bw_data_saver\n-N bw_global_alert\n-N bw_happy_box\n-N bw_penalty_box\n-N fw_FORWARD\n-N fw_INPUT\n-N fw_OUTPUT\n-N oem_fwd\n-N oem_in\n-N oem_out\n-N st_OUTPUT\n-N st_clear_caught\n-N st_clear_detect\n-N st_penalty_log\n-N st_penalty_reject\n-N tetherctrl_FORWARD\n-N tetherctrl_counters\n-A INPUT -j oem_in\n-A INPUT -j bw_INPUT\n-A INPUT -j fw_INPUT\n-A FORWARD -j oem_fwd\n-A FORWARD -j fw_FORWARD\n-A FORWARD -j bw_FORWARD\n-A FORWARD -j tetherctrl_FORWARD\n-A OUTPUT -j COMBINED359\n-A OUTPUT -j oem_out\n-A OUTPUT -j fw_OUTPUT\n-A OUTPUT -j st_OUTPUT\n-A OUTPUT -j bw_OUTPUT\n-A COMBINED359 -d ::1/128 -o lo -j ACCEPT\n-A COMBINED359 -j REJECT --reject-with icmp6-port-unreachable\n-A bw_FORWARD -i eth0 -j bw_costly_eth0\n-A bw_FORWARD -o eth0 -j bw_costly_eth0\n-A bw_INPUT -j bw_global_alert\n-A bw_INPUT -i eth0 -j bw_costly_eth0\n-A bw_INPUT -p esp -j RETURN\n-A bw_INPUT -m mark --mark 0x100000/0x100000 -j RETURN\n-A bw_INPUT -j MARK --set-xmark 0x100000/0x100000\n-A bw_OUTPUT -j bw_global_alert\n-A bw_OUTPUT -o eth0 -j bw_costly_eth0\n-A bw_costly_eth0 -j bw_penalty_box\n-A bw_costly_eth0 -m quota2 ! --name eth0  --quota 9223372036854775807  -j REJECT --reject-with icmp6-port-unreachable\n-A bw_costly_shared -j bw_penalty_box\n-A bw_data_saver -j RETURN\n-A bw_global_alert -m quota2 ! --name globalAlert  --quota 2097152 \n-A bw_happy_box -m bpf --object-pinned /sys/fs/bpf/netd_shared/prog_netd_skfilter_allowlist_xtbpf -j RETURN\n-A bw_happy_box -j bw_data_saver\n-A bw_penalty_box -m bpf --object-pinned /sys/fs/bpf/netd_shared/prog_netd_skfilter_denylist_xtbpf -j REJECT --reject-with icmp6-port-unreachable\n-A bw_penalty_box -j bw_happy_box\n-A fw_OUTPUT -s ::1/128 ! -o lo -j DROP\n-A st_clear_detect -m connmark --mark 0x2000000/0x2000000 -j REJECT --reject-with icmp6-port-unreachable\n-A st_clear_detect -m connmark --mark 0x1000000/0x1000000 -j RETURN\n-A st_clear_detect -p tcp -m u32 --u32 \"0x34>>0x1a&0x3c@0x28&0xffff0000=0x16030000&&0x34>>0x1a&0x3c@0x2c&0xff0000=0x10000\" -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_clear_detect -p udp -m u32 --u32 \"0x30&0xffff0000=0x16fe0000&&0x3c&0xff0000=0x10000\" -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_clear_detect -m connmark --mark 0x1000000/0x1000000 -j RETURN\n-A st_clear_detect -p tcp -m state --state ESTABLISHED -m u32 --u32 \"0x34>>0x1a&0x3c@0x28&0x0=0x0\" -j st_clear_caught\n-A st_clear_detect -p udp -j st_clear_caught\n-A st_penalty_log -j CONNMARK --set-xmark 0x1000000/0x1000000\n-A st_penalty_log -j NFLOG\n-A st_penalty_reject -j CONNMARK --set-xmark 0x2000000/0x2000000\n-A st_penalty_reject -j NFLOG\n-A st_penalty_reject -j REJECT --reject-with icmp6-port-unreachable\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-L",
+        "COMBINED359",
+        "-nv"
+      ],
+      "exit": 0,
+      "out": "Chain COMBINED359 (1 references)\n pkts bytes target     prot opt in     out     source               destination         \n    0     0 ACCEPT     all  --  *      lo      ::/0                 ::1                 \n    0     0 REJECT     all  --  *      *       ::/0                 ::/0                 reject-with icmp6-port-unreachable\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "reverse",
+        "tcp:3356",
+        "tcp:3356"
+      ],
+      "exit": 0,
+      "out": "3356\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "reverse",
+        "tcp:62351",
+        "tcp:62351"
+      ],
+      "exit": 0,
+      "out": "62351\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "reverse",
+        "tcp:62359",
+        "tcp:62359"
+      ],
+      "exit": 0,
+      "out": "62359\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "reverse",
+        "tcp:8205",
+        "tcp:8205"
+      ],
+      "exit": 0,
+      "out": "8205\n",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "(printf 'GET / HTTP/1.0\r\nHost: localhost\r\n\r\n'; sleep 1) | toybox nc -w 3 -W 3 127.0.0.1 3356"
+      ],
+      "exit": 0,
+      "out": "HTTP/1.0 200 OK\r\nServer: BaseHTTP/0.6 Python/3.14.6\r\nDate: Thu, 29 Oct 2026 00:14:26 GMT\r\nContent-Type: application/json\r\nContent-Length: 14\r\n\r\n{\"result\": []}",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "toybox nc -z -w 3 1.1.1.1 443"
+      ],
+      "exit": 1,
+      "out": "",
+      "err": "nc: Timeout\n"
+    },
+    {
+      "args": [
+        "shell",
+        "run-as com.anonymous.unifyfrontend sh -c '(printf '\"'\"'GET / HTTP/1.0\r\nHost: localhost\r\n\r\n'\"'\"'; sleep 1) | toybox nc -w 3 -W 3 127.0.0.1 3356'"
+      ],
+      "exit": 0,
+      "out": "HTTP/1.0 200 OK\r\nServer: BaseHTTP/0.6 Python/3.14.6\r\nDate: Thu, 29 Oct 2026 00:14:30 GMT\r\nContent-Type: application/json\r\nContent-Length: 14\r\n\r\n{\"result\": []}",
+      "err": ""
+    },
+    {
+      "args": [
+        "shell",
+        "run-as com.anonymous.unifyfrontend sh -c 'toybox nc -z -w 3 1.1.1.1 443'"
+      ],
+      "exit": 1,
+      "out": "",
+      "err": "nc: Timeout\n"
+    },
+    {
+      "args": [
+        "shell",
+        "ip6tables",
+        "-L",
+        "COMBINED359",
+        "-nv"
+      ],
+      "exit": 0,
+      "out": "Chain COMBINED359 (1 references)\n pkts bytes target     prot opt in     out     source               destination         \n    0     0 ACCEPT     all  --  *      lo      ::/0                 ::1                 \n    6  1928 REJECT     all  --  *      *       ::/0                 ::/0                 reject-with icmp6-port-unreachable\n",
+      "err": ""
+    }
+  ]
+}

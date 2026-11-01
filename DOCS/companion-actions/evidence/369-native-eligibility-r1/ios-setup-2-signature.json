@@ -1,0 +1,38 @@
+{
+  "rows": [
+    {
+      "path": "native369-guard.dylib",
+      "verify_before_exit": 1,
+      "verify_before_stderr": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/test-installation/Unify.app/native369-guard.dylib: code object is not signed at all\n"
+    },
+    {
+      "path": "Unify.debug.dylib",
+      "verify_before_exit": 1,
+      "verify_before_stderr": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-53844316/build/369-native-eligibility-r1/test-installation/Unify.app/Unify.debug.dylib: invalid signature (code or signature have been modified)\nIn architecture: arm64\n"
+    },
+    {
+      "path": "native369-guard.dylib",
+      "verify_after_exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "Unify.debug.dylib",
+      "verify_after_exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "Unify",
+      "verify_after_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "hashes": {
+    "Unify": "3b048a9010306a4b0769f6cd9eb0f24fcaae0ee26bdeffd818ca0f4ff75d4286",
+    "Unify.debug.dylib": "526b20db3f286119008b45e9178384cededeef7dd84b122b1d2b5a8c5c4adcce",
+    "native369-guard.dylib": "90a1bdbd6defb92528721133d943779f4624f2361b1670d5740a3a23aabcff2d",
+    "local-only.bytecode": "0f395c011fd9da7ca46316513a334d6a4f609a046b9e512cf8a5700451804c2b",
+    "Info.plist": "7e57375fb062593e47cada75f04a519ea0ffd8574fa34b96d1d86defd9c4dbec"
+  },
+  "entitlements_changed": false,
+  "explanation": "codesign --deep did not repair the modified top-level Debug dylib. Explicitly signed both owned dylibs before the owned app."
+}

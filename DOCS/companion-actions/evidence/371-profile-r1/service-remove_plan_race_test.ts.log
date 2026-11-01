@@ -1,0 +1,22 @@
+running 3 tests from ./remove_plan_race_test.ts
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"],"middle":{"plans":["Transit only"],"removed":false}}
+{"removal":[200,null,[]],"plan":[409,"needs_review"]}
+----- output end -----
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ... ok (548ms)
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ...
+------- output -------
+{"waiting":1,"blockers":["companion_plan_apply"],"middle":{"plans":[],"removed":false}}
+{"plan":[200,null],"removal":[409,"needs_review",null]}
+----- output end -----
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ... ok (510ms)
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"]}
+{"removal":[200,[]],"retry":[409,"needs_review"]}
+----- output end -----
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ... ok (451ms)
+
+ok | 3 passed | 0 failed (1s)
+

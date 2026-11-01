@@ -1,0 +1,17 @@
+{
+  "configuration": "Existing expo-secure-store plugin, default configureAndroidBackup=true. No application override.",
+  "plugin_sha256": "e45e68e20e85fc3d41d55c6424071c24ff6b8d0bf6490255272189d15a9db9f0",
+  "xml": [
+    {
+      "path": "unify-front-end/node_modules/expo-secure-store/android/src/main/res/xml/secure_store_data_extraction_rules.xml",
+      "sha256": "b190be6de4f64e123f3835725955d21aaf310f0cb46dfaa837fe3ed18535e9ad",
+      "excludes_secure_store": true
+    },
+    {
+      "path": "unify-front-end/node_modules/expo-secure-store/android/src/main/res/xml/secure_store_backup_rules.xml",
+      "sha256": "3dc0b1559e85fc6831d08264fe61e2e5846300da443324beb8224d24f00cb416",
+      "excludes_secure_store": true
+    }
+  ],
+  "native_generated_or_observed": false
+}

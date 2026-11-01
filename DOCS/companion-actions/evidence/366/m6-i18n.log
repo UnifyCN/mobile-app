@@ -1,0 +1,12 @@
+
+> unify-front-end@1.6.0 check-i18n
+> node ./scripts/check-i18n-parity.mjs
+
+✔ vi: 1843 keys (matches en)
+✔ es: 1845 keys (matches en)
+✔ hi: 1844 keys (matches en)
+✔ ar: 1848 keys (matches en)
+✔ fr-CA: 1845 keys (matches en)
+✔ pa: 1844 keys (matches en)
+
+i18n parity OK: 1843 keys per locale.

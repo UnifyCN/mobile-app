@@ -1,0 +1,9 @@
+{
+  "path": "supabase/workers/companion-push/worker.ts",
+  "old": "let state='unknown',ticket:string|null=null",
+  "new": "let state='retry_wait',ticket:string|null=null",
+  "occurrences": 1,
+  "base_sha256": "17e8ed651f3ba69d27e13337719bb3afe6821f509c6a26f7e691ef43a33201c0",
+  "fault_sha256": "506e5093238aea3fd2596fc403325ed92894922a2fc312de1c21ae0008955a8f",
+  "filter": "unknown transport"
+}

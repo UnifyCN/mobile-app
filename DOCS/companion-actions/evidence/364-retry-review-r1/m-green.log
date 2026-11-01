@@ -1,0 +1,15 @@
+PASS __tests__/companionActions/planLocalStack.test.tsx
+  Settlement plans against the real local stack (mobile)
+    ✓ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (1446 ms)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+
+Test Suites: 1 passed, 1 total
+Tests:       5 skipped, 1 passed, 6 total
+Snapshots:   0 total
+Time:        2.542 s, estimated 15 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "retry after a relevant profile change".
+exit=0

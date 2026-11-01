@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "protected_containers": 33,
+  "full_mount_objects_equal": true,
+  "mount_order_only_differences": 2,
+  "protected_volumes": 18,
+  "protected_nondefault_networks": 7,
+  "ports_free_ipv4_ipv6": 14,
+  "owned_containers": 0,
+  "owned_volumes": 0,
+  "owned_networks": 0,
+  "strict_network_ids_unchanged": false,
+  "bounded_bridge_disposition": "Resource Saver startup and resync in the fresh captured interval. The replacement bridge creation falls inside engine startup. This is not a strict network identity claim or continuous process observation.",
+  "startup": "2026-10-30T21:59:40.676772+00:00",
+  "engine_ready": "2026-10-30T21:59:42.060527+00:00",
+  "bridge_created": "2026-10-30T21:59:41.927440+00:00",
+  "old_bridge": "b638ea163d884b6db3bb8861ed050611b43dccd48c691595bf4f9ed4741fb8c8",
+  "new_bridge": "aa827fc2f2a06ccaa49cf13324c5af6daeea476dd0a5f6608e3d5bd50a208ac3",
+  "input_hashes": {
+    "preflight.json": "417fa9a366586ac20034e26f28643f88c2366423d6180a2f7645ee0afd7bd608",
+    "cleanup.json": "8003484d12a77ceddd9faaa0099b708cab31547b89454f318e706c781fbc8110",
+    "host-cleanup-tail.txt": "0492b47dd7a11eebe6c23bfbbe50e279d8fd2a3d8f88764bd503a1155ac936d2",
+    "startup-network-lines.txt": "d720f770d2c435cc0896f9cb6aba01c522c9600c47dffe075a6101fc5172a6f2"
+  }
+}

@@ -1,0 +1,34 @@
+running 11 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/boundary_test.ts
+wrong account: no token, project key, forged token, or another account's task ... ok (1s)
+forged or model-made approval is refused and writes nothing ... ok (762ms)
+invalid contract versions and platforms are refused before any write ... ok (403ms)
+invalid payloads are 4xx, never 500, and write nothing ... ok (705ms)
+a stale revision is a conflict that names expected and actual, and writes nothing ... ok (328ms)
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... ok (882ms)
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... ok (3s)
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... FAILED (166ms)
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... ok (379ms)
+only POST is served ... ok (145ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+task controls, lookup and Undo work at the AI limit and never touch the generation quota => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/boundary_test.ts:255:6
+error: PostgresError: relation "chatbot_usage" does not exist
+      errorResponse = Errors.postgres(parseError(x))
+                             ^
+    at ErrorResponse (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:815:30)
+    at handle (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:489:6)
+    at Socket.data (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/deno/npm/registry.npmjs.org/postgres/3.4.9/src/connection.js:324:9)
+    at Socket.emit (ext:deno_node/_events.mjs:439:20)
+    at addChunk (node:_stream_readable:452:12)
+    at readableAddChunkPushByteMode (node:_stream_readable:413:3)
+    at Socket.Readable.push (node:_stream_readable:308:48)
+
+ FAILURES 
+
+task controls, lookup and Undo work at the AI limit and never touch the generation quota => ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/boundary_test.ts:255:6
+
+FAILED | 10 passed | 1 failed (8s)
+
+error: Test failed

@@ -1,0 +1,22 @@
+error[no-import-prefix]: Inline 'npm:', 'jsr:' or 'https:' dependency not allowed
+ --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/$deno$stdin.ts:4:27
+  | 
+4 | import type postgres from 'npm:postgres@3.4.9';
+  |                           ^^^^^^^^^^^^^^^^^^^^
+  = hint: Add it as a dependency in a deno.json or package.json instead and reference it here via its bare specifier
+
+  docs: https://docs.deno.com/lint/rules/no-import-prefix
+
+
+error[no-explicit-any]: `any` type is not allowed
+  --> /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/$deno$stdin.ts:50:38
+   | 
+50 | function budgetReady(p:Record<string,any>):boolean {
+   |                                      ^^^
+   = hint: Use a specific type other than `any`
+
+  docs: https://docs.deno.com/lint/rules/no-explicit-any
+
+
+Found 2 problems
+Checked 1 file

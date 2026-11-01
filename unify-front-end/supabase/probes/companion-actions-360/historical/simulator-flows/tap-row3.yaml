@@ -1,0 +1,6 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn:
+    point: "10%,53%"
+- waitForAnimationToEnd:
+    timeout: 8000

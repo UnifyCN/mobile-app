@@ -1,0 +1,251 @@
+FAIL __tests__/companionActions/taskStepSuggestions.test.tsx
+  Suggested steps through Companion (mobile, #366)
+    ✕ suggested steps are a draft card; excluding one makes a new revision; approval adds exactly the selected steps once (2286 ms)
+    ✕ Not now closes the draft and writes no step; at the AI limit a draft can still be added without a model request (1016 ms)
+
+  ● Suggested steps through Companion (mobile, #366) › suggested steps are a draft card; excluding one makes a new revision; approval adds exactly the selected steps once
+
+    Unable to find an element with testID: step-draft-card
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mHow do I get my SIN?[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<View[39m
+                      [33maccessible[39m=[32m{true}[39m
+                    [36m>[39m
+                      [36m<Text>[39m
+                        [0m[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mStart with the official requirements.[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mHow do I get my SIN?[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      463 |     await send('How do I get my SIN?');
+      464 |
+    > 465 |     const card = await screen.findByTestId('step-draft-card');
+          |                               ^
+      466 |     expect(within(card).getByText('Steps for Get a SIN')).toBeTruthy();
+      467 |     expect(within(card).getByText('Draft · not saved yet')).toBeTruthy();
+      468 |     expect(server.steps()).toEqual([]);
+
+      at Object.findByTestId (__tests__/companionActions/taskStepSuggestions.test.tsx:465:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Suggested steps through Companion (mobile, #366) › Not now closes the draft and writes no step; at the AI limit a draft can still be added without a model request
+
+    Unable to find an element with testID: step-draft-card
+
+    [36m<View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Open history"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+          [36m<Text>[39m
+            [0mCompanion[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"New chat"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m/>[39m
+        [36m</View>[39m
+        [36m<View[39m
+          [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+          [33maccessibilityRole[39m=[32m"button"[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<View />[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mYour tasks[0m
+            [36m</Text>[39m
+            [36m<Text>[39m
+              [0mIn progress: 0 · Waiting: 0[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<RCTScrollView>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mHow do I get my SIN?[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<View>[39m
+                    [36m<View[39m
+                      [33maccessible[39m=[32m{true}[39m
+                    [36m>[39m
+                      [36m<Text>[39m
+                        [0m[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mHere are steps.[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<View>[39m
+                  [36m<Text>[39m
+                    [0mHow do I get my SIN?[0m
+                  [36m</Text>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+            [36m<View />[39m
+          [36m</View>[39m
+        [36m</RCTScrollView>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33meditable[39m=[32m{true}[39m
+              [33mplaceholder[39m=[32m"Ask anything..."[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<View[39m
+              [33maccessibilityState[39m=[32m{
+                {
+                  "disabled": true,
+                }
+              }[39m
+              [33maccessible[39m=[32m{true}[39m
+            [36m>[39m
+              [36m<View />[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<Text>[39m
+              [0mCompanion can make mistakes. Verify important info.[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      505 |     renderScreen();
+      506 |     await send('How do I get my SIN?');
+    > 507 |     const card = await screen.findByTestId('step-draft-card');
+          |                               ^
+      508 |     fireEvent.press(within(card).getByRole('button', { name: 'Review suggested steps for Get a SIN' }));
+      509 |     const sheet = await screen.findByTestId('companion-task-sheet');
+      510 |     fireEvent.press(await within(sheet).findByRole('button', { name: 'Not now' }));
+
+      at Object.findByTestId (__tests__/companionActions/taskStepSuggestions.test.tsx:507:31)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 2 total
+Snapshots:   0 total
+Time:        4.296 s
+Ran all test suites matching /__tests__\/companionActions\/taskStepSuggestions.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

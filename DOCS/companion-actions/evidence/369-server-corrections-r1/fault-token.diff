@@ -1,0 +1,11 @@
+--- fixed-worker.ts
++++ fault-worker.ts
+@@ -24,7 +24,7 @@
+           select ${e.reminder_id},n.user_id,${e.task_ref},n.installation_id,n.generation,n.token_id,
+             case when n.enabled and n.revoked_at is null and n.token_id is not null
+               and companion_push_private.session_authorized(n.session_id,n.user_id) then 'queued' else 'suppressed' end
+-          from companion_push_private.enrollments n where n.user_id=${e.user_id} and n.token_id is not null on conflict do nothing`;
++          from companion_push_private.enrollments n where n.user_id=${e.user_id} on conflict do nothing`;
+         await tx`update companion_push_private.events set reason='no_eligible_installation' where reminder_id=${e.reminder_id}
+           and not exists(select 1 from companion_push_private.deliveries where reminder_id=${e.reminder_id} and state='queued')`;
+       }

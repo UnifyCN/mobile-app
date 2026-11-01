@@ -1,0 +1,53 @@
+COMMAND ['reset']
+COMMAND ['npx', 'jest', '__tests__/companionActions/companionActionsLocalStack.test.tsx', '--runInBand', '--watchAll=false', '-t', 'S370-1']
+FAIL __tests__/companionActions/companionActionsLocalStack.test.tsx
+  Task progress against the real local stack (mobile)
+    ○ skipped a state and waiting reason saved in the mobile Checklist are the same record in Companion, on web and in the legacy table; another account sees nothing
+  Task steps against the real local stack (mobile, #366)
+    ○ skipped steps added and checked in the mobile Checklist never complete the task; explicit completion keeps the unfinished step; Companion, web and a new mount read the same steps; another account sees none
+    ○ skipped removing a step asks first; Keep changes nothing; Remove and its Undo go through the real service; the offered completion completes the task
+  Saved details against the real local stack (mobile, #370)
+    ✕ S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review (2 ms)
+    ○ skipped a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none
+
+  ● Saved details against the real local stack (mobile, #370) › a remembered detail is shown in the mobile sheet; an edit and a confirmed removal go through the real service and a later answer stops reading it; another account sees none
+
+    Command failed: docker exec -i supabase_db_unify-details-370-corrections-r1 psql -v ON_ERROR_STOP=1 -q -U postgres -d postgres
+    ERROR:  relation "public.companion_proposals" does not exist
+
+      333 |
+      334 | function psql(sqlText: string) {
+    > 335 |   execFileSync(
+          |               ^
+      336 |     'docker',
+      337 |     ['exec', '-i', DB_CONTAINER, 'psql', '-v', 'ON_ERROR_STOP=1', '-q', '-U', 'postgres', '-d', 'postgres'],
+      338 |     { input: sqlText, stdio: ['pipe', 'pipe', 'pipe'] }
+
+      at psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:335:15)
+      at Object.psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:734:7)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Saved details against the real local stack (mobile, #370) › S370-1: a conflicting Undo of a save reviews the detail the real service read; unconfirmed approval sends nothing; a newer edit is never removed by the older review
+
+    Command failed: docker exec -i supabase_db_unify-details-370-corrections-r1 psql -v ON_ERROR_STOP=1 -q -U postgres -d postgres
+    ERROR:  relation "public.companion_proposals" does not exist
+
+      333 |
+      334 | function psql(sqlText: string) {
+    > 335 |   execFileSync(
+          |               ^
+      336 |     'docker',
+      337 |     ['exec', '-i', DB_CONTAINER, 'psql', '-v', 'ON_ERROR_STOP=1', '-q', '-U', 'postgres', '-d', 'postgres'],
+      338 |     { input: sqlText, stdio: ['pipe', 'pipe', 'pipe'] }
+
+      at psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:335:15)
+      at Object.psql (__tests__/companionActions/companionActionsLocalStack.test.tsx:734:7)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 skipped, 5 total
+Snapshots:   0 total
+Time:        1.808 s, estimated 4 s
+Ran all test suites matching /__tests__\/companionActions\/companionActionsLocalStack.test.tsx/i with tests matching "S370-1".

@@ -1,0 +1,33 @@
+{
+ "total": 41,
+ "by_name": {
+  "unindexed_foreign_keys": 4,
+  "auth_rls_initplan": 11,
+  "unused_index": 2,
+  "rls_enabled_no_policy": 6,
+  "function_search_path_mutable": 16,
+  "rls_disabled_in_public": 2
+ },
+ "plan_related": [
+  {
+   "name": "rls_enabled_no_policy",
+   "level": "INFO",
+   "detail": "Table `public.companion_plan_proposals` has RLS enabled, but no policies exist"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "detail": "Function `public.companion_plan_plain` has a role mutable search_path"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "detail": "Function `public.companion_plan_unresolved` has a role mutable search_path"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "detail": "Function `public.companion_plan_item_operation` has a role mutable search_path"
+  }
+ ]
+}

@@ -1,0 +1,271 @@
+{
+  "records": [
+    {
+      "gate": "mobile CI after accepted integration merge",
+      "command": [
+        "npm",
+        "run",
+        "test:ci"
+      ],
+      "exit": 0,
+      "natural_exit_observed": true,
+      "log": "mobile-ci-after-integration.log",
+      "suites_passed": 157,
+      "suites_skipped": 5,
+      "tests_passed": 1616,
+      "tests_skipped": 31,
+      "dst_suites_passed": 2,
+      "dst_tests_passed": 13
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+      "exit": 0,
+      "seconds": 1.786,
+      "log": "mobile-quality-1.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+      "exit": 0,
+      "seconds": 0.175,
+      "log": "mobile-quality-2.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+      "exit": 0,
+      "seconds": 7.403,
+      "log": "mobile-quality-3.log"
+    },
+    {
+      "command": [
+        "npx",
+        "expo",
+        "export",
+        "--platform",
+        "ios",
+        "--platform",
+        "android"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+      "exit": 0,
+      "seconds": 17.985,
+      "log": "mobile-quality-4.log"
+    },
+    {
+      "gate": "web tests locked final",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "natural_exit_observed": true,
+      "log": "web-tests-locked-privacy-last.log",
+      "files_passed": 72,
+      "tests_passed": 778,
+      "tests_skipped": 13
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "exit": 1,
+      "seconds": 10.645,
+      "log": "web-quality-1.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check-i18n"
+      ],
+      "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "exit": 0,
+      "seconds": 0.134,
+      "log": "web-quality-2.log"
+    },
+    {
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "exit": 0,
+      "seconds": 6.744,
+      "log": "web-quality-3.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root",
+      "exit": 0,
+      "seconds": 19.798,
+      "log": "web-quality-4.log"
+    },
+    {
+      "command": [
+        "npx",
+        "eslint",
+        "app/(main)/companion/page.tsx",
+        "components/companion/tasks/ProfilePanel.tsx",
+        "components/companion/tasks/TaskActionCards.tsx",
+        "components/companion/tasks/TaskActions.test.tsx",
+        "components/companion/tasks/TaskActionsDrawer.tsx",
+        "hooks/useCompanion.ts",
+        "hooks/useProfileEditor.ts",
+        "hooks/useTaskActions.ts",
+        "lib/companion/clearPrivateAccountWork.ts",
+        "lib/companionActions/analytics.ts",
+        "lib/companionActions/client.ts",
+        "lib/companionActions/contract.ts",
+        "lib/companionActions/profile.ts",
+        "lib/companionActions/queryKeys.ts",
+        "lib/companionActions/taskActionStore.ts",
+        "services/checklist.ts",
+        "services/companion.ts",
+        "supabase/tests/companion-actions/profileSupport.ts",
+        "supabase/tests/companion-actions/profile_browser_fixture.ts",
+        "supabase/tests/companion-actions/profile_races_test.ts",
+        "supabase/tests/companion-actions/profile_reset_fixture.ts",
+        "supabase/tests/companion-actions/profile_rollback_test.ts",
+        "supabase/tests/companion-actions/profile_test.ts",
+        "supabase/tests/companion-actions/profile_validation_test.ts"
+      ],
+      "exit": 0,
+      "seconds": 2.731,
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root"
+    },
+    {
+      "gate": "final web changed lint after final race test",
+      "command_log": "web-lint-commit.log",
+      "exit": 0,
+      "natural_exit_observed": true
+    },
+    {
+      "gate": "exact mobile Deno workflow",
+      "deno": "2.7.14",
+      "exit": 0,
+      "log": "deno-ci-owned-cache.log",
+      "passed": 457,
+      "steps": 7,
+      "failed": 0,
+      "command": "deno test --allow-read --allow-env unify-front-end/supabase/functions/_shared/interview/*.test.ts unify-front-end/supabase/functions/personalize/index_test.ts unify-front-end/supabase/functions/matchmake-circles/index_test.ts unify-front-end/supabase/functions/generate-daily-tips/index_test.ts unify-front-end/supabase/functions/ingest-documents/lib/ unify-front-end/supabase/tests/"
+    },
+    {
+      "gate": "complete local service suite",
+      "files": 53,
+      "final_failed": 0,
+      "evidence": "service-suite-summary.json",
+      "limit": "historical independent fixtures; final profile corrections verified in affected four files and selected final ten-file composition"
+    },
+    {
+      "gate": "final profile files",
+      "cases": 17,
+      "files": [
+        {
+          "file": "profile_test.ts",
+          "passed": 6,
+          "failed": 0
+        },
+        {
+          "file": "profile_validation_test.ts",
+          "passed": 3,
+          "failed": 0
+        },
+        {
+          "file": "profile_races_test.ts",
+          "passed": 7,
+          "failed": 0
+        },
+        {
+          "file": "profile_rollback_test.ts",
+          "passed": 1,
+          "failed": 0
+        }
+      ],
+      "results": "current-profile-results.json"
+    },
+    {
+      "gate": "complete-current composition selected suite",
+      "files": 10,
+      "final_failed": 0,
+      "results": "composed-suite-results.json",
+      "historical_incompatible_probes": [
+        "composed-incompatible-boundary.json",
+        "composed-incompatible-reminder-rollback.json"
+      ],
+      "filter": "reminders_test.ts only: /^(?!reminders: rollback)/"
+    },
+    {
+      "command": [
+        "npx",
+        "jest",
+        "--runInBand",
+        "--watchAll=false",
+        "--runTestsByPath",
+        "__tests__/companionActions/profileLocalStack.test.tsx"
+      ],
+      "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end",
+      "exit": 0,
+      "seconds": 5.38
+    },
+    {
+      "gate": "actual browser",
+      "result": "browser/browser-current-final.json",
+      "model_attempts": 0,
+      "hosted": false
+    },
+    {
+      "gate": "deliberate faults",
+      "result": "fault-results.json",
+      "assertion_red": 4,
+      "restored": 4
+    },
+    {
+      "gate": "profile function ACL and composition",
+      "result": "profile-composition-metadata.json",
+      "hosted": false
+    },
+    {
+      "gate": "local security advisor",
+      "exit": 1,
+      "errors": 2,
+      "warnings": 26,
+      "map": "local-advisors-map.json"
+    },
+    {
+      "gate": "mirrors",
+      "count": 32,
+      "all_equal": true
+    },
+    {
+      "gate": "owned cleanup and full older resource preservation",
+      "result": "preservation-result.json",
+      "pass": true
+    }
+  ],
+  "acceptance": false,
+  "native_acceptance": false,
+  "hosted_acceptance": false,
+  "failed_gates_are_not_green": true
+}

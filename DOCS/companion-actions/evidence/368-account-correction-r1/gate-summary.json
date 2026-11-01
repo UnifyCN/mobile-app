@@ -1,0 +1,30 @@
+{
+  "base": "157081d3d5b0aaca10b06f9b2456c504f4b9d5df",
+  "source": [
+    {
+      "path": "unify-front-end/app/(tabs)/companion/index.tsx",
+      "sha256": "9f40b0641b8a3519501304eeef9e0ccfdb29473ff68c64f7ba5a82f6596c7a4b"
+    },
+    {
+      "path": "unify-front-end/__tests__/companionActions/companionTaskSheet.test.tsx",
+      "sha256": "6cb98f7e8ead11fc63159646e1a732fdc51785cb0e867bc097c327db3d054b05"
+    }
+  ],
+  "reviewer_original_sha256": "9b18d7be5e7c8e24d1d5c04851d29b835f0e29b29069282cb0db17afa65c1f42",
+  "reviewer_red_failed": 1,
+  "reviewer_green_passed": 1,
+  "permanent_red_failed": 4,
+  "permanent_red_passed": 1,
+  "sheet_green_passed": 12,
+  "assertion_mutation_kills": 2,
+  "main_passed": 1521,
+  "main_skipped": 24,
+  "dst_passed": 13,
+  "ci_exit": 0,
+  "typecheck_exit": 0,
+  "lint_exit": 0,
+  "exports_exit": 0,
+  "i18n_exit": 0,
+  "native_qualification": false,
+  "hosted_qualification": false
+}

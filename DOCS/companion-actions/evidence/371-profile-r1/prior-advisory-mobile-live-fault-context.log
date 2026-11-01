@@ -1,0 +1,259 @@
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to ProfilePanel inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+  console.error
+    An update to Surface inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      53 |     epoch: changed ? snapshot.epoch + 1 : snapshot.epoch,
+      54 |   };
+    > 55 |   for (const l of listeners) l();
+         |                              ^
+      56 | }
+      57 |
+      58 | function start() {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14402:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14401:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12086:9)
+      at forceStoreRerender (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5432:24)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:5417:11
+      at l (services/account/accountSession.ts:55:30)
+      at publish (services/account/accountSession.ts:73:9)
+
+FAIL __tests__/companionActions/profileLocalStack.test.tsx
+  ✕ 371 local: rendered review saves the authoritative profile, refreshes the Checklist reader, preserves drafts and survives a new view (1514 ms)
+  ○ skipped 371 local: a late prepared response cannot restore the previous account; token refresh keeps valid typed work
+
+  ● 371 local: rendered review saves the authoritative profile, refreshes the Checklist reader, preserves drafts and survives a new view
+
+    Unable to find an element with text: Checklist province: Ontario
+
+    [36m<View>[39m
+      [36m<TextInput[39m
+        [33maccessibilityLabel[39m=[32m"Message"[39m
+        [33mvalue[39m=[32m"Question kept during profile review"[39m
+      [36m/>[39m
+      [36m<Text>[39m
+        [0mChecklist province: [0m
+        [0mBritish Columbia[0m
+      [36m</Text>[39m
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mYou can discuss another province or date without changing your profile. Review a change to save it.[0m
+        [36m</Text>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mprovince[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mOntario[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Edit province"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mEdit province[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0marrival date[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0m2026-11-07[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Edit arrival date"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mEdit arrival date[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mReview profile change[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mCurrent: British Columbia[0m
+          [36m</Text>[39m
+          [36m<Text>[39m
+            [0mProposed: Ontario[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Save profile change"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": true,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mSave profile change[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Not now"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": true,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mNot now[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+        [36m<View>[39m
+          [36m<Text>[39m
+            [0mChanged province from British Columbia to Ontario[0m
+          [36m</Text>[39m
+          [36m<View[39m
+            [33maccessibilityLabel[39m=[32m"Undo this change"[39m
+            [33maccessibilityRole[39m=[32m"button"[39m
+            [33maccessibilityState[39m=[32m{
+              {
+                "disabled": false,
+              }
+            }[39m
+            [33maccessible[39m=[32m{true}[39m
+          [36m>[39m
+            [36m<Text>[39m
+              [0mUndo this change[0m
+            [36m</Text>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+       97 |   fireEvent.press(screen.getByRole('button', { name: 'Save profile change' }));
+       98 |   expect(await screen.findByText('Changed province from British Columbia to Ontario')).toBeTruthy();
+    >  99 |   expect(await screen.findByText('Checklist province: Ontario')).toBeTruthy();
+          |                       ^
+      100 |   expect(screen.getByLabelText('Message').props.value).toBe('Question kept during profile review');
+      101 |   const saved = await mockHttp('/rest/v1/user_onboarding_profiles?select=province&id=eq.'+mockUser.id, undefined, mockUser.jwt, 'GET');
+      102 |   expect(saved.json).toEqual([{ province: 'Ontario' }]);
+
+      at Object.findByText (__tests__/companionActions/profileLocalStack.test.tsx:99:23)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 skipped, 2 total
+Snapshots:   0 total
+Time:        2.238 s
+Ran all test suites within paths "__tests__/companionActions/profileLocalStack.test.tsx".

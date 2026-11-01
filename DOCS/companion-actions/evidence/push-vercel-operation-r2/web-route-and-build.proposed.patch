@@ -1,0 +1,78 @@
+--- a/next.config.ts
++++ b/next.config.ts
+@@ -2,2 +2,14 @@
+ import { withSentryConfig } from "@sentry/nextjs";
++
++const companionPushFiles = [
++  "./supabase/workers/companion-push/.runtime/linux-x64/**",
++  "./supabase/workers/companion-push/content-source/**",
++  "./supabase/workers/companion-push/runtime-pins.json",
++  "./supabase/workers/companion-push/deno.lock",
++  "./supabase/workers/companion-push/supervisor.ts",
++  "./supabase/workers/companion-push/process.ts",
++  "./supabase/workers/companion-push/worker.ts",
++  "./supabase/workers/companion-push/copy.ts",
++  "./supabase/workers/companion-push/readiness.ts",
++];
+ 
+@@ -8,3 +20,12 @@
+   outputFileTracingIncludes: {
++    "/api/cron/companion-push": companionPushFiles,
++    "/api/cron/companion-push-readiness": companionPushFiles,
+     "/opengraph-image": ["./app/_og-assets/**"],
++  },
++  outputFileTracingExcludes: {
++    "/api/cron/companion-push*": [
++      "./supabase/workers/companion-push/.runtime/darwin-arm64/**",
++      "./supabase/workers/companion-push/.runtime/sql-check-cache/**",
++      "./supabase/workers/companion-push/*.test.*",
++    ],
+   },
+--- a/package.json
++++ b/package.json
+@@ -4,2 +4,3 @@
+   "private": true,
++  "engines": { "node": "22.x" },
+   "scripts": {
+@@ -7,2 +8,3 @@
+     "build": "next build",
++    "prepare:companion-push": "node supabase/workers/companion-push/prepare-runtime.mjs",
+     "start": "next start",
+--- a/vercel.json
++++ b/vercel.json
+@@ -2,2 +2,3 @@
+   "$schema": "https://openapi.vercel.sh/vercel.json",
++  "buildCommand": "npm run prepare:companion-push && npm run build",
+   "crons": [
+--- /dev/null
++++ b/app/api/cron/companion-push/route.ts
+@@ -0,0 +1,11 @@
++import { handlePush } from "../../../../supabase/workers/companion-push/node-adapter.mjs";
++
++export const runtime = "nodejs";
++export const dynamic = "force-dynamic";
++export const maxDuration = 180;
++
++export async function GET(request: Request) {
++  return handlePush(request, "cycle");
++}
++
++export const POST = GET;
+--- /dev/null
++++ b/app/api/cron/companion-push-readiness/route.ts
+@@ -0,0 +1,9 @@
++import { handlePush } from "../../../../supabase/workers/companion-push/node-adapter.mjs";
++
++export const runtime = "nodejs";
++export const dynamic = "force-dynamic";
++export const maxDuration = 15;
++
++export async function GET(request: Request) {
++  return handlePush(request, "readiness");
++}
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -9,2 +9,3 @@
+       "version": "0.1.0",
++      "engines": { "node": "22.x" },
+       "dependencies": {

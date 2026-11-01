@@ -1,0 +1,69 @@
+{
+  "ports": [
+    {
+      "address": "127.0.0.1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63081,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63082,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63083,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 63084,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 3385,
+      "free": true
+    },
+    {
+      "address": "127.0.0.1",
+      "port": 3390,
+      "free": true
+    },
+    {
+      "address": "::1",
+      "port": 3390,
+      "free": true
+    }
+  ],
+  "resources": {
+    "containers": [],
+    "volumes": [],
+    "networks": []
+  }
+}

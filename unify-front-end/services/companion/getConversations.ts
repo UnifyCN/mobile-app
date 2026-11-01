@@ -1,4 +1,9 @@
 import { supabase } from '@/lib/supabase';
+import {
+  assertOwned,
+  isAccountChange,
+  type AccountSnapshot,
+} from '@/services/account/accountSession';
 
 export interface Conversation {
   conversation_identifier: string;
@@ -6,12 +11,16 @@ export interface Conversation {
   updated_at: string;
 }
 
-export const getConversations = async (): Promise<Conversation[]> => {
+/** The conversations of `owner`, read only while it is the signed-in account. */
+export const getConversations = async (
+  owner: AccountSnapshot
+): Promise<Conversation[]> => {
   try {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) throw new Error('No authenticated user');
+    assertOwned(owner, user.id);
 
     const { data, error } = await supabase
       .from('conversations')
@@ -26,6 +35,8 @@ export const getConversations = async (): Promise<Conversation[]> => {
 
     return data || [];
   } catch (error) {
+    // Another account signed in: fail the read, never cache another list here.
+    if (isAccountChange(error)) throw error;
     console.error('Error in getConversations:', error);
     return [];
   }

@@ -1,0 +1,89 @@
+
+> web-app@0.1.0 build
+> next build
+
+[@sentry/nextjs] Importing `withSentryConfig` from `@sentry/nextjs` is deprecated and will stop working in v11. Import it from `@sentry/nextjs/config` instead:
+  import { withSentryConfig } from '@sentry/nextjs/config';
+▲ Next.js 16.2.6 (Turbopack)
+- Experiments (use with caution):
+  · clientTraceMetadata
+
+  Creating an optimized production build ...
+[@sentry/nextjs] Importing `withSentryConfig` from `@sentry/nextjs` is deprecated and will stop working in v11. Import it from `@sentry/nextjs/config` instead:
+  import { withSentryConfig } from '@sentry/nextjs/config';
+✓ Compiled successfully in 10.3s
+  Running next.config.js provided runAfterProductionCompile ...
+✓ Completed runAfterProductionCompile in 910ms
+  Running TypeScript ...
+  Finished TypeScript in 24.0s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/41) ...
+  Generating static pages using 11 workers (10/41) 
+  Generating static pages using 11 workers (20/41) 
+  Generating static pages using 11 workers (30/41) 
+✓ Generating static pages using 11 workers (41/41) in 1397ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /admin/events
+├ ƒ /admin/events/[id]
+├ ƒ /admin/events/new
+├ ƒ /api/account
+├ ƒ /api/companion
+├ ƒ /api/companion/actions
+├ ƒ /api/cover-letter
+├ ƒ /api/cover-letter/job-posting
+├ ƒ /api/cron/sentry-snapshot
+├ ƒ /api/documents/extract
+├ ƒ /api/learning-destination
+├ ƒ /api/moderation
+├ ƒ /api/onboarding-profile
+├ ƒ /api/resume
+├ ƒ /api/resume/job-posting
+├ ƒ /api/storage
+├ ƒ /api/storage/image
+├ ƒ /api/translate
+├ ƒ /auth/callback
+├ ƒ /before-you-continue
+├ ƒ /checklist
+├ ƒ /community
+├ ƒ /community/[groupId]
+├ ƒ /community/event/[eventId]
+├ ƒ /companion
+├ ƒ /cover-letter
+├ ƒ /cover-letter/[letterId]
+├ ƒ /forgot-password
+├ ƒ /home
+├ ƒ /learn
+├ ƒ /learn/[moduleId]
+├ ƒ /learn/[moduleId]/[submoduleId]
+├ ƒ /learn/[moduleId]/[submoduleId]/[lessonId]
+├ ƒ /learn/[moduleId]/[submoduleId]/practice
+├ ƒ /login
+├ ƒ /onboarding
+├ ○ /opengraph-image
+├ ƒ /post/[postId]
+├ ƒ /profile
+├ ƒ /profile/[userId]
+├ ƒ /profile/[userId]/followers
+├ ƒ /reset-password
+├ ƒ /resources
+├ ƒ /resources/[slug]
+├ ƒ /resources/category/[key]
+├ ƒ /resume
+├ ƒ /resume/[draftId]
+├ ○ /robots.txt
+├ ƒ /settings
+├ ƒ /signup
+├ ○ /sitemap.xml
+├ ƒ /verify-email
+└ ƒ /welcome
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

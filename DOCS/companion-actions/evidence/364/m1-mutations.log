@@ -1,0 +1,14 @@
+# 2026-10-27T20:09:49Z mobile client deliberate faults, each restored with git checkout
+## M1 entry hides while the plan read is pending
+    ✕ the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation (1259 ms)
+Tests:       1 failed, 3 passed, 4 total
+## M2 an unknown approval outcome is treated as settled without a lookup
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+    ✕ a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes (10371 ms)
+Tests:       1 failed, 3 passed, 4 total
+## M3 Undo removes without asking first
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+    ✕ the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation (1414 ms)
+Tests:       1 failed, 3 passed, 4 total
+ M __tests__/companionActions/planLocalStack.test.tsx
+ M services/companionActions/planClient.ts

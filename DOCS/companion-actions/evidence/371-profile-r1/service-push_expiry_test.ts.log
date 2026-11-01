@@ -1,0 +1,10 @@
+running 1 test from ./push_expiry_test.ts
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary ...
+------- output -------
+FALSIFIER: content delay lets a session expire before POST but the worker still sends
+{"kind":"provider_fixture_distribution","total":0,"modes":{}}
+----- output end -----
+push expiry: session expiry during content I/O is checked at the last preventable POST boundary ... ok (2s)
+
+ok | 1 passed | 0 failed (2s)
+

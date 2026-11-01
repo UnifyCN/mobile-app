@@ -1,0 +1,34 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 3 tests from ./remove_plan_race_test.ts
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"],"middle":{"plans":["Transit only"],"removed":false}}
+{"removal":[200,null,[]],"plan":[409,"needs_review"]}
+----- output end -----
+a plan approval naming a task waits for its removal in progress, then needs a new review; other plans do not wait ... ok (521ms)
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ...
+------- output -------
+{"waiting":1,"blockers":["companion_plan_apply"],"middle":{"plans":[],"removed":false}}
+{"plan":[200,null],"removal":[409,"needs_review",null]}
+----- output end -----
+a removal approval waits for a plan approval naming the task, then needs a new review that names the plan ... ok (501ms)
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ...
+------- output -------
+{"waiting":1,"blockers":["companion_apply_actions"]}
+{"removal":[200,[]],"retry":[409,"needs_review"]}
+----- output end -----
+an approved plan retry review that references an existing task waits for its removal, then needs a new review ... ok (447ms)
+
+ok | 3 passed | 0 failed (1s)
+

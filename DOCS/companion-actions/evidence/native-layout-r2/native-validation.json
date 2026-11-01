@@ -1,0 +1,626 @@
+{
+  "falsifier": "Missing retained panel, changed draft, unchanged text bounds, overlapping empty entry, or changed served source bytes.",
+  "context": [
+    {
+      "before": "b02-en-context-default",
+      "after": "b03-en-context-live-xxxl",
+      "heading_before": {
+        "label": "Sources and context",
+        "value": null,
+        "frame": {
+          "y": 209.6666717529297,
+          "x": 20,
+          "height": 26,
+          "width": 326
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "heading_after": {
+        "label": "Sources and context",
+        "value": null,
+        "frame": {
+          "y": 174.33333349227905,
+          "x": 20,
+          "height": 35.33331298828125,
+          "width": 326
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "close_after": {
+        "label": "Close sources and context",
+        "value": null,
+        "frame": {
+          "y": 168,
+          "x": 346,
+          "height": 48,
+          "width": 48
+        },
+        "role": "AXButton",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true
+    },
+    {
+      "before": "c07-french-context-default",
+      "after": "c08-french-context-live-xxxl",
+      "heading_before": {
+        "label": "Sources et contexte",
+        "value": null,
+        "frame": {
+          "y": 209.6666717529297,
+          "x": 20,
+          "width": 326,
+          "height": 26
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "heading_after": {
+        "label": "Sources et contexte",
+        "value": null,
+        "frame": {
+          "height": 35.33331298828125,
+          "x": 20,
+          "y": 174.33333349227905,
+          "width": 326
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "close_after": {
+        "label": "Fermer les sources et le contexte",
+        "value": null,
+        "frame": {
+          "height": 48,
+          "x": 346,
+          "y": 168,
+          "width": 48
+        },
+        "role": "AXButton",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true
+    }
+  ],
+  "task_list": [
+    {
+      "before": "b08-en-task-list-medium",
+      "after": "b09-en-task-list-live-axxxxl",
+      "heading_before": {
+        "label": "Your Checklist tasks",
+        "value": null,
+        "frame": {
+          "height": 43,
+          "x": 52,
+          "width": 298,
+          "y": 591.3333333432674
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "heading_after": {
+        "label": "Your Checklist tasks",
+        "value": null,
+        "frame": {
+          "width": 298,
+          "y": 89,
+          "height": 257.3333435058594,
+          "x": 52
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "rows": [
+        {
+          "before": {
+            "label": "Open a bank account, In progress",
+            "value": null,
+            "frame": {
+              "height": 90.3333740234375,
+              "x": 16,
+              "width": 370,
+              "y": 651.3333358764648
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Open a bank account, In progress",
+            "value": null,
+            "frame": {
+              "width": 370,
+              "y": 362.6666564941406,
+              "height": 234.66665649414062,
+              "x": 16
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        },
+        {
+          "before": {
+            "label": "Get a phone plan, Waiting",
+            "value": null,
+            "frame": {
+              "height": 90.33331298828125,
+              "x": 16,
+              "width": 370,
+              "y": 741.6666717529297
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Get a phone plan, Waiting",
+            "value": null,
+            "frame": {
+              "width": 370,
+              "y": 597.3333282470703,
+              "height": 234.66668701171875,
+              "x": 16
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        }
+      ]
+    },
+    {
+      "before": "c10-french-task-list-medium",
+      "after": "c11-french-task-list-live-axxxxl",
+      "heading_before": {
+        "label": "Les tâches de votre liste",
+        "value": null,
+        "frame": {
+          "x": 52,
+          "y": 549,
+          "height": 86,
+          "width": 298
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "heading_after": {
+        "label": "Les tâches de votre liste",
+        "value": null,
+        "frame": {
+          "x": 52,
+          "height": 257.3333435058594,
+          "width": 298,
+          "y": 89
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "rows": [
+        {
+          "before": {
+            "label": "Open a bank account, En cours",
+            "value": null,
+            "frame": {
+              "x": 16,
+              "y": 651.3333358764648,
+              "height": 90.3333740234375,
+              "width": 370
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Open a bank account, En cours",
+            "value": null,
+            "frame": {
+              "x": 16,
+              "height": 234.66665649414062,
+              "width": 370,
+              "y": 362.6666564941406
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        },
+        {
+          "before": {
+            "label": "Get a phone plan, En attente",
+            "value": null,
+            "frame": {
+              "x": 16,
+              "y": 741.6666717529297,
+              "height": 90.33331298828125,
+              "width": 370
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Get a phone plan, En attente",
+            "value": null,
+            "frame": {
+              "x": 16,
+              "height": 234.66668701171875,
+              "width": 370,
+              "y": 597.3333282470703
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        }
+      ]
+    },
+    {
+      "before": "d06-reduced-motion-task-medium",
+      "after": "d07-reduced-motion-task-live-axxxxl",
+      "heading_before": {
+        "label": "Les tâches de votre liste",
+        "value": null,
+        "frame": {
+          "height": 86,
+          "width": 298,
+          "x": 52,
+          "y": 549
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "heading_after": {
+        "label": "Les tâches de votre liste",
+        "value": null,
+        "frame": {
+          "width": 298,
+          "height": 257.3333435058594,
+          "y": 89,
+          "x": 52
+        },
+        "role": "AXHeading",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "rows": [
+        {
+          "before": {
+            "label": "Open a bank account, En cours",
+            "value": null,
+            "frame": {
+              "height": 90.3333740234375,
+              "width": 370,
+              "x": 16,
+              "y": 651.3333358764648
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Open a bank account, En cours",
+            "value": null,
+            "frame": {
+              "height": 234.66665649414062,
+              "width": 370,
+              "y": 362.6666564941406,
+              "x": 16
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        },
+        {
+          "before": {
+            "label": "Get a phone plan, En attente",
+            "value": null,
+            "frame": {
+              "height": 90.33331298828125,
+              "width": 370,
+              "x": 16,
+              "y": 741.6666717529297
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          },
+          "after": {
+            "label": "Get a phone plan, En attente",
+            "value": null,
+            "frame": {
+              "width": 370,
+              "height": 234.66668701171875,
+              "y": 597.3333282470703,
+              "x": 16
+            },
+            "role": "AXButton",
+            "enabled": true,
+            "focused": null,
+            "selected": null
+          }
+        }
+      ]
+    }
+  ],
+  "waiting": [
+    {
+      "before": "b11-en-waiting-draft-medium-keyboard",
+      "after": "b12-en-waiting-draft-live-axxxxl-keyboard",
+      "continued_without_refocus": "b13-en-retained-input",
+      "input_before": {
+        "label": "What are you waiting for?",
+        "value": "R2 waiting for provider",
+        "frame": {
+          "x": 25,
+          "y": 600.6666475931804,
+          "width": 352,
+          "height": 70
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "input_after": {
+        "label": "What are you waiting for?",
+        "value": "R2 waiting for provider",
+        "frame": {
+          "height": 170.00000000000023,
+          "x": 25,
+          "y": 2028.3333079020183,
+          "width": 352
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "input_continued": {
+        "label": "What are you waiting for?",
+        "value": "R2 waiting for provider continued",
+        "frame": {
+          "height": 245.00000000000023,
+          "y": 2028.3333079020183,
+          "width": 352,
+          "x": 25
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true,
+      "selected_waiting_retained": true
+    },
+    {
+      "before": "c13-french-waiting-draft-medium",
+      "after": "c14-french-waiting-draft-live-axxxxl",
+      "continued_without_refocus": "c15-french-waiting-draft-continued",
+      "input_before": {
+        "label": "Qu’attendez-vous?",
+        "value": "R2 attempts du fournisseur",
+        "frame": {
+          "x": 25,
+          "y": 567.333334604899,
+          "width": 352,
+          "height": 70
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "input_after": {
+        "label": "Qu’attendez-vous?",
+        "value": "R2 attempts du fournisseur",
+        "frame": {
+          "height": 170,
+          "width": 352,
+          "x": 25,
+          "y": 2195.6667124430337
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "input_continued": {
+        "label": "Qu’attendez-vous?",
+        "value": "R2 attempts du fournisseur suite",
+        "frame": {
+          "y": 2195.6667124430337,
+          "width": 352,
+          "x": 25,
+          "height": 245
+        },
+        "role": "AXTextArea",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true,
+      "selected_waiting_retained": true
+    }
+  ],
+  "empty_entry": [
+    {
+      "capture": "c19-french-empty-axxxxl",
+      "entry": {
+        "label": "Vos tâches, En cours : 1 · En attente : 1",
+        "value": null,
+        "frame": {
+          "y": 110,
+          "x": 16,
+          "width": 370,
+          "height": 296.6666564941406
+        },
+        "role": "AXButton",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "welcome": {
+        "label": "Posez-moi n'importe quelle question.",
+        "value": null,
+        "frame": {
+          "y": 414.6666564941406,
+          "width": 366,
+          "x": 18,
+          "height": 272.0000305175781
+        },
+        "role": "AXStaticText",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "gap_pt": 8.0
+    },
+    {
+      "capture": "c20-french-empty-live-medium",
+      "entry": {
+        "label": "Vos tâches, En cours : 1 · En attente : 1",
+        "value": null,
+        "frame": {
+          "width": 370,
+          "x": 16,
+          "y": 110,
+          "height": 88
+        },
+        "role": "AXButton",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "welcome": {
+        "label": "Posez-moi n'importe quelle question.",
+        "value": null,
+        "frame": {
+          "width": 366,
+          "y": 206,
+          "x": 18,
+          "height": 92.33334350585938
+        },
+        "role": "AXStaticText",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "gap_pt": 8
+    },
+    {
+      "capture": "e04-final-companion",
+      "entry": {
+        "label": "Your tasks, In progress: 1 · Waiting: 1",
+        "value": null,
+        "frame": {
+          "y": 110,
+          "height": 57,
+          "width": 370,
+          "x": 16
+        },
+        "role": "AXButton",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "welcome": {
+        "label": "Ask me anything.",
+        "value": null,
+        "frame": {
+          "width": 366,
+          "x": 18,
+          "y": 409,
+          "height": 34
+        },
+        "role": "AXStaticText",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "gap_pt": 242
+    }
+  ],
+  "served_runtime_sources_matching": 12,
+  "explicit_context_close": [
+    {
+      "capture": "b05-en-expanded-sources-visible",
+      "expanded_source_retained": {
+        "label": ", example.invalid, ·, Review source title",
+        "value": null,
+        "frame": {
+          "width": 300.6666564941406,
+          "height": 44.6666259765625,
+          "x": 36,
+          "y": 560.3333295186361
+        },
+        "role": "AXGenericElement",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true
+    },
+    {
+      "capture": "c09-french-context-closed",
+      "expanded_source_retained": {
+        "label": ", example.invalid, ·, Review source title",
+        "value": null,
+        "frame": {
+          "height": 44.666748046875,
+          "y": 891.3333498636882,
+          "x": 36,
+          "width": 300.6666564941406
+        },
+        "role": "AXGenericElement",
+        "enabled": true,
+        "focused": null,
+        "selected": null
+      },
+      "composer_retained": true
+    }
+  ],
+  "limits": [
+    "Native AX frames do not prove VoiceOver or TalkBack behavior.",
+    "The French input value is verified off screen after resizing; the last scroll capture is below the field.",
+    "Software keyboard keys exist below the visible screen; fresh visible software keyboard proof is incomplete.",
+    "The reduced-motion sequence follows a separate app restart after the English and French binding transitions."
+  ]
+}

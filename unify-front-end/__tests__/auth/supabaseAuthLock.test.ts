@@ -24,7 +24,7 @@ const slowRead = () =>
     setTimeout(() => resolve(null), STORAGE_DELAY_MS)
   );
 
-jest.mock('react-native-url-polyfill/auto', () => ({}), { virtual: true });
+jest.mock('react-native-url-polyfill/auto', () => ({}));
 // App-client storage delay; a test raises it to hold the lock for longer.
 let mockStorageDelayMs = STORAGE_DELAY_MS;
 jest.mock('expo-secure-store', () => ({

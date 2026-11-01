@@ -1,0 +1,22 @@
+{
+  "command": [
+    "deno",
+    "test",
+    "--no-check",
+    "--node-modules-dir=none",
+    "--allow-net",
+    "--allow-env",
+    "--allow-read",
+    "remove_test.ts",
+    "remove_plan_race_test.ts",
+    "details_test.ts",
+    "details_undo_test.ts",
+    "compose_365_370_test.ts",
+    "compose_367_370_test.ts",
+    "remove_rollback_test.ts",
+    "compose_rollback_test.ts"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions",
+  "exit": 1,
+  "seconds": 0.01271510124206543
+}

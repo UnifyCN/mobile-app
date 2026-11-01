@@ -1,0 +1,8 @@
+running 4 tests from ../../Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (408ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (421ms)
+read returns only the caller's tasks ... ok (335ms)
+cleanup ... ok (6ms)
+
+ok | 4 passed | 0 failed (1s)
+

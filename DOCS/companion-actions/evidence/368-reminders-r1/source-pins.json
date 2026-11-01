@@ -1,0 +1,39 @@
+{
+  "mobile": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-abe3435e",
+    "assigned_path": "/Users/savargupta/.t3/worktrees/Unify/t3-abe3435e",
+    "branch": "t3/companion-reminders-ticket-368",
+    "source_commit": "b788e31d73e78031ccadb86260a727910652ca5a",
+    "source_tree": "4fcaf06827bf40aa661c531c4a45b91c56807b6c",
+    "base": "61a4134c786c37f65a02baca2364fd7e18ea2509",
+    "base_ancestors_preserved": 892,
+    "clean": true,
+    "integration": {
+      "branch": "feat/companion-actions-359",
+      "head": "61a4134c786c37f65a02baca2364fd7e18ea2509",
+      "tree": "473039fa8eb0019a562413c221e4410d0c3c494c",
+      "clean": true
+    }
+  },
+  "web": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-removed-receipt-view-359",
+    "assigned_path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-removed-receipt-view-359",
+    "branch": "feat/companion-reminders-368-r1",
+    "source_commit": "1b2cfdcc91de93961ce89dbade101b754c6dd91e",
+    "source_tree": "8f8486385c87b63f5ec3d3b937d609030cf51610",
+    "base": "914e4f54b08deaa9cf48e25aa86041720e6296db",
+    "base_ancestors_preserved": 663,
+    "clean": true,
+    "integration": {
+      "branch": "feat/companion-actions-359",
+      "head": "914e4f54b08deaa9cf48e25aa86041720e6296db",
+      "tree": "069454bb5bc7b45484d013222ffcc55265445fa8",
+      "clean": true
+    }
+  },
+  "probe": {
+    "commit": "559b56d99e21c0bd9f30928245a1d6a53e85bbe6",
+    "composition": "b29e9346e0f26809cc0ebc71a77fc90ff0cc9460",
+    "subtree_unchanged": true
+  }
+}

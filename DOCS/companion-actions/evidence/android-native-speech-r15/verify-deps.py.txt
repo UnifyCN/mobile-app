@@ -1,0 +1,10 @@
+from pathlib import Path
+import gzip,json,hashlib,os
+R=Path.cwd();E=R/'DOCS/companion-actions/evidence/android-native-speech-r15';P=R/'build/android-native-speech-r15/mobile'
+with gzip.open('/tmp/unify-companion-359/ios-metro-root-repair-r9/copied-dependency-files.json.gz','rt') as f:records=json.load(f)
+for r in records:
+ p=P/'node_modules'/r['path']
+ if r['type']=='symlink':assert p.is_symlink() and os.readlink(p)==r['target'] and p.resolve().is_relative_to((P/'node_modules').resolve())
+ else:assert p.stat().st_size==r['bytes'] and hashlib.sha256(p.read_bytes()).hexdigest()==r['sha256'],str(p)
+(E/'locked-dependency-verification.json').write_text(json.dumps(dict(records=len(records),match=True,source='retained dependency manifest with exact current package and lockfile equality')))
+print('All',len(records),'copied dependency records match.')

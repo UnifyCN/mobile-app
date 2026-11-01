@@ -1,0 +1,27 @@
+running 1 test from ./compose_367_370_test.ts
+approved saved detail and plan task removal retain exact receipts, replay, steps and account boundaries together ... FAILED (1s)
+
+ ERRORS 
+
+approved saved detail and plan task removal retain exact receipts, replay, steps and account boundaries together => ./compose_367_370_test.ts:13:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation","detail":{"type":"detail.create"}}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify/t3-c68f1368/DOCS/companion-actions/evidence/compose-367-370-native-r1/runtime/supabase/tests/companion-actions/compose_367_370_test.ts:23:5)
+
+ FAILURES 
+
+approved saved detail and plan task removal retain exact receipts, replay, steps and account boundaries together => ./compose_367_370_test.ts:13:6
+
+FAILED | 0 passed | 1 failed (1s)
+
+error: Test failed

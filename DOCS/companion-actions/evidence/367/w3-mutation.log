@@ -1,0 +1,337 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ❯ components/companion/tasks/TaskRemovalLocalStack.test.tsx (3 tests | 1 failed | 2 skipped) 2035ms
+   ↓ Task removal against the real local stack (web, #367) > a removal request opens a review in the drawer; Cancel writes nothing and returns focus; the confirmed removal names the plan; Undo restores; the draft stays
+   ↓ Task removal against the real local stack (web, #367) > the Checklist delete control opens the reviewed removal; a change on another device before approval revises the review and removes nothing
+   × Task removal against the real local stack (web, #367) > an old removal request opened after another device removed the task offers nothing to remove; the card turns historical 1545ms
+     → expected <h4 id="_r_4_-review" …(2)></h4> to be null
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body
+    style="overflow: hidden;"
+  >
+    <div
+      inert=""
+    >
+      <div
+        class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+      >
+        <div
+          class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+        >
+          <header
+            class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+          >
+            <button
+              aria-label="Conversations"
+              class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="18"
+                  rx="2"
+                  width="18"
+                  x="3"
+                  y="3"
+                />
+                <path
+                  d="M9 3v18"
+                />
+              </svg>
+            </button>
+            <h1
+              class="truncate text-sm font-semibold text-ink-secondary"
+            >
+              First week
+            </h1>
+          </header>
+          <header
+            class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+          >
+            <h1
+              class="truncate text-sm font-semibold text-ink-secondary"
+            >
+              First week
+            </h1>
+          </header>
+          <div
+            class="border-b border-border-card px-4 py-2 md:px-6"
+          >
+            <div
+              class="mx-auto flex w-full max-w-3xl items-center gap-3"
+            >
+              <div
+                class="min-w-0 flex-1"
+              >
+                <p
+                  class="text-sm font-semibold text-ink-secondary"
+                >
+                  Your tasks
+                </p>
+                <p
+                  class="truncate text-xs text-ink-muted"
+                >
+                  In progress: 0 · Waiting: 0
+                </p>
+              </div>
+              <button
+                class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                type="button"
+              >
+                Open
+              </button>
+            </div>
+          </div>
+          <div
+            class="scrollbar-thin flex-1 overflow-y-auto"
+          >
+            <div
+              class="mx-auto w-full max-w-3xl px-6 py-6"
+            >
+              <div>
+                <div
+                  class="flex animate-message-in justify-end mt-4"
+                >
+                  <div
+                    class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"
+                  >
+                    <p
+                      class="whitespace-pre-wrap"
+                      dir="auto"
+                    >
+                      Remove task: Get your SIN
+                    </p>
+                  </div>
+                </div>
+                <article
+                  aria-label="Removal request"
+                  class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+                  data-testid="task-removal-card"
+                >
+                  <span
+                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-trash lucide-trash-2 h-4 w-4 text-ink-secondary"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 11v6"
+                      />
+                      <path
+                        d="M14 11v6"
+                      />
+                      <path
+                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+                      />
+                      <path
+                        d="M3 6h18"
+      ...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskRemovalLocalStack.test.tsx > Task removal against the real local stack (web, #367) > an old removal request opened after another device removed the task offers nothing to remove; the card turns historical
+AssertionError: expected <h4 id="_r_4_-review" …(2)></h4> to be null
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body
+    style="overflow: hidden;"
+  >
+    <div
+      inert=""
+    >
+      <div
+        class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+      >
+        <div
+          class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+        >
+          <header
+            class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+          >
+            <button
+              aria-label="Conversations"
+              class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="18"
+                  rx="2"
+                  width="18"
+                  x="3"
+                  y="3"
+                />
+                <path
+                  d="M9 3v18"
+                />
+              </svg>
+            </button>
+            <h1
+              class="truncate text-sm font-semibold text-ink-secondary"
+            >
+              First week
+            </h1>
+          </header>
+          <header
+            class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+          >
+            <h1
+              class="truncate text-sm font-semibold text-ink-secondary"
+            >
+              First week
+            </h1>
+          </header>
+          <div
+            class="border-b border-border-card px-4 py-2 md:px-6"
+          >
+            <div
+              class="mx-auto flex w-full max-w-3xl items-center gap-3"
+            >
+              <div
+                class="min-w-0 flex-1"
+              >
+                <p
+                  class="text-sm font-semibold text-ink-secondary"
+                >
+                  Your tasks
+                </p>
+                <p
+                  class="truncate text-xs text-ink-muted"
+                >
+                  In progress: 0 · Waiting: 0
+                </p>
+              </div>
+              <button
+                class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                type="button"
+              >
+                Open
+              </button>
+            </div>
+          </div>
+          <div
+            class="scrollbar-thin flex-1 overflow-y-auto"
+          >
+            <div
+              class="mx-auto w-full max-w-3xl px-6 py-6"
+            >
+              <div>
+                <div
+                  class="flex animate-message-in justify-end mt-4"
+                >
+                  <div
+                    class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white"
+                  >
+                    <p
+                      class="whitespace-pre-wrap"
+                      dir="auto"
+                    >
+                      Remove task: Get your SIN
+                    </p>
+                  </div>
+                </div>
+                <article
+                  aria-label="Removal request"
+                  class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+                  data-testid="task-removal-card"
+                >
+                  <span
+                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-trash lucide-trash-2 h-4 w-4 text-ink-secondary"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 11v6"
+                      />
+                      <path
+                        d="M14 11v6"
+                      />
+                      <path
+                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+                      />
+                      <path
+                        d="M3 6h18"
+      ...
+
+- Expected: 
+null
+
++ Received: 
+<h4
+  class="break-words text-sm font-semibold text-ink-secondary focus-visible:outline-none"
+  id="_r_4_-review"
+  tabindex="-1"
+>
+  Remove “Get your SIN”?
+</h4>
+
+ ❯ components/companion/tasks/TaskRemovalLocalStack.test.tsx:460:109
+    458|     fireEvent.click(within(card).getByRole("button", { name: "Review r…
+    459|     expect(await within(await screen.findByRole("dialog")).findByText(…
+    460|     await waitFor(() => expect(within(dialog()).queryByRole("heading",…
+       |                                                                                                             ^
+    461|     expect(within(dialog()).queryByRole("button", { name: "Remove task…
+    462|     fireEvent.keyDown(document, { key: "Escape" });
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  21:03:21
+   Duration  3.24s (transform 262ms, setup 0ms, collect 687ms, tests 2.04s, environment 234ms, prepare 47ms)
+

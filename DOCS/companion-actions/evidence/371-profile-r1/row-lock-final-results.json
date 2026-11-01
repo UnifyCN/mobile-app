@@ -1,0 +1,22 @@
+[
+  {
+    "label": "row-lock-profile-behavior",
+    "file": "profile_test.ts",
+    "exit": 0
+  },
+  {
+    "label": "row-lock-validation",
+    "file": "profile_validation_test.ts",
+    "exit": 0
+  },
+  {
+    "label": "row-lock-races-final",
+    "file": "profile_races_test.ts",
+    "exit": 0
+  },
+  {
+    "label": "row-lock-rollback",
+    "file": "profile_rollback_test.ts",
+    "exit": 0
+  }
+]

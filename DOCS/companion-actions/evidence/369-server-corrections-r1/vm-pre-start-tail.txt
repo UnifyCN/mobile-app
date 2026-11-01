@@ -1,0 +1,45 @@
+{"component":"procd","level":"info","msg":"unpause successful","time":"2026-10-30T20:02:16.860207131Z"}
+{"component":"poweroff","level":"info","msg":"preparing to power the VM off...","time":"2026-10-30T20:02:17.954278257Z"}
+{"component":"control","level":"info","msg":"graceful shutdown complete","time":"2026-10-30T20:02:17.954358215Z"}
+{"component":"poweroff","level":"info","msg":"killing /usr/bin/bash (pid 185)","time":"2026-10-30T20:02:17.965363049Z"}
+{"component":"poweroff","level":"info","msg":"killing /usr/bin/login (pid 186)","time":"2026-10-30T20:02:17.965401215Z"}
+{"component":"poweroff","level":"info","msg":"killing /usr/bin/bash (pid 208)","time":"2026-10-30T20:02:17.965434882Z"}
+{"component":"poweroff","level":"info","msg":"killing /usr/bin/rosetta-mount (pid 298)","time":"2026-10-30T20:02:17.965496924Z"}
+{"component":"poweroff","level":"info","msg":"all processes have shutdown","time":"2026-10-30T20:02:17.971460174Z"}
+{"component":"poweroff","level":"info","msg":"disks synced","time":"2026-10-30T20:02:18.002727465Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/Users","time":"2026-10-30T20:02:18.002998632Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/Users","time":"2026-10-30T20:02:18.003008799Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/Users","time":"2026-10-30T20:02:18.003055007Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/Users","time":"2026-10-30T20:02:18.003071507Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/Volumes","time":"2026-10-30T20:02:18.003160465Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/Volumes","time":"2026-10-30T20:02:18.003177049Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/Volumes","time":"2026-10-30T20:02:18.003326132Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/Volumes","time":"2026-10-30T20:02:18.003335882Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/private","time":"2026-10-30T20:02:18.003406840Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/private","time":"2026-10-30T20:02:18.003416007Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/private","time":"2026-10-30T20:02:18.003525424Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/private","time":"2026-10-30T20:02:18.003534382Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/tmp","time":"2026-10-30T20:02:18.003602590Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/tmp","time":"2026-10-30T20:02:18.003610632Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/tmp","time":"2026-10-30T20:02:18.003708257Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/tmp","time":"2026-10-30T20:02:18.003715174Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/var/folders","time":"2026-10-30T20:02:18.003792590Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/host_mark/var/folders","time":"2026-10-30T20:02:18.003812924Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/var/folders","time":"2026-10-30T20:02:18.003885340Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /host_mnt/var/folders","time":"2026-10-30T20:02:18.003905840Z"}
+{"component":"poweroff","level":"info","msg":"error unmounting /var/lib: unmounting /var/lib: device or resource busy","time":"2026-10-30T20:02:18.003915715Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/mutagen-file-shares-mark","time":"2026-10-30T20:02:18.004012507Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/mutagen-file-shares-mark","time":"2026-10-30T20:02:18.004021299Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/mutagen-file-shares","time":"2026-10-30T20:02:18.004095674Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /run/mutagen-file-shares","time":"2026-10-30T20:02:18.004104965Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /","time":"2026-10-30T20:02:18.004407757Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /","time":"2026-10-30T20:02:18.004415132Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /var/lib","time":"2026-10-30T20:02:18.149003174Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /var/lib","time":"2026-10-30T20:02:18.149106424Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /","time":"2026-10-30T20:02:18.149138424Z"}
+{"component":"poweroff","level":"info","msg":"unmounted /","time":"2026-10-30T20:02:18.149150507Z"}
+{"component":"poweroff","level":"info","msg":"disks unmounted","time":"2026-10-30T20:02:18.149165757Z"}
+{"component":"poweroff","level":"info","msg":"flushing memlogd logs...","time":"2026-10-30T20:02:18.149169007Z"}
+{"level":"info","msg":"flushing logs","time":"2026-10-30T20:02:18.149178215Z"}
+{"component":"poweroff","level":"info","msg":"flushing memlogd logs succeeded","time":"2026-10-30T20:02:18.149820424Z"}
+{"component":"poweroff","level":"info","msg":"VM is ready to be powered off","time":"2026-10-30T20:02:18.149831590Z"}

@@ -1,0 +1,14 @@
+PASS  keyboard: Remove task opens the review and focus moves to its heading
+PASS  opening the review sends no write
+PASS  Cancel sends nothing and returns focus to Remove task
+PASS  the confirmation removes once and reads back removed
+PASS  focus stays inside the drawer after the removal
+PASS  390px: no horizontal overflow after removal; Undo at least 44px tall
+PASS  keyboard: the Undo of the removal receipt restores the task
+PASS  another account reads none of it
+PASS  Remove task is at least 44px tall
+PASS  review buttons are at least 44px tall
+PASS  Arabic: the review is right to left with Arabic copy and no overflow
+PASS  Arabic: opening the review sends no write
+
+12 passed, 0 failed, 0 errors

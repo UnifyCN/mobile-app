@@ -1,0 +1,98 @@
+{
+  "saved": [
+    {
+      "due": true,
+      "title": "Synthetic due task",
+      "due_at": "2026-10-29T20:46:00.025699+00:00",
+      "status": "pending",
+      "history": [
+        {
+          "at": "2026-10-29T20:45:27.91045+00:00",
+          "reason": null,
+          "status": "pending"
+        }
+      ],
+      "revision": 1,
+      "task_ref": "custom:4",
+      "remind_at": "2026-10-29T20:45:42.849+00:00",
+      "time_zone": "Etc/UTC",
+      "wall_time": "2026-10-29T20:45:42.849",
+      "last_error": null,
+      "reminder_id": "69241cc7-d277-457d-8c40-76430f56d9f1",
+      "cancelled_reason": null
+    },
+    {
+      "due": false,
+      "title": "Synthetic reminder control task",
+      "due_at": null,
+      "status": "pending",
+      "history": [
+        {
+          "at": "2026-10-29T20:46:00.509981+00:00",
+          "reason": null,
+          "status": "pending"
+        }
+      ],
+      "revision": 1,
+      "task_ref": "custom:5",
+      "remind_at": "2026-10-29T20:48:00+00:00",
+      "time_zone": "Etc/UTC",
+      "wall_time": "2026-10-29T20:48:00",
+      "last_error": null,
+      "reminder_id": "d192974d-93bb-471b-8ce4-334e384de31c",
+      "cancelled_reason": null
+    }
+  ],
+  "stopped": [
+    {
+      "due": true,
+      "title": "Synthetic due task",
+      "due_at": "2026-10-29T20:46:00.025699+00:00",
+      "status": "pending",
+      "history": [
+        {
+          "at": "2026-10-29T20:45:27.91045+00:00",
+          "reason": null,
+          "status": "pending"
+        }
+      ],
+      "revision": 1,
+      "task_ref": "custom:4",
+      "remind_at": "2026-10-29T20:45:42.849+00:00",
+      "time_zone": "Etc/UTC",
+      "wall_time": "2026-10-29T20:45:42.849",
+      "last_error": null,
+      "reminder_id": "69241cc7-d277-457d-8c40-76430f56d9f1",
+      "cancelled_reason": null
+    },
+    {
+      "due": false,
+      "title": "Synthetic reminder control task",
+      "due_at": null,
+      "status": "cancelled",
+      "history": [
+        {
+          "at": "2026-10-29T20:46:00.509981+00:00",
+          "reason": null,
+          "status": "pending"
+        },
+        {
+          "at": "2026-10-29T20:46:00.823346+00:00",
+          "reason": "schedule_undo",
+          "status": "cancelled"
+        }
+      ],
+      "revision": 2,
+      "task_ref": "custom:5",
+      "remind_at": "2026-10-29T20:48:00+00:00",
+      "time_zone": "Etc/UTC",
+      "wall_time": "2026-10-29T20:48:00",
+      "last_error": null,
+      "reminder_id": "d192974d-93bb-471b-8ce4-334e384de31c",
+      "cancelled_reason": "schedule_undo"
+    }
+  ],
+  "taskState": "not_started",
+  "taskRevision": 1,
+  "foreignCount": 0
+}

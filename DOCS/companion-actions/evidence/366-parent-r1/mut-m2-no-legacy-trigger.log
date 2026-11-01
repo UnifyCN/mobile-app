@@ -1,0 +1,105 @@
+[0m[38;5;245mrunning 9 tests from ./steps_parent_race_test.ts[0m
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ... [0m[31mFAILED[0m [0m[38;5;245m(415ms)[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyState":"settled","stepState":"blocked","mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:07.081441+00:00"}],"steps":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_completed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:07.081441+00:00"}],"steps":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(242ms)[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ... [0m[31mFAILED[0m [0m[38;5;245m(268ms)[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyState":"settled","stepState":"blocked","mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:07.587522+00:00"}],"steps":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_removed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:07.587522+00:00"}],"steps":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(235ms)[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ... [0m[31mFAILED[0m [0m[38;5;245m(285ms)[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ...
+[0m[38;5;245m------- output -------[0m
+{"shape":"upsert","legacyState":"settled","stepState":"settled","legacyWhileStepHeld":[],"mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:08.14459+00:00"}],"steps":[]},"step":{"status":422,"reason":"task_completed"},"legacy":{"status":200,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:08.14459+00:00"}],"steps":[]}}
+{"shape":"update","legacyState":"settled","stepState":"settled","legacyWhileStepHeld":[],"mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:08.419538+00:00"}],"steps":[]},"step":{"status":422,"reason":"task_completed"},"legacy":{"status":204,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-27T20:37:08.419538+00:00"}],"steps":[]}}
+[0m[38;5;245m----- output end -----[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ... [0m[32mok[0m [0m[38;5;245m(557ms)[0m
+independent parents and accounts are not serialized behind a held parent ... [0m[32mok[0m [0m[38;5;245m(318ms)[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ...
+[0m[38;5;245m------- output -------[0m
+[{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":200,"l":201,"steps":1,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"}]
+[0m[38;5;245m----- output end -----[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ... [0m[32mok[0m [0m[38;5;245m(272ms)[0m
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again ... [0m[31mFAILED[0m [0m[38;5;245m(601ms)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the step add passed its parent check
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [41m[37msettled[31m[49m
+[22m[39m[32m[1m+   [42m[37mblocked[32m[49m
+[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m117[0m:[0m[33m9[0m)
+
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the step add passed its parent check
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [41m[37msettled[31m[49m
+[22m[39m[32m[1m+   [42m[37mblocked[32m[49m
+[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m117[0m:[0m[33m9[0m)
+
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read [0m[38;5;245m=> ./steps_parent_race_test.ts:186:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: the check passed its parent check
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [41m[37msettled[31m[49m
+[22m[39m[32m[1m+   [42m[37mblocked[32m[49m
+[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m209[0m:[0m[33m7[0m)
+
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again [0m[38;5;245m=> ./steps_parent_race_test.ts:336:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal: re-applied: ordered again
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[31m[1m-   [41m[37msettled[31m[49m
+[22m[39m[32m[1m+   [42m[37mblocked[32m[49m
+[22m[39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[2m[38;5;245mfile:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/[0m[0m[36msteps_parent_race_test.ts[0m:[0m[33m364[0m:[0m[33m7[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step [0m[38;5;245m=> ./steps_parent_race_test.ts:92:8[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read [0m[38;5;245m=> ./steps_parent_race_test.ts:186:6[0m
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again [0m[38;5;245m=> ./steps_parent_race_test.ts:336:6[0m
+
+[0m[31mFAILED[0m | 5 passed | 4 failed [0m[38;5;245m(3s)[0m
+
+[0m[1m[31merror[0m: Test failed
+exit=1

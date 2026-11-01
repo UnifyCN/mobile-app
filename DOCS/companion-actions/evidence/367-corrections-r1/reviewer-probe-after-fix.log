@@ -1,0 +1,36 @@
+[0m[38;5;245mrunning 1 test from ../../../../../../Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/effect-race.test.ts[0m
+reviewer: a plan added during approval must be reviewed before removal ...
+[0m[38;5;245m------- output -------[0m
+{"reviewedPlans":[],"planStatus":200,"planObservedBeforeRemovalCommit":[{"goal":"New plan during removal","removed":false}],"removalStatus":503,"removalError":"operation_in_flight","persistedRemoved":false}
+[0m[38;5;245m----- output end -----[0m
+reviewer: a plan added during approval must be reviewed before removal ... [0m[31mFAILED[0m [0m[38;5;245m(3s)[0m
+
+[0m[1m[37m[41m ERRORS [0m
+
+reviewer: a plan added during approval must be reviewed before removal [0m[38;5;245m=> ../../../../../../Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/effect-race.test.ts:9:6[0m
+[0m[1m[31merror[0m: AssertionError: Values are not equal.
+
+
+    [90m[1m[Diff][22m[39m [31m[1mActual[22m[39m / [32m[1mExpected[22m[39m
+
+
+[37m    [[39m
+[31m[1m-     503,[22m[39m
+[31m[1m-     "operation_in_flight",[22m[39m
+[32m[1m+     409,[22m[39m
+[32m[1m+     "needs_review",[22m[39m
+[37m      false,[39m
+[37m    ][39m
+
+  throw new AssertionError(message);
+[0m[31m        ^[0m
+    at [0m[1m[3massertEquals[0m ([0m[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts[0m:[0m[33m67[0m:[0m[33m9[0m)
+    at [0m[1m[3mfn[0m ([0m[36mfile:///Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/effect-race.test.ts[0m:[0m[33m46[0m:[0m[33m7[0m)
+
+[0m[1m[37m[41m FAILURES [0m
+
+reviewer: a plan added during approval must be reviewed before removal [0m[38;5;245m=> ../../../../../../Users/savargupta/.t3/worktrees/Unify/t3-457f38cc/DOCS/companion-actions/evidence/review-367-r1/effect-race.test.ts:9:6[0m
+
+[0m[31mFAILED[0m | 0 passed | 1 failed [0m[38;5;245m(3s)[0m
+
+[0m[1m[31merror[0m: Test failed

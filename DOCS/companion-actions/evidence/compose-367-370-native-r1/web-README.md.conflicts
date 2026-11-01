@@ -1,0 +1,57 @@
+# Companion task actions: endpoint tests (mobile-app#361)
+
+Tests for `supabase/functions/companion-actions` and the migrations
+`supabase/migrations/20261025235536_companion_task_actions.sql` (#361),
+`20261026165156_companion_task_create.sql` (#363) and
+`20261028001530_companion_task_edit.sql` (#365), which this repo mirrors byte for
+byte from the mobile repo (the migration authority). This repo is the deploy
+authority for the function. `edit_published_test.ts` runs the same handler in
+process against the same stack, with a controlled published-content fixture (the
+local edge runtime cannot reach published content).
+
+They run against a disposable local Supabase stack (`project_id = unify-actions-363`,
+ports 60671-60674) that starts from a copy of the hosted schema
+(`supabase/migrations/20260101000000_hosted_baseline.sql`) and applies the
+production migration and rollback script itself. Every assertion goes through the
+public HTTP boundary with real JWTs of synthetic accounts, or through the legacy
+PostgREST calls of released clients. `run.sh` refuses any non-127.0.0.1 URL.
+
+```
+./run.sh                    # every *_test.ts, database reset before each file
+./run.sh undo_test.ts       # one file
+ACTIONS_KEEP=1 ./run.sh     # start and reset only; prints the ACTIONS_* env
+python3 -I mutation_check.py   # breaks one mechanism at a time; each must fail by assertion
+```
+
+Needs docker, the Supabase CLI and deno. No hosted project is contacted.
+
+#366 task steps: `steps_test.ts` and `steps_rollback_test.ts` also apply
+`20261027183644_companion_task_steps.sql`. A new step under a content-backed task needs
+its published Checklist document; the edge function reads it from
+`COMPANION_CONTENT_QUERY_URL`, which `run.sh` points at the tests' stand-in
+(`support.ts` `contentStub`) on `ACTIONS_CONTENT_PORT` (default 60675; the edge runtime
+reaches it as `host.docker.internal`). The secret is set when the stack starts, so set
+the port before `supabase start`. `steps_parent_race_test.ts` (#366 F1) and
+`steps_context_race_test.ts` (#366 F3) hold locks from separate connections and read
+`pg_stat_activity` to order concurrent requests. `scripts/verify-companion-task-steps.mjs` is the
+real-browser check of the web step controls against this stack (same port).
+
+<<<<<<< HEAD
+Results, test order and proof limits: mobile repo `DOCS/companion-actions/361-task-actions.md`.
+
+#365 + #370 composition: `compose_365_370_test.ts` (both domains through one service, one
+account, isolation, concurrency) and `compose_rollback_test.ts` (the #370 rollback restores
+the #365 shared functions and kinds exactly; data keeps its identity through the full
+reverse rollback and re-application). Support applies #361, #363, #364, #366, #365, #370 and
+rolls back in reverse: `migrate365('down')` runs the #370 rollback first.
+=======
+#367 task removal: `remove_test.ts`, `remove_rollback_test.ts` and
+`remove_plan_race_test.ts` also apply `20261028025026_companion_task_remove.sql`, after
+#365 (timestamp order #361, #363, #364, #366, #365, #367; `support.ts` rolls back in
+reverse). `remove_plan_race_test.ts` pauses one write of a fixture account with a
+test-installed trigger and reads `pg_stat_activity` to show that a plan approval naming a
+task and that task's removal wait for each other, in both orders.
+
+Results, test order and proof limits: mobile repo `DOCS/companion-actions/361-task-actions.md`
+(and `367-task-remove.md` for #367).
+>>>>>>> c022bb48e61b5195ce3d22e5e9190b4d8b2920a9

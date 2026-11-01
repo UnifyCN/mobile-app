@@ -1,0 +1,100 @@
+running 9 tests from ./supabase/tests/companion-actions/push_authority_races_test.ts
+push authority: committed sign_out prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: sign_out
+{"kind":"enrollment_authority_intermediate","stop":"sign_out","graph":[{"pid":1329,"blockers":[1328]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"sign_out","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed sign_out prevents enrollment after installation contention ... ok (347ms)
+push authority: committed gate_stop prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: gate_stop
+{"kind":"enrollment_authority_intermediate","stop":"gate_stop","graph":[{"pid":1329,"blockers":[1345]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"gate_stop","status":503,"persisted_enrollments":0}
+----- output end -----
+push authority: committed gate_stop prevents enrollment after installation contention ... ok (174ms)
+push authority: committed expired_policy prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: expired_policy
+{"kind":"enrollment_authority_intermediate","stop":"expired_policy","graph":[{"pid":1329,"blockers":[1328]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"expired_policy","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed expired_policy prevents enrollment after installation contention ... ok (173ms)
+push authority: committed banned_account prevents enrollment after installation contention ...
+------- output -------
+FALSIFIER: authorization becomes invalid while enrollment waits, but a later write still commits: banned_account
+{"kind":"enrollment_authority_intermediate","stop":"banned_account","graph":[{"pid":1329,"blockers":[1345]}],"enrollments":0,"invalidation_committed":true}
+{"kind":"enrollment_authority_result","stop":"banned_account","status":403,"persisted_enrollments":0}
+----- output end -----
+push authority: committed banned_account prevents enrollment after installation contention ... ok (180ms)
+push authority: enrollment holds sign_out until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: sign_out
+{"kind":"enrollment_authority_first","stop":"sign_out","graph":[{"pid":1478,"blockers":[1466]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds sign_out until its write commits ... ok (228ms)
+push authority: enrollment holds gate_stop until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: gate_stop
+{"kind":"enrollment_authority_first","stop":"gate_stop","graph":[{"pid":1345,"blockers":[1503]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds gate_stop until its write commits ... ok (184ms)
+push authority: enrollment holds banned_account until its write commits ...
+------- output -------
+FALSIFIER: invalidation commits while enrollment is paused after its authorization check: banned_account
+{"kind":"enrollment_authority_first","stop":"banned_account","graph":[{"pid":1328,"blockers":[1531]}],"enrollments":0,"invalidation_committed":false}
+----- output end -----
+push authority: enrollment holds banned_account until its write commits ... ok (195ms)
+push authority: clock expiry is checked after operation_replay ...
+------- output -------
+FALSIFIER: a policy expires during a later lock wait, but a write or historical reply is returned: operation_replay
+{"kind":"enrollment_clock_expiry","stage":"operation_replay","graph":[{"pid":1557,"blockers":[1505]}],"policy_expired":true}
+----- output end -----
+push authority: clock expiry is checked after operation_replay ... FAILED (997ms)
+push authority: clock expiry is checked after token_lock ...
+------- output -------
+FALSIFIER: a policy expires during a later lock wait, but a write or historical reply is returned: token_lock
+{"kind":"enrollment_clock_expiry","stage":"token_lock","graph":[{"pid":1557,"blockers":[1345]}],"policy_expired":true}
+----- output end -----
+push authority: clock expiry is checked after token_lock ... FAILED (976ms)
+
+ ERRORS 
+
+push authority: clock expiry is checked after operation_replay => ./supabase/tests/companion-actions/push_authority_races_test.ts:119:8
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   200
++   403
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_authority_races_test.ts:151:7)
+
+push authority: clock expiry is checked after token_lock => ./supabase/tests/companion-actions/push_authority_races_test.ts:119:8
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   200
++   403
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_authority_races_test.ts:151:7)
+
+ FAILURES 
+
+push authority: clock expiry is checked after operation_replay => ./supabase/tests/companion-actions/push_authority_races_test.ts:119:8
+push authority: clock expiry is checked after token_lock => ./supabase/tests/companion-actions/push_authority_races_test.ts:119:8
+
+FAILED | 7 passed | 2 failed (3s)
+
+error: Test failed

@@ -1,0 +1,20 @@
+{
+  "node": {
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "skipped": 0
+  },
+  "worker_types": "PASS",
+  "offline_linux_dependency_cache_on_macos": "PASS",
+  "sql_test_types": "PASS",
+  "sql_runtime": "REFUSED_BEFORE_CONNECTION_NO_LEASE",
+  "mobile_types": "PASS",
+  "package_integrity_and_refusal_controls": "PASS",
+  "web_patch_apply_check": "PASS",
+  "web_build": "NOT_RUN",
+  "vercel_execution": "NOT_RUN",
+  "existing_migrations_unchanged": 92,
+  "companion_migrations_unchanged": 11,
+  "production_provider_native_release_acceptance": "NOT_RUN"
+}

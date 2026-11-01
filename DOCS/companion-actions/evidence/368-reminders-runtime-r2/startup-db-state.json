@@ -1,0 +1,46 @@
+[
+  {
+    "command": [
+      "docker",
+      "exec",
+      "supabase_db_unify-reminders-368-r1",
+      "psql",
+      "-U",
+      "postgres",
+      "-d",
+      "postgres",
+      "-Atc",
+      "select 1"
+    ],
+    "exit": 2,
+    "stdout": "",
+    "stderr": "psql: error: connection to server on socket \"/run/postgresql/.s.PGSQL.5432\" failed: FATAL:  the database system is shutting down\n",
+    "seconds": 0.067
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "supabase_db_unify-reminders-368-r1",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "stdout": "{\"Status\":\"running\",\"Running\":true,\"Paused\":false,\"Restarting\":false,\"OOMKilled\":false,\"Dead\":false,\"Pid\":743,\"ExitCode\":0,\"Error\":\"\",\"StartedAt\":\"2026-10-29T19:38:38.781476051Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Health\":{\"Status\":\"healthy\",\"FailingStreak\":0,\"Log\":[{\"Start\":\"2026-10-29T19:39:39.332906426Z\",\"End\":\"2026-10-29T19:39:39.368312509Z\",\"ExitCode\":0,\"Output\":\"127.0.0.1:5432 - accepting connections\\n\"},{\"Start\":\"2026-10-29T19:39:49.369613791Z\",\"End\":\"2026-10-29T19:39:49.410002333Z\",\"ExitCode\":0,\"Output\":\"127.0.0.1:5432 - accepting connections\\n\"},{\"Start\":\"2026-10-29T19:39:59.411045755Z\",\"End\":\"2026-10-29T19:39:59.448220046Z\",\"ExitCode\":0,\"Output\":\"127.0.0.1:5432 - accepting connections\\n\"},{\"Start\":\"2026-10-29T19:40:09.458107301Z\",\"End\":\"2026-10-29T19:40:09.502992093Z\",\"ExitCode\":0,\"Output\":\"127.0.0.1:5432 - accepting connections\\n\"},{\"Start\":\"2026-10-29T19:40:19.5083495Z\",\"End\":\"2026-10-29T19:40:19.550561916Z\",\"ExitCode\":0,\"Output\":\"127.0.0.1:5432 - accepting connections\\n\"}]}}\n",
+    "stderr": "",
+    "seconds": 0.016
+  },
+  {
+    "command": [
+      "docker",
+      "inspect",
+      "supabase_db_unify-reminders-368-r1",
+      "--format",
+      "{{json .Mounts}}"
+    ],
+    "exit": 0,
+    "stdout": "[{\"Type\":\"volume\",\"Name\":\"supabase_db_unify-reminders-368-r1\",\"Source\":\"/var/lib/docker/volumes/supabase_db_unify-reminders-368-r1/_data\",\"Destination\":\"/var/lib/postgresql/data\",\"Driver\":\"local\",\"Mode\":\"z\",\"RW\":true,\"Propagation\":\"\"}]\n",
+    "stderr": "",
+    "seconds": 0.289
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "pid": 84639,
+    "command": "supabase start --workdir DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions",
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 91848,
+    "command": "/bin/zsh -c tail -30 DOCS/companion-actions/evidence/368-reminders-runtime-r2/start.log\\012 docker inspect --type container supabase_edge_runtime_unify-reminders-368-r1 --format '{{json .State}}'\\012 docker inspect --type container supabase_edge_runtime_unify-reminders-368-r1 --format '{{json .Mounts}}'\\012 ps -Ao pid,ppid,etime,command | rg 'supabase start|npm ci'",
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 91850,
+    "command": "docker inspect --type container supabase_edge_runtime_unify-reminders-368-r1 --format {{json .State}}",
+    "signal": "SIGTERM"
+  }
+]

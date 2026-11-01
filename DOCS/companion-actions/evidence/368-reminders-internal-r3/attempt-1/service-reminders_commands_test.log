@@ -1,0 +1,37 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+Download https://jsr.io/@supabase/supabase-js/meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0_meta.json
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/SupabaseClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/constants.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/fetch.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/helpers.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/SupabaseAuthClient.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/rest/types/common/rpc.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/version.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/index.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/lib/tracingRegistry.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/types.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/create-extractor.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/parse.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/validate.ts
+Download https://jsr.io/@supabase/supabase-js/2.118.0/src/_internal/tracing/defaults.ts
+running 3 tests from ./reminders_commands_test.ts
+reminder authorization: exact own user command, unknown outcome, foreign and assistant message refusal ... ok (350ms)
+reminder proposal: registry produces data only and the exact approved server revision authorizes the change ... ok (178ms)
+reminder command cleanup ... ok (3ms)
+
+ok | 3 passed | 0 failed (539ms)
+

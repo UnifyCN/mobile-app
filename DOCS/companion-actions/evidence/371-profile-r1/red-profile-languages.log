@@ -1,0 +1,29 @@
+running 2 tests from ./profile_validation_test.ts
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing ... FAILED (397ms)
+profile validation: forged controls, messages, sources, identities and malformed values cannot authorize writes ... ok (1s)
+
+ ERRORS 
+
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing => ./profile_validation_test.ts:5:6
+error: AssertionError: Values are not equal: {"text":"Update my profile province to B.C.","result":{"command":{"kind":"profile_clarify"}}}
+
+
+    [Diff] Actual / Expected
+
+
+-   profile_clarify
++   profile
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_validation_test.ts:20:5)
+
+ FAILURES 
+
+profile validation: exact supported commands in all seven locales resolve; ambiguity and unsupported values write nothing => ./profile_validation_test.ts:5:6
+
+FAILED | 1 passed | 1 failed (1s)
+
+error: Test failed

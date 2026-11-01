@@ -1,0 +1,21 @@
+-- Read-only PostHog query. Root must bind interval and explicit excluded IDs.
+-- Keep historical first-event calculation outside the report interval filter.
+-- No private message, title, reminder note, saved detail, URL or receipt ID.
+WITH first_action AS (
+  SELECT distinct_id, min(timestamp) AS first_at
+  FROM events WHERE event = 'companion_action_result' GROUP BY distinct_id
+)
+SELECT
+  multiIf(e.properties.platform IN ('ios', 'android', 'web'), toString(e.properties.platform),
+    e.properties.$os = 'iOS', 'ios', e.properties.$os = 'Android', 'android',
+    e.properties.$lib = 'web', 'web', 'unknown') AS platform,
+  if(f.first_at >= {date_from}, 'new', 'returning') AS cohort,
+  toString(e.properties.action) AS action,
+  toString(e.properties.outcome) AS outcome,
+  count() AS events, count(DISTINCT e.distinct_id) AS accounts
+FROM events e JOIN first_action f ON e.distinct_id = f.distinct_id
+WHERE e.event = 'companion_action_result'
+  AND e.timestamp >= {date_from} AND e.timestamp < {date_to}
+  AND e.distinct_id NOT IN {excluded_distinct_ids}
+GROUP BY platform, cohort, action, outcome
+ORDER BY platform, cohort, action, outcome

@@ -1,0 +1,30 @@
+running 3 tests from ./spec_r2_review_test.ts
+independent: reviewed remaining addition preserves an earlier saved addition, identity, receipt and exact Undo ...
+------- output -------
+{"preserved":"custom:1","itemOperation":"841cc7fe-0116-761e-99e6-ce8d2e264a17","reviewOperation":"4a5c039d-f366-4d30-8214-d6e24f22eb52","concurrentStatuses":[200,200],"undo":200}
+----- output end -----
+independent: reviewed remaining addition preserves an earlier saved addition, identity, receipt and exact Undo ... ok (1s)
+independent: a second retry review must not hide the first unfinished review ...
+------- output -------
+{"firstReview":"dfae12c8-23e5-41b3-96ee-4c6ce5fbbb83","secondReview":"a5044040-e2c2-4758-94a5-86f0188134de","reachable":["a5044040-e2c2-4758-94a5-86f0188134de"],"retryable":[],"openReviews":[{"id":"dfae12c8-23e5-41b3-96ee-4c6ce5fbbb83","status":"draft","items":[{"key":"n2","kind":"new","title":"Set up phone service","include":true,"priority":"Do soon"}]},{"id":"a5044040-e2c2-4758-94a5-86f0188134de","status":"draft","items":[{"key":"n3","kind":"new","title":"Get a library card","include":true,"priority":"Do soon"}]}]}
+----- output end -----
+independent: a second retry review must not hide the first unfinished review ... FAILED (286ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+independent: a second retry review must not hide the first unfinished review => ./spec_r2_review_test.ts:46:6
+error: AssertionError: first unfinished review is absent from every saved-plan/draft entry while its item cannot Retry
+    throw new AssertionError(msg);
+          ^
+    at assert (https://jsr.io/@std/assert/1.0.19/assert.ts:22:11)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/spec_r2_review_test.ts:72:7)
+
+ FAILURES 
+
+independent: a second retry review must not hide the first unfinished review => ./spec_r2_review_test.ts:46:6
+
+FAILED | 2 passed | 1 failed (1s)
+
+error: Test failed
+exit=1

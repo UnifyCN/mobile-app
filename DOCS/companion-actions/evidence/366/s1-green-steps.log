@@ -1,0 +1,19 @@
+running 15 tests from ./steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... ok (352ms)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... ok (241ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... ok (386ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... ok (368ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... ok (448ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... ok (312ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... ok (704ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... ok (333ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... ok (369ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... ok (531ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... ok (460ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... ok (475ms)
+another account cannot read, change, look up or undo my steps ... ok (493ms)
+step controls, lookup and Undo never touch the AI allowance ... ok (269ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... ok (291ms)
+
+ok | 15 passed | 0 failed (6s)
+

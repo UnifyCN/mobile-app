@@ -9,6 +9,7 @@
 import React from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 interface Row {
   arrival_date: string;
@@ -136,7 +137,7 @@ beforeEach(() => {
   mockRow = { arrival_date: OLD, stage: 0 };
   mockReadGates = [];
   mockWritePlans = [];
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
 });
 

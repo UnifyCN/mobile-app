@@ -1,0 +1,4 @@
+{"target":"linux-x64","bytes":105912216,"files":623,"version":"2.9.8"}
+{"target":"darwin-arm64","bytes":91356912,"files":624,"version":"2.9.8"}
+PASS: a corrupt binary manifest is rejected
+PASS: a manifest path outside the package is rejected

@@ -1,0 +1,14 @@
+COMMAND: run.sh steps_rollback_test.ts compose_rollback_test.ts (steps_rollback test 1 rolls back #370/#365 before its cache mock)
+running 2 tests from ./steps_rollback_test.ts
+the #366 rollback waits for the step RPC to leave the cache while plan setup accepts installed steps ... ok (2s)
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts ... ok (2s)
+
+ok | 2 passed | 0 failed (4s)
+
+running 2 tests from ./compose_rollback_test.ts
+the #370 rollback restores the accepted #365 shared functions and kinds; re-application restores #370 exactly ... ok (5s)
+data saved with both migrations keeps its identity through the #370 rollback, the full reverse rollback and re-application ... ok (6s)
+
+ok | 2 passed | 0 failed (11s)
+
+EXIT 0

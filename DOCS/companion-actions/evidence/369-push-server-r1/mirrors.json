@@ -1,0 +1,110 @@
+[
+  {
+    "path": "migrations/20261025235536_companion_task_actions.sql",
+    "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111",
+    "bytes": 44478,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261026165156_companion_task_create.sql",
+    "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808",
+    "bytes": 44117,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261027183338_companion_settlement_plan.sql",
+    "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d",
+    "bytes": 71147,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261027183644_companion_task_steps.sql",
+    "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8",
+    "bytes": 62948,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261028001530_companion_task_edit.sql",
+    "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6",
+    "bytes": 53508,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261028004902_companion_saved_details.sql",
+    "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374",
+    "bytes": 67833,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261028025026_companion_task_remove.sql",
+    "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b",
+    "bytes": 73421,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261029175439_companion_task_reminders.sql",
+    "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7",
+    "bytes": 27502,
+    "identical": true
+  },
+  {
+    "path": "migrations/20261030181040_companion_reminder_push.sql",
+    "sha256": "f46d7249545aeff7b816867a9ae39336950d21b827b903e209c5cb3d7d38a02c",
+    "bytes": 14522,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261025235536_companion_task_actions.down.sql",
+    "sha256": "33aebda5e08577ada559aa909a36f20c76c6f6bbf4456b8385ff9384f52c8001",
+    "bytes": 5998,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261026165156_companion_task_create.down.sql",
+    "sha256": "8d9b369096281c6b2f62030f61291060b6557ff1cb26a922b67d56f4635cf332",
+    "bytes": 19182,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261027183338_companion_settlement_plan.down.sql",
+    "sha256": "2416ca44970f72595e9a39da94693afdccda00e4972a6670cf031ea279465d91",
+    "bytes": 4740,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261027183644_companion_task_steps.down.sql",
+    "sha256": "50ee8f104aff18e0688aeb4a1c5b37cd986ca3c03cad86ed5fa6ad3dc0fac967",
+    "bytes": 33062,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261028001530_companion_task_edit.down.sql",
+    "sha256": "11a109bc020722cf8e70f44f5b3fd0430e7e750b44a5c03589d4c35a664e1539",
+    "bytes": 32932,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261028004902_companion_saved_details.down.sql",
+    "sha256": "a6b12f3df40a3b16233ad88640b9daa59852c3ef585ea0bb6ec7ef191fcf7df6",
+    "bytes": 41980,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261028025026_companion_task_remove.down.sql",
+    "sha256": "821398d146159a42cd31fb12acccd83e95899e6ea47ef1fae23d8e0a9208c6de",
+    "bytes": 48860,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261029175439_companion_task_reminders.down.sql",
+    "sha256": "9282bc6a64bc4fa5a74c4e702e588191412a97934e00ca76caf2317b670d3049",
+    "bytes": 3703,
+    "identical": true
+  },
+  {
+    "path": "rollbacks/20261030181040_companion_reminder_push.down.sql",
+    "sha256": "dc9b0f2c6dfb507bafc66c9ce761576d42b8068a76f2f802f411ca4829cd4ce8",
+    "bytes": 1568,
+    "identical": true
+  }
+]

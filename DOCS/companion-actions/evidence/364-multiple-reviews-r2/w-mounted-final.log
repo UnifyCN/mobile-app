@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 /private/tmp/unify-merge-361-web
+
+ ✓ components/companion/plans/PlanPanelMotion.test.tsx (4 tests) 74ms
+ ✓ components/companion/plans/PlanLocalStack.test.tsx (8 tests) 4807ms
+   ✓ Settlement plans against the real local stack (web) > a saved task completion reconciles the plan entry without reopening the page  672ms
+   ✓ Settlement plans against the real local stack (web) > a saved plan task opens its controls directly in the same drawer  314ms
+   ✓ Settlement plans against the real local stack (web) > reviews a suggested plan in the drawer: two reused tasks, one addition, an exclusion that changes the count, one approval, focus and draft kept  653ms
+   ✓ Settlement plans against the real local stack (web) > resumes the saved plan after a reload with current progress, says it is checking while the read is pending, and Undo asks before removing the added task  420ms
+   ✓ Settlement plans against the real local stack (web) > a reply lost after commit is looked up before anything else; a failed lookup stays unresolved and never writes again  374ms
+   ✓ Settlement plans against the real local stack (web) > a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a reload; approving adds exactly one task  855ms
+   ✓ Settlement plans against the real local stack (web) > two unfinished retry reviews both stay reachable after a reload; closing one keeps the other and focus in the drawer  1072ms
+   ✓ Settlement plans against the real local stack (web) > an account change closes the previous account's plan and shows none of it  446ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  16:19:53
+   Duration  5.81s (transform 276ms, setup 0ms, collect 951ms, tests 4.88s, environment 491ms, prepare 80ms)
+
+exit=0

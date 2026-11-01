@@ -1,0 +1,12 @@
+{
+  "origin": "Retained excerpts of tool-captured output from this session. These are not fresh reruns or reconstructed raw command logs.",
+  "context_command": "node .agents/skills/impeccable/scripts/context.mjs --target unify-front-end/components/companion/tasks/ReminderSection.tsx",
+  "context_correction": "Use the installed skill directory at /Users/savargupta/.agents/skills/impeccable. Version and hash are unchanged.",
+  "cleanup_command": "python3 DOCS/companion-actions/evidence/369-mobile-client-r1/resources.py cleanup",
+  "cleanup_correction": "The frozen captures were verified against the fresh startup interval without another resource snapshot.",
+  "manifest_correction": "A preserved legacy comment contained an em dash. The comment now uses a hyphen. No runtime code changed.",
+  "context_excerpt_only": true,
+  "context_tool_chunk": "495c49",
+  "cleanup_tool_chunk": "2103f2",
+  "manifest_tool_chunk": "6378d3"
+}

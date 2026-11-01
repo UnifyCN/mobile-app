@@ -1,0 +1,56 @@
+# Local test stack for the Companion task actions endpoint (mobile-app#361, #363).
+# Not the app's config: its own project id and ports, so it cannot touch the
+# default local stack, another worker's stack or any hosted project.
+# Started by ../run.sh, which copies the function source into supabase/functions.
+project_id = "unify-actions-363"
+
+[api]
+enabled = true
+port = 60671
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 60672
+shadow_port = 60673
+major_version = 17
+
+[db.migrations]
+enabled = true
+[db.seed]
+enabled = false
+
+[realtime]
+enabled = false
+[studio]
+enabled = false
+[local_smtp]
+enabled = false
+[storage]
+enabled = false
+[analytics]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3009"
+jwt_expiry = 3600
+enable_signup = true
+minimum_password_length = 6
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+[edge_runtime]
+enabled = true
+policy = "per_worker"
+inspector_port = 60674
+
+# A new step under a content-backed task needs its published Checklist document (#366).
+# Tests answer that read from 127.0.0.1 (support.ts contentStub); run.sh sets the URL.
+[edge_runtime.secrets]
+COMPANION_CONTENT_QUERY_URL = "env(ACTIONS_CONTENT_QUERY_URL)"
+
+[functions.companion-actions]
+verify_jwt = true

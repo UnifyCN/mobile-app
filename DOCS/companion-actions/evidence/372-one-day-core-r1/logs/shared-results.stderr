@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-836b2497/DOCS/companion-actions/evidence/372-one-day-core-r1/shared-results-repro.py", line 78, in <module>
+    assert status == 200 and len(observed.get('results', [])) == 2, '372 individual multi-operation results unavailable'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 372 individual multi-operation results unavailable

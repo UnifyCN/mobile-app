@@ -1,0 +1,31 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 1 test from ./profile_races_test.ts
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ... FAILED (379ms)
+
+ ERRORS 
+
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress => ./profile_races_test.ts:83:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   Ontario
++   British Columbia
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_races_test.ts:104:5)
+
+ FAILURES 
+
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress => ./profile_races_test.ts:83:6
+
+FAILED | 0 passed | 1 failed | 5 filtered out (387ms)
+
+error: Test failed

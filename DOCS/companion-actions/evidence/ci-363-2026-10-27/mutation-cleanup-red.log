@@ -1,0 +1,28 @@
+FAIL __tests__/helpers/queryClientCleanup.test.ts
+  ✓ stops collection timers for a query removed while its observer was mounted (2 ms)
+  ✕ stops collection timers for completed mutations after cache removal (3 ms)
+
+  ● stops collection timers for completed mutations after cache removal
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 3
+
+      53 |   disposeTestQueryClients();
+      54 |
+    > 55 |   expect(jest.getTimerCount()).toBe(1);
+         |                                ^
+      56 |   clearTimeout(outsideTimer);
+      57 | });
+      58 |
+
+      at Object.toBe (__tests__/helpers/queryClientCleanup.test.ts:55:32)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 passed, 2 total
+Snapshots:   0 total
+Time:        0.572 s, estimated 1 s
+Ran all test suites within paths "__tests__/helpers/queryClientCleanup.test.ts".

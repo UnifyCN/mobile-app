@@ -1,0 +1,8 @@
+running 4 tests from ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (216ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (374ms)
+read returns only the caller's tasks ... ok (300ms)
+cleanup ... ok (4ms)
+
+ok | 4 passed | 0 failed (902ms)
+

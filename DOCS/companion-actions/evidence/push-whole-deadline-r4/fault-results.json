@@ -1,0 +1,22 @@
+[
+  {
+    "fault": "without-whole-race",
+    "exit": 1,
+    "assertion_seen": true,
+    "summary": [
+      "# tests 6",
+      "# pass 0",
+      "# fail 6"
+    ]
+  },
+  {
+    "fault": "without-cancellation-checks",
+    "exit": 1,
+    "assertion_seen": true,
+    "summary": [
+      "# tests 6",
+      "# pass 1",
+      "# fail 5"
+    ]
+  }
+]

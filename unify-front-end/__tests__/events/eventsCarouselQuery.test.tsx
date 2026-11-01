@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { render, waitFor } from '@testing-library/react-native';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { EventsCarousel } from '@/components/EventsCarousel';
 import { useEvents } from '@/hooks/events/useEvents';
 import { getAllEvents } from '@/services/events/getAllEvents';
@@ -38,7 +39,7 @@ function EventReaders() {
 test.each([false, true])(
   'shares the full event read with list and detail subscribers (concurrent: %s)',
   async concurrent => {
-    const client = new QueryClient({
+    const client = createTestQueryClient({
       defaultOptions: { queries: { retry: false, gcTime: 0 } },
     });
     fetchEvents.mockReset();

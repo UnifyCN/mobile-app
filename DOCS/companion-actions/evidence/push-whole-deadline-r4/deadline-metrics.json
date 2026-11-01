@@ -1,0 +1,65 @@
+{
+  "real_110_second_control": {
+    "configuredMs": 110000,
+    "measuredDeadlineMs": 110000,
+    "verificationDelayMs": 115000,
+    "deadlineFiredAtMs": 110010.522209,
+    "returnedAtMs": 110013.676459,
+    "status": 504,
+    "body": {
+      "ok": false
+    }
+  },
+  "compressed_OS_cases": [
+    {
+      "phase": "verification",
+      "cancel": false,
+      "status": 504,
+      "returnedMs": 45.939959,
+      "afterAbortMs": 0.6759170000000054,
+      "secondStatus": 200,
+      "spawns": 1,
+      "leftovers": []
+    },
+    {
+      "phase": "directory",
+      "cancel": false,
+      "status": 504,
+      "returnedMs": 45.717125,
+      "afterAbortMs": 0.6942080000000033,
+      "secondStatus": 200,
+      "spawns": 1,
+      "leftovers": []
+    },
+    {
+      "phase": "copy",
+      "cancel": false,
+      "status": 504,
+      "returnedMs": 46.558125000000004,
+      "afterAbortMs": 0.8274159999999995,
+      "secondStatus": 200,
+      "spawns": 1,
+      "leftovers": []
+    },
+    {
+      "phase": "cleanup",
+      "cancel": false,
+      "status": 504,
+      "returnedMs": 44.548458,
+      "afterAbortMs": 0.15816600000000136,
+      "secondStatus": 200,
+      "spawns": 2,
+      "leftovers": []
+    },
+    {
+      "phase": "verification",
+      "cancel": true,
+      "status": 499,
+      "returnedMs": 10.791250000000002,
+      "afterAbortMs": 0.6452920000000049,
+      "secondStatus": 200,
+      "spawns": 1,
+      "leftovers": []
+    }
+  ]
+}

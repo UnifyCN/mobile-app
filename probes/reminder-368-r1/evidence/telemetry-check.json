@@ -1,0 +1,107 @@
+{
+  "source": "owned Edge container console event JSON",
+  "since_utc": "2026-10-29T17:14:30.145713Z",
+  "matching_events": 82,
+  "allowed_keys": [
+    "action",
+    "event",
+    "http_status",
+    "operation_type",
+    "outcome",
+    "platform"
+  ],
+  "private_or_owner_keys_found": 0,
+  "by_action_platform_status_outcome": [
+    {
+      "action": "apply",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "applied",
+      "count": 21
+    },
+    {
+      "action": "apply",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "replayed",
+      "count": 4
+    },
+    {
+      "action": "apply",
+      "platform": "ios",
+      "status": 404,
+      "outcome": "failed",
+      "count": 1
+    },
+    {
+      "action": "apply",
+      "platform": "ios",
+      "status": 409,
+      "outcome": "failed",
+      "count": 1
+    },
+    {
+      "action": "apply",
+      "platform": "ios",
+      "status": 422,
+      "outcome": "failed",
+      "count": 3
+    },
+    {
+      "action": "prepare",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "prepared",
+      "count": 2
+    },
+    {
+      "action": "read",
+      "platform": "android",
+      "status": 200,
+      "outcome": "read",
+      "count": 2
+    },
+    {
+      "action": "read",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "read",
+      "count": 34
+    },
+    {
+      "action": "read",
+      "platform": "ios",
+      "status": 500,
+      "outcome": "failed",
+      "count": 1
+    },
+    {
+      "action": "read",
+      "platform": "web",
+      "status": 200,
+      "outcome": "read",
+      "count": 2
+    },
+    {
+      "action": "status",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "status_applied",
+      "count": 6
+    },
+    {
+      "action": "status",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "status_not_applied",
+      "count": 1
+    },
+    {
+      "action": "undo",
+      "platform": "ios",
+      "status": 200,
+      "outcome": "undone",
+      "count": 4
+    }
+  ]
+}

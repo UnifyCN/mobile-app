@@ -1,0 +1,55 @@
+  console.warn
+    expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/companionTaskSheet.test.tsx:262:1)
+
+PASS __tests__/companionActions/companionTaskSheet.test.tsx
+  native R5 draft and live-text findings
+    ○ skipped N02: history selection and return keep the current account draft
+    ○ skipped N02: a same-account remount keeps the unsent message
+    ○ skipped N02: New conversation navigates without silently clearing a typed draft
+    ○ skipped N02: sending clears the stored draft across a same-account remount
+    ○ skipped N02: a late send failure keeps the newer draft typed after navigation
+    ○ skipped N02: a failed send restores its question when no newer draft exists
+    ○ skipped N02: an unresolved session hides the stored draft, then restores it only for its owner
+    ○ skipped N02: an account change while away clears the previous draft permanently
+    ○ skipped N03: large and live text sizes do not create duplicate sibling keys
+  Companion task entry and sheet (mobile)
+    ✓ 371: reviews old and proposed profile values, refreshes saved values, and keeps the composer draft (358 ms)
+    ○ skipped opens saved tasks from a compact entry, changes one in the sheet, and keeps the typed message
+    ○ skipped at the AI limit, task controls still save and no model request is made
+    ○ skipped the sheet opens Checklist through existing navigation
+  review corrections (mobile sheet)
+    ○ skipped F8: on Android, the sheet header and Checklist link are at least 48dp
+  review r2 corrections (mobile sheet)
+    ○ skipped R368: a reminder title is removed when another account signs in
+    ○ skipped R368: a sign-out and sign-in in one batch clears the previous selected reminder
+    ○ skipped R368-SPEC-2: a batched sign-out/sign-in session reset removes the stored reminder draft
+    ○ skipped R368-SPEC-2: a batched A/B/A session reset removes the stored reminder draft
+    ○ skipped R368: a return to the first account does not restore its old selected reminder
+    ○ skipped R368: the same task id in another account needs a fresh selection
+    ○ skipped R368: a same-account token refresh keeps the selected reminder and typed drafts
+    ○ skipped F1: another account signing in clears the unsent message; the same account keeps it
+    ○ skipped F1: the open task sheet drops A's private task once B signs in
+    ○ skipped F1: A's Checklist read that ends after B signed in never shows A's task
+
+Test Suites: 1 passed, 1 total
+Tests:       23 skipped, 1 passed, 24 total
+Snapshots:   0 total
+Time:        2.278 s, estimated 8 s
+Ran all test suites matching /__tests__\/companionActions\/companionTaskSheet.test.tsx/i with tests matching "371:".

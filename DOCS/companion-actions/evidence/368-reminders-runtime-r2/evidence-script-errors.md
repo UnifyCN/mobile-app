@@ -1,0 +1,1 @@
+The first mirror-summary command used contracts.ts. That file does not exist. The command failed with FileNotFoundError before it wrote a result. The corrected command uses the exact 21 paths from the retained r1 mirror manifest. All 21 hashes and mirror byte comparisons pass. This command error is separate from product tests.

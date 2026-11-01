@@ -1,0 +1,42 @@
+from pathlib import Path
+import json,re,hashlib,datetime,wave,collections
+R=Path.cwd();E=R/'DOCS/companion-actions/evidence/android-native-speech-r15'
+def load(n):return json.loads((E/n).read_text())
+rows=[]
+for p in sorted((E/'raw').glob('*.wav')):
+ label=p.stem;meta=load('raw/'+label+'.json');transcript=E/(label+'-transcript.json');t=json.loads(transcript.read_text())['text'] if transcript.exists() else None
+ logs=meta['logs'];f=E/logs['com.google.android.marvin.talkback'];a=datetime.datetime.fromisoformat(meta['start_utc']).timestamp();b=datetime.datetime.fromisoformat(meta['end_utc']).timestamp();lines=[]
+ for l in f.read_text().splitlines():
+  m=re.match(r'\s*(\d+\.\d+)\s',l)
+  if m and a-1<=float(m[1])<=b+1 and any(s in l for s in ['TYPE_VIEW_ACCESSIBILITY_FOCUSED:  ttsOutput=','SpeechControllerImpl: Speaking fragment','Received utterance completed']):lines.append(l)
+ with wave.open(str(p)) as w:assert (w.getframerate(),w.getnchannels(),w.getsampwidth())==(48000,1,2)
+ rows.append(dict(label=label,wav_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),wav_bytes=p.stat().st_size,asr=t,metadata=meta,native_event_extract=lines))
+(E/'speech-review.json').write_text(json.dumps(dict(no_expected_text_prompt=True,model='Retained cached MLX Whisper large-v3-turbo',unmodified_pcm=True,human_listening=False,records=rows),indent=2))
+expected={
+ 'state-save-fixed':('Changed from Not started to In progress','talkback_36'),
+ 'state-undo-fixed':('Undid a change. The task is back to Not started.','talkback_41'),
+ 'step-add-fixed':('Added step: Bring synthetic photo ID','talkback_58'),
+ 'step-check-fixed':('Checked step: Bring synthetic photo ID','talkback_63'),
+ 'step-undo-fixed':('Unchecked step: Bring synthetic photo ID','talkback_69'),
+ 'reminder-save-physical':('Reminder saved.','talkback_41'),
+ 'reminder-time-touch-center':('Nov 3, 2026, 10:30','talkback_42'),
+ 'reminder-time-touch-left':('Nov 3, 2026, 10:30','talkback_44'),
+ 'reminder-time-swipe-preserved':('Nov 3, 2026, 10:30','talkback_46')}
+checks=[]
+for label,(words,uid) in expected.items():
+ r=next(r for r in rows if r['label']==label);lines=r['native_event_extract'];spoken=[l for l in lines if 'Speaking fragment text="'+words in l and 'utteranceId='+uid in l and 'TYPE_VIEW_ACCESSIBILITY_FOCUSED' in l];complete=[l for l in lines if 'Received utterance completed for "'+uid+'", returned true' in l];assert spoken and complete and r['asr'],label
+ checks.append(dict(label=label,expected_receipt_text=words,reader_utterance=uid,native_text_and_completion=True,asr=r['asr'],human_words_review='Read against recorded full result and name; ASR tense and UTC-offset limits retained'))
+(E/'speech-checks.json').write_text(json.dumps(checks,indent=2))
+labels=['state-saved','pre-final-state','state-save-fixed','state-undo-fixed','step-add-fixed','step-check-fixed','step-undo-fixed','reminder-saved-physical'];seen={};progress=[]
+for name in labels:
+ a=load(name+'-full-readback.json')['result'];new=[r for r in a['receipts'] if r['operation_id'] not in seen]
+ for r in new:seen[r['operation_id']]=r
+ progress.append(dict(scene=name,task_revision=a['task'][0]['revision'],steps=[{k:s[k] for k in ['id','title','revision','completed']} for s in a['steps']],new_receipts=new))
+a=load('step-add-fixed-full-readback.json')['result'];b=load('step-check-fixed-full-readback.json')['result'];c=load('step-undo-fixed-full-readback.json')['result'];d=load('reminder-saved-physical-full-readback.json')['result'];assert a['task']==b['task']==c['task']==d['task'];assert c['steps']==d['steps'];assert [x['steps'][0]['revision'] for x in [a,b,c]]==[1,2,3]
+assert d['receipts'][-1]['outcome']['results'][0]['type']=='reminder.schedule'
+assert c['receipts'][-1]['undo_of']==b['receipts'][-1]['operation_id']
+assert load('state-undo-fixed-full-readback.json')['result']['receipts'][-1]['undo_of']==load('state-save-fixed-full-readback.json')['result']['receipts'][-1]['operation_id']
+(E/'receipt-revision-matrix.json').write_text(json.dumps(dict(progress=progress,task_unchanged_by_steps_and_reminder=True,steps_unchanged_by_reminder=True,exact_undo_targets=True,final_receipts=list(seen.values())),indent=2))
+base=R/'build/android-native-speech-r15/web/supabase/migrations';names=['20261025235536_companion_task_actions.sql','20261026165156_companion_task_create.sql','20261027183338_companion_settlement_plan.sql','20261027183644_companion_task_steps.sql','20261028001530_companion_task_edit.sql','20261028004902_companion_saved_details.sql','20261028025026_companion_task_remove.sql','20261029175439_companion_task_reminders.sql','20261030181040_companion_reminder_push.sql','20261031055422_companion_profile_changes.sql','20261101024721_companion_allowance_and_cohort.sql'];assert names==sorted(names)
+(E/'ordered-migration-inputs.json').write_text(json.dumps([dict(order=i+1,path=n,sha256=hashlib.sha256((base/n).read_bytes()).hexdigest()) for i,n in enumerate(names)],indent=2))
+print('Speech content/completion checks:',len(checks),'recordings:',len(rows),'receipt observations:',len(progress),'unique receipts:',len(seen))

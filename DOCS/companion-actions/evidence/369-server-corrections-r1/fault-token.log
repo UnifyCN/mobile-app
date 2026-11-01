@@ -1,0 +1,32 @@
+running 1 test from ./supabase/tests/companion-actions/push_isolation_test.ts
+push isolation: a deleted shared token cannot stop another account or restart an old event ...
+------- output -------
+FALSIFIER: deleting one shared token aborts the batch, skips a healthy account, or later enrollment revives the consumed event
+{"kind":"deleted_token_isolation","jwt_delete_status":200,"deleted_rows":1,"sqlstate":"23502","consumed_events":0,"healthy_queued":0}
+----- output end -----
+push isolation: a deleted shared token cannot stop another account or restart an old event ... FAILED (2s)
+
+ ERRORS 
+
+push isolation: a deleted shared token cannot stop another account or restart an old event => ./supabase/tests/companion-actions/push_isolation_test.ts:11:6
+error: AssertionError: Values are not equal: a missing token must not abort other accounts
+
+
+    [Diff] Actual / Expected
+
+
+-   "23502"
++   null
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/supabase/tests/companion-actions/push_isolation_test.ts:46:5)
+
+ FAILURES 
+
+push isolation: a deleted shared token cannot stop another account or restart an old event => ./supabase/tests/companion-actions/push_isolation_test.ts:11:6
+
+FAILED | 0 passed | 1 failed (2s)
+
+error: Test failed

@@ -1,0 +1,68 @@
+[
+  {
+    "criterion": "Native permission allow/deny",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "iOS stops at guard load-order gate. Android prebuild cannot find google-services.json and has no SDK tools."
+  },
+  {
+    "criterion": "Save an in-app reminder with denied push",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "Rendered/SDK controls pass separately. No native signed-in workflow ran."
+  },
+  {
+    "criterion": "SecureStore process restart and no AsyncStorage proof",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "SDK storage/loss controls pass. No native installation record was created."
+  },
+  {
+    "criterion": "Native enrollment and authenticated persisted readback",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No real native registration or enrollment. No token fixture was copied into a test app."
+  },
+  {
+    "criterion": "Warm notification tap to stable current task",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No OS notification injection ran. Synthetic service delivery rows alone are not tap proof."
+  },
+  {
+    "criterion": "Cold notification tap",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "The proposed persistent guard does not precede all bundled framework initializers. No OS cold activation ran."
+  },
+  {
+    "criterion": "Signed-out tap and normal authentication",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No native sign-in or notification tap ran. The local DB has zero Auth sessions."
+  },
+  {
+    "criterion": "Removed or inaccessible task",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No native routing cell ran. SDK tests are separate."
+  },
+  {
+    "criterion": "Composer/task draft and focus retention",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No product task sheet loaded. Development launcher only."
+  },
+  {
+    "criterion": "Disabled/failed push retains reminder and progress",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "No native reminder was written. Focused client controls pass separately."
+  },
+  {
+    "criterion": "Actual Expo/APNs/FCM delivery",
+    "ios": "INCOMPLETE",
+    "android": "INCOMPLETE",
+    "evidence": "Provider credentials/policy are unverified. Dispatch stays disabled. Zero sends."
+  }
+]

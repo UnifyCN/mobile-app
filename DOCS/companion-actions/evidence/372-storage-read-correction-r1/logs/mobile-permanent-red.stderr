@@ -1,0 +1,28 @@
+FAIL __tests__/companionActions/planRecoveryStorage.test.tsx
+  ✕ preserves an unresolved operation through a temporary cleanup read failure before reopening its panel (131 ms)
+
+  ● preserves an unresolved operation through a temporary cleanup read failure before reopening its panel
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "{\"accountId\":\"11111111-1111-4111-8111-111111111111\",\"entries\":{\"plan-proposal:33333333-3333-4333-8333-333333333333\":{\"operationId\":\"44444444-4444-4444-8444-444444444444\",\"kind\":\"apply\",\"proposalId\":\"33333333-3333-4333-8333-333333333333\",\"proposalRevision\":1}}}"
+    Received: "{\"accountId\":\"11111111-1111-4111-8111-111111111111\",\"entries\":{\"plan-proposal:33333333-3333-4333-8333-333333333333\":{\"operationId\":\"46381c13-c757-486a-981a-93749cd86e64\",\"kind\":\"apply\",\"proposalId\":\"33333333-3333-4333-8333-333333333333\",\"proposalRevision\":1}}}"
+
+      108 |     await waitFor(() => expect(writes()).toHaveLength(1));
+      109 |   }
+    > 110 |   expect(await AsyncStorage.getItem(STORAGE_KEY)).toBe(retainedRecord);
+          |                                                   ^
+      111 |   expect(approval.props.accessibilityState?.disabled).toBe(true);
+      112 |   await screen.findByText(en.taskActions.lookupFailed);
+      113 |   expect(writes()).toHaveLength(0);
+
+      at Object.toBe (__tests__/companionActions/planRecoveryStorage.test.tsx:110:51)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.489 s
+Ran all test suites matching /__tests__\/companionActions\/planRecoveryStorage.test.tsx/i.
+Test results written to: ../../../../../../../tmp/unify-companion-359/one-day-delivery-20261031/recovery-read-correction-r1/mobile-permanent-red-tests.json

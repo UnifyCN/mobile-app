@@ -1,0 +1,85 @@
+{
+  "full_web_exit": 1,
+  "prior_errors": [
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 59,
+      "column": 36,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 71,
+      "column": 15,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 246,
+      "column": 78,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 249,
+      "column": 42,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 250,
+      "column": 42,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 271,
+      "column": 62,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/probes/companion-context-362/context_rls_test.ts",
+      "line": 369,
+      "column": 35,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/tests/companion-actions/rollback_test.ts",
+      "line": 77,
+      "column": 49,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/tests/companion-actions/support.ts",
+      "line": 85,
+      "column": 9,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/tests/companion-actions/support.ts",
+      "line": 101,
+      "column": 13,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/tests/companion-actions/support.ts",
+      "line": 387,
+      "column": 87,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    },
+    {
+      "file": "supabase/tests/companion-actions/support.ts",
+      "line": 390,
+      "column": 32,
+      "message": "Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any"
+    }
+  ],
+  "new_errors": [],
+  "starting_record_note": "The supplied brief identifies twelve prior errors. The first local full-lint run occurred after the new tests existed; its three new unused imports were then removed.",
+  "warnings_before": 11,
+  "warnings_final": 8,
+  "changed_web_first_attempt": "Invalid as proof: logical absolute paths were outside ESLint base. Retained; replaced by relative paths and actual lint.",
+  "changed_web_actual_exit": 0,
+  "mobile_full_final_exit": 0,
+  "mobile_prior_warnings": 85
+}

@@ -1,0 +1,434 @@
+[
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 59,
+    "column": 36,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 59,
+    "endColumn": 39,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            2423,
+            2426
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            2423,
+            2426
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 71,
+    "column": 15,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 71,
+    "endColumn": 18,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            2809,
+            2812
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            2809,
+            2812
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 246,
+    "column": 78,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 246,
+    "endColumn": 81,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            9834,
+            9837
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            9834,
+            9837
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 249,
+    "column": 42,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 249,
+    "endColumn": 45,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            9909,
+            9912
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            9909,
+            9912
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 250,
+    "column": 42,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 250,
+    "endColumn": 45,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            9959,
+            9962
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            9959,
+            9962
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 271,
+    "column": 62,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 271,
+    "endColumn": 65,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            11085,
+            11088
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            11085,
+            11088
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/probes/companion-context-362/context_rls_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 369,
+    "column": 35,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 369,
+    "endColumn": 38,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            15224,
+            15227
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            15224,
+            15227
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/tests/companion-actions/rollback_test.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 77,
+    "column": 49,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 77,
+    "endColumn": 52,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            5881,
+            5884
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            5881,
+            5884
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/tests/companion-actions/support.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 85,
+    "column": 9,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 85,
+    "endColumn": 12,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            5082,
+            5085
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            5082,
+            5085
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/tests/companion-actions/support.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 101,
+    "column": 13,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 101,
+    "endColumn": 16,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            5651,
+            5654
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            5651,
+            5654
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/tests/companion-actions/support.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 387,
+    "column": 87,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 387,
+    "endColumn": 90,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            20017,
+            20020
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            20017,
+            20020
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  },
+  {
+    "path": "supabase/tests/companion-actions/support.ts",
+    "ruleId": "@typescript-eslint/no-explicit-any",
+    "severity": 2,
+    "message": "Unexpected any. Specify a different type.",
+    "line": 390,
+    "column": 32,
+    "nodeType": "TSAnyKeyword",
+    "messageId": "unexpectedAny",
+    "endLine": 390,
+    "endColumn": 35,
+    "suggestions": [
+      {
+        "messageId": "suggestUnknown",
+        "fix": {
+          "range": [
+            20201,
+            20204
+          ],
+          "text": "unknown"
+        },
+        "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+      },
+      {
+        "messageId": "suggestNever",
+        "fix": {
+          "range": [
+            20201,
+            20204
+          ],
+          "text": "never"
+        },
+        "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+      }
+    ]
+  }
+]

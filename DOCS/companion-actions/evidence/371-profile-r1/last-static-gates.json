@@ -1,0 +1,23 @@
+[
+  {
+    "label": "web-types-last",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "web-changed-last",
+    "command": [
+      "npx",
+      "eslint",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "supabase/tests/companion-actions/profile_races_test.ts",
+      "supabase/tests/companion-actions/profile_test.ts",
+      "supabase/tests/companion-actions/profile_reset_fixture.ts"
+    ],
+    "exit": 0
+  }
+]

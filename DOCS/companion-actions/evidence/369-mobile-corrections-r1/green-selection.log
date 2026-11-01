@@ -1,0 +1,15 @@
+PASS __tests__/companionActions/pushSelectionRecovery.test.tsx
+  ● Console
+
+    console.log
+      CHECKLIST READS before=14 after=15
+
+      at Object.log (__tests__/companionActions/pushSelectionRecovery.test.tsx:497:11)
+
+PASS __tests__/companionActions/pushNavigation.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        2.125 s, estimated 3 s
+Ran all test suites matching /__tests__\/companionActions\/pushSelectionRecovery.test.tsx|__tests__\/companionActions\/pushNavigation.test.tsx/i.

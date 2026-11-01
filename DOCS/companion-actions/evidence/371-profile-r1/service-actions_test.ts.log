@@ -1,0 +1,8 @@
+running 4 tests from ./actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (346ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (700ms)
+read returns only the caller's tasks ... ok (461ms)
+cleanup ... ok (3ms)
+
+ok | 4 passed | 0 failed (1s)
+

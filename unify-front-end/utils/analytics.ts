@@ -8,6 +8,7 @@ import type {
 } from '@/types/partner';
 import type { PartnerCtaSource } from '@/utils/partners';
 import type { SignUpValidationReason } from '@/utils/signUpValidation';
+import type { TaskActionResultProperties } from '@/services/companionActions/analytics';
 import type {
   CompanionMessageSentProperties,
   CompanionResponseProperties,
@@ -123,6 +124,7 @@ export const AnalyticsEvents = {
   CHECKLIST_TASK_UNCOMPLETED: 'checklist_task_uncompleted',
   CHECKLIST_CUSTOM_TASK_CREATED: 'checklist_custom_task_created',
   CHECKLIST_CUSTOM_TASK_DELETED: 'checklist_custom_task_deleted',
+  COMPANION_ACTION_RESULT: 'companion_action_result',
   ARRIVAL_COUNTDOWN_SHOWN: 'arrival_countdown_shown',
   ARRIVAL_DATE_CHANGED: 'arrival_date_changed',
 
@@ -753,6 +755,14 @@ export function useAnalytics() {
       },
       trackChecklistCustomTaskDeleted: () => {
         posthog?.capture(AnalyticsEvents.CHECKLIST_CUSTOM_TASK_DELETED);
+      },
+      // Companion task actions (mobile-app#361). Same name and properties as web.
+      // Categorical values only: never a task title, waiting reason, receipt id or
+      // message text. Built by buildTaskActionResultProperties (allowlist).
+      trackCompanionActionResult: (properties: TaskActionResultProperties) => {
+        posthog?.capture(AnalyticsEvents.COMPANION_ACTION_RESULT, {
+          ...properties,
+        });
       },
       trackArrivalCountdownShown: (countdown: ArrivalCountdownShown) => {
         posthog?.capture(

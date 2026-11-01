@@ -1,0 +1,131 @@
+[
+  {
+    "case": "neither",
+    "passed": false,
+    "jest_exit": 1,
+    "intercepted_commands": [
+      {
+        "command": "docker",
+        "args": [
+          "exec",
+          "-i",
+          "supabase_db_unify-actions-361",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-q",
+          "-U",
+          "postgres",
+          "-d",
+          "postgres"
+        ]
+      },
+      {
+        "command": "docker",
+        "args": [
+          "kill",
+          "--signal=SIGUSR1",
+          "supabase_rest_unify-actions-361"
+        ]
+      }
+    ]
+  },
+  {
+    "case": "db-only",
+    "passed": false,
+    "jest_exit": 1,
+    "intercepted_commands": [
+      {
+        "command": "docker",
+        "args": [
+          "exec",
+          "-i",
+          "probe_db_owned",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-q",
+          "-U",
+          "postgres",
+          "-d",
+          "postgres"
+        ]
+      },
+      {
+        "command": "docker",
+        "args": [
+          "kill",
+          "--signal=SIGUSR1",
+          "supabase_rest_unify-actions-361"
+        ]
+      }
+    ]
+  },
+  {
+    "case": "rest-only",
+    "passed": false,
+    "jest_exit": 1,
+    "intercepted_commands": [
+      {
+        "command": "docker",
+        "args": [
+          "exec",
+          "-i",
+          "supabase_db_unify-actions-361",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-q",
+          "-U",
+          "postgres",
+          "-d",
+          "postgres"
+        ]
+      },
+      {
+        "command": "docker",
+        "args": [
+          "kill",
+          "--signal=SIGUSR1",
+          "probe_rest_owned"
+        ]
+      }
+    ]
+  },
+  {
+    "case": "both",
+    "passed": true,
+    "jest_exit": 1,
+    "intercepted_commands": [
+      {
+        "command": "docker",
+        "args": [
+          "exec",
+          "-i",
+          "probe_db_owned",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-q",
+          "-U",
+          "postgres",
+          "-d",
+          "postgres"
+        ]
+      },
+      {
+        "command": "docker",
+        "args": [
+          "kill",
+          "--signal=SIGUSR1",
+          "probe_rest_owned"
+        ]
+      }
+    ]
+  }
+]
+Traceback (most recent call last):
+  File "/Users/savargupta/.t3/worktrees/Unify/t3-7c5562c7/unify-front-end/node_modules/.cache/366-client-root-r1/check-container-guard.py", line 21, in <module>
+    assert all(item['passed'] for item in summary), 'The harness must refuse incomplete targets before any container command.'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: The harness must refuse incomplete targets before any container command.

@@ -1,0 +1,25 @@
+=== cm1-review-not-rendered
+    ✕ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (10785 ms)
+    ✕ a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again (10509 ms)
+    Unable to find an element with text: City: Surrey
+    Unable to find an element with role: button, name: Approve and add 1 task
+Tests:       2 failed, 5 skipped, 7 total
+=== cm2-entry-ignores-review
+    ✕ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (11018 ms)
+    ✕ a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again (10443 ms)
+    Unable to find an element with role: button, name: /Your plan, Your first week in Vancouver, .*needs your review/
+    Unable to find an element with role: button, name: /Your plan, Your first week in Vancouver, .*needs your review/
+Tests:       2 failed, 5 skipped, 7 total
+=== cm3-plain-retry-still-offered
+    ✕ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (1875 ms)
+    ✓ a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again (672 ms)
+    expect(received).toBeNull()
+    Received: {"_fiber": {"_debugHookTypes": null, "_debugInfo": null, "_debugNeedsRemount": false, "_debugOwner": [FiberNode], "_debugStack": [Error: react-stack-top-frame], "_debugTask": null, "actualDuration": 0, "actualStartTime": 1793138331943, "alternate": [FiberNode], "child": [FiberNode], "childLanes": 0, "deletions": null, "dependencies": null, "elementType": "View", "flags": 4, "index": 0, "key": null, "lanes": 0, "memoizedProps": [Object], "memoizedState": null, "mode": 3, "pendingProps": [Object], "ref": null, "refCleanup": null, "return": [FiberNode], "selfBaseDuration": 0, "sibling": null, "stateNode": [Object], "subtreeFlags": 262149, "tag": 5, "treeBaseDuration": 0, "type": "View", "updateQueue": null}}
+Tests:       1 failed, 5 skipped, 1 passed, 7 total
+=== cm4-stale-review-revision
+    ✓ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (1233 ms)
+    ✓ a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again (837 ms)
+Tests:       5 skipped, 2 passed, 7 total
+=== cm4-stale-review-revision (after adding the second-change step)
+    ✓ a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task (1387 ms)
+Tests:       6 skipped, 1 passed, 7 total

@@ -1,0 +1,19 @@
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/__tests__/companionActions/companionTaskSheet.test.tsx
+   38:17  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   53:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   68:38  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   82:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   94:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   95:7   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   99:9   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  100:11  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  262:1   warning  Import in body of module; reorder to top  import/first
+  606:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/hooks/companion/useSendMessage.ts
+  197:17  warning  'usage' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 11 problems (0 errors, 11 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

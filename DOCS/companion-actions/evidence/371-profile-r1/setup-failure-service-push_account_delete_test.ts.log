@@ -1,0 +1,25 @@
+running 1 test from ./push_account_delete_test.ts
+push account deletion: new attempt history does not block Auth account deletion ...
+------- output -------
+FALSIFIER: retained attempt foreign keys prevent deletion of the synthetic Auth account
+{"kind":"provider_fixture_distribution","total":0,"modes":{}}
+----- output end -----
+push account deletion: new attempt history does not block Auth account deletion ... FAILED (1s)
+
+ ERRORS 
+
+push account deletion: new attempt history does not block Auth account deletion => ./push_account_delete_test.ts:5:6
+error: Error: loopback_fixture_required
+  if(url.origin!=='http://127.0.0.1:63615')throw Error('loopback_fixture_required');
+                                                 ^
+    at endpoint (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/workers/companion-push/worker.ts:46:50)
+    at dispatch (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/workers/companion-push/worker.ts:82:13)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/push_account_delete_test.ts:9:9)
+
+ FAILURES 
+
+push account deletion: new attempt history does not block Auth account deletion => ./push_account_delete_test.ts:5:6
+
+FAILED | 0 passed | 1 failed (1s)
+
+error: Test failed

@@ -1,0 +1,798 @@
+[
+ {
+  "name": "r1-red-unchanged-sql",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 9.5,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 7,
+    "failed": 13
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "s1-reapply-fixed",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.8,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "g1-green-context",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 8.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 20,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "mut-c1-no-recheck-lock-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.5,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "mut-c1-no-recheck-lock",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.0,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 10,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "mut-c2-lock-after-context-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "mut-c2-lock-after-context",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 7.6,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 10,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "mut-c3-custom-writes-unordered-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "mut-c3-custom-writes-unordered",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 7.5,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 14,
+    "failed": 6
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "s2-reapply-fixed-after-mutants",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "g2-green-context-late-window",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "final-unchanged-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/unchanged-e0c7184a.sql"
+  }
+ },
+ {
+  "name": "final-unchanged",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.9,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 8,
+    "failed": 15
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/unchanged-e0c7184a.sql"
+  }
+ },
+ {
+  "name": "final-c1-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "final-c1",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.5,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 13,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "final-c2-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "final-c2",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.9,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 13,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "final-c3-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "final-c3",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 9.1,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 15,
+    "failed": 8
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "s3-reapply-fixed",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.3,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-rollback_test",
+  "files": [
+   "rollback_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.0,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 6,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-actions_test",
+  "files": [
+   "actions_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 1.0,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 4,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-boundary_test",
+  "files": [
+   "boundary_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 6.9,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 11,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-command_test",
+  "files": [
+   "command_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 2.3,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 7,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-create_test",
+  "files": [
+   "create_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 5.0,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 17,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-create_rollback_test",
+  "files": [
+   "create_rollback_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 1.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 3,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-receipt_history_test",
+  "files": [
+   "receipt_history_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.8,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 4,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-steps_test",
+  "files": [
+   "steps_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 5.4,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 15,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-steps_parent_race_test",
+  "files": [
+   "steps_parent_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 3.5,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 11,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-steps_rollback_test",
+  "files": [
+   "steps_rollback_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.7,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-undo_test",
+  "files": [
+   "undo_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 2.4,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 8,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "b-steps_context_race_test",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.1,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "rep1-steps_parent_race_test",
+  "files": [
+   "steps_parent_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 3.4,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 11,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "rep1-steps_context_race_test",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "rep2-steps_parent_race_test",
+  "files": [
+   "steps_parent_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 3.4,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 11,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "rep2-steps_context_race_test",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.3,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "z-green-final",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 8.7,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "z-unchanged-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/unchanged-e0c7184a.sql"
+  }
+ },
+ {
+  "name": "z-red-unchanged",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.8,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 8,
+    "failed": 15
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/unchanged-e0c7184a.sql"
+  }
+ },
+ {
+  "name": "z-c1-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "z-red-c1",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.9,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 13,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c1-no-recheck-lock.sql"
+  }
+ },
+ {
+  "name": "z-c2-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "z-red-c2",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 8.6,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 13,
+    "failed": 10
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c2-lock-after-context.sql"
+  }
+ },
+ {
+  "name": "z-c3-reapply",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "z-red-c3",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 1,
+  "seconds": 9.1,
+  "summaries": [
+   {
+    "result": "FAILED",
+    "passed": 15,
+    "failed": 8
+   }
+  ],
+  "overrides": {
+   "ACTIONS_MIGRATION_366_FILE": "/tmp/unify-companion-359/context-race-r1-scratch/mutants/c3-custom-writes-unordered.sql"
+  }
+ },
+ {
+  "name": "z-reapply-fixed",
+  "files": [
+   "/tmp/unify-companion-359/context-race-r1-scratch/reapply366_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 0.2,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 1,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ },
+ {
+  "name": "z-green-final-after-faults",
+  "files": [
+   "steps_context_race_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 9.1,
+  "summaries": [
+   {
+    "result": "ok",
+    "passed": 23,
+    "failed": 0
+   }
+  ],
+  "overrides": {}
+ }
+]

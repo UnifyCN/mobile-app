@@ -1,0 +1,9 @@
+running 5 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/edit_published_test.ts
+a command names a published task by the title the Checklist shows, in the command's language, and changes only its state ... ok (308ms)
+a published task's shared title, description and priority are never edited for one account ... ok (320ms)
+a published task and a custom task with the same title, another province's task or a removed one are not guessed ... ok (252ms)
+an edit draft for a published task is prepared only for a task the Checklist shows, and shows its title ... ok (283ms)
+when published content cannot be read, no command or draft names a task ... ok (276ms)
+
+ok | 5 passed | 0 failed (1s)
+

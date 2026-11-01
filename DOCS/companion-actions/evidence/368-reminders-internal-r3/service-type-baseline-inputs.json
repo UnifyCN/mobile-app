@@ -1,0 +1,28 @@
+{
+  "baseline": "914e4f54b08deaa9cf48e25aa86041720e6296db",
+  "errors": 6,
+  "affected_files": 3,
+  "inputs": [
+    {
+      "file": "supabase/tests/companion-actions/compose_367_370_recovery_test.ts",
+      "sha256": "c97c1a6a8afc0940c8ceafc0cf1c553a7b6652582418df59d437a1fcf7cb7fb2",
+      "same_as_accepted_integration": true
+    },
+    {
+      "file": "supabase/tests/companion-actions/compose_367_370_test.ts",
+      "sha256": "5a529382c223574d6e1db06535a5fedadf08f28cab6ae3637f164bb122ef54e7",
+      "same_as_accepted_integration": true
+    },
+    {
+      "file": "supabase/tests/companion-actions/edit_published_test.ts",
+      "sha256": "f7817ba52824f919428da121cd5790664ce2748409b2943c9791ca080a944cd0",
+      "same_as_accepted_integration": true
+    },
+    {
+      "file": "supabase/tests/companion-actions/support.ts",
+      "sha256": "d61674fc8173631bf7c7c9936f797f28a3c8f487924febbd4fc820f5afe40e9c",
+      "same_as_accepted_integration": true
+    }
+  ],
+  "scope": "The whole 37-file normal check failed. Focused normal checks for both corrected test files passed. No type suppression or unrelated fix was made."
+}

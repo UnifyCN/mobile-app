@@ -1,0 +1,28 @@
+running 2 tests from ./profile_test.ts
+profile: discussion writes nothing; an exact command saves the authoritative province once ... ok (299ms)
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval ... FAILED (164ms)
+
+ ERRORS 
+
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval => ./profile_test.ts:39:6
+error: AssertionError: Values are not equal: {"error":"invalid_request","reason":"unsupported_operation"}
+
+
+    [Diff] Actual / Expected
+
+
+-   422
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_test.ts:50:5)
+
+ FAILURES 
+
+profile: proposal shows authoritative old/proposed values and changes only after fresh approval => ./profile_test.ts:39:6
+
+FAILED | 1 passed | 1 failed (468ms)
+
+error: Test failed

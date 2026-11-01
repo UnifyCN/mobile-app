@@ -1,0 +1,5 @@
+appId: com.anonymous.unifyfrontend
+---
+- tapOn: ".*Mark as complete"
+- waitForAnimationToEnd:
+    timeout: 8000

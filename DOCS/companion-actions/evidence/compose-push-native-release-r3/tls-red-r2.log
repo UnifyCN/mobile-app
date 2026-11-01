@@ -1,0 +1,24 @@
+Check unify-front-end/supabase/workers/companion-push/database-tls.test.ts
+running 1 test from ./unify-front-end/supabase/workers/companion-push/database-tls.test.ts
+production connection pins the trusted CA and retains certificate verification ... FAILED (4ms)
+
+ ERRORS 
+
+production connection pins the trusted CA and retains certificate verification => ./unify-front-end/supabase/workers/companion-push/database-tls.test.ts:3:6
+error: AssertionError: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- true
+
+    assert.equal(ssl.rejectUnauthorized, true);
+           ^
+    at file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/database-tls.test.ts:7:12
+
+ FAILURES 
+
+production connection pins the trusted CA and retains certificate verification => ./unify-front-end/supabase/workers/companion-push/database-tls.test.ts:3:6
+
+FAILED | 0 passed | 1 failed (11ms)
+
+error: Test failed

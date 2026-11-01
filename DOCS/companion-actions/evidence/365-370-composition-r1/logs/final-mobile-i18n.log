@@ -1,0 +1,12 @@
+
+> unify-front-end@1.6.0 check-i18n
+> node ./scripts/check-i18n-parity.mjs
+
+✔ vi: 2021 keys (matches en)
+✔ es: 2041 keys (matches en)
+✔ hi: 2031 keys (matches en)
+✔ ar: 2071 keys (matches en)
+✔ fr-CA: 2041 keys (matches en)
+✔ pa: 2031 keys (matches en)
+
+i18n parity OK: 2021 keys per locale.

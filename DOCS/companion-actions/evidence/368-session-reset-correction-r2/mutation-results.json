@@ -1,0 +1,24 @@
+{
+  "mutations": [
+    {
+      "name": "mobile-omits-session-epoch",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "name": "shared-store-ignores-new-session",
+      "exit": 1,
+      "assertion_failure": true
+    },
+    {
+      "name": "shared-store-clears-same-session",
+      "exit": 1,
+      "assertion_failure": true
+    }
+  ],
+  "restored_sha256": {
+    "/Users/savargupta/.t3/worktrees/Unify/fix-reminder-account-isolation-368-r1-root/unify-front-end/services/companionActions/taskActionStore.ts": "0949abd63485458a598f6be92fd45dbf4e0513054ee66cc0f336a6e93b3ba3e2",
+    "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/lib/companionActions/taskActionStore.ts": "0949abd63485458a598f6be92fd45dbf4e0513054ee66cc0f336a6e93b3ba3e2",
+    "/Users/savargupta/.t3/worktrees/Unify/fix-reminder-account-isolation-368-r1-root/unify-front-end/hooks/companion/useTaskActions.ts": "6b6c4b7810fd469334285f53c8b7a3fbba26eb0892fb19c01e9299ae7809c323"
+  }
+}

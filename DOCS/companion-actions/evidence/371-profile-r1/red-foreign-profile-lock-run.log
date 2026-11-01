@@ -1,0 +1,32 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 1 test from ./profile_races_test.ts
+profile isolation: a foreign UPSERT is refused before it can wait on another account row ... FAILED (288ms)
+
+ ERRORS 
+
+profile isolation: a foreign UPSERT is refused before it can wait on another account row => ./profile_races_test.ts:183:6
+error: AssertionError: Values are not equal: {"actor":"foreign_user","observed":{"kind":"blocked","graph":[{"pid":7275,"wait_event":"transactionid","blockers":[7274]}]}}
+
+
+    [Diff] Actual / Expected
+
+
+-   blocked
++   replied
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_races_test.ts:209:9)
+
+ FAILURES 
+
+profile isolation: a foreign UPSERT is refused before it can wait on another account row => ./profile_races_test.ts:183:6
+
+FAILED | 0 passed | 1 failed | 6 filtered out (293ms)
+
+error: Test failed
+

@@ -1,0 +1,1468 @@
+running 33 tests from ./supabase/functions/rag-query/index_companion_context_test.ts
+Vancouver arrival: the answer reads profile, Checklist, conversation and official pages, and returns them with ids, revisions and check times ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"557f303f-7273-489d-8d26-3ef789027d19","identity":"canonical"}
+{"event":"embedding_checked","call_id":"557f303f-7273-489d-8d26-3ef789027d19","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":1,"profile_ms":2,"classify_ms":0,"embedding_ms":1,"vector_search_ms":2,"generation_ms":0,"total_ms":56}
+----- output end -----
+Vancouver arrival: the answer reads profile, Checklist, conversation and official pages, and returns them with ids, revisions and check times ... ok (59ms)
+Vancouver arrival: the streamed metadata carries the same context as the JSON answer, and the saved answer text is unchanged ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"0594ef36-1b26-4df1-995e-fee34849d82e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"0594ef36-1b26-4df1-995e-fee34849d82e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"710530af-2204-46a3-963d-a1657a6f6536","identity":"canonical"}
+{"event":"embedding_checked","call_id":"710530af-2204-46a3-963d-a1657a6f6536","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":1,"total_ms":3}
+----- output end -----
+Vancouver arrival: the streamed metadata carries the same context as the JSON answer, and the saved answer text is unchanged ... ok (7ms)
+analytics: the AI event gets a categorical guidance status only, never task titles, profile values, URLs or page text ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3c5d7ae4-6586-4e4a-af32-03c266c9601b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3c5d7ae4-6586-4e4a-af32-03c266c9601b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+----- output end -----
+analytics: the AI event gets a categorical guidance status only, never task titles, profile values, URLs or page text ... ok (2ms)
+malicious page and task text: no link is followed, no write is made, and the text stays inside the data block ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ab7e69d1-659d-4636-89b6-dcf4f3cebf1e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ab7e69d1-659d-4636-89b6-dcf4f3cebf1e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+malicious page and task text: no link is followed, no write is made, and the text stays inside the data block ... ok (1ms)
+search results off the official list, on private addresses or redirecting away are never read ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2c09a4da-55e3-46fa-87d5-23d822c16772","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2c09a4da-55e3-46fa-87d5-23d822c16772","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+search results off the official list, on private addresses or redirecting away are never read ... ok (1ms)
+unavailable guidance is typed and the answer is told it is unverified: search off, search failure, no official result, failed reads ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"025dcd1e-ad77-46a9-acef-d22b9648d5f0","identity":"canonical"}
+{"event":"embedding_checked","call_id":"025dcd1e-ad77-46a9-acef-d22b9648d5f0","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"04f6207d-c47a-49ff-9cf9-bfca82b805dd","identity":"canonical"}
+{"event":"embedding_checked","call_id":"04f6207d-c47a-49ff-9cf9-bfca82b805dd","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+[rag-query] guidance search failed search 502
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f90597fe-3695-4bad-b5d0-105158b224a4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f90597fe-3695-4bad-b5d0-105158b224a4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"0348054a-dfd6-411e-95d5-368356ea63e9","identity":"canonical"}
+{"event":"embedding_checked","call_id":"0348054a-dfd6-411e-95d5-368356ea63e9","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+unavailable guidance is typed and the answer is told it is unverified: search off, search failure, no official result, failed reads ... ok (5ms)
+questions that do not need guidance make no search call ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"7df4ff98-335c-4a93-9873-fbd0541d1616","identity":"canonical"}
+{"event":"embedding_checked","call_id":"7df4ff98-335c-4a93-9873-fbd0541d1616","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Hello there!": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: form_help
+Routing to RAG pipeline for query type: form_help
+{"event":"embedding_identity","call_id":"a2736ac6-5738-4079-ae86-0718b1a23c2c","identity":"canonical"}
+{"event":"embedding_checked","call_id":"a2736ac6-5738-4079-ae86-0718b1a23c2c","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I fill out form IMM 5710 field 3?": 0
+OpenRouter Request Details:
+- Query type: form_help
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+questions that do not need guidance make no search call ... ok (3ms)
+conflict: a stated province that differs from the profile asks for clarification and never touches the profile ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"45fd6170-f9ad-4fb8-a40a-519efc71a69e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"45fd6170-f9ad-4fb8-a40a-519efc71a69e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+conflict: a stated province that differs from the profile asks for clarification and never touches the profile ... ok (1ms)
+conflict: "arriving next week" against a past profile arrival date asks which is right ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"673ba3cc-8c0e-449e-bb63-d87fe18942a2","identity":"canonical"}
+{"event":"embedding_checked","call_id":"673ba3cc-8c0e-449e-bb63-d87fe18942a2","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+conflict: "arriving next week" against a past profile arrival date asks which is right ... ok (1ms)
+conflict: when only another province publishes the page, it is shown as not used and the answer must ask ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5a17da9c-667d-4741-aa79-7dd914cd314e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5a17da9c-667d-4741-aa79-7dd914cd314e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+conflict: when only another province publishes the page, it is shown as not used and the answer must ask ... ok (1ms)
+missing: a planning question with no province anywhere asks for it ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"d1386bd3-2b30-4b4d-8541-8ae0269a2469","identity":"canonical"}
+{"event":"embedding_checked","call_id":"d1386bd3-2b30-4b4d-8541-8ae0269a2469","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do in my first week?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+missing: a planning question with no province anywhere asks for it ... ok (1ms)
+a conversation the JWT cannot see adds no context and drops the client-sent history ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"1018013e-f5b3-4307-ac3a-6e32e9c97d65","identity":"canonical"}
+{"event":"embedding_checked","call_id":"1018013e-f5b3-4307-ac3a-6e32e9c97d65","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a conversation the JWT cannot see adds no context and drops the client-sent history ... ok (1ms)
+an invalid JWT is rejected before any context read ...
+------- output -------
+Unable to resolve authenticated user from JWT
+----- output end -----
+an invalid JWT is rejected before any context read ... ok (0ms)
+two simultaneous requests for different accounts keep their own profile, tasks, sources and clarification ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6a0a86fb-701a-4eb7-a005-a9191a9d8e8e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6a0a86fb-701a-4eb7-a005-a9191a9d8e8e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+{"event":"embedding_identity","call_id":"3c8153ad-825f-48aa-832c-b0b630df0d6b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3c8153ad-825f-48aa-832c-b0b630df0d6b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get started with health coverage in Ontario?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Chunks received for "What should I do first after I arrive in Vancouver next week?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":33,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":34}
+----- output end -----
+two simultaneous requests for different accounts keep their own profile, tasks, sources and clarification ... ok (34ms)
+later conversations do not inherit a stated detail: a new question reads only the profile ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"a0bfb998-d048-4e0d-b3a4-be05a281a48a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"a0bfb998-d048-4e0d-b3a4-be05a281a48a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"04612f50-0e5f-4f75-bb2c-84917431fe22","identity":"canonical"}
+{"event":"embedding_checked","call_id":"04612f50-0e5f-4f75-bb2c-84917431fe22","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do about health coverage?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+later conversations do not inherit a stated detail: a new question reads only the profile ... ok (2ms)
+a denied conversation: details from its earlier turns are not used, shown or sent; the same turn in an own conversation is ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8afd66dd-8dc6-47a2-877a-1ee8a122b1c8","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8afd66dd-8dc6-47a2-877a-1ee8a122b1c8","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"435ddfc6-917c-4fb0-b53e-d0969d094c45","identity":"canonical"}
+{"event":"embedding_checked","call_id":"435ddfc6-917c-4fb0-b53e-d0969d094c45","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a denied conversation: details from its earlier turns are not used, shown or sent; the same turn in an own conversation is ... ok (2ms)
+Checklist context follows the Checklist's province rule: national and own-province tasks only ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2f43062a-848e-46db-bdb0-4a2b660f2a2c","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2f43062a-848e-46db-bdb0-4a2b660f2a2c","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week as a new permanent resident. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"214afc97-3822-4f17-8b1b-8357dd4c9d2d","identity":"canonical"}
+{"event":"embedding_checked","call_id":"214afc97-3822-4f17-8b1b-8357dd4c9d2d","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first to build credit?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+Checklist context follows the Checklist's province rule: national and own-province tasks only ... ok (3ms)
+planning questions in every supported language check official guidance automatically; plain definitions do not ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f28e47c1-9372-43dd-bbeb-7533197c0852","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f28e47c1-9372-43dd-bbeb-7533197c0852","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Je vais arriver à Vancouver la semaine prochaine. Que dois-je faire en premier ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"b2565cc2-dcb2-4c19-a611-931f1601480f","identity":"canonical"}
+{"event":"embedding_checked","call_id":"b2565cc2-dcb2-4c19-a611-931f1601480f","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Quelles sont les prochaines étapes pour m’installer à Montréal ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":157}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"a61d3d33-6316-4f77-9467-db1826138bf3","identity":"canonical"}
+{"event":"embedding_checked","call_id":"a61d3d33-6316-4f77-9467-db1826138bf3","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Par où commencer après mon déménagement au Canada ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"919a5045-f0e5-433c-afde-17a203e6556a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"919a5045-f0e5-433c-afde-17a203e6556a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Llego a Vancouver la próxima semana. ¿Qué debo hacer primero?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"338c6a82-8825-4213-a09c-6aeb1b37250a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"338c6a82-8825-4213-a09c-6aeb1b37250a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "¿Cuáles son los primeros pasos al llegar a Canadá?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":1,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f13115a4-6aaf-49b7-8a61-fd20d1f6b761","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f13115a4-6aaf-49b7-8a61-fd20d1f6b761","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Me mudo a Toronto, ¿por dónde empiezo?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"faed76a8-73a7-4d56-b4c7-8880f8b79057","identity":"canonical"}
+{"event":"embedding_checked","call_id":"faed76a8-73a7-4d56-b4c7-8880f8b79057","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأصل إلى فانكوفر الأسبوع المقبل. ماذا يجب أن أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9a02478a-e903-46fe-b605-2a0427e93fe7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9a02478a-e903-46fe-b605-2a0427e93fe7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ما هي الخطوات الأولى بعد الوصول إلى كندا؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"1638f7ed-7ceb-4c5f-9574-a9100512feca","identity":"canonical"}
+{"event":"embedding_checked","call_id":"1638f7ed-7ceb-4c5f-9574-a9100512feca","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "من أين أبدأ بعد انتقالي إلى تورنتو؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":1,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f0cead81-d7ef-4812-a790-a2268f9047a9","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f0cead81-d7ef-4812-a790-a2268f9047a9","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह वैंकूवर पहुँच रहा हूँ। मुझे पहले क्या करना चाहिए?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"d123d5aa-ae98-4eed-aa8d-f2b6a997ebca","identity":"canonical"}
+{"event":"embedding_checked","call_id":"d123d5aa-ae98-4eed-aa8d-f2b6a997ebca","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "कनाडा पहुंचने के बाद अगले कदम क्या हैं?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"691cd4ce-11c4-43c1-993c-6caf956d25fa","identity":"canonical"}
+{"event":"embedding_checked","call_id":"691cd4ce-11c4-43c1-993c-6caf956d25fa","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "टोरंटो में बसने के लिए शुरुआत कहाँ से करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"122e9cae-d7fc-4d49-b9b7-a92c718a2929","identity":"canonical"}
+{"event":"embedding_checked","call_id":"122e9cae-d7fc-4d49-b9b7-a92c718a2929","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਵੈਨਕੂਵਰ ਪਹੁੰਚ ਰਿਹਾ ਹਾਂ। ਮੈਨੂੰ ਪਹਿਲਾਂ ਕੀ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"d0bd0534-e063-4e6d-a7b0-ab0038b694e1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"d0bd0534-e063-4e6d-a7b0-ab0038b694e1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਕੈਨੇਡਾ ਪਹੁੰਚਣ ਤੋਂ ਬਾਅਦ ਅਗਲੇ ਕਦਮ ਕੀ ਹਨ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5056886a-026c-4db4-86f5-bab432aec8d9","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5056886a-026c-4db4-86f5-bab432aec8d9","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Tôi sẽ đến Vancouver vào tuần tới. Tôi nên làm gì đầu tiên?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"171b5679-9c88-43ae-9e0f-e8aa33cfdbcb","identity":"canonical"}
+{"event":"embedding_checked","call_id":"171b5679-9c88-43ae-9e0f-e8aa33cfdbcb","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Các bước đầu tiên sau khi định cư ở Canada là gì?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"da31568e-f250-4cb0-8971-6089b8fbedb0","identity":"canonical"}
+{"event":"embedding_checked","call_id":"da31568e-f250-4cb0-8971-6089b8fbedb0","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Tôi chuyển đến Toronto, nên bắt đầu từ đâu?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ba4d534a-e5e6-4709-947a-34649e8c7222","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ba4d534a-e5e6-4709-947a-34649e8c7222","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I land in Vancouver la próxima semana, ¿qué hago primero?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e5675b40-3948-4274-b20b-b7ce0d8f0589","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e5675b40-3948-4274-b20b-b7ce0d8f0589","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं next week Vancouver पहुँच रहा हूँ, पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e7ee2614-e458-4dc3-bf36-97304d285325","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e7ee2614-e458-4dc3-bf36-97304d285325","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Main next week Vancouver pahunch reha haan, pehle ki karna chahida?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3a78d6be-b958-481e-9a52-21a582042636","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3a78d6be-b958-481e-9a52-21a582042636","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I will arrive in Vancouver next week، ماذا يجب أن أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"78240152-5db3-4613-8b87-a33f255476ee","identity":"canonical"}
+{"event":"embedding_checked","call_id":"78240152-5db3-4613-8b87-a33f255476ee","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Qu'est-ce qu'un CELI ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6726a9f0-9bd5-44ff-8948-b96903b6c473","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6726a9f0-9bd5-44ff-8948-b96903b6c473","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "¿Qué es una TFSA?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"993808a3-6274-40d7-aeeb-c5dad413f7a3","identity":"canonical"}
+{"event":"embedding_checked","call_id":"993808a3-6274-40d7-aeeb-c5dad413f7a3","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ما هو حساب TFSA؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5686100b-517a-4198-967f-0bbb79947ae2","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5686100b-517a-4198-967f-0bbb79947ae2","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "TFSA क्या है?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3deed8b9-cd29-4224-aaac-8a2299a47f73","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3deed8b9-cd29-4224-aaac-8a2299a47f73","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "TFSA ਕੀ ਹੈ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8bc7f256-dee2-4fca-b1da-514aff4de4f4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8bc7f256-dee2-4fca-b1da-514aff4de4f4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "TFSA là gì?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+planning questions in every supported language check official guidance automatically; plain definitions do not ... ok (190ms)
+conversation access not established (lookup 503 or network failure): earlier turns are not used, shown, searched or sent; the current message still is ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5e32a955-cb5e-4512-8a39-507f5dc57246","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5e32a955-cb5e-4512-8a39-507f5dc57246","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4005}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"d4935003-2b56-4ea1-8630-168ea2e4171b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"d4935003-2b56-4ea1-8630-168ea2e4171b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto tomorrow. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4004}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"47e715b7-3f61-462b-9c9b-0ec40b199095","identity":"canonical"}
+{"event":"embedding_checked","call_id":"47e715b7-3f61-462b-9c9b-0ec40b199095","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4004}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5359d7b3-e5d3-46d5-9dba-03d2fb050192","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5359d7b3-e5d3-46d5-9dba-03d2fb050192","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto tomorrow. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":1,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":4003}
+----- output end -----
+conversation access not established (lookup 503 or network failure): earlier turns are not used, shown, searched or sent; the current message still is ... ok (16s)
+no conversation id: client-sent earlier turns are not used ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f576fc08-8059-43e1-a2a7-dc2def3f7628","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f576fc08-8059-43e1-a2a7-dc2def3f7628","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+no conversation id: client-sent earlier turns are not used ... ok (1ms)
+a stated destination in any supported language or script drives guidance and asks about the saved province ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8142dd0d-1a16-4e61-8a0f-91d3168c27f7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8142dd0d-1a16-4e61-8a0f-91d3168c27f7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3b1a332f-4f7f-4249-80e0-94f88e732cc1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3b1a332f-4f7f-4249-80e0-94f88e732cc1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "J’arrive à Toronto la semaine prochaine. Que dois-je faire en premier ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"33c28cf4-9a7c-48be-a8e5-53532fdcf8e7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"33c28cf4-9a7c-48be-a8e5-53532fdcf8e7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Llego a Toronto la próxima semana. ¿Qué debo hacer primero?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"874ae4fe-0246-44e9-91e8-499c83e82ff9","identity":"canonical"}
+{"event":"embedding_checked","call_id":"874ae4fe-0246-44e9-91e8-499c83e82ff9","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأصل إلى تورونتو الأسبوع المقبل. ماذا يجب أن أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3ab34b89-d670-4e65-a103-95b82519fdbc","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3ab34b89-d670-4e65-a103-95b82519fdbc","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأصل إلى تورنتو الأسبوع القادم. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"24978ab1-7d91-43b1-a245-ffd8f18323f3","identity":"canonical"}
+{"event":"embedding_checked","call_id":"24978ab1-7d91-43b1-a245-ffd8f18323f3","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل لتورونتو الأسبوع المقبل، من أين أبدأ؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"edd29c97-79b1-4887-b610-6e7e7780ccae","identity":"canonical"}
+{"event":"embedding_checked","call_id":"edd29c97-79b1-4887-b610-6e7e7780ccae","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह टोरंटो पहुँच रहा हूँ। मुझे पहले क्या करना चाहिए?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"81453865-4be6-4946-8db3-2501f38e2fc6","identity":"canonical"}
+{"event":"embedding_checked","call_id":"81453865-4be6-4946-8db3-2501f38e2fc6","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले हफ़्ते टोरोंटो पहुंच रही हूं, पहले क्या करूं?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5ba01475-f198-40ee-89fd-69aa6783891a","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5ba01475-f198-40ee-89fd-69aa6783891a","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਟੋਰਾਂਟੋ ਪਹੁੰਚ ਰਿਹਾ ਹਾਂ। ਮੈਨੂੰ ਪਹਿਲਾਂ ਕੀ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f9f681c9-0ef6-42c9-9ef8-34b61443ff40","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f9f681c9-0ef6-42c9-9ef8-34b61443ff40","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਟਰਾਂਟੋ ਪਹੁੰਚ ਰਹੀ ਹਾਂ, ਪਹਿਲਾਂ ਕੀ ਕਰਾਂ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ade87e6c-1580-4d19-b72a-79b221613401","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ade87e6c-1580-4d19-b72a-79b221613401","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Tôi sẽ đến Toronto vào tuần tới. Tôi nên làm gì đầu tiên?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"224811ce-7929-456e-ba74-b78f95cac2c3","identity":"canonical"}
+{"event":"embedding_checked","call_id":"224811ce-7929-456e-ba74-b78f95cac2c3","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं next week टोरंटो पहुँच रहा हूँ, पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"1e5907b1-841f-4989-95b2-d62d84ea6af1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"1e5907b1-841f-4989-95b2-d62d84ea6af1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in تورونتو next week، ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"fc528d99-5718-49eb-8db4-3454e663e0fc","identity":"canonical"}
+{"event":"embedding_checked","call_id":"fc528d99-5718-49eb-8db4-3454e663e0fc","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Main next week ਟੋਰਾਂਟੋ pahunch reha haan, pehle ki karna chahida?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a stated destination in any supported language or script drives guidance and asks about the saved province ... ok (14ms)
+a province named in another language or script is the stated province ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9ceea5d8-a503-45ca-b214-c0ad3b7085e4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9ceea5d8-a503-45ca-b214-c0ad3b7085e4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل إلى أونتاريو الشهر المقبل. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"bd339845-331c-4766-95da-0041cfbda3f0","identity":"canonical"}
+{"event":"embedding_checked","call_id":"bd339845-331c-4766-95da-0041cfbda3f0","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले महीने ओंटारियो शिफ्ट हो रहा हूँ, पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"b6829105-df60-494a-8837-5c420ef2c900","identity":"canonical"}
+{"event":"embedding_checked","call_id":"b6829105-df60-494a-8837-5c420ef2c900","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਮਹੀਨੇ ਓਨਟਾਰੀਓ ਸ਼ਿਫਟ ਹੋ ਰਿਹਾ ਹਾਂ, ਪਹਿਲਾਂ ਕੀ ਕਰਾਂ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"dfcc232f-1cee-493c-95aa-7c8d47b40610","identity":"canonical"}
+{"event":"embedding_checked","call_id":"dfcc232f-1cee-493c-95aa-7c8d47b40610","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Je vais arriver en Colombie-Britannique la semaine prochaine. Que dois-je faire en premier ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"323bf2e0-2ff1-4926-9ecf-0530382791ff","identity":"canonical"}
+{"event":"embedding_checked","call_id":"323bf2e0-2ff1-4926-9ecf-0530382791ff","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Me mudo a Columbia Británica la próxima semana, ¿qué hago primero?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8c68e3a0-d22c-4223-b5ba-b337e9e2c695","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8c68e3a0-d22c-4223-b5ba-b337e9e2c695","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل إلى كولومبيا البريطانية الأسبوع المقبل. من أين أبدأ؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"93e40dd3-dc15-4580-9564-eba53eed31a0","identity":"canonical"}
+{"event":"embedding_checked","call_id":"93e40dd3-dc15-4580-9564-eba53eed31a0","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह ब्रिटिश कोलंबिया शिफ्ट हो रहा हूँ, पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5ae47489-cd5e-4abf-b701-bdab0a5219f2","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5ae47489-cd5e-4abf-b701-bdab0a5219f2","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਸ਼ਿਫਟ ਹੋ ਰਿਹਾ ਹਾਂ, ਪਹਿਲਾਂ ਕੀ ਕਰਾਂ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a province named in another language or script is the stated province ... ok (11ms)
+control: the saved city stated in another script agrees with the profile and asks nothing ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8d54a42d-b278-4e7a-8bc1-ae99a81a0dee","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8d54a42d-b278-4e7a-8bc1-ae99a81a0dee","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأصل إلى فانكوفر الأسبوع المقبل. ماذا يجب أن أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"f3b1c0ed-d202-454f-9a23-494d748e84d1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"f3b1c0ed-d202-454f-9a23-494d748e84d1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह वैंकूवर पहुँच रहा हूँ। मुझे पहले क्या करना चाहिए?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"62b64ecd-b37e-4b8c-b36d-9792fab7c54b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"62b64ecd-b37e-4b8c-b36d-9792fab7c54b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਵੈਨਕੂਵਰ ਪਹੁੰਚ ਰਿਹਾ ਹਾਂ। ਮੈਨੂੰ ਪਹਿਲਾਂ ਕੀ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+control: the saved city stated in another script agrees with the profile and asks nothing ... ok (3ms)
+origin and destination: a clear destination after or before an origin, a residence or a family/visit place is used ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"13a164f3-0064-403b-9703-78f575daee44","identity":"canonical"}
+{"event":"embedding_checked","call_id":"13a164f3-0064-403b-9703-78f575daee44","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Vancouver to Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5c6d4ad4-7890-4279-9442-ccb2c3dfacb1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5c6d4ad4-7890-4279-9442-ccb2c3dfacb1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto from Vancouver next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"14407a16-dbd2-4510-8520-927030b1f857","identity":"canonical"}
+{"event":"embedding_checked","call_id":"14407a16-dbd2-4510-8520-927030b1f857","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I currently live in Vancouver and I am moving to Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"33049f20-30c3-4962-9a67-6d79ac463745","identity":"canonical"}
+{"event":"embedding_checked","call_id":"33049f20-30c3-4962-9a67-6d79ac463745","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I lived in Vancouver for two years, but next week I arrive in Toronto. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"d8fefca2-bbd8-479a-a9f2-a87ab2945df5","identity":"canonical"}
+{"event":"embedding_checked","call_id":"d8fefca2-bbd8-479a-a9f2-a87ab2945df5","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Je déménage de Vancouver à Toronto la semaine prochaine. Par où commencer ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"1307220a-83e0-4cdc-8012-c446c4d22132","identity":"canonical"}
+{"event":"embedding_checked","call_id":"1307220a-83e0-4cdc-8012-c446c4d22132","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Me mudo de Vancouver a Toronto la próxima semana. ¿Qué hago primero?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e20500f4-d997-419f-8f61-f7f878bddbf4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e20500f4-d997-419f-8f61-f7f878bddbf4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل من فانكوفر إلى تورونتو الأسبوع المقبل. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":2}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"929b3814-6e33-40ae-bf91-6bcaf31966cd","identity":"canonical"}
+{"event":"embedding_checked","call_id":"929b3814-6e33-40ae-bf91-6bcaf31966cd","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह वैंकूवर से टोरंटो शिफ्ट हो रहा हूँ। पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5b72b03d-6449-4209-a9a9-e0d27924fe89","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5b72b03d-6449-4209-a9a9-e0d27924fe89","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "ਮੈਂ ਅਗਲੇ ਹਫ਼ਤੇ ਵੈਨਕੂਵਰ ਤੋਂ ਟੋਰਾਂਟੋ ਸ਼ਿਫਟ ਹੋ ਰਿਹਾ ਹਾਂ। ਪਹਿਲਾਂ ਕੀ ਕਰਾਂ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ed43ae1e-89e3-48ca-ad07-23704b726faa","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ed43ae1e-89e3-48ca-ad07-23704b726faa","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Tôi chuyển từ Vancouver đến Toronto vào tuần tới. Tôi nên làm gì trước?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9ba2ff57-3016-4c0a-90d8-6d1e03474bcc","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9ba2ff57-3016-4c0a-90d8-6d1e03474bcc","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Vancouver to टोरंटो next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"484864d2-2654-4cf5-a290-3784adc9391c","identity":"canonical"}
+{"event":"embedding_checked","call_id":"484864d2-2654-4cf5-a290-3784adc9391c","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Vancouver to ਟੋਰਾਂਟੋ next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"46ce4cb8-bafb-4123-8e47-66e6a4b3e0e0","identity":"canonical"}
+{"event":"embedding_checked","call_id":"46ce4cb8-bafb-4123-8e47-66e6a4b3e0e0","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं Vancouver से टोरंटो अगले सप्ताह पहुँच रहा हूँ। पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6e2a8bda-97cd-40e0-8297-cd02ace89a58","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6e2a8bda-97cd-40e0-8297-cd02ace89a58","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "My sister lives in Calgary. I arrive in Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2ec493f4-42f2-43d0-b1c7-7dc53b37411b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2ec493f4-42f2-43d0-b1c7-7dc53b37411b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I want to visit Montreal later, but I am moving to Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"fa9c329c-0c73-411a-afc5-ec750cc0498d","identity":"canonical"}
+{"event":"embedding_checked","call_id":"fa9c329c-0c73-411a-afc5-ec750cc0498d","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "أختي تعيش في كالغاري. سأصل إلى تورونتو الأسبوع المقبل. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"667ffc9a-0499-4e9f-a245-72e000d976fc","identity":"canonical"}
+{"event":"embedding_checked","call_id":"667ffc9a-0499-4e9f-a245-72e000d976fc","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मेरी बहन कैलगरी में रहती है। मैं अगले सप्ताह टोरंटो पहुँच रहा हूँ। पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+origin and destination: a clear destination after or before an origin, a residence or a family/visit place is used ... ok (17ms)
+origin and destination: reversed routes and family mentions keep the saved place when it is the destination ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5f21740e-3c18-4d44-bb7f-694f84758aca","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5f21740e-3c18-4d44-bb7f-694f84758aca","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Toronto to Vancouver next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"b2bf2fb9-d722-458a-87e5-3529d2747114","identity":"canonical"}
+{"event":"embedding_checked","call_id":"b2bf2fb9-d722-458a-87e5-3529d2747114","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I arrive in Vancouver next week; my brother lives in Toronto. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"dbd2758b-70cb-4f0b-b6b0-0dcedaa8303b","identity":"canonical"}
+{"event":"embedding_checked","call_id":"dbd2758b-70cb-4f0b-b6b0-0dcedaa8303b","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह टोरंटो से वैंकूवर पहुँच रहा हूँ। पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"cf10fcc0-7714-4bce-a75a-3296ed29a2b9","identity":"canonical"}
+{"event":"embedding_checked","call_id":"cf10fcc0-7714-4bce-a75a-3296ed29a2b9","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل من تورونتو إلى فانكوفر الأسبوع المقبل. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2cb0f1b5-0cc2-4b65-9e8e-e10361af606c","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2cb0f1b5-0cc2-4b65-9e8e-e10361af606c","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Toronto to Vancouver next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+origin and destination: reversed routes and family mentions keep the saved place when it is the destination ... ok (4ms)
+origin and destination: two different destinations are asked about, not guessed from the order or the profile ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"321beb08-394f-4312-9436-b3332cad8e5f","identity":"canonical"}
+{"event":"embedding_checked","call_id":"321beb08-394f-4312-9436-b3332cad8e5f","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto or Calgary next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8dca71e5-d0e1-486e-98b1-f673f2262391","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8dca71e5-d0e1-486e-98b1-f673f2262391","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I might move to Toronto, or maybe Calgary, next month. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ff9d478a-b95e-4156-92cc-3cc56f365f20","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ff9d478a-b95e-4156-92cc-3cc56f365f20","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Je déménage à Toronto ou à Calgary la semaine prochaine. Par où commencer ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"2203cf34-73dd-4a17-8beb-b34c11a4256d","identity":"canonical"}
+{"event":"embedding_checked","call_id":"2203cf34-73dd-4a17-8beb-b34c11a4256d","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "मैं अगले सप्ताह टोरंटो या कैलगरी शिफ्ट हो रहा हूँ, पहले क्या करूँ?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"6be758c4-ba3e-4411-a891-9943b09e9f6f","identity":"canonical"}
+{"event":"embedding_checked","call_id":"6be758c4-ba3e-4411-a891-9943b09e9f6f","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "سأنتقل إلى تورونتو أو كالغاري الأسبوع المقبل. ماذا أفعل أولاً؟": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"4c4440f3-e080-440d-bd61-c561ccc3a8de","identity":"canonical"}
+{"event":"embedding_checked","call_id":"4c4440f3-e080-440d-bd61-c561ccc3a8de","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto or Calgary next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+origin and destination: two different destinations are asked about, not guessed from the order or the profile ... ok (5ms)
+origin and destination: the current message comes before earlier turns, and an origin alone is no destination ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"93eb080e-1e87-49b5-b280-6de64b1668da","identity":"canonical"}
+{"event":"embedding_checked","call_id":"93eb080e-1e87-49b5-b280-6de64b1668da","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Vancouver to Toronto next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"72e941a4-64aa-49ed-847b-2d89e0c6dcc1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"72e941a4-64aa-49ed-847b-2d89e0c6dcc1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"02e49a3f-2d69-4e3e-bea9-f80bb1c5a493","identity":"canonical"}
+{"event":"embedding_checked","call_id":"02e49a3f-2d69-4e3e-bea9-f80bb1c5a493","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "Toronto or Calgary, I am not sure yet. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"53b75cd7-d5e9-4c2d-af21-3cd5ce278d76","identity":"canonical"}
+{"event":"embedding_checked","call_id":"53b75cd7-d5e9-4c2d-af21-3cd5ce278d76","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving from Vancouver next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+origin and destination: the current message comes before earlier turns, and an origin alone is no destination ... ok (3ms)
+client fixture: two possible destinations (place_unclear) as the clients receive it ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9f24bfe2-7775-4633-aa7d-6dc52df0339f","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9f24bfe2-7775-4633-aa7d-6dc52df0339f","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "I am moving to Toronto or Calgary next week. What should I do first?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+client fixture: two possible destinations (place_unclear) as the clients receive it ... ok (1ms)
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8220df99-a96f-4f7d-9131-817d123ddb25","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8220df99-a96f-4f7d-9131-817d123ddb25","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need in my first week in Vancouver?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9dcbb11b-d598-441f-a479-0e1dcc3d61e4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9dcbb11b-d598-441f-a479-0e1dcc3d61e4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need in my first week in Vancouver?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a suggested task becomes a typed proposal field, leaves the answer text, and nothing is written or prepared ... ok (2ms)
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e87fb2b9-09e3-4afc-adfd-0c205a7e801e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e87fb2b9-09e3-4afc-adfd-0c205a7e801e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"ade8a2cb-2e88-4d32-9e29-d0592b34ed5f","identity":"canonical"}
+{"event":"embedding_checked","call_id":"ade8a2cb-2e88-4d32-9e29-d0592b34ed5f","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"9b8000e2-7531-4ac7-b5b9-668269fee3fe","identity":"canonical"}
+{"event":"embedding_checked","call_id":"9b8000e2-7531-4ac7-b5b9-668269fee3fe","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"cbcd7cc2-b7b4-451b-95f2-cb59226ee96e","identity":"canonical"}
+{"event":"embedding_checked","call_id":"cbcd7cc2-b7b4-451b-95f2-cb59226ee96e","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"44343f46-1e8a-4d54-92d4-cc0d4d63d6a7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"44343f46-1e8a-4d54-92d4-cc0d4d63d6a7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"c337440f-71c6-4f0d-84bf-85797144c8b1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"c337440f-71c6-4f0d-84bf-85797144c8b1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+a task suggestion that is not one plain title is dropped: markup, links, several tasks, approval text ... ok (3ms)
+suggested steps for a task this answer read become one typed proposal and leave the answer text; nothing is written ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"28756921-793d-497d-9124-6be1e56489c7","identity":"canonical"}
+{"event":"embedding_checked","call_id":"28756921-793d-497d-9124-6be1e56489c7","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"4d43928e-f5ff-4d6e-bff8-3d2607d1d717","identity":"canonical"}
+{"event":"embedding_checked","call_id":"4d43928e-f5ff-4d6e-bff8-3d2607d1d717","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: true
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+suggested steps for a task this answer read become one typed proposal and leave the answer text; nothing is written ... ok (2ms)
+step suggestions are dropped unless they name one task this answer read: unknown ids, mixed tasks, too many, markup ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"66151433-beed-4d7e-b009-f0a2b47147c8","identity":"canonical"}
+{"event":"embedding_checked","call_id":"66151433-beed-4d7e-b009-f0a2b47147c8","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e232ffd4-edc4-4da7-823a-e9ad36608c20","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e232ffd4-edc4-4da7-823a-e9ad36608c20","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"e237cd46-a195-423a-a897-36f127a44e22","identity":"canonical"}
+{"event":"embedding_checked","call_id":"e237cd46-a195-423a-a897-36f127a44e22","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"13b6576d-a8ac-4709-9704-85710894f4c1","identity":"canonical"}
+{"event":"embedding_checked","call_id":"13b6576d-a8ac-4709-9704-85710894f4c1","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"5a6f0789-7243-4996-87ad-c5ad16e4ecdd","identity":"canonical"}
+{"event":"embedding_checked","call_id":"5a6f0789-7243-4996-87ad-c5ad16e4ecdd","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"fc806593-3f4f-4dd8-94a4-051d67b49665","identity":"canonical"}
+{"event":"embedding_checked","call_id":"fc806593-3f4f-4dd8-94a4-051d67b49665","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"3bdfeb6f-bcd7-4235-9513-df1b2e16cba4","identity":"canonical"}
+{"event":"embedding_checked","call_id":"3bdfeb6f-bcd7-4235-9513-df1b2e16cba4","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "How do I get my SIN?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+step suggestions are dropped unless they name one task this answer read: unknown ids, mixed tasks, too many, markup ... ok (5ms)
+an answer with a task suggestion keeps the #363 task proposal and drops its step lines ...
+------- output -------
+Query classified as: immigration
+Routing to RAG pipeline for query type: immigration
+{"event":"embedding_identity","call_id":"8581f099-9f80-4f93-a857-c5f358f30aed","identity":"canonical"}
+{"event":"embedding_checked","call_id":"8581f099-9f80-4f93-a857-c5f358f30aed","model":"qwen/qwen3-embedding-8b","contract":"qwen3-8b-prefix1536-l2-v1","identity":"canonical","checked":1,"native_dimensions":4096,"stored_dimensions":1536}
+Chunks received for "What else do I need?": 0
+OpenRouter Request Details:
+- Query type: immigration
+- Has good KB hits: false
+- Streaming: false
+rag-query timing {"status":"success","auth_ms":0,"profile_ms":0,"classify_ms":0,"embedding_ms":0,"vector_search_ms":0,"generation_ms":0,"total_ms":1}
+----- output end -----
+an answer with a task suggestion keeps the #363 task proposal and drops its step lines ... ok (0ms)
+
+ok | 33 passed | 0 failed (16s)
+

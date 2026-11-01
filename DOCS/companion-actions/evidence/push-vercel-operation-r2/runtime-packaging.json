@@ -1,0 +1,46 @@
+{
+  "pins": {
+    "version": "2.9.8",
+    "linux-x64": {
+      "asset": "deno-x86_64-unknown-linux-gnu.zip",
+      "archiveSha256": "e890975bc2549807bbcc0b584ffafda72cc7c93349dd99c80483dd784f6c4609",
+      "binarySha256": "368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7"
+    },
+    "darwin-arm64": {
+      "asset": "deno-aarch64-apple-darwin.zip",
+      "archiveSha256": "9f0bf660393da2eaff044cdc7444cb08c73f235849b61d224d825a194ce7c98e",
+      "binarySha256": "d1e99265e5e6ee096c5780d88ff7d3e6cfdf33b1953a118b4889cab8ca6980ba"
+    }
+  },
+  "packages": {
+    "linux-x64": {
+      "version": "2.9.8",
+      "target": "linux-x64",
+      "bytes": 105912216,
+      "files": 623,
+      "binary": {
+        "path": "deno",
+        "bytes": 96055992,
+        "sha256": "368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7"
+      },
+      "lockSha256": "7264c84a0808153ed2eec3db856de15423766c0c1f8379823cc7c6b556d51717",
+      "manifestSha256": "85dec1e530a788d5e593f1d82b26df0fcb9398c8044c15811d22af9d2925793c"
+    },
+    "darwin-arm64": {
+      "version": "2.9.8",
+      "target": "darwin-arm64",
+      "bytes": 91356912,
+      "files": 624,
+      "binary": {
+        "path": "deno",
+        "bytes": 81512928,
+        "sha256": "d1e99265e5e6ee096c5780d88ff7d3e6cfdf33b1953a118b4889cab8ca6980ba"
+      },
+      "lockSha256": "7264c84a0808153ed2eec3db856de15423766c0c1f8379823cc7c6b556d51717",
+      "manifestSha256": "fef8add86876a965e591cf38438a6497be81355adfd3378164f58b2b950d376e"
+    }
+  },
+  "uncompressed_limit_bytes": 250000000,
+  "runtime_limit_bytes": 200000000,
+  "complete_next_function_size": "not measured; root must build and inspect"
+}

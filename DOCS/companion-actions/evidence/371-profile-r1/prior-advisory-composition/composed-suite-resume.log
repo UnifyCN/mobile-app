@@ -1,0 +1,8 @@
+PASS owned labels, workdir, content URL, database and REST containers
+{"file": "receipt_history_test.ts", "exit": 0, "seconds": 21.624, "baseline_reset": true, "profile_371_applied": true}
+{"file": "create_test.ts", "exit": 0, "seconds": 25.829, "baseline_reset": true, "profile_371_applied": true}
+{"file": "steps_test.ts", "exit": 0, "seconds": 27.649, "baseline_reset": true, "profile_371_applied": true}
+{"file": "edit_test.ts", "exit": 0, "seconds": 23.563, "baseline_reset": true, "profile_371_applied": true}
+{"file": "remove_test.ts", "exit": 0, "seconds": 27.985, "baseline_reset": true, "profile_371_applied": true}
+{"file": "details_test.ts", "exit": 0, "seconds": 25.573, "baseline_reset": true, "profile_371_applied": true}
+{"file": "reminders_test.ts", "exit": 1, "seconds": 40.586, "baseline_reset": true, "profile_371_applied": true}

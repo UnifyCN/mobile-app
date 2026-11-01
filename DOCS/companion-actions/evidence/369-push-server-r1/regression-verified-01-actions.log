@@ -1,0 +1,8 @@
+running 4 tests from ../../Unify/t3-56bad9ac/DOCS/companion-actions/evidence/369-push-server-r1/private/legacy-export/supabase/tests/companion-actions/actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (399ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (400ms)
+read returns only the caller's tasks ... ok (306ms)
+cleanup ... ok (2ms)
+
+ok | 4 passed | 0 failed (1s)
+

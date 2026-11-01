@@ -1,0 +1,52 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 11 tests from ./boundary_test.ts
+wrong account: no token, project key, forged token, or another account's task ... ok (548ms)
+forged or model-made approval is refused and writes nothing ... ok (640ms)
+invalid contract versions and platforms are refused before any write ... ok (333ms)
+invalid payloads are 4xx, never 500, and write nothing ... FAILED (183ms)
+a stale revision is a conflict that names expected and actual, and writes nothing ... ok (267ms)
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... ok (454ms)
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... ok (3s)
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... ok (253ms)
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... ok (231ms)
+only POST is served ... ok (133ms)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+invalid payloads are 4xx, never 500, and write nothing => ./boundary_test.ts:113:6
+error: AssertionError: Values are not equal: unimplemented operation: {"error":"invalid_request","reason":"explicit_instant_and_zone_required"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      422,
+-     "explicit_instant_and_zone_required",
++     "unsupported_operation",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-companion-359/reminders-internal-r3/DOCS/companion-actions/evidence/368-reminders-runtime-r2/.runtime/supabase/tests/companion-actions/boundary_test.ts:143:5)
+
+ FAILURES 
+
+invalid payloads are 4xx, never 500, and write nothing => ./boundary_test.ts:113:6
+
+FAILED | 10 passed | 1 failed (6s)
+
+error: Test failed

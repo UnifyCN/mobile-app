@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-31T08:19:28.806780+00:00",
+  "service_stop_exit": 0,
+  "removed": [
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/dist",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/.expo",
+    "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/.next",
+    "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build-profile-371-npm-ci.log",
+    "/tmp/unify-371-deno-ci-owned-cache.log",
+    "/tmp/unify-371-deno-ci.log",
+    "/tmp/unify-371-edge-check.log",
+    "/tmp/unify-371-mobile-ci-final.log",
+    "/tmp/unify-371-mobile-ci.log",
+    "/tmp/unify-371-mobile-lint-final.log",
+    "/tmp/unify-371-mobile-profile-lint-fix.log",
+    "/tmp/unify-371-web-green-profile1.log",
+    "/tmp/unify-371-web-green-profile2.log",
+    "/tmp/unify-371-web-lint-changed1.log",
+    "/tmp/unify-371-web-lint-changed2.log",
+    "/tmp/unify-371-web-lint-changed3.log",
+    "/tmp/unify-371-web-lint-final.log",
+    "/tmp/unify-371-web-lint-initial.log",
+    "/tmp/unify-371-web-npm-ci.log",
+    "/tmp/unify-371-web-privacy-changed-lint.log",
+    "/tmp/unify-371-web-profile-account.log",
+    "/tmp/unify-371-web-red-profile.log",
+    "/tmp/unify-371-web-tests-final.log",
+    "/tmp/unify-371-web-tests-first-full.log",
+    "/tmp/unify-371-web-tests-privacy-final.log",
+    "/tmp/unify-371-web-types-checklist.log",
+    "/tmp/unify-371-web-types1.log",
+    "/tmp/unify-371-web-types2.log",
+    "/tmp/unify-371-web-types3.log",
+    "/tmp/unify-371-web-types4.log",
+    "/tmp/unify-371-edge-check-final.log",
+    "/tmp/unify-371-edge-check-last.log",
+    "/tmp/unify-371-mobile-ci-after-integration.log",
+    "/tmp/unify-371-mobile-types-final.log",
+    "/tmp/unify-371-web-final-lint-current.log",
+    "/tmp/unify-371-web-last-changed-lint.log",
+    "/tmp/unify-371-web-lint-commit.log",
+    "/tmp/unify-371-web-lint-last.log",
+    "/tmp/unify-371-web-npm-ci-restored.log",
+    "/tmp/unify-371-web-row-lock-changed-lint.log",
+    "/tmp/unify-371-web-tests-locked-privacy-last.log",
+    "/tmp/unify-371-changelog.md"
+  ],
+  "private_build_removed": true,
+  "retained": [
+    {
+      "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/unify-front-end/node_modules",
+      "reason": "ignored installed mobile dependencies"
+    },
+    {
+      "path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/node_modules",
+      "reason": "ignored locked web dependencies"
+    },
+    {
+      "path": "/Users/savargupta/.t3/worktrees/Unify-Web-App/fix-reminder-standards-368-r1-root/tsconfig.tsbuildinfo",
+      "reason": "pre-existing ignored incremental cache, created before this task"
+    },
+    {
+      "path": "shared tool dependency caches",
+      "reason": "another worker can use them; no global cache removal"
+    }
+  ],
+  "temporary_config_restored": "configs-restored.json",
+  "native_resources_touched": false,
+  "preservation": "preservation-result.json",
+  "owned_resources_removed": true,
+  "all_nine_ports_free_ipv4_ipv6": true
+}

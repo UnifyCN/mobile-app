@@ -1,0 +1,346 @@
+COMMAND ['sync']
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/actions_test.ts']
+[0m[38;5;245mrunning 4 tests from ./supabase/tests/companion-actions/actions_test.ts[0m
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... [0m[32mok[0m [0m[38;5;245m(407ms)[0m
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... [0m[32mok[0m [0m[38;5;245m(406ms)[0m
+read returns only the caller's tasks ... [0m[32mok[0m [0m[38;5;245m(301ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+
+[0m[32mok[0m | 4 passed | 0 failed [0m[38;5;245m(1s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/boundary_test.ts']
+[0m[38;5;245mrunning 11 tests from ./supabase/tests/companion-actions/boundary_test.ts[0m
+wrong account: no token, project key, forged token, or another account's task ... [0m[32mok[0m [0m[38;5;245m(556ms)[0m
+forged or model-made approval is refused and writes nothing ... [0m[32mok[0m [0m[38;5;245m(579ms)[0m
+invalid contract versions and platforms are refused before any write ... [0m[32mok[0m [0m[38;5;245m(351ms)[0m
+invalid payloads are 4xx, never 500, and write nothing ... [0m[32mok[0m [0m[38;5;245m(630ms)[0m
+a stale revision is a conflict that names expected and actual, and writes nothing ... [0m[32mok[0m [0m[38;5;245m(255ms)[0m
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... [0m[32mok[0m [0m[38;5;245m(432ms)[0m
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... [0m[32mok[0m [0m[38;5;245m(3s)[0m
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... [0m[32mok[0m [0m[38;5;245m(268ms)[0m
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... [0m[32mok[0m [0m[38;5;245m(253ms)[0m
+only POST is served ... [0m[32mok[0m [0m[38;5;245m(123ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+
+[0m[32mok[0m | 11 passed | 0 failed [0m[38;5;245m(6s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/command_test.ts']
+[0m[38;5;245mrunning 7 tests from ./supabase/tests/companion-actions/command_test.ts[0m
+a clear command adds exactly the task it names, once, however often it is sent ... [0m[32mok[0m [0m[38;5;245m(279ms)[0m
+two operations racing on one command message, released together from a held use, add one task ... [0m[32mok[0m [0m[38;5;245m(212ms)[0m
+unclear requests are answered with a question and authorize nothing ... [0m[32mok[0m [0m[38;5;245m(457ms)[0m
+a command naming a task that already exists asks which is meant and writes nothing ... [0m[32mok[0m [0m[38;5;245m(191ms)[0m
+only the caller's own user message is command evidence ... [0m[32mok[0m [0m[38;5;245m(463ms)[0m
+the command phrasing taught in each supported language adds exactly its task ... [0m[32mok[0m [0m[38;5;245m(506ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(3ms)[0m
+
+[0m[32mok[0m | 7 passed | 0 failed [0m[38;5;245m(2s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/create_rollback_test.ts']
+[0m[38;5;245mrunning 3 tests from ./supabase/tests/companion-actions/create_rollback_test.ts[0m
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(9ms)[0m
+
+[0m[32mok[0m | 3 passed | 0 failed [0m[38;5;245m(3s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/create_test.ts']
+[0m[38;5;245mrunning 17 tests from ./supabase/tests/companion-actions/create_test.ts[0m
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... [0m[32mok[0m [0m[38;5;245m(389ms)[0m
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... [0m[32mok[0m [0m[38;5;245m(246ms)[0m
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... [0m[32mok[0m [0m[38;5;245m(275ms)[0m
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... [0m[32mok[0m [0m[38;5;245m(275ms)[0m
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... [0m[32mok[0m [0m[38;5;245m(241ms)[0m
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... [0m[32mok[0m [0m[38;5;245m(345ms)[0m
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... [0m[32mok[0m [0m[38;5;245m(281ms)[0m
+unrelated changes since review do not ask for approval again ... [0m[32mok[0m [0m[38;5;245m(221ms)[0m
+a task with the same title added elsewhere since review needs a new review that names it ... [0m[32mok[0m [0m[38;5;245m(226ms)[0m
+Undo of an added task removes it only after confirmation, once, with its own receipt ... [0m[32mok[0m [0m[38;5;245m(326ms)[0m
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... [0m[32mok[0m [0m[38;5;245m(296ms)[0m
+a reviewed removal is refused after another edit, and cannot remove any other task ... [0m[32mok[0m [0m[38;5;245m(388ms)[0m
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... [0m[32mok[0m [0m[38;5;245m(328ms)[0m
+a cancelled draft cannot be approved and stays visible as cancelled ... [0m[32mok[0m [0m[38;5;245m(261ms)[0m
+reopening a conversation reads its drafts and command results with their current state ... [0m[32mok[0m [0m[38;5;245m(435ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+
+[0m[32mok[0m | 17 passed | 0 failed [0m[38;5;245m(5s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/details_language_test.ts']
+[0m[38;5;245mrunning 3 tests from ./supabase/tests/companion-actions/details_language_test.ts[0m
+S370-3: every locale’s own help example saves its whole first-person detail ... [0m[32mok[0m [0m[38;5;245m(805ms)[0m
+S370-3: Arabic attached first-person forms keep their meaning; other attached forms ask ... [0m[32mok[0m [0m[38;5;245m(419ms)[0m
+S370-2: a need that mentions a permit is saved; a statement of status stays with the profile ... [0m[32mok[0m [0m[38;5;245m(780ms)[0m
+
+[0m[32mok[0m | 3 passed | 0 failed [0m[38;5;245m(2s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/details_rollback_test.ts']
+[0m[38;5;245mrunning 2 tests from ./supabase/tests/companion-actions/details_rollback_test.ts[0m
+rolling back stops every use of saved details; re-applying restores them, their receipts and a re-review ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+the full schema rollback (all four migrations) and re-application still work with #370 first ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
+
+[0m[32mok[0m | 2 passed | 0 failed [0m[38;5;245m(3s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/details_test.ts']
+[0m[38;5;245mrunning 12 tests from ./supabase/tests/companion-actions/details_test.ts[0m
+a clear remember message saves exactly that detail once, with owner, scope, provenance and revision ... [0m[32mok[0m [0m[38;5;245m(495ms)[0m
+interpret resolves the documented remember grammar in every supported language and writes nothing ... [0m[32mok[0m [0m[38;5;245m(611ms)[0m
+a profile fact is never saved as a detail: by command, approved draft or edit ... [0m[32mok[0m [0m[38;5;245m(225ms)[0m
+an inferred detail is a draft until the shown revision is approved; Not now saves nothing ... [0m[32mok[0m [0m[38;5;245m(498ms)[0m
+an edit saves at the revision shown, names before and after, and a stale or concurrent edit cannot overwrite ... [0m[32mok[0m [0m[38;5;245m(319ms)[0m
+every removal needs confirmation; Cancel sends nothing; a removed detail leaves later context at once ... [0m[32mok[0m [0m[38;5;245m(399ms)[0m
+Undo after a newer edit keeps the newer text and offers a reviewed change ... [0m[32mok[0m [0m[38;5;245m(288ms)[0m
+another account can neither read, change, remove nor look up a detail ... [0m[32mok[0m [0m[38;5;245m(397ms)[0m
+a lost reply is looked up; the same id replays once; a held operation is pending ... [0m[32mok[0m [0m[38;5;245m(298ms)[0m
+a command and an approval of the same text, applied concurrently, save one detail ... [0m[32mok[0m [0m[38;5;245m(444ms)[0m
+with the feature gate off, saved details can be neither read nor changed through the action service ... [0m[32mok[0m [0m[38;5;245m(199ms)[0m
+malformed detail operations are refused before any write ... [0m[32mok[0m [0m[38;5;245m(289ms)[0m
+
+[0m[32mok[0m | 12 passed | 0 failed [0m[38;5;245m(4s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/receipt_history_test.ts']
+[0m[38;5;245mrunning 4 tests from ./supabase/tests/companion-actions/receipt_history_test.ts[0m
+an approved creation receipt keeps the reviewed title after the owner renames the task ... [0m[32mok[0m [0m[38;5;245m(288ms)[0m
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... [0m[32mok[0m [0m[38;5;245m(247ms)[0m
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... [0m[32mok[0m [0m[38;5;245m(287ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+
+[0m[32mok[0m | 4 passed | 0 failed [0m[38;5;245m(829ms)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/rollback_test.ts']
+[0m[38;5;245mrunning 6 tests from ./supabase/tests/companion-actions/rollback_test.ts[0m
+legacy Checklist calls and existing rows are identical on the baseline, after up, after down and after up again ... [0m[32mok[0m [0m[38;5;245m(4s)[0m
+the migration ships the feature off; API roles cannot execute the action SQL ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+receipts, waiting reasons and Undo survive a rollback and re-application; held revisions go stale ... [0m[32mok[0m [0m[38;5;245m(2s)[0m
+a full rollback stops every pending reminder; re-application restarts none; history stays exact ... [0m[32mok[0m [0m[38;5;245m(3s)[0m
+account deletion removes receipts and proposals with the account ... [0m[32mok[0m [0m[38;5;245m(202ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(4ms)[0m
+
+[0m[32mok[0m | 6 passed | 0 failed [0m[38;5;245m(12s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/steps_context_race_test.ts']
+[0m[38;5;245mrunning 23 tests from ./supabase/tests/companion-actions/steps_context_race_test.ts[0m
+F3 serial control: a matching step saved before the approval needs a new review ... [0m[32mok[0m [0m[38;5;245m(380ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["9efd66a4-7b06-474e-b65b-61d7d3de7df5"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["9efd66a4-7b06-474e-b65b-61d7d3de7df5"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(326ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["38b2ce9f-88e8-4885-92da-5a3b85a6744c","563b2f3f-e1e7-47c9-8115-4d6d7289b68e"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(281ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["f2a9453a-aa7c-494a-bcfc-eb3d5a60203d"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["f2a9453a-aa7c-494a-bcfc-eb3d5a60203d"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a direct add of the same title (custom task) ... [0m[32mok[0m [0m[38;5;245m(341ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["409dfe3f-5bb9-48b0-9d8b-e2871fab781c","a6a142d1-68e2-4f81-84b4-74dcbed5844a"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a direct add of the same title (custom task) ... [0m[32mok[0m [0m[38;5;245m(319ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of another step to the same title (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["f5ac43b0-b7e3-4f18-83ac-46e31310f410"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["f5ac43b0-b7e3-4f18-83ac-46e31310f410"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (custom task) ... [0m[32mok[0m [0m[38;5;245m(392ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of another step to the same title (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["6caf967e-dee0-4cbe-84e9-65ff333a5c23","a3af7893-d893-47ff-a633-028665d4820f"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (custom task) ... [0m[32mok[0m [0m[38;5;245m(308ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of another step to the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["d0a337c3-4bf3-47ce-b86b-70abc07024be"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["d0a337c3-4bf3-47ce-b86b-70abc07024be"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of another step to the same title (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(301ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of another step to the same title (content-backed task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["288280aa-217d-4d15-a969-f6b40f2d484b","f9d9ccf5-8276-4a10-a4ef-9abbe3bec789"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of another step to the same title (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(281ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of the matching step to another title (custom task)","order":"change-first","reviewed":["0202828e-43a8-4fbf-a034-8c3c32018ba7"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a rename of the matching step to another title (custom task) ... [0m[32mok[0m [0m[38;5;245m(314ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of the matching step to another title (custom task)","order":"approval-first","reviewed":["8325b982-105d-42ab-a9be-ba1f314247a1"],"changeWaited":"blocked","mid":["8325b982-105d-42ab-a9be-ba1f314247a1"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["16c1649b-2df4-41eb-b1bc-2639231aa556"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a rename of the matching step to another title (custom task) ... [0m[32mok[0m [0m[38;5;245m(293ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"change-first","reviewed":["304cec37-664e-4ab4-b1e1-22e44bde1a89"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a confirmed removal of the matching step (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(307ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a confirmed removal of the matching step (content-backed task)","order":"approval-first","reviewed":["6f805fae-81a6-4fad-bd10-3bdee0ccefa4"],"changeWaited":"blocked","mid":["6f805fae-81a6-4fad-bd10-3bdee0ccefa4"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["11a8717e-5ebf-4784-918f-3e0c84f371ec"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed removal of the matching step (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(290ms)[0m
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"an Undo that restores a removed matching step (custom task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["5a507768-69db-4306-80aa-4fabe6e60528"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["5a507768-69db-4306-80aa-4fabe6e60528"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: an Undo that restores a removed matching step (custom task) ... [0m[32mok[0m [0m[38;5;245m(368ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"an Undo that restores a removed matching step (custom task)","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["09fb2add-3dee-4387-91ac-963ce9f48fb2","0da49df0-597a-4e93-874f-a3d8ee2d56d2"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: an Undo that restores a removed matching step (custom task) ... [0m[32mok[0m [0m[38;5;245m(312ms)[0m
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"change-first","reviewed":["8aeb29db-f45a-4da2-adf1-695f07acf988"],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":[]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change committed while an approval waits needs a new review: a confirmed Undo of the added matching step (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(338ms)[0m
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a confirmed Undo of the added matching step (content-backed task)","order":"approval-first","reviewed":["3266669b-db97-420e-b3dd-32ca38ac663c"],"changeWaited":"blocked","mid":["3266669b-db97-420e-b3dd-32ca38ac663c"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["722825c8-c504-46f8-ab7b-1090da90017c"]}
+[0m[38;5;245m----- output end -----[0m
+F3 relevant change sent after the approval holds the parent waits for it: a confirmed Undo of the added matching step (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(343ms)[0m
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (content-backed task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["4a7acd08-1a85-4f45-b05d-c8ac311c6724","4c1aa451-eeac-4501-883c-e294739b41d1"]}
+[0m[38;5;245m----- output end -----[0m
+F3 a relevant change cannot commit between the approval's context read and its save: a direct add of the same title (content-backed task) ... [0m[32mok[0m [0m[38;5;245m(270ms)[0m
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a rename of another step to the same title (custom task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["acd9b9ca-e6d2-4676-bba5-286da6d1016f","ca3dbfc1-4fe1-4681-b710-24cc78fde35a"]}
+[0m[38;5;245m----- output end -----[0m
+F3 a relevant change cannot commit between the approval's context read and its save: a rename of another step to the same title (custom task) ... [0m[32mok[0m [0m[38;5;245m(295ms)[0m
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ...
+[0m[38;5;245m------- output -------[0m
+{"case":"an Undo that restores a removed matching step (custom task)","order":"late-window","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["99b92c1d-2e40-4fcf-9d10-71475c29ba42","d8cfacc8-4c5a-49c4-bc05-63960e226bfa"]}
+[0m[38;5;245m----- output end -----[0m
+F3 a relevant change cannot commit between the approval's context read and its save: an Undo that restores a removed matching step (custom task) ... [0m[32mok[0m [0m[38;5;245m(321ms)[0m
+F3 unrelated changes while an approval waits do not force a new review ...
+[0m[38;5;245m------- output -------[0m
+{"case":"another title on the same task","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["d678fb09-4b17-4aad-81a6-ab221cf89537"]}
+{"case":"another title on the same task","order":"approval-first","reviewed":[],"changeWaited":"blocked","mid":[],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["aefafd5f-7fa7-4b18-ba9c-0a629e1fb061"]}
+{"case":"checking the matching step","order":"change-first","reviewed":["30ce9435-fc95-45a6-bdd6-341bcf96dcc9"],"changeWaited":"blocked","mid":["30ce9435-fc95-45a6-bdd6-341bcf96dcc9"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["30ce9435-fc95-45a6-bdd6-341bcf96dcc9","6b5f3bdb-b697-4277-8b4b-d42d14342b5c"]}
+{"case":"checking the matching step","order":"approval-first","reviewed":["03323ebe-cbc8-41a0-9c47-1f525f714f8a"],"changeWaited":"blocked","mid":["03323ebe-cbc8-41a0-9c47-1f525f714f8a"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":200},"final":["03323ebe-cbc8-41a0-9c47-1f525f714f8a","c13aa45a-649e-4fc3-b840-810e0a832fc3"]}
+[0m[38;5;245m----- output end -----[0m
+F3 unrelated changes while an approval waits do not force a new review ... [0m[32mok[0m [0m[38;5;245m(1s)[0m
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ...
+[0m[38;5;245m------- output -------[0m
+{"mid":["027bbb1e-f026-40b7-a75d-843b91019e69"],"openAtMid":true,"r1":[409,"needs_review",null],"r2":[403,"forbidden","invalid_authorization"],"final":["027bbb1e-f026-40b7-a75d-843b91019e69"]}
+[0m[38;5;245m----- output end -----[0m
+F3 competing approvals of one draft and their replays: no stale save, one new review, then one save ... [0m[32mok[0m [0m[38;5;245m(439ms)[0m
+F3 rolling back and re-applying #366 keeps the approval context check ordered ...
+[0m[38;5;245m------- output -------[0m
+{"case":"a direct add of the same title (content-backed task)","order":"change-first","reviewed":[],"changeWaited":"blocked","mid":["afc0f8f2-0f7c-4e44-a7a1-7f2d1f14ef6e"],"approvalOpenAtMid":true,"change":{"status":200},"approval":{"status":409,"error":"needs_review","revision":2},"final":["afc0f8f2-0f7c-4e44-a7a1-7f2d1f14ef6e"]}
+[0m[38;5;245m----- output end -----[0m
+F3 rolling back and re-applying #366 keeps the approval context check ordered ... [0m[32mok[0m [0m[38;5;245m(809ms)[0m
+
+[0m[32mok[0m | 23 passed | 0 failed [0m[38;5;245m(9s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/steps_parent_race_test.ts']
+[0m[38;5;245mrunning 11 tests from ./supabase/tests/companion-actions/steps_parent_race_test.ts[0m
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyFirst":"blocked","legacyWhileStepHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held completion step","step_id":"6e354bc7-63cd-4bf8-a3c4-cdf5469894f1","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T02:47:35.609218+00:00","after_state":"not_started","before_state":"not_started","operation_id":"f880c6b2-c60c-4f07-87b2-ad9af950c297","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held completion step","step_id":"6e354bc7-63cd-4bf8-a3c4-cdf5469894f1","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"f880c6b2-c60c-4f07-87b2-ad9af950c297"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:35.636151+00:00"}],"steps":[{"done":false,"title":"held completion step","step_id":"6e354bc7-63cd-4bf8-a3c4-cdf5469894f1","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion and a held step add are ordered; the parent change never precedes a saved step ... [0m[32mok[0m [0m[38;5;245m(353ms)[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyState":"blocked","stepState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_completed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:35.891733+00:00"}],"steps":[],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(237ms)[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyFirst":"blocked","legacyWhileStepHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"held dismissal step","step_id":"1d5fc8d5-3d65-4724-8ee8-d0dc530437de","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T02:47:36.169176+00:00","after_state":"not_started","before_state":"not_started","operation_id":"26059b9b-adbe-43c6-a23d-4b7461ab285c","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"held dismissal step","step_id":"1d5fc8d5-3d65-4724-8ee8-d0dc530437de","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"26059b9b-adbe-43c6-a23d-4b7461ab285c"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:36.182653+00:00"}],"steps":[{"done":false,"title":"held dismissal step","step_id":"1d5fc8d5-3d65-4724-8ee8-d0dc530437de","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal and a held step add are ordered; the parent change never precedes a saved step ... [0m[32mok[0m [0m[38;5;245m(320ms)[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyState":"blocked","stepState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"legacy":{"status":201,"error":null},"step":{"status":422,"json":{"error":"invalid_request","reason":"task_removed","detail":{"task_ref":"sanity:sin-number"}},"headers":{}},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:36.44888+00:00"}],"steps":[],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal queued before the step add commits first and the step add is refused ... [0m[32mok[0m [0m[38;5;245m(241ms)[0m
+absent progress row: a legacy completion sent after the step add passed its parent check waits for that step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"completion","legacyState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"late completion step","step_id":"56e21d1c-f2f4-41d5-b344-41505fdf57b3","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T02:47:36.706733+00:00","after_state":"not_started","before_state":"not_started","operation_id":"e61a85a2-49b6-44ef-a71b-297d31ea43bd","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"late completion step","step_id":"56e21d1c-f2f4-41d5-b344-41505fdf57b3","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"e61a85a2-49b6-44ef-a71b-297d31ea43bd"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:36.720567+00:00"}],"steps":[{"done":false,"title":"late completion step","step_id":"56e21d1c-f2f4-41d5-b344-41505fdf57b3","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy completion sent after the step add passed its parent check waits for that step ... [0m[32mok[0m [0m[38;5;245m(245ms)[0m
+absent progress row: a legacy dismissal sent after the step add passed its parent check waits for that step ...
+[0m[38;5;245m------- output -------[0m
+{"mode":"dismissal","legacyState":"blocked","mid":{"contract_version":1,"tasks":[],"steps":[],"details":[]},"step":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":false,"title":"late dismissal step","step_id":"faa366b1-fc9b-40b2-a01f-5e13b46eb60a","before_done":false,"after_revision":1,"before_revision":0}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T02:47:36.948805+00:00","after_state":"not_started","before_state":"not_started","operation_id":"81543ae9-95c1-49e8-9f01-7c61554d0033","after_revision":1,"operation_type":"step.create","before_revision":0},"results":[{"type":"step.create","state":"not_started","steps":[{"done":false,"title":"late dismissal step","step_id":"faa366b1-fc9b-40b2-a01f-5e13b46eb60a","before_done":false,"after_revision":1,"before_revision":0}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":1,"before_revision":0}],"replayed":false,"operation_id":"81543ae9-95c1-49e8-9f01-7c61554d0033"}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":true,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:36.963776+00:00"}],"steps":[{"done":false,"title":"late dismissal step","step_id":"faa366b1-fc9b-40b2-a01f-5e13b46eb60a","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a legacy dismissal sent after the step add passed its parent check waits for that step ... [0m[32mok[0m [0m[38;5;245m(249ms)[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ...
+[0m[38;5;245m------- output -------[0m
+{"checkState":"blocked","legacyFirst":"blocked","legacyWhileCheckHeld":["advisory"],"mid1":{"contract_version":1,"tasks":[],"steps":[{"done":false,"title":"check me","step_id":"8638377b-dc7c-4e57-b015-c72fd3274da3","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]},"mid2":{"contract_version":1,"tasks":[],"steps":[{"done":false,"title":"check me","step_id":"8638377b-dc7c-4e57-b015-c72fd3274da3","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]},"check":{"status":200,"json":{"status":"applied","receipt":{"kind":"change","steps":[{"done":true,"title":"check me","step_id":"8638377b-dc7c-4e57-b015-c72fd3274da3","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"current":true,"undo_of":null,"task_ref":"sanity:sin-number","undoable":true,"undone_by":null,"created_at":"2026-10-28T02:47:37.249513+00:00","after_state":"not_started","before_state":"not_started","operation_id":"fa2193aa-9bde-42eb-8eae-2782696e6ec5","after_revision":2,"operation_type":"step.set_done","before_revision":1},"results":[{"type":"step.set_done","state":"not_started","steps":[{"done":true,"title":"check me","step_id":"8638377b-dc7c-4e57-b015-c72fd3274da3","before_done":false,"before_title":"check me","after_revision":2,"before_revision":1}],"task_ref":"sanity:sin-number","before_state":"not_started","after_revision":2,"before_revision":1}],"replayed":false,"operation_id":"fa2193aa-9bde-42eb-8eae-2782696e6ec5"},"headers":{}},"legacy":{"status":201,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:37.264851+00:00"}],"steps":[{"done":true,"title":"check me","step_id":"8638377b-dc7c-4e57-b015-c72fd3274da3","position":0,"revision":2,"task_ref":"sanity:sin-number"}],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+absent progress row: a held step check and a legacy completion are ordered; no step changes after a completion is read ... [0m[32mok[0m [0m[38;5;245m(316ms)[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ...
+[0m[38;5;245m------- output -------[0m
+{"shape":"upsert","legacyState":"blocked","stepState":"blocked","legacyWhileStepHeld":["advisory"],"mid":{"contract_version":1,"tasks":[{"state":"not_started","source":"sanity","removed":false,"revision":1,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:37.498081+00:00"}],"steps":[],"details":[]},"step":{"status":200},"legacy":{"status":200,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:37.530045+00:00"}],"steps":[{"done":false,"title":"existing upsert","step_id":"9641e3bc-4ef2-43bc-95ca-b3f2432e4a2f","position":0,"revision":1,"task_ref":"sanity:sin-number"}],"details":[]}}
+{"shape":"update","legacyState":"settled","stepState":"settled","legacyWhileStepHeld":[],"mid":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:37.781619+00:00"}],"steps":[],"details":[]},"step":{"status":422,"reason":"task_completed"},"legacy":{"status":204,"error":null},"after":{"contract_version":1,"tasks":[{"state":"completed","source":"sanity","removed":false,"revision":2,"task_ref":"sanity:sin-number","last_receipt":null,"waiting_reason":null,"state_updated_at":"2026-10-28T02:47:37.781619+00:00"}],"steps":[],"details":[]}}
+[0m[38;5;245m----- output end -----[0m
+existing progress row: legacy upsert and plain UPDATE completions are ordered with a held step add ... [0m[32mok[0m [0m[38;5;245m(529ms)[0m
+independent parents and accounts are not serialized behind a held parent ... [0m[32mok[0m [0m[38;5;245m(327ms)[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ...
+[0m[38;5;245m------- output -------[0m
+[{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"},{"s":422,"reason":"task_completed","l":201,"steps":0,"state":"completed"}]
+[0m[38;5;245m----- output end -----[0m
+simultaneous unheld step adds and legacy completions on fresh parents end in a legal state without errors ... [0m[32mok[0m [0m[38;5;245m(290ms)[0m
+rolling back #366 leaves legacy writes free of the parent lock; re-applying orders them again ... [0m[32mok[0m [0m[38;5;245m(695ms)[0m
+
+[0m[32mok[0m | 11 passed | 0 failed [0m[38;5;245m(3s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/steps_rollback_test.ts']
+[0m[38;5;245mrunning 1 test from ./supabase/tests/companion-actions/steps_rollback_test.ts[0m
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts ... [0m[32mok[0m [0m[38;5;245m(978ms)[0m
+
+[0m[32mok[0m | 1 passed | 0 failed [0m[38;5;245m(990ms)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/steps_test.ts']
+[0m[38;5;245mrunning 15 tests from ./supabase/tests/companion-actions/steps_test.ts[0m
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... [0m[32mok[0m [0m[38;5;245m(256ms)[0m
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... [0m[32mok[0m [0m[38;5;245m(228ms)[0m
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... [0m[32mok[0m [0m[38;5;245m(359ms)[0m
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... [0m[32mok[0m [0m[38;5;245m(281ms)[0m
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... [0m[32mok[0m [0m[38;5;245m(299ms)[0m
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... [0m[32mok[0m [0m[38;5;245m(251ms)[0m
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... [0m[32mok[0m [0m[38;5;245m(542ms)[0m
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... [0m[32mok[0m [0m[38;5;245m(286ms)[0m
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... [0m[32mok[0m [0m[38;5;245m(305ms)[0m
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... [0m[32mok[0m [0m[38;5;245m(405ms)[0m
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... [0m[32mok[0m [0m[38;5;245m(366ms)[0m
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... [0m[32mok[0m [0m[38;5;245m(400ms)[0m
+another account cannot read, change, look up or undo my steps ... [0m[32mok[0m [0m[38;5;245m(441ms)[0m
+step controls, lookup and Undo never touch the AI allowance ... [0m[32mok[0m [0m[38;5;245m(262ms)[0m
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... [0m[32mok[0m [0m[38;5;245m(237ms)[0m
+
+[0m[32mok[0m | 15 passed | 0 failed [0m[38;5;245m(4s)[0m
+
+COMMAND ['reset']
+COMMAND ['deno', 'test', '--no-check', '--node-modules-dir=none', '--allow-net', '--allow-env', '--allow-read', 'supabase/tests/companion-actions/undo_test.ts']
+[0m[38;5;245mrunning 8 tests from ./supabase/tests/companion-actions/undo_test.ts[0m
+Undo restores the exact earlier state and waiting reason of its own receipt ... [0m[32mok[0m [0m[38;5;245m(390ms)[0m
+Undo of completion restores the earlier state and does not restart a stopped reminder ... [0m[32mok[0m [0m[38;5;245m(325ms)[0m
+an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change ... [0m[32mok[0m [0m[38;5;245m(431ms)[0m
+a compensating proposal goes stale when the task changes again; nothing is overwritten ... [0m[32mok[0m [0m[38;5;245m(283ms)[0m
+a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review ... [0m[32mok[0m [0m[38;5;245m(272ms)[0m
+concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay ... [0m[32mok[0m [0m[38;5;245m(312ms)[0m
+Undo is scoped to the account and only to undoable receipts ... [0m[32mok[0m [0m[38;5;245m(461ms)[0m
+cleanup ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+
+[0m[32mok[0m | 8 passed | 0 failed [0m[38;5;245m(2s)[0m
+

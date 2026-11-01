@@ -1,0 +1,20 @@
+appId: com.anonymous.unifyfrontend
+---
+- repeat:
+    times: 4
+    commands:
+      - tapOn:
+          text: "Dismiss"
+          optional: true
+- tapOn:
+    point: "30%,93%"
+    optional: true
+- tapOn: "Checklist, tab, 3 of 6"
+- waitForAnimationToEnd:
+    timeout: 15000
+- repeat:
+    times: 3
+    commands:
+      - tapOn:
+          text: "Dismiss"
+          optional: true

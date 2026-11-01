@@ -1,0 +1,53 @@
+--- /Users/savargupta/.t3/worktrees/Unify/t3-c4f8e1aa/unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql	2026-10-27 15:57:56
++++ mf-m1-latest-only.sql	2026-10-27 16:02:06
+@@ -376,7 +376,7 @@
+     'reviews', coalesce((select jsonb_agg(public.companion_plan_proposal_view(pp) order by pp.created_at, pp.id)
+                            from public.companion_plan_proposals pp
+                           where pp.user_id = p_plan.user_id and pp.kind = 'retry' and pp.plan_id = p_plan.id
+-                            and pp.status in ('draft', 'applied')), '[]'::jsonb),
++                            and pp.status in ('draft', 'applied') and pp.id = (select x.id from public.companion_plan_proposals x where x.plan_id = p_plan.id and x.kind = 'retry' order by x.created_at desc limit 1)), '[]'::jsonb),
+     -- Earlier single-review field, kept unchanged for a reader of that shape: the latest
+     -- review (open, approved or closed). It can hide an older open review; read 'reviews'.
+     'review', (select public.companion_plan_proposal_view(pp) from public.companion_plan_proposals pp
+--- /Users/savargupta/.t3/worktrees/Unify/t3-c4f8e1aa/unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql	2026-10-27 15:57:56
++++ mf-m2-approve-closes-others.sql	2026-10-27 16:02:06
+@@ -841,6 +841,7 @@
+ 
+   update public.companion_plan_proposals set status = 'applied', receipt_operation_id = p_op, updated_at = now()
+    where id = p_prop.id;
++  update public.companion_plan_proposals set status = 'cancelled' where plan_id = v_plan.id and kind = 'retry' and status = 'draft' and id <> p_prop.id;
+   for v_item in select i from jsonb_array_elements(p_prop.items) with ordinality e(i, n) order by n loop
+     -- An existing task chosen instead of an addition carries that addition's title as label.
+     v_key := case when v_item->>'kind' = 'new' then v_item->>'key'
+--- /Users/savargupta/.t3/worktrees/Unify/t3-c4f8e1aa/unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql	2026-10-27 15:57:56
++++ mf-m3-notnow-closes-all.sql	2026-10-27 16:02:06
+@@ -543,6 +543,7 @@
+   end if;
+   update public.companion_plan_proposals set status = 'cancelled', updated_at = now()
+    where id = v_prop.id returning * into v_prop;
++  update public.companion_plan_proposals set status = 'cancelled' where kind = 'retry' and plan_id = v_prop.plan_id and status = 'draft';
+   return jsonb_build_object('plan_proposal', public.companion_plan_proposal_view(v_prop));
+ end $$;
+ 
+--- /Users/savargupta/.t3/worktrees/Unify/t3-c4f8e1aa/unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql	2026-10-27 15:57:56
++++ mf-m4-retryable-ignores-reviews.sql	2026-10-27 16:02:06
+@@ -298,7 +298,7 @@
+                           and xr->>'key' = r->>'key' and xr->>'outcome' in ('created', 'reused', 'excluded'))
+        and not exists (select 1 from public.companion_plan_proposals pp
+                         where pp.user_id = p_receipt.user_id and pp.kind = 'retry' and pp.status = 'draft'
+-                          and pp.retry_of = p_receipt.operation_id
++                          and pp.retry_of = p_receipt.operation_id and false
+                           and pp.original_items @> jsonb_build_array(jsonb_build_object('key', r->>'key')))), '[]'::jsonb) end
+ $$;
+ 
+--- /Users/savargupta/.t3/worktrees/Unify/t3-c4f8e1aa/unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql	2026-10-27 15:57:56
++++ mf-m5-undo-leaves-reviews.sql	2026-10-27 16:02:06
+@@ -938,7 +938,7 @@
+    where id = p_plan and user_id = p_user;
+   -- A revised retry review of a removed plan can no longer be approved.
+   update public.companion_plan_proposals set status = 'cancelled', updated_at = now()
+-   where user_id = p_user and kind = 'retry' and plan_id = p_plan and status = 'draft';
++   where user_id = p_user and kind = 'retry' and plan_id = p_plan and status = 'draft' and false;
+   begin
+     insert into public.companion_action_receipts
+       (user_id, operation_id, request_hash, contract_version, authorization_evidence, outcome, undo_of)

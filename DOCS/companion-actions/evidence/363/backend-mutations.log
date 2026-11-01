@@ -1,0 +1,22 @@
+undo_forgets_reason              undo_test.ts       RED
+undo_ignores_newer_edit          undo_test.ts       RED
+receipt_always_current           undo_test.ts       RED
+approval_hash_unchecked          boundary_test.ts   RED
+no_operation_lock                boundary_test.ts   RED
+custom_revision_unchecked        boundary_test.ts   RED
+completion_keeps_reminders       undo_test.ts       RED
+registry_accepts_any_type        boundary_test.ts   RED
+rollback_keeps_pending           rollback_test.ts   RED
+handler_spends_quota             boundary_test.ts   RED
+create_context_unchecked         create_test.ts     RED
+command_reusable                 command_test.ts    RED
+command_duplicate_title_unchecked command_test.ts    RED
+undo_removal_unconfirmed         create_test.ts     RED
+removal_of_any_task              create_test.ts     SURVIVED
+proposal_cross_account           create_test.ts     RED
+down_keeps_create_inverse        create_rollback_test.ts RED
+restored_draft_keeps_approval    create_rollback_test.ts RED
+handler_command_unchecked        command_test.ts    RED
+handler_trusts_body_owner        boundary_test.ts   RED
+19 of 20 RED
+exit=1

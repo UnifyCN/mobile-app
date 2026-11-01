@@ -1,0 +1,111 @@
+FAIL __tests__/companionActions/planLocalStack.test.tsx
+  Settlement plans against the real local stack (mobile)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+  Independent retained mobile Checklist completion
+    ○ skipped Checklist completion refreshes the retained Companion plan entry
+  Plan and task steps together against the real local stack (mobile)
+    ○ skipped a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+  Task removal against the real local stack (mobile, #367)
+    ✕ a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays (1 ms)
+    ○ skipped a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+    ○ skipped a removal request card turns historical after another device removed the task; its review cannot remove again
+    ○ skipped another account sees none of a removal review, card or receipt
+
+  ● Task removal against the real local stack (mobile, #367) › a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+
+    #366 and #364 must be applied before #367
+
+      960 |     // missing; refuse an out-of-order stack instead of guessing.
+      961 |     if (!has('companion_read_steps(uuid)') || !has('companion_plans_read(uuid)'))
+    > 962 |       throw new Error('#366 and #364 must be applied before #367');
+          |             ^
+      963 |     const has365 = has('companion_prepare_edit(uuid,jsonb,jsonb,text)');
+      964 |     const has367 = has('companion_remove_prepare(uuid,text,jsonb)');
+      965 |     if (has367 && !has365) throw new Error('#365 must be applied before #367');
+
+      at Object.<anonymous> (__tests__/companionActions/planLocalStack.test.tsx:962:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Task removal against the real local stack (mobile, #367) › a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+
+    TypeError: Cannot read properties of undefined (reading 'mockRestore')
+
+      994 |   });
+      995 |   afterEach(() => {
+    > 996 |     announcementSpy.mockRestore();
+          |                     ^
+      997 |     global.fetch = realFetch;
+      998 |     clients.splice(0).forEach(client => client.clear());
+      999 |   });
+
+      at Object.mockRestore (__tests__/companionActions/planLocalStack.test.tsx:996:21)
+
+  ● Task removal against the real local stack (mobile, #367) › a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+
+    #366 and #364 must be applied before #367
+
+      960 |     // missing; refuse an out-of-order stack instead of guessing.
+      961 |     if (!has('companion_read_steps(uuid)') || !has('companion_plans_read(uuid)'))
+    > 962 |       throw new Error('#366 and #364 must be applied before #367');
+          |             ^
+      963 |     const has365 = has('companion_prepare_edit(uuid,jsonb,jsonb,text)');
+      964 |     const has367 = has('companion_remove_prepare(uuid,text,jsonb)');
+      965 |     if (has367 && !has365) throw new Error('#365 must be applied before #367');
+
+      at Object.<anonymous> (__tests__/companionActions/planLocalStack.test.tsx:962:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Task removal against the real local stack (mobile, #367) › a removal request card turns historical after another device removed the task; its review cannot remove again
+
+    #366 and #364 must be applied before #367
+
+      960 |     // missing; refuse an out-of-order stack instead of guessing.
+      961 |     if (!has('companion_read_steps(uuid)') || !has('companion_plans_read(uuid)'))
+    > 962 |       throw new Error('#366 and #364 must be applied before #367');
+          |             ^
+      963 |     const has365 = has('companion_prepare_edit(uuid,jsonb,jsonb,text)');
+      964 |     const has367 = has('companion_remove_prepare(uuid,text,jsonb)');
+      965 |     if (has367 && !has365) throw new Error('#365 must be applied before #367');
+
+      at Object.<anonymous> (__tests__/companionActions/planLocalStack.test.tsx:962:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Task removal against the real local stack (mobile, #367) › another account sees none of a removal review, card or receipt
+
+    #366 and #364 must be applied before #367
+
+      960 |     // missing; refuse an out-of-order stack instead of guessing.
+      961 |     if (!has('companion_read_steps(uuid)') || !has('companion_plans_read(uuid)'))
+    > 962 |       throw new Error('#366 and #364 must be applied before #367');
+          |             ^
+      963 |     const has365 = has('companion_prepare_edit(uuid,jsonb,jsonb,text)');
+      964 |     const has367 = has('companion_remove_prepare(uuid,text,jsonb)');
+      965 |     if (has367 && !has365) throw new Error('#365 must be applied before #367');
+
+      at Object.<anonymous> (__tests__/companionActions/planLocalStack.test.tsx:962:13)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 13 skipped, 14 total
+Snapshots:   0 total
+Time:        1.125 s, estimated 24 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "a removal request in a conversation only opens a review".

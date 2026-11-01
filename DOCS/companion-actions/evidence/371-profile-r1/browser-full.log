@@ -1,0 +1,14 @@
+{"label":"browser-full","pass":false,"checks":["old/proposed values; reviewed save; cookie proxy; committed read; focus; composer draft","Checklist uses new province and retains saved progress","old plan approval blocked; durable revised review; saved progress retained"],"modelAttempts":0,"pageErrorCount":0}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('dialog').getByRole('button', { name: 'Profile', exact: true })[22m
+
+    at /Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/DOCS/companion-actions/evidence/371-profile-r1/browser.mjs:130:81 {
+  name: 'TimeoutError'
+}
+
+Node.js v22.23.1

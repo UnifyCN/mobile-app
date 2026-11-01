@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/savargupta/.t3/worktrees/Unify/t3-eb4d49c4/DOCS/companion-actions/evidence/android-font-scale-359-r1/run.py",
+    "./android/gradlew",
+    "-p",
+    "android",
+    "--no-daemon",
+    "--no-watch-fs",
+    "--max-workers=2",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "assembleDebug"
+  ],
+  "cwd": "/Users/savargupta/.t3/worktrees/Unify/t3-eb4d49c4/unify-front-end",
+  "start": "2026-10-28T22:04:02.602789+00:00",
+  "native_env": {
+    "JAVA_HOME": "/opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home",
+    "ANDROID_HOME": "/Users/savargupta/.t3/worktrees/Unify/t3-954237f7/unify-front-end/build/native367/android-sdk",
+    "ANDROID_SDK_ROOT": "/Users/savargupta/.t3/worktrees/Unify/t3-954237f7/unify-front-end/build/native367/android-sdk",
+    "ANDROID_USER_HOME": "/Users/savargupta/.t3/worktrees/Unify/t3-954237f7/unify-front-end/build/native367/android-user",
+    "ANDROID_AVD_HOME": "/Users/savargupta/.t3/worktrees/Unify/t3-954237f7/unify-front-end/build/native367/avd",
+    "GRADLE_USER_HOME": "/Users/savargupta/.t3/worktrees/Unify/t3-954237f7/unify-front-end/build/native367/gradle",
+    "ANDROID_ADB_SERVER_PORT": "61876",
+    "ADB_SERVER_PORT": "61876",
+    "ADB_SERVER_SOCKET": "tcp:127.0.0.1:61876"
+  },
+  "pid": 48746,
+  "exit": 0,
+  "finish": "2026-10-28T22:04:23.354639+00:00"
+}

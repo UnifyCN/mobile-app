@@ -1,0 +1,632 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-actions-361-web-r5-deno-base-9d05
+
+ ❯ components/companion/tasks/TaskEdit.test.tsx (8 tests | 1 failed | 7 skipped) 1133ms
+   ↓ Edit existing tasks through Companion (web) > a clear rename command saves exactly that change without an AI answer, names it in the card, and Checklist reads the new title
+   ↓ Edit existing tasks through Companion (web) > a state command names a published task by its Checklist title and saves only its state
+   ↓ Edit existing tasks through Companion (web) > an ambiguous or unknown target asks a question and writes nothing
+   ↓ Edit existing tasks through Companion (web) > a suggested change is a draft until approved; approval saves the reviewed change once, and the typed message and focus stay
+   ↓ Edit existing tasks through Companion (web) > a newer edit elsewhere gives a revised draft that shows the old and current values and needs its own approval
+   ↓ keeps the first direct edit receipt and marks it historical after a second edit
+   ↓ a waiting reason change names the reason before and after on the command card, and keeps them after a later edit
+   × in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question 1133ms
+     → Unable to find role="article" and name "Saved details"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  [3...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  [3...
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  23:47:08
+   Duration  2.90s (transform 491ms, setup 0ms, collect 1.06s, tests 1.13s, environment 396ms, prepare 127ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/companion/tasks/TaskEdit.test.tsx > in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question
+TestingLibraryElementError: Unable to find role="article" and name "Saved details"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  [3...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex h-[calc(100dvh_-_3.5rem_-_env(safe-area-inset-bottom))] md:h-dvh"
+    >
+      <div
+        class="h-full min-w-0 flex-1 flex-col bg-surface md:flex flex"
+      >
+        <header
+          class="flex h-14 shrink-0 items-center gap-2 border-b border-border-card px-3 md:hidden"
+        >
+          <button
+            aria-label="Conversations"
+            class="-ms-1 flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-surface-gray hover:text-ink"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-panel-left lucide-sidebar h-5 w-5 rtl:-scale-x-100"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="18"
+                rx="2"
+                width="18"
+                x="3"
+                y="3"
+              />
+              <path
+                d="M9 3v18"
+              />
+            </svg>
+          </button>
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <header
+          class="hidden h-14 shrink-0 items-center border-b border-border-card px-6 md:flex"
+        >
+          <h1
+            class="truncate text-sm font-semibold text-ink-secondary"
+          >
+            First week
+          </h1>
+        </header>
+        <div
+          class="border-b border-border-card px-4 py-2 md:px-6"
+        >
+          <div
+            class="mx-auto flex w-full max-w-3xl items-center gap-3"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <p
+                class="text-sm font-semibold text-ink-secondary"
+              >
+                Your tasks
+              </p>
+              <p
+                class="truncate text-xs text-ink-muted"
+              >
+                In progress: 0 · Waiting: 1
+              </p>
+            </div>
+            <button
+              class="press inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-lg border border-border-card px-3 text-sm font-semibold text-ink-secondary hover:bg-surface-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              type="button"
+            >
+              Open
+            </button>
+          </div>
+        </div>
+        <div
+          class="scrollbar-thin flex-1 overflow-y-auto"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl px-6 py-6"
+          >
+            <div>
+              <div
+                class="flex animate-message-in justify-end mt-4"
+              >
+                <div
+                  class="max-w-[80%] rounded-2xl bg-primary-light px-4 py-2.5 text-sm leading-relaxed text-white rounded-br-md rtl:rounded-bl-md rtl:rounded-br-2xl"
+                >
+                  <p
+                    class="whitespace-pre-wrap"
+                    dir="auto"
+                  >
+                    Mark task "Get a phone plan" as waiting: Appointment on Friday
+                  </p>
+                </div>
+              </div>
+              <article
+                aria-label="Get a phone plan: Not started → Waiting"
+                class="mt-2 flex items-center gap-3 rounded-xl border border-border-card bg-surface px-3 py-2.5"
+              >
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-bg"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-list-checks h-4 w-4 text-ink-secondary"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 5h8"
+                    />
+                    <path
+                      d="M13 12h8"
+                    />
+                    <path
+                      d="M13 19h8"
+                    />
+                    <path
+                      d="m3 17 2 2 4-4"
+                    />
+                    <path
+                      d="m3 7 2 2 4-4"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="min-w-0 flex-1"
+                  role="status"
+                >
+                  [3...
+ ❯ waitForWrapper node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/.deno/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/companion/tasks/TaskEdit.test.tsx:499:31
+    497| 
+    498|   await send("Remember that I can attend appointments on Fridays");
+    499|   const detail = await screen.findByRole("article", { name: "Saved det…
+       |                               ^
+    500|   expect(
+    501|     await within(detail).findByText(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

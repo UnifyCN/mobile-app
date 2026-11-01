@@ -1,0 +1,175 @@
+{
+ "command": "supabase db advisors --workdir . --local --type all --level warn (CLI 2.118.0)",
+ "total": 29,
+ "findings": [
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "custom_checklist_tasks"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "custom_checklist_tasks"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "custom_checklist_tasks"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "checklist_task_order"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "checklist_task_order"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "checklist_task_order"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "checklist_task_order"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "user_onboarding_profiles"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "user_onboarding_profiles"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "user_onboarding_profiles"
+  },
+  {
+   "name": "auth_rls_initplan",
+   "level": "WARN",
+   "object": "custom_checklist_tasks"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_title_key"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_validate_operations"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_unresolved"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_plain"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_ops_hash"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_op_lock_key"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_fail"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_nonneg_int"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_task_ref_valid"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_set_state_op"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "set_updated_at_custom_checklist_tasks"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_task_state"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_user_tasks_before"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_custom_tasks_before"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_create_op"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_item_operation"
+  },
+  {
+   "name": "rls_disabled_in_public",
+   "level": "ERROR",
+   "object": "users"
+  },
+  {
+   "name": "rls_disabled_in_public",
+   "level": "ERROR",
+   "object": "quota_tripwire_calls"
+  }
+ ],
+ "plan_objects": [
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_unresolved"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_plain"
+  },
+  {
+   "name": "function_search_path_mutable",
+   "level": "WARN",
+   "object": "companion_plan_item_operation"
+  }
+ ],
+ "new_objects_of_this_correction": [
+  "companion_plan_apply_review",
+  "companion_plan_proposals_retry_idx",
+  "companion_plan_proposals.plan_id",
+  "companion_plan_proposals.retry_of"
+ ],
+ "new_object_findings": []
+}

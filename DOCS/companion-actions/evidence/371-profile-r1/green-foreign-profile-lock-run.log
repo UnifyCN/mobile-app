@@ -1,0 +1,60 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 7 tests from ./profile_races_test.ts
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ...
+------- output -------
+{"scenario":"duplicate-before-commit","profile":"British Columbia","receipts":0,"graph":[{"pid":7422,"wait_event":"advisory","blockers":[7359,7362]},{"pid":7362,"wait_event":"advisory","blockers":[7359]}]}
+----- output end -----
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ... ok (566ms)
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ...
+------- output -------
+{"scenario":"legacy-profile-first","plans":0,"tasks":1,"committedProvince":"British Columbia","graph":[{"pid":7433,"wait_event":"transactionid","blockers":[7359]}]}
+----- output end -----
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ... ok (242ms)
+profile races: simultaneous profile and task changes preserve progress and one profile revision wins ... ok (267ms)
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ...
+------- output -------
+{"scenario":"task-first-before-commit","profile":"British Columbia","plans":0,"graph":[{"pid":7647,"wait_event":"transactionid","blockers":[7362]}]}
+----- output end -----
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ... ok (300ms)
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ...
+------- output -------
+{"scenario":"legacy-update-upsert","graph":[{"pid":7694,"wait_event":"advisory","blockers":[7359]},{"pid":7695,"wait_event":"transactionid","blockers":[7694]}],"errors":[null,null]}
+----- output end -----
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ... ok (275ms)
+profile races: a first profile INSERT waits until a task with a missing-profile review commits ...
+------- output -------
+{"scenario":"first-profile-insert-before-task-commit","profile":null,"plans":0,"graph":[{"pid":7765,"wait_event":"transactionid","blockers":[7764]}]}
+----- output end -----
+profile races: a first profile INSERT waits until a task with a missing-profile review commits ... ok (333ms)
+profile isolation: a foreign UPSERT is refused before it can wait on another account row ... FAILED (308ms)
+
+ ERRORS 
+
+profile isolation: a foreign UPSERT is refused before it can wait on another account row => ./profile_races_test.ts:183:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     401,
++     403,
+      "42501",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_races_test.ts:210:38)
+
+ FAILURES 
+
+profile isolation: a foreign UPSERT is refused before it can wait on another account row => ./profile_races_test.ts:183:6
+
+FAILED | 6 passed | 1 failed (2s)
+
+error: Test failed
+

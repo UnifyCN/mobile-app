@@ -1,0 +1,230 @@
+[
+  {
+    "name": "actions_test.ts",
+    "label": "regression-verified-01-actions",
+    "exit": 0,
+    "seconds": 17.45808696746826
+  },
+  {
+    "name": "boundary_test.ts",
+    "label": "regression-verified-02-boundary",
+    "exit": 0,
+    "seconds": 23.230588912963867
+  },
+  {
+    "name": "command_test.ts",
+    "label": "regression-verified-03-command",
+    "exit": 0,
+    "seconds": 19.492566108703613
+  },
+  {
+    "name": "compose_365_370_test.ts",
+    "label": "regression-verified-04-compose_365_370",
+    "exit": 0,
+    "seconds": 19.06011700630188
+  },
+  {
+    "name": "compose_367_370_recovery_test.ts",
+    "label": "regression-verified-05-compose_367_370_recovery",
+    "exit": 0,
+    "seconds": 21.974576234817505
+  },
+  {
+    "name": "compose_367_370_rollback_test.ts",
+    "label": "regression-verified-06-compose_367_370_rollback",
+    "exit": 0,
+    "seconds": 22.998367071151733
+  },
+  {
+    "name": "compose_367_370_test.ts",
+    "label": "regression-verified-07-compose_367_370",
+    "exit": 0,
+    "seconds": 17.67236304283142
+  },
+  {
+    "name": "compose_rollback_test.ts",
+    "label": "regression-verified-08-compose_rollback",
+    "exit": 0,
+    "seconds": 27.411041021347046
+  },
+  {
+    "name": "create_rollback_test.ts",
+    "label": "regression-verified-09-create_rollback",
+    "exit": 0,
+    "seconds": 24.159409999847412
+  },
+  {
+    "name": "create_test.ts",
+    "label": "regression-verified-10-create",
+    "exit": 0,
+    "seconds": 21.44631791114807
+  },
+  {
+    "name": "details_language_test.ts",
+    "label": "regression-verified-11-details_language",
+    "exit": 1,
+    "seconds": 18.045416831970215
+  },
+  {
+    "name": "details_rollback_test.ts",
+    "label": "regression-verified-12-details_rollback",
+    "exit": 0,
+    "seconds": 22.01398491859436
+  },
+  {
+    "name": "details_test.ts",
+    "label": "regression-verified-13-details",
+    "exit": 0,
+    "seconds": 21.25923728942871
+  },
+  {
+    "name": "edit_command_test.ts",
+    "label": "regression-verified-14-edit_command",
+    "exit": 1,
+    "seconds": 23.131981134414673
+  },
+  {
+    "name": "edit_published_test.ts",
+    "label": "regression-verified-15-edit_published",
+    "exit": 0,
+    "seconds": 17.828354597091675
+  },
+  {
+    "name": "edit_rollback_test.ts",
+    "label": "regression-verified-16-edit_rollback",
+    "exit": 0,
+    "seconds": 23.28181505203247
+  },
+  {
+    "name": "edit_test.ts",
+    "label": "regression-verified-17-edit",
+    "exit": 0,
+    "seconds": 19.879521131515503
+  },
+  {
+    "name": "edit_undo_test.ts",
+    "label": "regression-verified-18-edit_undo",
+    "exit": 0,
+    "seconds": 17.466195344924927
+  },
+  {
+    "name": "plan_access_test.ts",
+    "label": "regression-verified-19-plan_access",
+    "exit": 0,
+    "seconds": 18.704447984695435
+  },
+  {
+    "name": "plan_multiple_reviews_test.ts",
+    "label": "regression-verified-20-plan_multiple_reviews",
+    "exit": 0,
+    "seconds": 19.07195520401001
+  },
+  {
+    "name": "plan_recovery_test.ts",
+    "label": "regression-verified-21-plan_recovery",
+    "exit": 0,
+    "seconds": 18.467113256454468
+  },
+  {
+    "name": "plan_retry_review_test.ts",
+    "label": "regression-verified-22-plan_retry_review",
+    "exit": 0,
+    "seconds": 20.876151084899902
+  },
+  {
+    "name": "plan_rollback_test.ts",
+    "label": "regression-verified-23-plan_rollback",
+    "exit": 0,
+    "seconds": 23.956002950668335
+  },
+  {
+    "name": "plan_test.ts",
+    "label": "regression-verified-24-plan",
+    "exit": 0,
+    "seconds": 19.265904903411865
+  },
+  {
+    "name": "plan_undo_test.ts",
+    "label": "regression-verified-25-plan_undo",
+    "exit": 0,
+    "seconds": 19.897927045822144
+  },
+  {
+    "name": "receipt_history_test.ts",
+    "label": "regression-verified-26-receipt_history",
+    "exit": 0,
+    "seconds": 17.38825798034668
+  },
+  {
+    "name": "reminders_commands_test.ts",
+    "label": "regression-verified-27-reminders_commands",
+    "exit": 0,
+    "seconds": 18.857588052749634
+  },
+  {
+    "name": "reminders_races_test.ts",
+    "label": "regression-verified-28-reminders_races",
+    "exit": 0,
+    "seconds": 47.02679395675659
+  },
+  {
+    "name": "reminders_test.ts",
+    "label": "regression-verified-29-reminders",
+    "exit": 0,
+    "seconds": 37.99236989021301
+  },
+  {
+    "name": "remove_plan_race_test.ts",
+    "label": "regression-verified-30-remove_plan_race",
+    "exit": 0,
+    "seconds": 17.92218279838562
+  },
+  {
+    "name": "remove_rollback_test.ts",
+    "label": "regression-verified-31-remove_rollback",
+    "exit": 0,
+    "seconds": 21.084645986557007
+  },
+  {
+    "name": "remove_test.ts",
+    "label": "regression-verified-32-remove",
+    "exit": 0,
+    "seconds": 23.28219509124756
+  },
+  {
+    "name": "rollback_test.ts",
+    "label": "regression-verified-33-rollback",
+    "exit": 0,
+    "seconds": 37.071115016937256
+  },
+  {
+    "name": "steps_context_race_test.ts",
+    "label": "regression-verified-34-steps_context_race",
+    "exit": 0,
+    "seconds": 26.73763918876648
+  },
+  {
+    "name": "steps_parent_race_test.ts",
+    "label": "regression-verified-35-steps_parent_race",
+    "exit": 0,
+    "seconds": 22.246957778930664
+  },
+  {
+    "name": "steps_rollback_test.ts",
+    "label": "regression-verified-36-steps_rollback",
+    "exit": 0,
+    "seconds": 21.129344940185547
+  },
+  {
+    "name": "steps_test.ts",
+    "label": "regression-verified-37-steps",
+    "exit": 0,
+    "seconds": 21.806632041931152
+  },
+  {
+    "name": "undo_test.ts",
+    "label": "regression-verified-38-undo",
+    "exit": 0,
+    "seconds": 18.578999042510986
+  }
+]

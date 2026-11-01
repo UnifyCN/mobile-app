@@ -4,7 +4,8 @@
  * is unchanged.
  */
 import { createElement, type PropsWithChildren } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 import { renderHook, waitFor } from '@testing-library/react-native';
 
 const mockGetChecklist = jest.fn();
@@ -19,6 +20,10 @@ jest.mock('@/lib/supabase', () => ({
         data: { session: { user: { id: 'user-1' } } },
         error: null,
       }),
+      // The checklist hook follows auth changes (#361); none happen here.
+      onAuthStateChange: jest.fn(() => ({
+        data: { subscription: { unsubscribe: jest.fn() } },
+      })),
     },
   },
 }));
@@ -32,7 +37,7 @@ jest.mock('@/services/checklist/checklistTaskOrder', () => ({
 import { useChecklistTasks } from '@/hooks/checklist/useChecklistTasks';
 
 const run = async (params: Parameters<typeof useChecklistTasks>[0]) => {
-  const client = new QueryClient({
+  const client = createTestQueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   const wrapper = ({ children }: PropsWithChildren) =>
@@ -126,7 +131,7 @@ describe('useChecklistTasks stage mapping', () => {
 
   it('loads the new stage when the stage resolves from loading to unknown', async () => {
     let loading = true;
-    const client = new QueryClient({
+    const client = createTestQueryClient({
       defaultOptions: { queries: { retry: false } },
     });
     const wrapper = ({ children }: PropsWithChildren) =>

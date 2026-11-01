@@ -1,0 +1,25 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 9 tests from ./edit_test.ts
+a suggested edit is a draft until approved, and approval applies exactly the reviewed change once ... ok (314ms)
+a renamed or re-described task keeps its identity, and the old receipt keeps the old title ... ok (274ms)
+a suggested state change shows the state it changes from and applies only that state and reason ... ok (311ms)
+a draft that changes nothing, names a removed task or another account's task, or carries a revision is refused ... ok (548ms)
+an edit of a task's details needs a reviewed proposal or a clear command, never a control or a model flag ... ok (244ms)
+a newer edit of the field a proposal changes gives a revised proposal and writes nothing ... ok (254ms)
+a change to another field of the same task does not need a new approval ... ok (215ms)
+a newer state change elsewhere gives a state proposal a new review ... ok (299ms)
+two approvals of one edit released together from a held task lock apply once ... ok (313ms)
+
+ok | 9 passed | 0 failed (2s)
+

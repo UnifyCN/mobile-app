@@ -1,0 +1,11 @@
+running 7 tests from ../../../tmp/unify-merge-362-web/supabase/tests/companion-actions/command_test.ts
+a clear command adds exactly the task it names, once, however often it is sent ... ok (301ms)
+two operations racing on one command message, released together from a held use, add one task ... ok (224ms)
+unclear requests are answered with a question and authorize nothing ... ok (471ms)
+a command naming a task that already exists asks which is meant and writes nothing ... ok (182ms)
+only the caller's own user message is command evidence ... ok (478ms)
+the command phrasing taught in each supported language adds exactly its task ... ok (507ms)
+cleanup ... ok (2ms)
+
+ok | 7 passed | 0 failed (2s)
+

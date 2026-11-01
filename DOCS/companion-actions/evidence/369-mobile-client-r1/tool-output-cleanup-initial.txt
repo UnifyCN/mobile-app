@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/DOCS/companion-actions/evidence/369-mobile-client-r1/resources.py", line 57, in <module>
+    assert a.get('bridge')==b.get('bridge'), 'Fresh bounded bridge disposition required'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Fresh bounded bridge disposition required

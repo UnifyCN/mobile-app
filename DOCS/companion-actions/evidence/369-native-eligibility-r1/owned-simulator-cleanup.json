@@ -1,0 +1,28 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "B9D97093-BA2C-4418-9AD5-229C3CCFD5DC"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "delete",
+        "B9D97093-BA2C-4418-9AD5-229C3CCFD5DC"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "guest_preferences_changed": false,
+  "restoration": "No guest preference was changed. Only the owned guest and installations were removed."
+}

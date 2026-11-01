@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "event": "companion_action_result",
+  "properties": ["operation_type", "action", "outcome", "entry_surface", "to_state", "change_count"],
+  "stages": {
+    "review_needed": {"outcome": ["needs_review"]},
+    "approved_success": {"action": ["approve_plan", "approve_create", "approve_edit", "approve_steps", "approve_detail", "approve_removal"], "outcome": ["applied", "partial"]},
+    "progress": {"action": ["set_state", "command_edit", "step_change"], "outcome": ["applied"]},
+    "resume_lookup": {"action": ["lookup"]},
+    "conflict": {"outcome": ["conflict", "undo_conflict", "needs_review"]},
+    "recovered": {"action": ["lookup", "retry_plan", "approve_compensation", "approve_plan_compensation"], "outcome": ["applied", "replayed"]}
+  },
+  "cohort": {
+    "new": "first companion_action_result occurs in the selected report interval",
+    "returning": "first companion_action_result predates the selected report interval",
+    "platform": "explicit event platform when present, otherwise captured OS/library; missing stays unknown",
+    "exclude": "root supplies explicit team and synthetic distinct IDs before querying; do not infer identity from message content"
+  },
+  "limits": [
+    "needs_review measures review required, not a review screen impression",
+    "lookup measures recovery or resume intent, not later-day retention",
+    "a completed useful session requires synthetic outcome review",
+    "no hosted query or retention claim is established by this file"
+  ]
+}

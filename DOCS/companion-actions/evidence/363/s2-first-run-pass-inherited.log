@@ -1,0 +1,10 @@
+running 6 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (344ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (233ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (241ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (221ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (218ms)
+cleanup ... ok (3ms)
+
+ok | 6 passed | 0 failed (1s)
+

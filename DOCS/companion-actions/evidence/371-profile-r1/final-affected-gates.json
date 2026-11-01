@@ -1,0 +1,36 @@
+[
+  {
+    "label": "mobile-export-final",
+    "command": [
+      "npx",
+      "expo",
+      "export",
+      "--platform",
+      "ios",
+      "--platform",
+      "android"
+    ],
+    "exit": 0,
+    "seconds": 18.503
+  },
+  {
+    "label": "web-types-final",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 8.642
+  },
+  {
+    "label": "web-profile-lint-final",
+    "command": [
+      "npx",
+      "eslint",
+      "components/companion/tasks/TaskActions.test.tsx"
+    ],
+    "exit": 0,
+    "seconds": 1.929
+  }
+]

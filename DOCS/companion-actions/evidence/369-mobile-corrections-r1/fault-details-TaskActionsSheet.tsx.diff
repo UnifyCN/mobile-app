@@ -1,0 +1,22 @@
+--- fixed/TaskActionsSheet.tsx
++++ fault/TaskActionsSheet.tsx
+@@ -113,8 +113,8 @@
+     if (visible) setSelectedRef(initialRef);
+   }, [visible, initialRef]);
+   useEffect(() => {
+-    if (visible) setShowDetails(notificationId ? false : openDetails);
+-  }, [visible, openDetails, notificationId]);
++    if (visible) setShowDetails(openDetails);
++  }, [visible, openDetails]);
+   useEffect(() => {
+     if (visible && notificationId && notificationResult !== 'task')
+       onNotificationReady?.(notificationId);
+@@ -244,7 +244,7 @@
+                   </Pressable>
+                 ) : null}
+               </View>
+-            ) : visible && showDetails && !notificationId ? (
++            ) : visible && showDetails ? (
+               <DetailsBody />
+             ) : visible && detailProposalId ? (
+               <DetailProposalBody

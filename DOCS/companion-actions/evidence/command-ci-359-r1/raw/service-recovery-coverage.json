@@ -1,0 +1,228 @@
+{
+  "full_command_exit": 1,
+  "full_distribution": {
+    "passed": 229,
+    "failed": 1
+  },
+  "failed_case_reason": "Optional JSON evidence export denied after the data assertions. No write grant was enabled.",
+  "focused_retry_exit": 0,
+  "focused_retry_passed": 1,
+  "unique_case_coverage": {
+    "files": 35,
+    "passed": 230,
+    "failed": 0
+  },
+  "coverage_records": [
+    {
+      "file": "./actions_test.ts",
+      "passed": 4,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./boundary_test.ts",
+      "passed": 11,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./command_test.ts",
+      "passed": 7,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./compose_365_370_test.ts",
+      "passed": 4,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./compose_367_370_recovery_test.ts",
+      "passed": 1,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./compose_367_370_rollback_test.ts",
+      "passed": 1,
+      "failed": 0,
+      "source": "stage retry"
+    },
+    {
+      "file": "./compose_367_370_test.ts",
+      "passed": 1,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./compose_rollback_test.ts",
+      "passed": 2,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./create_rollback_test.ts",
+      "passed": 3,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./create_test.ts",
+      "passed": 17,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./details_language_test.ts",
+      "passed": 3,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./details_rollback_test.ts",
+      "passed": 2,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./details_test.ts",
+      "passed": 12,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./edit_command_test.ts",
+      "passed": 10,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./edit_published_test.ts",
+      "passed": 5,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./edit_rollback_test.ts",
+      "passed": 2,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./edit_test.ts",
+      "passed": 9,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./edit_undo_test.ts",
+      "passed": 3,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_access_test.ts",
+      "passed": 6,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_multiple_reviews_test.ts",
+      "passed": 5,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_recovery_test.ts",
+      "passed": 8,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_retry_review_test.ts",
+      "passed": 8,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_rollback_test.ts",
+      "passed": 3,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_test.ts",
+      "passed": 8,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./plan_undo_test.ts",
+      "passed": 6,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./receipt_history_test.ts",
+      "passed": 4,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./remove_plan_race_test.ts",
+      "passed": 3,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./remove_rollback_test.ts",
+      "passed": 2,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./remove_test.ts",
+      "passed": 15,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./rollback_test.ts",
+      "passed": 6,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./steps_context_race_test.ts",
+      "passed": 23,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./steps_parent_race_test.ts",
+      "passed": 11,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./steps_rollback_test.ts",
+      "passed": 2,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./steps_test.ts",
+      "passed": 15,
+      "failed": 0,
+      "source": "full run"
+    },
+    {
+      "file": "./undo_test.ts",
+      "passed": 8,
+      "failed": 0,
+      "source": "full run"
+    }
+  ],
+  "limit": "Full command remains a failed historical attempt. No claim that it exited 0. A fresh complete command remains the merger gate."
+}

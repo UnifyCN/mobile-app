@@ -1,0 +1,33 @@
+------- pre-test output -------
+{"kind":"profile_schema_ready","present":true,"observations":[{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4},{"schema":true,"status":200,"bytes":4}]}
+----- pre-test output end -----
+running 6 tests from ./profile_races_test.ts
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ...
+------- output -------
+{"scenario":"duplicate-before-commit","profile":"British Columbia","receipts":0,"graph":[{"pid":4356,"wait_event":"advisory","blockers":[4294,4295]},{"pid":4295,"wait_event":"advisory","blockers":[4294]}]}
+----- output end -----
+profile races: duplicate requests wait before commit, status is pending, and one receipt survives a lost reply ... ok (456ms)
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ...
+------- output -------
+{"scenario":"legacy-profile-first","plans":0,"tasks":1,"committedProvince":"British Columbia","graph":[{"pid":4367,"wait_event":"transactionid","blockers":[4294]}]}
+----- output end -----
+profile races: a legacy profile transaction blocks old plan approval until a fresh committed context is read ... ok (249ms)
+profile races: simultaneous profile and task changes preserve progress and one profile revision wins ... ok (273ms)
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ...
+------- output -------
+{"scenario":"task-first-before-commit","profile":"British Columbia","plans":0,"graph":[{"pid":4367,"wait_event":"transactionid","blockers":[4295]}]}
+----- output end -----
+profile races: a task transaction holds its reviewed profile stable until commit; the delayed legacy writer then saves without losing progress ... ok (298ms)
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ...
+------- output -------
+{"scenario":"legacy-update-upsert","graph":[{"pid":4626,"wait_event":"transactionid","blockers":[4627]},{"pid":4627,"wait_event":"advisory","blockers":[4294]}],"errors":[null,null]}
+----- output end -----
+profile races: legacy UPDATE and UPSERT serialize without a row/insert-trigger lock cycle ... ok (274ms)
+profile races: a first profile INSERT waits until a task with a missing-profile review commits ...
+------- output -------
+{"scenario":"first-profile-insert-before-task-commit","profile":null,"plans":0,"graph":[{"pid":4696,"wait_event":"transactionid","blockers":[4695]}]}
+----- output end -----
+profile races: a first profile INSERT waits until a task with a missing-profile review commits ... ok (339ms)
+
+ok | 6 passed | 0 failed (1s)
+

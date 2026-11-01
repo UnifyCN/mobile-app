@@ -1,0 +1,30 @@
+{
+  "manifest_other_elements_and_attributes_identical": true,
+  "javascript": [
+    {
+      "file": "load-proof-final.json.loaded.js",
+      "bytes": 28937215,
+      "sha256": "d06eba797aee45579d91dcf24e18e712c9df23d2345cf89ebcbe85357e5e3e53"
+    },
+    {
+      "file": "load-proof-fixed.json.loaded.js",
+      "bytes": 28937215,
+      "sha256": "d06eba797aee45579d91dcf24e18e712c9df23d2345cf89ebcbe85357e5e3e53"
+    },
+    {
+      "file": "load-proof-scale-refresh.json.loaded.js",
+      "bytes": 28937215,
+      "sha256": "d06eba797aee45579d91dcf24e18e712c9df23d2345cf89ebcbe85357e5e3e53"
+    }
+  ],
+  "repeat_native_recreation_events": [],
+  "repeat_scales": [
+    "1.3",
+    "2.0",
+    "1.0"
+  ],
+  "native_product_paths": [
+    "unify-front-end/android/app/src/main/AndroidManifest.xml",
+    "unify-front-end/android/app/src/main/java/com/anonymous/unifyfrontend/MainActivity.kt"
+  ]
+}

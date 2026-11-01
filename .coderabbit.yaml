@@ -4,6 +4,11 @@ reviews:
   profile: "assertive"
   high_level_summary: true
   review_status: true
+  path_filters:
+    - "!**/walkthroughs/**"
+    - "!**/SequenceDiagram*"
+    - "!**/*.png"
+    - "!**/*.svg"
   auto_review:
     enabled: true
     drafts: false
@@ -11,8 +16,3 @@ reviews:
       - "wip"
       - "draft"
     base_branches: [".*"]
-skip_files:
-  - "**/walkthroughs/**"
-  - "**/SequenceDiagram*"
-  - "**/*.png"
-  - "**/*.svg"

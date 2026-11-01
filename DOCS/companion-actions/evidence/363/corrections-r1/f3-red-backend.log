@@ -1,0 +1,108 @@
+Starting database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+running 2 tests from ./review363_history_test.ts
+historical create receipt preserves the reviewed title after a later rename ...
+------- output -------
+{"createdTitle":"Set up phone service","currentTitle":"Find a family doctor","historicalReceiptTitle":"Find a family doctor","current":false}
+----- output end -----
+historical create receipt preserves the reviewed title after a later rename ... FAILED (899ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+historical create receipt preserves the reviewed title after a later rename => ./review363_history_test.ts:4:6
+error: AssertionError: Values are not equal: receipt text must preserve the saved change
+
+
+    [Diff] Actual / Expected
+
+
+-   Find a family doctor
++   Set up phone service
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/review363_history_test.ts:18:2)
+
+ FAILURES 
+
+historical create receipt preserves the reviewed title after a later rename => ./review363_history_test.ts:4:6
+
+FAILED | 1 passed | 1 failed (906ms)
+
+error: Test failed
+running 4 tests from ./receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... FAILED (225ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... FAILED (221ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... FAILED (280ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+an approved creation receipt keeps the reviewed title after the owner renames the task => ./receipt_history_test.ts:25:6
+error: AssertionError: Values are not equal: receipt text must preserve the saved change
+
+
+    [Diff] Actual / Expected
+
+
+-   Find a family doctor
++   Set up phone service
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/receipt_history_test.ts:49:5)
+
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation => ./receipt_history_test.ts:62:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+    [
+      false,
+-     "Find a family doctor",
++     "Set up phone service",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/receipt_history_test.ts:80:5)
+
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name => ./receipt_history_test.ts:90:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   Third title
++   Find a family doctor
+
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///Users/savargupta/.t3/worktrees/Unify-Web-App/correct-363-r1-3b1a69b4/supabase/tests/companion-actions/receipt_history_test.ts:118:5)
+
+ FAILURES 
+
+an approved creation receipt keeps the reviewed title after the owner renames the task => ./receipt_history_test.ts:25:6
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation => ./receipt_history_test.ts:62:6
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name => ./receipt_history_test.ts:90:6
+
+FAILED | 1 passed | 3 failed (732ms)
+
+error: Test failed
+exit=1

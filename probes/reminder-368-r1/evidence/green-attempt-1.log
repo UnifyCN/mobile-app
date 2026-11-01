@@ -1,0 +1,72 @@
+Download https://jsr.io/@std/assert/meta.json
+Download https://registry.npmjs.org/@supabase%2fsupabase-js
+Download https://registry.npmjs.org/postgres
+Download https://jsr.io/@std/assert/1.0.19_meta.json
+Download https://jsr.io/@std/internal/meta.json
+Download https://jsr.io/@std/internal/1.0.14_meta.json
+Download https://jsr.io/@std/assert/1.0.19/mod.ts
+Download https://jsr.io/@std/assert/1.0.19/almost_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/array_includes.ts
+Download https://jsr.io/@std/assert/1.0.19/equals.ts
+Download https://jsr.io/@std/assert/1.0.19/exists.ts
+Download https://jsr.io/@std/assert/1.0.19/false.ts
+Download https://jsr.io/@std/assert/1.0.19/greater_or_equal.ts
+Download https://jsr.io/@std/assert/1.0.19/greater.ts
+Download https://jsr.io/@std/assert/1.0.19/instance_of.ts
+Download https://jsr.io/@std/assert/1.0.19/is_error.ts
+Download https://jsr.io/@std/assert/1.0.19/less_or_equal.ts
+Download https://jsr.io/@std/assert/1.0.19/less.ts
+Download https://jsr.io/@std/assert/1.0.19/match.ts
+Download https://jsr.io/@std/assert/1.0.19/not_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/not_instance_of.ts
+Download https://jsr.io/@std/assert/1.0.19/not_match.ts
+Download https://jsr.io/@std/assert/1.0.19/not_strict_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/object_match.ts
+Download https://jsr.io/@std/assert/1.0.19/rejects.ts
+Download https://jsr.io/@std/assert/1.0.19/strict_equals.ts
+Download https://jsr.io/@std/assert/1.0.19/string_includes.ts
+Download https://jsr.io/@std/assert/1.0.19/throws.ts
+Download https://jsr.io/@std/assert/1.0.19/assert.ts
+Download https://jsr.io/@std/assert/1.0.19/assertion_error.ts
+Download https://jsr.io/@std/assert/1.0.19/equal.ts
+Download https://jsr.io/@std/assert/1.0.19/fail.ts
+Download https://jsr.io/@std/assert/1.0.19/unimplemented.ts
+Download https://jsr.io/@std/assert/1.0.19/unreachable.ts
+Download https://jsr.io/@std/internal/1.0.14/format.ts
+Download https://jsr.io/@std/internal/1.0.14/build_message.ts
+Download https://jsr.io/@std/internal/1.0.14/diff.ts
+Download https://jsr.io/@std/internal/1.0.14/diff_str.ts
+Download https://jsr.io/@std/internal/1.0.14/styles.ts
+Download https://registry.npmjs.org/@opentelemetry%2fapi
+Download https://registry.npmjs.org/@supabase%2fauth-js
+Download https://registry.npmjs.org/@supabase%2ffunctions-js
+Download https://registry.npmjs.org/@supabase%2fpostgrest-js
+Download https://registry.npmjs.org/@supabase%2frealtime-js
+Download https://registry.npmjs.org/@supabase%2fstorage-js
+Download https://registry.npmjs.org/tslib
+Download https://registry.npmjs.org/@supabase%2fphoenix
+Download https://registry.npmjs.org/iceberg-js
+Download https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.118.0.tgz
+Download https://registry.npmjs.org/postgres/-/postgres-3.4.9.tgz
+Download https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.118.0.tgz
+Download https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.118.0.tgz
+Download https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz
+Download https://registry.npmjs.org/@supabase/phoenix/-/phoenix-0.4.5.tgz
+Download https://registry.npmjs.org/iceberg-js/-/iceberg-js-0.8.1.tgz
+------- pre-test output -------
+{"name":"versions-clock","data":{"version":"PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit","zone":"UTC","cron":"1.6.4"}}
+----- pre-test output end -----
+running 10 tests from ./probe_test.ts
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ...
+------- output -------
+{"name":"duplicate-intermediate","data":{"reminders":0,"locks":[{"pid":320,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[306]},{"pid":381,"application_name":"PostgREST 16.3","wait_event_type":"Lock","wait_event":"advisory","blockers":[306,320]}]}}
+----- output end -----
+01 concurrent scheduling, durable retry, actual Cron due, owner isolation ... FAILED (14s)
+02 persistence, stopped scheduler, scheduler error and read error stay separate ... FAILED (120ms)
+03 race complete, claim commits first, Undo does not restart ... FAILED (12s)
+03 race complete, stop commits first, Undo does not restart ... FAILED (5s)
+03 race remove, claim commits first, Undo does not restart ... FAILED (12s)
+03 race remove, stop commits first, Undo does not restart ...

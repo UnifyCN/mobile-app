@@ -1,0 +1,40 @@
+# 2026-10-27T19:00:48Z s5 red: partial outcome and retry
+running 8 tests from ./plan_recovery_test.ts
+repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt ... ok (408ms)
+two approvals of one draft with different operation ids, released together from a held lock, save once ... ok (276ms)
+a reply lost after commit is found by lookup, and a retry with the same id replays it ... ok (266ms)
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once ... ok (293ms)
+an operation id reused with different items is refused and writes nothing ... ok (262ms)
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one ... FAILED (218ms)
+when the plan itself cannot be saved, no addition is written ... ok (307ms)
+cleanup ... ok (2ms)
+
+ ERRORS 
+
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one => ./plan_recovery_test.ts:153:6
+error: AssertionError: Values are not equal: {"error":"internal"}
+
+
+    [Diff] Actual / Expected
+
+
+    [
+-     500,
+-     undefined,
++     200,
++     "partial",
+    ]
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-merge-361-web/supabase/tests/companion-actions/plan_recovery_test.ts:171:5)
+
+ FAILURES 
+
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one => ./plan_recovery_test.ts:153:6
+
+FAILED | 7 passed | 1 failed (2s)
+
+error: Test failed
+exit=1

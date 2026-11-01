@@ -1,0 +1,345 @@
+  console.warn
+    expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/.
+
+      1 | import { useEffect, useSyncExternalStore } from 'react';
+      2 | import { AppState } from 'react-native';
+    > 3 | import * as Notifications from 'expo-notifications';
+        | ^
+      4 | import { router } from 'expo-router';
+      5 | import { useTranslation } from 'react-i18next';
+      6 | import { useAccountSnapshot } from '@/hooks/auth/useSessionAccountId';
+
+      at warn (node_modules/expo-notifications/src/warnOfExpoGoPushUsage.ts:14:15)
+      at addPushTokenListener (node_modules/expo-notifications/src/TokenEmitter.ts:44:24)
+      at Object.<anonymous> (node_modules/expo-notifications/src/DevicePushTokenAutoRegistration.fx.ts:86:23)
+      at Object.require (node_modules/expo-notifications/src/getExpoPushTokenAsync.ts:5:1)
+      at Object.require (node_modules/expo-notifications/src/index.ts:16:1)
+      at Object.require (hooks/companion/useCompanionPush.ts:3:1)
+      at Object.require (/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/unify-front-end/app/(tabs)../../../../../../../companion/index.tsx:2:1)
+      at Object.require (__tests__/companionActions/planLocalStack.test.tsx:266:1)
+
+FAIL __tests__/companionActions/planLocalStack.test.tsx (10.709 s)
+  Settlement plans against the real local stack (mobile)
+    ○ skipped a saved task completion reconciles the plan entry without reopening the screen
+    ○ skipped a suggested plan is a draft that reuses two tasks and proposes one; excluding changes the count; approval adds exactly one task
+    ○ skipped the plan entry resumes the saved plan after a restart with current progress, never reads as "no plan" while loading, and Undo removes only the added task after confirmation
+    ○ skipped a reply lost after commit is looked up and shown as saved; a failed lookup stays unresolved and never writes
+    ○ skipped a retry after a relevant profile change asks for a new approval of the remaining addition, still reachable after a restart; approving adds exactly one task
+    ○ skipped a lost reply to the revised review approval is looked up before anything else; a failed lookup stays unresolved and never writes again
+    ○ skipped two unfinished retry reviews both stay reachable after a restart; each is approved on its own
+    ○ skipped an account change hides the previous account's plan entry, cards and open plan before the next account renders
+  Independent retained mobile Checklist completion
+    ○ skipped Checklist completion refreshes the retained Companion plan entry
+  Plan and task steps together against the real local stack (mobile)
+    ○ skipped a task the approved plan added takes a step; the step never completes the task or the plan; explicit completion updates the plan and keeps the step
+  Task removal against the real local stack (mobile, #367)
+    ○ skipped composition: remember and edit a detail, remove and restore a plan task, retain the draft and exclude another account
+    ○ skipped a removal request in a conversation only opens a review; Cancel writes nothing; the confirmed removal names the plan, reads as removed there, and its Undo restores it; the draft stays
+    ○ skipped a change on another device between review and approval opens a revised review and removes nothing; the approved removal keeps steps; an Undo another device already made changes nothing
+    ○ skipped a removal request card turns historical after another device removed the task; its review cannot remove again
+    ○ skipped another account sees none of a removal review, card or receipt
+  372 complete recovery journey against owned persistence
+    ✕ recovers a failed lookup after process restart before any receipt exists (10192 ms)
+    ○ skipped keeps one Vancouver plan, checked step, Waiting reason, approved context and in-app reminder after a new mount
+    ○ skipped looks up a dropped committed approval, blocks a second write after lookup failure, and resumes its durable receipt after restart
+    ○ skipped retries a confirmed unapplied change with the same identity and commits concurrent duplicate requests once
+    ○ skipped labels cached progress stale, blocks offline writes, refreshes another device edit, protects exact Undo, and clears private work on account change and sign-out
+    ○ skipped keeps a successful independent addition while retrying only the failed addition with its original item identity
+    ○ skipped keeps a real locked operation pending, permits only lookup, and retries its unchanged approval only after confirmed not-applied
+
+  ● 372 complete recovery journey against owned persistence › recovers a failed lookup after process restart before any receipt exists
+
+    Unable to find an element with text: We could not check the result. The change may or may not have saved.
+
+    [36m<View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Select Checklist tab"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mChecklist[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View[39m
+        [33maccessibilityLabel[39m=[32m"Select Companion tab"[39m
+        [33maccessibilityRole[39m=[32m"button"[39m
+        [33maccessible[39m=[32m{true}[39m
+      [36m>[39m
+        [36m<Text>[39m
+          [0mCompanion[0m
+        [36m</Text>[39m
+      [36m</View>[39m
+      [36m<View>[39m
+        [36m<View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"Open history"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m/>[39m
+              [36m<Text>[39m
+                [0mCompanion[0m
+              [36m</Text>[39m
+              [36m<View[39m
+                [33maccessibilityLabel[39m=[32m"New chat"[39m
+                [33maccessibilityRole[39m=[32m"button"[39m
+                [33maccessible[39m=[32m{true}[39m
+              [36m/>[39m
+            [36m</View>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33mpointerEvents[39m=[32m"none"[39m
+              [36m>[39m
+                [36m<View />[39m
+              [36m</View>[39m
+              [36m<RCTScrollView>[39m
+                [36m<View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Your tasks, In progress: 0 · Waiting: 0"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<View />[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mYour tasks[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mIn progress: 0 · Waiting: 0[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View[39m
+                    [33maccessibilityLabel[39m=[32m"Draft plan, Your first week in Vancouver, not saved yet"[39m
+                    [33maccessibilityRole[39m=[32m"button"[39m
+                    [33maccessible[39m=[32m{true}[39m
+                  [36m>[39m
+                    [36m<View />[39m
+                    [36m<View>[39m
+                      [36m<Text>[39m
+                        [0mDraft plan[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mYour first week in Vancouver[0m
+                      [36m</Text>[39m
+                      [36m<Text>[39m
+                        [0mNot saved yet · review it[0m
+                      [36m</Text>[39m
+                    [36m</View>[39m
+                  [36m</View>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mAsk me anything.[0m
+                    [36m</Text>[39m
+                    [36m<Text>[39m
+                      [0mFact-checked answers about anything in Canada.[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                  [36m<Text>[39m
+                    [0mTry one of these[0m
+                  [36m</Text>[39m
+                  [36m<View>[39m
+                    [36m<Text>[39m
+                      [0mCompanion can make mistakes. Verify important info.[0m
+                    [36m</Text>[39m
+                  [36m</View>[39m
+                [36m</View>[39m
+              [36m</RCTScrollView>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<View>[39m
+            [36m<View>[39m
+              [36m<View>[39m
+                [36m<TextInput[39m
+                  [33meditable[39m=[32m{true}[39m
+                  [33mplaceholder[39m=[32m"Ask anything..."[39m
+                  [33mvalue[39m=[32m""[39m
+                [36m/>[39m
+                [36m<View[39m
+                  [33maccessibilityState[39m=[32m{
+                    {
+                      "disabled": true,
+                    }
+                  }[39m
+                  [33maccessible[39m=[32m{true}[39m
+                [36m>[39m
+                  [36m<View />[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</View>[39m
+          [36m<Modal>[39m
+            [36m<View>[39m
+              [36m<View[39m
+                [33maccessible[39m=[32m{false}[39m
+              [36m>[39m
+                [36m<View />[39m
+              [36m</View>[39m
+              [36m<View[39m
+                [33mpointerEvents[39m=[32m"box-none"[39m
+              [36m>[39m
+                [36m<View[39m
+                  [33maccessibilityViewIsModal[39m=[32m{true}[39m
+                  [33mtestID[39m=[32m"companion-task-sheet"[39m
+                [36m>[39m
+                  [36m<View />[39m
+                  [36m<View>[39m
+                    [36m<View />[39m
+                    [36m<Text[39m
+                      [33maccessibilityRole[39m=[32m"header"[39m
+                    [36m>[39m
+                      [0mReview plan[0m
+                    [36m</Text>[39m
+                    [36m<View[39m
+                      [33maccessibilityLabel[39m=[32m"Close"[39m
+                      [33maccessibilityRole[39m=[32m"button"[39m
+                      [33maccessible[39m=[32m{true}[39m
+                    [36m/>[39m
+                  [36m</View>[39m
+                  [36m<RCTScrollView>[39m
+                    [36m<View>[39m
+                      [36m<View>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mDraft plan · not in your Checklist yet[0m
+                          [36m</Text>[39m
+                          [36m<Text[39m
+                            [33maccessibilityRole[39m=[32m"header"[39m
+                          [36m>[39m
+                            [0mYour first week in Vancouver[0m
+                          [36m</Text>[39m
+                        [36m</View>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mBased on your profile[0m
+                          [36m</Text>[39m
+                          [36m<View>[39m
+                            [36m<Text>[39m
+                              [0mCity: Vancouver[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View>[39m
+                            [36m<Text>[39m
+                              [0mProvince: British Columbia[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View>[39m
+                            [36m<Text>[39m
+                              [0mArrival date: November 2, 2026[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mTasks you already have[0m
+                          [36m</Text>[39m
+                          [36m<View>[39m
+                            [36m<View>[39m
+                              [36m<Text>[39m
+                                [0mGet your SIN[0m
+                              [36m</Text>[39m
+                              [36m<Text>[39m
+                                [0mAlready in your Checklist · Not started[0m
+                              [36m</Text>[39m
+                            [36m</View>[39m
+                          [36m</View>[39m
+                          [36m<View>[39m
+                            [36m<View>[39m
+                              [36m<Text>[39m
+                                [0mOpen a bank account[0m
+                              [36m</Text>[39m
+                              [36m<Text>[39m
+                                [0mAlready in your Checklist · Not started[0m
+                              [36m</Text>[39m
+                            [36m</View>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                        [36m<View>[39m
+                          [36m<Text>[39m
+                            [0mNew tasks to add[0m
+                          [36m</Text>[39m
+                          [36m<View>[39m
+                            [36m<View[39m
+                              [33maccessibilityLabel[39m=[32m"Add Set up phone service"[39m
+                              [33maccessibilityRole[39m=[32m"checkbox"[39m
+                              [33maccessibilityState[39m=[32m{
+                                {
+                                  "checked": true,
+                                  "disabled": false,
+                                }
+                              }[39m
+                              [33maccessible[39m=[32m{true}[39m
+                            [36m>[39m
+                              [36m<View>[39m
+                                [36m<Text>[39m
+                                  [0mSet up phone service[0m
+                                [36m</Text>[39m
+                                [36m<Text>[39m
+                                  [0mNew task to add[0m
+                                [36m</Text>[39m
+                              [36m</View>[39m
+                            [36m</View>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                        [36m<View />[39m
+                        [36m<View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Approve and add 1 task"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mApprove and add 1 task[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                          [36m<View[39m
+                            [33maccessibilityLabel[39m=[32m"Not now"[39m
+                            [33maccessibilityRole[39m=[32m"button"[39m
+                            [33maccessibilityState[39m=[32m{
+                              {
+                                "disabled": false,
+                              }
+                            }[39m
+                            [33maccessible[39m=[32m{true}[39m
+                          [36m>[39m
+                            [36m<Text>[39m
+                              [0mNot now[0m
+                            [36m</Text>[39m
+                          [36m</View>[39m
+                        [36m</View>[39m
+                      [36m</View>[39m
+                    [36m</View>[39m
+                  [36m</RCTScrollView>[39m
+                [36m</View>[39m
+              [36m</View>[39m
+            [36m</View>[39m
+          [36m</Modal>[39m
+        [36m</View>[39m
+      [36m</View>[39m
+    [36m</View>[39m
+
+      1758 |       const original = JSON.parse(fs.readFileSync(file, 'utf8')).operationId;
+      1759 |       // Wrong if a fresh process exposes an executable approval instead of lookup.
+    > 1760 |       await within(sheet).findByText(en.taskActions.lookupFailed, {}, { timeout: 10_000 });
+           |                           ^
+      1761 |       expect(within(sheet).getByRole('button', { name: 'Approve and add 1 task' })).toBeDisabled();
+      1762 |       fireEvent.press(within(sheet).getByRole('button', { name: 'Approve and add 1 task' }));
+      1763 |       fireEvent.press(within(sheet).getByRole('button', { name: 'Check again' }));
+
+      at Object.findByText (__tests__/companionActions/planLocalStack.test.tsx:1760:27)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 21 skipped, 22 total
+Snapshots:   0 total
+Time:        10.821 s
+Ran all test suites matching /__tests__\/companionActions\/planLocalStack.test.tsx/i with tests matching "recovers a failed lookup after process".
+Test results written to: ../tmp/372-recovery-completion-r2/restart-resume-red.json

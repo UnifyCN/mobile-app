@@ -1,0 +1,551 @@
+{
+  "auth-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/context/userContextStage.test.ts",
+      "--runInBand",
+      "--watchAll=false"
+    ]
+  },
+  "auth-read-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/context/userContextStage.test.ts",
+      "--runInBand",
+      "--watchAll=false"
+    ]
+  },
+  "auth-read-red": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/context/userContextStage.test.ts",
+      "--runInBand",
+      "--watchAll=false",
+      "--testNamePattern=keeps durable recovery"
+    ]
+  },
+  "excluded-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/excluded-green.json",
+      "--testNamePattern=keeps a successful independent"
+    ]
+  },
+  "excluded-red": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/excluded-red.json",
+      "--testNamePattern=keeps a successful independent"
+    ]
+  },
+  "excluded-render-red": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/excluded-render-red.json",
+      "--testNamePattern=keeps a successful independent"
+    ]
+  },
+  "mobile-final-imports": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "__tests__/context/userContextStage.test.ts",
+      "--runInBand",
+      "--watchAll=false"
+    ]
+  },
+  "mobile-i18n": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "check-i18n"
+    ]
+  },
+  "mobile-lint": {
+    "exit": 0,
+    "files": [
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "__tests__/context/userContextStage.test.ts",
+      "components/companion/plans/PlanPanel.tsx",
+      "context/UserContext.tsx",
+      "hooks/companion/usePlans.ts",
+      "services/companionActions/planStore.ts",
+      "services/companionActions/planRecovery.ts"
+    ],
+    "diagnostics": {
+      "errors": 0,
+      "warnings": 16
+    }
+  },
+  "mobile-local-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/mobile-local-final.json"
+    ],
+    "tests": {
+      "numPassedTests": 22,
+      "numFailedTests": 0,
+      "numPendingTests": 1
+    }
+  },
+  "mobile-normal-candidate": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "test:ci"
+    ]
+  },
+  "mobile-normal-final": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "test:ci"
+    ]
+  },
+  "mobile-normal": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "test:ci"
+    ]
+  },
+  "mobile-owner-first": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/mobile-owner-first.json",
+      "--testNamePattern=clears unresolved recovery"
+    ]
+  },
+  "mobile-recovery-candidate": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/mobile-recovery-candidate.json",
+      "--testNamePattern=372 complete recovery"
+    ],
+    "tests": {
+      "numPassedTests": 7,
+      "numFailedTests": 0,
+      "numPendingTests": 16
+    }
+  },
+  "mobile-recovery-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/mobile-recovery-green.json",
+      "--testNamePattern=372 complete recovery"
+    ]
+  },
+  "mobile-types-candidate": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "typecheck"
+    ]
+  },
+  "mobile-types-final-imports": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "typecheck"
+    ]
+  },
+  "mobile-types-final": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "typecheck"
+    ]
+  },
+  "restart-create-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-create-final.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ],
+    "tests": {
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 22
+    }
+  },
+  "restart-create-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-create-green.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ]
+  },
+  "restart-create-red": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-create-red.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ]
+  },
+  "restart-resume-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-resume-final.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ],
+    "tests": {
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 22
+    }
+  },
+  "restart-resume-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-resume-green.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ]
+  },
+  "restart-resume-red": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/restart-resume-red.json",
+      "--testNamePattern=recovers a failed lookup after process"
+    ]
+  },
+  "types-mid": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/jest",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "--runInBand",
+      "--watchAll=false",
+      "--json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/types-mid.json",
+      "./node_modules/.bin/tsc",
+      "--noEmit"
+    ]
+  },
+  "types-mobile-mid": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "typecheck"
+    ]
+  },
+  "web-build-final": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "build"
+    ]
+  },
+  "web-build": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "build"
+    ]
+  },
+  "web-core-first": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-core-first.json",
+      "-t=keeps plan, task, step"
+    ]
+  },
+  "web-core-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-core-green.json",
+      "-t=keeps plan, task, step"
+    ]
+  },
+  "web-full-lint": {
+    "exit": 1,
+    "files": [
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "components/companion/plans/PlanPanel.tsx",
+      "hooks/usePlans.ts",
+      "lib/companion/clearPrivateAccountWork.ts",
+      "lib/companionActions/planStore.ts",
+      "lib/companionActions/planRecovery.ts"
+    ],
+    "diagnostics": {
+      "errors": 12,
+      "warnings": 8
+    }
+  },
+  "web-i18n": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "run",
+      "check-i18n"
+    ]
+  },
+  "web-lint": {
+    "exit": 0,
+    "files": [
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "components/companion/plans/PlanPanel.tsx",
+      "hooks/usePlans.ts",
+      "lib/companion/clearPrivateAccountWork.ts",
+      "lib/companionActions/planStore.ts",
+      "lib/companionActions/planRecovery.ts"
+    ],
+    "diagnostics": {
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "web-local-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-local-final.json"
+    ],
+    "tests": {
+      "numPassedTests": 13,
+      "numFailedTests": 0,
+      "numPendingTests": 1
+    }
+  },
+  "web-normal-candidate": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "test"
+    ]
+  },
+  "web-normal": {
+    "exit": 0,
+    "cmd": [
+      "npm",
+      "test"
+    ]
+  },
+  "web-offline-first": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-offline-first.json",
+      "-t=blocks offline writes"
+    ]
+  },
+  "web-offline-second": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-offline-second.json",
+      "-t=blocks offline writes"
+    ]
+  },
+  "web-pending-first": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-pending-first.json",
+      "-t=keeps a real pending operation"
+    ]
+  },
+  "web-rendered-movement": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanPanelMotion.test.tsx"
+    ]
+  },
+  "web-restart-create-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-restart-create-final.json",
+      "-t=recovers a failed lookup after Web process"
+    ],
+    "tests": {
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 13
+    }
+  },
+  "web-restart-create": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-restart-create.json",
+      "-t=recovers a failed lookup after Web process"
+    ]
+  },
+  "web-restart-resume-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-restart-resume-final.json",
+      "-t=recovers a failed lookup after Web process"
+    ],
+    "tests": {
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 13
+    }
+  },
+  "web-restart-resume": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-restart-resume.json",
+      "-t=recovers a failed lookup after Web process"
+    ]
+  },
+  "web-results-first": {
+    "exit": 1,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-results-first.json",
+      "-t=names saved, failed"
+    ]
+  },
+  "web-results-green": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/vitest",
+      "run",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "--reporter=json",
+      "--outputFile=/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-469783ed/tmp/372-recovery-completion-r2/web-results-green.json",
+      "-t=names saved, failed"
+    ]
+  },
+  "web-types-candidate": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/tsc",
+      "--noEmit"
+    ]
+  },
+  "web-types-final": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/tsc",
+      "--noEmit"
+    ]
+  },
+  "web-types-mid": {
+    "exit": 0,
+    "cmd": [
+      "./node_modules/.bin/tsc",
+      "--noEmit"
+    ]
+  }
+}

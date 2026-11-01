@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f
+
+ ✓ components/companion/tasks/TaskSteps.test.tsx (6 tests) 1666ms
+   ✓ Task steps (web) > steps added and checked in the Checklist drawer never complete the task; focus stays on the same checkbox; completion keeps the unfinished step  666ms
+   ✓ Task steps (web) > removal asks first and Keep sends nothing; the offered completion saves Completed; a typed step survives closing the drawer  461ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  12:22:55
+   Duration  3.07s (transform 245ms, setup 0ms, collect 764ms, tests 1.67s, environment 344ms, prepare 41ms)
+

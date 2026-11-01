@@ -1,0 +1,15 @@
+{
+  "command": [
+    "npx",
+    "prettier",
+    "--ignore-path",
+    "/dev/null",
+    "--write",
+    "__tests__/companionActions/pushLocalization.test.tsx",
+    "__tests__/companionActions/pushReminderIndependence.test.tsx",
+    "__tests__/companionActions/pushNavigation.test.tsx"
+  ],
+  "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-1f65b158/unify-front-end",
+  "exit": 0,
+  "seconds": 0.5399692058563232
+}

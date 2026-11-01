@@ -1,0 +1,138 @@
+running 4 tests from ./actions_test.ts
+an existing task is set to Waiting with a reason; the receipt names the exact change; another platform reads it ... ok (383ms)
+all four states round-trip on an existing custom task, and Completed is what the legacy Checklist reads ... ok (445ms)
+read returns only the caller's tasks ... ok (329ms)
+cleanup ... ok (2ms)
+
+ok | 4 passed | 0 failed (1s)
+
+running 11 tests from ./boundary_test.ts
+wrong account: no token, project key, forged token, or another account's task ... ok (552ms)
+forged or model-made approval is refused and writes nothing ... ok (668ms)
+invalid contract versions and platforms are refused before any write ... ok (363ms)
+invalid payloads are 4xx, never 500, and write nothing ... ok (687ms)
+a stale revision is a conflict that names expected and actual, and writes nothing ... ok (279ms)
+one operation identity: repeat taps and concurrent retries produce one write and one outcome ... ok (512ms)
+result lookup: applied after a lost response, pending while in flight, not applied otherwise ... ok (3s)
+task controls, lookup and Undo work at the AI limit and never touch the generation quota ... ok (285ms)
+gate: off refuses and writes nothing; a gate-only toggle stops no reminder ... ok (273ms)
+only POST is served ... ok (163ms)
+cleanup ... ok (3ms)
+
+ok | 11 passed | 0 failed (7s)
+
+running 7 tests from ./command_test.ts
+a clear command adds exactly the task it names, once, however often it is sent ... ok (291ms)
+two operations racing on one command message, released together from a held use, add one task ... ok (218ms)
+unclear requests are answered with a question and authorize nothing ... ok (432ms)
+a command naming a task that already exists asks which is meant and writes nothing ... ok (193ms)
+only the caller's own user message is command evidence ... ok (500ms)
+the command phrasing taught in each supported language adds exactly its task ... ok (498ms)
+cleanup ... ok (2ms)
+
+ok | 7 passed | 0 failed (2s)
+
+running 3 tests from ./create_rollback_test.ts
+rolling back only #363 keeps #361 task controls, refuses (never misapplies) work it cannot do, and re-application restores it ... ok (948ms)
+a full rollback and re-application keeps operation identity: a retried create replays and adds nothing ... ok (1s)
+cleanup ... ok (4ms)
+
+ok | 3 passed | 0 failed (2s)
+
+running 17 tests from ./create_test.ts
+a prepared task is a draft only; approving the shown revision adds exactly one shared task with its receipt ... ok (265ms)
+repeated taps and concurrent retries of one approval add one task and replay one receipt ... ok (275ms)
+two approvals of one proposal with different operation ids, released together from a held lock, add one task ... ok (239ms)
+a reply lost after commit is recovered by lookup; the retry replays and writes nothing ... ok (239ms)
+while a write holds the operation, lookup is pending; once confirmed not applied, the same id applies once ... ok (240ms)
+editing the draft makes a new revision: the old approval writes nothing, the new one adds the edited title ... ok (286ms)
+a relevant profile change since review needs a new review; approving the refreshed revision applies ... ok (242ms)
+unrelated changes since review do not ask for approval again ... ok (201ms)
+a task with the same title added elsewhere since review needs a new review that names it ... ok (221ms)
+Undo of an added task removes it only after confirmation, once, with its own receipt ... ok (343ms)
+Undo after a newer edit keeps the edit and offers a reviewed removal at the current revision ... ok (287ms)
+a reviewed removal is refused after another edit, and cannot remove any other task ... ok (372ms)
+another account cannot read, edit, cancel or approve a proposal, and malformed or forged requests write nothing ... ok (875ms)
+prepare, approval, lookup, command, cancel and Undo never touch the AI-generation allowance ... ok (327ms)
+a cancelled draft cannot be approved and stays visible as cancelled ... ok (254ms)
+reopening a conversation reads its drafts and command results with their current state ... ok (422ms)
+cleanup ... ok (2ms)
+
+ok | 17 passed | 0 failed (5s)
+
+running 4 tests from ./receipt_history_test.ts
+an approved creation receipt keeps the reviewed title after the owner renames the task ... ok (295ms)
+a command creation receipt keeps the commanded title after a rename, in status and in its conversation ... ok (255ms)
+after a rename, Undo still needs review; the removal receipt names the task it removed and keeps that name ... ok (301ms)
+cleanup ... ok (2ms)
+
+ok | 4 passed | 0 failed (859ms)
+
+running 6 tests from ./rollback_test.ts
+legacy Checklist calls and existing rows are identical on the baseline, after up, after down and after up again ... ok (2s)
+the migration ships the feature off; API roles cannot execute the action SQL ... ok (1s)
+receipts, waiting reasons and Undo survive a rollback and re-application; held revisions go stale ... ok (1s)
+a full rollback stops every pending reminder; re-application restarts none; history stays exact ... ok (2s)
+account deletion removes receipts and proposals with the account ... ok (271ms)
+cleanup ... ok (2ms)
+
+ok | 6 passed | 0 failed (7s)
+
+running 1 test from ./steps_rollback_test.ts
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts ... FAILED (447ms)
+
+ ERRORS 
+
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts => ./steps_rollback_test.ts:11:6
+error: AssertionError: Values are not equal: {"error":"internal"}
+
+
+    [Diff] Actual / Expected
+
+
+-   500
++   200
+
+  throw new AssertionError(message);
+        ^
+    at assertEquals (https://jsr.io/@std/assert/1.0.19/equals.ts:67:9)
+    at fn (file:///private/tmp/unify-review-363-standards-web-r2-recovery-2a50332f/supabase/tests/companion-actions/steps_rollback_test.ts:30:5)
+
+ FAILURES 
+
+rolling back #366 keeps every saved step and the #363 actions; re-applying restores step receipts and re-reviews drafts => ./steps_rollback_test.ts:11:6
+
+FAILED | 0 passed | 1 failed (451ms)
+
+error: Test failed
+running 15 tests from ./steps_test.ts
+a step added by its exact control is saved once under its parent, read back at once, and adds no main-list task ... ok (253ms)
+a content-backed parent needs its published task: unknown, removed and failed reads write no step ... ok (242ms)
+no orphaned step: a failed parent creation, a missing or removed custom task and another account's task all write nothing ... ok (378ms)
+one level only and exact authorization: nested parents, unknown fields, multi-title controls and forged evidence are refused ... ok (309ms)
+repeated and concurrent sends of one step intent save one step; a lost reply is looked up; a reused id with another payload is refused ... ok (357ms)
+edits are revision-checked: a stale edit and the loser of two competing edits change nothing ... ok (261ms)
+checking every step leaves the parent unchanged; explicit completion keeps done and unfinished steps and stops reminders atomically ... ok (584ms)
+removal needs confirmation; Undo restores the step unless it changed; the removal receipt keeps its title ... ok (300ms)
+Undo of an old step receipt never overwrites a newer edit: it offers a reviewed change instead ... ok (298ms)
+Undo of an added step removes it only with confirmation; a historical receipt keeps the saved title and done state ... ok (426ms)
+suggested steps are a draft until approved; the approved revision adds exactly its steps once, in order ... ok (416ms)
+a relevant change since review needs a new approval; a removed or completed parent refuses the draft ... ok (450ms)
+another account cannot read, change, look up or undo my steps ... ok (458ms)
+step controls, lookup and Undo never touch the AI allowance ... ok (256ms)
+while one step write holds a parent, a parent removal and a step write are ordered, never interleaved ... ok (249ms)
+
+ok | 15 passed | 0 failed (5s)
+
+running 8 tests from ./undo_test.ts
+Undo restores the exact earlier state and waiting reason of its own receipt ... ok (295ms)
+Undo of completion restores the earlier state and does not restart a stopped reminder ... ok (268ms)
+an older receipt cannot reverse a newer edit: conflict keeps the newer state and offers a reviewed change ... ok (421ms)
+a compensating proposal goes stale when the task changes again; nothing is overwritten ... ok (302ms)
+a legacy Checklist write after a receipt makes that receipt historical; Undo then asks for review ... ok (258ms)
+concurrent Undo of one receipt: one reversal; duplicates of the same Undo replay ... ok (305ms)
+Undo is scoped to the account and only to undoable receipts ... ok (503ms)
+cleanup ... ok (2ms)
+
+ok | 8 passed | 0 failed (2s)
+

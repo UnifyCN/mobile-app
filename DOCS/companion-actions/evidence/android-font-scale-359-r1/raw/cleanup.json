@@ -1,0 +1,89 @@
+{
+  "time": "2026-10-28T22:15:15.894896+00:00",
+  "ports": [
+    {
+      "port": 3300,
+      "listener_output": ""
+    },
+    {
+      "port": 5610,
+      "listener_output": ""
+    },
+    {
+      "port": 5611,
+      "listener_output": ""
+    },
+    {
+      "port": 61871,
+      "listener_output": ""
+    },
+    {
+      "port": 61872,
+      "listener_output": ""
+    },
+    {
+      "port": 61873,
+      "listener_output": ""
+    },
+    {
+      "port": 61874,
+      "listener_output": ""
+    },
+    {
+      "port": 61876,
+      "listener_output": ""
+    },
+    {
+      "port": 61877,
+      "listener_output": ""
+    },
+    {
+      "port": 61879,
+      "listener_output": ""
+    },
+    {
+      "port": 8201,
+      "listener_output": ""
+    }
+  ],
+  "containers": [
+    {
+      "name": "supabase_db_unify-native-remove-367-r1",
+      "running": false,
+      "volumes_retained": true
+    },
+    {
+      "name": "supabase_rest_unify-native-remove-367-r1",
+      "running": false,
+      "volumes_retained": true
+    },
+    {
+      "name": "supabase_auth_unify-native-remove-367-r1",
+      "running": false,
+      "volumes_retained": true
+    },
+    {
+      "name": "supabase_kong_unify-native-remove-367-r1",
+      "running": false,
+      "volumes_retained": true
+    },
+    {
+      "name": "supabase_edge_runtime_unify-native-remove-367-r1",
+      "running": false,
+      "volumes_retained": true
+    }
+  ],
+  "emulator_exit": 0,
+  "metro_exit": 0,
+  "local_servers_exit": 143,
+  "forwarder_exit": 143,
+  "app_before_shutdown": "force-stopped; disabled-user verified",
+  "font_scale_before_shutdown": "1.0",
+  "resources_retained": [
+    "AVD data",
+    "native SDK and Gradle cache",
+    "local database volumes",
+    "ignored native builds"
+  ],
+  "docker_desktop": "Started to restore the unavailable daemon. Left running; only the assigned stack was stopped."
+}

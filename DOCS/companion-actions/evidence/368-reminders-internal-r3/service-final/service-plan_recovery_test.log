@@ -1,0 +1,24 @@
+Resetting local database...
+Recreating database...
+Initialising schema...
+Seeding globals from roles.sql...
+Applying migration 20260101000000_hosted_baseline.sql...
+Applying migration 20260101000001_generation_quota_tripwire.sql...
+Restarting containers...
+Finished supabase db reset on branch main.
+{"target":"local","version":"","message":"Reset local database."}
+A new version of Supabase CLI is available: v2.122.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+supabase_rest_unify-reminders-368-r1
+running 8 tests from ./plan_recovery_test.ts
+repeated taps and concurrent retries of one plan approval save one plan, one new task and one receipt ... ok (309ms)
+two approvals of one draft with different operation ids, released together from a held lock, save once ... ok (246ms)
+a reply lost after commit is found by lookup, and a retry with the same id replays it ... ok (252ms)
+while the approval is in flight the lookup says pending; afterwards not applied; the same id then saves once ... ok (305ms)
+an operation id reused with different items is refused and writes nothing ... ok (254ms)
+a failed independent addition is reported as failed; the saved ones stay; retry runs only the failed one ... ok (358ms)
+when the plan itself cannot be saved, no addition is written ... ok (277ms)
+cleanup ... ok (4ms)
+
+ok | 8 passed | 0 failed (2s)
+

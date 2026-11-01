@@ -1,0 +1,60 @@
+{
+  "mobile": {
+    "exit": 0,
+    "files": [
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "__tests__/companionActions/reminders.test.tsx",
+      "__tests__/companionActions/remindersLocalStack.test.tsx",
+      "app/(tabs)/companion/index.tsx",
+      "components/companion/tasks/ReceiptBlock.tsx",
+      "components/companion/tasks/ReminderSection.tsx",
+      "components/companion/tasks/TaskActionCards.tsx",
+      "components/companion/tasks/TaskActionsSheet.tsx",
+      "components/companion/tasks/TaskStatePanel.tsx",
+      "hooks/companion/useReminderEditor.ts",
+      "hooks/companion/useSendMessage.ts",
+      "hooks/companion/useTaskActions.ts",
+      "services/companionActions/analytics.ts",
+      "services/companionActions/client.ts",
+      "services/companionActions/contract.ts",
+      "services/companionActions/reminders.ts",
+      "services/companionActions/taskActionStore.ts",
+      "services/companionActions/transport.ts"
+    ],
+    "count": 18
+  },
+  "web": {
+    "exit": 0,
+    "files": [
+      "app/(main)/companion/page.tsx",
+      "components/companion/tasks/ReceiptBlock.tsx",
+      "components/companion/tasks/ReminderNavigation.test.tsx",
+      "components/companion/tasks/ReminderSection.tsx",
+      "components/companion/tasks/Reminders.test.tsx",
+      "components/companion/tasks/RemovedReceiptPage.test.tsx",
+      "components/companion/tasks/TaskActionCards.tsx",
+      "components/companion/tasks/TaskActions.test.tsx",
+      "components/companion/tasks/TaskActionsDrawer.tsx",
+      "components/companion/tasks/TaskStatePanel.tsx",
+      "hooks/useCompanion.ts",
+      "hooks/useReminderEditor.ts",
+      "hooks/useTaskActions.ts",
+      "lib/companionActions/analytics.ts",
+      "lib/companionActions/client.ts",
+      "lib/companionActions/contract.ts",
+      "lib/companionActions/reminders.ts",
+      "lib/companionActions/taskActionStore.ts",
+      "scripts/verify-companion-reminders.mjs",
+      "services/companion.ts",
+      "supabase/functions/companion-actions/contract.ts",
+      "supabase/functions/companion-actions/handler.ts",
+      "supabase/functions/companion-actions/reminders.ts",
+      "supabase/functions/rag-query/index_companion_context_test.ts",
+      "supabase/functions/rag-query/lib/actions/proposals.ts",
+      "supabase/tests/companion-actions/reminders_commands_test.ts",
+      "supabase/tests/companion-actions/reminders_races_test.ts",
+      "supabase/tests/companion-actions/reminders_test.ts"
+    ],
+    "count": 28
+  }
+}

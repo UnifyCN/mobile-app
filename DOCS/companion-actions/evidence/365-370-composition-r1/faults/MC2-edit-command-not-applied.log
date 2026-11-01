@@ -1,0 +1,56 @@
+  console.warn
+    An error occurred in the <MarkdownText> component.
+    
+    Consider adding an error boundary to your tree to customize error handling behavior.
+    Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+      at defaultOnUncaughtError (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6400:15)
+      at logUncaughtError (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6460:11)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at lane.callback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:6490:9)
+      at callCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4625:16)
+      at commitCallbacks (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4645:11)
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2315:13)
+      at commitLayoutEffectOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10103:15)
+      at flushLayoutEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13774:15)
+      at commitRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13697:9)
+      at commitRootWhenReady (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12444:7)
+      at performWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12391:15)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2923:7)
+      at flushSyncWorkAcrossRoots_impl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2764:21)
+      at processRootScheduleInMicrotask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2796:9)
+      at processRootScheduleInImmediateTask (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2772:7)
+      at Immediate.performWorkUntilDeadline [as _onImmediate] (node_modules/scheduler/cjs/scheduler.native.development.js:45:48)
+
+FAIL __tests__/companionActions/taskEdit.test.tsx
+  ✕ in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question (1600 ms)
+  ○ skipped keeps the first direct edit receipt and marks it historical after a second edit
+  ○ skipped a waiting reason change names the reason before and after on the command card, and keeps them after a later edit
+  Edit existing tasks through Companion (mobile)
+    ○ skipped a clear rename command saves exactly that change without an AI answer, names it in the card, and Checklist reads the new title
+    ○ skipped a state command names a published task by its Checklist title and saves only its state
+    ○ skipped an ambiguous or unknown target asks a question and writes nothing
+    ○ skipped a suggested change is a draft until approved; approval saves the reviewed change once and the typed message stays
+    ○ skipped a newer edit elsewhere gives a revised draft that shows the old and current values and needs its own approval
+
+  ● in one conversation, a waiting command, an ambiguous edit, a remember command and a repeated one each get their own saved result or question
+
+    Unable to find node on an unmounted component.
+
+      598 |   renderScreen();
+      599 |   await send(`Mark task "${PHONE}" as waiting: Appointment on Friday`);
+    > 600 |   const edit = await screen.findByTestId('task-command-card');
+          |                             ^
+      601 |   expect(within(edit).getByText('Waiting for: (empty) → “Appointment on Friday”')).toBeTruthy();
+      602 |
+      603 |   server.addCustomTask(PHONE);
+
+      at Object.findByTestId (__tests__/companionActions/taskEdit.test.tsx:600:29)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 skipped, 8 total
+Snapshots:   0 total
+Time:        4.194 s
+Ran all test suites matching /__tests__\/companionActions\/taskEdit.test.tsx/i with tests matching "in one conversation".

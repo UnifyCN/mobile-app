@@ -1,0 +1,33 @@
+{
+  "command": [
+    "deno",
+    "check",
+    "--node-modules-dir=auto",
+    "supabase/functions/companion-actions/index.ts",
+    "supabase/functions/cover-letter-chat/index.ts",
+    "supabase/functions/events-crawler/index.ts",
+    "supabase/functions/explain-term/index.ts",
+    "supabase/functions/get-daily-tip/index.ts",
+    "supabase/functions/news-crawler/index.ts",
+    "supabase/functions/practice-feedback/index.ts",
+    "supabase/functions/rag-query/index.ts",
+    "supabase/functions/resume-chat/index.ts",
+    "supabase/functions/translate-content/index.ts",
+    "supabase/functions/_shared/embeddings.ts",
+    "supabase/functions/_shared/fetchWithRetry.ts",
+    "supabase/functions/_shared/openrouter.ts",
+    "supabase/functions/_shared/pexels.ts",
+    "supabase/functions/_shared/platform.ts",
+    "supabase/functions/_shared/platform_test.ts",
+    "supabase/functions/_shared/posthogCapture.ts",
+    "supabase/functions/_shared/ssrf.ts",
+    "supabase/functions/_shared/testEmbeddingFixtures.ts",
+    "supabase/functions/_shared/testHarness.ts",
+    "supabase/functions/_shared/topics.ts",
+    "supabase/tests/companion-actions/reminders_commands_test.ts",
+    "supabase/tests/companion-actions/reminders_races_test.ts",
+    "supabase/tests/companion-actions/reminders_test.ts"
+  ],
+  "exit": 0,
+  "seconds": 2.1586883750005654
+}

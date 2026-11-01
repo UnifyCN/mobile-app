@@ -10,6 +10,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createTestQueryClient } from '@/testSupport/queryClient';
 
 type Row = Record<string, unknown>;
 let mockRow: Row;
@@ -129,7 +130,7 @@ beforeEach(() => {
   };
   mockWrites.length = 0;
   mockTrackChanged.mockReset();
-  client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client = createTestQueryClient({ defaultOptions: { queries: { retry: false } } });
   jest.spyOn(console, 'error').mockImplementation(() => undefined);
   jest.spyOn(console, 'warn').mockImplementation(() => undefined);
   jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);

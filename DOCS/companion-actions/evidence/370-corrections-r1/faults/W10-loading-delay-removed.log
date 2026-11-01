@@ -1,0 +1,29 @@
+COMMAND ['reset']
+COMMAND ['migrate']
+COMMAND ['node', 'build/s370c-stack/browser-370c.mjs']
+PASS  the saved detail is shown
+PASS  pointer: the editor opens with the shared entrance motion
+PASS  keyboard Enter: the editor opens without entrance motion
+PASS  keyboard Space: the editor opens without entrance motion
+FAIL  saving: hidden before 300ms, then visible (loading delay)  {"firstAfterAct":7,"n":73,"sample":[{"t":0,"o":1,"tr":"none","v":"visible"},{"t":49,"o":1,"tr":"none","v":"visible"},{"t":100,"o":1,"tr":"none","v":"visible"},{"t":150,"o":1,"tr":"none","v":"visible"},{"t":202,"o":1,"tr":"none","v":"visible"},{"t":251,"o":1,"tr":"none","v":"visible"},{"t":300,"o":1,"tr":"none","v":"visible"},{"t":351,"o":1,"tr":"none","v":"visible"},{"t":402,"o":1,"tr":"none","v":"visible"},{"t":450,"o":1,"tr":"none","v":"visible"},{"t":501,"o":1,"tr":"none","v":"visible"},{"t":550,"o":1,"tr":"none","v":"visible"},{"t":602,"o":1,"tr":"none","v":"visible"}]}
+PASS  keyboard edit saves once at the shown revision
+PASS  a later answer reads the edited text
+FAIL  checking: hidden before 300ms, then visible (loading delay)  {"firstAfterAct":931,"n":74,"sample":[{"t":0,"o":1,"tr":"none","v":"visible"},{"t":49,"o":1,"tr":"none","v":"visible"},{"t":99,"o":1,"tr":"none","v":"visible"},{"t":149,"o":1,"tr":"none","v":"visible"},{"t":199,"o":1,"tr":"none","v":"visible"},{"t":250,"o":1,"tr":"none","v":"visible"},{"t":299,"o":1,"tr":"none","v":"visible"},{"t":349,"o":1,"tr":"none","v":"visible"},{"t":398,"o":1,"tr":"none","v":"visible"},{"t":450,"o":1,"tr":"none","v":"visible"},{"t":499,"o":1,"tr":"none","v":"visible"},{"t":550,"o":1,"tr":"none","v":"visible"},{"t":599,"o":1,"tr":"none","v":"visible"}]}
+PASS  a lost reply is looked up, never sent twice
+PASS  pointer: the removal confirmation opens with the shared entrance motion
+PASS  keyboard: the removal confirmation opens without entrance motion
+PASS  Cancel after Remove sends nothing
+PASS  the confirmed removal carries the confirmation
+PASS  a removed detail is no longer read by a later answer
+PASS  Undo of the removal restores the detail for later answers
+PASS  390px: no horizontal overflow
+PASS  detail controls are at least 44px tall
+PASS  CSS 200 percent zoom has no horizontal overflow
+PASS  another account reads none of it
+PASS  pointer: the Undo-of-save confirmation opens with the shared entrance motion
+PASS  keyboard: the Undo-of-save confirmation opens without entrance motion
+PASS  Cancel of the Undo-of-save confirmation keeps the detail
+PASS  Arabic: right to left, Arabic copy, no overflow
+INFO  reduced motion, pointer: editor frames  {"name":"reduced motion, pointer: editor frames","instant":false,"detail":{"firstAfterAct":51,"n":87,"sample":[{"t":0,"o":0,"tr":"matrix(1, 0, 0, 1, 0, -4)","v":"visible"},{"t":38,"o":0.787109,"tr":"matrix(1, 0, 0, 1, 0, -1.1242)","v":"visible"},{"t":89,"o":0.981346,"tr":"matrix(1, 0, 0, 1, 0, -0.129363)","v":"visible"},{"t":139,"o":1,"tr":"none","v":"visible"},{"t":188,"o":1,"tr":"none","v":"visible"},{"t":237,"o":1,"tr":"none","v":"visible"},{"t":287,"o":1,"tr":"none","v":"visible"},{"t":339,"o":1,"tr":"none","v":"visible"},{"t":389,"o":1,"tr":"none","v":"visible"},{"t":441,"o":1,"tr":"none","v":"visible"},{"t":489,"o":1,"tr":"none","v":"visible"},{"t":539,"o":1,"tr":"none","v":"visible"},{"t":591,"o":1,"tr":"none","v":"visible"},{"t":639,"o":1,"tr":"none","v":"visible"}]}}
+
+21 passed, 2 failed, 0 errors

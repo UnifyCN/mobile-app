@@ -1,4 +1,9 @@
 export interface ChatbotUsage {
+  daily_limit: number;
+  remaining: number | null;
+  is_premium: boolean;
+  resets_at: string;
+  observed_at: string;
   message_count: number;
   last_message_at: string | null;
   total_tokens_used?: number;

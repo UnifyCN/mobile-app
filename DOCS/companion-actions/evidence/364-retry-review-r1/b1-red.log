@@ -1,0 +1,21 @@
+running 2 tests from ./plan_retry_review_test.ts
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task ... FAILED (1s)
+cleanup ... ok (3ms)
+
+ ERRORS 
+
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task => ./plan_retry_review_test.ts:16:6
+error: AssertionError: the needs-review result names no revised proposal
+    throw new AssertionError(msg);
+          ^
+    at assert (https://jsr.io/@std/assert/1.0.19/assert.ts:22:11)
+    at fn (file:///private/tmp/unify-review-363-spec-web-r2-638d8060/supabase/tests/companion-actions/plan_retry_review_test.ts:33:5)
+
+ FAILURES 
+
+a retry after a relevant profile change opens a durable revised review of exactly the remaining addition; approving it adds one task => ./plan_retry_review_test.ts:16:6
+
+FAILED | 1 passed | 1 failed (1s)
+
+error: Test failed
+exit=1

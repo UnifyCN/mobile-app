@@ -1,0 +1,145 @@
+{
+  "read": {
+    "contract_version": 1,
+    "tasks": [
+      {
+        "state": "not_started",
+        "title": "Get a phone plan",
+        "source": "custom",
+        "removed": true,
+        "revision": 4,
+        "task_ref": "custom:1",
+        "last_receipt": {
+          "kind": "change",
+          "plans": [
+            {
+              "goal": "Your first week in Vancouver",
+              "plan_id": "52fbf62b-fba8-4ca7-ab79-a4f6dc088dde"
+            }
+          ],
+          "title": "Get a phone plan",
+          "current": true,
+          "undo_of": null,
+          "task_ref": "custom:1",
+          "undoable": true,
+          "undone_by": null,
+          "created_at": "2026-10-29T03:52:04.570026+00:00",
+          "steps_kept": 2,
+          "after_state": "not_started",
+          "before_state": "not_started",
+          "operation_id": "539b3623-17d9-4db2-9f32-ff2267e9e8e0",
+          "after_revision": 4,
+          "operation_type": "task.remove",
+          "before_revision": 3,
+          "reminders_stopped": 0
+        },
+        "waiting_reason": null,
+        "state_updated_at": "2026-10-29T00:15:13.143678+00:00"
+      }
+    ],
+    "steps": [
+      {
+        "done": true,
+        "title": "Compare plans",
+        "step_id": "9b911113-e858-4435-bdc9-fa8ffd2bba19",
+        "position": 0,
+        "revision": 2,
+        "task_ref": "custom:1"
+      },
+      {
+        "done": false,
+        "title": "Bring passport",
+        "step_id": "4e219ebb-fe69-431d-9706-30376c95e900",
+        "position": 1,
+        "revision": 1,
+        "task_ref": "custom:1"
+      }
+    ],
+    "details": [
+      {
+        "text": "I can attend appointments on Fridays",
+        "scope": "companion",
+        "source": {
+          "kind": "direct_command",
+          "conversation_id": "b655c7fb-1b50-4a75-9c1a-85042933639b"
+        },
+        "revision": 1,
+        "detail_id": "0bf26128-a786-464f-9f03-0aa6b871788c",
+        "created_at": "2026-10-29T00:19:59.41623+00:00",
+        "updated_at": "2026-10-29T00:19:59.41623+00:00"
+      }
+    ]
+  },
+  "plans": {
+    "contract_version": 1,
+    "plans": [
+      {
+        "goal": "Your first week in Vancouver",
+        "items": [
+          {
+            "state": "not_started",
+            "title": "Get a phone plan",
+            "exists": true,
+            "source": "custom",
+            "removed": true,
+            "position": 1,
+            "revision": 4,
+            "task_ref": "custom:1",
+            "waiting_reason": null
+          }
+        ],
+        "review": null,
+        "source": null,
+        "context": {
+          "matches": {},
+          "profile": {
+            "city": "Vancouver",
+            "province": "BC",
+            "arrival_date": null
+          },
+          "existing": [
+            {
+              "task_ref": "custom:1",
+              "available": true
+            }
+          ]
+        },
+        "plan_id": "52fbf62b-fba8-4ca7-ab79-a4f6dc088dde",
+        "receipt": {
+          "kind": "plan",
+          "status": "applied",
+          "plan_id": "52fbf62b-fba8-4ca7-ab79-a4f6dc088dde",
+          "results": [
+            {
+              "kind": "existing",
+              "outcome": "reused",
+              "task_ref": "custom:1"
+            }
+          ],
+          "undo_of": null,
+          "retry_of": null,
+          "undoable": true,
+          "retryable": [],
+          "undone_by": null,
+          "created_at": "2026-10-29T00:15:14.236135+00:00",
+          "operation_id": "036fd018-7e86-4d57-bb3b-a5adc6645a42",
+          "removal_count": 0,
+          "plan_proposal_id": null
+        },
+        "removed": false,
+        "reviews": [],
+        "revision": 1,
+        "created_at": "2026-10-29T00:15:14.236135+00:00",
+        "updated_at": "2026-10-29T00:15:14.236135+00:00",
+        "proposal_id": "3ace6161-f15e-4e54-aa0a-8e40dff5cbad"
+      }
+    ],
+    "drafts": []
+  },
+  "conversation": {
+    "commands": [],
+    "proposals": [],
+    "detail_commands": [],
+    "detail_proposals": []
+  }
+}

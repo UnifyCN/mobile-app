@@ -1,0 +1,18 @@
+running 1 test from ./profile_rollback_test.ts
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history ... FAILED (400ms)
+
+ ERRORS 
+
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history => ./profile_rollback_test.ts:5:6
+error: TypeError: Cannot read properties of undefined (reading 'province')
+  assertEquals((await read(a)).json.profile.province,'Quebec');
+                                            ^
+    at fn (file:///Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-06529381/build/profile-371-r1/supabase/tests/companion-actions/profile_rollback_test.ts:29:45)
+
+ FAILURES 
+
+profile rollback: profile facts remain, exact previous function definitions return, and reapply retains recoverable receipt history => ./profile_rollback_test.ts:5:6
+
+FAILED | 0 passed | 1 failed (404ms)
+
+error: Test failed

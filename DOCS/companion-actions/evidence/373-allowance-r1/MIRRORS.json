@@ -1,0 +1,74 @@
+[
+  {
+    "path": "supabase/migrations/20261025235536_companion_task_actions.sql",
+    "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261026165156_companion_task_create.sql",
+    "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261027183338_companion_settlement_plan.sql",
+    "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261027183644_companion_task_steps.sql",
+    "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261028001530_companion_task_edit.sql",
+    "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261028004902_companion_saved_details.sql",
+    "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261028025026_companion_task_remove.sql",
+    "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261029175439_companion_task_reminders.sql",
+    "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261030181040_companion_reminder_push.sql",
+    "sha256": "59b464552db6319b0e33497e5fa34ea2fe7e67c5a6f6059e198567ee1bb1999b",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261031055422_companion_profile_changes.sql",
+    "sha256": "3c90110c7c7c44f0ddadd45b5bc24f8874d8943a29761f9c7ff5b9e5f459e8be",
+    "mobile_equal": true,
+    "prior_unchanged": true
+  },
+  {
+    "path": "supabase/migrations/20261101024721_companion_allowance_and_cohort.sql",
+    "sha256": "3dfb3c63cf27a21415cdc9388503585b06ce814f758bf87020e612ca2cd687c3",
+    "mobile_equal": true,
+    "prior_unchanged": false
+  },
+  {
+    "path": "supabase/rollbacks/20261101024721_companion_allowance_and_cohort.down.sql",
+    "sha256": "68329ff1e7c4662a0cf6605d815a10c45038f7c93b21d724b0951fa00026ca0c",
+    "mobile_equal": true,
+    "prior_unchanged": false
+  }
+]
