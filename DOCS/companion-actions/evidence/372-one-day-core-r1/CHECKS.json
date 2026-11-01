@@ -1,0 +1,45 @@
+{
+  "selected_final": {
+    "exit": 0,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "new_372_cases": 6
+  },
+  "retained_inventory": {
+    "exit": 0,
+    "passed": 21,
+    "failed": 0
+  },
+  "normal_ci": {
+    "exit": 0,
+    "main_passed": 1623,
+    "main_skipped": 37,
+    "dst_passed": 13,
+    "actions_environment": [],
+    "machine_filtered_summaries": [
+      "37 skipped, 1623 passed, 1660 total",
+      "13 passed, 13 total"
+    ]
+  },
+  "typecheck_final": {
+    "exit": 0
+  },
+  "changed_file_lint": {
+    "exit": 0,
+    "errors": 0,
+    "preexisting_warnings": 13
+  },
+  "shared_results_reproduction": {
+    "exit": 1,
+    "batch_http": 422,
+    "single_control_http": 200,
+    "classification": "confirmed public contract restriction; full four-state behavior unproved"
+  },
+  "natural_exits": true,
+  "forceExit": false,
+  "independent_review": "not run; user forbids children",
+  "product_changes": [],
+  "tested_code_commit": "0fbf9fdc3c40e6971c203550fef5ff7983b89c97",
+  "tested_code_tree": "931e88d942258f8f52d49c1b933747d9eba8a264"
+}

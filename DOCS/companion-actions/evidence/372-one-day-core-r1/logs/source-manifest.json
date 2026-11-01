@@ -1,0 +1,175 @@
+[
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/tests/companion-actions/run.sh",
+    "sha256": "335cb18743e88cb0352bcdf6eeb4cc8854540f16d4c7c287b940b2fc00bdded5",
+    "copy": "tmp/372-one-day-core-r1/harness/run.sh"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/tests/companion-actions/supabase/config.toml",
+    "sha256": "08a3f04c229f7e255a8afd328c1fd05bddfaba2a28633fcf1d776636d051c678",
+    "copy": "tmp/372-one-day-core-r1/harness/supabase/config.toml"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/tests/companion-actions/supabase/migrations/20260101000000_hosted_baseline.sql",
+    "sha256": "071b5a982342b0f08b97f4eddc1fea6ecc2fde9457b5eacc0a195533567b567b",
+    "copy": "tmp/372-one-day-core-r1/harness/supabase/migrations/20260101000000_hosted_baseline.sql"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/tests/companion-actions/supabase/migrations/20260101000001_generation_quota_tripwire.sql",
+    "sha256": "41d96ef29f95fbb2a1b926c64417931cb29850c09fcf78bfa0796fd902605126",
+    "copy": "tmp/372-one-day-core-r1/harness/supabase/migrations/20260101000001_generation_quota_tripwire.sql"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/PUSH_CONTRACT.md",
+    "sha256": "b8555a09c958ae2337f556242c4cdba9523d8e43b261c06f4626527c0debdfa1"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/commands.ts",
+    "sha256": "b7bd17ba25f6eafdd22c35004c86588cb046d1453274e00a966330b5fa853a72"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/contract.ts",
+    "sha256": "f8334c9daa44325b0359fba74b7e77a6ace7a01710a6ba5e2291b068a9ee2987"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/handler.ts",
+    "sha256": "d313207df1477104c9da73ad50a1a6866f6dc53e17967178c182b77b1f2bac97"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/index.ts",
+    "sha256": "7fdbcf5ddc8ce3513cb393e4b93d5421fb6dd9f51baff1297c3c60efac51fa82"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/planHandler.ts",
+    "sha256": "a41ebc53ca2ec0e1cba47f6e615bf992cc456fc0861273634a5af786a792970d"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/plans.ts",
+    "sha256": "ae0ebb1ba1266e5c20babe955d6e929cf77b00ee04f5e1631fafa7832f275939"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/profile.ts",
+    "sha256": "46785978a25564da0afde003026afaf32b8148494b077ce61a5a1b8cc8d19e2b"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/push.ts",
+    "sha256": "23ec7c35f1df3699c13852454e57caa44577ce1c9c861576802f56ee551655ab"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/reminders.ts",
+    "sha256": "516b423c217267185bc964b28db1f426f0f86c53d5dbf6d60a6622511bba7183"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/companion-actions/targets.ts",
+    "sha256": "1e5031c2234499fdcfd3220ac9f70c2b547b35a301b49dc1401e9a15c13a878b"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/actions/proposals.ts",
+    "sha256": "d845367c592cb0c490eb2be824c855147eb0277ac1bbc4dd4e57c79cc4f28025"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/appContext.ts",
+    "sha256": "e6a3f2378b2c758946faa413e5e9a272f492006d0cb70537af736fe412f77a99"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/companionContext.ts",
+    "sha256": "41ac1ebed1ce19f3a63c662cfd2fe1d4ccb3904960e9d118ab03a585a142b9d7"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/contract.ts",
+    "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/conversationDetails.ts",
+    "sha256": "bb2ad98f401fe7bc3b52e3d392b08a6d9542aa0f01f741ad4d8c9e3c2849d1d9"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/guidance.ts",
+    "sha256": "7d275c07d59e3173626232e08f6a72e2664b1751976d6be02dcda50c10c2d03b"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/placeNames.ts",
+    "sha256": "0e8c012aa44212d88f277a3e83997b7e614ea3319db1b6022c3598aecb435883"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/placeNames_test.ts",
+    "sha256": "661e6e018232c4e882ec85348f4f93400260f16f62ce3357b2fe089a58905099"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/profileFacts.ts",
+    "sha256": "2f8c9d19f0d3a37329b14fbc7508e9278627034580ab33423bfcb58ed77dedab"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/promptBlocks.ts",
+    "sha256": "c3f23734328eded09a55d0b06ee029097072d8eda87a3867be2d10c6e32b3bec"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/context/registry.ts",
+    "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/currentFacts.ts",
+    "sha256": "c250ece6a91d67fddb196a7ea39ff912f6254b9b3b35fe7c454359369130c1a5"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/dates.ts",
+    "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/dates_test.ts",
+    "sha256": "08763692934a86d3df62aac201f1b4b3bf09bf93d96af26ecc5244d9dcefa212"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/profile.ts",
+    "sha256": "86c22b063591c0e6651bd25a317d4bdf5d6a37561a05a6fbab1d083e2ba69af2"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/profile_test.ts",
+    "sha256": "13adfbb2dee07e88a977a82d00327e83748ecb142cd74e3fcfc5feff64bff35e"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/province.ts",
+    "sha256": "4460fa94c98ab7879b115ef0301ca466ce8122ce65f2486c1346e294c8848937"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/provincePointer.ts",
+    "sha256": "3a9e7b1be98b3c39c0d1920c3fc61a3c73fb79eae97197d6b58fdd0b02e8b121"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/provincePointer_test.ts",
+    "sha256": "8c528e08d9e782e10a9db911f77c26cd7129d4185fdeb7278c53a99382910f27"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/province_test.ts",
+    "sha256": "31d82889fc3568755d5374694d3b39a9e42a942cfd718fa0c2a20d66c669e13e"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/retrieval.ts",
+    "sha256": "0f71f72c3ddd3da0b2ad50873c1f46442828deda65369984ad6c35d410caccd1"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/retrieval_test.ts",
+    "sha256": "ebe2631a178301b4a5fd873514819d4ef2a43937f3ef570413d012a844381c44"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/retrievedContext.ts",
+    "sha256": "d4899bb11cb8f2aa871e936067f7f4628e8fc891ac4114c3e3c416b49e439843"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/retrievedContext_test.ts",
+    "sha256": "0104c8db31c4a86b8ce6ec5dcee9ef29f73fb27e91f044746287618b489609fb"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/topic.ts",
+    "sha256": "1c3436e8009477c57c8a3a909dd93104cf60bd0d66203df152fa23c777307dca"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/functions/rag-query/lib/topic_test.ts",
+    "sha256": "e9b198b0dfd9088e97fefce89d6dcc6b20b90bfa8e6c883f8bca7b87f392155a"
+  },
+  {
+    "source": "/Users/savargupta/.t3/worktrees/Unify-Web-App/feat-companion-actions-359/supabase/tests/companion-actions/pushSupport.ts",
+    "sha256": "e1856a34f7d134c04c0e7e8bef6f56c399ac489828abb5fa4dcc7d71384c5b4f",
+    "use": "existing push_tokens baseline fixture for one targeted setup recovery"
+  }
+]

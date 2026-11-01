@@ -1,0 +1,10 @@
+
+> unify-front-end@1.6.0 typecheck
+> tsc --noEmit
+
+__tests__/companionActions/planLocalStack.test.tsx(1485,21): error TS2345: Argument of type '(state: AppStateStatus) => void' is not assignable to parameter of type '(state: string) => void'.
+  Types of parameters 'state' and 'state' are incompatible.
+    Type 'string' is not assignable to type 'AppStateStatus'.
+__tests__/companionActions/planLocalStack.test.tsx(1486,47): error TS2345: Argument of type '(state: AppStateStatus) => void' is not assignable to parameter of type '(state: string) => void'.
+  Types of parameters 'state' and 'state' are incompatible.
+    Type 'string' is not assignable to type 'AppStateStatus'.

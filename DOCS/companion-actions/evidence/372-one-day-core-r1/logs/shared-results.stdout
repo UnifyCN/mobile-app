@@ -1,0 +1,92 @@
+{
+  "request": {
+    "action": "apply",
+    "operation_id": "d162880d-8d27-433a-8724-1143cfa9cd24",
+    "authorization": {
+      "kind": "ui_control"
+    },
+    "operations": [
+      {
+        "type": "task.set_state",
+        "task_ref": "sanity:sin-number",
+        "state": "in_progress",
+        "expected_revision": 1
+      },
+      {
+        "type": "task.set_state",
+        "task_ref": "sanity:bank-account",
+        "state": "in_progress",
+        "expected_revision": 1
+      }
+    ]
+  },
+  "expected": "Individual independent-operation results available for Mobile display",
+  "observed": {
+    "http_status": 422,
+    "body": {
+      "error": "invalid_request",
+      "reason": "invalid_operations"
+    }
+  },
+  "after_rejected_batch": [
+    {
+      "task_ref": "sanity:bank-account",
+      "state": "not_started",
+      "revision": 1
+    },
+    {
+      "task_ref": "sanity:sin-number",
+      "state": "not_started",
+      "revision": 1
+    }
+  ],
+  "single_operation_control": {
+    "http_status": 200,
+    "body": {
+      "status": "applied",
+      "receipt": {
+        "kind": "change",
+        "current": true,
+        "undo_of": null,
+        "task_ref": "sanity:sin-number",
+        "undoable": true,
+        "undone_by": null,
+        "created_at": "2026-11-01T01:04:08.361212+00:00",
+        "after_state": "in_progress",
+        "before_state": "not_started",
+        "operation_id": "638b36fd-6569-4679-b9a4-5f14bfa1e8ea",
+        "after_revision": 2,
+        "operation_type": "task.set_state",
+        "before_revision": 1,
+        "after_waiting_reason": null,
+        "before_waiting_reason": null
+      },
+      "results": [
+        {
+          "type": "task.set_state",
+          "state": "in_progress",
+          "task_ref": "sanity:sin-number",
+          "before_state": "not_started",
+          "after_revision": 2,
+          "before_revision": 1,
+          "after_waiting_reason": null,
+          "before_waiting_reason": null
+        }
+      ],
+      "replayed": false,
+      "operation_id": "638b36fd-6569-4679-b9a4-5f14bfa1e8ea"
+    }
+  },
+  "authenticated_persisted_rows_after_control": [
+    {
+      "sanity_checklist_id": "bank-account",
+      "completed": false,
+      "revision": 1
+    },
+    {
+      "sanity_checklist_id": "sin-number",
+      "completed": false,
+      "revision": 2
+    }
+  ]
+}
