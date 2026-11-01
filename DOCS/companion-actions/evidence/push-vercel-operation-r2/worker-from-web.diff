@@ -1,0 +1,21 @@
+--- web-pinned/worker.ts
++++ mobile-candidate/worker.ts
+@@ -1,5 +1,5 @@
+ // Separate worker. A due event proves scheduling only. No provider call here.
+-import { publishedTaskAvailable } from '../../functions/rag-query/lib/context/appContext.ts';
++import { publishedTaskAvailable } from './content-source/context/appContext.ts';
+ import { PUSH_COPY } from './copy.ts';
+ import type postgres from 'npm:postgres@3.4.9';
+ export type Database = ReturnType<typeof postgres>;
+@@ -118,10 +118,9 @@
+       if(current.state!=='dispatching')return;
+       const [n]=await inTime(tx`select n.*,p.token from companion_push_private.enrollments n
+         join public.push_tokens p on p.id=n.token_id and p.user_id=n.user_id
+-        join auth.sessions s on s.id=n.session_id and s.user_id=n.user_id
+         where n.installation_id=${d.installation_id}::uuid and n.user_id=${d.user_id}::uuid and n.generation=${d.generation}::uuid
+         and n.token_id=${d.token_id}::uuid and n.enabled and n.revoked_at is null
+-        and companion_push_private.session_authorized(n.session_id,n.user_id) for share of n,p,s`);
++        and companion_push_private.lock_session_authorized(n.session_id,n.user_id) for share of n,p`);
+       const [p]=await inTime(tx`select * from companion_push_private.settings for share`);
+       const prevent=async(reason:string)=>{
+         signal.throwIfAborted();

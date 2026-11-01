@@ -1,0 +1,468 @@
+{
+  "base": "17a12a7f75477f33f93805fe9894a61847ed538f",
+  "count": 92,
+  "companion_count": 11,
+  "all_unchanged": true,
+  "files": [
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_day13_reminder.sql",
+      "sha256": "d2e2bbb0c195d8660bcedff09f997a6d70f10983039dfe5c2fd2b218712b6ee3",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_fix_rls_recursion.sql",
+      "sha256": "3724237ce802b35ba90c33881811410ff49c4064c555c24ae7354419cb73d8af",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_fix_rls_recursion_v2.sql",
+      "sha256": "9f0dde411a3a820975ca0c45b9b0eee078890e7d3ecf29bbfd8d3ddd2eea7ad4",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_ice_breaker_prompts.sql",
+      "sha256": "6dc56eaa519f5c5845cfb030e39965fcddafdb90d7d59e394701474e66141234",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_push_tokens.sql",
+      "sha256": "05df4553ce6043a796d879c22849a288f85a4898d339cf0645de35d7290155d4",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250109_z_fix_rls_circles_messages.sql",
+      "sha256": "04be734798c3eea79a2e5b03fa8d31f653edb35bb11ec88339f8d2e633fdba5b",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250115_community_matching.sql",
+      "sha256": "6d478575db7c2c5554a72b6ab8e0034de728ff7c4afbe669dbc5a0d64fd6926d",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250201_user_practice_progress.sql",
+      "sha256": "38e86768dfa35ccd0aea2c612df2bf2d99fcc107098e5c35d53a41bd282d5d26",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250201_user_task_progress.sql",
+      "sha256": "aafd3310a7ab5f017163e478b7e256fe3ee4fc3ab48c699028c2a9754fd0edbc",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250201_user_tasks_sanity_checklist_id.sql",
+      "sha256": "9372c53f8deb91553b99fd1d433d0bb75c1f07710b2dc0d20be19dd7f70e1a21",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250201_user_tasks_sanity_unique.sql",
+      "sha256": "b87e2c231d0b5d5729a41218972b7dbe1a55d34bcb201afddaa190a96aeb8177",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20250203_delete_user_function.sql",
+      "sha256": "845516f81756c87d0307e6f9f3d580428fae37686b843db91dbb75871dc6b857",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260215_custom_checklist_tasks.sql",
+      "sha256": "fe0a447537f72f2737881558194a482f86ee3dc4492f3dc00d8cfbdd83295037",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260215_group_members_profile_visibility.sql",
+      "sha256": "e4603d61a615a9adc90c517bbdad843ff2e7d1dd26e2a86b49ad941658fe4531",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260301_blocked_users.sql",
+      "sha256": "ed438b82bf22cdaf64818d5892f7551796fd835d3ed66081ccccfcded34e0067",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260319000000_create_lesson_highlights.sql",
+      "sha256": "95a1bac59a61f3a2731242273f3fb2efc7cd61ead61fffdeadec1255de9e2a58",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260319000001_add_default_user_id_to_lesson_highlights.sql",
+      "sha256": "07807473427e53d22a6578a75351b93b15000ed9cd81d05f0624e8e69781048e",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260319000002_add_navigation_columns_to_lesson_highlights.sql",
+      "sha256": "c5717a8f1d00046a6f0cb513cda96238c849047da4cce9c988b607903b8c82ac",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260319_feed_metadata_and_rag_perf.sql",
+      "sha256": "98de7d624728640d66148d348f3414873cbc0cab95961c23c58209705c2e0b82",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_fix_post_metadata_comment_counts.sql",
+      "sha256": "c788024c3d88ed7d80417f39ba9098e75109a6242f059ed9fea70c7a5dba846e",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_increment_chatbot_usage_atomic.sql",
+      "sha256": "57c8b9213ae62c1ffbb537eb8cdcaa0e506778a69eb76092dc942cabb02798de",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_rag_ingestion_pipeline.sql",
+      "sha256": "e2147cba4ac9d3571bf0c3c25292b119b825a82e3aef8688726918d2a997a2c9",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_z_matchmake_circles_schedule.sql",
+      "sha256": "4d6d3d70cdbf3e4b2dbea025e7794eeb5a450102f79faf749fbe256fa15d1d57",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zz_matchmake_circles_service_role_auth.sql",
+      "sha256": "df10f92e4935aebb8d3bd5d7600763362127279ea277b5f1d412d0f248b42b04",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zzz_cleanup_legacy_matchmaking_cron.sql",
+      "sha256": "e391a7278b78582b4addc7317c0b90ae8ec873fd9d51a078528bd355a060516f",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zzzz_matchmake_circles_use_live_slug.sql",
+      "sha256": "c8949bc95294986ed51bef67cd4ad7e45a7f4fe2419eb4d9bc5ac2f93ebf0cfd",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zzzzz_circles_matching_refresh.sql",
+      "sha256": "4bd8e30903177c3878ad1e03f1ffbcc41daf75f374b4c551807084f3ab745823",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zzzzzz_matchmake_circles_scheduler_auth_fallback.sql",
+      "sha256": "e14f7a98e4ecacb1bd0b7746ffb05dda67d1a79b202b8710bff9aaf313bcd925",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260320_zzzzzzz_matchmake_circles_review_fixes.sql",
+      "sha256": "94a1f855d73d6f94b9f944fb95831c9c39e9a1ab4dd0f8cfed96a87761832c14",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260321_lesson_page_saves.sql",
+      "sha256": "86f87a931ff3a2b24446f7fb95bbdf93f8e8289ead6da3a1c673c9953dfbb59e",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260322000000_merge_highlights_rpc.sql",
+      "sha256": "d0dfabfbf1ffe19102cb2d4c78fa2df8db252bcf7a35d8da7dc7dc027d9af5e7",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260323_add_learn_reminder_tracking.sql",
+      "sha256": "585f18cfbf73cb0c61a9e1013cbb39f7dea52ebab0ae5916d7ad7a05e59410c9",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260323_z_learn_reminders_schedule.sql",
+      "sha256": "7503252c18a35d53d184a64e1439022576392aa2bd57f687348b07a561736978",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260324_create_daily_tips.sql",
+      "sha256": "6f23e6f898f15c06a52a6be8a45f798adfdf23d7262086b46027480686251e3f",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260324_z_daily_tips_schedule.sql",
+      "sha256": "6911e3376dfd70f81a62bc753b10be15e7f2d99b2b1ea6cc8f1001cc06fafa89",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260329_add_city_province_to_onboarding.sql",
+      "sha256": "fc012d26d37401b19b5e038b08171fa90b83c7ea137df7272909c3cb039c1157",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260329_checklist_task_order.sql",
+      "sha256": "258c7fb6437eae8c7faf63d6a95bb147af04e65d61e905526d4e25b09d044f36",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260411_daily_tips_per_user.sql",
+      "sha256": "19709f7dcf13b79a26f2e8ec121b87ad4ef838d28f5b409fef783f63106efa13",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260413_learn_modules.sql",
+      "sha256": "e6d33b63a8a6aed3f981bb1ab46d2f9873e6e45f69e670eb0ee5b5075968c7b8",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260413_learn_progress.sql",
+      "sha256": "48fc4cfcf72f95e95bbc2b247a9eecb0735bd117aab5906bac661f220bbddb9b",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260414_seed_learn_modules_metadata.sql",
+      "sha256": "5d1ab899220d9bac9b5e2af3964e714d938c48ded07eb25c1ddf30c4d473f18b",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260414_z_sync_learn_modules_schedule.sql",
+      "sha256": "7604f6bb06fd18fca5b62bb10f82d4e3ce73d2ed61aa7bb36ec8dfda1754e128",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260414_zzz_circle_lifecycle_cron.sql",
+      "sha256": "7a90ce9e89ef6f8734650d0f1227dfbd7f94bf640618d5fdcbfda79c0c8c9502",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260414_zzzz_security_hardening.sql",
+      "sha256": "ce1e2492d7a897bc20ed67d74229737c8657e5b464afdb1641573874b2caf7d3",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260414_zzzzz_security_hardening_v2.sql",
+      "sha256": "f3432c69ef7d31ac77e983bccc048e7b9ee30820600ce7efaffbe6d024b259bb",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260425_community_notifications_actor_select.sql",
+      "sha256": "e4c47549d6943ef7e9fc43be68bc0173f047cd66725545e1e3ec6667b157271c",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260425_post_saves_unique_user_post.sql",
+      "sha256": "1e17820fc9fc5cc122dfbfa0548d8a38039081ea2c2b8f0a5bfd231e1d5789f7",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260428165642_cascade_delete_comment_replies.sql",
+      "sha256": "c07a877f3211f06e3c8946556233633c0bf24d05005d1991aa6a8639bb111f7f",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260428220000_referrals.sql",
+      "sha256": "fbeee794150525d5e60dc05a9562ca92da43070a6267ef1c75b2355a13743ba5",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260429020000_referrals_generate_invite_code_concurrent_safe.sql",
+      "sha256": "1436bf6beeed1ddffc9322d8b3fd3548abdcf9ef1281a5eb60ada1d6a469f5f9",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260511_daily_tips_user_id_cascade.sql",
+      "sha256": "3410301891f8fc16eabe5699845186ebc72c1b96faf27d0cd62d85945c729761",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260511_user_fk_cascade_audit.sql",
+      "sha256": "076dd6bf180956cb73ee8632277ed1c7a812b5e8efcd14e84bbd0d6cd6c09769",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260514_email_assets_bucket.sql",
+      "sha256": "a6961e06c328219960c20e7b24c892407106bca3b889702a31470e9a3bfb669a",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260514_welcome_email_sent_at.sql",
+      "sha256": "855f295bf9c6f08ff3a7db8597568181150c466b21b33a89c33120f5b250f564",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260518000000_interview_picker_schema.sql",
+      "sha256": "242c3544324dcf57fe1f3ca6149f98e01914230264a93b3fecc6f94cce777cd6",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260518000001_interview_picker_cron.sql",
+      "sha256": "2fb1a76a4217e62537e2c56dfaeeeb001cd0bf14c89c2c6e716ae8dfee10e758",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260518_add_first_name_to_users.sql",
+      "sha256": "c258269b29d322d2510c6ede72eb00cc06dedbc7145e6ed35a3e1387bfcbc078",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260518_first_name_constraints.sql",
+      "sha256": "1613fcc3eebed2833d76b037ed7b94168d213660343b2ca9a6d52f75603f7d0c",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260518_grant_update_first_name.sql",
+      "sha256": "304330a6104e322a8b502cd25ea2faac9b4777bcf88d002b5571a429a4d79543",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260523_welcome_email_cron.sql",
+      "sha256": "a615cd84a884aabd0859cb3d5332b3c0a27ecd30fef3eb79f1427a819026f276",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260523_welcome_email_cron_rate_limit.sql",
+      "sha256": "2356f7ba30231eb25a8e574ceb2eda582ace47f3b324a08b27f480a912a33024",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260523_welcome_email_skip_backfill.sql",
+      "sha256": "cbc2e896889441d1b8545cd34cf7010f8334638f6832529ce4451aa6c2814e2a",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260621000000_fix_chatbot_usage_counting.sql",
+      "sha256": "9a9b8e2dc8cabc0ec568f4ba7877ee6d5cdc3e5575118fd24c8151d365988b81",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260705_user_practice_answers.sql",
+      "sha256": "28b4a71d4ed12aad8c265c1a0b02acbcfdfb2fb6f41b733471df2ca3e2f4f227",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260816215836_restrict_chatbot_usage_rpc_execution.sql",
+      "sha256": "95be6f925f8f819c208976912c3f6e4cc9190f15e5ddbea89ebe8b923c53356d",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260903000000_normalize_province_values.sql",
+      "sha256": "8847f685eb69bc76ba09a58a01f4be74f4d4f34a476ac78278313e6c3f643794",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20260924000000_preferred_language_add_ar_fr_ca_pa.sql",
+      "sha256": "c7878cff4b5b55845329af0e653118bd8c7711fc4f0f21429a97a7a373737ace",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261012192046_checklist_task_dismissals.sql",
+      "sha256": "366aabc3e39aee34f5303d1401dd8b9e2d752ffb4bc4f2c5711398146c55cfd4",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261023000000_learn_review_and_ending_resume.sql",
+      "sha256": "a81beaa139cbf17a161bbe82ea7d330c20c2b5ddf5c9e42726326a1f5a5f0f4a",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024043812_ingest_documents_single_scheduled_call.sql",
+      "sha256": "d42caa760c0dad5adc6c0f8254241ad6d48a50cd8b17ed9b4826d8c0a5b8d80e",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024044650_crawl_sources_province.sql",
+      "sha256": "6395fc163e848d951c8b3ab4c1291cb2d2ee61bcc0262aeb701aec5abc53825f",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024044652_match_chunks_province_filter.sql",
+      "sha256": "1c87bd0bbcd89cf80b3dd80ca69a5c30e19239eb8cad7d27927177cebebbf22f",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024044654_seed_province_crawl_sources.sql",
+      "sha256": "88b03a019b029cc098f01bc41fce1a8a4771c9030a5725bdcac3148fc41ce08e",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024052354_crawl_sources_record_sources.sql",
+      "sha256": "dbfdc06408aaad343c2c122fba6827723a0a21790091c5f79a842b6ccbe15792",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024052357_seed_ircc_record_sources.sql",
+      "sha256": "2c6bde90f1221bb0718be0b36a5cf7f40bfae5227f0b4eeb37a549ceaaaad8fd",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024052950_match_chunks_chunk_source_url.sql",
+      "sha256": "1eaa76c315e8ad78d3493a93f894e2b4de78104cbcf148cd1879e80556ded201",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024061514_ingest_refresh_generations.sql",
+      "sha256": "656a29449287fe778c72cb4dc7bd7bb269dcc40060fd95fd8ef7921da813ce43",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024172725_ingest_documents_dedicated_service_key.sql",
+      "sha256": "e8829e70c671ad8bb0df3350b630471b4519134cd892cb89123c1d57254e2817",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261024185043_pause_circles.sql",
+      "sha256": "5f889dddc71355416e3705a8b763ce4dd90717cfdac9a018dc824bb43b8159dc",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261025190326_qwen_embedding_model_guards.sql",
+      "sha256": "f2082f1cd17c9620b4b543d184c5aa7364e12e87dd335d52e924faacce20d00d",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261025235536_companion_task_actions.sql",
+      "sha256": "8f368d52d58d834d22e7ebcb77db1206fe42086e243fac8da0f8bbfa05402111",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261026165156_companion_task_create.sql",
+      "sha256": "6eb96ec05acadb131eef7c5540f00268aeb97273d03c9894229c74fc693e6808",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261027183338_companion_settlement_plan.sql",
+      "sha256": "7fc13153d88cce5eaeb46989ff4e25063d7162d7aa2b9e8a04bf5a2df373119d",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261027183644_companion_task_steps.sql",
+      "sha256": "bac75f98cb50603449163b9efaae2698ccaa6cc20a9dc9b39cd52ad3c0803de8",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261028001530_companion_task_edit.sql",
+      "sha256": "1876cfcc463af24d1ac3405e9392c6a16a56d259104c8c9b5f8e6d0f180b98e6",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261028004902_companion_saved_details.sql",
+      "sha256": "26772c2725b95d7b0bc2c9e323bcc36ddcd626e0f606d89931899adab2d97374",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261028025026_companion_task_remove.sql",
+      "sha256": "2fa1babd94feb61f4acc48269311c7ce9acbca5bf568466b30fd66a15dce8a9b",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261029175439_companion_task_reminders.sql",
+      "sha256": "1d345eadd360b7fa196afc90af62dac38e02e6b4878acaabe7e1581f87d0c5b7",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261030181040_companion_reminder_push.sql",
+      "sha256": "59b464552db6319b0e33497e5fa34ea2fe7e67c5a6f6059e198567ee1bb1999b",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261031055422_companion_profile_changes.sql",
+      "sha256": "3c90110c7c7c44f0ddadd45b5bc24f8874d8943a29761f9c7ff5b9e5f459e8be",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/20261101024721_companion_allowance_and_cohort.sql",
+      "sha256": "3dfb3c63cf27a21415cdc9388503585b06ce814f758bf87020e612ca2cd687c3",
+      "unchanged": true
+    },
+    {
+      "path": "unify-front-end/supabase/migrations/create_vector_search_function.sql",
+      "sha256": "fa9e9ab7b52aba4216ce7deb68a625a82c254930eca108298817472d4981c3bc",
+      "unchanged": true
+    }
+  ]
+}

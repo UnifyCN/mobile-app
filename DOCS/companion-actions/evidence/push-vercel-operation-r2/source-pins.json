@@ -1,0 +1,55 @@
+{
+  "mobile_base": "17a12a7f75477f33f93805fe9894a61847ed538f",
+  "web_base": "fff4a93ae58c9505f166b2188f7456e7435dc824",
+  "files": [
+    {
+      "source": "supabase/workers/companion-push/README.md",
+      "sha256": "3bf04646c21d4a24552a7f9e53347cbf45c1eb773546cad39a820ba96654f37f"
+    },
+    {
+      "source": "supabase/workers/companion-push/supervisor.ts",
+      "sha256": "95b3215e326211bf5ab815f849be7fd516e20bdd61ad6a30b7a0262bdfa9262d"
+    },
+    {
+      "source": "supabase/workers/companion-push/process.ts",
+      "sha256": "26c7a1736278bf556c013914f6a0a50a6880724769061d4fb745a13ec32b6449"
+    },
+    {
+      "source": "supabase/workers/companion-push/worker.ts",
+      "sha256": "f8ad77fd0deae255af70dd02a2218999b781cce7698ab9e5f52bcf2267db14f3"
+    },
+    {
+      "source": "supabase/workers/companion-push/copy.ts",
+      "sha256": "a6647887d3e4d561e925a305b57043515fb09036d67c6cdf209a509ae7d15f03"
+    },
+    {
+      "source": "supabase/workers/companion-push/deno.lock",
+      "sha256": "7264c84a0808153ed2eec3db856de15423766c0c1f8379823cc7c6b556d51717"
+    },
+    {
+      "source": "supabase/functions/rag-query/lib/context/appContext.ts",
+      "destination": "unify-front-end/supabase/workers/companion-push/content-source/context/appContext.ts",
+      "sha256": "e6a3f2378b2c758946faa413e5e9a272f492006d0cb70537af736fe412f77a99"
+    },
+    {
+      "source": "supabase/functions/rag-query/lib/dates.ts",
+      "destination": "unify-front-end/supabase/workers/companion-push/content-source/dates.ts",
+      "sha256": "2a85e7e5c3842d647a35b6d58000829b795ffb44012c89812eda9f11b72fd60f"
+    },
+    {
+      "source": "supabase/functions/rag-query/lib/province.ts",
+      "destination": "unify-front-end/supabase/workers/companion-push/content-source/province.ts",
+      "sha256": "4460fa94c98ab7879b115ef0301ca466ce8122ce65f2486c1346e294c8848937"
+    },
+    {
+      "source": "supabase/functions/rag-query/lib/context/registry.ts",
+      "destination": "unify-front-end/supabase/workers/companion-push/content-source/context/registry.ts",
+      "sha256": "ce36a73f5db5e17650aa47ecb9871beb7a67d99607a045a61f0325bc4be2431d"
+    },
+    {
+      "source": "supabase/functions/rag-query/lib/context/contract.ts",
+      "destination": "unify-front-end/supabase/workers/companion-push/content-source/context/contract.ts",
+      "sha256": "c1ddc1bbcd74959abdf5b9bd0a3005b5b37924f63a21e107055e1b087ef3605c"
+    }
+  ]
+}
