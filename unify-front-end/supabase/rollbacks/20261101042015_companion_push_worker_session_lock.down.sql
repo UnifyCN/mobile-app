@@ -54,5 +54,21 @@ revoke execute on function companion_push_private.lock_session_authorized(uuid,u
 drop function companion_push_private.lock_session_authorized(uuid,uuid);
 revoke usage on schema public, companion_push_private, companion_reminder_private from companion_push_worker;
 revoke connect on database postgres from companion_push_worker;
+-- Restore only the PUBLIC and direct API-role ACL entries changed on apply.
+do $$
+declare f record; principal text;
+begin
+  for f in select * from companion_push_private.worker_public_function_grants loop
+    if to_regprocedure(f.signature) is null then
+      raise exception 'recorded function is missing: %',f.signature;
+    end if;
+    execute format('grant execute on function %s to public',f.signature);
+    foreach principal in array f.added_api_roles loop
+      execute format('revoke execute on function %s from %I',f.signature,principal);
+    end loop;
+  end loop;
+end $$;
+drop table companion_push_private.worker_public_function_grants;
+
 drop role companion_push_worker;
 commit;

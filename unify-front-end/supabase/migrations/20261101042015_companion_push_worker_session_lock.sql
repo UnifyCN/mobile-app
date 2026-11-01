@@ -116,5 +116,47 @@ create policy push_worker_never_write on public.push_tokens as restrictive
   for update to companion_push_worker using(true) with check(false);
 create policy push_worker_never_write on public.user_onboarding_profiles as restrictive
   for update to companion_push_worker using(true) with check(false);
+-- NOINHERIT does not exclude PUBLIC. A direct login can set request.jwt.claims.
+-- Remove effective PUBLIC definer calls outside the three required helpers.
+-- Retain the previous API-role access and record each added ACL for exact undo.
+create table companion_push_private.worker_public_function_grants (
+  signature text primary key,
+  added_api_roles text[] not null
+);
+alter table companion_push_private.worker_public_function_grants enable row level security;
+revoke all on companion_push_private.worker_public_function_grants from public,anon,authenticated,service_role,companion_push_worker;
+do $$
+declare f record; principal text; added text[];
+begin
+  for f in
+    select p.oid,format('%I.%I(%s)',n.nspname,p.proname,oidvectortypes(p.proargtypes)) signature
+    from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where p.prosecdef and has_schema_privilege('companion_push_worker',n.oid,'USAGE')
+      and has_function_privilege('companion_push_worker',p.oid,'EXECUTE')
+      and exists(select 1 from aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
+        where a.grantee=0 and a.privilege_type='EXECUTE')
+  loop
+    added:=array[]::text[];
+    foreach principal in array array['anon','authenticated','service_role'] loop
+      if not exists(select 1 from pg_proc p,
+        lateral aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
+        where p.oid=f.oid and a.grantee=principal::regrole and a.privilege_type='EXECUTE') then
+        execute format('grant execute on function %s to %I',f.signature,principal);
+        added:=array_append(added,principal);
+      end if;
+    end loop;
+    insert into companion_push_private.worker_public_function_grants values(f.signature,added);
+    execute format('revoke execute on function %s from public',f.signature);
+  end loop;
+  if exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where p.prosecdef and has_schema_privilege('companion_push_worker',n.oid,'USAGE')
+      and has_function_privilege('companion_push_worker',p.oid,'EXECUTE')
+      and p.oid not in ('companion_push_private.lock_session_authorized(uuid,uuid)'::regprocedure,
+        'companion_push_private.session_authorized(uuid,uuid)'::regprocedure,
+        'public.companion_step_parent(uuid,text)'::regprocedure)) then
+    raise exception 'unexpected effective worker definer privilege';
+  end if;
+end $$;
+
 commit;
 -- No password or LOGIN enablement here. No settings, Cron, or provider change.

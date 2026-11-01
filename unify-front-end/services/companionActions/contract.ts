@@ -148,6 +148,7 @@ export interface TaskReceipt {
     reminderId: string;
     remindAt: string | null;
     timeZone: string | null;
+    wallTime?: string | null;
     stopped: boolean;
   };
   operationId: string;
@@ -659,6 +660,7 @@ export function parseReceipt(raw: unknown): TaskReceipt {
             reminderId: str(raw.reminder, 'reminder_id'),
             remindAt: strOrNull(raw.reminder, 'remind_at'),
             timeZone: strOrNull(raw.reminder, 'time_zone'),
+            wallTime: strOrNull(raw.reminder, 'wall_time'),
             stopped: raw.reminder.scheduling === 'stopped',
           },
         }

@@ -77,6 +77,31 @@ Deno.test('exact worker login: allowed queries, denied queries, and concurrent A
     assert.equal((await worker`select current_user name`)[0].name, 'companion_push_worker');
     const w = worker;
 
+    // regclass numeric IDs can bypass namespace lookup. A missing schema grant
+    // alone does not remove PUBLIC nextval/setval authority.
+    const sequences = await admin`select c.oid::text id from pg_class c
+      join pg_namespace n on n.oid=c.relnamespace where c.relkind='S'
+      and n.nspname not in ('pg_catalog','information_schema')`;
+    for (const sequence of sequences) {
+      await denied(() => w`select nextval(${sequence.id}::oid::regclass)`);
+      await denied(() => w`select setval(${sequence.id}::oid::regclass,1)`);
+    }
+
+    // A direct login can fabricate JWT settings. PUBLIC definer execution is
+    // therefore real authority, even for a NOINHERIT role.
+    await denied(() => w.begin(async (tx) => {
+      await tx`select set_config('request.jwt.claim.sub',${user},true)`;
+      await tx`select public.delete_user()`;
+    }));
+    const privileged = await admin`select n.nspname,p.proname from pg_proc p
+      join pg_namespace n on n.oid=p.pronamespace
+      where p.prosecdef and has_schema_privilege('companion_push_worker',n.oid,'USAGE')
+      and has_function_privilege('companion_push_worker',p.oid,'EXECUTE')
+      and p.oid not in ('companion_push_private.lock_session_authorized(uuid,uuid)'::regprocedure,
+        'companion_push_private.session_authorized(uuid,uuid)'::regprocedure,
+        'public.companion_step_parent(uuid,text)'::regprocedure)`;
+    assert.deepEqual([...privileged], [], 'unexpected effective privileged function execution');
+
     await w.begin(async (tx) => {
       assert.equal((await tx`select * from companion_push_private.settings for share`).length, 1);
       assert.equal((await tx`select * from companion_reminder_private.events where reminder_id=${reminder} for update`).length, 1);

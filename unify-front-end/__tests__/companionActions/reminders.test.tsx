@@ -93,6 +93,7 @@ const receipt = (id: string) => ({
     reminder_id: 'reminder-1',
     remind_at: '2027-11-07T01:30:00-04:00',
     time_zone: 'America/New_York',
+    wall_time: '2027-11-07T01:30:00',
     scheduling: 'registered',
   },
 });
@@ -166,7 +167,7 @@ it('reviews offset and named zone, saves only the exact approved revision and pr
   fill();
   fireEvent.press(screen.getByRole('button', { name: 'Review reminder' }));
   await screen.findByRole('button', { name: 'Save reminder' });
-  expect(screen.getByText(/GMT-04:00.*America\/New_York/)).toBeTruthy();
+  expect(screen.getByText(/UTC-04:00.*America\/New_York/)).toBeTruthy();
   expect(calls.filter(b => b.action === 'apply')).toHaveLength(0);
   fireEvent.press(screen.getByRole('button', { name: 'Save reminder' }));
   await screen.findByText('Reminder saved.');
@@ -187,11 +188,11 @@ it('reviews offset and named zone, saves only the exact approved revision and pr
     screen.getByLabelText('Date and time with UTC offset').props.value
   ).toBe('2027-11-07T01:30-04:00');
 });
-it('rejects a DST gap and an offset-free fold without making a write or draft request', async () => {
+it('rejects an invalid calendar and an offset-free fold before a draft request', async () => {
   mount();
   fill();
   const input = screen.getByLabelText('Date and time with UTC offset');
-  for (const invalid of ['2027-03-14T02:30-05:00', '2027-11-07T01:30']) {
+  for (const invalid of ['2027-02-30T02:30-05:00', '2027-11-07T01:30']) {
     fireEvent.changeText(input, invalid);
     fireEvent.press(screen.getByRole('button', { name: 'Review reminder' }));
     await screen.findByRole('alert');
@@ -318,3 +319,31 @@ it.each([
     }
   }
 );
+
+it('reviews and renders the saved wall time despite old device zone rules', async () => {
+  const RealFormat = Intl.DateTimeFormat;
+  const stale = function(locale: string, options: Intl.DateTimeFormatOptions = {}) {
+    return new RealFormat(locale, { ...options, timeZone: options.timeZone === 'America/Vancouver' ? 'Etc/GMT+8' : options.timeZone });
+  };
+  Intl.DateTimeFormat = stale as typeof Intl.DateTimeFormat;
+  try {
+    override = body => body.action === 'apply' ? { status: 200, body: { receipt: {
+      ...receipt(String(body.operation_id)), reminder: {
+        reminder_id: 'reminder-1', remind_at: '2026-11-03T17:30:00Z',
+        time_zone: 'America/Vancouver', wall_time: '2026-11-03T10:30:00', scheduling: 'registered',
+      },
+    } } } : undefined;
+    mount();
+    fireEvent.changeText(screen.getByLabelText('Date and time with UTC offset'), '2026-11-03T10:30-07:00');
+    fireEvent.changeText(screen.getByLabelText('Time zone'), 'America/Vancouver');
+    fireEvent.press(screen.getByRole('button', { name: 'Review reminder' }));
+    await screen.findByRole('button', { name: 'Save reminder' });
+    expect(screen.getByText(/10:30.*UTC-07:00.*America\/Vancouver/)).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Save reminder' }));
+    await screen.findByText('Reminder saved.');
+    expect(screen.getByText(/10:30.*UTC-07:00.*America\/Vancouver/)).toBeTruthy();
+    expect(calls.find(b => b.action === 'apply')?.operations).toEqual([
+      expect.objectContaining({ remind_at: '2026-11-03T10:30:00-07:00', wall_time: '2026-11-03T10:30:00' }),
+    ]);
+  } finally { Intl.DateTimeFormat = RealFormat; }
+});

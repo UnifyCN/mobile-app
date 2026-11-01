@@ -456,7 +456,7 @@ describe('N2: a live text-size change reflows the mounted screen', () => {
       setFontScale(scale);
       expect(screen.getByTestId('companion-task-sheet')).toBe(sheet);
       expect(screen.getByText('Get a phone plan')).toBeTruthy();
-      expect(screen.getByRole('radio', { name: 'Waiting' })).toBeSelected();
+      expect(screen.getByRole('radio', { name: 'Waiting' })).toBeChecked();
       expect(screen.getByPlaceholderText(en.taskActions.waitingPlaceholder)).toBe(reason);
       expect(reason.props.value).toBe('Waiting for a reply from the provider');
       expect(composer.props.value).toBe('Retained composer draft');

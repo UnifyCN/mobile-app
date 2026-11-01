@@ -174,45 +174,61 @@ export function reminderTime(
   const canonical = wall + match[3];
   const date = new Date(canonical);
   if (!Number.isFinite(date.getTime())) return null;
+  // Validate the calendar independently of the device's time-zone rules.
+  const calendar = new Date(wall + 'Z');
+  if (
+    !Number.isFinite(calendar.getTime()) ||
+    calendar.toISOString().slice(0, 19) !== wall
+  )
+    return null;
   try {
-    const parts = new Intl.DateTimeFormat('en-CA', {
-      timeZone: zone,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hourCycle: 'h23',
-    }).formatToParts(date);
-    const p = Object.fromEntries(parts.map(p => [p.type, p.value]));
-    if (
-      `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}` !== wall
-    )
-      return null;
+    new Intl.DateTimeFormat('en', { timeZone: zone });
   } catch {
     return null;
   }
   return { instant: canonical, wall };
 }
-/** Always format in the saved zone, including its UTC offset. Device-zone changes do not move it. */
+/** Use the saved wall and instant together. Old device rules cannot move either. */
 export function reminderLabel(
-  reminder: { remindAt: string; timeZone: string },
+  reminder: { remindAt: string; timeZone: string; wallTime?: string | null },
   locale: string
 ): string {
-  return (
-    new Intl.DateTimeFormat(locale, {
-      timeZone: reminder.timeZone,
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZoneName: 'longOffset',
-    }).format(new Date(reminder.remindAt)) +
-    ' · ' +
-    reminder.timeZone
-  );
+  const wall = reminder.wallTime;
+  const local = wall ? new Date(wall + 'Z') : null;
+  const instant = new Date(reminder.remindAt);
+  if (
+    local &&
+    Number.isFinite(local.getTime()) &&
+    Number.isFinite(instant.getTime())
+  ) {
+    const minutes = Math.round((local.getTime() - instant.getTime()) / 60000);
+    if (Math.abs(minutes) <= 14 * 60) {
+      const absolute = Math.abs(minutes);
+      const offset =
+        'UTC' +
+        (minutes < 0 ? '-' : '+') +
+        String(Math.floor(absolute / 60)).padStart(2, '0') +
+        ':' +
+        String(absolute % 60).padStart(2, '0');
+      return (
+        new Intl.DateTimeFormat(locale, {
+          timeZone: 'UTC',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }).format(local) +
+        ' ' +
+        offset +
+        ' · ' +
+        reminder.timeZone
+      );
+    }
+  }
+  // Older receipts can lack wall_time. Show their exact instant without deriving
+  // a new local time from the device's possibly changed zone rules.
+  return instant.toISOString() + ' · ' + reminder.timeZone;
 }
 
 export function parseSuggestedReminder(

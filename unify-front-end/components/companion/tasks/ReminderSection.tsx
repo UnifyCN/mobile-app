@@ -103,7 +103,11 @@ export function ReminderSection({
           <Text>
             {op.type === 'reminder.schedule'
               ? reminderLabel(
-                  { remindAt: op.remind_at, timeZone: op.time_zone },
+                  {
+                    remindAt: op.remind_at,
+                    timeZone: op.time_zone,
+                    wallTime: op.wall_time,
+                  },
                   i18n.language
                 )
               : t('reminders.cancelConfirm')}
@@ -154,6 +158,7 @@ export function ReminderSection({
                 {
                   remindAt: receipt.reminder.remindAt,
                   timeZone: receipt.reminder.timeZone,
+                  wallTime: receipt.reminder.wallTime,
                 },
                 i18n.language
               )}

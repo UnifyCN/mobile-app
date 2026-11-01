@@ -137,6 +137,7 @@ export function TaskActionCards({
                       {
                         remindAt: p.operation.remind_at,
                         timeZone: p.operation.time_zone,
+                        wallTime: p.operation.wall_time,
                       },
                       i18n.language
                     )
