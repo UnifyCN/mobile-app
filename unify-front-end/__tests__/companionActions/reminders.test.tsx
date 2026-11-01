@@ -170,6 +170,10 @@ it('reviews offset and named zone, saves only the exact approved revision and pr
   expect(calls.filter(b => b.action === 'apply')).toHaveLength(0);
   fireEvent.press(screen.getByRole('button', { name: 'Save reminder' }));
   await screen.findByText('Reminder saved.');
+  const savedTime = screen.getByLabelText(/GMT-04:00.*America\/New_York/);
+  expect(savedTime.props.accessible).toBe(true);
+  expect(savedTime.props.focusable).toBe(true);
+  expect(savedTime.props.accessibilityLabel).toContain('America/New_York');
   const write = calls.find(b => b.action === 'apply')!;
   expect(write.authorization).toEqual({
     kind: 'approved_proposal',

@@ -149,15 +149,15 @@ export function ReminderSection({
             )}
           </Text>
           {receipt.reminder?.remindAt && receipt.reminder.timeZone ? (
-            <Text>
-              {reminderLabel(
+            <ReminderTime
+              label={reminderLabel(
                 {
                   remindAt: receipt.reminder.remindAt,
                   timeZone: receipt.reminder.timeZone,
                 },
                 i18n.language
               )}
-            </Text>
+            />
           ) : null}
           {receipt.reminder &&
           (!receipt.current ||
@@ -202,6 +202,17 @@ export function ReminderSection({
     </View>
   );
 }
+
+function ReminderTime({ label }: { label: string }) {
+  return (
+    <View accessible focusable accessibilityLabel={label}>
+      <Text accessible={false} importantForAccessibility='no'>
+        {label}
+      </Text>
+    </View>
+  );
+}
+
 export function ReminderList({
   view,
   taskRef,
@@ -229,7 +240,7 @@ export function ReminderList({
       {items.map(r => (
         <View key={r.reminderId} style={styles.item}>
           <Text>{r.title ?? t('taskActions.existingTask')}</Text>
-          <Text>{reminderLabel(r, i18n.language)}</Text>
+          <ReminderTime label={reminderLabel(r, i18n.language)} />
           <Text>
             {t(
               r.status !== 'pending'
