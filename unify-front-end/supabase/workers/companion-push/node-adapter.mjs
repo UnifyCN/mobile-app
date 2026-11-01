@@ -90,32 +90,54 @@ export async function handlePush(request, mode = 'cycle') {
   if (busy) return response(409, { ok: false });
   busy = true;
   const signal = AbortSignal.any([request.signal, AbortSignal.timeout(CYCLE_TIMEOUT_MS)]);
-  let scratch;
-  try {
-    const files = await runtimeFiles();
-    scratch = await mkdtemp(path.join(tmpdir(), 'unify-push-'));
-    const cache = path.join(scratch, 'cache');
-    if (mode === 'readiness') return await readiness(files, signal, cache);
-    await cp(path.join(files.runtime, 'cache'), cache, { recursive: true });
-    // This is the full child environment. It excludes service-role/JWT secrets,
-    // Node/Deno injection options, fixture overrides, and unrelated app secrets.
-    const childEnv = { DENO_DIR: cache, DENO_NO_UPDATE_CHECK: '1', DENO_NO_PACKAGE_JSON: '1',
-      COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_DATABASE_URL: env.COMPANION_PUSH_DATABASE_URL };
-    for (const key of ['EXPO_ACCESS_TOKEN', 'SANITY_PROJECT_ID', 'SANITY_DATASET']) {
-      if (env[key]) childEnv[key] = env[key];
+  let abort;
+  const cancelled = new Promise((_, reject) => {
+    abort = () => reject(signal.reason);
+    signal.addEventListener('abort', abort, { once: true });
+    if (signal.aborted) abort();
+  });
+  // Keep scratch ownership inside this task. If filesystem work settles after
+  // the HTTP deadline, its finally block still removes the owned directory.
+  const work = async () => {
+    let scratch;
+    try {
+      signal.throwIfAborted();
+      const files = await runtimeFiles();
+      signal.throwIfAborted();
+      scratch = await mkdtemp(path.join(tmpdir(), 'unify-push-'));
+      signal.throwIfAborted();
+      const cache = path.join(scratch, 'cache');
+      if (mode === 'readiness') return await readiness(files, signal, cache);
+      await cp(path.join(files.runtime, 'cache'), cache, {
+        recursive: true,
+        filter: () => { signal.throwIfAborted(); return true; },
+      });
+      signal.throwIfAborted();
+      // This is the full child environment. It excludes service-role/JWT secrets,
+      // Node/Deno injection options, fixture overrides, and unrelated app secrets.
+      const childEnv = { DENO_DIR: cache, DENO_NO_UPDATE_CHECK: '1', DENO_NO_PACKAGE_JSON: '1',
+        COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_DATABASE_URL: env.COMPANION_PUSH_DATABASE_URL };
+      for (const key of ['EXPO_ACCESS_TOKEN', 'SANITY_PROJECT_ID', 'SANITY_DATASET']) {
+        if (env[key]) childEnv[key] = env[key];
+      }
+      const result = await runOwnedProcess(files.executable, ['run', '--no-config', '--no-prompt',
+        '--node-modules-dir=none', '--cached-only', '--frozen', '--lock=' + path.join(files.dir, 'deno.lock'),
+        '--allow-env', '--allow-net', '--allow-read', '--allow-run=' + files.executable,
+        path.join(files.dir, 'supervisor.ts')], {
+        cwd: files.dir, env: childEnv, timeoutMs: CYCLE_TIMEOUT_MS, signal,
+      });
+      return response(result.ok ? 200 : result.timedOut ? 504 : 502, { ok: result.ok });
+    } finally {
+      if (scratch) await rm(scratch, { recursive: true, force: true }).catch(() => {});
     }
-    const result = await runOwnedProcess(files.executable, ['run', '--no-config', '--no-prompt',
-      '--node-modules-dir=none', '--cached-only', '--frozen', '--lock=' + path.join(files.dir, 'deno.lock'),
-      '--allow-env', '--allow-net', '--allow-read', '--allow-run=' + files.executable,
-      path.join(files.dir, 'supervisor.ts')], {
-      cwd: files.dir, env: childEnv, timeoutMs: CYCLE_TIMEOUT_MS, signal,
-    });
-    return response(result.ok ? 200 : result.timedOut ? 504 : 502, { ok: result.ok });
+  };
+  try {
+    return await Promise.race([cancelled, work()]);
   } catch {
     // No exception, driver message, path, provider payload, or token enters HTTP.
-    return response(503, { ok: false });
+    return response(request.signal.aborted ? 499 : signal.aborted ? 504 : 503, { ok: false });
   } finally {
-    if (scratch) await rm(scratch, { recursive: true, force: true }).catch(() => {});
+    signal.removeEventListener('abort', abort);
     busy = false;
   }
 }
