@@ -1,0 +1,24 @@
+[
+  {
+    "route": "companion-push",
+    "files": 785,
+    "bytes": 107841951,
+    "limit_bytes": 250000000,
+    "headroom_bytes": 142158049,
+    "required_worker_files": 635,
+    "all_required_in_trace": true,
+    "deno_mode": "0o755",
+    "extra_host_generated_JS": []
+  },
+  {
+    "route": "companion-push-readiness",
+    "files": 785,
+    "bytes": 107842015,
+    "limit_bytes": 250000000,
+    "headroom_bytes": 142157985,
+    "required_worker_files": 635,
+    "all_required_in_trace": true,
+    "deno_mode": "0o755",
+    "extra_host_generated_JS": []
+  }
+]

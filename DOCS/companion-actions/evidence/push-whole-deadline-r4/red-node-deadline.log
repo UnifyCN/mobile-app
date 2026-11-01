@@ -1,0 +1,455 @@
+TAP version 13
+# Subtest: HTTP deadline bounds stalled verification, directory creation, copying and cleanup
+    # Subtest: verification
+    not ok 1 - verification
+      ---
+      duration_ms: 232.53275
+      type: 'test'
+      location: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-deadline.test.mjs:124:19'
+      failureType: 'testCodeFailure'
+      error: |-
+        Command failed: /Users/savargupta/.hermes/node/bin/node --input-type=module -e 
+              import assert from 'node:assert/strict';
+              import fsp from 'node:fs/promises';
+              import processes from 'node:child_process';
+              import { EventEmitter } from 'node:events';
+              import { syncBuiltinESMExports } from 'node:module';
+              import { pathToFileURL } from 'node:url';
+              import path from 'node:path';
+              const phase = "verification";
+              const cancel = false;
+              const original = { readFile: fsp.readFile, mkdtemp: fsp.mkdtemp, cp: fsp.cp, rm: fsp.rm };
+              let held = false, spawns = 0, abortAt;
+              const pause = async (at) => {
+                if (at === phase && !held) {
+                  held = true;
+                  await new Promise(resolve => setTimeout(resolve, 180));
+                }
+              };
+              fsp.readFile = async (...args) => {
+                if (String(args[0]).endsWith('runtime-pins.json')) await pause('verification');
+                return original.readFile(...args);
+              };
+              fsp.mkdtemp = async (...args) => { await pause('directory'); return original.mkdtemp(...args); };
+              fsp.cp = async (...args) => { await pause('copy'); return original.cp(...args); };
+              fsp.rm = async (...args) => { await pause('cleanup'); return original.rm(...args); };
+              processes.spawn = () => {
+                spawns++;
+                const child = new EventEmitter();
+                queueMicrotask(() => child.emit('exit', 0));
+                return child;
+              };
+              syncBuiltinESMExports();
+              const timeout = AbortSignal.timeout;
+              AbortSignal.timeout = milliseconds => {
+                assert.equal(milliseconds, 110000);
+                const signal = timeout(35);
+                signal.addEventListener('abort', () => { if (!cancel) abortAt ??= performance.now(); });
+                return signal;
+              };
+              Object.defineProperty(process, 'platform', { value: 'linux' });
+              Object.defineProperty(process, 'arch', { value: 'x64' });
+              const secret = 'synthetic-operator-secret-00000000000000000';
+              Object.assign(process.env, {
+                COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_OPERATOR_SECRET: secret,
+                COMPANION_PUSH_DATABASE_URL: 'postgres://companion_push_worker:synthetic@db.invalid/postgres?sslmode=verify-full',
+              });
+              const { handlePush } = await import(pathToFileURL(path.join(process.cwd(), 'supabase/workers/companion-push/node-adapter.mjs')));
+              const controller = new AbortController();
+              const request = signal => new Request('https://fixture.invalid/api/cron/companion-push', {
+                headers: { authorization: 'Bearer ' + secret }, signal,
+              });
+              if (cancel) setTimeout(() => { abortAt = performance.now(); controller.abort(); }, 10);
+              const started = performance.now();
+              const first = await handlePush(request(controller.signal));
+              const returned = performance.now();
+              assert.ok(held, 'the selected OS operation must actually stall');
+              assert.ok(returned - abortAt < 80, 'the HTTP handler stayed pending after cancellation');
+              assert.equal(first.status, cancel ? 499 : 504);
+              assert.deepEqual(await first.json(), { ok: false });
+              const second = await handlePush(request());
+              assert.equal(second.status, 200, 'the expired invocation must release the busy guard');
+              await new Promise(resolve => setTimeout(resolve, 220));
+              assert.equal(spawns, phase === 'cleanup' ? 2 : 1, 'late preparation must not start a process');
+              let leftovers = [];
+              for (let i = 0; i < 100; i++) {
+                leftovers = (await fsp.readdir(process.cwd())).filter(name => name.startsWith('unify-push-'));
+                if (!leftovers.length) break;
+                await new Promise(resolve => setTimeout(resolve, 10));
+              }
+              assert.deepEqual(leftovers, [], 'late-created and copied directories must be removed');
+              console.log(JSON.stringify({ phase, cancel, status: first.status, returnedMs: returned - started,
+                afterAbortMs: returned - abortAt, secondStatus: second.status, spawns, leftovers }));
+            
+        node:internal/modules/run_main:123
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: the HTTP handler stayed pending after cancellation
+            at file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-wsrZGz/[eval1]:57:14 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: false,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v22.23.1
+        
+      code: 1
+      stack: |-
+        file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-wsrZGz/[eval1]:57:14 {
+        genericNodeError (node:internal/errors:983:15)
+        wrappedFn (node:internal/errors:537:14)
+        ChildProcess.exithandler (node:child_process:417:12)
+        ChildProcess.emit (node:events:519:28)
+        maybeClose (node:internal/child_process:1101:16)
+        ChildProcess._handle.onexit (node:internal/child_process:304:5)
+      ...
+    # Subtest: directory
+    not ok 2 - directory
+      ---
+      duration_ms: 228.393458
+      type: 'test'
+      location: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-deadline.test.mjs:124:19'
+      failureType: 'testCodeFailure'
+      error: |-
+        Command failed: /Users/savargupta/.hermes/node/bin/node --input-type=module -e 
+              import assert from 'node:assert/strict';
+              import fsp from 'node:fs/promises';
+              import processes from 'node:child_process';
+              import { EventEmitter } from 'node:events';
+              import { syncBuiltinESMExports } from 'node:module';
+              import { pathToFileURL } from 'node:url';
+              import path from 'node:path';
+              const phase = "directory";
+              const cancel = false;
+              const original = { readFile: fsp.readFile, mkdtemp: fsp.mkdtemp, cp: fsp.cp, rm: fsp.rm };
+              let held = false, spawns = 0, abortAt;
+              const pause = async (at) => {
+                if (at === phase && !held) {
+                  held = true;
+                  await new Promise(resolve => setTimeout(resolve, 180));
+                }
+              };
+              fsp.readFile = async (...args) => {
+                if (String(args[0]).endsWith('runtime-pins.json')) await pause('verification');
+                return original.readFile(...args);
+              };
+              fsp.mkdtemp = async (...args) => { await pause('directory'); return original.mkdtemp(...args); };
+              fsp.cp = async (...args) => { await pause('copy'); return original.cp(...args); };
+              fsp.rm = async (...args) => { await pause('cleanup'); return original.rm(...args); };
+              processes.spawn = () => {
+                spawns++;
+                const child = new EventEmitter();
+                queueMicrotask(() => child.emit('exit', 0));
+                return child;
+              };
+              syncBuiltinESMExports();
+              const timeout = AbortSignal.timeout;
+              AbortSignal.timeout = milliseconds => {
+                assert.equal(milliseconds, 110000);
+                const signal = timeout(35);
+                signal.addEventListener('abort', () => { if (!cancel) abortAt ??= performance.now(); });
+                return signal;
+              };
+              Object.defineProperty(process, 'platform', { value: 'linux' });
+              Object.defineProperty(process, 'arch', { value: 'x64' });
+              const secret = 'synthetic-operator-secret-00000000000000000';
+              Object.assign(process.env, {
+                COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_OPERATOR_SECRET: secret,
+                COMPANION_PUSH_DATABASE_URL: 'postgres://companion_push_worker:synthetic@db.invalid/postgres?sslmode=verify-full',
+              });
+              const { handlePush } = await import(pathToFileURL(path.join(process.cwd(), 'supabase/workers/companion-push/node-adapter.mjs')));
+              const controller = new AbortController();
+              const request = signal => new Request('https://fixture.invalid/api/cron/companion-push', {
+                headers: { authorization: 'Bearer ' + secret }, signal,
+              });
+              if (cancel) setTimeout(() => { abortAt = performance.now(); controller.abort(); }, 10);
+              const started = performance.now();
+              const first = await handlePush(request(controller.signal));
+              const returned = performance.now();
+              assert.ok(held, 'the selected OS operation must actually stall');
+              assert.ok(returned - abortAt < 80, 'the HTTP handler stayed pending after cancellation');
+              assert.equal(first.status, cancel ? 499 : 504);
+              assert.deepEqual(await first.json(), { ok: false });
+              const second = await handlePush(request());
+              assert.equal(second.status, 200, 'the expired invocation must release the busy guard');
+              await new Promise(resolve => setTimeout(resolve, 220));
+              assert.equal(spawns, phase === 'cleanup' ? 2 : 1, 'late preparation must not start a process');
+              let leftovers = [];
+              for (let i = 0; i < 100; i++) {
+                leftovers = (await fsp.readdir(process.cwd())).filter(name => name.startsWith('unify-push-'));
+                if (!leftovers.length) break;
+                await new Promise(resolve => setTimeout(resolve, 10));
+              }
+              assert.deepEqual(leftovers, [], 'late-created and copied directories must be removed');
+              console.log(JSON.stringify({ phase, cancel, status: first.status, returnedMs: returned - started,
+                afterAbortMs: returned - abortAt, secondStatus: second.status, spawns, leftovers }));
+            
+        node:internal/modules/run_main:123
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: the HTTP handler stayed pending after cancellation
+            at file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-vIdt87/[eval1]:57:14 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: false,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v22.23.1
+        
+      code: 1
+      stack: |-
+        file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-vIdt87/[eval1]:57:14 {
+        genericNodeError (node:internal/errors:983:15)
+        wrappedFn (node:internal/errors:537:14)
+        ChildProcess.exithandler (node:child_process:417:12)
+        ChildProcess.emit (node:events:519:28)
+        maybeClose (node:internal/child_process:1101:16)
+        Socket.<anonymous> (node:internal/child_process:456:11)
+        Socket.emit (node:events:519:28)
+        Pipe.<anonymous> (node:net:347:12)
+      ...
+    # Subtest: copy
+    not ok 3 - copy
+      ---
+      duration_ms: 236.933209
+      type: 'test'
+      location: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-deadline.test.mjs:124:19'
+      failureType: 'testCodeFailure'
+      error: |-
+        Command failed: /Users/savargupta/.hermes/node/bin/node --input-type=module -e 
+              import assert from 'node:assert/strict';
+              import fsp from 'node:fs/promises';
+              import processes from 'node:child_process';
+              import { EventEmitter } from 'node:events';
+              import { syncBuiltinESMExports } from 'node:module';
+              import { pathToFileURL } from 'node:url';
+              import path from 'node:path';
+              const phase = "copy";
+              const cancel = false;
+              const original = { readFile: fsp.readFile, mkdtemp: fsp.mkdtemp, cp: fsp.cp, rm: fsp.rm };
+              let held = false, spawns = 0, abortAt;
+              const pause = async (at) => {
+                if (at === phase && !held) {
+                  held = true;
+                  await new Promise(resolve => setTimeout(resolve, 180));
+                }
+              };
+              fsp.readFile = async (...args) => {
+                if (String(args[0]).endsWith('runtime-pins.json')) await pause('verification');
+                return original.readFile(...args);
+              };
+              fsp.mkdtemp = async (...args) => { await pause('directory'); return original.mkdtemp(...args); };
+              fsp.cp = async (...args) => { await pause('copy'); return original.cp(...args); };
+              fsp.rm = async (...args) => { await pause('cleanup'); return original.rm(...args); };
+              processes.spawn = () => {
+                spawns++;
+                const child = new EventEmitter();
+                queueMicrotask(() => child.emit('exit', 0));
+                return child;
+              };
+              syncBuiltinESMExports();
+              const timeout = AbortSignal.timeout;
+              AbortSignal.timeout = milliseconds => {
+                assert.equal(milliseconds, 110000);
+                const signal = timeout(35);
+                signal.addEventListener('abort', () => { if (!cancel) abortAt ??= performance.now(); });
+                return signal;
+              };
+              Object.defineProperty(process, 'platform', { value: 'linux' });
+              Object.defineProperty(process, 'arch', { value: 'x64' });
+              const secret = 'synthetic-operator-secret-00000000000000000';
+              Object.assign(process.env, {
+                COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_OPERATOR_SECRET: secret,
+                COMPANION_PUSH_DATABASE_URL: 'postgres://companion_push_worker:synthetic@db.invalid/postgres?sslmode=verify-full',
+              });
+              const { handlePush } = await import(pathToFileURL(path.join(process.cwd(), 'supabase/workers/companion-push/node-adapter.mjs')));
+              const controller = new AbortController();
+              const request = signal => new Request('https://fixture.invalid/api/cron/companion-push', {
+                headers: { authorization: 'Bearer ' + secret }, signal,
+              });
+              if (cancel) setTimeout(() => { abortAt = performance.now(); controller.abort(); }, 10);
+              const started = performance.now();
+              const first = await handlePush(request(controller.signal));
+              const returned = performance.now();
+              assert.ok(held, 'the selected OS operation must actually stall');
+              assert.ok(returned - abortAt < 80, 'the HTTP handler stayed pending after cancellation');
+              assert.equal(first.status, cancel ? 499 : 504);
+              assert.deepEqual(await first.json(), { ok: false });
+              const second = await handlePush(request());
+              assert.equal(second.status, 200, 'the expired invocation must release the busy guard');
+              await new Promise(resolve => setTimeout(resolve, 220));
+              assert.equal(spawns, phase === 'cleanup' ? 2 : 1, 'late preparation must not start a process');
+              let leftovers = [];
+              for (let i = 0; i < 100; i++) {
+                leftovers = (await fsp.readdir(process.cwd())).filter(name => name.startsWith('unify-push-'));
+                if (!leftovers.length) break;
+                await new Promise(resolve => setTimeout(resolve, 10));
+              }
+              assert.deepEqual(leftovers, [], 'late-created and copied directories must be removed');
+              console.log(JSON.stringify({ phase, cancel, status: first.status, returnedMs: returned - started,
+                afterAbortMs: returned - abortAt, secondStatus: second.status, spawns, leftovers }));
+            
+        node:internal/modules/run_main:123
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: the HTTP handler stayed pending after cancellation
+            at file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-duQ0rf/[eval1]:57:14 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: false,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v22.23.1
+        
+      code: 1
+      stack: |-
+        file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-duQ0rf/[eval1]:57:14 {
+        genericNodeError (node:internal/errors:983:15)
+        wrappedFn (node:internal/errors:537:14)
+        ChildProcess.exithandler (node:child_process:417:12)
+        ChildProcess.emit (node:events:519:28)
+        maybeClose (node:internal/child_process:1101:16)
+        Socket.<anonymous> (node:internal/child_process:456:11)
+        Socket.emit (node:events:519:28)
+        Pipe.<anonymous> (node:net:347:12)
+      ...
+    # Subtest: cleanup
+    not ok 4 - cleanup
+      ---
+      duration_ms: 232.2025
+      type: 'test'
+      location: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-deadline.test.mjs:124:19'
+      failureType: 'testCodeFailure'
+      error: |-
+        Command failed: /Users/savargupta/.hermes/node/bin/node --input-type=module -e 
+              import assert from 'node:assert/strict';
+              import fsp from 'node:fs/promises';
+              import processes from 'node:child_process';
+              import { EventEmitter } from 'node:events';
+              import { syncBuiltinESMExports } from 'node:module';
+              import { pathToFileURL } from 'node:url';
+              import path from 'node:path';
+              const phase = "cleanup";
+              const cancel = false;
+              const original = { readFile: fsp.readFile, mkdtemp: fsp.mkdtemp, cp: fsp.cp, rm: fsp.rm };
+              let held = false, spawns = 0, abortAt;
+              const pause = async (at) => {
+                if (at === phase && !held) {
+                  held = true;
+                  await new Promise(resolve => setTimeout(resolve, 180));
+                }
+              };
+              fsp.readFile = async (...args) => {
+                if (String(args[0]).endsWith('runtime-pins.json')) await pause('verification');
+                return original.readFile(...args);
+              };
+              fsp.mkdtemp = async (...args) => { await pause('directory'); return original.mkdtemp(...args); };
+              fsp.cp = async (...args) => { await pause('copy'); return original.cp(...args); };
+              fsp.rm = async (...args) => { await pause('cleanup'); return original.rm(...args); };
+              processes.spawn = () => {
+                spawns++;
+                const child = new EventEmitter();
+                queueMicrotask(() => child.emit('exit', 0));
+                return child;
+              };
+              syncBuiltinESMExports();
+              const timeout = AbortSignal.timeout;
+              AbortSignal.timeout = milliseconds => {
+                assert.equal(milliseconds, 110000);
+                const signal = timeout(35);
+                signal.addEventListener('abort', () => { if (!cancel) abortAt ??= performance.now(); });
+                return signal;
+              };
+              Object.defineProperty(process, 'platform', { value: 'linux' });
+              Object.defineProperty(process, 'arch', { value: 'x64' });
+              const secret = 'synthetic-operator-secret-00000000000000000';
+              Object.assign(process.env, {
+                COMPANION_PUSH_ENABLED: 'true', COMPANION_PUSH_OPERATOR_SECRET: secret,
+                COMPANION_PUSH_DATABASE_URL: 'postgres://companion_push_worker:synthetic@db.invalid/postgres?sslmode=verify-full',
+              });
+              const { handlePush } = await import(pathToFileURL(path.join(process.cwd(), 'supabase/workers/companion-push/node-adapter.mjs')));
+              const controller = new AbortController();
+              const request = signal => new Request('https://fixture.invalid/api/cron/companion-push', {
+                headers: { authorization: 'Bearer ' + secret }, signal,
+              });
+              if (cancel) setTimeout(() => { abortAt = performance.now(); controller.abort(); }, 10);
+              const started = performance.now();
+              const first = await handlePush(request(controller.signal));
+              const returned = performance.now();
+              assert.ok(held, 'the selected OS operation must actually stall');
+              assert.ok(returned - abortAt < 80, 'the HTTP handler stayed pending after cancellation');
+              assert.equal(first.status, cancel ? 499 : 504);
+              assert.deepEqual(await first.json(), { ok: false });
+              const second = await handlePush(request());
+              assert.equal(second.status, 200, 'the expired invocation must release the busy guard');
+              await new Promise(resolve => setTimeout(resolve, 220));
+              assert.equal(spawns, phase === 'cleanup' ? 2 : 1, 'late preparation must not start a process');
+              let leftovers = [];
+              for (let i = 0; i < 100; i++) {
+                leftovers = (await fsp.readdir(process.cwd())).filter(name => name.startsWith('unify-push-'));
+                if (!leftovers.length) break;
+                await new Promise(resolve => setTimeout(resolve, 10));
+              }
+              assert.deepEqual(leftovers, [], 'late-created and copied directories must be removed');
+              console.log(JSON.stringify({ phase, cancel, status: first.status, returnedMs: returned - started,
+                afterAbortMs: returned - abortAt, secondStatus: second.status, spawns, leftovers }));
+            
+        node:internal/modules/run_main:123
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: the HTTP handler stayed pending after cancellation
+            at file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-rqCSp0/[eval1]:57:14 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: false,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v22.23.1
+        
+      code: 1
+      stack: |-
+        file:///private/var/folders/vb/z9w0nmnd2hjcpdmmn578hxqw0000gn/T/unify-push-deadline-test-rqCSp0/[eval1]:57:14 {
+        genericNodeError (node:internal/errors:983:15)
+        wrappedFn (node:internal/errors:537:14)
+        ChildProcess.exithandler (node:child_process:417:12)
+        ChildProcess.emit (node:events:519:28)
+        maybeClose (node:internal/child_process:1101:16)
+        Socket.<anonymous> (node:internal/child_process:456:11)
+        Socket.emit (node:events:519:28)
+        Pipe.<anonymous> (node:net:347:12)
+      ...
+    1..4
+not ok 1 - HTTP deadline bounds stalled verification, directory creation, copying and cleanup
+  ---
+  duration_ms: 931.152834
+  type: 'test'
+  location: '/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-deadline.test.mjs:122:1'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 965.260833

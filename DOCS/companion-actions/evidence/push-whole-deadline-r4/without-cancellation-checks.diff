@@ -1,0 +1,28 @@
+diff --git a/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-adapter.mjs b/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/.runtime/deadline-faults-r4/without-cancellation-checks/node-adapter.mjs
+index 70cf99dd6..f4f37178e 100644
+--- a/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/node-adapter.mjs
++++ b/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-33359ffe/unify-front-end/supabase/workers/companion-push/.runtime/deadline-faults-r4/without-cancellation-checks/node-adapter.mjs
+@@ -101,18 +101,18 @@ export async function handlePush(request, mode = 'cycle') {
+   const work = async () => {
+     let scratch;
+     try {
+-      signal.throwIfAborted();
++      
+       const files = await runtimeFiles();
+-      signal.throwIfAborted();
++      
+       scratch = await mkdtemp(path.join(tmpdir(), 'unify-push-'));
+-      signal.throwIfAborted();
++      
+       const cache = path.join(scratch, 'cache');
+       if (mode === 'readiness') return await readiness(files, signal, cache);
+       await cp(path.join(files.runtime, 'cache'), cache, {
+         recursive: true,
+-        filter: () => { signal.throwIfAborted(); return true; },
++        filter: () => {  return true; },
+       });
+-      signal.throwIfAborted();
++      
+       // This is the full child environment. It excludes service-role/JWT secrets,
+       // Node/Deno injection options, fixture overrides, and unrelated app secrets.
+       const childEnv = { DENO_DIR: cache, DENO_NO_UPDATE_CHECK: '1', DENO_NO_PACKAGE_JSON: '1',
