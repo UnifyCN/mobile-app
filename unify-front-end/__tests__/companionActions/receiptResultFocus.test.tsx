@@ -173,6 +173,9 @@ it.each(['change', 'undo'] as const)('the Android panel focuses a fresh state %s
       beforeState: 'not_started', afterState: 'in_progress',
     } };
     rendered.rerender(panel());
+    const radio = screen.getByRole('radio', { name: 'Not started' });
+    expect(radio.props.accessibilityState.checked).toBe(true);
+    expect(radio.props.accessibilityState.selected).toBeUndefined();
     const result = screen.getByText(kind === 'undo'
       ? 'Undid a change. The task is back to In progress.'
       : 'Changed from Not started to In progress');

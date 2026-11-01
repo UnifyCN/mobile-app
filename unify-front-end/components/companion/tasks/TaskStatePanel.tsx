@@ -234,7 +234,6 @@ export function TaskStatePanel({
               accessibilityRole='radio'
               accessibilityLabel={stateLabel(s)}
               accessibilityState={{
-                selected,
                 checked: selected,
                 disabled: !canWrite,
               }}
