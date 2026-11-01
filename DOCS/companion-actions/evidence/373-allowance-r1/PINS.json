@@ -1,0 +1,252 @@
+{
+  "mobile": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29",
+    "base": "fc33670c0c1f0ac6e2b8a99b9a5a38d96ef04d9f",
+    "branch": "t3/companion-allowance-one-day-delivery",
+    "code_commit": "6e218ad0285f70e961106fa33add3d2f8bfa5095",
+    "code_tree": "85853794b54dcd0de34450454531514efd452d4a",
+    "files": [
+      {
+        "path": "DOCS/companion-actions/373-allowance.md",
+        "sha256": "a2f932dd45a310a93a27f7e18e051a362495d62b5cee723d2259be069145d735"
+      },
+      {
+        "path": "DOCS/companion-actions/373-funnel.hogql",
+        "sha256": "7a1b85342b35a47b4f00d5542e70d5915ae0928397cc7dd1df6ea55e371a593c"
+      },
+      {
+        "path": "DOCS/companion-actions/373-funnel.json",
+        "sha256": "8c1d2592aacb5df5f8d66d94e7c9b134bf29c158792a2474f0e1c6f6912af44c"
+      },
+      {
+        "path": "unify-front-end/__tests__/companion/allowance.test.ts",
+        "sha256": "85b64c339be35ac3d3418ddd3b6e98a3337fc13a89d8215615f3785c80ba4dc2"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/companionTaskSheet.test.tsx",
+        "sha256": "21c8ab970adf57a802cbb4daa3fe1c7c6932e9ac8a7854bb4d321ee4ae4bbbd0"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/planLocalStack.test.tsx",
+        "sha256": "7755b4a57f70abee45a6acff53dda9caba8592d5989cdcc0fc4b38637e31a3a2"
+      },
+      {
+        "path": "unify-front-end/__tests__/companionActions/savedDetails.test.tsx",
+        "sha256": "20cd5ce9db53f3a95fd922d067c291d4ad7ffd724668bf8917ccd40cb6db36db"
+      },
+      {
+        "path": "unify-front-end/app/(tabs)/companion/index.tsx",
+        "sha256": "4c996cb0db7ce125b8a163f9e769c4a12cc8fa54b1be66005f15fbfa032563cb"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useChatbotUsage.ts",
+        "sha256": "b076903eb9bec5f95a504be895136c3b74d4d2acada9a9b7db861adcb9252421"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useSendMessage.ts",
+        "sha256": "f1743c55d19503282688d109231ae13c367b56db4aca85149714665075ecff89"
+      },
+      {
+        "path": "unify-front-end/hooks/companion/useTaskActions.ts",
+        "sha256": "3899fcb276687c411c55b6721fd42eb68c1d72da8dce4f2588bcfb4f021280d7"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/ar/translation.json",
+        "sha256": "fb270eb174c5518b6c078dc3427d31134d114db733c757c2f8a45eccbac91c57"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/en/translation.json",
+        "sha256": "6b6c49b9fa7f42cc9fe8d9c80450dab73b6dc733d1828c48bac664a900ea529d"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/es/translation.json",
+        "sha256": "c93d2e5fc2cfeb7283cc5d020fe5770dc9a609977c8d6752b99c35a75415654c"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/fr-CA/translation.json",
+        "sha256": "0ce89898ede6da8dee4aa4ae7e4bbc25d93cf7db4bcda6a284ae87018a169183"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/hi/translation.json",
+        "sha256": "63e4df938c33b7449fe449c72ffe0222684dc062918858f0c3c13cfbbcdcb1e6"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/pa/translation.json",
+        "sha256": "9ee962952d8375287c4ff48f46d1736342589ea845ebcdb7a36c0805c722503f"
+      },
+      {
+        "path": "unify-front-end/i18n/locales/vi/translation.json",
+        "sha256": "3f72f9ef1557c55f0af1362939f3b2798a50659db4a40c1d95511dd66566ec34"
+      },
+      {
+        "path": "unify-front-end/scripts/measure-companion-sessions.py",
+        "sha256": "9731e749d148f95030ce0a6470e61926656d92992a748803d187641a4a330d4e"
+      },
+      {
+        "path": "unify-front-end/services/companion/getChatbotUsage.ts",
+        "sha256": "4a99ea47cda91971677fc5e7ea59f2e170cb9177ef97fe386f9db930fba80394"
+      },
+      {
+        "path": "unify-front-end/supabase/migrations/20261101024721_companion_allowance_and_cohort.sql",
+        "sha256": "3dfb3c63cf27a21415cdc9388503585b06ce814f758bf87020e612ca2cd687c3"
+      },
+      {
+        "path": "unify-front-end/supabase/rollbacks/20261101024721_companion_allowance_and_cohort.down.sql",
+        "sha256": "68329ff1e7c4662a0cf6605d815a10c45038f7c93b21d724b0951fa00026ca0c"
+      },
+      {
+        "path": "unify-front-end/types/chatbot.ts",
+        "sha256": "1256a6ee9d9ed5dbc9b218ddb01238fb97005bc2490568d3113e246dd8d9fa2b"
+      }
+    ]
+  },
+  "web": {
+    "path": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "base": "35e5f1ac1b89a72411e37d16ed5bcd250fbc5c62",
+    "branch": "fix/companion-release-359-root",
+    "code_commit": "a75747bc0f7a9bbe8684b19992fdf7ce4a11f007",
+    "code_tree": "007293cab3367762f3aaa672e690ff5fc2083a13",
+    "files": [
+      {
+        "path": "app/(main)/companion/page.tsx",
+        "sha256": "34c22f035c1ec33924cbca20e2593b19f8c677a4722eca36088c999dbc12a383"
+      },
+      {
+        "path": "components/companion/ChatPanel.tsx",
+        "sha256": "65d79c0fddf37b29d19c008b553e9b8236f4e2dc68f9591258051a87e7282739"
+      },
+      {
+        "path": "components/companion/FreeTierIndicator.tsx",
+        "sha256": "e159e9c7f624cf02ee3dca2e80d45af5817e480c25c921bdfb2f42c82f7bac47"
+      },
+      {
+        "path": "components/companion/plans/PlanLocalStack.test.tsx",
+        "sha256": "5eea641b4b6ce744cecf8c72e2d9d16cf3aa3e3815d47e78239d30c11f8e1c67"
+      },
+      {
+        "path": "components/companion/tasks/ComposerPendingSession.test.tsx",
+        "sha256": "1ded4801d78f8970333d56705f3ff66e44036e95efbac17499f0667be39e70af"
+      },
+      {
+        "path": "components/learn/help/InLessonChat.tsx",
+        "sha256": "38f608be31a8ae0f3c59f8d786bfb62adc192cd3b629c80d57464d32b20e2bc6"
+      },
+      {
+        "path": "docs/companion-actions/373-allowance.md",
+        "sha256": "a2f932dd45a310a93a27f7e18e051a362495d62b5cee723d2259be069145d735"
+      },
+      {
+        "path": "docs/companion-actions/373-funnel.hogql",
+        "sha256": "7a1b85342b35a47b4f00d5542e70d5915ae0928397cc7dd1df6ea55e371a593c"
+      },
+      {
+        "path": "docs/companion-actions/373-funnel.json",
+        "sha256": "8c1d2592aacb5df5f8d66d94e7c9b134bf29c158792a2474f0e1c6f6912af44c"
+      },
+      {
+        "path": "hooks/useCompanion.ts",
+        "sha256": "5d15bc16fd208ab3ac3d5bd02cf394c3d4dabcf80c7ab72dde4847c2ff6f2e81"
+      },
+      {
+        "path": "lib/companion/clearPrivateAccountWork.ts",
+        "sha256": "349b34606f45e4306c918112eb1ca96a42a808ef31434ccd9e167b6823c1826e"
+      },
+      {
+        "path": "lib/companionActions/funnelSchema.test.ts",
+        "sha256": "11250810c39716843cab1facbbdb34b0e745082cdc9b6adaebc5f5ea38c75a51"
+      },
+      {
+        "path": "lib/i18n/locales/ar/translation.json",
+        "sha256": "f968c3087a4c3d9d8a707153aab409e2d1ac3fa45c8950545508842209103d15"
+      },
+      {
+        "path": "lib/i18n/locales/en/translation.json",
+        "sha256": "2e966acf1fb0b11e650d83b86685c129db7e3aa84e3c5129806e9c29e597c94d"
+      },
+      {
+        "path": "lib/i18n/locales/es/translation.json",
+        "sha256": "b84c9ae8fbb21e9fd1a9dc83e5597532a1550b07ca40de86720866c957041a1c"
+      },
+      {
+        "path": "lib/i18n/locales/fr-CA/translation.json",
+        "sha256": "ad3d2a17ac903430ed14b459722eea914138e2cadadb12423e87d95b82c86139"
+      },
+      {
+        "path": "lib/i18n/locales/hi/translation.json",
+        "sha256": "3113c1124ff16c05cd6e3a2d9cd300efb3c2e12302c5a1fd29fce96f15518dd8"
+      },
+      {
+        "path": "lib/i18n/locales/pa/translation.json",
+        "sha256": "e1082bfef04904c3366ecbfee720c27e34816fceee2b299d064bcdb1860def75"
+      },
+      {
+        "path": "lib/i18n/locales/vi/translation.json",
+        "sha256": "49f09f99bf1061dbe230e3ec23ff0a5d68d665dde369823c10283d36510a2ca3"
+      },
+      {
+        "path": "scripts/measure-companion-sessions.py",
+        "sha256": "9731e749d148f95030ce0a6470e61926656d92992a748803d187641a4a330d4e"
+      },
+      {
+        "path": "services/companion.ts",
+        "sha256": "b1141ee2f8d3c74e9f3b358bd93e27cef825e6f65079487fba42e1543b7bb5f5"
+      },
+      {
+        "path": "services/companionAllowance.test.ts",
+        "sha256": "90099e2ef8537d04e6834ea97b68e33123d4bb3cf984c2f6076a051474390797"
+      },
+      {
+        "path": "supabase/functions/_shared/openrouter.ts",
+        "sha256": "e4262e1b5f0fd3fafc3b263a54d2bf73624a2458f105c6cd023f28e0d68de887"
+      },
+      {
+        "path": "supabase/functions/_shared/testHarness.ts",
+        "sha256": "27fe7bdb37a4ce9ed27003e40a34c583d784a4abb61ad733b82b6ac65ceb16f2"
+      },
+      {
+        "path": "supabase/functions/companion-actions/handler.ts",
+        "sha256": "f152180b7426d049ff2d195472be088710f33b1f8e7bf55032378e6d6a45aad4"
+      },
+      {
+        "path": "supabase/functions/rag-query/index.ts",
+        "sha256": "414550014ad79876ece2331ee2e645e68136b68cef67114ce453cef1de7148ee"
+      },
+      {
+        "path": "supabase/functions/rag-query/index_companion_context_test.ts",
+        "sha256": "01e3d601bf987bf9d0061ccb1565478e1588928ca9d3231e658e2222d3ef163d"
+      },
+      {
+        "path": "supabase/functions/rag-query/index_embedding_test.ts",
+        "sha256": "b70cf3ced0cac3a1722d3015c3a8f6724481203f9bd94a3982f4de13c3103216"
+      },
+      {
+        "path": "supabase/functions/rag-query/lib/context/companionContext.ts",
+        "sha256": "7faec0c88fa8c72aba451e84088735f73b809cd540c9e1d8707d9d476679b562"
+      },
+      {
+        "path": "supabase/migrations/20261101024721_companion_allowance_and_cohort.sql",
+        "sha256": "3dfb3c63cf27a21415cdc9388503585b06ce814f758bf87020e612ca2cd687c3"
+      },
+      {
+        "path": "supabase/rollbacks/20261101024721_companion_allowance_and_cohort.down.sql",
+        "sha256": "68329ff1e7c4662a0cf6605d815a10c45038f7c93b21d724b0951fa00026ca0c"
+      },
+      {
+        "path": "supabase/tests/companion-actions/allowance_test.ts",
+        "sha256": "dd784614db354008f73922dcebe4c5fa9cc454582f9dd01ec74b450d433433a2"
+      },
+      {
+        "path": "supabase/tests/companion-actions/fixtures/chatbot-usage-permissions.sql",
+        "sha256": "95be6f925f8f819c208976912c3f6e4cc9190f15e5ddbea89ebe8b923c53356d"
+      },
+      {
+        "path": "supabase/tests/companion-actions/fixtures/chatbot-usage-policy.sql",
+        "sha256": "9a9b8e2dc8cabc0ec568f4ba7877ee6d5cdc3e5575118fd24c8151d365988b81"
+      },
+      {
+        "path": "types/index.ts",
+        "sha256": "d484470866e0b35deed1d85bee178e98a58fe5f6054fe2e57d0d4ef82b566b96"
+      }
+    ]
+  }
+}

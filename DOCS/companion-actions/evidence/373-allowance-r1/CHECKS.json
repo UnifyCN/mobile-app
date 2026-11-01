@@ -1,0 +1,166 @@
+{
+  "web-build": {
+    "mode": "web-build",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-i18n": {
+    "mode": "mobile-i18n",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-types": {
+    "mode": "mobile-types",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-ci-first": {
+    "mode": "mobile-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 1,
+    "inherited_actions_cleared": true
+  },
+  "mobile-ci": {
+    "mode": "mobile-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "web-i18n": {
+    "mode": "web-i18n",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "npm",
+      "run",
+      "check-i18n"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-ci-details": {
+    "mode": "mobile-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 1,
+    "inherited_actions_cleared": true
+  },
+  "web-types": {
+    "mode": "web-types",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "web-lint": {
+    "mode": "web-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "./node_modules/.bin/eslint",
+      ".",
+      "--format",
+      "json"
+    ],
+    "exit": 1,
+    "inherited_actions_cleared": true
+  },
+  "web-test": {
+    "mode": "web-test",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-changed-lint": {
+    "mode": "mobile-changed-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "./node_modules/.bin/eslint",
+      "__tests__/companion/allowance.test.ts",
+      "__tests__/companionActions/companionTaskSheet.test.tsx",
+      "__tests__/companionActions/planLocalStack.test.tsx",
+      "__tests__/companionActions/savedDetails.test.tsx",
+      "app/(tabs)/companion/index.tsx",
+      "hooks/companion/useChatbotUsage.ts",
+      "hooks/companion/useSendMessage.ts",
+      "hooks/companion/useTaskActions.ts",
+      "services/companion/getChatbotUsage.ts",
+      "types/chatbot.ts",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  },
+  "mobile-ci-details-second": {
+    "mode": "mobile-ci",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify/t3-387adb29/unify-front-end",
+    "command": [
+      "npm",
+      "run",
+      "test:ci"
+    ],
+    "exit": 1,
+    "inherited_actions_cleared": true
+  },
+  "web-changed-lint": {
+    "mode": "web-changed-lint",
+    "cwd": "/Volumes/Lexar/Dev.noindex/t3-worktrees/Unify-Web-App/root-companion-release-359",
+    "command": [
+      "./node_modules/.bin/eslint",
+      "app/(main)/companion/page.tsx",
+      "components/companion/ChatPanel.tsx",
+      "components/companion/FreeTierIndicator.tsx",
+      "components/companion/plans/PlanLocalStack.test.tsx",
+      "components/companion/tasks/ComposerPendingSession.test.tsx",
+      "components/learn/help/InLessonChat.tsx",
+      "hooks/useCompanion.ts",
+      "lib/companion/clearPrivateAccountWork.ts",
+      "lib/companionActions/funnelSchema.test.ts",
+      "services/companion.ts",
+      "services/companionAllowance.test.ts",
+      "types/index.ts",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "inherited_actions_cleared": true
+  }
+}

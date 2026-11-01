@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-01T02:58:52.621448+00:00",
+  "platform": "web",
+  "sessions": [
+    {
+      "session": "planning",
+      "proof": "local_controlled",
+      "generation_endpoint_requests": 1,
+      "generation_requests": 2,
+      "generation_count_scope": "logical answer plus guidance search requests; upstream retry attempts excluded",
+      "provider_attempt_count": null,
+      "provider_attempt_count_note": "Upstream retries and internal routing are not exposed",
+      "resolved_model": "controlled/model",
+      "server_model_field": "controlled/model",
+      "model_tier": "controlled",
+      "model_tier_source": "operator_label",
+      "reasoning_effort": "off",
+      "scope": "one answer, no automatic approval",
+      "request_frequency": {
+        "requests": 3,
+        "session_seconds": 0.031
+      },
+      "latency_ms": 31,
+      "token_usage": {
+        "prompt_tokens": 10,
+        "completion_tokens": 5,
+        "total_tokens": 15
+      },
+      "measured_provider_cost_usd": null,
+      "measured_answer_provider_cost_usd": null,
+      "cost_scope": "answer only; embedding and guidance cost unavailable; total session cost is unknown",
+      "controlled_cost_usd": 0.0001,
+      "useful_session": null,
+      "useful_session_note": "Root must inspect synthetic outcomes before marking useful"
+    },
+    {
+      "session": "task_help",
+      "proof": "local_controlled",
+      "generation_endpoint_requests": 1,
+      "generation_requests": 1,
+      "generation_count_scope": "logical answer plus guidance search requests; upstream retry attempts excluded",
+      "provider_attempt_count": null,
+      "provider_attempt_count_note": "Upstream retries and internal routing are not exposed",
+      "resolved_model": "controlled/model",
+      "server_model_field": "controlled/model",
+      "model_tier": "controlled",
+      "model_tier_source": "operator_label",
+      "reasoning_effort": "off",
+      "scope": "one answer, no automatic approval",
+      "request_frequency": {
+        "requests": 3,
+        "session_seconds": 0.028
+      },
+      "latency_ms": 28,
+      "token_usage": {
+        "prompt_tokens": 10,
+        "completion_tokens": 5,
+        "total_tokens": 15
+      },
+      "measured_provider_cost_usd": null,
+      "measured_answer_provider_cost_usd": null,
+      "cost_scope": "answer only; embedding and guidance cost unavailable; total session cost is unknown",
+      "controlled_cost_usd": 0.0001,
+      "useful_session": null,
+      "useful_session_note": "Root must inspect synthetic outcomes before marking useful"
+    },
+    {
+      "session": "deterministic_edit",
+      "proof": "local_controlled",
+      "generation_endpoint_requests": 0,
+      "generation_requests": 0,
+      "generation_count_scope": "logical answer plus guidance search requests; upstream retry attempts excluded",
+      "provider_attempt_count": null,
+      "provider_attempt_count_note": "Upstream retries and internal routing are not exposed",
+      "resolved_model": null,
+      "server_model_field": null,
+      "model_tier": "controlled",
+      "model_tier_source": "operator_label",
+      "reasoning_effort": null,
+      "scope": "one exact saved task command",
+      "request_frequency": {
+        "requests": 6,
+        "session_seconds": 0.123
+      },
+      "latency_ms": 123,
+      "token_usage": null,
+      "measured_provider_cost_usd": null,
+      "measured_answer_provider_cost_usd": null,
+      "cost_scope": "answer only; embedding and guidance cost unavailable; total session cost is unknown",
+      "controlled_cost_usd": null,
+      "useful_session": null,
+      "useful_session_note": "Root must inspect synthetic outcomes before marking useful"
+    },
+    {
+      "session": "recovery",
+      "proof": "local_controlled",
+      "generation_endpoint_requests": 0,
+      "generation_requests": 0,
+      "generation_count_scope": "logical answer plus guidance search requests; upstream retry attempts excluded",
+      "provider_attempt_count": null,
+      "provider_attempt_count_note": "Upstream retries and internal routing are not exposed",
+      "resolved_model": null,
+      "server_model_field": null,
+      "model_tier": "controlled",
+      "model_tier_source": "operator_label",
+      "reasoning_effort": null,
+      "scope": "receipt lookup then explicit Undo",
+      "request_frequency": {
+        "requests": 2,
+        "session_seconds": 0.047
+      },
+      "latency_ms": 47,
+      "token_usage": null,
+      "measured_provider_cost_usd": null,
+      "measured_answer_provider_cost_usd": null,
+      "cost_scope": "answer only; embedding and guidance cost unavailable; total session cost is unknown",
+      "controlled_cost_usd": null,
+      "useful_session": null,
+      "useful_session_note": "Root must inspect synthetic outcomes before marking useful"
+    }
+  ],
+  "requests": [
+    {
+      "boundary": "/auth/v1/user",
+      "http_status": 200,
+      "bytes": 1045,
+      "latency_ms": 34
+    },
+    {
+      "boundary": "/rest/v1/rpc/get_chatbot_allowance",
+      "http_status": 200,
+      "bytes": 223,
+      "latency_ms": 3
+    },
+    {
+      "boundary": "/rest/v1/conversations",
+      "http_status": 201,
+      "bytes": 75,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/rest/v1/messages",
+      "http_status": 201,
+      "bytes": 165,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/functions/v1/rag-query",
+      "http_status": 200,
+      "bytes": 1241,
+      "latency_ms": 26
+    },
+    {
+      "boundary": "/rest/v1/conversations",
+      "http_status": 201,
+      "bytes": 75,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/rest/v1/messages",
+      "http_status": 201,
+      "bytes": 172,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/functions/v1/rag-query",
+      "http_status": 200,
+      "bytes": 1176,
+      "latency_ms": 25
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 399,
+      "latency_ms": 24
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 663,
+      "latency_ms": 28
+    },
+    {
+      "boundary": "/rest/v1/conversations",
+      "http_status": 201,
+      "bytes": 75,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/rest/v1/messages",
+      "http_status": 201,
+      "bytes": 10,
+      "latency_ms": 2
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 254,
+      "latency_ms": 30
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 699,
+      "latency_ms": 36
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 682,
+      "latency_ms": 24
+    },
+    {
+      "boundary": "/functions/v1/companion-actions",
+      "http_status": 200,
+      "bytes": 733,
+      "latency_ms": 23
+    },
+    {
+      "boundary": "/rest/v1/rpc/get_chatbot_allowance",
+      "http_status": 200,
+      "bytes": 223,
+      "latency_ms": 2
+    }
+  ],
+  "allowance_before": {
+    "remaining": 6,
+    "resets_at": "2026-11-02T00:00:00+00:00",
+    "is_premium": false,
+    "daily_limit": 6,
+    "observed_at": "2026-11-01T02:58:52.621642+00:00",
+    "message_count": 0,
+    "last_message_at": "2026-11-01T02:58:52.537572+00:00"
+  },
+  "deterministic_interpretation": "edit",
+  "allowance_after": {
+    "remaining": 4,
+    "resets_at": "2026-11-02T00:00:00+00:00",
+    "is_premium": false,
+    "daily_limit": 6,
+    "observed_at": "2026-11-01T02:58:52.852561+00:00",
+    "message_count": 2,
+    "last_message_at": "2026-11-01T02:58:52.681115+00:00"
+  }
+}
