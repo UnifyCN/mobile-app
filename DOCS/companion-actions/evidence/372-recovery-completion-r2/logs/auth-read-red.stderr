@@ -1,0 +1,36 @@
+FAIL __tests__/context/userContextStage.test.ts
+  useUserInfo cached reads
+    ○ skipped recomputes the stage of a cached entry from its arrival date
+    ○ skipped gives unknown for a cached entry without a date
+  UserProvider
+    ✕ keeps durable recovery after a failed session read and clears it on confirmed sign-out without a plan screen (8 ms)
+    ○ skipped exposes a recomputed stage for a stale cached user
+    ○ skipped exposes the plain date and stage 0 for a cached raw timestamp
+    ○ skipped refreshUser reloads the profile after a date update
+    ○ skipped refreshUser resolves with no signed-in user
+    ○ skipped does not show the old account after an account change
+
+  ● UserProvider › keeps durable recovery after a failed session read and clears it on confirmed sign-out without a plan screen
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "{\"accountId\":\"11111111-1111-1111-1111-111111111111\",\"entries\":{}}"
+    Received: null
+
+      208 |     renderUser(makeClient());
+      209 |     await act(async () => {});
+    > 210 |     expect(await AsyncStorage.getItem(key)).toBe(record);
+          |                                             ^
+      211 |     await act(async () => { mockAuthListener!('SIGNED_OUT', null); });
+      212 |     await waitFor(async () => expect(await AsyncStorage.getItem(key)).toBeNull());
+      213 |   });
+
+      at Object.toBe (__tests__/context/userContextStage.test.ts:210:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 skipped, 8 total
+Snapshots:   0 total
+Time:        0.445 s, estimated 1 s
+Ran all test suites matching /__tests__\/context\/userContextStage.test.ts/i with tests matching "keeps durable recovery".

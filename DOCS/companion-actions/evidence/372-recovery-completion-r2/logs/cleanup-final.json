@@ -1,0 +1,14 @@
+{
+  "project": "unify-recovery-372-r2",
+  "containers": [],
+  "volumes": [],
+  "ports": {
+    "65060": "free",
+    "65061": "free",
+    "65062": "free",
+    "65063": "free",
+    "3512": "free"
+  },
+  "temporary_harness_removed": true,
+  "port_check": "SO_REUSEADDR bind after removal; first ordinary bind met TCP TIME_WAIT"
+}
