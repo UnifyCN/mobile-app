@@ -84,7 +84,7 @@ export function clearPlanRecoveryExcept(
     try {
       data = await read();
     } catch {
-      if (isCurrent()) await storage.removeItem(STORAGE_KEY);
+      // An unreadable record can describe an unresolved write. Keep it for another read.
       return;
     }
     if (isCurrent() && data?.accountId !== accountId)
